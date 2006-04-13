@@ -1,0 +1,49 @@
+--
+-- unit-terran-science-vessel
+--
+
+DefineAnimations("animations-terran-science-vessel", {
+  Still = {"frame 0", "wait 125",},
+  Move = {"unbreakable begin", "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",
+    "frame 0", "move 3", "wait 2", "frame 0", "move 2", "wait 1",
+    "frame 0", "move 3", "wait 1", "frame 0", "move 2", "wait 1",
+    "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",
+    "frame 0", "move 3", "wait 2", "frame 0", "move 2", "wait 1",
+    "frame 0", "move 3", "wait 1", "frame 0", "move 2", "unbreakable end", "wait 1",},
+  Attack = {"unbreakable begin", "attack", "sound terran-science-vessel-attack",
+    "unbreakable end", "wait 1",},
+  Death = {"unbreakable begin", "sound terran-science-vessel-death",
+    --[[active overlay 333,0]] "wait 3", "unbreakable end", "wait 1",},
+})
+
+DefineUnitType("unit-terran-science-vessel", { Name = "Wraith",
+  Image = {"file", "terran/units/science vessel.png", "size", {96, 128}},
+  Shadow = {"file", "terran/units/science vessel shadow.png", "size", {96, 128}, "offset", {0, 42}},
+  DrawLevel = 45, NumDirections = 1,
+  Animations = "animations-terran-science-vessel", Icon = "icon-terran-science-vessel",
+  Costs = {"time", 250, "gold", 100, "wood", 225},
+  Speed = 14,
+  HitPoints = 200,
+  DrawLevel = 60,
+  TileSize = {1, 1}, BoxSize = {63, 63},
+  SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
+  Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-griffon-hammer",
+  MaxAttackRange = 4,
+  Priority = 65,
+  Points = 150,
+  Demand = 2,
+  ExplodeWhenKilled = "missile-terran-explosion-medium",
+  Type = "fly", ShadowFly = {Value = 1, Enable = true},
+  RightMouseAction = "attack",
+  CanAttack = true,
+  CanTargetLand = true, CanTargetSea = true, CanTargetAir = true,
+  AirUnit = true,
+  DetectCloak = true,
+  organic = true,
+  SelectableByRectangle = true,
+  Sounds = {
+    "selected", "terran-science-vessel-selected",
+    "acknowledge", "terran-science-vessel-acknowledge",
+    "ready", "terran-science-vessel-ready",
+    "help", "basic human voices help 1",
+    "dead", "terran-science-vessel-death"} } )

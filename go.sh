@@ -1,0 +1,1 @@
+./startool ~/Documents ./data
