@@ -39,14 +39,6 @@ DefineBoolFlags("isundead", "organic", "hero", "volatile")
 --
 DefineVariables("Speed", "ShadowFly", {Max = 2}, "Level")
 
---  Declare some unit types used in spells. This is quite accetable, the other
---  way would be to define can-cast-spell outside unit definitions, not much of an improvement.
-DefineUnitType("unit-revealer", {})
-DefineUnitType("unit-eye-of-vision", {})
-DefineUnitType("unit-critter", {})
-DefineUnitType("unit-skeleton", {})
-DefineUnitType("unit-circle-of-power", {})
-
 -- And declare upgrade for dependency...
 -- For human
 CUpgrade:New("upgrade-holy-vision")

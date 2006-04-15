@@ -29,7 +29,7 @@
 
 DefineTileset(
  "name",  "Desert",
- "image", "tiles/desert.png",
+ "image", "tilesets/desert.png",
  -- Slots descriptions
  "slots", {
   "special", {-- Can't be in pud
