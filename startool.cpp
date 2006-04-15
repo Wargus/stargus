@@ -872,7 +872,6 @@ Control CDTodo[] = {
 
 Control Todo[] = {
 	{F,0,"","stardat.mpq" __4},
-	{T,0,"platform/platform","tileset\\platform" __4},
 
 //	{G,0,"ui/blink","game\\blink.grp",0 __3},
 
