@@ -87,11 +87,15 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\mpq.c
+SOURCE=.\mpq.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\startool.c
+SOURCE=.\scm.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\startool.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"

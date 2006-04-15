@@ -10,7 +10,7 @@
 //
 /**@name mpq.h - The mpq headerfile. */
 //
-//      (c) Copyright 2002-2005 by Jimmy Salmon, Lutz Sammer
+//      (c) Copyright 2002-2006 by Jimmy Salmon, Lutz Sammer
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -63,6 +63,8 @@ extern int MpqReadInfo(FILE* fpMpq);
 extern int MpqExtractTo(unsigned char* mpqbuf, UInt32 entry, FILE* fpMpq);
 	/// Clean mpq
 extern void CleanMpq(void);
+
+extern void ConvertScm(const char *name);
 
 
 //@}

@@ -10,7 +10,7 @@
 //
 /**@name startool.c - Extract files from star archives. */
 //
-//      (c) Copyright 2002-2005 by Jimmy Salmon
+//      (c) Copyright 2002-2006 by Jimmy Salmon
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -68,45 +68,6 @@
 	#define O_BINARY 0
 #endif
 
-
-/*
-// From SDL_byteorder.h
-#if  defined(__i386__) || defined(__ia64__) || defined(WIN32) || \
-    (defined(__alpha__) || defined(__alpha)) || \
-     defined(__arm__) || \
-    (defined(__mips__) && defined(__MIPSEL__)) || \
-     defined(__SYMBIAN32__) || \
-     defined(__x86_64__) || \
-     defined(__LITTLE_ENDIAN__)
-#define FetchLE16(p) (*((unsigned short*)(p))); p += 2
-#define FetchLE32(p) (*((unsigned int*)(p))); p += 4
-#endif
-#define AccessLE16(p) (*((unsigned short*)(p)))
-#define AccessLE32(p) (*((unsigned int*)(p)))
-#define ConvertLE16(v) (v)
-#define ConvertLE32(v) (v)
-
-  #define FetchLE16(p) (*((unsigned short*)(p))++)
-  #define FetchLE32(p) (*((unsigned int*)(p))++)
-  #define AccessLE16(p) (*((unsigned short*)(p)))
-  #define AccessLE32(p) (*((unsigned int*)(p)))
-  #define ConvertLE16(v) (v)
-#else
-	static _inline unsigned short Swap16(unsigned short D) {
-		return ((D << 8) | (D >> 8));
-	}
-	static _inline unsigned int Swap32(unsigned int D) {
-		return ((D << 24) | ((D << 8) & 0x00FF0000) | ((D >> 8) & 0x0000FF00) | (D >> 24));
-	}
-	#define FetchLE16(p) Swap16(*((unsigned short*)(p))++)
-	#define FetchLE32(p) Swap32(*((unsigned int*)(p))++)
-	#define AccessLE16(p) (*((unsigned short*)(p)))
-	#define AccessLE32(p) Swap32(*((unsigned int*)(p)))
-	#define ConvertLE16(v) Swap16(v)
-#endif
-
-#define FetchByte(p) (*((unsigned char*)(p))++)
-*/
 
 #if  defined(__i386__) || defined(__ia64__) || defined(WIN32) || \
     (defined(__alpha__) || defined(__alpha)) || \
@@ -911,6 +872,7 @@ Control CDTodo[] = {
 
 Control Todo[] = {
 	{F,0,"","stardat.mpq" __4},
+	{T,0,"platform/platform","tileset\\platform" __4},
 
 //	{G,0,"ui/blink","game\\blink.grp",0 __3},
 
@@ -1038,26 +1000,26 @@ Control Todo[] = {
 #endif
 
 	// Tilesets
-	{T,0,"ashworld/terrain/ashworld","tileset\\AshWorld" __4},
-	{R,0,"ashworld/ashworld","tileset\\AshWorld" __4},
+	{T,0,"ashworld/ashworld","tileset\\AshWorld" __4},
+//	{R,0,"ashworld/ashworld","tileset\\AshWorld" __4},
 	{G,0,"tilesets/ashworld/creep","tileset\\AshWorld.grp",1 __3},
-	{T,0,"ashworld-nc/terrain/ashworld-nc","tileset\\AshWorld-nc" __4},
-	{R,0,"ashworld-nc/ashworld-nc","tileset\\AshWorld-nc" __4},
-	{T,0,"badlands/terrain/badlands","tileset\\badlands" __4},
-	{R,0,"badlands/badlands","tileset\\badlands" __4},
+	{T,0,"ashworld-nc/ashworld-nc","tileset\\AshWorld-nc" __4},
+//	{R,0,"ashworld-nc/ashworld-nc","tileset\\AshWorld-nc" __4},
+	{T,0,"badlands/badlands","tileset\\badlands" __4},
+//	{R,0,"badlands/badlands","tileset\\badlands" __4},
 	{G,0,"tilesets/badlands/creep","tileset\\badlands.grp",1 __3},
-	{T,0,"badlands-nc/terrain/badlands-nc","tileset\\badlands-nc" __4},
-	{R,0,"badlands-nc/badlands-nc","tileset\\badlands-nc" __4},
-	{T,0,"installation/terrain/installation","tileset\\Install" __4},
-	{R,0,"installation/installation","tileset\\install" __4},
+	{T,0,"badlands-nc/badlands-nc","tileset\\badlands-nc" __4},
+//	{R,0,"badlands-nc/badlands-nc","tileset\\badlands-nc" __4},
+	{T,0,"installation/installation","tileset\\Install" __4},
+//	{R,0,"installation/installation","tileset\\install" __4},
 	{G,0,"tilesets/installation/creep","tileset\\Install.grp",1 __3},
-	{T,0,"jungle/terrain/jungle","tileset\\Jungle" __4},
-	{R,0,"jungle/jungle","tileset\\Jungle" __4},
+	{T,0,"jungle/jungle","tileset\\Jungle" __4},
+//	{R,0,"jungle/jungle","tileset\\Jungle" __4},
 	{G,0,"tilesets/jungle/creep","tileset\\Jungle.grp",1 __3},
-	{T,0,"jungle-nc/terrain/jungle-nc","tileset\\Jungle-nc" __4},
-	{R,0,"jungle-nc/jungle-nc","tileset\\Jungle-nc" __4},
-	{T,0,"platform/terrain/platform","tileset\\platform" __4},
-	{R,0,"platform/platform","tileset\\platform" __4},
+	{T,0,"jungle-nc/jungle-nc","tileset\\Jungle-nc" __4},
+//	{R,0,"jungle-nc/jungle-nc","tileset\\Jungle-nc" __4},
+	{T,0,"platform/platform","tileset\\platform" __4},
+//	{R,0,"platform/platform","tileset\\platform" __4},
 	{G,0,"tilesets/platform/creep","tileset\\platform.grp",1 __3},
 
 	// Neutral
@@ -2694,13 +2656,13 @@ void CheckPath(const char* path)
 **  @param pal          Palette
 **  @param transparent  Image uses transparency
 */
-int SavePNG(const char* name, unsigned char* image, int w, int h,
-	unsigned char* pal, int transparent)
+int SavePNG(const char *name, unsigned char *image, int w, int h,
+	unsigned char *pal, int transparent)
 {
-	FILE* fp;
+	FILE *fp;
 	png_structp png_ptr;
 	png_infop info_ptr;
-	unsigned char** lines;
+	unsigned char **lines;
 	int i;
 
 	if (!(fp = fopen(name, "wb"))) {
@@ -2739,7 +2701,7 @@ int SavePNG(const char* name, unsigned char* image, int w, int h,
 	info_ptr->color_type = PNG_COLOR_TYPE_PALETTE;
 	info_ptr->interlace_type = 0;
 	info_ptr->valid |= PNG_INFO_PLTE;
-	info_ptr->palette = (void*)pal;
+	info_ptr->palette = (png_colorp)pal;
 	info_ptr->num_palette = 256;
 
 	if (transparent != -1) {
@@ -2756,7 +2718,7 @@ int SavePNG(const char* name, unsigned char* image, int w, int h,
 	// set transformation
 
 	// prepare image
-	lines = malloc(h * sizeof(*lines));
+	lines = (unsigned char **)malloc(h * sizeof(*lines));
 	if (!lines) {
 		png_destroy_write_struct(&png_ptr, &info_ptr);
 		fclose(fp);
@@ -2808,28 +2770,28 @@ int OpenArchive(const char* file)
 }
 
 /**
-**		Extract/uncompress entry.
+**  Extract/uncompress entry.
 **
-**		@param name		Name of the entry to extract
+**  @param name  Name of the entry to extract
 **
-**		@return				Pointer to uncompressed entry
+**  @return      Pointer to uncompressed entry
 */
-unsigned char* ExtractEntry(unsigned char* name)
+unsigned char *ExtractEntry(unsigned char *name)
 {
 	int i;
 	unsigned char *buf;
 
-	buf=NULL;
-	for( i=0; i<MpqFileCount; ++i ) {
-		if( !strcmp(name,MpqFilenameTable+i*PATH_MAX) ) {
-			EntrySize=MpqBlockTable[i*4+2];
-			buf=malloc(EntrySize+1);
-			MpqExtractTo(buf,i,MpqFD);
+	buf = NULL;
+	for (i = 0; i < MpqFileCount; ++i) {
+		if (!strcmp((char *)name, MpqFilenameTable + i * PATH_MAX)) {
+			EntrySize = MpqBlockTable[i * 4 + 2];
+			buf = (unsigned char *)malloc(EntrySize + 1);
+			MpqExtractTo(buf, i, MpqFD);
 			printf("extracted: %s (%d, %d bytes)\n", name, i, EntrySize);
 			break;
 		}
 	}
-	if( i==MpqFileCount ) {
+	if (i == MpqFileCount) {
 		printf("Not found: %s\n", name);
 		exit(-1);
 	}
@@ -2871,32 +2833,32 @@ unsigned char* ConvertPaletteRGBXtoRGB(unsigned char* pal)
 }
 
 /**
-**		Convert rgb to my format.
+**  Convert rgb to my format.
 */
-int ConvertRgb(char* listfile,char* file)
+int ConvertRgb(char *listfile, char *file)
 {
-	unsigned char* palp;
+	unsigned char *palp;
 	char buf[1024];
-	FILE* f;
+	FILE *f;
 	int i;
 
-	sprintf(buf,"%s.wpe",listfile);
-	palp=ExtractEntry(buf);
+	sprintf(buf, "%s.wpe", listfile);
+	palp = ExtractEntry((unsigned char *)buf);
 	ConvertPaletteRGBXtoRGB(palp);
 
 	//
 	//		Generate RGB File.
 	//
-	sprintf(buf,"%s/%s/%s.rgb",Dir,TILESET_PATH,file);
+	sprintf(buf, "%s/%s/%s.rgb", Dir, TILESET_PATH, file);
 	CheckPath(buf);
-	f=fopen(buf,"wb");
-	if( !f ) {
+	f = fopen(buf, "wb");
+	if (!f) {
 		perror("");
-		printf("Can't open %s\n",buf);
+		printf("Can't open %s\n", buf);
 		exit(-1);
 	}
-	if( fwrite(palp,1,256*3,f) != 256*3) {
-		printf("Can't write %d bytes\n",256*3);
+	if (fwrite(palp, 1, 256 * 3, f) != 256 * 3) {
+		printf("Can't write %d bytes\n", 256 * 3);
 	}
 
 	fclose(f);
@@ -2931,109 +2893,97 @@ int ConvertRgb(char* listfile,char* file)
 //		Tileset
 //----------------------------------------------------------------------------
 
-void SaveCCL(const unsigned char* map __attribute__((unused)),
-		const int* map2tile, int mapl)
+#ifdef MAKE_CCL
+void SaveCCL(const unsigned char *map __attribute__((unused)),
+	const int *map2tile, int mapl)
 {
 	int i;
-	char* cp;
-	FILE* f;
-	char file[1024];
-	char tileset[1024];
-	char *name="tileset";
-	static int savecount=0;
+	FILE *f;
+	static int savecount = 0;
 	char buf[1024];
 
-	sprintf(buf,"save%02d.ccl",savecount++);
-	f=fopen(buf,"w");
+	sprintf(buf, "save%02d.ccl", savecount++);
+	f = fopen(buf, "w");
 
-	if( (cp=strrchr(name,'/')) ) {		// remove leading path
-		++cp;
-	} else {
-		cp=(char*)name;
-	}
-	strcpy(file,cp);
-	strcpy(tileset,cp);
-	if( (cp=strrchr(tileset,'.')) ) {		// remove suffix
-		*cp='\0';
-	}
+	fprintf(f, "DefineTileset(\n");
+	fprintf(f, "  \"name\", \"\",\n");
+	fprintf(f, "  \"image\", \"tilesets/.png\",\n");
+	fprintf(f, "  \"slots\", {\n");
 
-	fprintf(f,"(tileset Tileset%c%s \"%s\" \"%s\"\n"
-		,toupper(*tileset),tileset+1,tileset,file);
-
-	fprintf(f,"  #(");
-	for( i=0; i<mapl/52*16; ++i ) {
-		if( i&15 ) {
-			fprintf(f," ");
-		} else if( i ) {
-			fprintf(f,"\t; %03X\n	",i-16);
+	fprintf(f,"   \"solid\", { \"light-grass\", \"land\", {\n");
+	for (i = 0; i < mapl / 52 * 16; ++i) {
+		if (i & 15) {
+			fprintf(f, " ");
+		} else if (i) {
+			fprintf(f, "\t-- %03X\n",i - 16);
 		}
-		fprintf(f,"%3d",map2tile[i]);
+		fprintf(f, "%4d,", map2tile[i]);
 	}
 
-	fprintf(f,"  ))\n");
+	fprintf(f, "\n}}})\n");
 
-	 fclose(f);
+	fclose(f);
 }
 
 /**
 **		Count used mega tiles for map.
 */
-int CountUsedTiles(const unsigned char* map,const unsigned char* mega,int* map2tile,int mapl)
+int CountUsedTiles(const unsigned char *map, const unsigned char *mega,
+	int *map2tile, int mapl)
 {
 	int i;
 	int j;
 	int used;
-	const char* tp;
-	int* img2tile;
+	const unsigned char *tp;
+	int *img2tile;
 
-	img2tile=malloc(mapl/52*16*sizeof(int));
+	img2tile = (int *)malloc(mapl / 52 * 16 * sizeof(int));
 
-	memset(map2tile,0,sizeof(map2tile));
+	memset(map2tile, 0, sizeof(map2tile));
 
 	//
 	//		Build conversion table.
 	//
-	for( i=0; i<mapl/52; ++i ) {
-		tp=map+i*52+20;
-		for( j=0; j<0x10; ++j ) {
-			if( ((i<<4)|j) > mapl ) {
+	for (i = 0; i < mapl / 52; ++i) {
+		tp = map + i * 52 + 20;
+		for (j = 0; j< 0x10; ++j ) {
+			if (((i << 4) | j) > mapl) {
 				break;
 			}
-			map2tile[(i<<4)|j]=AccessLE16(tp+j*2);
+			map2tile[(i << 4) | j] = AccessLE16(tp + j * 2);
 		}
 	}
 
 	//
-	//		Mark all used mega tiles.
+	//  Mark all used mega tiles.
 	//
-	used=0;
-	for( i=0; i<mapl/52*16; ++i ) {
-		if( !map2tile[i] ) {
+	used = 0;
+	for (i = 0; i < mapl / 52 * 16; ++i) {
+		if (!map2tile[i]) {
 			continue;
 		}
-		for( j=0; j<used; ++j ) {
-			if( img2tile[j]==map2tile[i] ) {
+		for (j = 0; j < used; ++j) {
+			if (img2tile[j] == map2tile[i]) {
 				break;
 			}
 		}
-		if( j==used ) {
+		if (j == used) {
 			//
-			//		Check unique mega tiles.
+			//  Check unique mega tiles.
 			//
-			for( j=0; j<used; ++j ) {
-				if( !memcmp(mega+img2tile[j]*32
-							,mega+map2tile[i]*32,32) ) {
+			for (j = 0; j < used; ++j) {
+				if (!memcmp(mega + img2tile[j] * 32, mega + map2tile[i] * 32, 32)) {
 					break;
 				}
 			}
-			if( j==used ) {
-				img2tile[used++]=map2tile[i];
+			if (j == used) {
+				img2tile[used++] = map2tile[i];
 			}
 		}
 	}
 #if 0
-	for( i=0; i<used; ++i ) {
-		if( !(i%16) ) {
+	for (i = 0; i < used; ++i) {
+		if (!(i % 16)) {
 			DebugLevel1("\n");
 		}
 		DebugLevel1("%3d " _C_ img2tile[i]);
@@ -3043,20 +2993,18 @@ int CountUsedTiles(const unsigned char* map,const unsigned char* mega,int* map2t
 
 	return used;
 }
+#endif
 
 /**
-**		Decode a minitile into the image.
+**  Decode a minitile into the image.
 */
-void DecodeMiniTile(unsigned char* image,int ix,int iy,int iadd
-		,unsigned char* mini,int index,int flipx,int flipy)
+void DecodeMiniTile(unsigned char *image, int ix, int iy, int iadd,
+	unsigned char *mini, int index, int flipx, int flipy)
 {
-	int x;
-	int y;
-
-	for( y=0; y<8; ++y ) {
-		for( x=0; x<8; ++x ) {
-			image[(y+iy*8)*iadd+ix*8+x]=mini[index+
-				(flipy ? (8-y) : y)*8+(flipx ? (8-x) : x)];
+	for (int y = 0; y < 8; ++y) {
+		for (int x = 0; x < 8; ++x) {
+			image[(y + iy * 8) * iadd + ix * 8 + x] =
+				mini[index + (flipy ? (7 - y) : y) * 8 + (flipx ? (7 - x) : x)];
 		}
 	}
 }
@@ -3064,12 +3012,12 @@ void DecodeMiniTile(unsigned char* image,int ix,int iy,int iadd
 /**
 **		Convert tiles into image.
 */
-unsigned char* ConvertTile(unsigned char* mini,const char* mega,int msize,
-		const char* map __attribute__((unused)),
-		int mapl __attribute__((unused)),int *wp,int *hp)
+unsigned char *ConvertTile(unsigned char *mini, const char *mega, int msize,
+	const char *map __attribute__((unused)),
+	int mapl __attribute__((unused)), int *wp, int *hp)
 {
-	unsigned char* image;
-	const unsigned short* mp;
+	unsigned char *image;
+	const unsigned short *mp;
 	int height;
 	int width;
 	int i;
@@ -3078,49 +3026,52 @@ unsigned char* ConvertTile(unsigned char* mini,const char* mega,int msize,
 	int offset;
 	int numtiles;
 #ifdef MAKE_CCL
-	int* map2tile;
+	int *map2tile;
 
-	map2tile=malloc(mapl/52*16*sizeof(int));
-	CountUsedTiles(map,mega,map2tile,mapl);
+	map2tile = (int *)malloc(mapl / 52 * 16 * sizeof(int));
+	CountUsedTiles((unsigned char *)map, (unsigned char *)mega, map2tile, mapl);
 #endif
-	numtiles=msize/32;
+	numtiles = msize / 32;
 
-	width=TILE_PER_ROW*32;
-	height=((numtiles+TILE_PER_ROW-1)/TILE_PER_ROW)*32;
-	image=malloc(height*width);
-	memset(image,0,height*width);
+	width = TILE_PER_ROW * 32;
+	height = ((numtiles + TILE_PER_ROW - 1) / TILE_PER_ROW) * 32;
+	image = (unsigned char *)calloc(1, height * width);
 
-	for( i=0; i<numtiles; ++i ) {
-		//mp=(const unsigned short*)(mega+img2tile[i]*32);
-		mp=(const unsigned short*)(mega+i*32);
-		for( y=0; y<4; ++y ) {
-			for( x=0; x<4; ++x ) {
-				offset=ConvertLE16(mp[x+y*4]);
-				DecodeMiniTile(image
-					,x+((i%TILE_PER_ROW)*4),y+(i/TILE_PER_ROW)*4,width
-					,mini,(offset/2)*64,offset&1,0);
+	for (i = 0; i < numtiles; ++i) {
+		if (i / (13 * TILE_PER_ROW)) {
+			i = i;
+		}
+		//mp = (const unsigned short *)(mega + img2tile[i] * 32);
+		mp = (const unsigned short *)(mega + i * 32);
+		for (y = 0; y < 4; ++y) {
+			for (x = 0; x < 4; ++x) {
+				offset = ConvertLE16(mp[x + y * 4]);
+				DecodeMiniTile(image,
+					x + ((i % TILE_PER_ROW) * 4), y + (i / TILE_PER_ROW) * 4,
+					width, mini, (offset / 2) * 64, offset & 1, 0);
 			}
 		}
 	}
 
-	*wp=width;
-	*hp=height;
+	*wp = width;
+	*hp = height;
 #ifdef MAKE_CCL
-	SaveCCL(map,map2tile,mapl);
+	SaveCCL((unsigned char *)map, map2tile, mapl);
+	free(map2tile);
 #endif
 	return image;
 }
 
 /**
-**		Convert a tileset to my format.
+**  Convert a tileset to my format.
 */
-int ConvertTileset(char* listfile,char* file)
+int ConvertTileset(char *listfile, char *file)
 {
-	unsigned char* palp;
-	unsigned char* megp;
-	unsigned char* minp;
-	unsigned char* mapp;
-	unsigned char* image;
+	unsigned char *palp;
+	unsigned char *megp;
+	unsigned char *minp;
+	unsigned char *mapp;
+	unsigned char *image;
 	int w;
 	int h;
 	int megl;
@@ -3129,23 +3080,23 @@ int ConvertTileset(char* listfile,char* file)
 
 	if (!strcmp(listfile, "tileset\\Install")) {
 		sprintf(buf, "tileset\\install.wpe");
-		palp = ExtractEntry(buf);
+		palp = ExtractEntry((unsigned char *)buf);
 		sprintf(buf, "tileset\\install.vr4");
-		minp = ExtractEntry(buf);
+		minp = ExtractEntry((unsigned char *)buf);
 	} else {
 		sprintf(buf, "%s.wpe", listfile);
-		palp = ExtractEntry(buf);
+		palp = ExtractEntry((unsigned char *)buf);
 		sprintf(buf, "%s.vr4", listfile);
-		minp = ExtractEntry(buf);
+		minp = ExtractEntry((unsigned char *)buf);
 	}
 	sprintf(buf, "%s.vx4", listfile);
-	megp = ExtractEntry(buf);
+	megp = ExtractEntry((unsigned char *)buf);
 	megl = EntrySize;
 	sprintf(buf, "%s.cv5", listfile);
-	mapp = ExtractEntry(buf);
+	mapp = ExtractEntry((unsigned char *)buf);
 	mapl = EntrySize;
 
-	image = ConvertTile(minp, megp, megl, mapp, mapl, &w, &h);
+	image = ConvertTile(minp, (char *)megp, megl, (char *)mapp, mapl, &w, &h);
 
 	free(megp);
 	free(minp);
@@ -3351,7 +3302,7 @@ unsigned char* ConvertGraphic(int gfx,unsigned char* bp,int *wp,int *hp
 		length=count;
 	}
 
-	image=malloc(best_width*best_height*length);
+	image = (unsigned char *)malloc(best_width * best_height * length);
 
 	//		Image:		0, 1, 2, 3, 4,
 	//				5, 6, 7, 8, 9, ...
@@ -3411,7 +3362,7 @@ int ConvertGfx(char* listfile, char* file, int pale)
 	int h;
 	char buf[1024];
 
-	gfxp = ExtractEntry(listfile);
+	gfxp = ExtractEntry((unsigned char *)listfile);
 
 	gfxp2 = NULL;
 	image = ConvertGraphic(1, gfxp, &w, &h, gfxp2, 0);
@@ -3448,7 +3399,7 @@ int ConvertGfu(char* listfile, char* file, int pale)
 	unsigned char* p;
 	unsigned char* end;
 
-	gfup = ExtractEntry(listfile);
+	gfup = ExtractEntry((unsigned char *)listfile);
 
 	gfup2 = NULL;
 	image = ConvertGraphic(0, gfup, &w, &h, gfup2, 0);
@@ -3494,17 +3445,17 @@ struct PCXheader {
 };
 
 /**
-**		Convert 8 bit pcx file to raw image
+**  Convert 8 bit pcx file to raw image
 */
-void ConvertPcxToRaw(unsigned char* pcx, unsigned char** raw,unsigned char** pal,
-					 int* w,int* h)
+void ConvertPcxToRaw(unsigned char *pcx, unsigned char **raw, unsigned char **pal,
+	int *w, int *h)
 {
 	struct PCXheader pcxh;
 	int y;
 	int i;
 	int count;
-	unsigned char* src;
-	unsigned char* dest;
+	unsigned char *src;
+	unsigned char *dest;
 	unsigned char ch;
 
 	ch=0;
@@ -3518,16 +3469,16 @@ void ConvertPcxToRaw(unsigned char* pcx, unsigned char** raw,unsigned char** pal
 	*w = pcxh.Xmax - pcxh.Xmin + 1;
 	*h = pcxh.Ymax - pcxh.Ymin + 1;
 
-	*raw = malloc(*w * *h);
+	*raw = (unsigned char *)malloc(*w * *h);
 	src = pcx + sizeof(struct PCXheader);
 
-	for( y=0; y<*h; ++y ) {
+	for (y = 0; y < *h; ++y) {
 		count = 0;
 		dest = *raw + y * *w;
-		for( i=0; i<*w; ++i ) {
-			if( !count ) {
+		for (i = 0; i < *w; ++i) {
+			if (!count) {
 				ch = *src++;
-				if( (ch & 0xc0) == 0xc0 ) {
+				if ((ch & 0xc0) == 0xc0) {
 					count = ch & 0x3f;
 					ch = *src++;
 				} else {
@@ -3539,13 +3490,13 @@ void ConvertPcxToRaw(unsigned char* pcx, unsigned char** raw,unsigned char** pal
 		}
 	}
 
-	*pal = malloc(256*3);
+	*pal = (unsigned char *)malloc(256 * 3);
 	dest = *pal;
 	do {
 		ch = *src++;
-	} while( ch != 12 );
+	} while (ch != 12);
 
-	for( i=0; i<256*3; ++i ) {
+	for (i = 0; i < 256 * 3; ++i) {
 		*dest++ = *src++;
 	}
 }
@@ -3553,16 +3504,16 @@ void ConvertPcxToRaw(unsigned char* pcx, unsigned char** raw,unsigned char** pal
 /**
 **  Convert a pcx graphic to my format
 */
-void ConvertPcx(char* listfile, char* file)
+void ConvertPcx(char *listfile, char *file)
 {
-	unsigned char* palp;
-	unsigned char* pcxp;
-	unsigned char* image;
+	unsigned char *palp;
+	unsigned char *pcxp;
+	unsigned char *image;
 	char buf[1024];
 	int w;
 	int h;
 
-	pcxp = ExtractEntry(listfile);
+	pcxp = ExtractEntry((unsigned char *)listfile);
 
 	ConvertPcxToRaw(pcxp, &image, &palp, &w, &h);
 	free(pcxp);
@@ -3582,7 +3533,7 @@ void ConvertPcx(char* listfile, char* file)
 /**
 **  Convert font into image.
 */
-unsigned char* ConvertFnt(unsigned char* start, int* wp, int* hp) {
+unsigned char *ConvertFnt(unsigned char *start, int *wp, int *hp) {
 	int i;
 	int count;
 	int max_width;
@@ -3593,10 +3544,10 @@ unsigned char* ConvertFnt(unsigned char* start, int* wp, int* hp) {
 	int h;
 	int xoff;
 	int yoff;
-	unsigned char* bp;
-	unsigned char* dp;
-	unsigned char* image;
-	unsigned* offsets;
+	unsigned char *bp;
+	unsigned char *dp;
+	unsigned char *image;
+	unsigned *offsets;
 
 	bp = start + 5;  // skip "FONT "
 	count = FetchByte(bp);
@@ -3605,12 +3556,12 @@ unsigned char* ConvertFnt(unsigned char* start, int* wp, int* hp) {
 	max_height = FetchByte(bp);
 
 
-	offsets = malloc(count * sizeof(u_int32_t));
+	offsets = (unsigned *)malloc(count * sizeof(u_int32_t));
 	for (i = 0; i < count; ++i) {
 		offsets[i] = FetchLE32(bp);
 	}
 
-	image = malloc(max_width * max_height * count);
+	image = (unsigned char *)malloc(max_width * max_height * count);
 	if (!image) {
 		printf("Can't allocate image\n");
 		exit(-1);
@@ -3670,7 +3621,7 @@ int ConvertFont(char* listfile, char* file, int pale, int fnte __attribute__((un
 	char buf[1024];
 
 	palp = Palettes[pale];
-	fntp = ExtractEntry(listfile);
+	fntp = ExtractEntry((unsigned char *)listfile);
 
 	image = ConvertFnt(fntp, &w, &h);
 	free(fntp);
@@ -3689,26 +3640,26 @@ int ConvertFont(char* listfile, char* file, int pale, int fnte __attribute__((un
 //----------------------------------------------------------------------------
 
 /**
-**		Convert pud to my format.
+**  Convert pud to my format.
 */
-int ConvertWav(char* listfile,char* file,int wave __attribute__((unused)))
+int ConvertWav(char *listfile, char *file, int wave __attribute__((unused)))
 {
-	unsigned char* wavp;
+	unsigned char *wavp;
 	char buf[1024];
 	gzFile gf;
 
-	wavp=ExtractEntry(listfile);
+	wavp = ExtractEntry((unsigned char *)listfile);
 
-	sprintf(buf,"%s/%s/%s.wav.gz",Dir,SOUND_PATH,file);
+	sprintf(buf, "%s/%s/%s.wav.gz", Dir, SOUND_PATH, file);
 	CheckPath(buf);
-	gf=gzopen(buf,"wb9");
-	if( !gf ) {
+	gf = gzopen(buf, "wb9");
+	if (!gf) {
 		perror("");
-		printf("Can't open %s\n",buf);
+		printf("Can't open %s\n", buf);
 		exit(-1);
 	}
-	if( EntrySize!=gzwrite(gf,wavp,EntrySize) ) {
-		printf("Can't write %d bytes\n",EntrySize);
+	if (EntrySize != gzwrite(gf, wavp, EntrySize)) {
+		printf("Can't write %d bytes\n", EntrySize);
 	}
 
 	free(wavp);
@@ -3760,23 +3711,23 @@ char* ParseString(char* input)
 }
 
 /**
-**		Raw extraction
+**  Raw extraction
 */
-int RawExtract(char* listfile,char* file)
+int RawExtract(char *listfile, char *file)
 {
 	FILE *fd;
-	unsigned char* p;
+	unsigned char *p;
 	char buf[1024];
 
-	sprintf(buf,"%s/%s",Dir,file);
+	sprintf(buf, "%s/%s", Dir, file);
 	CheckPath(buf);
-	p=ExtractEntry(listfile);
-	fd=fopen(buf,"wb");
-	if( !fd ) {
+	p = ExtractEntry((unsigned char *)listfile);
+	fd = fopen(buf, "wb");
+	if (!fd) {
 		free(p);
 		return -1;
 	}
-	fwrite(p,EntrySize,1,fd);
+	fwrite(p, EntrySize, 1, fd);
 	fclose(fd);
 	free(p);
 	return 0;
@@ -3855,6 +3806,13 @@ int main(int argc,char** argv)
 		fclose(fd);
 		free(p);
 		CloseArchive();
+		exit(0);
+	}
+#endif
+
+#if 0
+	{
+		ConvertScm("(4)Blood Bath.scm");
 		exit(0);
 	}
 #endif

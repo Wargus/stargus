@@ -10,7 +10,7 @@
 //
 /**@name mpq.c - Mpq. */
 //
-//      (c) Copyright 1998-2005 by Lutz Sammer and Jimmy Salmon
+//      (c) Copyright 1998-2006 by Lutz Sammer and Jimmy Salmon
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -77,8 +77,8 @@ typedef UInt16 read_data_proc(UInt8 * buffer, UInt16 size, void *param);
 typedef void write_data_proc(UInt8 * buffer, UInt16 size, void *param);
 
 typedef struct {
-	char *buf_in;
-	char *buf_out;
+	UInt8 *buf_in;
+	UInt8 *buf_out;
 } params;
 
 static UInt16 __explode_1(UInt8 * buf);
@@ -488,7 +488,7 @@ int MpqExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 	UInt8 *read_buffer, *write_buffer;
 	UInt32 i, j, offset_body, flag, crc_file;
 	UInt32 num_block, length_read, iteration;
-	UInt8 *szNameFile;
+	char *szNameFile;
 	UInt8 metod;
 	ldiv_t divres;
 	params param;
