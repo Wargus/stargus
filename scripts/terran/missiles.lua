@@ -21,7 +21,7 @@ DefineMissileType("missile-terran-explosion-large", {
 })
 
 DefineMissileType("missile-terran-firebat-flame", {
-  File = "terran/flamer.png", Size = {224, 224},
+  File = "neutral/flamer.png", Size = {224, 224},
   Frames = 221, NumDirections = 32, DrawLevel = 50,
   Class = "missile-class-point-to-point", Sleep = 1, Speed = 4, Range = 0,
 })

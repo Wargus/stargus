@@ -2440,7 +2440,7 @@ DefineMenuItem("pos", { 176 + ((288 - 260) / 2), 112 + (11 + (36 * 3) + 22)}, "f
 DefineMenuItem("pos", { 176 + (288 - ((288 - 260) / 2) - 152), 112 + (11 + (36 * 3) + 22)}, "font", "game",
   "pulldown",  {"size", {152, 20},
     "style", "pulldown",
-    "options", {"summer", "winter", "wasteland", "swamp"},
+    "options", {"desert", "winter"},
     "func", nil},
   "menu", "menu-editor-new")
 DefineMenuItem("pos", { 320 - 106 - 23, 328}, "font", "large",
@@ -2629,7 +2629,7 @@ DefineMenuItem("pos", { (288 - 260) / 2, 11 + (36 * 3) + 22}, "font", "game",
 DefineMenuItem("pos", { 288 - ((288 - 260) / 2) - 152, 11 + (36 * 3) + 22}, "font", "game",
   "pulldown",  {"size", {152, 20},
     "style", "pulldown",
-    "options", {"summer", "winter", "wasteland", "swamp"},
+    "options", {"desert", "winter"},
     "func", nil},
   "menu", "menu-editor-map-properties")
 DefineMenuItem("pos", { (288 - 260) / 2, 11 + (36 * 4) + 22}, "font", "game",

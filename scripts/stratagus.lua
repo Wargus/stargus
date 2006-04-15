@@ -173,7 +173,7 @@ SetShowCommandKey(false)
 SetFogOfWar(true)
 --SetFogOfWar(false)
 
-SetFogOfWarGraphics("tilesets/summer/terrain/summer.png")
+SetFogOfWarGraphics("tilesets/desert.png")
 
 --  Choose your default for minimap with/without terrain.
 SetMinimapTerrain(true)
@@ -340,8 +340,8 @@ Load("scripts/units.lua")
 Load("scripts/upgrade.lua")
 Load("scripts/fonts.lua")
 Load("scripts/buttons.lua")
-Load("scripts/ui.lua")
 Load("scripts/ai.lua")
+Load("scripts/ui.lua")
 Load("scripts/campaigns.lua")
 Load("scripts/credits.lua")
 Load("scripts/tips.lua")

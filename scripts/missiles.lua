@@ -34,38 +34,38 @@ Load("scripts/terran/missiles.lua")
 
 
 DefineMissileType("missile-small-fire",
-  { File = "missiles/small_fire.png", Size = {32, 48}, Frames = 6, NumDirections = 1,
+  { File = "terran/building burnc.png", Size = {32, 48}, Frames = 6, NumDirections = 1,
   DrawLevel = 45, Class = "missile-class-fire", Sleep = 8, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-big-fire",
-  { File = "missiles/big_fire.png", Size = {48, 48}, Frames = 10, NumDirections = 1,
+  { File = "terran/building burnf.png", Size = {32, 48}, Frames = 10, NumDirections = 1,
   DrawLevel = 45, Class = "missile-class-fire", Sleep = 8, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-impact",
-  { File = "missiles/ballista-catapult_impact.png", Size = {48, 48}, Frames = 10, NumDirections = 1,
+  { File = "neutral/missiles/blastcan.png", Size = {32, 32}, Frames = 17, NumDirections = 1,
   DrawLevel = 50, Class = "missile-class-stay", Sleep = 1, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-explosion",
-  { File = "missiles/explosion.png", Size = {64, 64}, Frames = 20, NumDirections = 1,
+  { File = "neutral/missiles/explo1.png", Size = {44, 59}, Frames = 10, NumDirections = 1,
   DrawLevel = 50, Class = "missile-class-stay", Sleep = 1, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-small-cannon",
-  { File = "missiles/cannon.png", Size = {32, 32}, Frames = 15, NumDirections = 5,
+  { File = "neutral/missiles/blastcan.png", Size = {32, 32}, Frames = 17, NumDirections = 5,
   DrawLevel = 50, ImpactSound = "explosion",
   Class = "missile-class-parabolic", Sleep = 1, Speed = 16, Range = 1,
   ImpactMissile = "missile-cannon-explosion" } )
 
 DefineMissileType("missile-cannon-explosion",
-  { File = "missiles/cannon_explosion.png", Size = {32, 32}, Frames = 4, NumDirections = 1,
+  { File = "neutral/missiles/blastcan.png", Size = {32, 32}, Frames = 17, NumDirections = 1,
   DrawLevel = 50, Class = "missile-class-stay", Sleep = 1, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-green-cross",
-  { File = "missiles/green_cross.png", Size = {32, 32}, Frames = 4, NumDirections = 1,
+  { File = "ui/cursors/targg.png", Size = {128, 128}, Frames = 2, NumDirections = 1,
   DrawLevel = 150, Class = "missile-class-cycle-once", Sleep = 1, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-red-cross",
-  { File = "missiles/red_cross.png", Size = {32, 32}, Frames = 4, NumDirections = 1,
-  DrawLevel = 5, Class = "missile-class-cycle-once", Sleep = 1, Speed = 16, Range = 1 } )
+  { File = "ui/cursors/targr.png", Size = {128, 128}, Frames = 2, NumDirections = 1,
+  DrawLevel = 150, Class = "missile-class-cycle-once", Sleep = 1, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-none",
   { Size = {32, 32}, DrawLevel = 50,

@@ -35,23 +35,23 @@ Load("scripts/widgets.lua")
 --
 
 --ManaSprite("ui/mana.png", -7, -7, 7, 7)
-ManaSprite("ui/mana2.png", 0, -1, 31, 4)
+ManaSprite("ui/ppbrfull.png", 0, -1, 108, 9)
 --HealthSprite("ui/health.png", 1, -7, 7, 7)
-HealthSprite("ui/health2.png", 0, -4, 31, 4)
+HealthSprite("ui/ppbrfull.png", 0, -1, 108, 9)
 
-DefineSprites({Name = "sprite-spell", File = "ui/bloodlust,haste,slow,invisible,shield.png",
-        Offset = {1, 1}, Size = {16, 16}})
+--DefineSprites({Name = "sprite-spell", File = "ui/bloodlust,haste,slow,invisible,shield.png",
+--        Offset = {1, 1}, Size = {16, 16}})
 
-DefineDecorations({Index = "Bloodlust", ShowOpponent = true,
-  Offset = {0, 0}, Method = {"static-sprite", {"sprite-spell", 0}}})
-DefineDecorations({Index = "Haste", ShowOpponent = true,
-  Offset = {16, 0}, Method = {"static-sprite", {"sprite-spell", 1}}})
-DefineDecorations({Index = "Slow", ShowOpponent = true,
-  Offset = {16, 0}, Method = {"static-sprite", {"sprite-spell", 2}}})
-DefineDecorations({Index = "Invisible", ShowOpponent = true,
-  Offset = {32, 0}, Method = {"static-sprite", {"sprite-spell", 3}}})
-DefineDecorations({Index = "UnholyArmor", ShowOpponent = true,
-  Offset = {48, 0}, Method = {"static-sprite", {"sprite-spell", 4}}})
+--DefineDecorations({Index = "Bloodlust", ShowOpponent = true,
+--  Offset = {0, 0}, Method = {"static-sprite", {"sprite-spell", 0}}})
+--DefineDecorations({Index = "Haste", ShowOpponent = true,
+--  Offset = {16, 0}, Method = {"static-sprite", {"sprite-spell", 1}}})
+--DefineDecorations({Index = "Slow", ShowOpponent = true,
+--  Offset = {16, 0}, Method = {"static-sprite", {"sprite-spell", 2}}})
+--DefineDecorations({Index = "Invisible", ShowOpponent = true,
+--  Offset = {32, 0}, Method = {"static-sprite", {"sprite-spell", 3}}})
+--DefineDecorations({Index = "UnholyArmor", ShowOpponent = true,
+--  Offset = {48, 0}, Method = {"static-sprite", {"sprite-spell", 4}}})
 
 --ShowHealthBar()
 --ShowHealthVertical()

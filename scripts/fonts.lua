@@ -1,9 +1,9 @@
 --       _________ __                 __                               
 --      /   _____//  |_____________ _/  |______     ____  __ __  ______
 --      \_____  \\   __\_  __ \__  \\   __\__  \   / ___\|  |  \/  ___/
---      /        \|  |  |  | \// __ \|  |  / __ \_/ /_/  >  |  /\___ \ 
+--      /        \|  |  |  | \// __ \|  |  / __ \_/ /_/  >  |  /\___ \
 --     /_______  /|__|  |__|  (____  /__| (____  /\___  /|____//____  >
---             \/                  \/          \//_____/            \/ 
+--             \/                  \/          \//_____/            \/
 --  ______________________                           ______________________
 --                        T H E   W A R   B E G I N S
 --         Stratagus - A free fantasy real time strategy game engine
@@ -16,12 +16,12 @@
 --      it under the terms of the GNU General Public License as published by
 --      the Free Software Foundation; either version 2 of the License, or
 --      (at your option) any later version.
---  
+--
 --      This program is distributed in the hope that it will be useful,
 --      but WITHOUT ANY WARRANTY; without even the implied warranty of
 --      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 --      GNU General Public License for more details.
---  
+--
 --      You should have received a copy of the GNU General Public License
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -34,14 +34,20 @@ CFont:New("large", CGraphic:New("ui/fonts/large.png", 17, 17))
 CFont:New("small-title", CGraphic:New("ui/fonts/small_episode_titles.png", 32, 35))
 CFont:New("large-title", CGraphic:New("ui/fonts/large_episode_titles.png", 52, 50))
 
+CFont:New("small", CGraphic:New("ui/fonts/font8.png", 8, 11))
+CFont:New( "game", CGraphic:New("ui/fonts/font10.png",10, 13))
+CFont:New("large", CGraphic:New("ui/fonts/font12.png", 12, 12))
+CFont:New("small-title", CGraphic:New("ui/fonts/font32.png", 32, 35))
+CFont:New("large-title", CGraphic:New("ui/fonts/font50.png",52, 50))
 
-CFont:New("10", CGraphic:New("ui/fonts/small.png", 7, 6))
-CFont:New("12", CGraphic:New("ui/fonts/game.png", 13, 14))
-CFont:New("14", CGraphic:New("ui/fonts/large.png", 17, 17))
-CFont:New("16", CGraphic:New("ui/fonts/large.png", 17, 17))
-CFont:New("16x", CGraphic:New("ui/fonts/small_episode_titles.png", 32, 35))
-CFont:New("32", CGraphic:New("ui/fonts/small_episode_titles.png", 32, 35))
-CFont:New("50", CGraphic:New("ui/fonts/large_episode_titles.png", 52, 50))
+CFont:New("font8", CGraphic:New("ui/fonts/font8.png",8, 11))
+CFont:New("font10", CGraphic:New("ui/fonts/font10.png",10, 13))
+CFont:New("font12", CGraphic:New("ui/fonts/font12.png",12, 12))
+CFont:New("font14", CGraphic:New("ui/fonts/font14.png",15, 16))
+CFont:New("font16", CGraphic:New("ui/fonts/font16.png",17, 19))
+CFont:New("font16x", CGraphic:New("ui/fonts/font16x.png",25, 19))
+CFont:New("font32", CGraphic:New("ui/fonts/font32.png",32, 35))
+CFont:New("font50", CGraphic:New("ui/fonts/font50.png",52, 50))
 
 
 --	FIXME: only yellow, white, and grey are correct.
