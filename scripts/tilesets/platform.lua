@@ -1,5 +1,3 @@
--- $Id$
-
 DefineTileset(
   "name", "Platform",
   "image", "tilesets/platform/platform.png",
