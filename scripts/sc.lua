@@ -10,7 +10,7 @@
 --
 --      wc2.lua - WC2 compatibility level
 --
---      (c) Copyright 2001-2004 by Lutz Sammer and Jimmy Salmon
+--      (c) Copyright 2001-2006 by Lutz Sammer and Jimmy Salmon
 --
 --      This program is free software; you can redistribute it and/or modify
 --      it under the terms of the GNU General Public License as published by
@@ -34,7 +34,14 @@ DefineRaceNames(
     "display", "Terran",
     "visible"},
   "race", {
+    "name", "zerg",
+    "display", "Zerg",
+    "visible"},
+  "race", {
+    "name", "protoss",
+    "display", "Protoss",
+    "visible"},
+  "race", {
     "name", "neutral",
     "display", "Neutral"})
 
---Load("scripts/wc2-config.lua")
