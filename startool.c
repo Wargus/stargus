@@ -3617,25 +3617,15 @@ unsigned char* ConvertFnt(unsigned char* start, int* wp, int* hp) {
 	}
 	memset(image, 255, max_width * max_height * count);
 
-	printf("DEBUG 2.5 - count: [%d], offsets[0]: [%d], max_width: %d, max_height: %d\n", count, offsets[0], max_width, max_height);
 	for (i = 0; i < count; ++i) {
-		//printf("DEBUG 2.5, i: [%d]\n", i);
 		if (!offsets[i]) {
-			//printf("DEBUG 2.5.1\n");
 			continue;
 		}
-		//printf("DEBUG 2.5.2\n");
 		bp = start + offsets[i];
-		//printf("DEBUG 2.5.3\n");
-		//#define FetchByte(p) (*((unsigned char*)(p))); ++p
 		width = FetchByte(bp);
-		//printf("DEBUG 2.5.4\n");
 		height = FetchByte(bp);
-		//printf("DEBUG 2.5.5 - width: %d, height: %d\n", width, height);
 		xoff = FetchByte(bp);
-		//printf("DEBUG 2.5.6\n");
 		yoff = FetchByte(bp);
-		//printf("DEBUG 2.5.7\n");
 		dp = image + xoff + yoff * max_width + i * (max_width * max_height);
 		h = w = 0;
 		for (;;) {
@@ -3679,13 +3669,10 @@ int ConvertFont(char* listfile, char* file, int pale, int fnte __attribute__((un
 	int h;
 	char buf[1024];
 
-	printf("DEBUG 1\n");
 	palp = Palettes[pale];
 	fntp = ExtractEntry(listfile);
-	printf("DEBUG 2\n");
 
 	image = ConvertFnt(fntp, &w, &h);
-	printf("DEBUG 3\n");
 	free(fntp);
 
 	sprintf(buf, "%s/%s/%s.png", Dir, FONT_PATH, file);
