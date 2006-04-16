@@ -59,8 +59,8 @@ DefineUnitType("unit-terran-academy", { Name = "Academy",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
 
--- DefineUpgrade("upgrade-terran-u238-shells")
--- DefineUpgrade("upgrade-terran-stim-pack")
+CUpgrade:New("upgrade-terran-u238-shells")
+CUpgrade:New("upgrade-terran-stim-pack")
 
 DefineButton( { Pos = 1, Level = 0, Icon = "icon-terran-u238-shells",
   Action = "research", Value = "upgrade-terran-u238-shells",

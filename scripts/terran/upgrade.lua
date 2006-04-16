@@ -3,33 +3,34 @@
 --
 
 upgrades = {
-{ "upgrade-terran-infantry-weapons1",
-  "icon", "icon-terran-upgrade-infantry-weapons",
-  "costs", {   200,   100,   100,     0,     0,     0,     0}},
-{ "upgrade-terran-infantry-weapons2",
-  "icon", "icon-terran-upgrade-infantry-weapons",
-  "costs", {   200,   175,   175,     0,     0,     0,     0}},
-{ "upgrade-terran-infantry-weapons3",
-  "icon", "icon-terran-upgrade-infantry-weapons",
-  "costs", {   200,   250,   250,     0,     0,     0,     0}},
-{ "upgrade-terran-infantry-armor1",
-  "icon", "icon-terran-upgrade-infantry-armor",
-  "costs", {   200,   100,   100,     0,     0,     0,     0}},
-{ "upgrade-terran-infantry-armor2",
-  "icon", "icon-terran-upgrade-infantry-armor",
-  "costs", {   200,   175,   175,     0,     0,     0,     0}},
-{ "upgrade-terran-infantry-armor3",
-  "icon", "icon-terran-upgrade-infantry-armor",
-  "costs", {   200,   250,   250,     0,     0,     0,     0}},
+{ "upgrade-terran-infantry-weapons1", "icon-terran-upgrade-infantry-weapons",
+  {   200,   100,   100,     0,     0,     0,     0}},
+{ "upgrade-terran-infantry-weapons2", "icon-terran-upgrade-infantry-weapons",
+  {   200,   175,   175,     0,     0,     0,     0}},
+{ "upgrade-terran-infantry-weapons3", "icon-terran-upgrade-infantry-weapons",
+  {   200,   250,   250,     0,     0,     0,     0}},
+{ "upgrade-terran-infantry-armor1", "icon-terran-upgrade-infantry-armor",
+  {   200,   100,   100,     0,     0,     0,     0}},
+{ "upgrade-terran-infantry-armor2", "icon-terran-upgrade-infantry-armor",
+  {   200,   175,   175,     0,     0,     0,     0}},
+{ "upgrade-terran-infantry-armor3", "icon-terran-upgrade-infantry-armor",
+  {   200,   250,   250,     0,     0,     0,     0}},
 
-{ "upgrade-terran-u238-shells",
-  "icon", "icon-terran-u238-shells",
-  "costs", {   200,   150,   150,     0,     0,     0,     0}},
+{ "upgrade-terran-u238-shells", "icon-terran-u238-shells",
+  {   200,   150,   150,     0,     0,     0,     0}},
 
-{ "upgrade-terran-stim-pack",
-  "icon", "icon-terran-stim-pack",
-  "costs", {   200,   100,   100,     0,     0,     0,     0}}
+{ "upgrade-terran-stim-pack", "icon-terran-stim-pack",
+  {   200,   100,   100,     0,     0,     0,     0}},
 }
+
+for i = 1,table.getn(upgrades) do
+  u = CUpgrade:New(upgrades[i][1])
+  u.Icon = Icons[upgrades[i][2]]
+  for j = 1,table.getn(upgrades[1][3]) do
+    u.Costs[j - 1] = upgrades[i][3][j]
+  end
+end
+
 
 --
 --  Modifiers

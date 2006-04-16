@@ -59,12 +59,12 @@ DefineUnitType("unit-terran-engineering-bay", { Name = "Engineering Bay",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
 
---DefineUpgrade("upgrade-terran-infantry-weapons1")
---DefineUpgrade("upgrade-terran-infantry-weapons2")
---DefineUpgrade("upgrade-terran-infantry-weapons3")
---DefineUpgrade("upgrade-terran-infantry-armor1")
---DefineUpgrade("upgrade-terran-infantry-armor2")
---DefineUpgrade("upgrade-terran-infantry-armor3")
+CUpgrade:New("upgrade-terran-infantry-weapons1")
+CUpgrade:New("upgrade-terran-infantry-weapons2")
+CUpgrade:New("upgrade-terran-infantry-weapons3")
+CUpgrade:New("upgrade-terran-infantry-armor1")
+CUpgrade:New("upgrade-terran-infantry-armor2")
+CUpgrade:New("upgrade-terran-infantry-armor3")
 
 DefineButton( { Pos = 1, Level = 0, Icon = "icon-terran-upgrade-infantry-weapons",
   Action = "research", Value = "upgrade-terran-infantry-weapons1",
