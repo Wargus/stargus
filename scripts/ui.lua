@@ -10,7 +10,7 @@
 --
 --      ui.lua - Define the user interface
 --
---      (c) Copyright 2000-2005 by Lutz Sammer and Jimmy Salmon
+--      (c) Copyright 2004-2006 by Jimmy Salmon
 --
 --      This program is free software; you can redistribute it and/or modify
 --      it under the terms of the GNU General Public License as published by
@@ -87,21 +87,23 @@ DefinePanelContents(
 -- Default presentation. ------------------------
   {
   Ident = "panel-general-contents",
-  Pos = {info_panel_x, info_panel_y}, DefaultFont = "game",
+  Pos = {0, 0}, DefaultFont = "game",
   Contents = {
+--[[
   { Pos = {10, 48}, Condition = {ShowOpponent = false, HideNeutral = true},
     More = {"LifeBar", {Variable = "HitPoints", Height = 7, Width = 45}}
   },
-  { Pos = {34, 49}, Condition = {ShowOpponent = false, HideNeutral = true},
+]]
+  { Pos = {198, 454}, Condition = {ShowOpponent = false, HideNeutral = true},
     More = {"FormattedText2", {
       Font = "small", Variable = "HitPoints", Format = "%d/%d",
       Component1 = "Value", Component2 = "Max", Centered = true}}
   },
 
-  { Pos = {114, 11}, More = {"Text", {Text = Line(1, UnitName("Active"), 110, "game"), Centered = true}} },
-  { Pos = {114, 25}, More = {"Text", {Text = Line(2, UnitName("Active"), 110, "game"), Centered = true}} },
+  { Pos = {315, 391}, More = {"Text", {Text = Line(1, UnitName("Active"), 110, "game"), Centered = true}} },
+  { Pos = {315, 405}, More = {"Text", {Text = Line(2, UnitName("Active"), 110, "game"), Centered = true}} },
 
--- Ressource Left
+-- Resource Left
   { Pos = {88, 86}, Condition = {ShowOpponent = false, GiveResource = "only"},
     More = {"FormattedText2", {Format = "%s Left:%d", Variable = "GiveResource",
           Component1 = "Name", Component2 = "Value", Centered = true}}
@@ -142,6 +144,7 @@ DefinePanelContents(
   DefaultFont = "game",
   Condition = {ShowOpponent = false, HideNeutral = true, Build = "false"},
   Contents = {
+--[[
   { Pos = {37, 86}, Condition = {PiercingDamage = "only"},
     More = {"Text", {Text = Concat("Damage: ", String(min_damage), "-", String(max_damage),
                 If(Equal(0, damage_bonus), "",
@@ -153,6 +156,7 @@ DefinePanelContents(
     More = {"Text", {
           Text = "Range: ", Variable = "AttackRange" , Stat = true}}
   },
+]]
 -- Research
   { Pos = {12, 153}, Condition = {Research = "only"},
     More = {"CompleteBar", {Variable = "Research", Width = 152, Height = 12}}
@@ -181,8 +185,9 @@ DefinePanelContents(
         Component1 = "Value", Component2 = "Name"}}
   }
 
-  } },
+  } }--,
 -- Attack Unit -----------------------------
+--[[
   {
   Ident = "panel-attack-unit-contents",
   Pos = {info_panel_x, info_panel_y},
@@ -206,7 +211,9 @@ DefinePanelContents(
   },
   { Pos = {53, 133}, Condition = {Speed = "only"},
     More = {"Text", {Text = "Speed: ", Variable = "Speed", Stat = true}}
-  } } })
+  } } }
+]]
+  )
 
 Load("scripts/terran/ui.lua")
 

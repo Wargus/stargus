@@ -10,7 +10,7 @@
 --
 --      fonts.lua - Define the used fonts.
 --
---      (c) Copyright 2000-2004 by Lutz Sammer and Jimmy Salmon
+--      (c) Copyright 2004-2006 by Jimmy Salmon
 --
 --      This program is free software; you can redistribute it and/or modify
 --      it under the terms of the GNU General Public License as published by
@@ -28,14 +28,8 @@
 --
 --      $Id: fonts.lua 1297 2005-10-14 17:52:57Z jsalmon3 $
 
-CFont:New("small", CGraphic:New("ui/fonts/small.png", 7, 6))
-CFont:New("game", CGraphic:New("ui/fonts/game.png", 13, 14))
-CFont:New("large", CGraphic:New("ui/fonts/large.png", 17, 17))
-CFont:New("small-title", CGraphic:New("ui/fonts/small_episode_titles.png", 32, 35))
-CFont:New("large-title", CGraphic:New("ui/fonts/large_episode_titles.png", 52, 50))
-
 CFont:New("small", CGraphic:New("ui/fonts/font8.png", 8, 11))
-CFont:New( "game", CGraphic:New("ui/fonts/font10.png",10, 13))
+CFont:New("game", CGraphic:New("ui/fonts/font10.png",10, 13))
 CFont:New("large", CGraphic:New("ui/fonts/font12.png", 12, 12))
 CFont:New("small-title", CGraphic:New("ui/fonts/font32.png", 32, 35))
 CFont:New("large-title", CGraphic:New("ui/fonts/font50.png",52, 50))

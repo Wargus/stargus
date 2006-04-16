@@ -10,7 +10,7 @@
 --
 --      ui.lua - Define the human user interface
 --
---      (c) Copyright 2005 by Jimmy Salmon
+--      (c) Copyright 2005-2006 by Jimmy Salmon
 --
 --      This program is free software; you can redistribute it and/or modify
 --      it under the terms of the GNU General Public License as published by
@@ -58,14 +58,14 @@ function TerranScreen(screen_width, screen_height)
     "info-panel", {
       "panels", {
         "panel-general-contents",
-        "panel-attack-unit-contents",
+--        "panel-attack-unit-contents",
         "panel-all-unit-contents",
         "panel-building-contents"
       },
       "selected", {
         "single", {
           "icon", {
-            "pos", {info_panel_x + 9, info_panel_y + 9}, "style", "icon"}},
+            "pos", {183, 413}, "style", "icon"}},
         "multiple", {
           "icons", {
             { "pos", {info_panel_x +   9, info_panel_y + 9}, "style", "icon"},

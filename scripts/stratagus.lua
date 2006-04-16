@@ -10,7 +10,7 @@
 --
 --      stratagus.lua - The craft configuration language.
 --
---      (c) Copyright 1998-2005 by Lutz Sammer
+--      (c) Copyright 2005-2006 by Jimmy Salmon
 --
 --      This program is free software; you can redistribute it and/or modify
 --      it under the terms of the GNU General Public License as published by
@@ -173,7 +173,7 @@ SetShowCommandKey(false)
 SetFogOfWar(true)
 --SetFogOfWar(false)
 
-SetFogOfWarGraphics("tilesets/desert.png")
+SetFogOfWarGraphics("tilesets/fog.png")
 
 --  Choose your default for minimap with/without terrain.
 SetMinimapTerrain(true)
