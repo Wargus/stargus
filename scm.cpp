@@ -744,6 +744,10 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 
 					length -= 36;
 
+					if (unit.Player == 11) {
+						unit.Player = PlayerMax - 1;
+					}
+
 					unit.X /= 32;
 					unit.Y /= 32;
 
