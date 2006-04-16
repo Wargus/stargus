@@ -5,8 +5,8 @@
 //     /_______  /|__|  |__|  (____  /__| (____  /\___  /|____//____  >
 //             \/                  \/          \//_____/            \/ 
 //  ______________________                           ______________________
-//			  T H E   W A R   B E G I N S
-//	   Stratagus - A free fantasy real time strategy game engine
+//                        T H E   W A R   B E G I N S
+//         Stratagus - A free fantasy real time strategy game engine
 //
 /**@name scm.c - The scm. */
 //
@@ -150,6 +150,8 @@ typedef struct WorldMap
 
 char **TilesetWcNames;
 
+static CMpq *Mpq;
+
 /*----------------------------------------------------------------------------
 --  Functions
 ----------------------------------------------------------------------------*/
@@ -231,11 +233,11 @@ static void ExtractMap(FILE *mpqfd, unsigned char **entry, int *size)
 	max = 0;
 	maxi = 0;
 
-	for (i = 0; i < MpqFileCount; ++i) {
-		if (!strcmp("staredit\\scenario.chk", MpqFilenameTable + i * PATH_MAX)) {
-			*size = MpqBlockTable[i * 4 + 2];
+	for (i = 0; i < Mpq->FileCount; ++i) {
+		if (!strcmp("staredit\\scenario.chk", Mpq->FilenameTable + i * PATH_MAX)) {
+			*size = Mpq->BlockTable[i * 4 + 2];
 			*entry = (unsigned char *)malloc(*size + 1);
-			MpqExtractTo(*entry, i, mpqfd);
+			Mpq->ExtractTo(*entry, i, mpqfd);
 			return;
 		}
 	}
@@ -377,7 +379,7 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 					if (v == 5) { // user selected race
 						v = 1;
 					}
-					if (v > 2 && v != 4) {
+					if (v > 2 && v != 4 && v != 7) {
 						DebugLevel1("Unknown race %d\n" _C_ v);
 						v = 0;
 					}
@@ -712,7 +714,7 @@ pawn:
 		if (!memcmp(header, "STR ", 4)) {
 //		    if (length==) {
 			if (1) {
-#if 1
+#if 0
 				int i;
 				short s;
 
@@ -911,6 +913,8 @@ void LoadScm(const char *scm, WorldMap *map)
 	FILE *fpMpq;
 	int chklen;
 
+	Mpq = new CMpq;
+
 	if (!(fpMpq = fopen(scm, "rb"))) {
 		fprintf(stderr, "Try ./path/name\n");
 		sprintf(buf, "scm: fopen(%s)", scm);
@@ -918,7 +922,7 @@ void LoadScm(const char *scm, WorldMap *map)
 		ExitFatal(-1);
 	}
 
-	if (MpqReadInfo(fpMpq)) {
+	if (Mpq->ReadInfo(fpMpq)) {
 		fprintf(stderr, "MpqReadInfo failed\n");
 		ExitFatal(-1);
 	}
@@ -933,7 +937,7 @@ void LoadScm(const char *scm, WorldMap *map)
 
 	LoadChkFromBuffer(chkdata, chklen, map);
 
-	CleanMpq();
+	delete Mpq;
 }
 
 /**

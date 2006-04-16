@@ -121,6 +121,7 @@ static inline unsigned int Swap32(unsigned int D) {
 **		Mpq file
 */
 FILE *MpqFD;
+static CMpq *Mpq;
 
 /**
 **		Destination directory of the graphics
@@ -203,15 +204,16 @@ int EntrySize;
 */
 enum _archive_type_ {
 	S,						// Setup
-	F,						// File								(name)
+	F,						// File							(name)
+	M,						// Map							(name)
 	T,						// Tileset						(name,pal,mega,mini,map)
-	R,						// RGB -> gimp						(name,rgb)
+	R,						// RGB -> gimp					(name,rgb)
 	G,						// Graphics						(name,pal,gfx)
 	U,						// Uncompressed Graphics		(name,pal,gfu)
-	N,						// Font								(name,idx)
-	W,						// Wav								(name,wav)
-	H,						// Pcx								(name)
-	E,						// Raw extract						(name)
+	N,						// Font							(name,idx)
+	W,						// Wav							(name,wav)
+	H,						// Pcx							(name)
+	E,						// Raw extract					(name)
 };
 
 /**
@@ -234,45 +236,45 @@ Control CDTodo[] = {
 	{N,0,"font50","files\\font\\font50.fnt" __4},
 
 	// Maps
-	{E,0,"puds/(2)Challenger.scm","multimaps\\(2)Challenger.scm" __4},
-	{E,0,"puds/(2)River Crossing.scm","multimaps\\(2)River Crossing.scm" __4},
-	{E,0,"puds/(2)Road War.scm","multimaps\\(2)Road War.scm" __4},
-	{E,0,"puds/(2)Space Madness.scm","multimaps\\(2)Space Madness.scm" __4},
-	{E,0,"puds/(2)The Small Divide.scm","multimaps\\(2)The Small Divide.scm" __4},
-	{E,0,"puds/(2)Volcanis.scm","multimaps\\(2)Volcanis.scm" __4},
-	{E,0,"puds/(3)Holy Ground.scm","multimaps\\(3)Holy Ground.scm" __4},
-	{E,0,"puds/(3)Meltdown.scm","multimaps\\(3)Meltdown.scm" __4},
-	{E,0,"puds/(3)Three Kingdoms.scm","multimaps\\(3)Three Kingdoms.scm" __4},
-	{E,0,"puds/(3)Triumvirate.scm","multimaps\\(3)Triumvirate.scm" __4},
-	{E,0,"puds/(4)Alpha Draconis.scm","multimaps\\(4)Alpha Draconis.scm" __4},
-	{E,0,"puds/(4)Blood Bath.scm","multimaps\\(4)Blood Bath.scm" __4},
-	{E,0,"puds/(4)Bridge Too Near.scm","multimaps\\(4)Bridge Too Near.scm" __4},
-	{E,0,"puds/(4)Cyclone.scm","multimaps\\(4)Cyclone.scm" __4},
-	{E,0,"puds/(4)Dark Crystal.scm","multimaps\\(4)Dark Crystal.scm" __4},
-	{E,0,"puds/(4)Dark Star.scm","multimaps\\(4)Dark Star.scm" __4},
-	{E,0,"puds/(4)Lost Civilization.scm","multimaps\\(4)Lost Civilization.scm" __4},
-	{E,0,"puds/(4)Opposing City States '98.scm","multimaps\\(4)Opposing City States '98.scm" __4},
-	{E,0,"puds/(4)Orbital Relay.scm","multimaps\\(4)Orbital Relay.scm" __4},
-	{E,0,"puds/(4)Power Lines.scm","multimaps\\(4)Power Lines.scm" __4},
-	{E,0,"puds/(4)Ruins of the Ancients.scm","multimaps\\(4)Ruins of the Ancients.scm" __4},
-	{E,0,"puds/(4)Tarsonis Orbital.scm","multimaps\\(4)Tarsonis Orbital.scm" __4},
-	{E,0,"puds/(5)Diablo.scm","multimaps\\(5)Diablo.scm" __4},
-	{E,0,"puds/(5)Island Hop.scm","multimaps\\(5)Island Hop.scm" __4},
-	{E,0,"puds/(5)Jeweled River.scm","multimaps\\(5)Jeweled River.scm" __4},
-	{E,0,"puds/(5)Sherwood Forest.scm","multimaps\\(5)Sherwood Forest.scm" __4},
-	{E,0,"puds/(6)Ground Zero.scm","multimaps\\(6)Ground Zero.scm" __4},
-	{E,0,"puds/(6)Hidden Shrine.scm","multimaps\\(6)Hidden Shrine.scm" __4},
-	{E,0,"puds/(6)New Gettysburg.scm","multimaps\\(6)New Gettysburg.scm" __4},
-	{E,0,"puds/(7)Continental Divide.scm","multimaps\\(7)Continental Divide.scm" __4},
-	{E,0,"puds/(7)River War.scm","multimaps\\(7)River War.scm" __4},
-	{E,0,"puds/(8)Bridge to Bridge '98.scm","multimaps\\(8)Bridge to Bridge '98.scm" __4},
-	{E,0,"puds/(8)Char Magma.scm","multimaps\\(8)Char Magma.scm" __4},
-	{E,0,"puds/(8)Homeworld.scm","multimaps\\(8)Homeworld.scm" __4},
-	{E,0,"puds/(8)Killing Fields.scm","multimaps\\(8)Killing Fields.scm" __4},
-	{E,0,"puds/(8)Orbital Death.scm","multimaps\\(8)Orbital Death.scm" __4},
-	{E,0,"puds/(8)Plains of Snow '98.scm","multimaps\\(8)Plains of Snow '98.scm" __4},
-	{E,0,"puds/(8)Station Unrest.scm","multimaps\\(8)Station Unrest.scm" __4},
-	{E,0,"puds/(8)The Hunters.scm","multimaps\\(8)The Hunters.scm" __4},
+	{M,0,"maps/(2)Challenger.scm","multimaps\\(2)Challenger.scm" __4},
+	{M,0,"maps/(2)River Crossing.scm","multimaps\\(2)River Crossing.scm" __4},
+	{M,0,"maps/(2)Road War.scm","multimaps\\(2)Road War.scm" __4},
+	{M,0,"maps/(2)Space Madness.scm","multimaps\\(2)Space Madness.scm" __4},
+	{M,0,"maps/(2)The Small Divide.scm","multimaps\\(2)The Small Divide.scm" __4},
+	{M,0,"maps/(2)Volcanis.scm","multimaps\\(2)Volcanis.scm" __4},
+	{M,0,"maps/(3)Holy Ground.scm","multimaps\\(3)Holy Ground.scm" __4},
+	{M,0,"maps/(3)Meltdown.scm","multimaps\\(3)Meltdown.scm" __4},
+	{M,0,"maps/(3)Three Kingdoms.scm","multimaps\\(3)Three Kingdoms.scm" __4},
+	{M,0,"maps/(3)Triumvirate.scm","multimaps\\(3)Triumvirate.scm" __4},
+	{M,0,"maps/(4)Alpha Draconis.scm","multimaps\\(4)Alpha Draconis.scm" __4},
+	{M,0,"maps/(4)Blood Bath.scm","multimaps\\(4)Blood Bath.scm" __4},
+	{M,0,"maps/(4)Bridge Too Near.scm","multimaps\\(4)Bridge Too Near.scm" __4},
+	{M,0,"maps/(4)Cyclone.scm","multimaps\\(4)Cyclone.scm" __4},
+	{M,0,"maps/(4)Dark Crystal.scm","multimaps\\(4)Dark Crystal.scm" __4},
+	{M,0,"maps/(4)Dark Star.scm","multimaps\\(4)Dark Star.scm" __4},
+	{M,0,"maps/(4)Lost Civilization.scm","multimaps\\(4)Lost Civilization.scm" __4},
+	{M,0,"maps/(4)Opposing City States '98.scm","multimaps\\(4)Opposing City States '98.scm" __4},
+	{M,0,"maps/(4)Orbital Relay.scm","multimaps\\(4)Orbital Relay.scm" __4},
+	{M,0,"maps/(4)Power Lines.scm","multimaps\\(4)Power Lines.scm" __4},
+	{M,0,"maps/(4)Ruins of the Ancients.scm","multimaps\\(4)Ruins of the Ancients.scm" __4},
+	{M,0,"maps/(4)Tarsonis Orbital.scm","multimaps\\(4)Tarsonis Orbital.scm" __4},
+	{M,0,"maps/(5)Diablo.scm","multimaps\\(5)Diablo.scm" __4},
+	{M,0,"maps/(5)Island Hop.scm","multimaps\\(5)Island Hop.scm" __4},
+	{M,0,"maps/(5)Jeweled River.scm","multimaps\\(5)Jeweled River.scm" __4},
+	{M,0,"maps/(5)Sherwood Forest.scm","multimaps\\(5)Sherwood Forest.scm" __4},
+	{M,0,"maps/(6)Ground Zero.scm","multimaps\\(6)Ground Zero.scm" __4},
+	{M,0,"maps/(6)Hidden Shrine.scm","multimaps\\(6)Hidden Shrine.scm" __4},
+	{M,0,"maps/(6)New Gettysburg.scm","multimaps\\(6)New Gettysburg.scm" __4},
+	{M,0,"maps/(7)Continental Divide.scm","multimaps\\(7)Continental Divide.scm" __4},
+	{M,0,"maps/(7)River War.scm","multimaps\\(7)River War.scm" __4},
+	{M,0,"maps/(8)Bridge to Bridge '98.scm","multimaps\\(8)Bridge to Bridge '98.scm" __4},
+	{M,0,"maps/(8)Char Magma.scm","multimaps\\(8)Char Magma.scm" __4},
+	{M,0,"maps/(8)Homeworld.scm","multimaps\\(8)Homeworld.scm" __4},
+	{M,0,"maps/(8)Killing Fields.scm","multimaps\\(8)Killing Fields.scm" __4},
+	{M,0,"maps/(8)Orbital Death.scm","multimaps\\(8)Orbital Death.scm" __4},
+	{M,0,"maps/(8)Plains of Snow '98.scm","multimaps\\(8)Plains of Snow '98.scm" __4},
+	{M,0,"maps/(8)Station Unrest.scm","multimaps\\(8)Station Unrest.scm" __4},
+	{M,0,"maps/(8)The Hunters.scm","multimaps\\(8)The Hunters.scm" __4},
 
 	// Terran Campaigns
 	{H,0,"campaigns/terran/palta-blank","glue\\PalTA\\Blank.pcx",0 __3},
@@ -2744,23 +2746,23 @@ int SavePNG(const char *name, unsigned char *image, int w, int h,
 //----------------------------------------------------------------------------
 
 /**
-**		Open the archive file.
+**  Open the archive file.
 **
-**		@param file		Archive file name
-**		@param type		Archive type requested
+**  @param file  Archive file name
+**  @param type  Archive type requested
 */
-int OpenArchive(const char* file)
+int OpenArchive(const char *file)
 {
 	//
-	//		Open the archive file
+	//  Open the archive file
 	//
-	MpqFD=fopen(file,"rb");
-	if( !MpqFD ) {
-		printf("Can't open %s\n",file);
+	MpqFD = fopen(file, "rb");
+	if (!MpqFD) {
+		printf("Can't open %s\n", file);
 		return -1;
 	}
 
-	if( MpqReadInfo(MpqFD) ) {
+	if (Mpq->ReadInfo(MpqFD)) {
 		printf("MpqReadInfo failed\n");
 		return -1;
 	}
@@ -2781,16 +2783,16 @@ unsigned char *ExtractEntry(unsigned char *name)
 	unsigned char *buf;
 
 	buf = NULL;
-	for (i = 0; i < MpqFileCount; ++i) {
-		if (!strcmp((char *)name, MpqFilenameTable + i * PATH_MAX)) {
-			EntrySize = MpqBlockTable[i * 4 + 2];
+	for (i = 0; i < Mpq->FileCount; ++i) {
+		if (!strcmp((char *)name, Mpq->FilenameTable + i * PATH_MAX)) {
+			EntrySize = Mpq->BlockTable[i * 4 + 2];
 			buf = (unsigned char *)malloc(EntrySize + 1);
-			MpqExtractTo(buf, i, MpqFD);
+			Mpq->ExtractTo(buf, i, MpqFD);
 			printf("extracted: %s (%d, %d bytes)\n", name, i, EntrySize);
 			break;
 		}
 	}
-	if (i == MpqFileCount) {
+	if (i == Mpq->FileCount) {
 		printf("Not found: %s\n", name);
 		exit(-1);
 	}
@@ -2807,6 +2809,36 @@ int CloseArchive(void)
 		fclose(MpqFD);
 		MpqFD = NULL;
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------------------
+//		Map
+//----------------------------------------------------------------------------
+
+/**
+**  Convert map
+*/
+int ConvertMap(char *listfile, char *file)
+{
+	FILE *fd;
+	unsigned char *p;
+	char buf[1024];
+
+	sprintf(buf, "%s/%s", Dir, file);
+	CheckPath(buf);
+	p = ExtractEntry((unsigned char *)listfile);
+	fd = fopen(buf, "wb");
+	if (!fd) {
+		free(p);
+		return -1;
+	}
+	fwrite(p, EntrySize, 1, fd);
+	fclose(fd);
+	free(p);
+
+	ConvertScm(buf);
+
 	return 0;
 }
 
@@ -2863,23 +2895,22 @@ int ConvertRgb(char *listfile, char *file)
 	fclose(f);
 
 	//
-	//		Generate GIMP palette
+	//  Generate GIMP palette
 	//
-	sprintf(buf,"%s/%s/%s.gimp",Dir,TILESET_PATH,file);
+	sprintf(buf, "%s/%s/%s.gimp", Dir, TILESET_PATH, file);
 	CheckPath(buf);
-	f=fopen(buf,"wb");
-	if( !f ) {
+	f = fopen(buf, "wb");
+	if (!f) {
 		perror("");
-		printf("Can't open %s\n",buf);
+		printf("Can't open %s\n", buf);
 		exit(-1);
 	}
-	fprintf(f,"GIMP Palette\n# Stratagus %c%s -- GIMP Palette file\n"
-			,toupper(*file),file+1);
+	fprintf(f, "GIMP Palette\n# Stratagus %c%s -- GIMP Palette file\n",
+		toupper(*file), file + 1);
 
-	for( i=0; i<256; ++i ) {
+	for (i = 0; i < 256; ++i) {
 		// FIXME: insert nice names!
-		fprintf(f,"%d %d %d\t#%d\n"
-				,palp[i*3],palp[i*3+1],palp[i*3+2],i);
+		fprintf(f, "%d %d %d\t#%d\n", palp[i * 3], palp[i * 3 + 1], palp[i * 3 + 2], i);
 	}
 	fclose(f);
 
@@ -3752,26 +3783,26 @@ destination-directory\tDirectory where the extracted files are placed.\n"
 **		Main
 */
 #undef main
-int main(int argc,char** argv)
+int main(int argc, char **argv)
 {
 	unsigned u;
-	char* archivedir;
+	char *archivedir;
 	char buf[1024];
 	int video;
 	int a;
 	int i;
 
-	a=1;
-	video=0;
+	a = 1;
+	video = 0;
 
-	while( argc>=2 ) {
-		if( !strcmp(argv[a],"-v") ) {
-			video=1;
+	while (argc >= 2) {
+		if (!strcmp(argv[a], "-v")) {
+			video = 1;
 			++a;
 			--argc;
 			continue;
 		}
-		if( !strcmp(argv[a],"-h") ) {
+		if (!strcmp(argv[a], "-h")) {
 			Usage(argv[0]);
 			++a;
 			--argc;
@@ -3780,16 +3811,16 @@ int main(int argc,char** argv)
 		break;
 	}
 
-	if( argc!=2 && argc!=3 ) {
+	if (argc != 2 && argc != 3) {
 		Usage(argv[0]);
 		exit(-1);
 	}
 
-	archivedir=argv[a];
-	if( argc==3 ) {
-		Dir=argv[a+1];
+	archivedir = argv[a];
+	if (argc == 3) {
+		Dir = argv[a + 1];
 	} else {
-		Dir="data";
+		Dir = "data";
 	}
 
 #if 0
@@ -3797,11 +3828,11 @@ int main(int argc,char** argv)
 		FILE *fd;
 		unsigned char* p;
 		char buf[PATH_MAX];
-		sprintf(buf,"%s/%s",archivedir,"stardat.mpq");
+		sprintf(buf, "%s/%s", archivedir, "stardat.mpq");
 		OpenArchive(buf);
-		p=ExtractEntry("tileset\\install.wpe");
-		fd=fopen("install.wpe","wb");
-		fwrite(p,EntrySize,1,fd);
+		p = ExtractEntry("tileset\\install.wpe");
+		fd = fopen("install.wpe", "wb");
+		fwrite(p, EntrySize, 1, fd);
 		fclose(fd);
 		free(p);
 		CloseArchive();
@@ -3816,78 +3847,78 @@ int main(int argc,char** argv)
 	}
 #endif
 
+	Mpq = new CMpq;
+
 #ifdef DEBUG
 	printf("Extract from \"%s\" to \"%s\"\n", archivedir, Dir);
 #endif
-	for( i=0; i<2; ++i ) {
+	for (i = 0; i < 2; ++i) {
 		Control *c;
 		unsigned len;
 
-		if( i==0 ) {				// CD install.exe
-			c=CDTodo;
-			len=sizeof(CDTodo)/sizeof(*CDTodo);
+		if (i == 0) {				// CD install.exe
+			c = CDTodo;
+			len=sizeof(CDTodo) / sizeof(*CDTodo);
 		} else {				// stardat.mpq from cd or hard drive
-			c=Todo;
-			len=sizeof(Todo)/sizeof(*Todo);
+			c = Todo;
+			len = sizeof(Todo) / sizeof(*Todo);
 		}
 
-		for( u=0; u<len; ++u ) {
+		for (u = 0; u < len; ++u) {
 #ifdef DEBUG
 			printf("%s:\n", ParseString(c[u].File));
 #endif
-			switch( c[u].Type ) {
+			switch (c[u].Type) {
 				case F:
 					if( !strncmp(c[u].ListFile,"remove-",7) ) {
-						sprintf(buf,"%s/%s",Dir,c[u].ListFile);
+						sprintf(buf, "%s/%s", Dir, c[u].ListFile);
 					} else {
-						sprintf(buf,"%s/%s",archivedir,c[u].ListFile);
+						sprintf(buf, "%s/%s", archivedir, c[u].ListFile);
 					}
 #ifdef DEBUG
 					printf("Archive \"%s\"\n", buf);
 #endif
-					if( OpenArchive(buf) == -1 ) {
+					if (OpenArchive(buf) == -1) {
 #ifdef DEBUG
 						printf("Could not open archive \"%s\", skipping\n", buf);
 #endif
 						u=len;
 					} else {
-						if( c==CDTodo ) {
+						if (c == CDTodo) {
 #ifdef DEBUG
 							printf("%s:\n", ParseString("remove-stardat.mpq"));
 #endif
-							RawExtract("files\\stardat.mpq","remove-stardat.mpq");
-							Todo[0].ListFile="remove-stardat.mpq";
+							RawExtract("files\\stardat.mpq", "remove-stardat.mpq");
+							Todo[0].ListFile = "remove-stardat.mpq";
 						}
 					}
 					break;
+				case M:
+					ConvertMap(c[u].ListFile, c[u].File);
+					break;
 				case R:
-					ConvertRgb(c[u].ListFile,c[u].File);
+					ConvertRgb(c[u].ListFile, c[u].File);
 					break;
 				case T:
-					ConvertTileset(c[u].ListFile,c[u].File);
+					ConvertTileset(c[u].ListFile, c[u].File);
 					break;
 				case G:
-					ConvertGfx(c[u].ListFile,ParseString(c[u].File),c[u].Arg1);
+					ConvertGfx(c[u].ListFile, ParseString(c[u].File), c[u].Arg1);
 					break;
 				case U:
-					ConvertGfu(c[u].ListFile,ParseString(c[u].File),c[u].Arg1);
+					ConvertGfu(c[u].ListFile, ParseString(c[u].File), c[u].Arg1);
 					break;
 				case N:
-					//printf("convert-font\n");
-					ConvertFont(c[u].ListFile,c[u].File,2,c[u].Arg1);
-					//RawExtract(c[u].ListFile,c[u].File);
+					ConvertFont(c[u].ListFile, c[u].File, 2, c[u].Arg1);
 					break;
 				case W:
-					//printf("convet-wav\n");
-					ConvertWav(c[u].ListFile,c[u].File,c[u].Arg1);
+					ConvertWav(c[u].ListFile, c[u].File, c[u].Arg1);
 					break;
 				case H:
-					//printf("convert-pcx\n");
-					ConvertPcx(c[u].ListFile,c[u].File);
+					ConvertPcx(c[u].ListFile, c[u].File);
 					break;
 				case E:
-					//printf("raw-extract\n");
-					RawExtract(c[u].ListFile,c[u].File);
+					RawExtract(c[u].ListFile, c[u].File);
 					break;
 				default:
 					break;
@@ -3904,6 +3935,7 @@ int main(int argc,char** argv)
 			unlink(buf);
 		}
 	}
+	delete Mpq;
 
 	printf("DONE!\n");
 

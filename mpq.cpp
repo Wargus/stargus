@@ -59,12 +59,6 @@
 --		Declarations
 ----------------------------------------------------------------------------*/
 
-#define UInt8		unsigned char
-#define UInt16		unsigned short
-#define SInt16		short
-#define UInt32		unsigned long
-#define SInt32		int
-
 #define DCL_NO_ERROR	0L
 #define DCL_ERROR_1	 1L
 #define DCL_ERROR_2	 2L
@@ -73,15 +67,12 @@
 
 #define DEFAULT_LIST		"mpqlist.txt"
 
-typedef UInt16 read_data_proc(UInt8 * buffer, UInt16 size, void *param);
-typedef void write_data_proc(UInt8 * buffer, UInt16 size, void *param);
-
 typedef struct {
 	UInt8 *buf_in;
 	UInt8 *buf_out;
 } params;
 
-static UInt16 __explode_1(UInt8 * buf);
+static UInt16 __explode_1(UInt8 * buf, UInt32 *length_write);
 static UInt16 __explode_2(UInt8 * buf);
 static UInt16 __explode_3(UInt8 * buf, UInt16 result);
 static UInt16 __explode_4(UInt8 * buf, UInt32 flag);
@@ -89,13 +80,11 @@ static void __explode_5(UInt16 count, UInt8 * buf_1, const UInt8 * table, UInt8 
 static void __explode_6(UInt8 * buf, const UInt8 * table);
 static void __explode_7(UInt8 * buf, const UInt8 * table, UInt32 count);
 
-static void BuildBaseMassive(void);
-static int InitializeLocals(void);
 static UInt32 Crc(char *string, UInt32 * massive_base, UInt32 massive_base_offset);
 static void Decode(UInt32 * data_in, UInt32 * massive_base, UInt32 crc, UInt32 length);
-static UInt16 read_data(UInt8 * buffer, UInt16 size, void *crap);
-static void write_data(UInt8 * buffer, UInt16 size, void *crap);
-static UInt32 explode(read_data_proc read_data, write_data_proc write_data, void *param);
+static UInt16 read_data(UInt8 *buffer, UInt16 size, void *crap);
+static void write_data(UInt8 * buffer, UInt16 size, void *crap, UInt32 *length_write);
+
 
 UInt32		ExtWavUnp1(UInt32,UInt32,UInt32,UInt32);
 UInt32		ExtWavUnp2(UInt32,UInt32,UInt32,UInt32);
@@ -120,31 +109,11 @@ UInt32		Sub_WavUnp13(UInt32,UInt32,UInt32,UInt32,UInt32);
 --  Variables
 ----------------------------------------------------------------------------*/
 
+static UInt32 avail_metods[4] = { 0x08, 0x01, 0x40, 0x80 };
 extern const unsigned char dcl_table[];
-static UInt8 *explode_buffer;
-
 extern const UInt8 wav_table[2512];
 extern const UInt32 small_tbl1[90];
 extern const UInt32 small_tbl2[32];
-
-static UInt32 offset_mpq;				/// Offset to MPQ file data
-static UInt32 offset_htbl;				/// Offset to hash_table of MPQ
-static UInt32 offset_btbl;				/// Offset to MpqBlockTable of MPQ
-static UInt32 length_mpq_part;				/// Length of MPQ file data
-static UInt32 length_htbl;				/// Length of hash table
-static UInt32 length_btbl;				/// Length of block table
-static UInt32 *hash_table;				/// Hash table
-int MpqFileCount;				/// Number of files in MPQ (calculated from size of MpqBlockTable)
-static UInt32 massive_base[0x500];		/// This massive is used to calculate crc and decode files
-char *MpqFilenameTable;				/// Array of MPQ filenames
-char *MpqIdentifyTable;				/// Bitmap table of MPQ filenames 1 - if file name for this entry is known, 0 - if is not
-
-UInt32 *MpqBlockTable;				/// Block table
-
-static UInt32 avail_metods[4] = { 0x08, 0x01, 0x40, 0x80 };
-static UInt32 length_write;
-static UInt8 *global_buffer, *read_buffer_start, *write_buffer_start;
-static UInt32 *file_header;
 
 
 /*----------------------------------------------------------------------------
@@ -154,7 +123,7 @@ static UInt32 *file_header;
 /**
 **  Analyzing archive
 */
-int MpqReadInfo(FILE *fpMpq)
+int CMpq::ReadInfo(FILE *fpMpq)
 {
 	UInt32 mpq_header[2] = { 0x1a51504d, 0x00000020 };
 	int i, j;
@@ -187,7 +156,7 @@ int MpqReadInfo(FILE *fpMpq)
 	fread(&length_htbl, sizeof(UInt32), 1, fpMpq);
 	length_htbl *= 4;
 	fread(&length_btbl, sizeof(UInt32), 1, fpMpq);
-	MpqFileCount = length_btbl;
+	FileCount = length_btbl;
 	length_btbl *= 4;
 
 	BuildBaseMassive();
@@ -199,11 +168,11 @@ int MpqReadInfo(FILE *fpMpq)
 	fseek(fpMpq, offset_mpq + offset_htbl, SEEK_SET);
 	fread(hash_table, sizeof(UInt32), length_htbl, fpMpq);
 	fseek(fpMpq, offset_mpq + offset_btbl, SEEK_SET);
-	fread(MpqBlockTable, sizeof(UInt32), length_btbl, fpMpq);
+	fread(BlockTable, sizeof(UInt32), length_btbl, fpMpq);
 	tmp = Crc(name_htable, massive_base, 0x300);
 	Decode(hash_table, massive_base, tmp, length_htbl);
 	tmp = Crc(name_btable, massive_base, 0x300);
-	Decode(MpqBlockTable, massive_base, tmp, length_btbl);
+	Decode(BlockTable, massive_base, tmp, length_btbl);
 
 	fpList = fopen(DEFAULT_LIST, "rt");
 	if (!fpList) {
@@ -225,10 +194,10 @@ int MpqReadInfo(FILE *fpMpq)
 			for (; pointer_ht < length_htbl; pointer_ht += 4) {
 				if ((*(hash_table + pointer_ht) == scrc2)
 					&& (*(hash_table + pointer_ht + 1) == scrc3)) {
-					// - fill MpqFilenameTable
-					sprintf((MpqFilenameTable + PATH_MAX * (*(hash_table + pointer_ht + 3))), "%s", prnbuf);
-					// . fill MpqIdentifyTable
-					*(MpqIdentifyTable + *(hash_table + pointer_ht + 3)) = 1;
+					// - fill FilenameTable
+					sprintf((FilenameTable + PATH_MAX * (*(hash_table + pointer_ht + 3))), "%s", prnbuf);
+					// . fill IdentifyTable
+					*(IdentifyTable + *(hash_table + pointer_ht + 3)) = 1;
 					break;
 				}
 			}
@@ -239,9 +208,9 @@ int MpqReadInfo(FILE *fpMpq)
 	}
 
 	j = 1;
-	for (i = 0; i < MpqFileCount; ++i) {		// if there are not identified files, then
-		if (!*(MpqIdentifyTable + i)) {				// fill MpqFilenameTable with "unknow\unknowN
-			sprintf(MpqFilenameTable + PATH_MAX*i, "unknow\\unk%05d.xxx", j);
+	for (i = 0; i < FileCount; ++i) {		// if there are not identified files, then
+		if (!*(IdentifyTable + i)) {				// fill MpqFilenameTable with "unknow\unknowN
+			sprintf(FilenameTable + PATH_MAX * i, "unknow\\unk%05d.xxx", j);
 			++j;
 		}
 	}
@@ -253,7 +222,7 @@ int MpqReadInfo(FILE *fpMpq)
 **		MpqFilenameTable,MpqIdentifyTable and working buffers
 **		7to decompress files
 */
-static int InitializeLocals(void)
+int CMpq::InitializeLocals(void)
 {
 	global_buffer = (UInt8 *) malloc(0x60000);		// Allocation 384 KB for global_buffer
 	if (!global_buffer) {
@@ -263,13 +232,13 @@ static int InitializeLocals(void)
 	read_buffer_start = global_buffer;		// 4 KB for read_buffer
 	write_buffer_start = global_buffer + 0x1000;		// 4 KB for write_buffer
 	explode_buffer = global_buffer + 0x2000;		// 16 KB for explode_buffer
-	file_header = (UInt32 *) (global_buffer + 0x6000);		// 360 KB for file_header (max size of unpacked file can't exceed 360 MB)
+	file_header = (UInt32 *)(global_buffer + 0x6000);		// 360 KB for file_header (max size of unpacked file can't exceed 360 MB)
 
-	hash_table = (UInt32 *) malloc(length_htbl * 4);
-	MpqBlockTable = (UInt32 *)malloc(length_btbl * 4);
-	MpqFilenameTable = (char *)calloc(length_btbl / 4, PATH_MAX);
-	MpqIdentifyTable = (char *)calloc(length_btbl / 4, sizeof(char));
-	if (hash_table && MpqBlockTable && MpqFilenameTable && MpqIdentifyTable) {
+	hash_table = (UInt32 *)malloc(length_htbl * 4);
+	BlockTable = (UInt32 *)malloc(length_btbl * 4);
+	FilenameTable = (char *)calloc(length_btbl / 4, PATH_MAX);
+	IdentifyTable = (char *)calloc(length_btbl / 4, sizeof(char));
+	if (hash_table && BlockTable && FilenameTable && IdentifyTable) {
 		return 0;
 	} else {
 		printf("\nError! Insufficient memory");
@@ -278,9 +247,9 @@ static int InitializeLocals(void)
 }
 
 /**
-**		Free memory
+**  Free memory
 */
-void CleanMpq(void)
+CMpq::~CMpq()
 {
 	if (global_buffer) {
 		free(global_buffer);
@@ -290,17 +259,17 @@ void CleanMpq(void)
 		free(hash_table);
 		hash_table = NULL;
 	}
-	if (MpqBlockTable) {
-		free(MpqBlockTable);
-		MpqBlockTable = NULL;
+	if (BlockTable) {
+		free(BlockTable);
+		BlockTable = NULL;
 	}
-	if (MpqFilenameTable) {
-		free(MpqFilenameTable);
-		MpqFilenameTable = NULL;
+	if (FilenameTable) {
+		free(FilenameTable);
+		FilenameTable = NULL;
 	}
-	if (MpqIdentifyTable) {
-		free(MpqIdentifyTable);
-		MpqIdentifyTable = NULL;
+	if (IdentifyTable) {
+		free(IdentifyTable);
+		IdentifyTable = NULL;
 	}
 	return;
 }
@@ -308,7 +277,7 @@ void CleanMpq(void)
 /**
 **		Fill massive_base
 */
-static void BuildBaseMassive(void)
+void CMpq::BuildBaseMassive(void)
 {
 	UInt32 s1;
 	int i, j;
@@ -365,14 +334,14 @@ UInt16 read_data(UInt8 *buffer, UInt16 size, void *crap)
 /**
 **		(called by explode)
 */
-static void write_data(UInt8 * buffer, UInt16 size, void *crap)
+void write_data(UInt8 * buffer, UInt16 size, void *crap, UInt32 *length_write)
 {
 	params *param;
 
 	param = (params *)crap;
 	memcpy(param->buf_out, buffer, size);
 	param->buf_out += size;
-	length_write += size;
+	*length_write += size;
 }
 
 /**
@@ -397,7 +366,7 @@ static void Decode(UInt32 * data_in, UInt32 * massive_base, UInt32 crc, UInt32 l
 /**
 **		Calculate crc for file without name
 */
-static UInt32 GetUnknowCrc(UInt32 entry, FILE *fpMpq)
+UInt32 CMpq::GetUnknowCrc(UInt32 entry, FILE *fpMpq, UInt32 *BlockTable)
 {
 	UInt32 tmp, i, j, coded_dword, crc_file;
 	UInt32 flag, size_pack, size_unpack, num_block, offset_body;
@@ -407,14 +376,14 @@ static UInt32 GetUnknowCrc(UInt32 entry, FILE *fpMpq)
 	UInt32 sign_mpq2 = 0x00000020;
 	ldiv_t divres;
 
-	offset_body = *(MpqBlockTable + entry * 4);		// get offset of analized file
-	flag = *(MpqBlockTable + entry * 4 + 3);		// get flag of analized file
+	offset_body = *(BlockTable + entry * 4);		// get offset of analized file
+	flag = *(BlockTable + entry * 4 + 3);		// get flag of analized file
 	fseek(fpMpq, offset_mpq + offset_body, SEEK_SET);
 	fread(&coded_dword, sizeof(UInt32), 1, fpMpq);		// read first coded dword from file
 
 	if (flag & 0x200 || flag & 0x100) {		// IF FILE PACKED:
-		size_unpack = *(MpqBlockTable + entry * 4 + 2);		// . get size of unpacked file
-		size_pack = *(MpqBlockTable + entry * 4 + 1);		// . get size of packed file
+		size_unpack = *(BlockTable + entry * 4 + 2);		// . get size of unpacked file
+		size_pack = *(BlockTable + entry * 4 + 1);		// . get size of packed file
 		divres = ldiv(size_unpack - 1, 0x1000);
 		num_block = divres.quot + 2;		// . calculate length of file header
 		for (j = 0; j <= 0xff; j++) {		// . now we're gonna find crc_file of 0x100 possible variants
@@ -482,7 +451,7 @@ static UInt32 GetUnknowCrc(UInt32 entry, FILE *fpMpq)
 /**
 **		Extract file from archive
 */
-int MpqExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
+int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 {
 	UInt32 size_pack, size_unpack;
 	UInt8 *read_buffer, *write_buffer;
@@ -496,14 +465,14 @@ int MpqExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 
 	mpqptr = mpqbuf;
 
-	offset_body = *(MpqBlockTable + entry * 4);		// get offset of file in mpq
-	size_unpack = *(MpqBlockTable + entry * 4 + 2);		// get unpacked size of file
-	flag = *(MpqBlockTable + entry * 4 + 3);		// get flags for file
+	offset_body = *(BlockTable + entry * 4);		// get offset of file in mpq
+	size_unpack = *(BlockTable + entry * 4 + 2);		// get unpacked size of file
+	flag = *(BlockTable + entry * 4 + 3);		// get flags for file
 	crc_file = 0;
 
 	if (flag & 0x30000) {				// If file is coded, calculate its crc
-		if (*(MpqIdentifyTable + entry) & 0x1) {		// . Calculate crc_file for identified file:
-			szNameFile = MpqFilenameTable + PATH_MAX * entry;		// . . get name of file
+		if (*(IdentifyTable + entry) & 0x1) {		// . Calculate crc_file for identified file:
+			szNameFile = FilenameTable + PATH_MAX * entry;		// . . get name of file
 			if (strrchr(szNameFile, '\\')) {
 				szNameFile = strrchr(szNameFile, '\\') + 1;
 			}
@@ -512,7 +481,7 @@ int MpqExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 				crc_file = (crc_file + offset_body) ^ size_unpack;		// . . calculate crc_file (for Starcraft MPQs)
 			}
 		} else {
-			crc_file = GetUnknowCrc(entry, fpMpq);		// . calculate crc_file for not identified file:
+			crc_file = GetUnknowCrc(entry, fpMpq, BlockTable);		// . calculate crc_file for not identified file:
 		}
 	}
 
@@ -597,7 +566,7 @@ int MpqExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 	}
 
 	else {								// IF FILE IS NOT PACKED
-		size_pack = *(MpqBlockTable + entry * 4 + 1);		// get size  of file
+		size_pack = *(BlockTable + entry * 4 + 1);		// get size  of file
 		if (flag & 0x30000) {
 			length_read = 0x1000;		// if file is coded, length_read=0x1000 (4 KB)
 		} else {
@@ -641,7 +610,7 @@ int MpqExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 /**
 **
 */
-static UInt32 explode(read_data_proc read_data, write_data_proc write_data, void *param)
+UInt32 CMpq::explode(read_data_proc read_data, write_data_proc write_data, void *param)
 {
 	UInt32 result;
 	UInt16 read_result;
@@ -654,7 +623,7 @@ static UInt32 explode(read_data_proc read_data, write_data_proc write_data, void
 	*((UInt32 *) (work_buff + 0x1A)) = (UInt32) write_data;
 	*((void **)(work_buff + 0x12)) = param;
 	*((UInt16 *) (work_buff + 0x0E)) = 0x0800;
-	read_result = read_data(work_buff + 0x2222, 0x0800, param);
+	read_result = (*read_data)(work_buff + 0x2222, 0x0800, param);
 	if (read_result == DCL_ERROR_4) {
 		result = DCL_ERROR_3;
 	} else {
@@ -687,7 +656,7 @@ static UInt32 explode(read_data_proc read_data, write_data_proc write_data, void
 				__explode_7(work_buff + 0x30A2, table, 0x0040);
 				__explode_5(0x0040, work_buff + 0x30A2, table + 0x0040,
 					work_buff + 0x2A22);
-				if (__explode_1(work_buff) != 0x0306) {
+				if (__explode_1(work_buff, &length_write) != 0x0306) {
 					result = DCL_NO_ERROR;
 				} else {
 					result = DCL_ERROR_4;
@@ -702,11 +671,11 @@ static UInt32 explode(read_data_proc read_data, write_data_proc write_data, void
 /**
 **
 */
-static UInt16 __explode_1(UInt8 * buf)
+static UInt16 __explode_1(UInt8 * buf, UInt32 *length_write)
 {
 	UInt32 result, temp;
 	UInt8 *s, *d;
-	write_data_proc *write_data;
+	write_data_proc write_data;
 	void *param;
 
 	*((UInt16 *) (buf + 0x04)) = 0x1000;
@@ -734,18 +703,18 @@ static UInt16 __explode_1(UInt8 * buf)
 		}
 		if (*((UInt16 *) (buf + 4)) >= 0x2000) {
 			result = 0x1000;
-			write_data = (write_data_proc *) * ((UInt32 *) (buf + 0x1A));
+			write_data = (write_data_proc) * ((UInt32 *) (buf + 0x1A));
 			param = (void *)*((UInt32 *) (buf + 0x12));
-			write_data(buf + 0x101E, 0x1000, param);
+			(*write_data)(buf + 0x101E, 0x1000, param, length_write);
 			__explode_7(buf + 0x001E, buf + 0x101E,
 				*((UInt16 *) (buf + 0x04)) - 0x1000);
 			*((UInt16 *) (buf + 0x04)) -= 0x1000;
 		}
 	}
-	write_data = (write_data_proc *) * ((UInt32 *) (buf + 0x1A));
+	write_data = (write_data_proc) * ((UInt32 *) (buf + 0x1A));
 	param = (void *)*((UInt32 *) (buf + 0x12));
-	write_data(buf + 0x101E,
-		(UInt16) (*((UInt16 *) (buf + 0x04)) - 0x1000), param);
+	(*write_data)(buf + 0x101E,
+		(UInt16) (*((UInt16 *) (buf + 0x04)) - 0x1000), param, length_write);
 	return (UInt16) result;
 }
 
@@ -859,8 +828,8 @@ static UInt16 __explode_4(UInt8 * buf, UInt32 flag)
 {
 	UInt32 result;
 	UInt16 read_result;
-	read_data_proc *read_data =
-		(read_data_proc *) * ((UInt32 *) (buf + 0x16));
+	read_data_proc read_data =
+		(read_data_proc) * ((UInt32 *) (buf + 0x16));
 	void *param = (void *)*((UInt32 *) (buf + 0x12));
 
 	result = *((UInt16 *) (buf + 0x0C));
@@ -873,7 +842,7 @@ static UInt16 __explode_4(UInt8 * buf, UInt32 flag)
 		result = *((UInt16 *) (buf + 0x0E));
 		if (result == *((UInt16 *) (buf + 0x10))) {
 			*((UInt16 *) (buf + 0x0E)) = 0x0800;
-			read_result = read_data(buf + 0x2222, 0x0800, param);
+			read_result = (*read_data)(buf + 0x2222, 0x0800, param);
 			*((UInt16 *) (buf + 0x10)) = read_result;
 			if (!read_result) {
 				return 0x01;
