@@ -1,5 +1,5 @@
 
-CC = gcc
+CC = g++
 
 CROSSDIR = /usr/local/cross
 STRATAGUSPATH = ../stratagus/
