@@ -102,7 +102,7 @@ private:
 --  Functions
 ----------------------------------------------------------------------------*/
 
-extern void ConvertScm(const char *name);
+extern void ConvertScm(const char *fullpath, const char *name);
 
 
 //@}

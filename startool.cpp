@@ -2837,7 +2837,7 @@ int ConvertMap(char *listfile, char *file)
 	fclose(fd);
 	free(p);
 
-	ConvertScm(buf);
+	ConvertScm(buf, file);
 
 	return 0;
 }
@@ -3700,47 +3700,6 @@ int ConvertWav(char *listfile, char *file, int wave __attribute__((unused)))
 }
 
 /**
-**		Parse string.
-*/
-char* ParseString(char* input)
-{
-	static char buf[1024];
-	char* dp;
-	char* sp;
-	char* tp;
-	int i;
-	int f;
-
-	for( sp=input,dp=buf; *sp; ) {
-		if( *sp=='%' ) {
-			f=0;
-			if( *++sp=='-' ) {
-				f=1;
-				++sp;
-			}
-			i=strtol(sp,&sp,0);
-			tp=UnitNames[i];
-			if( f ) {
-				tp=strchr(tp,' ')+1;
-			}
-			while( *tp ) {		// make them readabler
-				if( *tp=='-' ) {
-					*dp++='_';
-					tp++;
-				} else {
-					*dp++=tolower(*tp++);
-				}
-			}
-			continue;
-		}
-		*dp++=*sp++;
-	}
-	*dp='\0';
-
-	return buf;
-}
-
-/**
 **  Raw extraction
 */
 int RawExtract(char *listfile, char *file)
@@ -3866,7 +3825,7 @@ int main(int argc, char **argv)
 
 		for (u = 0; u < len; ++u) {
 #ifdef DEBUG
-			printf("%s:\n", ParseString(c[u].File));
+			printf("%s:\n", c[u].File);
 #endif
 			switch (c[u].Type) {
 				case F:
@@ -3886,7 +3845,7 @@ int main(int argc, char **argv)
 					} else {
 						if (c == CDTodo) {
 #ifdef DEBUG
-							printf("%s:\n", ParseString("remove-stardat.mpq"));
+							printf("%s:\n", "remove-stardat.mpq");
 #endif
 							RawExtract("files\\stardat.mpq", "remove-stardat.mpq");
 							Todo[0].ListFile = "remove-stardat.mpq";
@@ -3903,10 +3862,10 @@ int main(int argc, char **argv)
 					ConvertTileset(c[u].ListFile, c[u].File);
 					break;
 				case G:
-					ConvertGfx(c[u].ListFile, ParseString(c[u].File), c[u].Arg1);
+					ConvertGfx(c[u].ListFile, c[u].File, c[u].Arg1);
 					break;
 				case U:
-					ConvertGfu(c[u].ListFile, ParseString(c[u].File), c[u].Arg1);
+					ConvertGfu(c[u].ListFile, c[u].File, c[u].Arg1);
 					break;
 				case N:
 					ConvertFont(c[u].ListFile, c[u].File, 2, c[u].Arg1);
