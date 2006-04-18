@@ -123,6 +123,7 @@ static inline unsigned int Swap32(unsigned int D) {
 #define _C_ ,
 #else
 #define DebugLevel1(x)
+#define DebugLevel2(x)
 #define _C_
 #endif
 
