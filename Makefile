@@ -9,7 +9,7 @@ LDFLAGS = -lz -lpng -lm -L/usr/local/lib
 
 all: cleanobj startool
 
-startool: startool.o mpq.o
+startool: startool.o mpq.o scm.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 cleanobj:
