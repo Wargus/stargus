@@ -10,7 +10,7 @@
 //
 /**@name scm.c - The scm. */
 //
-//      (c) Copyright 2002-2006 by Jimmy Salmon
+//      (c) Copyright 2002-2007 by Jimmy Salmon
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -1219,8 +1219,6 @@ static void SaveSMP(const char *fullpath, const char *name, WorldMap *map)
 	}
 	fprintf(fd, ")\n");
 	fprintf(fd, "PresentMap(\"%s\", %d, %d, %d, %d)\n", "none", 2, map->MapWidth, map->MapHeight, 0);
-	strcpy(strrchr(name, '.') + 1, "sms");
-	fprintf(fd, "DefineMapSetup(\"%s\")\n", name);
 
 	fclose(fd);
 }

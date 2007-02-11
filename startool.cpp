@@ -10,7 +10,7 @@
 //
 /**@name startool.c - Extract files from star archives. */
 //
-//      (c) Copyright 2002-2006 by Jimmy Salmon
+//      (c) Copyright 2002-2007 by Jimmy Salmon
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -210,6 +210,7 @@ enum _archive_type_ {
 	R,						// RGB -> gimp					(name,rgb)
 	G,						// Graphics						(name,pal,gfx)
 	U,						// Uncompressed Graphics		(name,pal,gfu)
+	I,                      // Widgets                      (name,pal,gfu)
 	N,						// Font							(name,idx)
 	W,						// Wav							(name,wav)
 	H,						// Pcx							(name)
@@ -879,9 +880,9 @@ Control Todo[] = {
 
 	// UI
 	{U,0,"ui/icons","game\\icons.grp",0 __3},
-	{U,0,"ui/protoss icons","dlgs\\protoss.grp",0 __3},
-	{U,0,"ui/terran icons","dlgs\\terran.grp",0 __3},
-	{U,0,"ui/zerg icons","dlgs\\zerg.grp",0 __3},
+	{I,0,"ui/protoss","dlgs\\protoss.grp",0 __3},
+	{I,0,"ui/terran","dlgs\\terran.grp",0 __3},
+	{I,0,"ui/zerg","dlgs\\zerg.grp",0 __3},
 	{H,0,"ui/aggicons","game\\aggicons.pcx",0 __3},
 	{H,0,"ui/pconover","game\\pconover.pcx",0 __3},
 	{H,0,"ui/pconsole","game\\pconsole.pcx",0 __3},
@@ -3457,6 +3458,105 @@ int ConvertGfu(char* listfile, char* file, int pale)
 	return 0;
 }
 
+void SaveButton(char *name, unsigned char *image, unsigned char *palp, int size, int id)
+{
+	unsigned char *button;
+	int i, j;
+
+	button = (unsigned char *)malloc(size * 28);
+
+#define copyimage(dst, src) \
+	for (j = 0; j < 28; ++j) { \
+		memcpy((dst + size*j), (src + 64*j), 8); \
+	}
+
+	copyimage(button + 0, image + (id - 1) * 28 * 64);
+	for (i = 8; i < size - 8; i += 8) {
+		copyimage(button + i, image + id * 28 * 64);
+	}
+	copyimage(button + size - 8, image + (id + 1) * 28 * 64);
+
+	for (i = 0; i < size * 28; ++i) {
+		if (button[i] == 41) {
+			button[i] = 255;
+		}
+	}
+
+	SavePNG(name, button, size, 28, palp, 255);
+
+	free(button);
+}
+
+int ConvertWidgets(char* listfile, char* file, int pale)
+{
+	unsigned char* palp;
+	unsigned char* gfup;
+	unsigned char* gfup2;
+	unsigned char* image;
+	int w;
+	int h;
+	char buf[1024];
+	unsigned char* p;
+	unsigned char* end;
+
+	gfup = ExtractEntry((unsigned char *)listfile);
+
+	gfup2 = NULL;
+	image = ConvertGraphic(0, gfup, &w, &h, gfup2, 0);
+
+	// 0 and 255 are transparent
+	p = image;
+	end = image + w * h;
+	while (p < end) {
+		if (!*p) {
+			*p = 0xFF;
+		}
+		++p;
+	}
+
+	palp = Palettes[pale];
+
+	free(gfup);
+
+	sprintf(buf, "%s/graphics/%s/", Dir, file);
+	CheckPath(buf);
+
+#if 0
+	sprintf(buf, "%s/graphics/%s/button left disabled 224x28.png", Dir, file);
+	SaveButton(buf, image, palp, 224, 104);
+
+	sprintf(buf, "%s/graphics/%s/button left 224x28.png", Dir, file);
+	SaveButton(buf, image, palp, 224, 107);
+
+	sprintf(buf, "%s/graphics/%s/button left pressed 224x28.png", Dir, file);
+	SaveButton(buf, image, palp, 224, 110);
+#endif
+
+	sprintf(buf, "%s/graphics/%s/button disabled 224x28.png", Dir, file);
+	SaveButton(buf, image, palp, 224, 113);
+
+	sprintf(buf, "%s/graphics/%s/button 224x28.png", Dir, file);
+	SaveButton(buf, image, palp, 224, 116);
+
+	sprintf(buf, "%s/graphics/%s/button pressed 224x28.png", Dir, file);
+	SaveButton(buf, image, palp, 224, 119);
+
+#if 0
+	sprintf(buf, "%s/graphics/%s/button right disabled 224x28.png", Dir, file);
+	SaveButton(buf, image, palp, 224, 122);
+
+	sprintf(buf, "%s/graphics/%s/button right 224x28.png", Dir, file);
+	SaveButton(buf, image, palp, 224, 125);
+
+	sprintf(buf, "%s/graphics/%s/button right pressed 224x28.png", Dir, file);
+	SaveButton(buf, image, palp, 224, 128);
+#endif
+
+	free(image);
+
+	return 0;
+}
+
 struct PCXheader {
 	unsigned char Manufacturer;
 	unsigned char Version;
@@ -3723,6 +3823,149 @@ int RawExtract(char *listfile, char *file)
 }
 
 //----------------------------------------------------------------------------
+//		Panels
+//----------------------------------------------------------------------------
+
+unsigned char *CreatePanel(int width, int height)
+{
+	unsigned char *buf;
+	int i, j;
+
+	buf = (unsigned char *)malloc(width * height * 4);
+	memset(buf, 0, width * height * 4);
+
+#define pixel2(i, j, r, g, b, a) \
+	buf[(j) * width * 4 + (i) * 4 + 0] = r; \
+	buf[(j) * width * 4 + (i) * 4 + 1] = g; \
+	buf[(j) * width * 4 + (i) * 4 + 2] = b; \
+	buf[(j) * width * 4 + (i) * 4 + 3] = a;
+
+#define pixel(i, j) \
+	pixel2((i), (j), 0x0, 0x8, 0x40, 0xff)
+
+	for (j = 1; j < height - 1; ++j) {
+		for (i = 1; i < width - 1; ++i) {
+			pixel2(i, j, 0x0, 0x8, 0x40, 0x80);
+		}
+	}
+	for (i = 3; i < width - 3; ++i) {
+		pixel(i, 0);
+		pixel(i, height - 1);
+	}
+	for (i = 3; i < height - 3; ++i) {
+		pixel(0, i);
+		pixel(width - 1, i);
+	}
+	// top left
+	pixel(1, 1);
+	pixel(2, 1);
+	pixel(1, 2);
+	// top right
+	pixel(width - 3, 1);
+	pixel(width - 2, 1);
+	pixel(width - 2, 2);
+	// bottom left
+	pixel(1, height - 3);
+	pixel(1, height - 2);
+	pixel(2, height - 2);
+	// bottom right
+	pixel(width - 3, height - 2);
+	pixel(width - 2, height - 2);
+	pixel(width - 2, height - 3);
+
+#undef pixel
+#undef pixel2
+
+	return buf;
+}
+
+int SavePanel(int width, int height)
+{
+	FILE *fp;
+	png_structp png_ptr;
+	png_infop info_ptr;
+	unsigned char **lines;
+	int i;
+	char name[256];
+	unsigned char *buf;
+
+	sprintf(name, "%s/graphics/ui/panels/%dx%d.png", Dir, width, height);
+	CheckPath(name);
+
+	if (!(fp = fopen(name, "wb"))) {
+		fprintf(stderr,"%s:", name);
+		perror("Can't open file");
+		return 1;
+	}
+
+	png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+	if (!png_ptr) {
+		fclose(fp);
+		return 1;
+	}
+	info_ptr = png_create_info_struct(png_ptr);
+	if (!info_ptr) {
+		png_destroy_write_struct(&png_ptr, NULL);
+		fclose(fp);
+		return 1;
+	}
+
+	if (setjmp(png_ptr->jmpbuf)) {
+		// FIXME: must free buffers!!
+		png_destroy_write_struct(&png_ptr, &info_ptr);
+		fclose(fp);
+		return 1;
+	}
+	png_init_io(png_ptr, fp);
+
+	// zlib parameters
+	png_set_compression_level(png_ptr, Z_BEST_COMPRESSION);
+
+	// prepare the file information
+	info_ptr->width = width;
+	info_ptr->height = height;
+	info_ptr->bit_depth = 8;
+	info_ptr->color_type = PNG_COLOR_TYPE_RGB_ALPHA;
+	info_ptr->interlace_type = 0;
+
+	buf = CreatePanel(width, height);
+
+	// write the file header information
+	png_write_info(png_ptr, info_ptr);  // write the file header information
+
+	// set transformation
+
+	// prepare image
+	lines = (unsigned char **)malloc(height * sizeof(*lines));
+	if (!lines) {
+		png_destroy_write_struct(&png_ptr, &info_ptr);
+		fclose(fp);
+		free(buf);
+		return 1;
+	}
+
+	for (i = 0; i < height; ++i) {
+		lines[i] = buf + i * width * 4;
+	}
+
+	png_write_image(png_ptr, lines);
+	png_write_end(png_ptr, info_ptr);
+
+	png_destroy_write_struct(&png_ptr, &info_ptr);
+	fclose(fp);
+
+	free(lines);
+	free(buf);
+
+	return 0;
+}
+
+void CreatePanels()
+{
+	SavePanel(264, 288);
+}
+
+//----------------------------------------------------------------------------
 //		Main loop
 //----------------------------------------------------------------------------
 
@@ -3867,6 +4110,9 @@ int main(int argc, char **argv)
 				case U:
 					ConvertGfu(c[u].ListFile, c[u].File, c[u].Arg1);
 					break;
+				case I:
+					ConvertWidgets(c[u].ListFile, c[u].File, c[u].Arg1);
+					break;
 				case N:
 					ConvertFont(c[u].ListFile, c[u].File, 2, c[u].Arg1);
 					break;
@@ -3895,6 +4141,8 @@ int main(int argc, char **argv)
 		}
 	}
 	delete Mpq;
+
+	CreatePanels();
 
 	printf("DONE!\n");
 
