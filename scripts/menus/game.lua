@@ -13,12 +13,12 @@ function WarGameMenu(background)
 
   function menu:resize(w, h)
     menu:setSize(w, h)
-    menu:setPosition(176 + (Video.Width - 176 - menu:getWidth()) / 2,
-      (Video.Height - menu:getHeight()) / 2)
+    menu:setPosition((Video.Width - menu:getWidth()) / 2,
+      (Video.Height - 128 - menu:getHeight()) / 2)
   end
 
   menu:resize(256, 288)
-  menu:setBorderSize(1)
+  menu:setBorderSize(0)
   menu:setDrawMenusUnder(true)
 
   AddMenuHelpers(menu)
@@ -29,23 +29,30 @@ end
 
 
 function RunGameMenu()
-  local menu = WarGameMenu(panel(1))
+  local menu = WarGameMenu(panel("264x288"))
+  menu:resize(264, 288)
 
-  menu:addLabel("Game Menu", 128, 11)
+  menu:addLabel("Game Menu", 264/2, 8)
 
-  menu:addHalfButton("Save (~<F11~>)", "f11", 16, 40,
+  menu:addFullButton("~!Save Game", "s", 20, 36,
     function() RunSaveMenu() end)
-  menu:addHalfButton("Load (~<F12~>)", "f12", 16 + 12 + 106, 40,
+  menu:addFullButton("~!Load Game", "l", 20, 70,
     function() RunGameLoadGameMenu() end)
-  menu:addFullButton("Options (~<F5~>)", "f5", 16, 40 + 36*1,
+--[[
+  menu:addFullButton("~!Pause Game", "p", 20, 70,
+    function() end)
+  menu:addFullButton("~!Resume Game", "r", 20, 70,
+    function() end)
+]]
+  menu:addFullButton("~!Options", "o", 20, 104,
     function() RunGameOptionsMenu() end)
-  menu:addFullButton("Help (~<F1~>)", "f1", 16, 40 + 36*2,
+  menu:addFullButton("~!Help", "h", 20, 138,
     function() RunHelpMenu() end)
-  menu:addFullButton("Scenario ~!Objectives", "o", 16, 40 + 36*3,
+  menu:addFullButton("Mission Ob~!jectives", "j", 20, 172,
     function() RunObjectivesMenu() end)
-  menu:addFullButton("~!End Scenario", "e", 16, 40 + 36*4,
+  menu:addFullButton("~!End Mission", "e", 20, 206,
     function() RunEndScenarioMenu() end)
-  menu:addFullButton("Return to Game (~<Esc~>)", "escape", 16, 288 - 40,
+  menu:addFullButton("Return to Game (~<Esc~>)", "escape", 20, 252,
     function() menu:stop() end)
 
   menu:run(false)

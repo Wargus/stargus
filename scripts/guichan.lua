@@ -10,37 +10,30 @@ bckground:Load()
 bckground:Resize(Video.Width, Video.Height)
 backgroundWidget = ImageWidget(bckground)
 
-g_hbln = CGraphic:New("ui/widgets/button-large-normal.png")
-g_hbln:Load()
-g_hblp = CGraphic:New("ui/widgets/button-large-pressed.png")
-g_hblp:Load()
-g_hblg = CGraphic:New("ui/widgets/button-large-grayed.png")
-g_hblg:Load()
+g_tbln = CGraphic:New("ui/terran/button 224x28.png")
+g_tbln:Load()
+g_tblp = CGraphic:New("ui/terran/button pressed 224x28.png")
+g_tblp:Load()
+g_tblg = CGraphic:New("ui/terran/button disabled 224x28.png")
+g_tblg:Load()
 
-g_hbsn = CGraphic:New("ui/widgets/button-small-normal.png")
-g_hbsn:Load()
-g_hbsp = CGraphic:New("ui/widgets/button-small-pressed.png")
-g_hbsp:Load()
-g_hbsg = CGraphic:New("ui/widgets/button-small-grayed.png")
-g_hbsg:Load()
+g_zbln = CGraphic:New("ui/zerg/button 224x28.png")
+g_zbln:Load()
+g_zblp = CGraphic:New("ui/zerg/button pressed 224x28.png")
+g_zblp:Load()
+g_zblg = CGraphic:New("ui/zerg/button disabled 224x28.png")
+g_zblg:Load()
 
-g_obln = CGraphic:New("ui/widgets/button-large-normal.png")
-g_obln:Load()
-g_oblp = CGraphic:New("ui/widgets/button-large-pressed.png")
-g_oblp:Load()
-g_oblg = CGraphic:New("ui/widgets/button-large-grayed.png")
-g_oblg:Load()
-
-g_obsn = CGraphic:New("ui/widgets/button-small-normal.png")
-g_obsn:Load()
-g_obsp = CGraphic:New("ui/widgets/button-small-pressed.png")
-g_obsp:Load()
-g_obsg = CGraphic:New("ui/widgets/button-small-grayed.png")
-g_obsg:Load()
+g_pbln = CGraphic:New("ui/protoss/button 224x28.png")
+g_pbln:Load()
+g_pblp = CGraphic:New("ui/protoss/button pressed 224x28.png")
+g_pblp:Load()
+g_pblg = CGraphic:New("ui/protoss/button disabled 224x28.png")
+g_pblg:Load()
 
 
 function panel(n)
-  return nil
+  return "ui/panels/" .. n .. ".png"
 end
 
 
@@ -85,6 +78,7 @@ function AddMenuHelpers(menu)
 
   function menu:addImageButton(caption, hotkey, x, y, callback)
     local b = ImageButton(caption)
+    b:setBorderSize(0)
     b:setHotKey(hotkey)
     b:setActionCallback(callback)
     self:add(b, x, y)
@@ -93,14 +87,18 @@ function AddMenuHelpers(menu)
 
   function menu:addFullButton(caption, hotkey, x, y, callback)
     local b = self:addImageButton(caption, hotkey, x, y, callback)
-    if (GetPlayerData(GetThisPlayer(), "RaceName") == "human") then
-      b:setNormalImage(g_hbln)
-      b:setPressedImage(g_hblp)
-      b:setDisabledImage(g_hblg)
+    if (GetPlayerData(GetThisPlayer(), "RaceName") == "terran") then
+      b:setNormalImage(g_tbln)
+      b:setPressedImage(g_tblp)
+      b:setDisabledImage(g_tblg)
+    elseif (GetPlayerData(GetThisPlayer(), "RaceName") == "zerg") then
+      b:setNormalImage(g_zbln)
+      b:setPressedImage(g_zblp)
+      b:setDisabledImage(g_zblg)
     else
-      b:setNormalImage(g_obln)
-      b:setPressedImage(g_oblp)
-      b:setDisabledImage(g_oblg)
+      b:setNormalImage(g_pbln)
+      b:setPressedImage(g_pblp)
+      b:setDisabledImage(g_pblg)
     end
     b:setSize(224, 28)
     return b
@@ -108,14 +106,18 @@ function AddMenuHelpers(menu)
 
   function menu:addHalfButton(caption, hotkey, x, y, callback)
     local b = self:addImageButton(caption, hotkey, x, y, callback)
-    if (GetPlayerData(GetThisPlayer(), "RaceName") == "human") then
-      b:setNormalImage(g_hbsn)
-      b:setPressedImage(g_hbsp)
-      b:setDisabledImage(g_hbsg)
+    if (GetPlayerData(GetThisPlayer(), "RaceName") == "terran") then
+      b:setNormalImage(g_tbsn)
+      b:setPressedImage(g_tbsp)
+      b:setDisabledImage(g_tbsg)
+    elseif (GetPlayerData(GetThisPlayer(), "RaceName") == "zerg") then
+      b:setNormalImage(g_zbsn)
+      b:setPressedImage(g_zbsp)
+      b:setDisabledImage(g_zbsg)
     else
-      b:setNormalImage(g_obsn)
-      b:setPressedImage(g_obsp)
-      b:setDisabledImage(g_obsg)
+      b:setNormalImage(g_pbnn)
+      b:setPressedImage(g_pbnp)
+      b:setDisabledImage(g_pbng)
     end
     b:setSize(106, 28)
     return b
