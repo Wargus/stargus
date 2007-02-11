@@ -103,13 +103,7 @@ function SetPlayerData(player, data, arg1, arg2)
       end
     end
   elseif (data == "Resources") then
-    if (GameSettings.Resources == 1) then
-      res = {2000, 1000, 1000}
-    elseif (GameSettings.Resources == 2) then
-      res = {5000, 2000, 2000}
-    elseif (GameSettings.Resources == 3) then
-      res = {10000, 5000, 5000}
-    end
+    res = {50, 0, 0}
     if (arg1 == "gold") then
       arg2 = res[1]
     elseif (arg1 == "wood") then
