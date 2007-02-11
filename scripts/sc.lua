@@ -45,3 +45,119 @@ DefineRaceNames(
     "name", "neutral",
     "display", "Neutral"})
 
+
+local t = {
+  {"unit-terran-scv", "unit-zerg-drone", "unit-protoss-probe"},
+}
+
+local TerranEquivalent = {}
+local ZergEquivalent = {}
+local ProtossEquivalent = {}
+
+for i=1,table.getn(t) do
+  TerranEquivalent[t[i][2]] = t[i][1]
+  TerranEquivalent[t[i][3]] = t[i][1]
+  ZergEquivalent[t[i][1]] = t[i][2]
+  ZergEquivalent[t[i][3]] = t[i][2]
+  ProtossEquivalent[t[i][1]] = t[i][3]
+  ProtossEquivalent[t[i][2]] = t[i][3]
+end
+
+-- Convert a unit type to the equivalent for a different race
+function ConvertUnitType(unittype, race)
+  local equiv
+
+  if (race == "terran") then
+    equiv = TerranEquivalent[unittype]
+  elseif (race == "zerg") then
+    equiv = ZergEquivalent[unittype]
+  else
+    equiv = ProtossEquivalent[unittype]
+  end
+
+  if (equiv ~= nil) then
+    return equiv
+  else
+    return unittype
+  end
+end
+
+
+if (OldSetPlayerData == nil) then
+  OldSetPlayerData = SetPlayerData
+end
+
+-- Override with game settings
+function SetPlayerData(player, data, arg1, arg2)
+  local res = {arg2, arg2, arg2}
+
+  if (data == "RaceName") then
+    -- FIXME: support multiplayer
+    if (ThisPlayer ~= nil and ThisPlayer.Index == player) then
+      if (GameSettings.Presets[0].Race == 1) then
+        arg1 = "terran"
+      elseif (GameSettings.Presets[0].Race == 2) then
+        arg1 = "zerg"
+      elseif (GameSettings.Presets[0].Race == 3) then
+        arg1 = "protoss"
+      end
+    end
+  elseif (data == "Resources") then
+    if (GameSettings.Resources == 1) then
+      res = {2000, 1000, 1000}
+    elseif (GameSettings.Resources == 2) then
+      res = {5000, 2000, 2000}
+    elseif (GameSettings.Resources == 3) then
+      res = {10000, 5000, 5000}
+    end
+    if (arg1 == "gold") then
+      arg2 = res[1]
+    elseif (arg1 == "wood") then
+      arg2 = res[2]
+    elseif (arg1 == "oil") then
+      arg2 = res[3]
+    end
+  end
+
+  OldSetPlayerData(player, data, arg1, arg2)
+
+  -- If this is 1 peasant mode add the peasant now
+  if (data == "RaceName") then
+    if (GameSettings.NumUnits == 1) then
+      if (player ~= 15 and Players[player].Type ~= PlayerNobody) then
+        local unittype = ConvertUnitType("unit-terran-scv",
+          GetPlayerData(player, "RaceName"))
+        CreateUnit(unittype, player,
+          {Players[player].StartX, Players[player].StartY})
+      end
+    end
+  end
+end
+
+if (OldDefinePlayerTypes == nil) then
+  OldDefinePlayerTypes = DefinePlayerTypes
+end
+
+function DefinePlayerTypes(p1, p2, p3, p4, p5, p6, p7, p8)
+  local p = {p1, p2, p3, p4, p5, p6, p7, p8}
+  local foundperson = false
+  local nump = GameSettings.Opponents
+  if (nump == 0) then nump = 8 end
+
+  -- FIXME: should randomly pick players to use
+  for i=1,8 do
+    if (p[i] == "person" or p[i] == "computer") then
+      if (p[i] == "person" and foundperson == false) then
+        foundperson = true
+      else
+        if (nump == 0) then
+          p[i] = "nobody"
+        else
+          nump = nump - 1
+        end
+      end
+    end
+  end
+
+  OldDefinePlayerTypes(p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
+end

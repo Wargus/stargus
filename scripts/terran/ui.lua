@@ -38,161 +38,208 @@ function TerranScreen(screen_width, screen_height)
   local info_panel_x = 0
   local info_panel_y = 160
 
-  DefineUI("terran", screen_width, screen_height,
-    "normal-font-color", "white",
-    "reverse-font-color", "yellow",
-
-    "filler", {
-      File = "ui/tconsole.png",
-      Pos = { 0, 0}},
-
-    "resources", {
-      "gold", { File = "ui/icons.png", Frame = 0,
-        Pos = { 436, 3}, Size = {54, 14}, TextPos = { 452, 3}},
-      "wood", { File = "ui/icons.png", Frame = 2,
-        Pos = { 504, 3}, Size = {54, 14}, TextPos = { 520, 3}},
-      "food", { File = "ui/icons.png", Frame = 5,
-        Pos = { 572, 3}, Size = {54, 14}, TextPos = { 588, 3}},
-    },
-
+  local ui = {
     "info-panel", {
-      "panels", {
-        "panel-general-contents",
---        "panel-attack-unit-contents",
-        "panel-all-unit-contents",
-        "panel-building-contents"
-      },
-      "selected", {
-        "single", {
-          "icon", {
-            "pos", {183, 413}, "style", "icon"}},
-        "multiple", {
-          "icons", {
-            { "pos", {info_panel_x +   9, info_panel_y + 9}, "style", "icon"},
-            { "pos", {info_panel_x +  65, info_panel_y + 9}, "style", "icon"},
-            { "pos", {info_panel_x + 121, info_panel_y + 9}, "style", "icon"},
-            { "pos", {info_panel_x +   9, info_panel_y + 63}, "style", "icon"},
-            { "pos", {info_panel_x +  65, info_panel_y + 63}, "style", "icon"},
-            { "pos", {info_panel_x + 121, info_panel_y + 63}, "style", "icon"},
-            { "pos", {info_panel_x +   9, info_panel_y + 117}, "style", "icon"},
-            { "pos", {info_panel_x +  65, info_panel_y + 117}, "style", "icon"},
-            { "pos", {info_panel_x + 121, info_panel_y + 117}, "style", "icon"}},
-          "max-text", {
-            "font", "game",
-            "pos", { info_panel_x + 10, info_panel_y + 10}}}
-      },
-      "training", {
-        "single", {
-          "text", {
-            "text", "Training:",
-            "font", "game",
-            "pos", { info_panel_x + 37, info_panel_y + 8 + 78}},
-          "icon", {
-            "pos", { info_panel_x + 110, info_panel_y + 11 + 70},
-            "style", "icon"}},
-        "multiple", {
-          "icons", {
-            { "pos", {  9, 219}, "style", "icon"},
-            { "pos", { 65, 219}, "style", "icon"},
-            { "pos", {121, 219}, "style", "icon"},
-            { "pos", {  9, 266}, "style", "icon"},
-            { "pos", { 65, 266}, "style", "icon"},
-            { "pos", {121, 266}, "style", "icon"}}}
-      },
-      "upgrading", {
-        "icon", {
-          "pos", { info_panel_x + 110, info_panel_y + 11 + 70},
-          "style", "icon"},
-      },
-      "researching", {
-        "icon", {
-          "pos", { info_panel_x + 110, info_panel_y + 11 + 70},
-          "style", "icon"}
-      },
-      "transporting", {
-        "icons", {
-          { "pos", {  9, 223}, "style", "icon"},
-          { "pos", { 65, 223}, "style", "icon"},
-          { "pos", {121, 223}, "style", "icon"},
-          { "pos", {  9, 277}, "style", "icon"},
-          { "pos", { 65, 277}, "style", "icon"},
-          { "pos", {121, 277}, "style", "icon"}}
-      },
+      "panels", {"panel-general-contents", --[["panel-attack-unit-contents",]]
+        "panel-all-unit-contents", "panel-building-contents"},
       "completed-bar", {
         "color", {48, 100, 4}
       }
-    },
-
-    "button-panel", {
-      "icons", {
-        {"pos", {505, 358}, "style", "icon"},
-        {"pos", {551, 358}, "style", "icon"},
-        {"pos", {597, 358}, "style", "icon"},
-        {"pos", {505, 398}, "style", "icon"},
-        {"pos", {551, 398}, "style", "icon"},
-        {"pos", {597, 398}, "style", "icon"},
-        {"pos", {505, 438}, "style", "icon"},
-        {"pos", {551, 438}, "style", "icon"},
-        {"pos", {597, 438}, "style", "icon"}},
-      "auto-cast-border-color", {0, 0, 252},
-    },
-
-    "map-area", {
-      Pos = {0, 0},
-      Size = {
-        screen_width,
-        screen_height - 0 - 106}},
-
-    "menu-panel", {
-      "menu-button", {
-        Pos = {416, 388},
-        Caption = "MENU",
-        Style = "menu button"},
-      "network-menu-button", {
-        Pos = {6, 2},
-        Caption = "Menu",
-        Style = "network"},
-      "network-diplomacy-button", {
-        Pos = {90, 2},
-        Caption = "Diplomacy",
-        Style = "network"},
-    },
-
-    "minimap", {
-      Pos = {7, 348},
-      Size = {128, 128}},
-
-    "status-line", {
-      TextPos = {172, 350},
-      Font = "game",
-      Width = screen_width - 16 - 2 - 176},
-
-    "cursors", {
-      Point = "cursor-point",
-      Glass = "cursor-glass",
-      Cross = "cursor-cross",
-      Yellow = "cursor-yellow-hair",
-      Green = "cursor-green-hair",
-      Red = "cursor-red-hair",
-      Scroll = "cursor-scroll",
-      ArrowE = "cursor-arrow-e",
-      ArrowNE = "cursor-arrow-ne",
-      ArrowN = "cursor-arrow-n",
-      ArrowNW = "cursor-arrow-nw",
-      ArrowW = "cursor-arrow-w",
-      ArrowSW = "cursor-arrow-sw",
-      ArrowS = "cursor-arrow-s",
-      ArrowSE = "cursor-arrow-se"},
-
-    "menu-panels", {
-      "panel5", "ui/tconsole.png"},
-
-    "victory-background", "terran/victory screen.png",
-    "defeat-background", "terran/defeat screen.png")
+    }
+  }
 end
 
-TerranScreen(640, 480)
-TerranScreen(800, 600)
-TerranScreen(1024, 768)
-TerranScreen(1280, 960)
-TerranScreen(1600, 1200)
+UI.NormalFontColor = "white"
+UI.ReverseFontColor = "yellow"
+
+UI.Fillers:clear()
+
+function AddFiller(file, x, y)
+    b = CFiller:new_local()
+    b.G = CGraphic:New(file)
+    b.X = x
+    b.Y = y
+    UI.Fillers:push_back(b)
+end
+
+AddFiller("ui/tconsole.png", 0, 0)
+
+UI.InfoPanel.X = 0
+UI.InfoPanel.Y = 160
+
+b = CUIButton:new()
+b.X = 9
+b.Y = 160 + 9
+b.Style = FindButtonStyle("icon")
+UI.SingleSelectedButton = b
+
+UI.SelectedButtons:clear()
+
+function AddSelectedButton(x, y)
+    b = CUIButton:new_local()
+    b.X = x
+    b.Y = y
+    b.Style = FindButtonStyle("icon")
+    UI.SelectedButtons:push_back(b)
+end
+
+AddSelectedButton(9, 160 + 9)
+AddSelectedButton(65, 160 + 9)
+AddSelectedButton(121, 160 + 9)
+AddSelectedButton(9, 160 + 63)
+AddSelectedButton(65, 160 + 63)
+AddSelectedButton(121, 160 + 63)
+AddSelectedButton(9, 160 + 117)
+AddSelectedButton(65, 160 + 117)
+AddSelectedButton(121, 160 + 117)
+
+UI.MaxSelectedFont = Fonts["game"]
+UI.MaxSelectedTextX = 10
+UI.MaxSelectedTextY = 160 + 10
+
+b = CUIButton:new()
+b.X = 110
+b.Y = 160 + 11 + 70
+b.Style = FindButtonStyle("icon")
+UI.SingleTrainingButton = b
+
+UI.TrainingButtons:clear()
+
+function AddTrainingButton(x, y)
+    b = CUIButton:new_local()
+    b.X = x
+    b.Y = y
+    b.Style = FindButtonStyle("icon")
+    UI.TrainingButtons:push_back(b)
+end
+
+AddTrainingButton(9, 219)
+AddTrainingButton(65, 219)
+AddTrainingButton(121, 219)
+AddTrainingButton(9, 266)
+AddTrainingButton(65, 266)
+AddTrainingButton(121, 266)
+
+b = CUIButton:new()
+b.X = 110
+b.Y = 160 + 11 + 70
+b.Style = FindButtonStyle("icon")
+UI.UpgradingButton = b
+
+b = CUIButton:new()
+b.X = 110
+b.Y = 160 + 11 + 70
+b.Style = FindButtonStyle("icon")
+UI.ResearchingButton = b
+
+UI.TransportingButtons:clear()
+
+function AddTransportingButton(x, y)
+    b = CUIButton:new_local()
+    b.X = x
+    b.Y = y
+    b.Style = FindButtonStyle("icon")
+    UI.TransportingButtons:push_back(b)
+end
+
+AddTransportingButton(9, 223)
+AddTransportingButton(65, 223)
+AddTransportingButton(121, 223)
+AddTransportingButton(9, 277)
+AddTransportingButton(65, 277)
+AddTransportingButton(121, 277)
+
+UI.CompletedBarColorRGB = CColor(48, 100, 4)
+UI.CompletedBarShadow = true
+
+UI.ButtonPanel.Buttons:clear()
+
+function AddButtonPanelButton(x, y)
+    b = CUIButton:new_local()
+    b.X = x
+    b.Y = y
+    b.Style = FindButtonStyle("icon")
+    UI.ButtonPanel.Buttons:push_back(b)
+end
+
+AddButtonPanelButton(505, 358)
+AddButtonPanelButton(551, 358)
+AddButtonPanelButton(597, 358)
+AddButtonPanelButton(505, 398)
+AddButtonPanelButton(551, 398)
+AddButtonPanelButton(597, 398)
+AddButtonPanelButton(505, 438)
+AddButtonPanelButton(551, 438)
+AddButtonPanelButton(597, 438)
+
+UI.ButtonPanel.X = 0
+UI.ButtonPanel.Y = 336
+UI.ButtonPanel.AutoCastBorderColorRGB = CColor(0, 0, 252)
+
+UI.MapArea.X = 0
+UI.MapArea.Y = 0
+UI.MapArea.EndX = Video.Width - 1
+UI.MapArea.EndY = Video.Height - 106
+
+UI.Minimap.X = 7
+UI.Minimap.Y = 348
+UI.Minimap.W = 128
+UI.Minimap.H = 128
+
+UI.StatusLine.TextX = 172
+UI.StatusLine.TextY = 350
+UI.StatusLine.Width = Video.Width - 16 - 2 - 176
+UI.StatusLine.Font = Fonts["game"]
+
+-- gold
+UI.Resources[1].G = CGraphic:New("ui/icons.png", 54, 14)
+UI.Resources[1].IconFrame = 0
+UI.Resources[1].IconX = 436
+UI.Resources[1].IconY = 3
+UI.Resources[1].TextX = 452
+UI.Resources[1].TextY = 3
+
+-- wood
+UI.Resources[2].G = CGraphic:New("ui/icons.png", 54, 14)
+UI.Resources[2].IconFrame = 2
+UI.Resources[2].IconX = 504
+UI.Resources[2].IconY = 3
+UI.Resources[2].TextX = 520
+UI.Resources[2].TextY = 3
+
+-- food
+UI.Resources[FoodCost].G = CGraphic:New("ui/icons.png", 54, 14)
+UI.Resources[FoodCost].IconFrame = 5
+UI.Resources[FoodCost].IconX = 572
+UI.Resources[FoodCost].IconY = 3
+UI.Resources[FoodCost].TextX = 588
+UI.Resources[FoodCost].TextY = 3
+
+-- score
+--[[
+UI.Resources[ScoreCost].G = CGraphic:New("ui/score.png", 14, 14)
+UI.Resources[ScoreCost].IconFrame = 0
+UI.Resources[ScoreCost].IconX = Video.Width - 16 - 68
+UI.Resources[ScoreCost].IconY = 0
+UI.Resources[ScoreCost].TextX = Video.Width - 16 - 68 + 18
+UI.Resources[ScoreCost].TextY = 1
+]]
+
+UI.MenuButton.X = 416
+UI.MenuButton.Y = 388
+UI.MenuButton.Text = "MENU"
+UI.MenuButton.Style = FindButtonStyle("menu button")
+UI.MenuButton:SetCallback(function() RunGameMenu() end)
+
+UI.NetworkMenuButton.X = 6
+UI.NetworkMenuButton.Y = 2
+UI.NetworkMenuButton.Text = "Menu"
+UI.NetworkMenuButton.Style = FindButtonStyle("network")
+UI.NetworkMenuButton:SetCallback(function() RunGameMenu() end)
+
+UI.NetworkDiplomacyButton.X = 90
+UI.NetworkDiplomacyButton.Y = 2
+UI.NetworkDiplomacyButton.Text = "Diplomacy"
+UI.NetworkDiplomacyButton.Style = FindButtonStyle("network")
+UI.NetworkDiplomacyButton:SetCallback(function() RunDiplomacyMenu() end)
+

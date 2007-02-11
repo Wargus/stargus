@@ -42,22 +42,24 @@ DefineButtonStyle("menu button", {
   Hover = {
     TextNormalColor = "white",
   },
+--[[
   Selected = {
     File = "ui/terran icons.png", Size = {64, 28}, Frame = 1,
     Border = {
       Color = {252, 252, 0}, Size = 1,
     },
-  },
+  },]]
   Clicked = {
     File = "ui/terran icons.png", Size = {64, 28}, Frame = 2,
     TextNormalColor = "white",
     TextPos = {35, 6},
   },
+--[[
   Disabled = {
     File = "ui/buttons_1.png", Size = {300, 144}, Frame = 3,
     TextNormalColor = "grey",
     TextReverseColor = "grey",
-  },
+  },]]
 })
 
 
@@ -74,21 +76,23 @@ DefineButtonStyle("main", {
   Hover = {
     TextNormalColor = "white",
   },
+--[[
   Selected = {
     Border = {
       Color = {252, 252, 0}, Size = 1,
     },
-  },
+  },]]
   Clicked = {
     File = "ui/buttons_1.png", Size = {300, 144}, Frame = 5,
     TextNormalColor = "white",
     TextPos = {66, 6},
   },
+--[[
   Disabled = {
     File = "ui/buttons_1.png", Size = {300, 144}, Frame = 3,
     TextNormalColor = "grey",
     TextReverseColor = "grey",
-  },
+  },]]
 })
 
 DefineButtonStyle("network", {
@@ -104,21 +108,23 @@ DefineButtonStyle("network", {
   Hover = {
     TextNormalColor = "white",
   },
+--[[
   Selected = {
     Border = {
       Color = {252, 252, 0}, Size = 1,
     },
-  },
+  },]]
   Clicked = {
     File = "ui/buttons_1.png", Size = {300, 144}, Frame = 8,
     TextNormalColor = "white",
     TextPos = {42, 6},
   },
+--[[
   Disabled = {
     File = "ui/buttons_1.png", Size = {300, 144}, Frame = 6,
     TextNormalColor = "grey",
     TextReverseColor = "grey",
-  },
+  },]]
 })
 
 DefineButtonStyle("gm-half", {
@@ -134,21 +140,23 @@ DefineButtonStyle("gm-half", {
   Hover = {
     TextNormalColor = "white",
   },
+--[[
   Selected = {
     Border = {
       Color = {252, 252, 0}, Size = 1,
     },
-  },
+  },]]
   Clicked = {
     File = "ui/buttons_1.png", Size = {300, 144}, Frame = 11,
     TextNormalColor = "white",
     TextPos = {55, 9},
   },
+--[[
   Disabled = {
     File = "ui/buttons_1.png", Size = {300, 144}, Frame = 9,
     TextNormalColor = "grey",
     TextReverseColor = "grey",
-  },
+  },]]
 })
 
 DefineButtonStyle("gm-full", {
@@ -164,21 +172,23 @@ DefineButtonStyle("gm-full", {
   Hover = {
     TextNormalColor = "white",
   },
+--[[
   Selected = {
     Border = {
       Color = {252, 252, 0}, Size = 1,
     },
-  },
+  },]]
   Clicked = {
     File = "ui/buttons_1.png", Size = {300, 144}, Frame = 17,
     TextNormalColor = "white",
     TextPos = {114, 9},
   },
+--[[
   Disabled = {
     File = "ui/buttons_1.png", Size = {300, 144}, Frame = 15,
     TextNormalColor = "grey",
     TextReverseColor = "grey",
-  },
+  },]]
 })
 
 DefineButtonStyle("folder", {
@@ -194,18 +204,20 @@ DefineButtonStyle("folder", {
   Hover = {
     TextNormalColor = "white",
   },
+--[[
   Selected = {
     Border = {
       Color = {252, 252, 0}, Size = 1,
     },
-  },
+  },]]
   Clicked = {
     File = "ui/buttons_1.png", Size = {300, 144}, Frame = 52,
     TextNormalColor = "white",
   },
+--[[
   Disabled = {
     File = "ui/buttons_1.png", Size = {300, 144}, Frame = 50,
-  },
+  },]]
 })
 
 DefineButtonStyle("icon", {
@@ -226,98 +238,20 @@ DefineButtonStyle("icon", {
       Color = {128, 128, 128}, Size = 1,
     },]]
   },
+--[[
   Selected = {
     --[[Border = {
       Color = {0, 252, 0}, Size = 1,
     },]]
-  },
+  },]]
   Clicked = {
     TextNormalColor = "white",
     --[[Border = {
       Color = {128, 128, 128}, Size = 1,
     },]]
   },
+--[[
   Disabled = {
-  },
+  },]]
 })
 
-
-DefineCheckboxStyle("round", {
-  Size = {19, 19},
-  Font = "game",
-  TextNormalColor = "white",
-  TextReverseColor = "white",
-  TextAlign = "Left",
-  TextPos = {24, 4},
-  Default = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 7,
-  },
-  Hover = {
-    TextNormalColor = "white",
-  },
-  Selected = {
-    Border = {
-      Color = {252, 252, 0}, Size = 1,
-    },
-  },
-  Disabled = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 6,
-  },
-  Clicked = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 8,
-    TextNormalColor = "white",
-  },
-  Checked = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 9,
-  },
-  CheckedHover = {
-    TextNormalColor = "white",
-  },
-  CheckedSelected = {
-    Border = {
-      Color = {252, 252, 0}, Size = 1,
-    },
-  },
-  CheckedClicked = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 10,
-    TextNormalColor = "white",
-  },
-  CheckedDisabled = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 6,
-  },
-})
-
-DefineCheckboxStyle("square", {
-  Size = {16, 16},
-  Font = "game",
-  TextNormalColor = "white",
-  TextReverseColor = "white",
-  TextAlign = "Left",
-  TextPos = {24, 4},
-  Default = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 12,
-  },
-  Hover = {
-    TextNormalColor = "white",
-  },
-  Clicked = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 13,
-    TextNormalColor = "white",
-  },
-  Disabled = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 11,
-  },
-  Checked = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 14,
-  },
-  CheckedHover = {
-    TextNormalColor = "white",
-  },
-  CheckedClicked = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 15,
-    TextNormalColor = "white",
-  },
-  CheckedDisabled = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 11,
-  },
-})

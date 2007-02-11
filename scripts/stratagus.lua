@@ -38,10 +38,20 @@ print("Stratagus default config file loading ...\n")
 --  Config-Part
 -------------------------------------------------------------------------------
 
+InitFuncs = {}
+function InitFuncs:add(f)
+  table.insert(self, f)
+end
+
+function InitGameVariables()
+  for i=1,table.getn(InitFuncs) do
+    InitFuncs[i]()
+  end
+end
+
 --  Edit the next sections to get your look and feel.
 --  Note, some of those values are overridden by user preferences,
---  see ~/.stratagus/preferences1.scripts
---  and ~/.stratagus/gamename/preferences2.scripts
+--  see preferences.lua
 
 --  Enter your default title screen.
 SetTitleScreens({
@@ -51,14 +61,9 @@ SetTitleScreens({
 --  {"logo_stratagus.avi"}
 )
 
---  Enter your menu music.
-SetMenuMusic("music/title.wav")
-
 --  Set the game name. It's used so we can mantain different savegames
 --  and setting. Might also be used for multiplayer.
 SetGameName("sc")
---  set the default map file.
-SetDefaultMap("maps/default.smp")
 
 
 SetSelectionStyle("corners")
@@ -74,12 +79,6 @@ SetMetaServer("stratagus.game-host.org", 7775)
 --  FIXME: planned
 --(set-order-feedback! #t)
 --(set-order-feedback! #f)
-
---  Uncomment next, to enable fancy building (random mirroring buildings)
--- SetFancyBuildings(false)
-
---  Edit this to enable/disable show tips at the start of a level
-SetShowTips(true)
 
 -------------------------------------------------------------------------------
 --  Game modification
@@ -100,11 +99,6 @@ SetTrainingQueue(true)
 --  Edit this to enable/disable building capture.
 --SetBuildingCapture(true)
 SetBuildingCapture(false)
-
---  Set forest regeneration speed. (n* seconds, 0 = disabled)
---  (Auf allgemeinen Wunsch eines einzelnen Herrn :)
-SetForestRegeneration(0)
---SetForestRegeneration(5)
 
 --  Edit this to enable/disable the reveal of the attacker.
 --SetRevealAttacker(true)
@@ -142,13 +136,6 @@ SetMouseScroll(true)
 SetKeyScroll(true)
 --SetKeyScroll(false)
 
---  Set keyboard scroll speed in frames (1=each frame,2 each second,...)
-SetKeyScrollSpeed(1)
-
---  Set mouse scroll speed in frames (1=each frame,2 each second,...)
---  This is when the mouse cursor hits the border.
-SetMouseScrollSpeed(1)
-
 --  While middle-mouse is pressed:
 --  Pixels to move per scrolled mouse pixel, negative = reversed
 SetMouseScrollSpeedDefault(4)
@@ -161,9 +148,6 @@ SetDoubleClickDelay(300)
 
 --  Change next, for the wanted hold-click delay (in ms).
 SetHoldClickDelay(1000)
-
---  Edit this to enable/disable the display of the command keys in buttons.
-SetShowCommandKey(false)
 
 --  Uncomment next, to reveal the complete map.
 --RevealMap()
@@ -196,18 +180,6 @@ SetFogOfWarOpacity(128)
 --    'income 100)
 --  FIXME: Must describe how geting resources work.
 --
-
-DefineDefaultResources(
-  0, 2000, 1000, 1000, 1000, 1000, 1000)
-
-DefineDefaultResourcesLow(
-  0, 2000, 1000, 1000, 1000, 1000, 1000)
-
-DefineDefaultResourcesMedium(
-  0, 5000, 2000, 2000, 2000, 2000, 2000)
-
-DefineDefaultResourcesHigh(
-  0, 10000, 5000, 5000, 5000, 5000, 5000)
 
 DefineDefaultIncomes(
   0, 100, 100, 100, 100, 100, 100)
@@ -289,7 +261,9 @@ DefinePlayerColors({
 --SetSpeedResearch(10)
 
 --  You can do all the above with this
-SetSpeeds(1)
+InitFuncs:add(function()
+  SetSpeeds(1)
+end)
 
 -------------------------------------------------------------------------------
 
@@ -321,17 +295,51 @@ function SinglePlayerTriggers()
     function() return ActionVictory() end)
 end
 
-
-
 -------------------------------------------------------------------------------
 --  Tables-Part
 -------------------------------------------------------------------------------
 
-Load("preferences1.lua")
+Load("preferences.lua")
 
+if (preferences == nil) then
+  preferences = {
+    VideoWidth = 800,
+    VideoHeight = 600,
+    VideoFullScreen = false,
+    PlayerName = "Player",
+    FogOfWar = true,
+    ShowCommandKey = true,
+    GroupKeys = "0123456789`",
+    GameSpeed = 30,
+    EffectsEnabled = true,
+    EffectsVolume = 128,
+    MusicEnabled = true,
+    MusicVolume = 128,
+    StratagusTranslation = "",
+    GameTranslation = "",
+    TipNumber = 0,
+    ShowTips = true,
+    GrabMouse = false,
+  }
+end
+
+SetVideoResolution(preferences.VideoWidth, preferences.VideoHeight)
+SetVideoFullScreen(preferences.VideoFullScreen)
+SetLocalPlayerName(preferences.PlayerName)
+SetFogOfWar(preferences.FogOfWar)
+UI.ButtonPanel.ShowCommandKey = preferences.ShowCommandKey
+SetGroupKeys(preferences.GroupKeys)
+SetGameSpeed(preferences.GameSpeed)
+SetEffectsEnabled(preferences.EffectsEnabled)
+SetEffectsVolume(preferences.EffectsVolume)
+SetMusicEnabled(preferences.MusicEnabled)
+SetMusicVolume(preferences.MusicVolume)
+SetTranslationsFiles(preferences.StratagusTranslation, preferences.GameTranslation)
+SetGrabMouse(preferences.GrabMouse)
+
+--- Uses Stratagus Library path!
 Load("scripts/sc.lua")
 
-Load("scripts/tilesets.lua")
 Load("scripts/icons.lua")
 Load("scripts/sound.lua")
 Load("scripts/missiles.lua")
@@ -340,17 +348,9 @@ Load("scripts/units.lua")
 Load("scripts/upgrade.lua")
 Load("scripts/fonts.lua")
 Load("scripts/buttons.lua")
-Load("scripts/ai.lua")
 Load("scripts/ui.lua")
-Load("scripts/campaigns.lua")
-Load("scripts/credits.lua")
-Load("scripts/tips.lua")
-Load("scripts/ranks.lua")
-Load("scripts/menus.lua")
+Load("scripts/ai.lua")
+Load("scripts/commands.lua")
 Load("scripts/cheats.lua")
 
-Load("preferences2.lua")
-
 print("... ready!\n")
-
-
