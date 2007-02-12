@@ -1,20 +1,19 @@
 function RunSaveMenu()
-  local menu = WarGameMenu(panel(3))
+  local menu = WarGameMenu(panel("384x256"))
   menu:resize(384, 256)
 
-  menu:addLabel("Save Game", 384 / 2, 11)
+  menu:addLabel("Save Game", 384/2, 8)
 
-  local t = menu:addTextInputField("game.sav",
-    (384 - 300 - 18) / 2, 11 + 36, 318)
+  local t = menu:addTextInputField("game.sav", 32, 44, 320)
 
   local browser = menu:addBrowser("~save", ".sav.gz$",
-    (384 - 300 - 18) / 2, 11 + 36 + 22, 318, 126)
+    32, 70, 320, 134)
   local function cb(s)
     t:setText(browser:getSelectedItem())
   end
   browser:setActionCallback(cb)
 
-  menu:addHalfButton("~!Save", "s", 1 * (384 / 3) - 106 - 10, 256 - 16 - 27,
+  menu:addHalfLeftButton("~!Save", "s", 20, 216,
     -- FIXME: use a confirm menu if the file exists already
     function()
       local name = t:getText()
@@ -39,7 +38,10 @@ function RunSaveMenu()
       menu:stop()
     end)
 
-  menu:addHalfButton("~!Cancel", "c", 3 * (384 / 3) - 106 - 10, 256 - 16 - 27,
+--  menu:addHalfButton("~!Delete", "d", 140, 216,
+--    function() end)
+
+  menu:addHalfRightButton("~!Cancel", "c", 260, 216,
     function() menu:stop() end)
 
   menu:run(false)
