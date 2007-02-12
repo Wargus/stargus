@@ -1,5 +1,6 @@
 function RunHelpMenu()
   local menu = WarGameMenu(panel("264x288"))
+  menu:resize(264, 288)
 
   menu:addLabel("Help Menu", 264/2, 8)
   menu:addFullButton("Keystroke ~!Help", "h", 20, 36,
@@ -54,8 +55,8 @@ local keystrokes = {
 }
 
 function RunKeystrokeHelpMenu()
-  local menu = WarGameMenu(panel(5))
-  menu:resize(352, 352)
+  local menu = WarGameMenu(panel("312x312"))
+  menu:resize(312, 312)
 
   local c = Container()
   c:setOpaque(false)
@@ -72,17 +73,17 @@ function RunKeystrokeHelpMenu()
   end
 
   local s = ScrollArea()
-  c:setSize(320 - s:getScrollbarWidth(), 20 * table.getn(keystrokes))
+  c:setSize(280 - s:getScrollbarWidth(), 20 * table.getn(keystrokes))
   s:setBaseColor(dark)
   s:setBackgroundColor(dark)
   s:setForegroundColor(clear)
-  s:setSize(320, 216)
+  s:setSize(280, 220)
   s:setContent(c)
-  menu:add(s, 16, 60)
+  menu:add(s, 16, 40)
 
-  menu:addLabel("Keystroke Help Menu", 352 / 2, 11)
-  menu:addFullButton("Previous (~<Esc~>)", "escape",
-    (352 / 2) - (224 / 2), 352 - 40, function() menu:stop() end)
+  menu:addLabel("Stargus Help", 312/2, 8)
+  menu:addHalfButton("~!OK", "o", 100, 276,
+    function() menu:stop() end)
 
   menu:run(false)
 end
