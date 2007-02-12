@@ -3455,6 +3455,21 @@ int ConvertGfu(char* listfile, char* file, int pale)
 	return 0;
 }
 
+void SaveImage(char *name, unsigned char *image, unsigned char *palp, int id, int w, int h)
+{
+	unsigned char *buf = (unsigned char *)malloc(w * h);
+	int i;
+
+	for (i = 0; i < h; ++i) {
+		memcpy(buf + w*i, image + id*28*64 + 64*i, w);
+	}
+
+	SavePNG(name, buf, w, h, palp, 255);
+
+	free(buf);
+}
+
+
 void SaveButton(char *name, unsigned char *image, unsigned char *palp, int size, int id)
 {
 	unsigned char *button;
@@ -3518,6 +3533,23 @@ int ConvertWidgets(char* listfile, char* file, int pale)
 	sprintf(buf, "%s/graphics/%s/", Dir, file);
 	CheckPath(buf);
 
+	sprintf(buf, "%s/graphics/%s/menu.png", Dir, file);
+	SaveImage(buf, image, palp, 1, 64, 20);
+
+	sprintf(buf, "%s/graphics/%s/menu pressed.png", Dir, file);
+	SaveImage(buf, image, palp, 2, 64, 20);
+
+
+	sprintf(buf, "%s/graphics/%s/minimap terrain disabled.png", Dir, file);
+	SaveImage(buf, image, palp, 3, 64, 20);
+
+	sprintf(buf, "%s/graphics/%s/minimap terrain.png", Dir, file);
+	SaveImage(buf, image, palp, 4, 64, 20);
+
+	sprintf(buf, "%s/graphics/%s/minimap terrain pressed.png", Dir, file);
+	SaveImage(buf, image, palp, 5, 64, 20);
+
+
 #if 0
 	sprintf(buf, "%s/graphics/%s/button left disabled 224x28.png", Dir, file);
 	SaveButton(buf, image, palp, 224, 104);
@@ -3529,6 +3561,7 @@ int ConvertWidgets(char* listfile, char* file, int pale)
 	SaveButton(buf, image, palp, 224, 110);
 #endif
 
+
 	sprintf(buf, "%s/graphics/%s/button disabled 224x28.png", Dir, file);
 	SaveButton(buf, image, palp, 224, 113);
 
@@ -3537,6 +3570,7 @@ int ConvertWidgets(char* listfile, char* file, int pale)
 
 	sprintf(buf, "%s/graphics/%s/button pressed 224x28.png", Dir, file);
 	SaveButton(buf, image, palp, 224, 119);
+
 
 #if 0
 	sprintf(buf, "%s/graphics/%s/button right disabled 224x28.png", Dir, file);
@@ -3548,6 +3582,7 @@ int ConvertWidgets(char* listfile, char* file, int pale)
 	sprintf(buf, "%s/graphics/%s/button right pressed 224x28.png", Dir, file);
 	SaveButton(buf, image, palp, 224, 128);
 #endif
+
 
 	free(image);
 
