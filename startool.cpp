@@ -3550,6 +3550,16 @@ int ConvertWidgets(char* listfile, char* file, int pale)
 	SaveImage(buf, image, palp, 5, 64, 20);
 
 
+	sprintf(buf, "%s/graphics/%s/diplomacy disabled.png", Dir, file);
+	SaveImage(buf, image, palp, 83, 64, 20);
+
+	sprintf(buf, "%s/graphics/%s/diplomacy.png", Dir, file);
+	SaveImage(buf, image, palp, 84, 64, 20);
+
+	sprintf(buf, "%s/graphics/%s/diplomacy pressed.png", Dir, file);
+	SaveImage(buf, image, palp, 85, 64, 20);
+
+
 #if 0
 	sprintf(buf, "%s/graphics/%s/button left disabled 224x28.png", Dir, file);
 	SaveButton(buf, image, palp, 224, 104);
@@ -4057,6 +4067,8 @@ int main(int argc, char **argv)
 		Dir = "data";
 	}
 
+	Mpq = new CMpq;
+
 #if 0
 	{
 		FILE *fd;
@@ -4064,8 +4076,8 @@ int main(int argc, char **argv)
 		char buf[PATH_MAX];
 		sprintf(buf, "%s/%s", archivedir, "stardat.mpq");
 		OpenArchive(buf);
-		p = ExtractEntry("tileset\\install.wpe");
-		fd = fopen("install.wpe", "wb");
+		p = ExtractEntry((unsigned char *)"rez\\minimap.bin");
+		fd = fopen("minimap.bin", "wb");
 		fwrite(p, EntrySize, 1, fd);
 		fclose(fd);
 		free(p);
@@ -4080,8 +4092,6 @@ int main(int argc, char **argv)
 		exit(0);
 	}
 #endif
-
-	Mpq = new CMpq;
 
 #ifdef DEBUG
 	printf("Extract from \"%s\" to \"%s\"\n", archivedir, Dir);
