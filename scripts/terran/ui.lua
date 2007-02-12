@@ -181,7 +181,7 @@ UI.MapArea.Y = 0
 UI.MapArea.EndX = Video.Width - 1
 UI.MapArea.EndY = Video.Height - 106
 
-UI.Minimap.X = 7
+UI.Minimap.X = 6
 UI.Minimap.Y = 348
 UI.Minimap.W = 128
 UI.Minimap.H = 128
@@ -231,15 +231,17 @@ UI.MenuButton.Text = "MENU"
 UI.MenuButton.Style = FindButtonStyle("terran menu button")
 UI.MenuButton:SetCallback(function() RunGameMenu() end)
 
-UI.NetworkMenuButton.X = 6
-UI.NetworkMenuButton.Y = 2
-UI.NetworkMenuButton.Text = "Menu"
+UI.NetworkMenuButton.X = 416 
+UI.NetworkMenuButton.Y = 388 
+UI.NetworkMenuButton.Text = "MENU"
 UI.NetworkMenuButton.Style = FindButtonStyle("terran menu button")
 UI.NetworkMenuButton:SetCallback(function() RunGameMenu() end)
 
-UI.NetworkDiplomacyButton.X = 90
-UI.NetworkDiplomacyButton.Y = 2
-UI.NetworkDiplomacyButton.Text = "Diplomacy"
-UI.NetworkDiplomacyButton.Style = FindButtonStyle("network")
+UI.NetworkDiplomacyButton.X = 76
+UI.NetworkDiplomacyButton.Y = 320
+--UI.NetworkDiplomacyButton.Text = "Diplomacy"
+UI.NetworkDiplomacyButton.Style = FindButtonStyle("terran diplomacy button")
 UI.NetworkDiplomacyButton:SetCallback(function() RunDiplomacyMenu() end)
+
+-- minimap terrain at 3,320
 

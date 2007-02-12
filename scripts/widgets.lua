@@ -30,7 +30,26 @@
 
 
 DefineButtonStyle("terran menu button", {
-  Size = {64, 28},
+  Size = {64, 20},
+  Font = "font8",
+  TextNormalColor = "white",
+  TextReverseColor = "white",
+  TextAlign = "Center",
+  TextPos = {33, 6},
+  Default = {
+    File = "ui/terran/menu.png",
+  },
+  Hover = {
+    TextNormalColor = "white",
+  },
+  Clicked = {
+    File = "ui/terran/menu pressed.png",
+    TextPos = {31, 4},
+  },
+})
+
+DefineButtonStyle("terran diplomacy button", {
+  Size = {64, 20},
   Font = "font8",
   TextNormalColor = "white",
   TextReverseColor = "white",
