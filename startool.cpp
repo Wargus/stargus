@@ -3560,16 +3560,14 @@ int ConvertWidgets(char* listfile, char* file, int pale)
 	SaveImage(buf, image, palp, 85, 64, 20);
 
 
-#if 0
-	sprintf(buf, "%s/graphics/%s/button left disabled 224x28.png", Dir, file);
-	SaveButton(buf, image, palp, 224, 104);
+	sprintf(buf, "%s/graphics/%s/button left disabled 104x28.png", Dir, file);
+	SaveButton(buf, image, palp, 104, 104);
 
-	sprintf(buf, "%s/graphics/%s/button left 224x28.png", Dir, file);
-	SaveButton(buf, image, palp, 224, 107);
+	sprintf(buf, "%s/graphics/%s/button left 104x28.png", Dir, file);
+	SaveButton(buf, image, palp, 104, 107);
 
-	sprintf(buf, "%s/graphics/%s/button left pressed 224x28.png", Dir, file);
-	SaveButton(buf, image, palp, 224, 110);
-#endif
+	sprintf(buf, "%s/graphics/%s/button left pressed 104x28.png", Dir, file);
+	SaveButton(buf, image, palp, 104, 110);
 
 
 	sprintf(buf, "%s/graphics/%s/button disabled 224x28.png", Dir, file);
@@ -3582,16 +3580,24 @@ int ConvertWidgets(char* listfile, char* file, int pale)
 	SaveButton(buf, image, palp, 224, 119);
 
 
-#if 0
-	sprintf(buf, "%s/graphics/%s/button right disabled 224x28.png", Dir, file);
-	SaveButton(buf, image, palp, 224, 122);
+	sprintf(buf, "%s/graphics/%s/button disabled 104x28.png", Dir, file);
+	SaveButton(buf, image, palp, 104, 113);
 
-	sprintf(buf, "%s/graphics/%s/button right 224x28.png", Dir, file);
-	SaveButton(buf, image, palp, 224, 125);
+	sprintf(buf, "%s/graphics/%s/button 104x28.png", Dir, file);
+	SaveButton(buf, image, palp, 104, 116);
 
-	sprintf(buf, "%s/graphics/%s/button right pressed 224x28.png", Dir, file);
-	SaveButton(buf, image, palp, 224, 128);
-#endif
+	sprintf(buf, "%s/graphics/%s/button pressed 104x28.png", Dir, file);
+	SaveButton(buf, image, palp, 104, 119);
+
+
+	sprintf(buf, "%s/graphics/%s/button right disabled 104x28.png", Dir, file);
+	SaveButton(buf, image, palp, 104, 122);
+
+	sprintf(buf, "%s/graphics/%s/button right 104x28.png", Dir, file);
+	SaveButton(buf, image, palp, 104, 125);
+
+	sprintf(buf, "%s/graphics/%s/button right pressed 104x28.png", Dir, file);
+	SaveButton(buf, image, palp, 104, 128);
 
 
 	free(image);
