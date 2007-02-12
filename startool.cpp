@@ -4005,6 +4005,7 @@ int SavePanel(int width, int height)
 void CreatePanels()
 {
 	SavePanel(264, 288);
+	SavePanel(384, 256);
 }
 
 //----------------------------------------------------------------------------
