@@ -29,7 +29,7 @@
 --      $Id: widgets.lua 1223 2005-06-25 20:49:51Z jsalmon3 $
 
 
-DefineButtonStyle("menu button", {
+DefineButtonStyle("terran menu button", {
   Size = {64, 28},
   Font = "font8",
   TextNormalColor = "white",
@@ -37,187 +37,15 @@ DefineButtonStyle("menu button", {
   TextAlign = "Center",
   TextPos = {33, 6},
   Default = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 0,
+    File = "ui/terran/menu.png",
   },
   Hover = {
     TextNormalColor = "white",
   },
---[[
-  Selected = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 1,
-    Border = {
-      Color = {252, 252, 0}, Size = 1,
-    },
-  },]]
   Clicked = {
-    File = "ui/terran icons.png", Size = {64, 28}, Frame = 2,
-    TextNormalColor = "white",
-    TextPos = {35, 6},
+    File = "ui/terran/menu pressed.png",
+    TextPos = {31, 4},
   },
---[[
-  Disabled = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 3,
-    TextNormalColor = "grey",
-    TextReverseColor = "grey",
-  },]]
-})
-
-
-DefineButtonStyle("main", {
-  Size = {128, 20},
-  Font = "game",
-  TextNormalColor = "white",
-  TextReverseColor = "white",
-  TextAlign = "Center",
-  TextPos = {64, 4},
-  Default = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 4,
-  },
-  Hover = {
-    TextNormalColor = "white",
-  },
---[[
-  Selected = {
-    Border = {
-      Color = {252, 252, 0}, Size = 1,
-    },
-  },]]
-  Clicked = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 5,
-    TextNormalColor = "white",
-    TextPos = {66, 6},
-  },
---[[
-  Disabled = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 3,
-    TextNormalColor = "grey",
-    TextReverseColor = "grey",
-  },]]
-})
-
-DefineButtonStyle("network", {
-  Size = {80, 20},
-  Font = "game",
-  TextNormalColor = "white",
-  TextReverseColor = "white",
-  TextAlign = "Center",
-  TextPos = {40, 4},
-  Default = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 7,
-  },
-  Hover = {
-    TextNormalColor = "white",
-  },
---[[
-  Selected = {
-    Border = {
-      Color = {252, 252, 0}, Size = 1,
-    },
-  },]]
-  Clicked = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 8,
-    TextNormalColor = "white",
-    TextPos = {42, 6},
-  },
---[[
-  Disabled = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 6,
-    TextNormalColor = "grey",
-    TextReverseColor = "grey",
-  },]]
-})
-
-DefineButtonStyle("gm-half", {
-  Size = {106, 28},
-  Font = "large",
-  TextNormalColor = "white",
-  TextReverseColor = "white",
-  TextAlign = "Center",
-  TextPos = {53, 7},
-  Default = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 10,
-  },
-  Hover = {
-    TextNormalColor = "white",
-  },
---[[
-  Selected = {
-    Border = {
-      Color = {252, 252, 0}, Size = 1,
-    },
-  },]]
-  Clicked = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 11,
-    TextNormalColor = "white",
-    TextPos = {55, 9},
-  },
---[[
-  Disabled = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 9,
-    TextNormalColor = "grey",
-    TextReverseColor = "grey",
-  },]]
-})
-
-DefineButtonStyle("gm-full", {
-  Size = {224, 28},
-  Font = "large",
-  TextNormalColor = "white",
-  TextReverseColor = "white",
-  TextAlign = "Center",
-  TextPos = {112, 7},
-  Default = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 16,
-  },
-  Hover = {
-    TextNormalColor = "white",
-  },
---[[
-  Selected = {
-    Border = {
-      Color = {252, 252, 0}, Size = 1,
-    },
-  },]]
-  Clicked = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 17,
-    TextNormalColor = "white",
-    TextPos = {114, 9},
-  },
---[[
-  Disabled = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 15,
-    TextNormalColor = "grey",
-    TextReverseColor = "grey",
-  },]]
-})
-
-DefineButtonStyle("folder", {
-  Size = {39, 22},
-  Font = "large",
-  TextNormalColor = "white",
-  TextReverseColor = "white",
-  TextAlign = "Left",
-  TextPos = {44, 6},
-  Default = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 51,
-  },
-  Hover = {
-    TextNormalColor = "white",
-  },
---[[
-  Selected = {
-    Border = {
-      Color = {252, 252, 0}, Size = 1,
-    },
-  },]]
-  Clicked = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 52,
-    TextNormalColor = "white",
-  },
---[[
-  Disabled = {
-    File = "ui/buttons_1.png", Size = {300, 144}, Frame = 50,
-  },]]
 })
 
 DefineButtonStyle("icon", {

@@ -228,13 +228,13 @@ UI.Resources[ScoreCost].TextY = 1
 UI.MenuButton.X = 416
 UI.MenuButton.Y = 388
 UI.MenuButton.Text = "MENU"
-UI.MenuButton.Style = FindButtonStyle("menu button")
+UI.MenuButton.Style = FindButtonStyle("terran menu button")
 UI.MenuButton:SetCallback(function() RunGameMenu() end)
 
 UI.NetworkMenuButton.X = 6
 UI.NetworkMenuButton.Y = 2
 UI.NetworkMenuButton.Text = "Menu"
-UI.NetworkMenuButton.Style = FindButtonStyle("network")
+UI.NetworkMenuButton.Style = FindButtonStyle("terran menu button")
 UI.NetworkMenuButton:SetCallback(function() RunGameMenu() end)
 
 UI.NetworkDiplomacyButton.X = 90
