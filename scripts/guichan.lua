@@ -32,6 +32,74 @@ g_pblg = CGraphic:New("ui/protoss/button disabled 224x28.png")
 g_pblg:Load()
 
 
+g_tbhn = CGraphic:New("ui/terran/button 104x28.png")
+g_tbhn:Load()
+g_tbhp = CGraphic:New("ui/terran/button pressed 104x28.png")
+g_tbhp:Load()
+g_tbhg = CGraphic:New("ui/terran/button disabled 104x28.png")
+g_tbhg:Load()
+
+g_zbhn = CGraphic:New("ui/zerg/button 104x28.png")
+g_zbhn:Load()
+g_zbhp = CGraphic:New("ui/zerg/button pressed 104x28.png")
+g_zbhp:Load()
+g_zbhg = CGraphic:New("ui/zerg/button disabled 104x28.png")
+g_zbhg:Load()
+
+g_pbhn = CGraphic:New("ui/protoss/button 104x28.png")
+g_pbhn:Load()
+g_pbhp = CGraphic:New("ui/protoss/button pressed 104x28.png")
+g_pbhp:Load()
+g_pbhg = CGraphic:New("ui/protoss/button disabled 104x28.png")
+g_pbhg:Load()
+
+
+g_tbhln = CGraphic:New("ui/terran/button left 104x28.png")
+g_tbhln:Load()
+g_tbhlp = CGraphic:New("ui/terran/button left pressed 104x28.png")
+g_tbhlp:Load()
+g_tbhlg = CGraphic:New("ui/terran/button left disabled 104x28.png")
+g_tbhlg:Load()
+
+g_zbhln = CGraphic:New("ui/zerg/button left 104x28.png")
+g_zbhln:Load()
+g_zbhlp = CGraphic:New("ui/zerg/button left pressed 104x28.png")
+g_zbhlp:Load()
+g_zbhlg = CGraphic:New("ui/zerg/button left disabled 104x28.png")
+g_zbhlg:Load()
+
+g_pbhln = CGraphic:New("ui/protoss/button left 104x28.png")
+g_pbhln:Load()
+g_pbhlp = CGraphic:New("ui/protoss/button left pressed 104x28.png")
+g_pbhlp:Load()
+g_pbhlg = CGraphic:New("ui/protoss/button left disabled 104x28.png")
+g_pbhlg:Load()
+
+
+g_tbhrn = CGraphic:New("ui/terran/button right 104x28.png")
+g_tbhrn:Load()
+g_tbhrp = CGraphic:New("ui/terran/button right pressed 104x28.png")
+g_tbhrp:Load()
+g_tbhrg = CGraphic:New("ui/terran/button right disabled 104x28.png")
+g_tbhrg:Load()
+
+g_zbhrn = CGraphic:New("ui/zerg/button right 104x28.png")
+g_zbhrn:Load()
+g_zbhrp = CGraphic:New("ui/zerg/button right pressed 104x28.png")
+g_zbhrp:Load()
+g_zbhrg = CGraphic:New("ui/zerg/button right disabled 104x28.png")
+g_zbhrg:Load()
+
+g_pbhrn = CGraphic:New("ui/protoss/button right 104x28.png")
+g_pbhrn:Load()
+g_pbhrp = CGraphic:New("ui/protoss/button right pressed 104x28.png")
+g_pbhrp:Load()
+g_pbhrg = CGraphic:New("ui/protoss/button right disabled 104x28.png")
+g_pbhrg:Load()
+
+
+
+
 function panel(n)
   return "ui/panels/" .. n .. ".png"
 end
@@ -104,22 +172,60 @@ function AddMenuHelpers(menu)
     return b
   end
 
+  function menu:addHalfLeftButton(caption, hotkey, x, y, callback)
+    local b = self:addImageButton(caption, hotkey, x, y, callback)
+    if (GetPlayerData(GetThisPlayer(), "RaceName") == "terran") then
+      b:setNormalImage(g_tbhln)
+      b:setPressedImage(g_tbhlp)
+      b:setDisabledImage(g_tbhlg)
+    elseif (GetPlayerData(GetThisPlayer(), "RaceName") == "zerg") then
+      b:setNormalImage(g_zbhln)
+      b:setPressedImage(g_zbhlp)
+      b:setDisabledImage(g_zbhlg)
+    else
+      b:setNormalImage(g_pbhln)
+      b:setPressedImage(g_pbhlp)
+      b:setDisabledImage(g_pbhlg)
+    end
+    b:setSize(104, 28)
+    return b
+  end
+
   function menu:addHalfButton(caption, hotkey, x, y, callback)
     local b = self:addImageButton(caption, hotkey, x, y, callback)
     if (GetPlayerData(GetThisPlayer(), "RaceName") == "terran") then
-      b:setNormalImage(g_tbsn)
-      b:setPressedImage(g_tbsp)
-      b:setDisabledImage(g_tbsg)
+      b:setNormalImage(g_tbhn)
+      b:setPressedImage(g_tbhp)
+      b:setDisabledImage(g_tbhg)
     elseif (GetPlayerData(GetThisPlayer(), "RaceName") == "zerg") then
-      b:setNormalImage(g_zbsn)
-      b:setPressedImage(g_zbsp)
-      b:setDisabledImage(g_zbsg)
+      b:setNormalImage(g_zbhn)
+      b:setPressedImage(g_zbhp)
+      b:setDisabledImage(g_zbhg)
     else
-      b:setNormalImage(g_pbnn)
-      b:setPressedImage(g_pbnp)
-      b:setDisabledImage(g_pbng)
+      b:setNormalImage(g_pbhn)
+      b:setPressedImage(g_pbhp)
+      b:setDisabledImage(g_pbhg)
     end
-    b:setSize(106, 28)
+    b:setSize(104, 28)
+    return b
+  end
+
+  function menu:addHalfRightButton(caption, hotkey, x, y, callback)
+    local b = self:addImageButton(caption, hotkey, x, y, callback)
+    if (GetPlayerData(GetThisPlayer(), "RaceName") == "terran") then
+      b:setNormalImage(g_tbhrn)
+      b:setPressedImage(g_tbhrp)
+      b:setDisabledImage(g_tbhrg)
+    elseif (GetPlayerData(GetThisPlayer(), "RaceName") == "zerg") then
+      b:setNormalImage(g_zbhrn)
+      b:setPressedImage(g_zbhrp)
+      b:setDisabledImage(g_zbhrg)
+    else
+      b:setNormalImage(g_pbhrn)
+      b:setPressedImage(g_pbhrp)
+      b:setDisabledImage(g_pbhrg)
+    end
+    b:setSize(104, 28)
     return b
   end
 
