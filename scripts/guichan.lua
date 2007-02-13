@@ -32,6 +32,28 @@ g_pblg = CGraphic:New("ui/protoss/button disabled 224x28.png")
 g_pblg:Load()
 
 
+g_tblln = CGraphic:New("ui/terran/button left 224x28.png")
+g_tblln:Load()
+g_tbllp = CGraphic:New("ui/terran/button left pressed 224x28.png")
+g_tbllp:Load()
+g_tbllg = CGraphic:New("ui/terran/button left disabled 224x28.png")
+g_tbllg:Load()
+
+g_zblln = CGraphic:New("ui/zerg/button left 224x28.png")
+g_zblln:Load()
+g_zbllp = CGraphic:New("ui/zerg/button left pressed 224x28.png")
+g_zbllp:Load()
+g_zbllg = CGraphic:New("ui/zerg/button left disabled 224x28.png")
+g_zbllg:Load()
+
+g_pblln = CGraphic:New("ui/protoss/button left 224x28.png")
+g_pblln:Load()
+g_pbllp = CGraphic:New("ui/protoss/button left pressed 224x28.png")
+g_pbllp:Load()
+g_pbllg = CGraphic:New("ui/protoss/button left disabled 224x28.png")
+g_pbllg:Load()
+
+
 g_tbhn = CGraphic:New("ui/terran/button 104x28.png")
 g_tbhn:Load()
 g_tbhp = CGraphic:New("ui/terran/button pressed 104x28.png")
@@ -150,6 +172,25 @@ function AddMenuHelpers(menu)
     b:setHotKey(hotkey)
     b:setActionCallback(callback)
     self:add(b, x, y)
+    return b
+  end
+
+  function menu:addFullLeftButton(caption, hotkey, x, y, callback)
+    local b = self:addImageButton(caption, hotkey, x, y, callback)
+    if (GetPlayerData(GetThisPlayer(), "RaceName") == "terran") then
+      b:setNormalImage(g_tblln)
+      b:setPressedImage(g_tbllp)
+      b:setDisabledImage(g_tbllg)
+    elseif (GetPlayerData(GetThisPlayer(), "RaceName") == "zerg") then
+      b:setNormalImage(g_zblln)
+      b:setPressedImage(g_zbllp)
+      b:setDisabledImage(g_zbllg)
+    else
+      b:setNormalImage(g_pblln)
+      b:setPressedImage(g_pbllp)
+      b:setDisabledImage(g_pbllg)
+    end
+    b:setSize(224, 28)
     return b
   end
 
