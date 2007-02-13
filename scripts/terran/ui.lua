@@ -10,7 +10,7 @@
 --
 --      ui.lua - Define the human user interface
 --
---      (c) Copyright 2005-2006 by Jimmy Salmon
+--      (c) Copyright 2005-2007 by Jimmy Salmon
 --
 --      This program is free software; you can redistribute it and/or modify
 --      it under the terms of the GNU General Public License as published by
@@ -33,6 +33,9 @@
 --;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 --  * Race Terran.
 --;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+local offx = (Video.Width - 640) / 2
+local offy = Video.Height - 480
 
 function TerranScreen(screen_width, screen_height)
   local info_panel_x = 0
@@ -62,14 +65,14 @@ function AddFiller(file, x, y)
     UI.Fillers:push_back(b)
 end
 
-AddFiller("ui/tconsole.png", 0, 0)
+AddFiller("ui/tconsole.png", offx, offy)
 
-UI.InfoPanel.X = 0
-UI.InfoPanel.Y = 160
+UI.InfoPanel.X = offx + 0
+UI.InfoPanel.Y = offy + 160
 
 b = CUIButton:new()
-b.X = 9
-b.Y = 160 + 9
+b.X = offx + 9
+b.Y = offy + 160 + 9
 b.Style = FindButtonStyle("icon")
 UI.SingleSelectedButton = b
 
@@ -83,23 +86,23 @@ function AddSelectedButton(x, y)
     UI.SelectedButtons:push_back(b)
 end
 
-AddSelectedButton(9, 160 + 9)
-AddSelectedButton(65, 160 + 9)
-AddSelectedButton(121, 160 + 9)
-AddSelectedButton(9, 160 + 63)
-AddSelectedButton(65, 160 + 63)
-AddSelectedButton(121, 160 + 63)
-AddSelectedButton(9, 160 + 117)
-AddSelectedButton(65, 160 + 117)
-AddSelectedButton(121, 160 + 117)
+AddSelectedButton(offx + 9,   offy + 160 + 9)
+AddSelectedButton(offx + 65,  offy + 160 + 9)
+AddSelectedButton(offx + 121, offy + 160 + 9)
+AddSelectedButton(offx + 9,   offy + 160 + 63)
+AddSelectedButton(offx + 65,  offy + 160 + 63)
+AddSelectedButton(offx + 121, offy + 160 + 63)
+AddSelectedButton(offx + 9,   offy + 160 + 117)
+AddSelectedButton(offx + 65,  offy + 160 + 117)
+AddSelectedButton(offx + 121, offy + 160 + 117)
 
 UI.MaxSelectedFont = Fonts["game"]
-UI.MaxSelectedTextX = 10
-UI.MaxSelectedTextY = 160 + 10
+UI.MaxSelectedTextX = offx + 10
+UI.MaxSelectedTextY = offy + 160 + 10
 
 b = CUIButton:new()
-b.X = 110
-b.Y = 160 + 11 + 70
+b.X = offx + 110
+b.Y = offy + 160 + 11 + 70
 b.Style = FindButtonStyle("icon")
 UI.SingleTrainingButton = b
 
@@ -113,22 +116,22 @@ function AddTrainingButton(x, y)
     UI.TrainingButtons:push_back(b)
 end
 
-AddTrainingButton(9, 219)
-AddTrainingButton(65, 219)
-AddTrainingButton(121, 219)
-AddTrainingButton(9, 266)
-AddTrainingButton(65, 266)
-AddTrainingButton(121, 266)
+AddTrainingButton(offx + 9,   offy + 219)
+AddTrainingButton(offx + 65,  offy + 219)
+AddTrainingButton(offx + 121, offy + 219)
+AddTrainingButton(offx + 9,   offy + 266)
+AddTrainingButton(offx + 65,  offy + 266)
+AddTrainingButton(offx + 121, offy + 266)
 
 b = CUIButton:new()
-b.X = 110
-b.Y = 160 + 11 + 70
+b.X = offx + 110
+b.Y = offy + 160 + 11 + 70
 b.Style = FindButtonStyle("icon")
 UI.UpgradingButton = b
 
 b = CUIButton:new()
-b.X = 110
-b.Y = 160 + 11 + 70
+b.X = offx + 110
+b.Y = offy + 160 + 11 + 70
 b.Style = FindButtonStyle("icon")
 UI.ResearchingButton = b
 
@@ -142,12 +145,12 @@ function AddTransportingButton(x, y)
     UI.TransportingButtons:push_back(b)
 end
 
-AddTransportingButton(9, 223)
-AddTransportingButton(65, 223)
-AddTransportingButton(121, 223)
-AddTransportingButton(9, 277)
-AddTransportingButton(65, 277)
-AddTransportingButton(121, 277)
+AddTransportingButton(offx + 9,   offy + 223)
+AddTransportingButton(offx + 65,  offy + 223)
+AddTransportingButton(offx + 121, offy + 223)
+AddTransportingButton(offx + 9,   offy + 277)
+AddTransportingButton(offx + 65,  offy + 277)
+AddTransportingButton(offx + 121, offy + 277)
 
 UI.CompletedBarColorRGB = CColor(48, 100, 4)
 UI.CompletedBarShadow = true
@@ -162,57 +165,57 @@ function AddButtonPanelButton(x, y)
     UI.ButtonPanel.Buttons:push_back(b)
 end
 
-AddButtonPanelButton(505, 358)
-AddButtonPanelButton(551, 358)
-AddButtonPanelButton(597, 358)
-AddButtonPanelButton(505, 398)
-AddButtonPanelButton(551, 398)
-AddButtonPanelButton(597, 398)
-AddButtonPanelButton(505, 438)
-AddButtonPanelButton(551, 438)
-AddButtonPanelButton(597, 438)
+AddButtonPanelButton(offx + 505, offy + 358)
+AddButtonPanelButton(offx + 551, offy + 358)
+AddButtonPanelButton(offx + 597, offy + 358)
+AddButtonPanelButton(offx + 505, offy + 398)
+AddButtonPanelButton(offx + 551, offy + 398)
+AddButtonPanelButton(offx + 597, offy + 398)
+AddButtonPanelButton(offx + 505, offy + 438)
+AddButtonPanelButton(offx + 551, offy + 438)
+AddButtonPanelButton(offx + 597, offy + 438)
 
-UI.ButtonPanel.X = 0
-UI.ButtonPanel.Y = 336
+UI.ButtonPanel.X = offx + 0
+UI.ButtonPanel.Y = offy + 336
 UI.ButtonPanel.AutoCastBorderColorRGB = CColor(0, 0, 252)
 
 UI.MapArea.X = 0
 UI.MapArea.Y = 0
 UI.MapArea.EndX = Video.Width - 1
-UI.MapArea.EndY = Video.Height - 106
+UI.MapArea.EndY = Video.Height - 1
 
-UI.Minimap.X = 6
-UI.Minimap.Y = 348
+UI.Minimap.X = offx + 6
+UI.Minimap.Y = offy + 348
 UI.Minimap.W = 128
 UI.Minimap.H = 128
 
-UI.StatusLine.TextX = 172
-UI.StatusLine.TextY = 350
-UI.StatusLine.Width = Video.Width - 16 - 2 - 176
+UI.StatusLine.TextX = offx + 172
+UI.StatusLine.TextY = offy + 350
+UI.StatusLine.Width = Video.Width - offx - 172
 UI.StatusLine.Font = Fonts["game"]
 
 -- gold
 UI.Resources[1].G = CGraphic:New("ui/icons.png", 54, 14)
 UI.Resources[1].IconFrame = 0
-UI.Resources[1].IconX = 436
+UI.Resources[1].IconX = offx + 436
 UI.Resources[1].IconY = 3
-UI.Resources[1].TextX = 452
+UI.Resources[1].TextX = offx + 452
 UI.Resources[1].TextY = 3
 
 -- wood
 UI.Resources[2].G = CGraphic:New("ui/icons.png", 54, 14)
 UI.Resources[2].IconFrame = 2
-UI.Resources[2].IconX = 504
+UI.Resources[2].IconX = offx + 504
 UI.Resources[2].IconY = 3
-UI.Resources[2].TextX = 520
+UI.Resources[2].TextX = offx + 520
 UI.Resources[2].TextY = 3
 
 -- food
 UI.Resources[FoodCost].G = CGraphic:New("ui/icons.png", 54, 14)
 UI.Resources[FoodCost].IconFrame = 5
-UI.Resources[FoodCost].IconX = 572
+UI.Resources[FoodCost].IconX = offx + 572
 UI.Resources[FoodCost].IconY = 3
-UI.Resources[FoodCost].TextX = 588
+UI.Resources[FoodCost].TextX = offx + 588
 UI.Resources[FoodCost].TextY = 3
 
 -- score
@@ -225,20 +228,20 @@ UI.Resources[ScoreCost].TextX = Video.Width - 16 - 68 + 18
 UI.Resources[ScoreCost].TextY = 1
 ]]
 
-UI.MenuButton.X = 416
-UI.MenuButton.Y = 388
+UI.MenuButton.X = offx + 416
+UI.MenuButton.Y = offy + 388
 UI.MenuButton.Text = "MENU"
 UI.MenuButton.Style = FindButtonStyle("terran menu button")
 UI.MenuButton:SetCallback(function() RunGameMenu() end)
 
-UI.NetworkMenuButton.X = 416 
-UI.NetworkMenuButton.Y = 388 
+UI.NetworkMenuButton.X = offx + 416 
+UI.NetworkMenuButton.Y = offy + 388 
 UI.NetworkMenuButton.Text = "MENU"
 UI.NetworkMenuButton.Style = FindButtonStyle("terran menu button")
 UI.NetworkMenuButton:SetCallback(function() RunGameMenu() end)
 
-UI.NetworkDiplomacyButton.X = 76
-UI.NetworkDiplomacyButton.Y = 320
+UI.NetworkDiplomacyButton.X = offx + 76
+UI.NetworkDiplomacyButton.Y = offy + 320
 --UI.NetworkDiplomacyButton.Text = "Diplomacy"
 UI.NetworkDiplomacyButton.Style = FindButtonStyle("terran diplomacy button")
 UI.NetworkDiplomacyButton:SetCallback(function() RunDiplomacyMenu() end)

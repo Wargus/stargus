@@ -70,12 +70,14 @@ ShowManaDot()
 --  FIXME: planned feature
 DecorationOnTop()
 
+local offx = (Video.Width - 640) / 2
+local offy = Video.Height - 480
 
 --
 --  Define Panels
 --
-local info_panel_x = 0
-local info_panel_y = 160
+local info_panel_x = offx + 0
+local info_panel_y = offy + 160
 
 local min_damage = Div(ActiveUnitVar("PiercingDamage"), 2)
 local max_damage = Add(ActiveUnitVar("PiercingDamage"), ActiveUnitVar("BasicDamage"))
@@ -87,35 +89,35 @@ DefinePanelContents(
 -- Default presentation. ------------------------
   {
   Ident = "panel-general-contents",
-  Pos = {0, 0}, DefaultFont = "game",
+  Pos = {offx, offy}, DefaultFont = "game",
   Contents = {
 --[[
   { Pos = {10, 48}, Condition = {ShowOpponent = false, HideNeutral = true},
     More = {"LifeBar", {Variable = "HitPoints", Height = 7, Width = 45}}
   },
 ]]
-  { Pos = {198, 454}, Condition = {ShowOpponent = false, HideNeutral = true},
+  { Pos = {offx + 198, offy + 454}, Condition = {ShowOpponent = false, HideNeutral = true},
     More = {"FormattedText2", {
       Font = "small", Variable = "HitPoints", Format = "%d/%d",
       Component1 = "Value", Component2 = "Max", Centered = true}}
   },
 
-  { Pos = {315, 391}, More = {"Text", {Text = Line(1, UnitName("Active"), 110, "game"), Centered = true}} },
-  { Pos = {315, 405}, More = {"Text", {Text = Line(2, UnitName("Active"), 110, "game"), Centered = true}} },
+  { Pos = {offx + 315, offy + 391}, More = {"Text", {Text = Line(1, UnitName("Active"), 110, "game"), Centered = true}} },
+  { Pos = {offx + 315, offy + 405}, More = {"Text", {Text = Line(2, UnitName("Active"), 110, "game"), Centered = true}} },
 
 -- Resource Left
-  { Pos = {88, 86}, Condition = {ShowOpponent = false, GiveResource = "only"},
+  { Pos = {offx + 88, offy + 86}, Condition = {ShowOpponent = false, GiveResource = "only"},
     More = {"FormattedText2", {Format = "%s Left:%d", Variable = "GiveResource",
           Component1 = "Name", Component2 = "Value", Centered = true}}
   },
 
 -- Construction
-  { Pos = {12, 153}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
+  { Pos = {offx + 12, offy + 153}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
     More = {"CompleteBar", {Variable = "Build", Width = 152, Height = 12}}
   },
-  { Pos = {50, 154}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
+  { Pos = {offx + 50, offy + 154}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
     More = {"Text", "% Complete"}},
-  { Pos = {107, 78}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
+  { Pos = {offx + 107, offy + 78}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
     More = {"Icon", {Unit = "Worker"}}}
 
 
@@ -128,9 +130,9 @@ DefinePanelContents(
 -- FIXME more condition. not town hall.
   Contents = {
 -- Food building
-  { Pos = {16, 71}, More = {"Text", "Usage"} },
-  { Pos = {58, 86}, More = {"Text", {Text = "Supply : ", Variable = "Supply", Component = "Max"}} },
-  { Pos = {51, 102}, More = { "Text", {Text = Concat("Demand : ",
+  { Pos = {offx + 16, offy + 71}, More = {"Text", "Usage"} },
+  { Pos = {offx + 58, offy + 86}, More = {"Text", {Text = "Supply : ", Variable = "Supply", Component = "Max"}} },
+  { Pos = {offx + 51, offy + 102}, More = { "Text", {Text = Concat("Demand : ",
                   If(GreaterThan(ActiveUnitVar("Demand", "Max"), ActiveUnitVar("Supply", "Max")),
                     InverseVideo(String(ActiveUnitVar("Demand", "Max"))),
                     String(ActiveUnitVar("Demand", "Max")) ))}}
@@ -158,29 +160,29 @@ DefinePanelContents(
   },
 ]]
 -- Research
-  { Pos = {12, 153}, Condition = {Research = "only"},
+  { Pos = {offx + 12, offy + 153}, Condition = {Research = "only"},
     More = {"CompleteBar", {Variable = "Research", Width = 152, Height = 12}}
   },
-  { Pos = {16, 86}, Condition = {Research = "only"}, More = {"Text", "Researching:"}},
-  { Pos = {50, 154}, Condition = {Research = "only"}, More = {"Text", "% Complete"}},
+  { Pos = {offx + 16, offy + 86}, Condition = {Research = "only"}, More = {"Text", "Researching:"}},
+  { Pos = {offx + 50, offy + 154}, Condition = {Research = "only"}, More = {"Text", "% Complete"}},
 -- Training
-  { Pos = {12, 153}, Condition = {Training = "only"},
+  { Pos = {offx + 12, offy + 153}, Condition = {Training = "only"},
     More = {"CompleteBar", {Variable = "Training", Width = 152, Height = 12}}
   },
-  { Pos = {50, 154}, Condition = {Training = "only"}, More = {"Text", "% Complete"}},
+  { Pos = {offx + 50, offy + 154}, Condition = {Training = "only"}, More = {"Text", "% Complete"}},
 -- Upgrading To
-  { Pos = {12, 153}, Condition = {UpgradeTo = "only"},
+  { Pos = {offx + 12, offy + 153}, Condition = {UpgradeTo = "only"},
     More = {"CompleteBar", {Variable = "UpgradeTo", Width = 152, Height = 12}}
   },
-  { Pos = {37,  86}, More = {"Text", "Upgrading:"}, Condition = {UpgradeTo = "only"} },
-  { Pos = {50, 154}, More = {"Text", "% Complete"}, Condition = {UpgradeTo = "only"} },
+  { Pos = {offx + 37, offy + 86}, More = {"Text", "Upgrading:"}, Condition = {UpgradeTo = "only"} },
+  { Pos = {offx + 50, offy + 154}, More = {"Text", "% Complete"}, Condition = {UpgradeTo = "only"} },
 -- Mana
-  { Pos = {16, 148}, Condition = {Mana = "only"},
+  { Pos = {offx + 16, offy + 148}, Condition = {Mana = "only"},
     More = {"CompleteBar", {Variable = "Mana", Height = 16, Width = 140, Border = true}}
   },
-  { Pos = {86, 150}, More = {"Text", {Variable = "Mana"}}, Condition = {Mana = "only"} },
+  { Pos = {offx + 86, offy + 150}, More = {"Text", {Variable = "Mana"}}, Condition = {Mana = "only"} },
 -- Ressource Carry
-  { Pos = {61, 149}, Condition = {CarryResource = "only"},
+  { Pos = {offx + 61, offy + 149}, Condition = {CarryResource = "only"},
     More = {"FormattedText2", {Format = "Carry: %d %s", Variable = "CarryResource",
         Component1 = "Value", Component2 = "Name"}}
   }
