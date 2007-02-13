@@ -1,7 +1,7 @@
 function AddSoundOptions(menu, offx, offy, centerx, bottom)
   local b
 
-  b = menu:addLabel("Sound Options", 176, 11)
+  b = menu:addLabel("Sound Options", 264/2, 8)
 
   b = Label("Effects Volume")
   b:setFont(CFont:Get("game"))
@@ -67,7 +67,7 @@ function AddSoundOptions(menu, offx, offy, centerx, bottom)
   musiccheckbox:setMarked(IsMusicEnabled())
   musiccheckbox:adjustSize();
 
-  b = menu:addFullButton("~!OK", "o", centerx, bottom - 11 - 27,
+  b = menu:addHalfLeftButton("~!OK", "o", offx + 20, 252,
     function()
       preferences.EffectsVolume = GetEffectsVolume()
       preferences.EffectsEnabled = IsEffectsEnabled()
@@ -76,21 +76,23 @@ function AddSoundOptions(menu, offx, offy, centerx, bottom)
       SavePreferences()
       menu:stop()
     end)
+  b = menu:addHalfRightButton("~!Cancel", "c", offx + 140, 252,
+    function() menu:stop() end)
 end
 
 function RunGameSoundOptionsMenu()
-  local menu = WarGameMenu(panel(5))
-  menu:resize(352, 352)
+  local menu = WarGameMenu(panel("264x288"))
+  menu:resize(264, 288)
 
-  AddSoundOptions(menu, 0, 0, 352/2 - 224/2, 352)
+  AddSoundOptions(menu, 0, 0, 264/2 - 224/2, 288)
 
   menu:run(false)
 end
 
 function RunPreferencesMenu()
-  local menu = WarGameMenu(panel(1))
+  local menu = WarGameMenu(panel("264x288"))
 
-  menu:addLabel("Preferences", 128, 11)
+  menu:addLabel("Preferences", 264/2, 8)
 
   local fog = {}
   fog = menu:addCheckBox("Fog of War", 16, 40 + 36 * 0,
@@ -118,7 +120,7 @@ function RunPreferencesMenu()
   l:adjustSize()
   menu:add(l, 230 - l:getWidth(), 40 + (36 * 3) + 6)
 
-  menu:addFullButton("~!OK", "o", 128 - (224 / 2), 288 - 40,
+  menu:addHalfLeftButton("~!OK", "o", 20, 252,
     function()
       preferences.FogOfWar = GetFogOfWar()
       preferences.ShowCommandKey = UI.ButtonPanel.ShowCommandKey
@@ -126,6 +128,8 @@ function RunPreferencesMenu()
       SavePreferences()
       menu:stop()
     end)
+  menu:addHalfRightButton("~!Cancel", "c", 140, 252,
+    function() menu:stop() end)
 
   menu:run(false)
 end
@@ -188,16 +192,17 @@ function RunOptionsMenu()
 end
 
 function RunGameOptionsMenu()
-  local menu = WarGameMenu(panel(1))
+  local menu = WarGameMenu(panel("264x288"))
+  menu:resize(264, 288)
 
-  menu:addLabel("Game Options", 128, 11)
-  menu:addFullButton("Sound (~<F7~>)", "f7", 16, 40 + 36*0,
+  menu:addLabel("Game Options", 264/2, 8)
+  menu:addFullButton("~!Sound", "s", 20, 36,
     function() RunGameSoundOptionsMenu() end)
-  menu:addFullButton("Preferences (~<F8~>)", "f8", 16, 40 + 36*1,
+  menu:addFullButton("~!Preferences", "p", 20, 70,
     function() RunPreferencesMenu() end)
-  menu:addFullButton("Diplomacy (~<F9~>)", "f9", 16, 40 + 36*2,
+  menu:addFullButton("~!Diplomacy", "d", 20, 104,
     function() RunDiplomacyMenu() end)
-  menu:addFullButton("Previous (~<Esc~>", "escape", 128 - (224 / 2), 288 - 40,
+  menu:addFullButton("Previous (~<Esc~>", "escape", 20, 252,
     function() menu:stop() end)
 
   menu:run(false)
