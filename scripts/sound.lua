@@ -10,7 +10,7 @@
 --
 --      sound.lua - Define the used sounds.
 --
---      (c) Copyright 1999-2005 by Fabrice Rossi, Lutz Sammer, and Jimmy Salmon
+--      (c) Copyright 2004-2007 by Jimmy Salmon
 --
 --      This program is free software; you can redistribute it and/or modify
 --      it under the terms of the GNU General Public License as published by
@@ -41,10 +41,33 @@
 --
 
 local playlist = {
-  "music/terran/1.wav",
-  "music/terran/2.wav",
-  "music/terran/3.wav"
+  "music/title.wav"
 }
+
+function SetMusic(music)
+  if (music == "menu") then
+    playlist = {"music/title.wav"}
+  elseif (music == "terran") then
+    playlist = {
+      "music/terran/1.wav",
+      "music/terran/2.wav",
+      "music/terran/3.wav"
+    }
+  elseif (music == "zerg") then
+    playlist = {
+      "music/zerg/1.wav",
+      "music/zerg/2.wav",
+      "music/zerg/3.wav"
+    }
+  elseif (music == "protoss") then
+    playlist = {
+      "music/protoss/1.wav",
+      "music/protoss/2.wav",
+      "music/protoss/3.wav"
+    }
+  end
+  MusicStopped()
+end
 
 function MusicStopped()
   if (table.getn(playlist) ~= 0) then

@@ -496,6 +496,7 @@ end
 InitGameSettings()
 
 function RunMap(map, objective, fow, revealmap)
+  SetMusic(GetPlayerData(GetThisPlayer(), "RaceName"))
   if objective == nil then
     Objectives = DefaultObjectives
   else
@@ -518,7 +519,8 @@ function RunMap(map, objective, fow, revealmap)
   RunResultsMenu(s)
 
   InitGameSettings()
-  SetPlayerData(GetThisPlayer(), "RaceName", "orc")
+  SetPlayerData(GetThisPlayer(), "RaceName", "terran")
+  SetMusic("menu")
 end
 
 mapname = "maps/default.smp"
