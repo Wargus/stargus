@@ -3560,6 +3560,16 @@ int ConvertWidgets(char* listfile, char* file, int pale)
 	SaveImage(buf, image, palp, 85, 64, 20);
 
 
+	sprintf(buf, "%s/graphics/%s/button left disabled 224x28.png", Dir, file);
+	SaveButton(buf, image, palp, 224, 104);
+
+	sprintf(buf, "%s/graphics/%s/button left 224x28.png", Dir, file);
+	SaveButton(buf, image, palp, 224, 107);
+
+	sprintf(buf, "%s/graphics/%s/button left pressed 224x28.png", Dir, file);
+	SaveButton(buf, image, palp, 224, 110);
+
+
 	sprintf(buf, "%s/graphics/%s/button left disabled 104x28.png", Dir, file);
 	SaveButton(buf, image, palp, 104, 104);
 
