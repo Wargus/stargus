@@ -1,33 +1,41 @@
-local hvictory = "ui/human/victory.png"
-local hdefeat =  "ui/human/defeat.png"
-local ovictory = "ui/orc/victory.png"
-local odefeat =  "ui/orc/defeat.png"
+local tvictory = "terran/victory screen.png"
+local tdefeat =  "terran/defeat screen.png"
+local zvictory = "zerg/victory screen.png"
+local zdefeat =  "zerg/defeat screen.png"
+local pvictory = "protoss/victory screen.png"
+local pdefeat =  "protoss/defeat screen.png"
 
 function RunResultsMenu()
   local background
   local result
-  local human = (GetPlayerData(GetThisPlayer(), "RaceName") == "human")
+  local race = GetPlayerData(GetThisPlayer(), "RaceName")
 
   if (GameResult == GameVictory) then
     result = "Victory!"
-    if (human) then
-      background = hvictory
+    if (race == "terran") then
+      background = tvictory
+    elseif (race == "zerg") then
+      background = zvictory
     else
-      background = ovictory
+      background = pvictory
     end
   elseif (GameResult == GameDefeat) then
     result = "Defeat!"
-    if (human) then
-      background = hdefeat
+    if (race == "terran") then
+      background = tdefeat
+    elseif (race == "zerg") then
+      background = zdefeat
     else
-      background = odefeat
+      background = pdefeat
     end
   elseif (GameResult == GameDraw) then
     result = "Draw!"
-    if (human) then
-      background = hdefeat
+    if (race == "terran") then
+      background = tdefeat
+    elseif (race == "zerg") then
+      background = zdefeat
     else
-      background = odefeat
+      background = pdefeat
     end
   else
     return -- quit to menu
