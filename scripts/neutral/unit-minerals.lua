@@ -22,7 +22,7 @@ DefineUnitType("unit-minerals1", { Name = "Minerals 1",
   Priority = 0,
   Type = "land",
   Building = true, VisibleUnderFog = true,
-  GivesResource = "gold", CanHarvest = true,
+  GivesResource = "minerals", CanHarvest = true,
 })
 
 DefineUnitType("unit-minerals2", { Name = "Minerals 2",
@@ -39,7 +39,7 @@ DefineUnitType("unit-minerals2", { Name = "Minerals 2",
   Priority = 0,
   Type = "land",
   Building = true, VisibleUnderFog = true,
-  GivesResource = "gold", CanHarvest = true,
+  GivesResource = "minerals", CanHarvest = true,
 })
 
 DefineUnitType("unit-minerals3", { Name = "Minerals 3",
@@ -56,6 +56,6 @@ DefineUnitType("unit-minerals3", { Name = "Minerals 3",
   Priority = 0,
   Type = "land",
   Building = true, VisibleUnderFog = true,
-  GivesResource = "gold", CanHarvest = true,
+  GivesResource = "minerals", CanHarvest = true,
 })
 

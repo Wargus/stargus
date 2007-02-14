@@ -185,14 +185,14 @@ DefineDefaultIncomes(
   0, 100, 100, 100, 100, 100, 100)
 
 DefineDefaultActions(
-  "stop", "mine", "chop", "drill", "mine", "mine", "mine")
+  "stop", "harvest", "harvest", "unused", "unused", "unused", "unused")
 
 DefineDefaultResourceNames(
-  "time", "gold", "wood", "oil", "ore", "stone", "coal")
+  "time", "minerals", "gas", "unused", "unused", "unused", "unused")
 
 DefineDefaultResourceAmounts(
-  "gold", 100000,
-  "oil", 50000)
+  "minerals", 100000,
+  "gas", 50000)
 
 -------------------------------------------------------------------------------
 

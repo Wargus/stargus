@@ -90,7 +90,7 @@ end
 
 -- Override with game settings
 function SetPlayerData(player, data, arg1, arg2)
-  local res = {arg2, arg2, arg2}
+  local res = {arg2, arg2}
 
   if (data == "RaceName") then
     -- FIXME: support multiplayer
@@ -104,13 +104,11 @@ function SetPlayerData(player, data, arg1, arg2)
       end
     end
   elseif (data == "Resources") then
-    res = {50, 0, 0}
-    if (arg1 == "gold") then
+    res = {50, 0}
+    if (arg1 == "minerals") then
       arg2 = res[1]
-    elseif (arg1 == "wood") then
+    elseif (arg1 == "gas") then
       arg2 = res[2]
-    elseif (arg1 == "oil") then
-      arg2 = res[3]
     end
   end
 

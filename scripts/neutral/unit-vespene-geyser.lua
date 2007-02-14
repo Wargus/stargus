@@ -24,6 +24,6 @@ DefineUnitType("unit-vespene-geyser", { Name = "Vespene Geyser",
   Priority = 0,
   Type = "land",
   Building = true, VisibleUnderFog = true,
-  GivesResource = "wood",
+  GivesResource = "gas",
 })
 

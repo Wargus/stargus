@@ -194,7 +194,7 @@ UI.StatusLine.TextY = offy + 350
 UI.StatusLine.Width = Video.Width - offx - 172
 UI.StatusLine.Font = Fonts["game"]
 
--- gold
+-- minerals
 UI.Resources[1].G = CGraphic:New("ui/icons.png", 54, 14)
 UI.Resources[1].IconFrame = 0
 UI.Resources[1].IconX = offx + 436
@@ -202,7 +202,7 @@ UI.Resources[1].IconY = 3
 UI.Resources[1].TextX = offx + 452
 UI.Resources[1].TextY = 3
 
--- wood
+-- gas
 UI.Resources[2].G = CGraphic:New("ui/icons.png", 54, 14)
 UI.Resources[2].IconFrame = 2
 UI.Resources[2].IconX = offx + 504
