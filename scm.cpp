@@ -1267,18 +1267,6 @@ static void SaveSMS(const char *name, WorldMap *map)
 
 	fprintf(fd, "\n\n");
 
-	for (i = 0; i < PlayerMax; ++i) {
-		if (map->PlayerType[i] == 0) { // inactive
-			continue;
-		}
-		fprintf(fd,
-			"if (Players[%d].TotalUnits == 0) then\n"
-			"  unit= CreateUnit(\"%s\", %d, {%d, %d})\n"
-			"end\n",
-				i, "unit-terran-scv", i, map->PlayerStart[i].X, map->PlayerStart[i].Y
-		);
-	}
-
 	fclose(fd);
 }
 
