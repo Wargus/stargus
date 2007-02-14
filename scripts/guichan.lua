@@ -523,7 +523,7 @@ function RunMap(map, objective, fow, revealmap)
   SetMusic("menu")
 end
 
-mapname = "maps/default.smp"
+mapname = "maps/\(2\)Challenger.smp"
 local mapinfo = {
   playertypes = {nil, nil, nil, nil, nil, nil, nil, nil},
   description = "",
