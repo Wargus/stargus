@@ -48,6 +48,7 @@ DefineRaceNames(
 
 local t = {
   {"unit-terran-scv", "unit-zerg-drone", "unit-protoss-probe"},
+  {"unit-terran-command-center", "unit-zerg-hatchery", "unit-protoss-nexus"},
 }
 
 local TerranEquivalent = {}
@@ -155,3 +156,19 @@ function DefinePlayerTypes(p1, p2, p3, p4, p5, p6, p7, p8)
 
   OldDefinePlayerTypes(p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
 end
+
+function LoadMapFinished()
+  for i=0,7 do
+    if (Players[i].Type ~= PlayerNobody) then
+      if (Players[i].TotalNumUnits == 0) then
+        CreateUnit(ConvertUnitType("unit-terran-command-center", GetPlayerData(i, "RaceName")),
+          i, {Players[i].StartX, Players[i].StartY})
+        for j=0,3 do
+          CreateUnit(ConvertUnitType("unit-terran-scv", GetPlayerData(i, "RaceName")),
+            i, {Players[i].StartX+j, Players[i].StartY+3})
+        end
+      end
+    end
+  end
+end
+
