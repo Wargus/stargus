@@ -1235,9 +1235,8 @@ static void SaveSMS(const char *name, WorldMap *map)
 			continue;
 		}
 		fprintf(fd, "SetStartView(%d, %d, %d)\n", i, map->PlayerStart[i].X, map->PlayerStart[i].Y);
-		fprintf(fd, "SetPlayerData(%d, \"Resources\", \"gold\", %d)\n", i, 0);
-		fprintf(fd, "SetPlayerData(%d, \"Resources\", \"wood\", %d)\n", i, 0);
-		fprintf(fd, "SetPlayerData(%d, \"Resources\", \"oil\", %d)\n", i, 0);
+		fprintf(fd, "SetPlayerData(%d, \"Resources\", \"minerals\", %d)\n", i, 0);
+		fprintf(fd, "SetPlayerData(%d, \"Resources\", \"gas\", %d)\n", i, 0);
 		fprintf(fd, "SetPlayerData(%d, \"RaceName\", \"%s\")\n", i, RaceNames[map->PlayerRace[i]]);
 	}
 
