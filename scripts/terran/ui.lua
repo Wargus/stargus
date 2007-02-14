@@ -182,7 +182,7 @@ UI.ButtonPanel.AutoCastBorderColorRGB = CColor(0, 0, 252)
 UI.MapArea.X = 0
 UI.MapArea.Y = 0
 UI.MapArea.EndX = Video.Width - 1
-UI.MapArea.EndY = Video.Height - 1
+UI.MapArea.EndY = Video.Height - 107
 
 UI.Minimap.X = offx + 6
 UI.Minimap.Y = offy + 348
