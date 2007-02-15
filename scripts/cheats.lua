@@ -10,7 +10,7 @@
 --
 --      cheats.lua - Cheats
 --
---      (c) Copyright 2001-2005 by Lutz Sammer and Jimmy Salmon
+--      (c) Copyright 2001-2007 by Lutz Sammer and Jimmy Salmon
 --
 --      This program is free software; you can redistribute it and/or modify
 --      it under the terms of the GNU General Public License as published by
@@ -32,54 +32,27 @@ speedcheat = false
 godcheat = false
 
 function HandleCheats(str)
-  local resources = { "gold", "wood", "oil" }
+  local resources = { "minerals", "gas" }
 
-  if (str == "there is no aliens level") then
-    -- FIXME: no function yet
-    AddMessage("cheat enabled")
+  if (str == "show me the money") then
+    SetPlayerData(GetThisPlayer(), "Resources", "minerals",
+      GetPlayerData(GetThisPlayer(), "Resources", "minerals") + 10000)
+    SetPlayerData(GetThisPlayer(), "Resources", "gas",
+      GetPlayerData(GetThisPlayer(), "Resources", "gas") + 10000)
 
-  elseif (str == "hatchet") then
-    SetSpeedResourcesHarvest("wood", 52 / 2)
-    AddMessage("Wow -- I got jigsaw!")
+  elseif (str == "whats mine is mine") then
+    SetPlayerData(GetThisPlayer(), "Resources", "minerals",
+      GetPlayerData(GetThisPlayer(), "Resources", "minerals") + 10000)
 
-  elseif (str == "show me the money") then
-    SetPlayerData(GetThisPlayer(), "Resources", "gold",
-      GetPlayerData(GetThisPlayer(), "Resources", "gold") + 12000)
-    SetPlayerData(GetThisPlayer(), "Resources", "wood",
-      GetPlayerData(GetThisPlayer(), "Resources", "wood") + 5000)
-    AddMessage("!!! :)")
+  elseif (str == "breathe deep") then
+    SetPlayerData(GetThisPlayer(), "Resources", "gas",
+      GetPlayerData(GetThisPlayer(), "Resources", "gas") + 10000)
 
   elseif (str == "black sheep wall") then
     RevealMap()
 
-  elseif (str == "breathe deep") then
-    SetPlayerData(GetThisPlayer(), "Resources", "wood",
-      GetPlayerData(GetThisPlayer(), "Resources", "wood") + 500)
-
   elseif (str == "war aint what it used to be") then
     SetFogOfWar(false)
-
-  elseif (str == "fast debug") then
-    for i = 1,table.getn(resources) do
-      SetSpeedResourcesHarvest(resources[i], 10)
-      SetSpeedResourcesReturn(resources[i], 10)
-    end
-    SetSpeedBuild(10)
-    SetSpeedTrain(10)
-    SetSpeedUpgrade(10)
-    SetSpeedResearch(10)
-    AddMessage("FAST DEBUG SPEED")
-
-  elseif (str == "normal debug") then
-    for i = 1,table.getn(resources) do
-      SetSpeedResourcesHarvest(resources[i], 1)
-      SetSpeedResourcesReturn(resources[i], 1)
-    end
-    SetSpeedBuild(1)
-    SetSpeedTrain(1)
-    SetSpeedUpgrade(1)
-    SetSpeedResearch(1)
-    AddMessage("NORMAL DEBUG SPEED")
 
   elseif (str == "operation cwal") then
     if (speedcheat) then
@@ -114,7 +87,7 @@ function HandleCheats(str)
   elseif (str == "game over man") then
     ActionDefeat()
 
-  elseif (str == "it is a good day to die") then
+  elseif (str == "power overwhelming") then
     if (godcheat) then
       godcheat = false
       SetGodMode(false)
@@ -123,12 +96,6 @@ function HandleCheats(str)
       godcheat = true
       SetGodMode(true)
       AddMessage("God Mode ON")
-    end
-
-  elseif (str == "fill mana") then
-    t = GetUnits("this");
-    for i = 1,table.getn(t) do
-      SetUnitMana(t[i], 255)
     end
 
   else
