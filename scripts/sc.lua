@@ -90,6 +90,10 @@ end
 
 -- Override with game settings
 function SetPlayerData(player, data, arg1, arg2)
+  if (GameCycle() ~= 0) then
+    return OldSetPlayerData(player, data, arg1, arg2)
+  end
+
   local res = {arg2, arg2}
 
   if (data == "RaceName") then
