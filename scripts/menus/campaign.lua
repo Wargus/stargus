@@ -111,17 +111,14 @@ function RunCampaignGameMenu()
   local offx = (Video.Width - 640) / 2
   local offy = (Video.Height - 480) / 2
 
-  menu:addFullButton("~!Human campaign", "h", offx + 208, offy + 212 + (36 * 0),
-    function() RunCampaign("scripts/human/campaign1.lua"); menu:stop() end)
-  menu:addFullButton("~!Orc campaign", "o", offx + 208, offy + 212 + (36 * 1),
-    function() RunCampaign("scripts/orc/campaign1.lua"); menu:stop() end)
-
-  if (expansion == true) then
-    menu:addFullButton("~!Human expansion levels", "h", offx + 208, offy + 212 + (36 * 2),
-      function() RunCampaign("scripts/human/campaign2.lua"); menu:stop() end)
-    menu:addFullButton("~!Orc expansion levels", "o", offx + 208, offy + 212 + (36 * 3),
-      function() RunCampaign("scripts/orc/campaign2.lua"); menu:stop() end)
-  end
+--[[
+  menu:addFullButton("~!Terran Campaign", "t", offx + 208, offy + 212 + (36 * 0),
+    function() RunCampaign("scripts/terran/campaign1.lua"); menu:stop() end)
+  menu:addFullButton("~!Zerg Campaign", "z", offx + 208, offy + 212 + (36 * 1),
+    function() RunCampaign("scripts/zerg/campaign1.lua"); menu:stop() end)
+  menu:addFullButton("~!Protoss Campaign", "p", offx + 208, offy + 212 + (36 * 2),
+    function() RunCampaign("scripts/protoss/campaign1.lua"); menu:stop() end)
+]]
 
   menu:addFullButton("~!Cancel", "c", offx + 208, offy + 212 + (36 * 5),
     function() menu:stop() end)
