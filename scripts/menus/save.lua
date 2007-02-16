@@ -38,8 +38,13 @@ function RunSaveMenu()
       menu:stop()
     end)
 
---  menu:addHalfButton("~!Delete", "d", 140, 216,
---    function() end)
+  menu:addHalfButton("~!Delete", "d", 140, 216,
+    function()
+      if (browser:getSelected() >= 0) then
+        DeleteSaveGame(browser:getSelectedItem())
+        browser:updateList()
+      end
+    end)
 
   menu:addHalfRightButton("~!Cancel", "c", 260, 216,
     function() menu:stop() end)

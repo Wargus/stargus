@@ -323,24 +323,24 @@ function AddMenuHelpers(menu)
     bq.actioncb = nil
 
     -- The directory changed, update the list
-    local function updatelist()
-      bq.itemslist = listfiles(bq.path)
-      if (bq.path ~= bq.origpath) then
-        table.insert(bq.itemslist, 1, "../")
+    function bq:updateList()
+      self.itemslist = listfiles(self.path)
+      if (self.path ~= self.origpath) then
+        table.insert(self.itemslist, 1, "../")
       end
-      bq:setList(bq.itemslist)
+      self:setList(self.itemslist)
     end
 
     -- Change to the default directory and select the default file
     if (default == nil) then
       bq.path = path
-      updatelist()
+      bq:updateList()
     else
       local i
       for i=string.len(default)-1,1,-1 do
         if (string.sub(default, i, i) == "/") then
           bq.path = string.sub(default, 1, i)
-          updatelist()
+          bq:updateList()
 
           local f = string.sub(default, i + 1)
           for i=1,table.getn(bq.itemslist) do
@@ -369,13 +369,13 @@ function AddMenuHelpers(menu)
         for i=string.len(bq.path)-1,1,-1 do
           if (string.sub(bq.path, i, i) == "/") then
             bq.path = string.sub(bq.path, 1, i)
-            updatelist()
+            bq:updateList()
             break
           end
         end
       elseif (string.sub(f, string.len(f)) == '/') then
         bq.path = bq.path .. f
-        updatelist()
+        bq:updateList()
       else
         if (bq.actioncb ~= nil) then
           bq:actioncb(s)
