@@ -118,8 +118,9 @@ function SetPlayerData(player, data, arg1, arg2)
 
   OldSetPlayerData(player, data, arg1, arg2)
 
-  -- If this is 1 peasant mode add the peasant now
+
   if (data == "RaceName") then
+    -- If this is 1 peasant mode add the peasant now
     if (GameSettings.NumUnits == 1) then
       if (player ~= 15 and Players[player].Type ~= PlayerNobody) then
         local unittype = ConvertUnitType("unit-terran-scv",
@@ -127,6 +128,14 @@ function SetPlayerData(player, data, arg1, arg2)
         CreateUnit(unittype, player,
           {Players[player].StartX, Players[player].StartY})
       end
+    end
+    -- Set AI
+    if (arg1 == "terran") then
+      SetAiType(player, "terran-ai")
+    elseif (arg1 == "zerg") then
+      SetAiType(player, "zerg-ai")
+    else
+      SetAiType(player, "protoss-ai")
     end
   end
 end
