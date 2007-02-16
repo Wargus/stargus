@@ -17,24 +17,21 @@ function int2bool(int)
 end
 
 function ErrorMenu(errmsg)
-  local menu = WarMenu(nil, panel(4), false)
+  local menu = WarMenu(nil, panel("288x128"), false)
   menu:setSize(288, 128)
   menu:setPosition((Video.Width - 288) / 2, (Video.Height - 128) / 2)
-  menu:setDrawMenusUnder(true)
-
-  menu:addLabel("Error:", 144, 11)
 
   local l = MultiLineLabel(errmsg)
   l:setFont(Fonts["large"])
   l:setAlignment(MultiLineLabel.CENTER)
   l:setVerticalAlignment(MultiLineLabel.CENTER)
   l:setLineWidth(270)
-  l:setWidth(270)
-  l:setHeight(41)
+  l:setWidth(264)
+  l:setHeight(80)
   l:setBackgroundColor(dark)
-  menu:add(l, 9, 38)
+  menu:add(l, 12, 8)
 
-  menu:addHalfButton("~!OK", "o", 92, 80, function() menu:stop() end)
+  menu:addHalfButton("~!OK", "o", 92, 92, function() menu:stop() end)
 
   menu:run()
 end
@@ -184,12 +181,11 @@ function RunJoiningMapMenu(s)
 end
 
 function RunJoiningGameMenu(s)
-  local menu = WarMenu(nil, panel(4), false)
+  local menu = WarMenu(nil, panel("288x128"), false)
   menu:setSize(288, 128)
   menu:setPosition((Video.Width - 288) / 2, (Video.Height - 128) / 2)
-  menu:setDrawMenusUnder(true)
 
-  menu:addLabel("Connecting to server", 144, 11)
+  menu:addLabel("Connecting to server", 144, 8)
 
   local percent = 0
 
@@ -232,22 +228,21 @@ function RunJoiningGameMenu(s)
   local listener = LuaActionListener(checkconnection)
   menu:addLogicCallback(listener)
 
-  menu:addHalfButton("Cancel (~<Esc~>)", "escape", 92, 80,
+  menu:addHalfButton("~!Cancel", "c", 92, 92,
     function() menu:stop(1) end)
 
   menu:run()
 end
 
 function RunJoinIpMenu()
-  local menu = WarMenu(nil, panel(4), false)
+  local menu = WarMenu(nil, panel("288x128"), false)
   menu:setSize(288, 128)
   menu:setPosition((Video.Width - 288) / 2, (Video.Height - 128) / 2)
-  menu:setDrawMenusUnder(true)
 
-  menu:addLabel("Enter server IP-address:", 144, 11)
+  menu:addLabel("Enter server IP-address:", 144, 8)
   local server = menu:addTextInputField("localhost", 40, 38, 212)
 
-  menu:addHalfButton("~!OK", "o", 24, 80,
+  menu:addHalfLeftButton("~!OK", "o", 24, 92,
     function(s) 
       -- FIXME: allow port ("localhost:1234")
       if (NetworkSetupServerAddress(server:getText()) ~= 0) then
@@ -262,7 +257,8 @@ function RunJoinIpMenu()
       menu:stop() 
     end
   )
-  menu:addHalfButton("~!Cancel", "c", 154, 80, function() menu:stop() end)
+  menu:addHalfRightButton("~!Cancel", "c", 160, 92,
+    function() menu:stop() end)
 
   menu:run()
 end
@@ -429,16 +425,15 @@ function RunCreateJoinMenu()
 end
 
 function RunMultiPlayerGameMenu(s)
-  local menu = WarMenu(nil, panel(4), false)
+  local menu = WarMenu(nil, panel("288x128"), false)
   menu:setSize(288, 128)
   menu:setPosition((Video.Width - 288) / 2, (Video.Height - 128) / 2)
-  menu:setDrawMenusUnder(true)
 
-  menu:addLabel("Enter your name:", 288 / 2, 11)
+  menu:addLabel("Enter your name:", 288/2, 8)
 
   local nick = menu:addTextInputField(GetLocalPlayerName(), 40, 38, 212)
 
-  menu:addHalfButton("~!OK", "o", 24, 80,
+  menu:addHalfLeftButton("~!OK", "o", 24, 92,
     function()
       if nick:getText() ~= GetLocalPlayerName() then
         SetLocalPlayerName(nick:getText())
@@ -448,7 +443,8 @@ function RunMultiPlayerGameMenu(s)
       RunCreateJoinMenu()
       menu:stop()
     end)
-  menu:addHalfButton("~!Cancel", "c", 154, 80, function() menu:stop() end)
+  menu:addHalfRightButton("~!Cancel", "c", 160, 92,
+    function() menu:stop() end)
 
   menu:run()
 end
