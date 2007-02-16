@@ -108,8 +108,6 @@ function AiTerran()
   player = AiPlayer() + 1
 
   while (true) do
-print("player = "..player)
-print("ai_terran_func = "..ai_terran_func[player])
     ret = terran_funcs[ai_terran_func[player]]()
     if (ret) then
       break
