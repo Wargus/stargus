@@ -3066,9 +3066,6 @@ unsigned char *ConvertTile(unsigned char *mini, const char *mega, int msize,
 	image = (unsigned char *)calloc(1, height * width);
 
 	for (i = 0; i < numtiles; ++i) {
-		if (i / (13 * TILE_PER_ROW)) {
-			i = i;
-		}
 		//mp = (const unsigned short *)(mega + img2tile[i] * 32);
 		mp = (const unsigned short *)(mega + i * 32);
 		for (y = 0; y < 4; ++y) {
