@@ -648,7 +648,7 @@ function RunSinglePlayerGameMenu()
   menu:addFullButton("~!Cancel Game", "c", offx + 640 - 224 - 16, offy + 360 + 36*2, function() menu:stop() end)
 
   menu:addLabel("~<Your Race:~>", offx + 40, offy + (10 + 240) - 20, Fonts["game"], false)
-  race = menu:addDropDown({"Map Default", "Human", "Orc"}, offx + 40, offy + 10 + 240,
+  race = menu:addDropDown({"Map Default", "Terran"--[[, "Zerg", "Protoss"]]}, offx + 40, offy + 10 + 240,
     function(dd) end)
   race:setSize(152, 20)
 
