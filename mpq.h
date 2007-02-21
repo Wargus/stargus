@@ -26,7 +26,7 @@
 //      Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 //      02111-1307, USA.
 //
-//      $Id: mpq.h 1182 2005-06-19 21:00:25Z jsalmon3 $
+//      $Id$
 
 #ifndef __MPQ_H__
 #define __MPQ_H__

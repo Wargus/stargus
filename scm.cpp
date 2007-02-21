@@ -435,11 +435,11 @@ static int ChkReadHeader(char *header, long *length)
 */
 static int ChkReadDWord(void)
 {
-    unsigned int temp_int;
+	unsigned int temp_int;
 
-    memcpy(&temp_int, chk_ptr, 4);
-    chk_ptr += 4;
-    return ConvertLE32(temp_int);
+	memcpy(&temp_int, chk_ptr, 4);
+	chk_ptr += 4;
+	return ConvertLE32(temp_int);
 }
 
 /**
@@ -447,11 +447,11 @@ static int ChkReadDWord(void)
 */
 static int ChkReadWord(void)
 {
-    unsigned short temp_short;
+	unsigned short temp_short;
 
-    memcpy(&temp_short, chk_ptr, 2);
-    chk_ptr += 2;
-    return ConvertLE16(temp_short);
+	memcpy(&temp_short, chk_ptr, 2);
+	chk_ptr += 2;
+	return ConvertLE16(temp_short);
 }
 
 /**
@@ -463,7 +463,7 @@ static inline int ChkReadByte(void)
 {
 	int c = *((unsigned char *)chk_ptr);
 	++chk_ptr;
-    return c;
+	return c;
 }
 
 /**
@@ -721,8 +721,6 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 		//	Units
 		//
 		if (!memcmp(header, "UNIT", 4)) {
-			int i;
-
 			if (length % 36 == 0) {
 				while (length > 0) {
 					Unit unit;
@@ -745,7 +743,7 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 
 					length -= 36;
 
-					if (unit.Player == 11) {
+					if (unit.Player == 11) { // neutral player
 						unit.Player = PlayerMax - 1;
 					}
 
@@ -762,85 +760,6 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 					} else {
 						Units.push_back(unit);
 					}
-#if 0
-					if (unit.Type == SC_StartLocation) {
-						if (GameSettings.NumUnits == SettingsNumUnits1 && Players[o].Type != PlayerNobody) {
-							if (t == SC_StartLocation) {
-								if (Players[o].Race == 0) {
-									t = SC_ZergDrone;
-								} else if (Players[o].Race == 1) {
-									t = SC_TerranSCV;
-								} else {
-									t = SC_ProtossProbe;
-								}
-							}
-							v = 1;
-							goto pawn;
-						}
-					} else {
-						if (GameSettings.NumUnits == SettingsNumUnitsMapDefault ||
-								SC_IsUnitMineral(t) || t == SC_UnitGeyser) {
-pawn:
-							if (!SC_IsUnitMineral(t) && t != SC_UnitGeyser) {
-								if ((s = GameSettings.Presets[o].Race) != SettingsPresetMapDefault) {
-									// FIXME: change races
-								}
-							}
-							if (Players[o].Type != PlayerNobody) {
-								unit = MakeUnitAndPlace(MapOffsetX + x, MapOffsetY + y, UnitTypeByWcNum(t), &Players[o]);
-								if (unit->Type->GivesResource) {
-									DebugCheck(!v);
-									unit->Value = v;
-								} else {
-									// active/inactive AI units!!
-									// Johns: it is better to have active buildings
-									if (!unit->Type->Building) {
-#if 0
-										unit->Active = !v;
-#endif
-									}
-								}
-								UpdateForNewUnit(unit,0);
-							}
-						}
-					}
-#endif
-				}
-
-				// If the player has no units use 4 peasants and a town
-				// hall as default
-				for (i = 0; i < 12; ++i) {
-#if 0
-					if (Players[i].Type == PlayerPerson || Players[i].Type == PlayerComputer) {
-						if (Players[i].TotalUnits == 0) {
-							int j;
-							int t1;
-							Unit *unit;
-							UnitType *type;
-
-							if (Players[i].Race == 0) {
-								t1 = SC_ZergDrone;
-								type = UnitTypeByWcNum(SC_ZergHatchery);
-							} else if (Players[i].Race == 1) {
-								t1 = SC_TerranSCV;
-								type = UnitTypeByWcNum(SC_TerranCommandCenter);
-							} else {
-								t1 = SC_ProtossProbe;
-								type = UnitTypeByWcNum(SC_ProtossNexus);
-							}
-							unit = MakeUnitAndPlace(Players[i].StartX, Players[i].StartY,
-								type, &Players[i]);
-							UpdateForNewUnit(unit, 0);
-							for (j = 0; j < 4; ++j) {
-								unit = MakeUnit(UnitTypeByWcNum(t1), &Players[i]);
-								unit->X = Players[i].StartX;
-								unit->Y = Players[i].StartY;
-								DropOutOnSide(unit, LookingS, type->TileWidth, type->TileHeight);
-								UpdateForNewUnit(unit, 0);
-							}
-						}
-					}
-#endif
 				}
 
 				continue;
@@ -1181,6 +1100,7 @@ void LoadScm(const char *scm, WorldMap *map)
 
 	LoadChkFromBuffer(chkdata, chklen, map);
 
+	free(chkdata);
 	delete Mpq;
 }
 
@@ -1285,14 +1205,23 @@ static void SaveMap(const char *fullpath, const char *name, WorldMap *map)
 	strcpy(strrchr(fullmapname, '.') + 1, "sms");
 	SaveSMS(fullmapname, map);
 
+	free(fullmapname);
 	free(mapname);
+}
+
+void FreeMap(WorldMap *map)
+{
+	free(map->Description);
+	free(map->MapTerrainName);
+	free(map->Tiles);
 }
 
 void ConvertScm(const char *fullpath, const char *name)
 {
-    WorldMap map;
-    memset(&map, 0, sizeof(map));
+	WorldMap map;
+	memset(&map, 0, sizeof(map));
 	Units.clear();
-    LoadScm(fullpath, &map);
+	LoadScm(fullpath, &map);
 	SaveMap(fullpath, name, &map);
+	FreeMap(&map);
 }
