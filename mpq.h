@@ -10,7 +10,7 @@
 //
 /**@name mpq.h - The mpq headerfile. */
 //
-//      (c) Copyright 2002-2006 by Jimmy Salmon, Lutz Sammer
+//      (c) Copyright 2002-2007 by Jimmy Salmon, Lutz Sammer
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ private:
 --  Functions
 ----------------------------------------------------------------------------*/
 
-extern void ConvertScm(const char *fullpath, const char *name);
+extern void ConvertScm(const char *scmname, const char *newname);
 
 
 //@}

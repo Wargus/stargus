@@ -8,7 +8,7 @@
 //                        T H E   W A R   B E G I N S
 //         Stratagus - A free fantasy real time strategy game engine
 //
-/**@name scm.c - The scm. */
+/**@name scm.cpp - The scm. */
 //
 //      (c) Copyright 2002-2007 by Jimmy Salmon
 //
@@ -37,6 +37,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <vector>
 
 #include "mpq.h"
@@ -888,7 +890,8 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 					}
 				}
 #endif
-//				strcpy(map->Description, chk_ptr+2051);
+//				strcpy(map->Description, chk_ptr + 2051);
+				map->Description = strdup("none");
 				chk_ptr += length;
 				continue;
 			}
@@ -1119,11 +1122,11 @@ void CleanChk(void)
 }
 
 
-static void SaveSMP(const char *fullpath, const char *name, WorldMap *map)
+static void SaveSMP(const char *name, WorldMap *map)
 {
 	FILE *fd;
 
-	fd = fopen(fullpath, "wb");
+	fd = fopen(name, "wb");
 
 	fprintf(fd, "DefinePlayerTypes(");
 	bool first = true;
@@ -1138,7 +1141,7 @@ static void SaveSMP(const char *fullpath, const char *name, WorldMap *map)
 		}
 	}
 	fprintf(fd, ")\n");
-	fprintf(fd, "PresentMap(\"%s\", %d, %d, %d, %d)\n", "none", 2, map->MapWidth, map->MapHeight, 0);
+	fprintf(fd, "PresentMap(\"%s\", %d, %d, %d, %d)\n", map->Description, 2, map->MapWidth, map->MapHeight, 0);
 
 	fclose(fd);
 }
@@ -1191,22 +1194,18 @@ static void SaveSMS(const char *name, WorldMap *map)
 	fclose(fd);
 }
 
-static void SaveMap(const char *fullpath, const char *name, WorldMap *map)
+static void SaveMap(const char *name, WorldMap *map)
 {
 	char *fullmapname;
-	char *mapname;
 	
-	fullmapname = strdup(fullpath);
+	fullmapname = strdup(name);
 	strcpy(strrchr(fullmapname, '.') + 1, "smp");
-	mapname = strdup(name);
-	strcpy(strrchr(mapname, '.') + 1, "smp");
-	SaveSMP(fullmapname, mapname, map);
+	SaveSMP(fullmapname, map);
 
 	strcpy(strrchr(fullmapname, '.') + 1, "sms");
 	SaveSMS(fullmapname, map);
 
 	free(fullmapname);
-	free(mapname);
 }
 
 void FreeMap(WorldMap *map)
@@ -1216,12 +1215,117 @@ void FreeMap(WorldMap *map)
 	free(map->Tiles);
 }
 
-void ConvertScm(const char *fullpath, const char *name)
+void ConvertScm(const char *scmname, const char *newname)
 {
 	WorldMap map;
 	memset(&map, 0, sizeof(map));
 	Units.clear();
-	LoadScm(fullpath, &map);
-	SaveMap(fullpath, name, &map);
+	LoadScm(scmname, &map);
+	SaveMap(newname, &map);
 	FreeMap(&map);
 }
+
+void ConvertChk(const char *scmname, const char *newname, unsigned char *chkdata, int chklen)
+{
+	WorldMap map;
+	memset(&map, 0, sizeof(map));
+	Units.clear();
+	LoadChkFromBuffer(chkdata, chklen, &map);
+	SaveMap(newname, &map);
+	FreeMap(&map);
+}
+
+
+#ifdef STAND_ALONE
+void usage()
+{
+	fprintf(stderr, "%s\n%s\n",
+		"scmconvert", "usage: scmconvert inputfile [ outputdir ]\n");
+	exit(-1);
+}
+
+int main(int argc, char **argv)
+{
+	char *infile;
+	char *outdir;
+
+	if (argc < 2 || argc > 3) {
+		usage();
+	}
+
+	infile = argv[1];
+	if (argc == 3) {
+		outdir = argv[2];
+	} else {
+		outdir = ".";
+	}
+
+	if (strstr(infile, ".scm\0")) {
+		char *tmp;
+		char newname[1024];
+
+		sprintf(newname, "%s/", outdir);
+		if ((tmp = strrchr(infile, '/'))) {
+			strcat(newname, tmp + 1);
+		} else if ((tmp = strrchr(infile, '\\'))) {
+			strcat(newname, tmp + 1);
+		} else {
+			strcat(newname, infile);
+		}
+
+		ConvertScm(infile, newname);
+
+	} else if (strstr(infile, ".chk\0")) {
+		FILE *f;
+		struct stat sb;
+		int len;
+		unsigned char *buf;
+
+		if (stat(infile, &sb) == -1) {
+			fprintf(stderr, "error finding file: %s\n", infile);
+			return -1;
+		}
+		len = sb.st_size;
+
+		f = fopen(infile, "rb");
+		if (f == NULL) {
+			fprintf(stderr, "error opening file: %s\n", infile);
+			return -1;
+		}
+
+		buf = (unsigned char *)malloc(len);
+		if (fread(buf, 1, len, f) != len) {
+			fprintf(stderr, "error reading from file: %s\n", infile);
+			free(buf);
+			return -1;
+		}
+
+		if (fclose(f)) {
+			fprintf(stderr, "error closing file: %s\n", infile);
+			free(buf);
+			return -1;
+		}
+
+		char *tmp;
+		char newname[1024];
+
+		sprintf(newname, "%s/", outdir);
+		if ((tmp = strrchr(infile, '/'))) {
+			strcat(newname, tmp + 1);
+		} else if ((tmp = strrchr(infile, '\\'))) {
+			strcat(newname, tmp + 1);
+		} else {
+			strcat(newname, infile);
+		}
+
+		ConvertChk(infile, newname, buf, len);
+
+		free(buf);
+	} else {
+		fprintf(stderr, "Invalid input file: %s\n", infile);
+		return -1;
+	}
+
+	return 0;
+}
+#endif

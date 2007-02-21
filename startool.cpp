@@ -2835,7 +2835,7 @@ int ConvertMap(char *listfile, char *file)
 	fclose(fd);
 	free(p);
 
-	ConvertScm(buf, file);
+	ConvertScm(buf, buf);
 
 	return 0;
 }
@@ -3096,12 +3096,14 @@ int ConvertTileset(char *listfile, char *file)
 	unsigned char *megp;
 	unsigned char *minp;
 	unsigned char *mapp;
+//	unsigned char *flagp;
 	unsigned char *image;
 	int w;
 	int h;
 	int megl;
-	char buf[1024];
 	int mapl;
+//	int flagl;
+	char buf[1024];
 
 	if (!strcmp(listfile, "tileset\\Install")) {
 		sprintf(buf, "tileset\\install.wpe");
@@ -3120,12 +3122,51 @@ int ConvertTileset(char *listfile, char *file)
 	sprintf(buf, "%s.cv5", listfile);
 	mapp = ExtractEntry((unsigned char *)buf);
 	mapl = EntrySize;
+#if 0
+	sprintf(buf, "%s.vf4", listfile);
+	flagp = ExtractEntry((unsigned char *)buf);
+	flagl = EntrySize;
+#endif
 
 	image = ConvertTile(minp, (char *)megp, megl, (char *)mapp, mapl, &w, &h);
+
+#if 0
+	sprintf(buf, "%s-flags.txt", strstr(listfile, "\\") + 1);
+	FILE *fd = fopen(buf, "w");
+	int i, j, tiles, start = -1;
+	for (i = 0; i < flagl / 32; ++i) {
+		unsigned short *s = (unsigned short *)(flagp + 32 * i);
+		tiles = 0;
+		for (j = 0; j < 16; ++j) {
+			if (s[j] == 0) {
+				++tiles;
+			}
+		}
+		if (tiles >= 2) {
+			if (start == -1) {
+				start = i;
+			}
+//			fprintf(fd, "tile %d is unpassable\n", i);
+		}
+		if (i == flagl / 32 - 1 || tiles < 2) {
+			if (i == flagl / 32 - 1) ++i;
+			if (start != -1) {
+				if (start != i - 1) {
+					fprintf(fd, "tile %d-%d unpassable\n", start, i - 1);
+				} else {
+					fprintf(fd, "tile %d unpassable\n", start);
+				}
+				start = -1;
+			}
+		}
+	}
+	fclose(fd);
+#endif
 
 	free(megp);
 	free(minp);
 	free(mapp);
+//	free(flagp);
 
 	ConvertPaletteRGBXtoRGB(palp);
 
@@ -4098,13 +4139,6 @@ int main(int argc, char **argv)
 		fclose(fd);
 		free(p);
 		CloseArchive();
-		exit(0);
-	}
-#endif
-
-#if 0
-	{
-		ConvertScm("(4)Blood Bath.scm");
 		exit(0);
 	}
 #endif
