@@ -34,11 +34,16 @@
 --	Includes
 ----------------------------------------------------------------------------*/
 
+#ifdef _MSC_VER
+#pragma warning(disable:4786)
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <string>
 #include <vector>
 
 #include "mpq.h"
@@ -134,6 +139,13 @@ static inline unsigned int Swap32(unsigned int D) {
 --  Variables
 ----------------------------------------------------------------------------*/
 
+static char *chk_ptr;			/// FIXME: docu
+static char *chk_endptr;			/// FIXME: docu
+
+static char *TypeNames[] = { "nobody", NULL, NULL, "rescue-passive", NULL, "computer", "person", "neutral" };
+static char *RaceNames[] = { "zerg", "terran", "protoss", NULL, "neutral" };
+
+
 typedef struct Unit
 {
 	unsigned short X;
@@ -150,13 +162,47 @@ typedef struct Unit
 	unsigned char StateFlags;
 } Unit;
 
-std::vector<Unit> Units;
+typedef struct Location
+{
+	unsigned int StartX;
+	unsigned int StartY;
+	unsigned int EndX;
+	unsigned int EndY;
+	unsigned short StringNumber;
+	unsigned short Flags;
+} Location;
 
-static char *chk_ptr;			/// FIXME: docu
-static char *chk_endptr;			/// FIXME: docu
+typedef struct TriggerCondition
+{
+	unsigned int Location;
+	unsigned int Group;
+	unsigned int QualifiedNumber;
+	unsigned short UnitType;
+	unsigned char CompType;
+	unsigned char Condition;
+	unsigned char ResType;
+	unsigned char Flags;
+} TriggerCondition;
 
-static char *TypeNames[] = { "nobody", NULL, NULL, "rescue-passive", NULL, "computer", "person", "neutral" };
-static char *RaceNames[] = { "zerg", "terran", "protoss", NULL, "neutral" };
+typedef struct TriggerAction
+{
+	unsigned int Source;
+	unsigned int TriggerNumber;
+	unsigned int WavNumber;
+	unsigned int Time;
+	unsigned int FirstGroup;
+	unsigned int SecondGroup;
+	unsigned short Status;
+	unsigned char Action;
+	unsigned char NumUnits;
+	unsigned char ActionFlags;
+} TriggerAction;
+
+typedef struct Trigger
+{
+	TriggerCondition TriggerConditions[16];
+	TriggerAction TriggerActions[64];
+} Trigger;
 
 typedef struct WorldMap
 {
@@ -168,9 +214,11 @@ typedef struct WorldMap
 	int PlayerType[PlayerMax];
 	int *Tiles;
 	struct { int X; int Y; } PlayerStart[PlayerMax];
+	std::vector<Location> Locations;
+	std::vector<Trigger> Triggers;
+	std::vector<Unit> Units;
+	std::vector<std::string> Strings;
 } WorldMap;
-
-char **TilesetWcNames;
 
 static CMpq *Mpq;
 
@@ -760,7 +808,7 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 						map->PlayerStart[unit.Player].X = unit.X;
 						map->PlayerStart[unit.Player].Y = unit.Y;
 					} else {
-						Units.push_back(unit);
+						map->Units.push_back(unit);
 					}
 				}
 
@@ -877,25 +925,19 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 		//	Strings
 		//
 		if (!memcmp(header, "STR ", 4)) {
-//		    if (length==) {
-			if (1) {
-#if 0
-				int i;
-				short s;
+			int i;
+			unsigned short num;
+			unsigned short s;
+			char *cptr = chk_ptr;
 
-				for (i = 0; i < 1024; ++i) {
-					s = ((short*)chk_ptr)[i + 1];
-					if (s != 2050) {
-						printf("STR %d - %s\n", i, chk_ptr + s);
-					}
-				}
-#endif
-//				strcpy(map->Description, chk_ptr + 2051);
-				map->Description = strdup("none");
-				chk_ptr += length;
-				continue;
+			num = ChkReadWord();
+			for (i = 0; i < num; ++i) {
+				s = ChkReadWord();
+				map->Strings.push_back(cptr + s);
 			}
-			DebugLevel1("Wrong STR  length\n");
+			map->Description = strdup("none");
+			chk_ptr += length - 2050;
+			continue;
 		}
 
 		//
@@ -926,9 +968,18 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 		//
 		//
 		if (!memcmp(header, "MRGN", 4)) {
-//		    if (length==) {
-			if (1) {
-				chk_ptr += length;
+			if ((length / 20) * 20 == length) {
+				while (length > 0) {
+					Location location;
+					location.StartX = ChkReadDWord();
+					location.StartY = ChkReadDWord();
+					location.EndX = ChkReadDWord();
+					location.EndY = ChkReadDWord();
+					location.StringNumber = ChkReadWord();
+					location.Flags = ChkReadWord();
+					map->Locations.push_back(location);
+					length -= 20;
+				}
 				continue;
 			}
 			DebugLevel1("Wrong MRGN length\n");
@@ -938,9 +989,39 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 		//	Triggers
 		//
 		if (!memcmp(header, "TRIG", 4)) {
-//		    if (length==) {
-			if (1) {
-				chk_ptr += length;
+			if ((length / 2400) * 2400 == length) {
+				int i;
+
+				while (length > 0) {
+					Trigger trigger;
+					for (i = 0; i < 16; ++i) {
+						trigger.TriggerConditions[i].Location = ChkReadDWord();
+						trigger.TriggerConditions[i].Group = ChkReadDWord();
+						trigger.TriggerConditions[i].QualifiedNumber = ChkReadDWord();
+						trigger.TriggerConditions[i].UnitType = ChkReadWord();
+						trigger.TriggerConditions[i].CompType = ChkReadByte();
+						trigger.TriggerConditions[i].Condition = ChkReadByte();
+						trigger.TriggerConditions[i].ResType = ChkReadByte();
+						trigger.TriggerConditions[i].Flags = ChkReadByte();
+						chk_ptr += 2;
+					}
+					for (i = 0; i < 64; ++i) {
+						trigger.TriggerActions[i].Source = ChkReadDWord();
+						trigger.TriggerActions[i].TriggerNumber = ChkReadDWord();
+						trigger.TriggerActions[i].WavNumber = ChkReadDWord();
+						trigger.TriggerActions[i].Time = ChkReadDWord();
+						trigger.TriggerActions[i].FirstGroup = ChkReadDWord();
+						trigger.TriggerActions[i].SecondGroup = ChkReadDWord();
+						trigger.TriggerActions[i].Status = ChkReadWord();
+						trigger.TriggerActions[i].Action = ChkReadByte();
+						trigger.TriggerActions[i].NumUnits = ChkReadByte();
+						trigger.TriggerActions[i].ActionFlags = ChkReadByte();
+						chk_ptr += 3;
+					}
+					chk_ptr += 32;
+					map->Triggers.push_back(trigger);
+					length -= 2400;
+				}
 				continue;
 			}
 			DebugLevel1("Wrong TRIG length\n");
@@ -1146,6 +1227,116 @@ static void SaveSMP(const char *name, WorldMap *map)
 	fclose(fd);
 }
 
+static void SaveTrigger(FILE *fd, WorldMap *map, Trigger *trigger)
+{
+	int i;
+	TriggerCondition *c;
+	TriggerAction *a;
+
+	// Conditions
+	for (i = 0; i < 16; ++i) {
+		c = &trigger->TriggerConditions[i];
+		if (c->Condition == 0) {
+			break;
+		}
+		switch (c->Condition) {
+			case 1:
+				fprintf(fd, "-- CountdownTimer(%d)\n", c->QualifiedNumber);
+				break;
+			case 2:
+				fprintf(fd, "-- Command(%d, %d, %d)\n", c->Group, c->UnitType, c->QualifiedNumber);
+				break;
+			case 4:
+				fprintf(fd, "-- Accumulate(%d, %d, %d)\n", c->Group, c->QualifiedNumber, c->ResType);
+				break;
+			case 5:
+				fprintf(fd, "-- Kill(%d, %d, %d)\n", c->Group, c->UnitType, c->QualifiedNumber);
+				break;
+			case 6:
+				fprintf(fd, "-- CommandMost(%d)\n", c->UnitType);
+				break;
+			case 8:
+				fprintf(fd, "-- MostKills(%d)\n", c->UnitType);
+				break;
+			case 12:
+				fprintf(fd, "-- ElapsedTime(%d)\n", c->QualifiedNumber);
+				break;
+			case 16:
+				fprintf(fd, "-- CommandLeast(%d)\n", c->UnitType);
+				break;
+			case 18:
+				fprintf(fd, "-- LeastKills(%d)\n", c->UnitType);
+				break;
+			case 20:
+				fprintf(fd, "-- LeastResources(%d)\n", c->ResType);
+				break;
+			default:
+				fprintf(fd, "-- Unhandled condition: %d\n", c->Condition);
+				break;
+		}
+	}
+
+	// Actions
+	for (i = 0; i < 64; ++i) {
+		a = &trigger->TriggerActions[i];
+		if (a->Action == 0) {
+			break;
+		}
+		switch (a->Action) {
+			case 1:
+				fprintf(fd, "--  Victory\n");
+				break;
+			case 2:
+				fprintf(fd, "--  Defeat\n");
+				break;
+			case 3:
+				fprintf(fd, "--  Preserve trigger\n");
+				break;
+			case 4:
+				fprintf(fd, "--  Wait(%d)\n", a->Time);
+				break;
+			case 5:
+				fprintf(fd, "--  Pause\n");
+				break;
+			case 6:
+				fprintf(fd, "--  Unpause\n");
+				break;
+			case 7:
+				fprintf(fd, "--  Transmission(%s, %d, [%hu,%hu]-[%hu,%hu], %d, %d, %d, %d, %d)\n",
+					map->Strings[a->TriggerNumber].c_str(), a->Status,
+					map->Locations[a->Source].StartX, map->Locations[a->Source].StartY,
+					map->Locations[a->Source].EndX, map->Locations[a->Source].EndY,
+					a->Time, a->NumUnits, a->WavNumber, a->Time);
+				break;
+			case 8:
+				fprintf(fd, "--  PlayWav(%d, %d)\n", a->WavNumber, a->Time);
+				break;
+			case 9:
+				fprintf(fd, "--  TextMessage(%s)\n", map->Strings[a->TriggerNumber].c_str());
+				break;
+			case 10:
+				fprintf(fd, "--  CenterView([%hu,%hu]-[%hu,%hu])\n", map->Locations[a->Source].StartX, map->Locations[a->Source].StartY,
+					map->Locations[a->Source].EndX, map->Locations[a->Source].EndY);
+				break;
+			case 12:
+				fprintf(fd, "--  SetObjectives(%s)\n", map->Strings[a->TriggerNumber].c_str());
+				break;
+			case 26:
+				fprintf(fd, "--  SetResources(%d, %d, %d, %d)\n", a->FirstGroup, a->TriggerNumber, a->NumUnits, a->Status);
+				break;
+			case 30:
+				fprintf(fd, "--  Mute unit speech\n");
+				break;
+			case 31:
+				fprintf(fd, "--  Unmute unit speech\n");
+				break;
+			default:
+				fprintf(fd, "--  Unhandled action: %d\n", a->Action);
+				break;
+		}
+	}
+}
+
 static void SaveSMS(const char *name, WorldMap *map)
 {
 	FILE *fd;
@@ -1179,12 +1370,18 @@ static void SaveSMS(const char *name, WorldMap *map)
 	fprintf(fd, "\n\n");
 
 	// units
-	for (i = 0; i < (int)Units.size(); ++i) {
-		fprintf(fd, "unit= CreateUnit(\"%s\", %d, {%d, %d})\n", UnitNames[Units[i].Type],
-			Units[i].Player, Units[i].X, Units[i].Y);
-		if (Units[i].ResourceAmount) {
-			fprintf(fd, "SetResourcesHeld(unit, %d)\n", Units[i].ResourceAmount);
+	for (i = 0; i < (int)map->Units.size(); ++i) {
+		fprintf(fd, "unit= CreateUnit(\"%s\", %d, {%d, %d})\n", UnitNames[map->Units[i].Type],
+			map->Units[i].Player, map->Units[i].X, map->Units[i].Y);
+		if (map->Units[i].ResourceAmount) {
+			fprintf(fd, "SetResourcesHeld(unit, %d)\n", map->Units[i].ResourceAmount);
 		}
+	}
+
+	fprintf(fd, "\n\n");
+
+	for (i = 0; i < (int)map->Triggers.size(); ++i) {
+//		SaveTrigger(fd, map, &map->Triggers[i]);
 	}
 
 	fprintf(fd, "\n\n");
@@ -1219,7 +1416,6 @@ void ConvertScm(const char *scmname, const char *newname)
 {
 	WorldMap map;
 	memset(&map, 0, sizeof(map));
-	Units.clear();
 	LoadScm(scmname, &map);
 	SaveMap(newname, &map);
 	FreeMap(&map);
@@ -1229,7 +1425,6 @@ void ConvertChk(const char *scmname, const char *newname, unsigned char *chkdata
 {
 	WorldMap map;
 	memset(&map, 0, sizeof(map));
-	Units.clear();
 	LoadChkFromBuffer(chkdata, chklen, &map);
 	SaveMap(newname, &map);
 	FreeMap(&map);
