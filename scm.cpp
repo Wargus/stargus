@@ -206,6 +206,14 @@ typedef struct Trigger
 
 typedef struct WorldMap
 {
+	WorldMap() :
+		MapWidth(0), MapHeight(0), MapTerrainName(NULL), Description(NULL), Tiles(NULL)
+	{
+		memset(PlayerRace, 0, sizeof(PlayerRace));
+		memset(PlayerType, 0, sizeof(PlayerType));
+		memset(PlayerStart, 0, sizeof(PlayerStart));
+	}
+
 	int MapWidth;
 	int MapHeight;
 	char *MapTerrainName;
@@ -1415,7 +1423,6 @@ void FreeMap(WorldMap *map)
 void ConvertScm(const char *scmname, const char *newname)
 {
 	WorldMap map;
-	memset(&map, 0, sizeof(map));
 	LoadScm(scmname, &map);
 	SaveMap(newname, &map);
 	FreeMap(&map);
@@ -1424,7 +1431,6 @@ void ConvertScm(const char *scmname, const char *newname)
 void ConvertChk(const char *scmname, const char *newname, unsigned char *chkdata, int chklen)
 {
 	WorldMap map;
-	memset(&map, 0, sizeof(map));
 	LoadChkFromBuffer(chkdata, chklen, &map);
 	SaveMap(newname, &map);
 	FreeMap(&map);
