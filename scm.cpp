@@ -1254,6 +1254,12 @@ static void SaveTrigger(FILE *fd, WorldMap *map, Trigger *trigger)
 			case 2:
 				fprintf(fd, "-- Command(%d, %d, %d)\n", c->Group, c->UnitType, c->QualifiedNumber);
 				break;
+			case 3:
+				fprintf(fd, "-- Bring(%d, %d, [%hu,%hu]-[%hu,%hu], %d)\n", c->Group, c->UnitType,
+					map->Locations[c->Location].StartX, map->Locations[c->Location].StartY,
+					map->Locations[c->Location].EndX, map->Locations[c->Location].EndY,
+					c->QualifiedNumber);
+				break;
 			case 4:
 				fprintf(fd, "-- Accumulate(%d, %d, %d)\n", c->Group, c->QualifiedNumber, c->ResType);
 				break;
@@ -1263,20 +1269,60 @@ static void SaveTrigger(FILE *fd, WorldMap *map, Trigger *trigger)
 			case 6:
 				fprintf(fd, "-- CommandMost(%d)\n", c->UnitType);
 				break;
+			case 7:
+				fprintf(fd, "-- CommandMostAt(%d, [%hu,%hu]-[%hu,%hu])\n", c->UnitType,
+					map->Locations[c->Location].StartX, map->Locations[c->Location].StartY,
+					map->Locations[c->Location].EndX, map->Locations[c->Location].EndY);
+				break;
 			case 8:
 				fprintf(fd, "-- MostKills(%d)\n", c->UnitType);
+				break;
+			case 9:
+				fprintf(fd, "-- HighestScore(%d)\n", c->ResType);
+				break;
+			case 10:
+				fprintf(fd, "-- MostResources(%d)\n", c->ResType);
+				break;
+			case 11:
+				fprintf(fd, "-- Switch(%d)\n", c->ResType);
 				break;
 			case 12:
 				fprintf(fd, "-- ElapsedTime(%d)\n", c->QualifiedNumber);
 				break;
+			case 13:
+				fprintf(fd, "-- MissionBriefing()\n");
+				break;
+			case 14:
+				fprintf(fd, "-- Opponents(%d, %d, %d)\n", c->Group, c->QualifiedNumber);
+				break;
+			case 15:
+				fprintf(fd, "-- Deaths(%d, %d, %d)\n", c->Group, c->UnitType, c->QualifiedNumber);
+				break;
 			case 16:
 				fprintf(fd, "-- CommandLeast(%d)\n", c->UnitType);
+				break;
+			case 17:
+				fprintf(fd, "-- CommandLeastAt(%d, [%hu,%hu]-[%hu,%hu])\n", c->UnitType,
+					map->Locations[c->Location].StartX, map->Locations[c->Location].StartY,
+					map->Locations[c->Location].EndX, map->Locations[c->Location].EndY);
 				break;
 			case 18:
 				fprintf(fd, "-- LeastKills(%d)\n", c->UnitType);
 				break;
+			case 19:
+				fprintf(fd, "-- LowestScore(%d)\n", c->ResType);
+				break;
 			case 20:
 				fprintf(fd, "-- LeastResources(%d)\n", c->ResType);
+				break;
+			case 21:
+				fprintf(fd, "-- Score(%d, %d, %d)\n", c->Group, c->ResType, c->QualifiedNumber);
+				break;
+			case 22:
+				fprintf(fd, "-- Always()\n");
+				break;
+			case 23:
+				fprintf(fd, "-- Never()\n");
 				break;
 			default:
 				fprintf(fd, "-- Unhandled condition: %d\n", c->Condition);
@@ -1292,10 +1338,10 @@ static void SaveTrigger(FILE *fd, WorldMap *map, Trigger *trigger)
 		}
 		switch (a->Action) {
 			case 1:
-				fprintf(fd, "--  Victory\n");
+				fprintf(fd, "--  ActionVictory()\n");
 				break;
 			case 2:
-				fprintf(fd, "--  Defeat\n");
+				fprintf(fd, "--  ActionDefeat()\n");
 				break;
 			case 3:
 				fprintf(fd, "--  Preserve trigger\n");
@@ -1311,7 +1357,7 @@ static void SaveTrigger(FILE *fd, WorldMap *map, Trigger *trigger)
 				break;
 			case 7:
 				fprintf(fd, "--  Transmission(%s, %d, [%hu,%hu]-[%hu,%hu], %d, %d, %d, %d, %d)\n",
-					map->Strings[a->TriggerNumber].c_str(), a->Status,
+					map->Strings[a->TriggerNumber - 1].c_str(), a->Status,
 					map->Locations[a->Source].StartX, map->Locations[a->Source].StartY,
 					map->Locations[a->Source].EndX, map->Locations[a->Source].EndY,
 					a->Time, a->NumUnits, a->WavNumber, a->Time);
@@ -1320,17 +1366,18 @@ static void SaveTrigger(FILE *fd, WorldMap *map, Trigger *trigger)
 				fprintf(fd, "--  PlayWav(%d, %d)\n", a->WavNumber, a->Time);
 				break;
 			case 9:
-				fprintf(fd, "--  TextMessage(%s)\n", map->Strings[a->TriggerNumber].c_str());
+				fprintf(fd, "--  TextMessage(%s)\n", map->Strings[a->TriggerNumber - 1].c_str());
 				break;
 			case 10:
-				fprintf(fd, "--  CenterView([%hu,%hu]-[%hu,%hu])\n", map->Locations[a->Source].StartX, map->Locations[a->Source].StartY,
-					map->Locations[a->Source].EndX, map->Locations[a->Source].EndY);
+				fprintf(fd, "--  CenterMap(%hu, %hu)\n",
+					(map->Locations[a->Source].StartX + map->Locations[a->Source].EndX) / 2 / 32,
+					(map->Locations[a->Source].StartY + map->Locations[a->Source].EndY) / 2 / 32);
 				break;
 			case 12:
-				fprintf(fd, "--  SetObjectives(%s)\n", map->Strings[a->TriggerNumber].c_str());
+				fprintf(fd, "--  SetObjectives(%s)\n", map->Strings[a->TriggerNumber - 1].c_str());
 				break;
 			case 26:
-				fprintf(fd, "--  SetResources(%d, %d, %d, %d)\n", a->FirstGroup, a->TriggerNumber, a->NumUnits, a->Status);
+				fprintf(fd, "--  SetResources(%d, %d, %d, %d)\n", a->FirstGroup, a->SecondGroup, a->NumUnits, a->Status);
 				break;
 			case 30:
 				fprintf(fd, "--  Mute unit speech\n");
