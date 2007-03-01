@@ -1,66 +1,54 @@
 function RunDiplomacyMenu()
-  local menu = WarGameMenu(panel(5))
-  menu:resize(352, 352)
+  local menu = WarGameMenu(panel("296x336"))
+  menu:resize(296, 336)
 
-  menu:addLabel("Diplomacy", 176, 11)
+  menu:addLabel("Alliances", 11, 13, Fonts["font16"], false)
+  menu:addLabel("Allies", 179, 21, Fonts["game"])
+  menu:addLabel("Shared", 246, 5, Fonts["game"])
+  menu:addLabel("Vision", 246, 21, Fonts["game"])
 
-  menu:addLabel("Allied", 136, 30, Fonts["game"])
-  menu:addLabel("Enemy", 196, 30, Fonts["game"])
-  menu:addLabel("Shared Vision", 286, 30, Fonts["game"])
+--  menu:addCheckBox("Allied Victory", 11, 274)
 
   local allied = {}
   local enemy = {}
   local sharedvision = {}
   local j = 0
 
-  for i=0,14 do
+  for i=0,11 do
     if (Players[i].Type ~= PlayerNobody and ThisPlayer.Index ~= i) then
-      j = j + 1
-
       local l = Label(Players[i].Name)
-      l:setFont(Fonts["game"])
+      l:setFont(Fonts["font16"])
       l:adjustSize()
-      menu:add(l, 16, (18 * j) + 26)
+      menu:add(l, 31, (17 * j) + 41)
+      -- player color is at x=11, name is at x=31
 
       -- FIXME: disable checkboxes in replays or if on the same team
 
       local alliedcb = {}
-      local enemycb = {}
       local sharedvisioncb = {}
 
-      alliedcb = menu:addCheckBox("", 126, (18 * j) + 23,
-        function()
-          if (alliedcb:isMarked() and enemycb:isMarked()) then
-            enemycb:setMarked(false)
-          end
-        end)
+      alliedcb = menu:addCheckBox("", 227, (17 * j) + 41,
+        function() end)
       alliedcb:setMarked(ThisPlayer:IsAllied(Players[i]))
       allied[j] = alliedcb
       allied[j].index = i
 
-      enemycb = menu:addCheckBox("", 186, (18 * j) + 23,
-        function()
-          if (alliedcb:isMarked() and enemycb:isMarked()) then
-            alliedcb:setMarked(false)
-          end
-        end)
-      enemycb:setMarked(ThisPlayer:IsEnemy(Players[i]))
-      enemy[j] = enemycb
-
-      sharedvisioncb = menu:addCheckBox("", 276, (18 * j) + 23,
+      sharedvisioncb = menu:addCheckBox("", 269, (17 * j) + 41,
         function() end)
       sharedvisioncb:setMarked(ThisPlayer:IsSharedVision(Players[i]))
       sharedvision[j] = sharedvisioncb
+
+      j = j + 1
     end
   end
 
-  menu:addHalfButton("~!OK", "o", 75, 352 - 40,
+  menu:addHalfLeftButton("Accept", nil, 11, 299,
     function()
       for j=1,table.getn(allied) do
         local i = allied[j].index
 
         -- allies
-        if (allied[j]:isMarked() and enemy[j]:isMarked() == false) then
+        if (allied[j]:isMarked()) then
           if (ThisPlayer:IsAllied(Players[i]) == false or
              ThisPlayer:IsEnemy(Players[i])) then
             SetDiplomacy(ThisPlayer.Index, "allied", i)
@@ -68,26 +56,10 @@ function RunDiplomacyMenu()
         end
 
         -- enemies
-        if (allied[j]:isMarked() == false and enemy[j]:isMarked()) then
+        if (allied[j]:isMarked() == false) then
           if (ThisPlayer:IsAllied(Players[i]) or
              ThisPlayer:IsEnemy(Players[i]) == false) then
             SetDiplomacy(ThisPlayer.Index, "enemy", i)
-          end
-        end
-
-        -- neutral
-        if (allied[j]:isMarked() == false and enemy[j]:isMarked() == false) then
-          if (ThisPlayer:IsAllied(Players[i]) or
-             ThisPlayer:IsEnemy(Players[i])) then
-            SetDiplomacy(ThisPlayer.Index, "neutral", i)
-          end
-        end
-
-        -- crazy
-        if (allied[j]:isMarked() and enemy[j]:isMarked()) then
-          if (ThisPlayer:IsAllied(Players[i]) == false or
-             ThisPlayer:IsEnemy(Players[i]) == false) then
-            SetDiplomacy(ThisPlayer.Index, "crazy", i)
           end
         end
 
@@ -104,7 +76,7 @@ function RunDiplomacyMenu()
       end
       menu:stop()
     end)
-  menu:addHalfButton("~!Cancel", "c", 195, 352 - 40, function() menu:stop() end)
+  menu:addHalfRightButton("Cancel", nil, 165, 299, function() menu:stop() end)
 
   menu:run(false)
 end
