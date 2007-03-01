@@ -573,36 +573,25 @@ function GetMapInfo(mapname)
 end
 
 function RunSelectScenarioMenu()
-  local menu = WarMenu(nil, panel(5), false)
-  menu:setSize(352, 352)
-  menu:setPosition((Video.Width - 352) / 2, (Video.Height - 352) / 2)
-  menu:setDrawMenusUnder(true)
+  local menu = WarMenu(nil, panel("384x256"), false)
+  menu:setSize(384, 256)
+  menu:setPosition((Video.Width - 384) / 2, (Video.Height - 256) / 2)
 
-  menu:addLabel("Select scenario", 176, 8)
+  menu:addLabel("Select scenario", 384/2, 8)
 
   local browser = menu:addBrowser("maps/", "^.*%.smp%.?g?z?$",
-    24, 140, 300, 108, mapname)
+    32, 44, 320, 160, mapname)
 
-  local l = menu:addLabel(browser:getSelectedItem(), 24, 260, Fonts["game"], false)
-
-  local function cb(s)
-    l:setCaption(browser:getSelectedItem())
-    l:adjustSize()
-  end
-  browser:setActionCallback(cb)
-
-  menu:addHalfButton("~!OK", "o", 48, 318,
+  menu:addFullLeftButton("~!OK", "o", 20, 216,
     function()
-      local cap = l:getCaption()
-
       if (browser:getSelected() < 0) then
         return
       end
 
-      mapname = browser.path .. cap
+      mapname = browser.path .. browser:getSelectedItem()
       menu:stop()
     end)
-  menu:addHalfButton("~!Cancel", "c", 198, 318,
+  menu:addHalfRightButton("~!Cancel", "c", 260, 216,
     function() menu:stop() end)
 
   menu:run()
