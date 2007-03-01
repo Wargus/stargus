@@ -87,9 +87,9 @@ DefineButtonStyle("icon", {
   },
 --[[
   Selected = {
-    --[[Border = {
+    Border = {
       Color = {0, 252, 0}, Size = 1,
-    },]]
+    },
   },]]
   Clicked = {
     TextNormalColor = "white",
