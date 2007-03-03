@@ -6,6 +6,9 @@
 !define STARINSTEXE "starinstall.exe"
 !define SCMCONVERTEXE "scmconvert.exe"
 !define MPQLIST "mpqlist.txt"
+!define MANIFEST "Microsoft.VC80.CRT.manifest"
+!define MSVCPDLL "msvcp80.dll"
+!define MSVCRDLL "msvcr80.dll"
 
 !define NAME "Stargus"
 !define SGTMP "stargustemp"
@@ -72,6 +75,9 @@ Section "${NAME}" SecDummy
   File "${STARINSTEXE}"
   File "${SCMCONVERTEXE}"
   File "${MPQLIST}"
+  File "${MANIFEST}"
+  File "${MSVCPDLL}"
+  File "${MSVCRDLL}"
   WriteRegStr HKCU "Software\${NAME}" "" $INSTDIR
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
