@@ -5,6 +5,7 @@
 !define SDLDLL "..\stratagus\SDL.dll"
 !define STARINSTEXE "starinstall.exe"
 !define SCMCONVERTEXE "scmconvert.exe"
+!define MPQLIST "mpqlist.txt"
 
 !define NAME "Stargus"
 !define SGTMP "stargustemp"
@@ -70,11 +71,12 @@ Section "${NAME}" SecDummy
   File "${SDLDLL}"
   File "${STARINSTEXE}"
   File "${SCMCONVERTEXE}"
+  File "${MPQLIST}"
   WriteRegStr HKCU "Software\${NAME}" "" $INSTDIR
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\${NAME}.lnk" "$INSTDIR\stratagus.exe"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Extract WC2 Data.lnk" "$INSTDIR\starinstall.exe"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Extract Starcraft Data.lnk" "$INSTDIR\starinstall.exe"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\uninstall.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -87,7 +89,7 @@ Section "Uninstall"
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
 
   Delete "$SMPROGRAMS\$MUI_TEMP\${NAME}.lnk"
-  Delete "$SMPROGRAMS\$MUI_TEMP\Extract WC2 Data.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\Extract Starcraft Data.lnk"
   Delete "$SMPROGRAMS\$MUI_TEMP\Uninstall.lnk"
   RMDir "$SMPROGRAMS\$MUI_TEMP"
 
