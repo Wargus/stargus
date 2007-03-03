@@ -254,7 +254,7 @@ UINT MyControllingFunction(LPVOID pParam)
 	MakeDir(_T("data\\scripts\\tilesets"));
 	CopyFiles(_T("scripts\\*.lua"), _T("data\\scripts"));
 	CopyFiles(_T("scripts\\ai\\*.lua"), _T("data\\scripts\\ai"));
-	CopyFiles(_T("scripts\\menus\\*.lua"), _T("data\\menus\\neutral"));
+	CopyFiles(_T("scripts\\menus\\*.lua"), _T("data\\scripts\\menus"));
 	CopyFiles(_T("scripts\\neutral\\*.lua"), _T("data\\scripts\\neutral"));
 	CopyFiles(_T("scripts\\terran\\*.lua"), _T("data\\scripts\\terran"));
 	CopyFiles(_T("scripts\\tilesets\\*.lua"), _T("data\\scripts\\tilesets"));
