@@ -1,0 +1,5 @@
+Load("scripts/tilesets/ashworld.lua")
+Load("scripts/tilesets/badlands.lua")
+Load("scripts/tilesets/installation.lua")
+Load("scripts/tilesets/jungle.lua")
+Load("scripts/tilesets/platform.lua")

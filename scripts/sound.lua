@@ -433,6 +433,51 @@ MakeSound("terran-factory-selected", "terran/units/factory.wav")
 MakeSound("terran-refinery-selected", "terran/units/refinery.wav")
 MakeSound("terran-science-facility-selected", "terran/units/science facility.wav")
 
+-- Zerg Units
+
+MakeSound("zerg-drone-ready", "zerg/units/drone/ready.wav")
+MakeSound("zerg-drone-death", "zerg/units/drone/death/1.wav")
+
+MakeSound("zerg-drone-selected",
+  {"zerg/units/drone/selected/1.wav",
+  "zerg/units/drone/selected/2.wav",
+  "zerg/units/drone/selected/3.wav",
+  "zerg/units/drone/selected/4.wav",
+  "zerg/units/drone/selected/5.wav"})
+
+MakeSound("zerg-drone-pissed",
+  {"zerg/units/drone/pissed/1.wav",
+  "zerg/units/drone/pissed/2.wav",
+  "zerg/units/drone/pissed/3.wav",})
+
+MakeSound("zerg-drone-acknowledgement",
+  {"zerg/units/drone/acknowledgement/1.wav",
+  "zerg/units/drone/acknowledgement/2.wav",
+  "zerg/units/drone/acknowledgement/3.wav",
+  "zerg/units/drone/acknowledgement/4.wav",
+  "zerg/units/drone/acknowledgement/5.wav"})
+
+MakeSound("zerg-hydralisk-selected",
+  {"zerg/units/hydralisk/selected/1.wav",
+  "zerg/units/hydralisk/selected/2.wav",
+  "zerg/units/hydralisk/selected/3.wav"})
+
+MakeSound("zerg-hydralisk-pissed",
+  {"zerg/units/hydralisk/pissed/1.wav",
+  "zerg/units/hydralisk/pissed/2.wav"})
+
+MakeSound("zerg-hydralisk-acknowledgement",
+  {"zerg/units/hydralisk/acknowledgement/1.wav",
+  "zerg/units/hydralisk/acknowledgement/2.wav",
+  "zerg/units/hydralisk/acknowledgement/3.wav",
+  "zerg/units/hydralisk/acknowledgement/4.wav"})
+
+-- Zerg Buildings
+
+MakeSound("zerg-hatchery-selected", "zerg/units/ha.wav")
+MakeSound("zerg-extractor-selected", "")
+
+
 
 ------------------------------------------------------------------------------
 --  Define sound remapping. (FIXME: somebody must clean the order.)

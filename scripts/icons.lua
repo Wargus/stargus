@@ -29,6 +29,13 @@
 --      $Id: icons.lua 1264 2005-07-04 13:53:05Z jsalmon3 $
 
 local icons = {
+  {"icon-zerg-drone", 41},
+  {"icon-zerg-hatchery", 131},
+  {"icon-zerg-extractor", 160},
+  {"icon-zerg-zergling", 37},
+  {"icon-zerg-hydralisk", 38},
+  {"icon-zerg-spawning-pool", 142},
+  {"icon-zerg-overlord", 40},
   {"icon-terran-marine", 0},
   {"icon-terran-ghost", 1},
   {"icon-terran-vulture", 2},

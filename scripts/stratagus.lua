@@ -102,7 +102,7 @@ SetBuildingCapture(false)
 
 --  Edit this to enable/disable the reveal of the attacker.
 --SetRevealAttacker(true)
-SetRevealAttacker(false)
+SetRevealAttacker(true)
 
 -------------------------------------------------------------------------------
 

@@ -34,6 +34,7 @@ UnitStill = {"frame 0", "wait 4", "random-goto 99 no-rotate", "random-rotate 1",
 BuildingStill = {"frame 0", "wait 4", "frame 0", "wait 1",}
 
 Load("scripts/terran/anim.lua")
+Load("scripts/zerg/anim.lua")
 Load("scripts/neutral/anim.lua")
 
 

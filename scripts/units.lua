@@ -31,4 +31,5 @@
 UnitTypeFiles = {}
 
 Load("scripts/terran/units.lua")
+Load("scripts/zerg/units.lua")
 Load("scripts/neutral/units.lua")

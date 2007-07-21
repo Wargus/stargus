@@ -30,4 +30,5 @@
 
 -- Load the different races
 Load("scripts/terran/upgrade.lua")
+Load("scripts/zerg/upgrade.lua")
 

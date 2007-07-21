@@ -17,6 +17,7 @@ DefineAnimations("animations-terran-vulture", {
     "unbreakable begin", "attack",
     "unbreakable end", "wait 1",
   },
+--
   Death = {
     "unbreakable begin",
     "sound terran-vulture-death", --[[active overlay 332,0]] "wait 3",

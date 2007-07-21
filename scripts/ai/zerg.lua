@@ -1,3 +1,4 @@
+ 
 InitFuncs:add(function()
   ai_terran_func = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 end)
