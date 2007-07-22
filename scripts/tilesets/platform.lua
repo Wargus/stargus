@@ -1,8 +1,8 @@
 DefineTileset(
-"name",  "Platform",
-"image", "tilesets/platform/platform.png",
-"slots", {
-  "solid", { "forest", "land",
+  "name", "Platform",
+  "image", "tilesets/platform/platform.png",
+  "slots", {
+   "solid", { "light-grass", "land", {
    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 000
  101,  102,  103,  104,  105,  106,  107,  108,  109,  110,  111,  112,  113,    0,    0,    0,	-- 010
    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 020

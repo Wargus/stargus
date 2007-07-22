@@ -1,38 +1,48 @@
 --
--- unit-terran-supply-depot
+-- unit-terran-dropship
 --
 
-DefineAnimations("animations-zerg-overlord-depot", {
-  Still = {
-    "frame 0", "wait 4",
-  },
-  Move = {
-    "frame 0", "wait 4", "frame 10", "wait 4", "frame 20", "wait 4", "frame 30"
-}
+DefineAnimations("animations-terran-dropship", {
+  Still = {"frame 0", "wait 125",--[[FIXME: shift down 79A2]]},
+  Move = {"unbreakable begin", "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",
+    "frame 0", "move 3", "wait 2", "frame 0", "move 2", "wait 1",
+    "frame 0", "move 3", "wait 1", "frame 0", "move 2", "wait 1",
+    "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",
+    "frame 0", "move 3", "wait 2", "frame 0", "move 2", "wait 1",
+    "frame 0", "move 3", "wait 1", "frame 0", "move 2", "unbreakable end", "wait 1",},
+  Attack = {"unbreakable begin", "attack", "sound terran-dropship-attack",
+    "unbreakable end", "wait 1",},
+  Death = {"unbreakable begin", "sound terran-dropship-death",
+    --[[active overlay 332,0]] "wait 3", "unbreakable end", "wait 1",},
 })
 
-DefineUnitType("unit-zerg-overlord", { Name = "Overlord",
-  Image = {"file", "graphics/zerg/units/overlord.png", "size", {84, 84}},
-  Shadow = {"file", "graphics/terran/units/overlord shadow.png", "size", {84, 84}},
-  Animations = "animations-zerg-overlord", Icon = "icon-zerg-overlord",
-  Costs = {"time", 100, "minerals", 100},
-  RepairHp = 4,
-  RepairCosts = {"minerals", 1, "gas", 1},
-  Speed = 0,
-  HitPoints = 500,
-  DrawLevel = 50,
-  TileSize = {3, 2}, BoxSize = {95, 63},
-  SightRange = 1,
-  Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
-  Priority = 20, AnnoyComputerFactor = 45,
-  Points = 200,
-  Supply = 8,
-  ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
+DefineUnitType("unit-terran-dropship", { Name = "Wraith",
+  Image = {"file", "terran/units/dropship.png", "size", {84, 84}},
+  Shadow = {"file", "terran/units/dropship.png", "size", {84, 84}, "offset", {0, 42}},
+  DrawLevel = 45, NumDirections = 32,
+  Animations = "animations-terran-dropship", Icon = "icon-terran-dropship",
+  Costs = {"time", 250, "minerals", 100, "gas", 0},
+  Speed = 14,
+  HitPoints = 200,
+  DrawLevel = 60,
+  TileSize = {1, 1}, BoxSize = {63, 63},
+  SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
+  Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-griffon-hammer",
+  Priority = 65,
+  Points = 150,
+  Demand = 2,
+--  Supply = 8,
+  ExplodeWhenKilled = "missile-terran-explosion-small",
+  Type = "fly", ShadowFly = {Value = 1, Enable = true},
+  RightMouseAction = "attack",
+  CanAttack = false,
+  AirUnit = true,
+  CanTransport = {},
+  organic = true,
+  SelectableByRectangle = true,
   Sounds = {
-    "selected", "zerg-overlord-selected",
---    "acknowledge", "farm-acknowledge",
---    "ready", "farm-ready",
-    "help", "zerg-base-attacked",
-    "dead", "explosion-large"} } )
-
+    "selected", "terran-dropship-selected",
+    "acknowledge", "terran-dropship-acknowledge",
+    "ready", "terran-dropship-ready",
+    "help", "basic human voices help 1",
+    "dead", "terran-dropship-death"} } )
