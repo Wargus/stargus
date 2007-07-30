@@ -3,7 +3,7 @@ Load("scripts/zerg/unit-zerg-drone.lua")
 Load("scripts/zerg/unit-zerg-zergling.lua")
 Load("scripts/zerg/unit-zerg-hydralisk.lua")
 Load("scripts/zerg/unit-zerg-spawning-pool.lua")
---Load("scripts/zerg/unit-zerg-overlord.lua")
+Load("scripts/zerg/unit-zerg-overlord.lua")
 
 --
 -- Buttons

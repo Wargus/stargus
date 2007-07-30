@@ -661,6 +661,8 @@ DefineUnitType("unit-zerg-hatchery", { Name = "Zerg Hatchery",
 DefineUnitType("unit-zerg-drone", {})
 DefineUnitType("unit-zerg-zergling", {})
 DefineUnitType("unit-zerg-hydralisk", {})
+DefineUnitType("unit-zerg-overlord", {})
+
 
 DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-drone",
   Action = "train-unit", Value = "unit-zerg-drone",
@@ -676,5 +678,9 @@ DefineButton( { Pos = 2, Level = 0, Icon = "icon-zerg-zergling",
 DefineButton( { Pos = 3, Level = 0, Icon = "icon-zerg-hydralisk",
   Action = "train-unit", Value = "unit-zerg-hydralisk",
   Key = "h", Hint = "Hydralisk",
+  ForUnit = {"unit-zerg-hatchery"} } )
+  DefineButton( { Pos = 5, Level = 0, Icon = "icon-zerg-overlord",
+  Action = "train-unit", Value = "unit-zerg-overlord",
+  Key = "o", Hint = "Overlord",
   ForUnit = {"unit-zerg-hatchery"} } )
 
