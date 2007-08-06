@@ -475,8 +475,6 @@ MakeSound("zerg-hydralisk-acknowledgement",
 -- Zerg Buildings
 
 MakeSound("zerg-hatchery-selected", "zerg/units/ha.wav")
-MakeSound("zerg-extractor-selected", "")
-
 
 
 ------------------------------------------------------------------------------

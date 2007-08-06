@@ -29,13 +29,19 @@
 --      $Id: icons.lua 1264 2005-07-04 13:53:05Z jsalmon3 $
 
 local icons = {
+  {"icon-zerg-larva", 35},
   {"icon-zerg-drone", 41},
+  {"icon-zerg-zergling", 37},
+  {"icon-zerg-overlord", 40},
+  {"icon-zerg-hydralisk", 38},
+  {"icon-zerg-mutalisk", 43},
+  {"icon-zerg-scourge", 47},
+  {"icon-zerg-queen", 45},
+  {"icon-zerg-ultralisk", 48},
+  {"icon-zerg-defiler", 46},
   {"icon-zerg-hatchery", 131},
   {"icon-zerg-extractor", 160},
-  {"icon-zerg-zergling", 37},
-  {"icon-zerg-hydralisk", 38},
   {"icon-zerg-spawning-pool", 142},
-  {"icon-zerg-overlord", 40},
   {"icon-terran-marine", 0},
   {"icon-terran-ghost", 1},
   {"icon-terran-vulture", 2},
@@ -110,6 +116,9 @@ local icons = {
   {"icon-terran-upgrade-infantry-armor", 292},
   {"icon-terran-upgrade-ship-plating", 293},
   {"icon-terran-nuke", 311},
+  {"icon-zerg-drone-scv", 7},
+  {"icon-zerg-hatchery", 115},
+
 }
 
 for i = 1,table.getn(icons) do
