@@ -28,57 +28,10 @@
 --
 --      $Id: icons.lua 1264 2005-07-04 13:53:05Z jsalmon3 $
 
-local icons = {
-  {"icon-zerg-larva", 35},
-  {"icon-zerg-drone", 41},
-  {"icon-zerg-zergling", 37},
-  {"icon-zerg-overlord", 40},
-  {"icon-zerg-hydralisk", 38},
-  {"icon-zerg-mutalisk", 43},
-  {"icon-zerg-scourge", 47},
-  {"icon-zerg-queen", 45},
-  {"icon-zerg-ultralisk", 48},
-  {"icon-zerg-defiler", 46},
-  {"icon-zerg-hatchery", 131},
-  {"icon-zerg-extractor", 160},
-  {"icon-zerg-spawning-pool", 142},
-  {"icon-terran-marine", 0},
-  {"icon-terran-ghost", 1},
-  {"icon-terran-vulture", 2},
-  {"icon-terran-goliath", 3},
-  {"icon-terran-tank", 5},
-  {"icon-terran-scv", 7},
-  {"icon-terran-wraith", 8},
-  {"icon-terran-science-vessel", 9},
-  {"icon-terran-gui-montang", 10},
-  {"icon-terran-dropship", 11},
-  {"icon-terran-battlecruiser", 12},
-  {"icon-terran-vulture-spider-mine", 13},
-  {"icon-terran-nuclear-missile", 14},
-  {"icon-terran-terran-civilian", 15},
-  {"icon-terran-sarah-kerrigan", 16},
-  {"icon-terran-jim-raynor-vulture", 19},
-  {"icon-terran-jim-raynor-marine", 20},
-  {"icon-terran-siege-tank", 31},
-  {"icon-terran-firebat", 32},
-  {"icon-terran-command-center", 106},
-  {"icon-terran-comsat-station", 107},
-  {"icon-terran-nuclear-silo", 108},
-  {"icon-terran-supply-depot", 109},
-  {"icon-terran-refinery", 110},
-  {"icon-terran-barracks", 111},
-  {"icon-terran-academy", 112},
-  {"icon-terran-factory", 113},
-  {"icon-terran-starport", 114},
-  {"icon-terran-control-tower", 115},
-  {"icon-terran-science-facility", 116},
-  {"icon-terran-covert-ops", 117},
-  {"icon-terran-physics-lab", 118},
-  {"icon-terran-machine-shop", 120},
-  {"icon-terran-engineering-bay", 122},
-  {"icon-terran-armory", 123},
-  {"icon-terran-missile-turret", 124},
-  {"icon-terran-bunker", 125},
+
+
+
+icons = {
   {"icon-minerals1", 176},
   {"icon-minerals2", 177},
   {"icon-minerals3", 178},
@@ -91,37 +44,18 @@ local icons = {
   {"icon-build", 234},
   {"icon-advanced-build", 235},
   {"icon-cancel", 236},
-  {"icon-terran-stim-pack", 237},
-  {"icon-terran-u238-shells", 238},
-  {"icon-terran-emp-shockwave", 241},
-  {"icon-terran-irradiate", 242},
-  {"icon-terran-spider-mines", 243},
-  {"icon-terran-siege-tank", 245},
-  {"icon-terran-titan-reactor", 248},
-  {"icon-terran-scanner-sweep", 250},
-  {"icon-terran-yamato-gun", 251},
-  {"icon-terran-cloak", 252},
   {"icon-patrol", 254},
   {"icon-hold-position", 255},
-  {"icon-terran-liftoff", 282},
-  {"icon-terran-land", 283},
-  {"icon-terran-apollo-reactor", 284},
-  {"icon-terran-colossus-reactor", 285},
   {"icon-rally-point", 286},
-  {"icon-terran-ion-thrusters", 287},
-  {"icon-terran-upgrade-infantry-weapons", 288},
-  {"icon-terran-upgrade-vehicle-weapons", 289},
-  {"icon-terran-upgrade-ship-weapons", 290},
-  {"icon-terran-upgrade-ship-plating", 291},
-  {"icon-terran-upgrade-infantry-armor", 292},
-  {"icon-terran-upgrade-ship-plating", 293},
-  {"icon-terran-nuke", 311},
-  {"icon-zerg-drone-scv", 7},
-  {"icon-zerg-hatchery", 115},
-
 }
 
+Load("scripts/terran/icons.lua")
+Load("scripts/zerg/icons.lua")
+Load("scripts/protoss/icons.lua")
+
+
 for i = 1,table.getn(icons) do
+	print("loading icon ", icons[i][1])
   icon = CIcon:New(icons[i][1])
   icon.G = CGraphic:New("cmdicons.png", 36, 34)
   icon.Frame = icons[i][2]
