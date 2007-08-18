@@ -2,7 +2,7 @@
 -- unit-protoss-probe
 --
 
-DefineAnimations("animations-protoss-probe", {
+DefineAnimations("animations-zerg-drone", {
 Still = {"frame 0", "wait 125",},
   Move = {"unbreakable begin",
     "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
@@ -21,10 +21,10 @@ Still = {"frame 0", "wait 125",},
 
 DefineUnitType("unit-protoss-probe", { Name = "Protoss Probe",
   Image = {"file", "protoss/units/probe.png", "size", {32, 32}},
-  Shadow = {"file", "protoss/units/probe.png", "size", {32, 32}, "offset", {0, -7}},
-  NumDirections = 4,
+  Shadow = {"file", "protoss/units/pteshad.png", "size", {32, 32}, "offset", {0, -7}},
+  NumDirections = 32,
   DrawLevel = 19,
-  Animations = "animations-protoss-probe", Icon = "icon-protoss-probe",
+  Animations = "animations-zerg-drone", Icon = "icon-zerg-drone",
   Costs = {"time", 45, "minerals", 50},
   Speed = 10,
   HitPoints = 60,
@@ -58,11 +58,11 @@ DefineUnitType("unit-protoss-probe", { Name = "Protoss Probe",
   organic = true,
   SelectableByRectangle = true,
   Sounds = {
-    "selected", "protoss-probe-selected",
-    "acknowledge", "protoss-probe-acknowledgement",
-    "ready", "protoss-probe-ready",
+    "selected", "zerg-drone-selected",
+    "acknowledge", "zerg-drone-acknowledgement",
+    "ready", "zerg-drone-ready",
     "help", "terran-units-attacked",
-    "dead", "protoss-probe-death"} } )
+    "dead", "zerg-drone-death"} } )
 
 
 --
@@ -108,8 +108,8 @@ DefineButton( { Pos = 8, Level = 0, Icon = "icon-advanced-build",
 -- Build
 --
 DefineButton( { Pos = 1, Level = 1, Icon = "icon-zerg-hatchery",
-  Action = "build", Value = "unit-zerg-hatchery",
-  Key = "h", Hint = "Hatchery",
+  Action = "build", Value = "unit-protoss-nexus",
+  Key = "x", Hint = "Nexus",
   ForUnit = {"unit-protoss-probe"} } )
 
 --DefineButton( { Pos = 2, Level = 1, Icon = "icon-zerg-spawning-pool",

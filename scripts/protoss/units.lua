@@ -1,9 +1,9 @@
-Load("scripts/zerg/unit-zerg-hatchery.lua")
+Load("scripts/protoss/unit-protoss-nexus.lua")
 Load("scripts/protoss/unit-protoss-probe.lua")
-Load("scripts/zerg/unit-zerg-zergling.lua")
-Load("scripts/zerg/unit-zerg-hydralisk.lua")
+Load("scripts/protoss/unit-zerg-zergling.lua")
+Load("scripts/protoss/unit-zerg-hydralisk.lua")
 --Load("scripts/zerg/unit-zerg-spawning-pool.lua")
-Load("scripts/zerg/unit-zerg-overlord.lua")
+Load("scripts/protoss/unit-zerg-overlord.lua")
 
 --
 -- Buttons
@@ -13,7 +13,7 @@ DefineButton( { Pos = 1, Level = 0, Icon = "icon-move",
   Key = "m", Hint = "~!Move",
   ForUnit = {
     "zerg-group",
-    "unit-zerg-drone",
+    "unit-protoss-probe",
     "unit-zerg-zergling",
     "unit-zerg-hydralisk",
     "terran-group",
@@ -24,7 +24,7 @@ DefineButton( { Pos = 1, Level = 0, Icon = "icon-move",
     "unit-terran-goliath",
     "unit-terran-marine",
     "unit-terran-science-vessel",
-    "unit-zerg-drone",
+    "unit-protoss-probe",
     "unit-terran-siege-tank",
     "unit-terran-vulture",
     "unit-terran-wraith",
@@ -36,7 +36,7 @@ DefineButton( { Pos = 2, Level = 0, Icon = "icon-stop",
   ForUnit = {
     "zerg-group",
     "unit-zerg-hydralisk",
-    "unit-zerg-drone",
+    "unit-protoss-probe",
     "unit-zerg-zergling",
     "terran-group",
     "unit-terran-battlecruiser",
@@ -47,7 +47,7 @@ DefineButton( { Pos = 2, Level = 0, Icon = "icon-stop",
     "unit-terran-marine",
     "unit-terran-missile-turret",
     "unit-terran-science-vessel",
-    "unit-zerg-drone",
+    "unit-protoss-probe",
     "unit-terran-siege-tank",
     "unit-terran-vulture",
     "unit-terran-wraith",
@@ -59,7 +59,7 @@ DefineButton( { Pos = 3, Level = 0, Icon = "icon-attack",
   ForUnit = {
     "zerg-group",
     "unit-zerg-hydralisk",
-    "unit-zerg-drone",
+    "unit-protoss-probe",
     "unit-zerg-zergling",
     "terran-group",
     "unit-terran-battlecruiser",
@@ -67,7 +67,7 @@ DefineButton( { Pos = 3, Level = 0, Icon = "icon-attack",
     "unit-terran-ghost",
     "unit-terran-goliath",
     "unit-terran-marine",
-    "unit-zerg-drone",
+    "unit-protoss-probe",
     "unit-terran-missile-turret",
     "unit-terran-siege-tank",
     "unit-terran-vulture",
@@ -80,7 +80,7 @@ DefineButton( { Pos = 4, Level = 0, Icon = "icon-patrol",
   ForUnit = {
     "zerg-group",
     "unit-zerg-hydralisk",
-    "unit-zerg-drone",
+    "unit-protoss-probe",
     "unit-zerg-zergling",
     "terran-group",
     "unit-terran-battlecruiser",
@@ -102,7 +102,7 @@ DefineButton( { Pos = 5, Level = 0, Icon = "icon-hold-position",
   ForUnit = {
     "zerg-group",
     "unit-zerg-hydralisk",
-    "unit-zerg-drone",
+    "unit-protoss-probe",
     "unit-zerg-zergling",
     "terran-group",
     "unit-terran-battlecruiser",
@@ -123,9 +123,9 @@ DefineButton( { Pos = 6, Level = 0, Icon = "icon-rally-point",
   Key = "r", Hint = "Set ~!Rally Point",
   ForUnit = {
     "zerg-group",
-    "unit-zerg-hatchery",
+    "unit-protoss-nexus",
     "unit-terran-barracks",
-    "unit-zerg-hatchery",
+    "unit-protoss-nexus",
     "unit-terran-starport",
   } } )
 
@@ -134,19 +134,19 @@ DefineButton( { Pos = 6, Level = 0, Icon = "icon-rally-point",
 --
 -- Allow
 --
-DefineAllow("unit-zerg-drone",            "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-protoss-probe",            "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-zergling",         "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-hydralisk",        "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-ghost",          "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-goliath",        "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-marine",         "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-science-vessel", "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-drone",            "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-protoss-probe",            "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-siege-tank",     "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-vulture",        "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-wraith",         "AAAAAAAAAAAAAAAA")
 
-DefineAllow("unit-zerg-hatchery",          "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-protoss-nexus",          "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-armory",           "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-barracks",         "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-bunker",           "AAAAAAAAAAAAAAAA")
