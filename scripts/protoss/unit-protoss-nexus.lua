@@ -659,28 +659,29 @@ DefineUnitType("unit-protoss-nexus", { Name = "Protoss Nexus",
 
 
 DefineUnitType("unit-protoss-probe", {})
-DefineUnitType("unit-zerg-zergling", {})
-DefineUnitType("unit-zerg-hydralisk", {})
+DefineUnitType("unit-protoss-zealot", {})
+DefineUnitType("unit-protoss-dragoon", {})
 DefineUnitType("unit-zerg-overlord", {})
 
 
-DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-drone",
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-protoss-probe",
   Action = "train-unit", Value = "unit-protoss-probe",
   Key = "d", Hint = "Build Probe",
   ForUnit = {"unit-protoss-nexus"} } )
 DefineUnitType("unit-protoss-probe", {})
 
-DefineButton( { Pos = 2, Level = 0, Icon = "icon-zerg-zergling",
-  Action = "train-unit", Value = "unit-zerg-zergling",
-  Key = "z", Hint = "Zergling",
+DefineButton( { Pos = 2, Level = 0, Icon = "icon-protoss-zealot",
+  Action = "train-unit", Value = "unit-protoss-zealot",
+  Key = "z", Hint = "Warp In Zealot",
   ForUnit = {"unit-protoss-nexus"} } )
 
-DefineButton( { Pos = 3, Level = 0, Icon = "icon-zerg-hydralisk",
-  Action = "train-unit", Value = "unit-zerg-hydralisk",
-  Key = "h", Hint = "Hydralisk",
+DefineButton( { Pos = 3, Level = 0, Icon = "icon-protoss-dragoon",
+  Action = "train-unit", Value = "unit-protoss-dragoon",
+  Key = "d", Hint = "Warp In Dragoon",
   ForUnit = {"unit-protoss-nexus"} } )
-  DefineButton( { Pos = 5, Level = 0, Icon = "icon-zerg-overlord",
+
+DefineButton( { Pos = 5, Level = 0, Icon = "icon-zerg-overlord",
   Action = "train-unit", Value = "unit-zerg-overlord",
-  Key = "o", Hint = "Overlord",
+  Key = "o", Hint = "Build Overlord",
   ForUnit = {"unit-protoss-nexus"} } )
 

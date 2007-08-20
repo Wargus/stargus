@@ -1,7 +1,7 @@
 Load("scripts/protoss/unit-protoss-nexus.lua")
 Load("scripts/protoss/unit-protoss-probe.lua")
-Load("scripts/protoss/unit-zerg-zergling.lua")
-Load("scripts/protoss/unit-zerg-hydralisk.lua")
+Load("scripts/protoss/unit-protoss-zealot.lua")
+Load("scripts/protoss/unit-protoss-dragoon.lua")
 --Load("scripts/zerg/unit-zerg-spawning-pool.lua")
 Load("scripts/protoss/unit-zerg-overlord.lua")
 
@@ -14,8 +14,8 @@ DefineButton( { Pos = 1, Level = 0, Icon = "icon-move",
   ForUnit = {
     "zerg-group",
     "unit-protoss-probe",
-    "unit-zerg-zergling",
-    "unit-zerg-hydralisk",
+    "unit-protoss-zealot",
+    "unit-protoss-dragoon",
     "terran-group",
     "unit-terran-battlecruiser",
     "unit-terran-dropship",
@@ -35,9 +35,9 @@ DefineButton( { Pos = 2, Level = 0, Icon = "icon-stop",
   Key = "s", Hint = "~!Stop",
   ForUnit = {
     "zerg-group",
-    "unit-zerg-hydralisk",
+    "unit-protoss-dragoon",
     "unit-protoss-probe",
-    "unit-zerg-zergling",
+    "unit-protoss-zealot",
     "terran-group",
     "unit-terran-battlecruiser",
     "unit-terran-dropship",
@@ -58,9 +58,9 @@ DefineButton( { Pos = 3, Level = 0, Icon = "icon-attack",
   Key = "a", Hint = "~!Attack",
   ForUnit = {
     "zerg-group",
-    "unit-zerg-hydralisk",
+    "unit-protoss-dragoon",
     "unit-protoss-probe",
-    "unit-zerg-zergling",
+    "unit-protoss-zealot",
     "terran-group",
     "unit-terran-battlecruiser",
     "unit-terran-firebat",
@@ -79,9 +79,9 @@ DefineButton( { Pos = 4, Level = 0, Icon = "icon-patrol",
   Key = "p", Hint = "~!Patrol",
   ForUnit = {
     "zerg-group",
-    "unit-zerg-hydralisk",
+    "unit-protoss-dragoon",
     "unit-protoss-probe",
-    "unit-zerg-zergling",
+    "unit-protoss-zealot",
     "terran-group",
     "unit-terran-battlecruiser",
     "unit-terran-dropship",
@@ -101,9 +101,9 @@ DefineButton( { Pos = 5, Level = 0, Icon = "icon-hold-position",
   Key = "h", Hint = "~!Hold Position",
   ForUnit = {
     "zerg-group",
-    "unit-zerg-hydralisk",
+    "unit-protoss-dragoon",
     "unit-protoss-probe",
-    "unit-zerg-zergling",
+    "unit-protoss-zealot",
     "terran-group",
     "unit-terran-battlecruiser",
     "unit-terran-dropship",
@@ -135,8 +135,8 @@ DefineButton( { Pos = 6, Level = 0, Icon = "icon-rally-point",
 -- Allow
 --
 DefineAllow("unit-protoss-probe",            "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-zergling",         "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-hydralisk",        "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-protoss-zealot",         "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-protoss-dragoon",        "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-ghost",          "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-goliath",        "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-marine",         "AAAAAAAAAAAAAAAA")
