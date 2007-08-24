@@ -2,304 +2,304 @@ DefineTileset(
   "name", "Badlands",
   "image", "tilesets/badlands/badlands.png",
   "slots", {
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",
 {    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 000
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  123,  124,  125,  126,  128,  129,  130,  131,  127,  132,  133,  134,  135,    0,    0,    0,	-- 010
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {    1,    2,    3,    4,    5,    6,    7,    8,    9,    0,   10,   11,   12,   13,   14,    0,	-- 020
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {   15,   16,   17,   18,   16,   19,   20,    3,   21,    0,   22,    6,   23,    2,   24,    0,	-- 030
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {   25,   26,   27,   28,   29,   28,   30,   31,   32,    0,   33,   34,   35,   36,   37,    0,	-- 040
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {   29,   38,   39,   40,   41,   42,   43,   44,   27,    0,   45,   46,   46,   47,   48,    0,	-- 050
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {   49,   50,   51,   50,   52,   53,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 060
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {   54,   55,   56,   57,   58,   59,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 070
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {   60,   61,   62,   63,   64,   65,   66,    0,   67,   68,   69,    0,    0,    0,    0,    0,	-- 080
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {   70,   71,   72,   73,   74,   75,   76,    0,   77,   78,   79,    0,    0,    0,    0,    0,	-- 090
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {   80,   81,   82,   83,   84,   85,   86,    0,   87,   88,   89,    0,    0,    0,    0,    0,	-- 0A0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {   90,   91,   92,   93,   94,   95,   96,    0,   97,   98,   99,    0,    0,    0,    0,    0,	-- 0B0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  100,  101,  102,  103,  104,  105,  106,  107,  108,  109,  110,  105,    0,    0,    0,    0,	-- 0C0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  111,  112,  113,  114,  115,  116,  117,  118,  119,  120,  121,  122,    0,    0,    0,    0,	-- 0D0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  164,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 0E0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  173,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 0F0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  182,  183,  184,  185,  186,  187,    0,  188,  189,  190,  191,  192,  193,    0,    0,    0,	-- 100
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  194,  195,  196,  197,  198,  199,    0,  200,  201,  202,  203,  204,  205,    0,    0,    0,	-- 110
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  206,  206,  207,  208,  206,  209,    0,  210,  211,  212,  213,  214,  215,    0,    0,    0,	-- 120
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  216,  217,  218,  219,  216,  220,    0,  221,  222,  223,  224,  225,  226,    0,    0,    0,	-- 130
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  136,  137,  138,  139,  140,  141,  142,  143,  144,    0,  145,  146,  147,  148,  149,    0,	-- 140
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  150,  151,  152,  153,  154,  155,  156,  157,  158,    0,  159,  160,  161,  162,  163,    0,	-- 150
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 160
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 170
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 180
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 190
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 1A0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 1B0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 1C0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 1D0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 1E0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 1F0
- }},
-"solid", { "light-grass", "land", "unpassable",
+ }}, 
+"solid", { "light-grass", "land",  
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 200
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 210
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 220
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 230
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 240
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 250
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 260
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 270
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 280
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 290
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 2A0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 2B0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  553,  554,  555,  556,  557,  558,  559,    0,  558,  558,  559,  559,  555,    0,    0,    0,	-- 2C0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 { 4740, 4741, 4742, 4740, 4743, 4744, 4743,    0, 4744, 4744, 4743, 4743, 4742,    0,    0,    0,	-- 2D0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  540,  541,  542,  543,  544,  545,  546,    0,  545,  547,  546,  546,  542,    0,    0,    0,	-- 2E0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  548,  549,  550,  548,  551,  552,  551,    0,  552,  552,  551,  551,  550,    0,    0,    0,	-- 2F0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 { 4745, 4746, 4747, 4745, 4748, 4749, 4748,    0, 4749, 4749, 4748, 4748, 4747,    0,    0,    0,	-- 300
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  583,  584,  585,  586,  587,  588,  589,    0,  588,  588,  589,  589,  585,    0,    0,    0,	-- 310
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  565,  566,  567,  565,  568,  569,  568,    0,  569,  569,  568,  568,  567,    0,    0,    0,	-- 320
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  570,  571,  572,  573,  574,  575,  576,    0,  575,  577,  576,  576,  572,    0,    0,    0,	-- 330
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  662,  663,  664,  665,  666,  667,  668,    0,  669,  670,  671,  672,  673,    0,    0,    0,	-- 340
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 { 4767, 4768,  676, 4769,  678,  679,  680,    0,  681,  682, 4770,  684, 4771,    0,    0,    0,	-- 350
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  686,  687,  688,  689,  690,  691,  692,    0,  693,  694,  695,  696,  697,    0,    0,    0,	-- 360
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  698,  699,  700,  701,  702,  703,  704,    0,  705,  706,  707,  708,  709,    0,    0,    0,	-- 370
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 { 4772, 4773, 4774,  713, 4775, 4776, 4777,    0, 4778, 4779, 4780, 4781, 4782,    0,    0,    0,	-- 380
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  722, 4783,  724,  725,  726,  727,  728,    0,  729,  730,  731,  732,  733,    0,    0,    0,	-- 390
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 { 4750, 4751,  592, 4752,  594,  595,  596,    0,  597,  598, 4753,  600, 4754,    0,    0,    0,	-- 3A0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  602,  603,  604,  605,  606,  607,  608,    0,  609,  610,  611,  612,  613,    0,    0,    0,	-- 3B0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  614,  615,  616,  617,  618,  619,  620,    0,  621,  622,  623,  624,  625,    0,    0,    0,	-- 3C0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  626,  627,  628,  629,  630,  631,  632,    0,  633,  634,  635,  636,  637,    0,    0,    0,	-- 3D0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  638, 4755,  640,  641,  642,  643,  644,    0,  645,  646,  647,  648,  649,    0,    0,    0,	-- 3E0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 { 4756, 4757, 4758,  653, 4759, 4760, 4761,    0, 4762, 4763, 4764, 4765, 4766,    0,    0,    0,	-- 3F0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    5,  734,    5,    5,  734,  734,  734,    0,  734,  734,    5,    5,    5,    0,    0,    0,	-- 400
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  735,  736,  737,  735,  736,  736,  736,    0,  736,  738,  735,  737,  735,    0,    0,    0,	-- 410
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  739,  740,  741,  741,  742,  742,  743,    0,  743,  744,  741,  741,  741,    0,    0,    0,	-- 420
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  745,  746,  745,  745,  746,  746,  746,    0,  746,  746,  745,  745,  745,    0,    0,    0,	-- 430
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 { 4784, 4785, 4784, 4784, 4785, 4785, 4785,    0, 4785, 4785, 4784, 4784, 4784,    0,    0,    0,	-- 440
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  749,  750,  749,  749,  750,  750,  750,    0,  750,  750,  749,  749,  749,    0,    0,    0,	-- 450
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  751,  752,  753,  751,  752,  752,  752,    0,  752,  754,  751,  753,  751,    0,    0,    0,	-- 460
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {  755,   16,  755,  755,   16,   16,   16,    0,   16,   16,  755,  755,  755,    0,    0,    0,	-- 470
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  756,  757,  756,  756,  757,  757,  757,    0,  757,  757,  756,  756,  756,    0,    0,    0,	-- 480
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  758,  759,  760,  760,  761,  761,  762,    0,  762,  763,  764,  760,  760,    0,    0,    0,	-- 490
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  765,  766,  765,  765,  766,  766,  766,    0,  766,  766,  765,  765,  765,    0,    0,    0,	-- 4A0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 { 4786, 4787, 4786, 4786, 4787, 4787, 4787,    0, 4787, 4787, 4786, 4786, 4786,    0,    0,    0,	-- 4B0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  780,  781,  780,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 4C0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  782, 4794, 4795,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 4D0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 { 4796, 4797, 4798,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 4E0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  788, 4799, 4800,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 4F0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  769,  770, 4788,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 500
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  772,  773,  772,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 510
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  774, 4789, 4790,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 520
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 { 4791, 4792, 4793,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 530
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  815,  816,  817,  818,  819,  820,  821,    0,  822,  823,  824,  825,  826,    0,    0,    0,	-- 540
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  827,  828,  829,  830,  831,  832,  833,    0,  834,  835,  836,  837,  838,    0,    0,    0,	-- 550
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  791,  792,  793,  794,  795,  796,  797,    0,  798,  799,  800,  801,  802,    0,    0,    0,	-- 560
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  803,  804,  805,  806,  807,  808,  809,    0,  810,  811,  812,  813,  814,    0,    0,    0,	-- 570
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  855,  856,  857,  858,  859,  860,  861,    0,  860,  860,  862,  862,  862,    0,    0,    0,	-- 580
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  863,  864,  865,  866,  867,  868,  869,    0,  868,  868,  870,  870,  870,    0,    0,    0,	-- 590
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  839,  840,  841,  842,  843,  844,  845,    0,  844,  844,  846,  846,  846,    0,    0,    0,	-- 5A0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  847,  848,  849,  850,  851,  852,  853,    0,  852,  852,  854,  854,  854,    0,    0,    0,	-- 5B0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  815,  891,  892,  893,  819,  820,  821,    0,  894,  895,  896,  897,  721,    0,    0,    0,	-- 5C0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  898,  899,  900,  901,  902,  903,  904,    0,  905,  906,  907,  908,  909,    0,    0,    0,	-- 5D0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  871,  872,  873,  874,  875,  876,  877,    0,  878,  879,  880,  881,  882,    0,    0,    0,	-- 5E0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  803,  883,  884,  885,  807,  808,  809,    0,  886,  887,  888,  889,  890,    0,    0,    0,	-- 5F0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  913,  748,  913,  913,  748,  748,  748,    0,  748,  748,  913,  913,  913,    0,    0,    0,	-- 600
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  914,  915,  914,  914,  915,  915,  915,    0,  915,  915,  914,  914,  914,    0,    0,    0,	-- 610
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  910,  911,  910,  910,  911,  911,  911,    0,  911,  911,  910,  910,  910,    0,    0,    0,	-- 620
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  912,  768,  912,  912,  768,  768,  768,    0,  768,  768,  912,  912,  912,    0,    0,    0,	-- 630
  }},
 "solid", { "light-grass", "land", "unpassable",

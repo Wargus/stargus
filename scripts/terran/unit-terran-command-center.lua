@@ -58,24 +58,24 @@ DefineUnitType("unit-terran-command-center", { Name = "Command Center",
   CanStore = {"gas", "minerals"},
   Sounds = {
     "selected", "button",
---    "ready", "town-hall-ready",
+   "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
 
 
 DefineUnitType("unit-terran-scv", {})
+DefineUnitType("unit-terran-comsat-station", {})
 
 DefineButton( { Pos = 1, Level = 0, Icon = "icon-terran-scv",
   Action = "train-unit", Value = "unit-terran-scv",
   Key = "s", Hint = "Build ~!SCV",
   ForUnit = {"unit-terran-command-center"} } )
-
---[[
+  
 DefineButton( { Pos = 7, Level = 0, Icon = "icon-terran-comsat-station",
   Action = "train-unit", Value = "unit-terran-comsat-station",
   Key = "c", Hint = "Comsat Station",
   ForUnit = {"unit-terran-command-center"} } )
-
+--[[
 DefineButton( { Pos = 8, Level = 0, Icon = "icon-terran-nuclear-silo",
   Action = "train-unit", Value = "unit-terran-nuclear-silo",
   Key = "c", Hint = "Nuclear Silo",

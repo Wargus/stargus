@@ -1,9 +1,9 @@
 DefineAnimations("animations-zerg-zergling-death", {
-  Death = {"unbreakable begin", "frame 296", "wait 50", "unbreakable end", "wait 1", },
+  Death = {"unbreakable begin", "frame 0", "wait 50", "frame 1", "wait 50", "frame 2", "wait 50", "frame 3", "wait 50", "frame 4", "wait 50", "unbreakable end", "wait 1", },
 })
 
 DefineUnitType("unit-zerg-zergling-death", { Name = "Dead Zergling",
-  Image = {"file", "zerg/units/zergling.png", "size", {128, 128}},
+  Image = {"file", "zerg/units/zzedeath.png", "size", {128, 128}},
   Animations = "animations-zerg-zergling-death", Icon = "icon-zerg-zergling",
   NumDirections = 1,
   HitPoints = 255,
@@ -80,6 +80,7 @@ DefineUnitType("unit-zerg-zergling", { Name = "Zergling",
   Points = 50,
   Demand = 1,
   Corpse = "unit-zerg-zergling-death",
+  RegenerationRate = 1,
   Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,

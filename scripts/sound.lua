@@ -76,7 +76,7 @@ function MusicStopped()
 end
 
 -- SetCdMode("off")
-
+MakeSound("building-placed", "terran/building place.wav")
 MakeSound("button", "ui/button.wav")
 MakeSound("buzz", "ui/buzz.wav")
 
@@ -457,6 +457,8 @@ MakeSound("zerg-drone-acknowledgement",
   "zerg/units/drone/acknowledgement/4.wav",
   "zerg/units/drone/acknowledgement/5.wav"})
 
+--hydralisk
+  
 MakeSound("zerg-hydralisk-selected",
   {"zerg/units/hydralisk/selected/1.wav",
   "zerg/units/hydralisk/selected/2.wav",
@@ -471,12 +473,98 @@ MakeSound("zerg-hydralisk-acknowledgement",
   "zerg/units/hydralisk/acknowledgement/2.wav",
   "zerg/units/hydralisk/acknowledgement/3.wav",
   "zerg/units/hydralisk/acknowledgement/4.wav"})
+  
+MakeSound("zerg-hydralisk-death", "zerg/units/hydralisk/death/1.wav")
+
+MakeSound("zerg-hydralisk-ready", "zerg/units/hydralisk/ready.wav")
+  
+--zergling
+  
+MakeSound("zerg-zergling-selected",
+  {"zerg/units/zergling/selected/1.wav",
+  "zerg/units/zergling/selected/2.wav",
+  "zerg/units/zergling/selected/3.wav",
+  "zerg/units/zergling/selected/4.wav"})
+
+MakeSound("zerg-zergling-pissed",
+  {"zerg/units/zergling/pissed/1.wav",
+  "zerg/units/zergling/pissed/2.wav",
+  "zerg/units/zergling/pissed/3.wav"})
+
+MakeSound("zerg-zergling-acknowledgement",
+  {"zerg/units/zergling/acknowledgement/1.wav",
+  "zerg/units/zergling/acknowledgement/2.wav",
+  "zerg/units/zergling/acknowledgement/3.wav",
+  "zerg/units/zergling/acknowledgement/4.wav"})
+  
+MakeSound("zerg-zergling-death", "zerg/units/zergling/death/1.wav")
+MakeSound("zerg-zergling-ready", "zerg/units/zergling/ready.wav")
+
+--zerg ultralisk
+
+MakeSound("zerg-ultralisk-selected",
+  {"zerg/units/ultralisk/selected/1.wav",
+  "zerg/units/ultralisk/selected/2.wav",
+  "zerg/units/ultralisk/selected/3.wav"})
+
+MakeSound("zerg-ultralisk-pissed",
+  {"zerg/units/ultralisk/pissed/1.wav",
+  "zerg/units/ultralisk/pissed/2.wav",
+  "zerg/units/ultralisk/pissed/3.wav"})
+
+MakeSound("zerg-ultralisk-acknowledgement",
+  {"zerg/units/ultralisk/acknowledgement/1.wav",
+  "zerg/units/ultralisk/acknowledgement/2.wav",
+  "zerg/units/ultralisk/acknowledgement/3.wav",
+  "zerg/units/ultralisk/acknowledgement/4.wav"})
+
+MakeSound("zerg-ultralisk-hit",
+  {"zerg/units/ultralisk/hit00.wav",
+  "zerg/units/ultralisk/hit01.wav"})
+  
+MakeSound("zerg-ultralisk-attack",
+  {"zerg/units/ultralisk/att01.wav",
+  "zerg/units/ultralisk/hit01.wav",
+  "zerg/units/ultralisk/att02.wav"})  
+
+MakeSound("zerg-ultralisk-death", "zerg/units/ultralisk/death/1.wav")
+MakeSound("zerg-ultralisk-ready", "zerg/units/ultralisk/ready.wav")
+
+--overlord
+
+MakeSound("zerg-overlord-selected",
+  {"zerg/units/overlord/selected/1.wav",
+  "zerg/units/overlord/selected/2.wav",
+  "zerg/units/overlord/selected/3.wav",
+  "zerg/units/overlord/selected/4.wav"})
+
+MakeSound("zerg-overlord-pissed",
+  {"zerg/units/overlord/pissed/1.wav",
+  "zerg/units/overlord/pissed/2.wav",
+  "zerg/units/overlord/pissed/3.wav",
+  "zerg/units/overlord/pissed/4.wav"})
+
+MakeSound("zerg-overlord-acknowledgement",
+  {"zerg/units/overlord/acknowledgement/1.wav",
+  "zerg/units/overlord/acknowledgement/2.wav",
+  "zerg/units/overlord/acknowledgement/3.wav",
+  "zerg/units/overlord/acknowledgement/4.wav"})
+
+MakeSound("zerg-overlord-death", "zerg/units/overlord/death/1.wav")
+MakeSound("zerg-overlord-ready", "zerg/units/overlord/ready.wav")
 
 -- Zerg Buildings
 
 MakeSound("zerg-hatchery-selected", "zerg/units/ha.wav")
 
+MakeSound("zerg-building-ready", "zerg/units/chrdy.wav")
 
+MakeSound("zerg-base-attacked", "zerg/units/advisor/upd00.wav")
+
+MakeSound("zerg-building-blowup", "zerg/units/bldgdth.wav")
+
+MakeSound("terran-scv-done", "terran/units/scv/upd00.wav")
+MakeSound("scv-attack", "terran/units/scv/udrrep00.wav")
 ------------------------------------------------------------------------------
 --  Define sound remapping. (FIXME: somebody must clean the order.)
 --
@@ -486,7 +574,7 @@ MakeSound("zerg-hatchery-selected", "zerg/units/ha.wav")
 --
 DefineGameSounds(
   "placement-error", SoundForName("buzz"),
-  "placement-success", SoundForName("button"),
+  "placement-success", SoundForName("building-placed"),
   "click", SoundForName("button")
 
 -- FIXME: Not ready

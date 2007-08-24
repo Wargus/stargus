@@ -55,7 +55,7 @@ DefineUnitType("unit-terran-academy", { Name = "Academy",
   Building = true, VisibleUnderFog = true, 
   Sounds = {
     "selected", "terran-academy-selected",
---    "ready", "human-blacksmith-ready",
+   "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
 

@@ -1,32 +1,10 @@
-DefineAnimations("animations-zerg-rubble-large", {
-  Death = {"unbreakable begin", "frame 0", "wait 100", "frame 1", "wait 100",
-    "frame 2", "wait 100", "frame 3", "wait 100", "frame 4", "unbreakable end", "wait 1", },
-})
-
-DefineUnitType("unit-zerg-rubble-large", { Name = "Rubble",
-  Image = {"file", "zerg/units/rubble large.png", "size", {128, 128}},
-  Animations = "animations-zerg-rubble-large", Icon = "icon-zerg-hatchery",
-  NumDirections = 1,
-  HitPoints = 255,
-  DrawLevel = 1,
-  TileSize = {1, 1}, BoxSize = {31, 31},
-  SightRange = 1,
-  BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
-  Priority = 0,
-  Type = "land",
-  SelectableByRectangle = false,
-  Vanishes = true,
-  Sounds = {} } )
-
-DefineAnimations("animations-zerg-hatchery", {
-  Still = {
-    "frame 0", "wait 125",
-  },
-  Train = {
+DefineAnimations("animations-zerg-sunken-colony", {
+   Still = {
     "frame 0", "wait 125",
   },
 })
-DefineConstruction("construction-zerg-hatchery", {
+
+DefineConstruction("construction-zerg-creep-colony", {
   Files = {
     File = "zerg/units/zbuild.png",
     Size = {160, 192}},
@@ -648,88 +626,28 @@ DefineConstruction("construction-zerg-hatchery", {
 }
 })
 
-DefineUnitType("unit-zerg-hatchery", { Name = "Zerg Hatchery",
-  Image = {"file", "zerg/units/hatchery.png", "size", {192, 160}},
-  Shadow = {"file", "zerg/units/hatchery shadow.png", "size", {192, 160}},
-  Animations = "animations-zerg-hatchery", Icon = "icon-zerg-hatchery",
-  Costs = {"time", 255, "minerals", 300},
+DefineUnitType("unit-zerg-creep-colony", { Name = "Creep Colony",
+  Image = {"file", "zerg/units/creep colony.png", "size",  {128, 64}},
+  Shadow = {"file", "zerg/units/creep colony shadow.png", "size",  {128, 64}},
+  Animations = "animations-zerg-creep-colony", Icon = "icon-zerg-creep-colony",
+  Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
-  RepairCosts = {"minerals", 1, "gas", 0},
-  Construction = "construction-zerg-hatchery",
+  RepairCosts = {"minerals", 1, "gas", 1},
+  Construction = "construction-zerg-creep-colony",
   Speed = 0,
-  HitPoints = 1500,
-  DrawLevel = 30,
-  TileSize = {4, 3}, BoxSize = {126, 95},
-  SightRange = 1,
+  HitPoints = 200,
+  DrawLevel = 50,
+  TileSize = {3, 2}, BoxSize = {95, 63},
+  SightRange = 4,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
-  Priority = 35, AnnoyComputerFactor = 45,
-  Points = 200,
-  Supply = 8,
-  RegenerationRate = 1,
---  ExplodeWhenKilled = "missle-zerg-rubble-large",
+  Priority = 15, AnnoyComputerFactor = 20,
+  Points = 170,
+  Corpse = "unit-destroyed-3x3-place",
+  ExplodeWhenKilled = "missile-terran-explosion-large",
   Type = "land",
-  Corpse = "unit-zerg-rubble-large",
-  Building = true, VisibleUnderFog = true, 
-  BuildingRules = { { "distance", { Distance = 3, DistanceType = ">", Type = "unit-minerals1"} } },
-  CanStore = {"gas", "minerals"},
+  Building = true, VisibleUnderFog = true,
   Sounds = {
-    "selected", "zerg-hatchery-selected",
---    "ready", "town-hall-ready",
-    "ready", "zerg-building-ready",
-    "help", "zerg-base-attacked",
-    "dead", "zerg-building-blowup"} } )
-
-
-DefineUnitType("unit-zerg-drone", {})
-DefineUnitType("unit-zerg-zergling", {})
-DefineUnitType("unit-zerg-hydralisk", {})
-DefineUnitType("unit-zerg-ultralisk", {})
-DefineUnitType("unit-zerg-overlord", {})
-DefineUnitType("unit-zerg-queen", {})
-DefineUnitType("unit-zerg-defiler", {})
-DefineUnitType("unit-zerg-mut", {})
-
-DefineButton( { Pos = 1, Level = 0, Icon = "icon-build",
-  Action = "button", Value = 1,
-  Key = "b", Hint = "Select Larva",
-  ForUnit = {"unit-zerg-hatchery"} } )
-
-DefineButton( { Pos = 1, Level = 1, Icon = "icon-zerg-drone",
-  Action = "train-unit", Value = "unit-zerg-drone",
-  Key = "d", Hint = "Build Drone",
-  ForUnit = {"unit-zerg-hatchery"} } )
-
-DefineButton( { Pos = 2, Level = 1, Icon = "icon-zerg-zergling",
-  Action = "train-unit", Value = "unit-zerg-zergling",
-  Key = "z", Hint = "Zergling",
-  ForUnit = {"unit-zerg-hatchery"} } )
-
-DefineButton( { Pos = 3, Level = 1, Icon = "icon-zerg-hydralisk",
-  Action = "train-unit", Value = "unit-zerg-hydralisk",
-  Key = "h", Hint = "Hydralisk",
-  ForUnit = {"unit-zerg-hatchery"} } )
-  
-DefineButton( { Pos = 4, Level = 1, Icon = "icon-zerg-ultralisk",
-  Action = "train-unit", Value = "unit-zerg-ultralisk",
-  Key = "u", Hint = "Ultralisk",
-  ForUnit = {"unit-zerg-hatchery"} } )
-  
-DefineButton( { Pos = 5, Level = 1, Icon = "icon-zerg-overlord",
-  Action = "train-unit", Value = "unit-zerg-overlord",
-  Key = "o", Hint = "Overlord",
-  ForUnit = {"unit-zerg-hatchery"} } )
-
-DefineButton( { Pos = 7, Level = 1, Icon = "icon-zerg-mutalisk",
-  Action = "train-unit", Value = "unit-zerg-mut",
-  Key = "m", Hint = "Mutalisk",
-  ForUnit = {"unit-zerg-hatchery"} } )
-
-DefineButton( { Pos = 8, Level = 1, Icon = "icon-zerg-queen",
-  Action = "train-unit", Value = "unit-zerg-queen",
-  Key = "q", Hint = "Queen",
-  ForUnit = {"unit-zerg-hatchery"} } )
-
-DefineButton( { Pos = 9, Level = 1, Icon = "icon-zerg-defiler",
-  Action = "train-unit", Value = "unit-zerg-defiler",
-  Key = "d", Hint = "Defiler",
-  ForUnit = {"unit-zerg-hatchery"} } )
+    "selected", "terran-bunker-selected",
+    "ready", "terran-work-complete",
+    "help", "terran-base-attacked",
+    "dead", "explosion-large"} } )

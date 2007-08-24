@@ -1,5 +1,4 @@
-SetPlayerData(GetThisPlayer(), "RaceName", "terran")
-
+SetPlayerData(GetThisPlayer(), "RaceName", "zerg")
 -- Global useful objects for menus  ----------
 dark = Color(38, 38, 78)
 clear = Color(200, 200, 120)

@@ -59,6 +59,6 @@ DefineUnitType("unit-terran-missile-turret", { Name = "Missile Turret",
   DetectCloak = true,
   Sounds = {
     "selected", "terran-missile-turret-selected",
---    "ready", "human-cannon-tower-ready",
+   "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )

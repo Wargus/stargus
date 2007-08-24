@@ -56,7 +56,7 @@ DefineUnitType("unit-terran-starport", { Name = "Starport",
   Sounds = {
     "selected", "terran-starport-selected",
 --    "acknowledge", "human-barracks-acknowledge",
---    "ready", "human-barracks-ready",
+   "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
 

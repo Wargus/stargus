@@ -3,7 +3,14 @@ Load("scripts/zerg/unit-zerg-drone.lua")
 Load("scripts/zerg/unit-zerg-zergling.lua")
 Load("scripts/zerg/unit-zerg-hydralisk.lua")
 Load("scripts/zerg/unit-zerg-spawning-pool.lua")
+Load("scripts/zerg/unit-zerg-ultralisk.lua")
+Load("scripts/zerg/unit-zerg-extractor.lua")
+Load("scripts/zerg/unit-zerg-mut.lua")
 Load("scripts/zerg/unit-zerg-overlord.lua")
+Load("scripts/zerg/unit-zerg-queen.lua")
+Load("scripts/zerg/unit-zerg-sunken-colony.lua")
+Load("scripts/zerg/unit-zerg-defiler.lua")
+
 
 --
 -- Buttons
@@ -15,7 +22,12 @@ DefineButton( { Pos = 1, Level = 0, Icon = "icon-move",
     "zerg-group",
     "unit-zerg-drone",
     "unit-zerg-zergling",
+	"unit-zerg-overlord",
     "unit-zerg-hydralisk",
+	"unit-zerg-ultralisk",
+	"unit-zerg-defiler",
+	"unit-zerg-mut",
+	"unit-zerg-queen",
     "terran-group",
     "unit-terran-battlecruiser",
     "unit-terran-dropship",
@@ -35,9 +47,15 @@ DefineButton( { Pos = 2, Level = 0, Icon = "icon-stop",
   Key = "s", Hint = "~!Stop",
   ForUnit = {
     "zerg-group",
+	"unit-zerg-mut",
+	"unit-zerg-overlord",
     "unit-zerg-hydralisk",
+	"unit-zerg-queen",
     "unit-zerg-drone",
     "unit-zerg-zergling",
+	"unit-zerg-ultralisk",
+	"unit-zerg-defiler",
+	"unit-zerg-sunken-colony",
     "terran-group",
     "unit-terran-battlecruiser",
     "unit-terran-dropship",
@@ -58,9 +76,12 @@ DefineButton( { Pos = 3, Level = 0, Icon = "icon-attack",
   Key = "a", Hint = "~!Attack",
   ForUnit = {
     "zerg-group",
+	"unit-zerg-mut",
+	"unit-zerg-ultralisk",
     "unit-zerg-hydralisk",
     "unit-zerg-drone",
     "unit-zerg-zergling",
+	"unit-zerg-sunken-colony",
     "terran-group",
     "unit-terran-battlecruiser",
     "unit-terran-firebat",
@@ -79,7 +100,12 @@ DefineButton( { Pos = 4, Level = 0, Icon = "icon-patrol",
   Key = "p", Hint = "~!Patrol",
   ForUnit = {
     "zerg-group",
+	"unit-zerg-mut",
+	"unit-zerg-ultralisk",
+	"unit-zerg-overlord",
     "unit-zerg-hydralisk",
+	"unit-zerg-queen",
+	"unit-zerg-defiler",
     "unit-zerg-drone",
     "unit-zerg-zergling",
     "terran-group",
@@ -101,7 +127,12 @@ DefineButton( { Pos = 5, Level = 0, Icon = "icon-hold-position",
   Key = "h", Hint = "~!Hold Position",
   ForUnit = {
     "zerg-group",
+	"unit-zerg-mut",
+	"unit-zerg-queen",
+	"unit-zerg-overlord",
     "unit-zerg-hydralisk",
+	"unit-zerg-defiler",
+    "unit-zerg-ultralisk",
     "unit-zerg-drone",
     "unit-zerg-zergling",
     "terran-group",
@@ -124,8 +155,8 @@ DefineButton( { Pos = 6, Level = 0, Icon = "icon-rally-point",
   ForUnit = {
     "zerg-group",
     "unit-zerg-hatchery",
-    "unit-terran-barracks",
-    "unit-zerg-hatchery",
+    "unit-zerg-lair",
+    "unit-zerg-hive",
     "unit-terran-starport",
   } } )
 
@@ -134,22 +165,22 @@ DefineButton( { Pos = 6, Level = 0, Icon = "icon-rally-point",
 --
 -- Allow
 --
-DefineAllow("unit-zerg-drone",            "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-zergling",         "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-hydralisk",        "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-ghost",          "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-goliath",        "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-marine",         "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-science-vessel", "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-drone",            "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-siege-tank",     "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-vulture",        "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-wraith",         "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-drone",              "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-zergling",           "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-hydralisk",          "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-ultralisk",          "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-mut",                "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-overlord",           "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-queen",              "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-drone",              "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-defiler",            "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-terran-vulture",          "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-terran-wraith",           "AAAAAAAAAAAAAAAA")
 
-DefineAllow("unit-zerg-hatchery",          "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-armory",           "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-barracks",         "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-bunker",           "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-hatchery",           "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-spawning-pool",      "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-extractor",          "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-sunken-colony",      "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-command-center",   "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-engineering-bay",  "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-factory",          "AAAAAAAAAAAAAAAA")

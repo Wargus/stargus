@@ -55,6 +55,6 @@ DefineUnitType("unit-terran-armory", { Name = "Armory",
   Building = true, VisibleUnderFog = true, 
   Sounds = {
     "selected", "terran-armory-selected",
---    "ready", "human-barracks-ready",
+   "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )

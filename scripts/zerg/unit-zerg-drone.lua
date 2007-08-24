@@ -8,20 +8,19 @@ Still = {"frame 0", "wait 125",},
     "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
     "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
     "move 4", "wait 1", "move 4", "unbreakable end", "wait 1",},
-  Attack = {"unbreakable begin", "frame 34", "sound scv-attack",
-    "wait 1", "frame 17", "unbreakable end", "wait 1",},
-  Harvest_minerals = {"unbreakable begin", "frame 102", "sound scv-attack",
-    "wait 3", "frame 122", "unbreakable end", "wait 3",},
+  Attack = {"unbreakable begin", "frame 1", "wait 1", "unbreakable end", "wait 1",},
+  Harvest_minerals = {"unbreakable begin", "frame 102", "wait 3", "frame 122", "wait 3", "frame 139", "wait 3", "frame 156", "wait 3", "frame 173", "wait 3", "frame 190", "wait 3", "unbreakable end", "wait 2",
+  },
   Repair = {"unbreakable begin", "frame 34", "sound scv-attack",
     "wait 1", "frame 17", "unbreakable end", "wait 1",},
-  Death = {"unbreakable begin", "frame 50", "wait 3", "frame 55", "wait 3", "frame 60", "wait 100",
-    "frame 60", "unbreakable end", "wait 1",},
+  Death = {"unbreakable begin", "wait 2", "frame 170", "wait 2",
+    "frame 187", "wait 2", "frame 204", "wait 2", "frame 221", "wait 2", "frame 238", "unbreakable end", "wait 1",},
 })
 
 
 DefineUnitType("unit-zerg-drone", { Name = "Zerg Drone",
   Image = {"file", "zerg/units/drone.png", "size", {128, 128}},
-  Shadow = {"file", "zerg/units/drone.png", "size", {128, 128}, "offset", {0, -7}},
+  Shadow = {"file", "zerg/units/drone.png", "size", {128, 128}},
   NumDirections = 32,
   DrawLevel = 19,
   Animations = "animations-zerg-drone", Icon = "icon-zerg-drone",
@@ -31,17 +30,18 @@ DefineUnitType("unit-zerg-drone", { Name = "Zerg Drone",
   DrawLevel = 40,
   TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
-  BasicDamage = 3, PiercingDamage = 2, Missile = "missile-none",
+  BasicDamage = 3, PiercingDamage = 2, Missile = "missile-zerg-spit",
   MaxAttackRange = 1,
   Priority = 50,
+  RegenerationRate = 1,
   Points = 30,
   Demand = 1,
-  ExplodeWhenKilled = "missile-terran-explosion-small",
   Type = "land",
   RightMouseAction = "harvest",
   CanAttack = true, RepairRange = 1,
   CanTargetLand = true,
   LandUnit = true,
+  BuilderLost = true,
   Coward = true,
   CanGatherResources = {
    {"file-when-loaded", "zerg/units/drone.png",
@@ -107,6 +107,9 @@ DefineButton( { Pos = 8, Level = 0, Icon = "icon-advanced-build",
 --
 -- Build
 --
+DefineUnitType("unit-zerg-extractor", {})
+DefineUnitType("unit-zerg-spawning-pool", {})
+DefineUnitType("unit-zerg-sunken-colony", {})
 DefineButton( { Pos = 1, Level = 1, Icon = "icon-zerg-hatchery",
   Action = "build", Value = "unit-zerg-hatchery",
   Key = "h", Hint = "Hatchery",
@@ -115,6 +118,16 @@ DefineButton( { Pos = 1, Level = 1, Icon = "icon-zerg-hatchery",
 DefineButton( { Pos = 2, Level = 1, Icon = "icon-zerg-spawning-pool",
   Action = "build", Value = "unit-zerg-spawning-pool",
   Key = "s", Hint = "Spawning Pool",
+  ForUnit = {"unit-zerg-drone"} } )
+  
+  DefineButton( { Pos = 3, Level = 1, Icon = "icon-zerg-extractor",
+  Action = "build", Value = "unit-zerg-extractor",
+  Key = "e", Hint = "Extractor",
+  ForUnit = {"unit-zerg-drone"} } )
+  
+  DefineButton( { Pos = 4, Level = 1, Icon = "icon-terran-bunker",
+  Action = "build", Value = "unit-zerg-sunken-colony",
+  Key = "s", Hint = "Sunken Colony",
   ForUnit = {"unit-zerg-drone"} } )
 
   

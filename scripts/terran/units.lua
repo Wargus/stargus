@@ -10,6 +10,7 @@ Load("scripts/terran/unit-terran-refinery.lua")
 Load("scripts/terran/unit-terran-science-facility.lua")
 Load("scripts/terran/unit-terran-starport.lua")
 Load("scripts/terran/unit-terran-supply-depot.lua")
+Load("scripts/terran/unit-terran-comsat-station.lua")
 
 Load("scripts/terran/unit-terran-battlecruiser.lua")
 Load("scripts/terran/unit-terran-dropship.lua")
@@ -164,4 +165,4 @@ DefineAllow("unit-terran-refinery",         "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-science-facility", "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-starport",         "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-supply-depot",     "AAAAAAAAAAAAAAAA")
-
+DefineAllow("unit-terran-comsat-station",   "AAAAAAAAAAAAAAAA")

@@ -3,7 +3,7 @@
 --
 
 upgrades = {
-{ "upgrade-zerg-zergling-speed", "icon-zerg-zergling-attack-speed",
+{ "upgrade-zerg-zergling-speed", "icon-zerg-zergling-speed",
   {   200,   100,   100,     0,     0,     0,     0}},
 { "upgrade-terran-infantry-weapons2", "icon-terran-upgrade-infantry-weapons",
   {   200,   175,   175,     0,     0,     0,     0}},
@@ -36,10 +36,9 @@ end
 --  Modifiers
 --
 
-DefineModifier("upgrade-terran-infantry-weapons1",
-  {"Level", 1}, {"PiercingDamage", 2},
-  {"apply-to", "unit-terran-marine"}, {"apply-to", "unit-terran-firebat"},
-  {"apply-to", "unit-terran-ghost"})
+DefineModifier("upgrade-zerg-zergling-speed",
+  {"Level", 1}, {"Speed", 15},
+  {"apply-to", "unit-zerg-zergling"})
 DefineModifier("upgrade-terran-infantry-weapons2",
   {"Level", 2}, {"PiercingDamage", 3},
   {"apply-to", "unit-terran-marine"}, {"apply-to", "unit-terran-firebat"},
@@ -77,7 +76,7 @@ DefineModifier("upgrade-terran-stim-pack",
 --  Allow
 --
 
-DefineAllow("upgrade-terran-infantry-weapons1", "AAAAAAAAAAAAAAAA")
+DefineAllow("upgrade-zerg-zergling-speed", "AAAAAAAAAAAAAAAA")
 DefineAllow("upgrade-terran-infantry-weapons2", "AAAAAAAAAAAAAAAA")
 DefineAllow("upgrade-terran-infantry-weapons3", "AAAAAAAAAAAAAAAA")
 DefineAllow("upgrade-terran-infantry-armor1", "AAAAAAAAAAAAAAAA")
@@ -91,14 +90,14 @@ DefineAllow("upgrade-terran-u238-shells", "AAAAAAAAAAAAAAAA")
 --  Dependencies
 --
 
-DefineDependency("upgrade-terran-infantry-weapons2",
-  {"upgrade-terran-infantry-weapons1"})
-DefineDependency("upgrade-terran-infantry-weapons3",
-  {"upgrade-terran-infantry-weapons2"})
-DefineDependency("upgrade-terran-infantry-armor2",
-  {"upgrade-terran-infantry-armor1"})
-DefineDependency("upgrade-terran-infantry-armor3",
-  {"upgrade-terran-infantry-armor2"})
+DefineDependency("unit-zerg-zergling",
+  {"unit-zerg-spawning-pool"})
+DefineDependency("unit-zerg-spawning-pool",
+  {"unit-zerg-hatchery"})
+DefineDependency("unit-zerg-cc",
+  {"unit-zerg-hatchery"})
+DefineDependency("unit-zerg-sunken-colony",
+  {"unit-zerg-spawning-pool"})
 
 DefineDependency("unit-terran-ghost",
   {"unit-terran-academy", "unit-terran-science-facility",

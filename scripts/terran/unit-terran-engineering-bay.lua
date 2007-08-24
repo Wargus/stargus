@@ -55,7 +55,7 @@ DefineUnitType("unit-terran-engineering-bay", { Name = "Engineering Bay",
   Building = true, VisibleUnderFog = true, 
   Sounds = {
     "selected", "terran-engineering-bay-selected",
---    "ready", "human-blacksmith-ready",
+   "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
 
