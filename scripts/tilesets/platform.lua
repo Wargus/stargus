@@ -2,43 +2,43 @@ DefineTileset(
   "name", "Platform",
   "image", "tilesets/platform/platform.png",
   "slots", {
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land", 
 {    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 000
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  101,  102,  103,  104,  105,  106,  107,  108,  109,  110,  111,  112,  113,    0,    0,    0,	-- 010
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 020
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 030
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    1,    2,    3,    4,    5,    1,    0,    6,    7,    8,    9,   10,   11,   12,   13,    0,	-- 040
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {    4,   14,    5,    2,    4,    3,    0,   15,   16,   17,   18,   19,   20,   21,   22,    0,	-- 050
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {   23,   24,   25,   26,   27,   28,    0,   29,   30,   31,   32,   33,   34,   35,   36,    0,	-- 060
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {   37,   38,   39,   40,   41,   42,    0,   43,   44,   45,   46,   47,   48,   49,   50,    0,	-- 070
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {   51,   52,   53,   54,   55,   51,    0,   56,   57,   58,   59,   60,   61,   62,   63,    0,	-- 080
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {   54,   64,   55,   52,   54,   53,    0,   65,   66,   67,   68,   69,   70,   71,   72,    0,	-- 090
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {   73,   74,   75,   76,   77,   78,    0,   79,   80,   81,   82,   83,   84,   85,   86,    0,	-- 0A0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {   87,   88,   89,   90,   91,   92,    0,   93,   94,   95,   96,   97,   98,   99,  100,    0,	-- 0B0
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",  
 {  114,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 0C0
  }},
 "solid", { "light-grass", "land", "unpassable",
@@ -4540,6 +4540,4 @@ DefineTileset(
  }},
 "solid", { "light-grass", "land", "unpassable",
 { 2889, 2890, 2891, 2892, 2893, 2894,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
- }},
-"solid", { "light-grass", "land", "unpassable",
  }}})

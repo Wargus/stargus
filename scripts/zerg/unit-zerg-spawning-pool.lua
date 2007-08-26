@@ -1,12 +1,11 @@
 DefineAnimations("animations-zerg-spawning-pool", {
   Still = {
-    "frame 0", "wait 125",
+    "frame 0", "wait 3", "frame 1", "wait 3", "frame 2", "wait 3", "frame 3", "wait 3",
   },
   Train = {--[[FIXME: active overlay 276]]
     "frame 0", "wait 125",
   },
 })
---todo change animations from terran-command-center to zerg-hatchery
 DefineConstruction("construction-zerg-spawning-pool", {
   Files = {
     File = "zerg/units/zbuild.png",
@@ -639,22 +638,23 @@ DefineUnitType("unit-zerg-spawning-pool", { Name = "Spawning Pool",
   Construction = "construction-zerg-spawning-pool",
   Speed = 0,
   HitPoints = 1000,
-  DrawLevel = 50,
-  TileSize = {2, 1}, BoxSize = {127, 95},
+  DrawLevel = 40,
+  TileSize = {2, 1}, BoxSize = {96, 80},
   SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 30, AnnoyComputerFactor = 35,
   Points = 160,
   RegenerationRate = 1,
-  Corpse = "unit-destroyed-3x3-place",--FIXME
-  ExplodeWhenKilled = "missile-terran-explosion-large",--FIXME
+  BuilderLost = true,
+  Corpse = "unit-zerg-rubble-large",
+  ExplodeWhenKilled = "missile-none",
   Type = "land",
   Building = true, VisibleUnderFog = true, 
   Sounds = {
     "selected", "zerg-spawning-pool-selected",
     "ready", "zerg-work-complete",
     "help", "zerg-base-attacked",
-    "dead", "explosion-large"} } )
+    "dead", "zerg-building-blowup"} } )
 --[[	
 CUpgrade:New("upgrade-zerg-zergling-speed")
 	

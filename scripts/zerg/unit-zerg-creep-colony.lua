@@ -1,10 +1,10 @@
-DefineAnimations("animations-zerg-sunken-colony", {
+DefineAnimations("animations-zerg-cc", {
    Still = {
-    "frame 0", "wait 125",
-  },
+    "frame 0", "wait 3", "frame 1", "wait 3", "frame 2", "wait 3",
+  }, 
 })
 
-DefineConstruction("construction-zerg-creep-colony", {
+DefineConstruction("construction-zerg-cc", {
   Files = {
     File = "zerg/units/zbuild.png",
     Size = {160, 192}},
@@ -626,25 +626,30 @@ DefineConstruction("construction-zerg-creep-colony", {
 }
 })
 
-DefineUnitType("unit-zerg-creep-colony", { Name = "Creep Colony",
+DefineUnitType("unit-zerg-cc", { Name = "Creep Colony",
   Image = {"file", "zerg/units/creep colony.png", "size",  {128, 64}},
-  Shadow = {"file", "zerg/units/creep colony shadow.png", "size",  {128, 64}},
-  Animations = "animations-zerg-creep-colony", Icon = "icon-zerg-creep-colony",
+  Shadow = {"file", "zerg/units/creep colony shadow.png", "size",  {128, 96}},
+  Animations = "animations-zerg-cc", Icon = "icon-terran-bunker",
   Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
-  Construction = "construction-zerg-creep-colony",
+  Construction = "construction-zerg-cc",
   Speed = 0,
-  HitPoints = 200,
-  DrawLevel = 50,
-  TileSize = {3, 2}, BoxSize = {95, 63},
+  HitPoints = 400,
+  DrawLevel = 30,
+  TileSize = {2, 2}, BoxSize = {63, 63},
   SightRange = 4,
-  Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
+  Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,
   Points = 170,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
   Type = "land",
+  RightMouseAction = "attack",
+  RegenerationRate = 1,
+  CanAttack = true,
+  BuilderLost = true,
+  CanTargetLand = true,
   Building = true, VisibleUnderFog = true,
   Sounds = {
     "selected", "terran-bunker-selected",

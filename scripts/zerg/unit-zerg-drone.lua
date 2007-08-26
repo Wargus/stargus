@@ -41,7 +41,6 @@ DefineUnitType("unit-zerg-drone", { Name = "Zerg Drone",
   CanAttack = true, RepairRange = 1,
   CanTargetLand = true,
   LandUnit = true,
-  BuilderLost = true,
   Coward = true,
   CanGatherResources = {
    {"file-when-loaded", "zerg/units/drone.png",
@@ -109,7 +108,9 @@ DefineButton( { Pos = 8, Level = 0, Icon = "icon-advanced-build",
 --
 DefineUnitType("unit-zerg-extractor", {})
 DefineUnitType("unit-zerg-spawning-pool", {})
-DefineUnitType("unit-zerg-sunken-colony", {})
+DefineUnitType("unit-zerg-cc", {})
+DefineUnitType("unit-zerg-hydralisk-den", {})
+DefineUnitType("unit-zerg-ultralisk-cavern", {})
 DefineButton( { Pos = 1, Level = 1, Icon = "icon-zerg-hatchery",
   Action = "build", Value = "unit-zerg-hatchery",
   Key = "h", Hint = "Hatchery",
@@ -126,8 +127,18 @@ DefineButton( { Pos = 2, Level = 1, Icon = "icon-zerg-spawning-pool",
   ForUnit = {"unit-zerg-drone"} } )
   
   DefineButton( { Pos = 4, Level = 1, Icon = "icon-terran-bunker",
-  Action = "build", Value = "unit-zerg-sunken-colony",
-  Key = "s", Hint = "Sunken Colony",
+  Action = "build", Value = "unit-zerg-cc",
+  Key = "s", Hint = "Creep Colony",
+  ForUnit = {"unit-zerg-drone"} } )
+  
+DefineButton( { Pos = 5, Level = 1, Icon = "icon-terran-bunker",
+  Action = "build", Value = "unit-zerg-hydralisk-den",
+  Key = "s", Hint = "Hydralisk Den",
+  ForUnit = {"unit-zerg-drone"} } )
+  
+DefineButton( { Pos = 1, Level = 2, Icon = "icon-terran-bunker",
+  Action = "build", Value = "unit-zerg-ultralisk-cavern",
+  Key = "u", Hint = "Ultralisk Cavern",
   ForUnit = {"unit-zerg-drone"} } )
 
   
