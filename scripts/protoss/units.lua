@@ -1,9 +1,13 @@
 Load("scripts/protoss/unit-protoss-nexus.lua")
 Load("scripts/protoss/unit-protoss-probe.lua")
+Load("scripts/protoss/unit-protoss-pylon.lua")
+Load("scripts/protoss/unit-protoss-gateway.lua")
 Load("scripts/protoss/unit-protoss-zealot.lua")
 Load("scripts/protoss/unit-protoss-dragoon.lua")
+--Load("scripts/protoss/unit-protoss-zealot.lua")
+--Load("scripts/protoss/unit-protoss-dragoon.lua")
 --Load("scripts/zerg/unit-zerg-spawning-pool.lua")
-Load("scripts/protoss/unit-zerg-overlord.lua")
+--Load("scripts/protoss/unit-zerg-overlord.lua")
 
 --
 -- Buttons
@@ -146,9 +150,9 @@ DefineAllow("unit-terran-siege-tank",     "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-vulture",        "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-wraith",         "AAAAAAAAAAAAAAAA")
 
-DefineAllow("unit-protoss-nexus",          "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-armory",           "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-barracks",         "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-protoss-nexus",           "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-protoss-pylon",           "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-protoss-gateway",         "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-bunker",           "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-command-center",   "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-engineering-bay",  "AAAAAAAAAAAAAAAA")

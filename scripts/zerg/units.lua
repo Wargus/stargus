@@ -13,8 +13,8 @@ Load("scripts/zerg/unit-zerg-creep-colony.lua")
 Load("scripts/zerg/unit-zerg-defiler.lua")
 Load("scripts/zerg/unit-zerg-hydralisk-den.lua")
 Load("scripts/zerg/unit-zerg-ultralisk-cavern.lua")
-
-
+Load("scripts/zerg/unit-zerg-evolution-chamber.lua")
+Load("scripts/zerg/unit-zerg-spire.lua")
 --
 -- Buttons
 --
@@ -187,8 +187,8 @@ DefineAllow("unit-zerg-sunken-colony",      "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-cc",                 "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-hydralisk-den",      "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-ultralisk-cavern",   "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-missile-turret",   "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-refinery",         "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-evolution-chamber",  "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-spire",              "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-science-facility", "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-starport",         "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-supply-depot",     "AAAAAAAAAAAAAAAA")

@@ -32,10 +32,10 @@
 
 local zerg_icons = {
   {"icon-zerg-larva", 35},
---  {"icon-zerg-drone", 41},
---  {"icon-zerg-zergling", 37},
+  {"icon-zerg-drone", 41},
+  {"icon-zerg-zergling", 37},
   {"icon-zerg-overlord", 40},
---  {"icon-zerg-hydralisk", 38},
+  {"icon-zerg-hydralisk", 38},
   {"icon-zerg-mutalisk", 43},
   {"icon-zerg-scourge", 47},
   {"icon-zerg-queen", 45},
@@ -46,20 +46,6 @@ local zerg_icons = {
   {"icon-zerg-spawning-pool", 142},
   {"icon-zerg-drone-scv", 7},
   {"icon-zerg-hatchery", 115},
-  {"icon-protoss-probe", 64},
-  {"icon-protoss-zealot", 65},
-  {"icon-protoss-dragoon", 66},
-  {"icon-protoss-high-templar", 67},
-  {"icon-protoss-archon", 68},
-  {"icon-protoss-corsair", 69},
-  {"icon-protoss-scout", 70},
-  {"icon-protoss-arbitrer", 71},
-  {"icon-protoss-carrier", 72},
-  {"icon-protoss-interceptor", 73},
-  {"icon-protoss-dark-templar", 74},
-  {"icon-protoss-dark-templar2", 75},
-  {"icon-protoss-dark-archon", 76},
-  {"icon-protoss-nexus", 154}
 
 }
 

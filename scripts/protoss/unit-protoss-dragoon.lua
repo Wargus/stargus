@@ -3,7 +3,7 @@
 --
 
 
-DefineAnimations("animations-zerg-hydralisk", {
+DefineAnimations("animations-protoss-dragoon", {
    Still = {
     "frame 119", "wait 125",
   },
@@ -29,12 +29,12 @@ DefineAnimations("animations-zerg-hydralisk", {
   },
 })
 
-DefineUnitType("unit-protoss-dragoon", { Name = "Hydralisk",
+DefineUnitType("unit-protoss-dragoon", { Name = "Dragoon",
 --  Image = {"file", "zerg/units/hydralisk.png", "size", {128, 128}},
 --  Shadow = {"file", "zerg/units/hydralisk.png", "size", {128, 128}, "offset", {0, 7}},
   Image = {"file", "protoss/units/dragoon.png", "size", {96,96}},
   Shadow = {"file", "protoss/units/pdrshad.png", "size", {96,96}, "offset", {0, 7}},
-  Animations = "animations-zerg-hydralisk", Icon = "icon-protoss-dragoon",
+  Animations = "animations-protoss-dragoon", Icon = "icon-terran-bunker",
   Costs = {"time", 60, "minerals", 75},
   Speed = 10, NumDirections = 32,
   HitPoints = 80,

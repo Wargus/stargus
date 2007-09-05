@@ -2,6 +2,19 @@
 --  Missiles
 --
 
+DefineMissileType("missle-zerg-dark-swarm", {
+  File = "terran/dark swarm.png", Size = {252, 188},
+  Frames = 10, NumDirections = 1, DrawLevel = 50,
+  Class = "missile-class-none", Sleep = 75,
+})
+
+DefineSpell( "dark-swarm", 
+"range", 1,
+"manacost", 6,
+"target", "position",
+"spawn-missile", "missle-zerg-dark-swarm",
+)
+
 DefineMissileType("missle-zerg-rubble-large", {
   File = "zerg/units/rubble large.png", Size = {128, 128},
   Frames = 4, NumDirections = 1, DrawLevel = 1,

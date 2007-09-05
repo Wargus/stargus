@@ -9,7 +9,7 @@ Still = {"frame 0", "wait 125",},
     "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
     "move 4", "wait 1", "move 4", "unbreakable end", "wait 1",},
   Attack = {"unbreakable begin", "frame 1", "wait 1", "unbreakable end", "wait 1",},
-  Harvest_minerals = {"unbreakable begin", "frame 102", "wait 3", "frame 122", "wait 3", "frame 139", "wait 3", "frame 156", "wait 3", "frame 173", "wait 3", "frame 190", "wait 3", "unbreakable end", "wait 2",
+  Harvest_minerals = {"unbreakable begin", "frame 102", "wait 3", "frame 122", "wait 3", "frame 139", "wait 3", "frame 156", "wait 3", "unbreakable end", "wait 2",
   },
   Repair = {"unbreakable begin", "frame 34", "sound scv-attack",
     "wait 1", "frame 17", "unbreakable end", "wait 1",},
@@ -27,7 +27,7 @@ DefineUnitType("unit-zerg-drone", { Name = "Zerg Drone",
   Costs = {"time", 45, "minerals", 50},
   Speed = 10,
   HitPoints = 60,
-  DrawLevel = 40,
+  DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
   BasicDamage = 3, PiercingDamage = 2, Missile = "missile-zerg-spit",
@@ -111,6 +111,8 @@ DefineUnitType("unit-zerg-spawning-pool", {})
 DefineUnitType("unit-zerg-cc", {})
 DefineUnitType("unit-zerg-hydralisk-den", {})
 DefineUnitType("unit-zerg-ultralisk-cavern", {})
+DefineUnitType("unit-zerg-evolution-chamber", {})
+DefineUnitType("unit-zerg-spire", {})
 DefineButton( { Pos = 1, Level = 1, Icon = "icon-zerg-hatchery",
   Action = "build", Value = "unit-zerg-hatchery",
   Key = "h", Hint = "Hatchery",
@@ -136,8 +138,18 @@ DefineButton( { Pos = 5, Level = 1, Icon = "icon-terran-bunker",
   Key = "s", Hint = "Hydralisk Den",
   ForUnit = {"unit-zerg-drone"} } )
   
+DefineButton( { Pos = 6, Level = 1, Icon = "icon-terran-bunker",
+  Action = "build", Value = "unit-zerg-evolution-chamber",
+  Key = "s", Hint = "Hydralisk Den",
+  ForUnit = {"unit-zerg-drone"} } )
+  
 DefineButton( { Pos = 1, Level = 2, Icon = "icon-terran-bunker",
   Action = "build", Value = "unit-zerg-ultralisk-cavern",
+  Key = "u", Hint = "Ultralisk Cavern",
+  ForUnit = {"unit-zerg-drone"} } )
+  
+DefineButton( { Pos = 2, Level = 2, Icon = "icon-terran-bunker",
+  Action = "build", Value = "unit-zerg-spire",
   Key = "u", Hint = "Ultralisk Cavern",
   ForUnit = {"unit-zerg-drone"} } )
 

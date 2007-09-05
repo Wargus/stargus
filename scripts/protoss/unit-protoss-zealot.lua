@@ -1,10 +1,10 @@
-DefineAnimations("animations-zerg-zergling-death", {
+DefineAnimations("animations-protoss-zealot-death", {
   Death = {"unbreakable begin", "frame 296", "wait 50", "unbreakable end", "wait 1", },
 })
 
 DefineUnitType("unit-protoss-zealot-death", { Name = "Dead Zergling",
   Image = {"file", "zerg/units/zergling.png", "size", {128, 128}},
-  Animations = "animations-zerg-zergling-death", Icon = "icon-zerg-zergling",
+  Animations = "animations-protoss-zealot-death", Icon = "icon-zerg-zergling",
   NumDirections = 1,
   HitPoints = 255,
   DrawLevel = 30,
@@ -18,7 +18,7 @@ DefineUnitType("unit-protoss-zealot-death", { Name = "Dead Zergling",
 
 
 
-DefineAnimations("animations-zerg-zergling", {
+DefineAnimations("animations-protoss-zealot", {
   Still = {
     "label 70FD", "frame 68",
     "label 7100", "random-wait 63 75", "random-goto 10 7124",
@@ -67,7 +67,7 @@ DefineAnimations("animations-zerg-zergling", {
 DefineUnitType("unit-protoss-zealot", { Name = "Zealot",
   Image = {"file", "protoss/units/zealot.png", "size", {128, 128}},
   Shadow = {"file", "protoss/units/pzeshad.png", "size", {128, 128}},
-  Animations = "animations-zerg-zergling", Icon = "icon-zerg-zergling",
+  Animations = "animations-protoss-zealot", Icon = "icon-zerg-zergling",
   Costs = {"time", 60, "minerals", 50},
   Speed = 10, NumDirections = 32,
   HitPoints = 25,

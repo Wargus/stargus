@@ -1,5 +1,4 @@
 --
--- unit-terran-refinery
 --
 
 DefineAnimations("animations-zerg-extractor", {
@@ -638,7 +637,7 @@ DefineUnitType("unit-zerg-extractor", { Name = "Extractor",
   Construction = "construction-zerg-extractor",
   Speed = 0,
   HitPoints = 500,
-  DrawLevel = 50,
+  DrawLevel = 30,
   TileSize = {4, 2}, BoxSize = {127, 63},
   SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",

@@ -2,7 +2,7 @@
 -- unit-protoss-probe
 --
 
-DefineAnimations("animations-zerg-drone", {
+DefineAnimations("animations-protoss-probe", {
 Still = {"frame 0", "wait 125",},
   Move = {"unbreakable begin",
     "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
@@ -24,7 +24,7 @@ DefineUnitType("unit-protoss-probe", { Name = "Protoss Probe",
   Shadow = {"file", "protoss/units/pteshad.png", "size", {32, 32}, "offset", {0, -7}},
   NumDirections = 32,
   DrawLevel = 19,
-  Animations = "animations-zerg-drone", Icon = "icon-protoss-probe",
+  Animations = "animations-protoss-probe", Icon = "icon-zerg-drone",
   Costs = {"time", 45, "minerals", 50},
   Speed = 10,
   HitPoints = 60,
@@ -64,7 +64,9 @@ DefineUnitType("unit-protoss-probe", { Name = "Protoss Probe",
     "help", "terran-units-attacked",
     "dead", "zerg-drone-death"} } )
 
-
+DefineUnitType("unit-protoss-pylon", {})
+DefineUnitType("unit-protoss-nexus", {})
+DefineUnitType("unit-protoss-gateway", {})
 --
 -- Default
 --
@@ -112,12 +114,16 @@ DefineButton( { Pos = 1, Level = 1, Icon = "icon-zerg-hatchery",
   Key = "x", Hint = "Nexus",
   ForUnit = {"unit-protoss-probe"} } )
 
---DefineButton( { Pos = 2, Level = 1, Icon = "icon-zerg-spawning-pool",
---  Action = "build", Value = "unit-zerg-spawning-pool",
---  Key = "s", Hint = "Spawning Pool",
---  ForUnit = {"unit-protoss-probe"} } )
-
+DefineButton( { Pos = 2, Level = 1, Icon = "icon-zerg-hatchery",
+  Action = "build", Value = "unit-protoss-pylon",
+  Key = "x", Hint = "Pylon",
+  ForUnit = {"unit-protoss-probe"} } )
   
+DefineButton( { Pos = 3, Level = 1, Icon = "icon-zerg-hatchery",
+  Action = "build", Value = "unit-protoss-gateway",
+  Key = "x", Hint = "Gateway",
+  ForUnit = {"unit-protoss-probe"} } )
+
 DefineButton( { Pos = 9, Level = 1, Icon = "icon-cancel",
   Action = "button", Value = 0,
   Key = "\27", Hint = "~<ESC~> - Cancel",

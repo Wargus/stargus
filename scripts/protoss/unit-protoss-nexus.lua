@@ -1,4 +1,4 @@
-DefineAnimations("animations-zerg-hatchery", {
+DefineAnimations("animations-protoss-nexus", {
   Still = {
     "frame 0", "wait 125",
   },
@@ -6,7 +6,30 @@ DefineAnimations("animations-zerg-hatchery", {
     "frame 0", "wait 125",
   },
 })
---todo change animations from terran-command-center to zerg-hatchery
+
+DefineConstruction("construction-protoss-nexus", {
+  Files = {
+    File = "terran/units/building construction large.png",
+    Size = {160, 128}},
+  ShadowFiles = {
+    File = "terran/units/building construction large shadow.png",
+    Size = {128, 128}},
+  Constructions = {
+   {Percent = 0,
+    File = "construction",
+    Frame = 0},
+   {Percent = 20,
+    File = "construction",
+    Frame = 1},
+   {Percent = 40,
+    File = "construction",
+    Frame = 2},
+   {Percent = 60,
+    File = "main",
+    Frame = 1}}
+})
+
+--[[
 DefineConstruction("construction-zerg-hatchery", {
   Files = {
     File = "protoss/units/pb1glow.png",
@@ -627,12 +650,12 @@ DefineConstruction("construction-zerg-hatchery", {
     File = "construction",
     Frame = 8},
 }
-})
+}) --]]
 
 DefineUnitType("unit-protoss-nexus", { Name = "Protoss Nexus",
   Image = {"file", "protoss/units/nexus.png", "size", {192, 224}},
   Shadow = {"file", "protoss/units/pneshad.png", "size", {192, 224}},
-  Animations = "animations-zerg-hatchery", Icon = "icon-zerg-hatchery",
+  Animations = "animations-protoss-nexus", Icon = "icon-zerg-hatchery",
   Costs = {"time", 255, "minerals", 300},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 0},
@@ -659,29 +682,9 @@ DefineUnitType("unit-protoss-nexus", { Name = "Protoss Nexus",
 
 
 DefineUnitType("unit-protoss-probe", {})
-DefineUnitType("unit-protoss-zealot", {})
-DefineUnitType("unit-protoss-dragoon", {})
-DefineUnitType("unit-zerg-overlord", {})
 
 
-DefineButton( { Pos = 1, Level = 0, Icon = "icon-protoss-probe",
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-drone",
   Action = "train-unit", Value = "unit-protoss-probe",
   Key = "d", Hint = "Build Probe",
   ForUnit = {"unit-protoss-nexus"} } )
-DefineUnitType("unit-protoss-probe", {})
-
-DefineButton( { Pos = 2, Level = 0, Icon = "icon-protoss-zealot",
-  Action = "train-unit", Value = "unit-protoss-zealot",
-  Key = "z", Hint = "Warp In Zealot",
-  ForUnit = {"unit-protoss-nexus"} } )
-
-DefineButton( { Pos = 3, Level = 0, Icon = "icon-protoss-dragoon",
-  Action = "train-unit", Value = "unit-protoss-dragoon",
-  Key = "d", Hint = "Warp In Dragoon",
-  ForUnit = {"unit-protoss-nexus"} } )
-
-DefineButton( { Pos = 5, Level = 0, Icon = "icon-zerg-overlord",
-  Action = "train-unit", Value = "unit-zerg-overlord",
-  Key = "o", Hint = "Build Overlord",
-  ForUnit = {"unit-protoss-nexus"} } )
-

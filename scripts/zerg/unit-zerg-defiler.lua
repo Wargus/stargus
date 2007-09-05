@@ -59,7 +59,8 @@ DefineUnitType("unit-zerg-defiler", { Name = "Hydralisk",
   Costs = {"time", 60, "minerals", 75},
   Speed = 10, NumDirections = 32,
   HitPoints = 80,
-  DrawLevel = 40,
+  Mana = 200,
+  DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 2, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
@@ -71,6 +72,7 @@ DefineUnitType("unit-zerg-defiler", { Name = "Hydralisk",
   RegenerationRate = 1,
   Type = "land",
   RightMouseAction = "attack",
+--  CanCastSpell = {"d-s"},
   CanAttack = true,
   CanTargetLand = true,
   LandUnit = true,
@@ -82,5 +84,9 @@ DefineUnitType("unit-zerg-defiler", { Name = "Hydralisk",
     "ready", "zerg-hydralisk-ready",
     "help", "basic human voices help 1",
 	"dead", "zerg-hydralisk-death"} } )
-
-
+--[[
+DefineButton( { Pos = 9, Level = 0, Icon = "icon-cancel",
+  Action = "cast-spell", Value = "d-s",
+  Key = "d", Hint = "Dark Swarm",
+  ForUnit = {"unit-zerg-defiler"} } )
+--]]

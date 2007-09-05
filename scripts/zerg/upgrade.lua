@@ -103,14 +103,16 @@ DefineDependency("unit-terran-ghost",
   {"unit-terran-academy", "unit-terran-science-facility",
    --[["unit-terran-covert-ops"]]})
 
-DefineDependency("unit-terran-supply-depot",
-  {"unit-terran-command-center"})
-DefineDependency("unit-terran-engineering-bay",
-  {"unit-terran-command-center"})
-DefineDependency("unit-terran-barracks",
-  {"unit-terran-command-center"})
-DefineDependency("unit-terran-refinery",
-  {"unit-terran-command-center"})
+DefineDependency("unit-zerg-hydralisk",
+  {"unit-zerg-hydralisk-den"})
+DefineDependency("unit-zerg-ultralisk",
+  {"unit-zerg-ultralisk-cavern"})
+DefineDependency("unit-zerg-hydralisk-den",
+  {"unit-zerg-hatchery"})
+DefineDependency("unit-zerg-ultralisk-cavern",
+  {"unit-zerg-hatchery"})
+DefineDependency("unit-zerg-extractor",
+  {"unit-zerg-hatchery"})
 
 DefineDependency("unit-terran-missile-turret",
   {"unit-terran-engineering-bay"})
