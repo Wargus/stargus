@@ -652,7 +652,7 @@ DefineUnitType("unit-zerg-spawning-pool", { Name = "Spawning Pool",
   Building = true, VisibleUnderFog = true, 
   Sounds = {
     "selected", "zerg-spawning-pool-selected",
-    "ready", "zerg-work-complete",
+    "ready", "zerg-building-ready",
     "help", "zerg-base-attacked",
     "dead", "zerg-building-blowup"} } )
 --[[	

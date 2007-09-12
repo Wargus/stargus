@@ -53,6 +53,8 @@ DefineUnitType("unit-protoss-gateway", { Name = "Barracks",
   Points = 160,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
+--  BuilderOutside = true,  --FIXME: Stratagus crashes if enabled (but required for protoss probe to be free while ocnstructing a building)
+  AutoBuildRate = 2,
   Type = "land",
   Building = true, VisibleUnderFog = true, 
   BuildingRules = { { "distance", { Distance = 3, DistanceType = "<", Type = "unit-protoss-pylon"} } },

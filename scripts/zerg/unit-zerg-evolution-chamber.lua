@@ -654,7 +654,7 @@ DefineUnitType("unit-zerg-evolution-chamber", { Name = "Evolution Chamber",
   CanTargetLand = true,
   Building = true, VisibleUnderFog = true,
   Sounds = {
-    "selected", "terran-bunker-selected",
-    "ready", "terran-work-complete",
-    "help", "terran-base-attacked",
-    "dead", "explosion-large"} } )
+    "selected", "zerg-evolution-chamber-selected",
+    "ready", "zerg-building-ready",
+    "help", "zerg-base-attacked",
+    "dead", "zerg-building-blowup"} } )

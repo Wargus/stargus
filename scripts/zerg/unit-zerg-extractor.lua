@@ -652,6 +652,6 @@ DefineUnitType("unit-zerg-extractor", { Name = "Extractor",
   GivesResource = "gas", CanHarvest = true,
   Sounds = {
     "selected", "zerg-extractor-selected",
---    "ready", "terran-refinery-ready",
+    "ready", "zerg-building-ready",
     "help", "zerg-base-attacked",
-    "dead", "explosion-large"} } )--FIXME
+    "dead", "zerg-building-blowup"} } )

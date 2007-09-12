@@ -656,7 +656,7 @@ DefineUnitType("unit-zerg-sunken-colony", { Name = "Sunken Colony",
   CanTargetLand = true,
   Building = true, VisibleUnderFog = true,
   Sounds = {
-    "selected", "terran-bunker-selected",
-    "ready", "terran-work-complete",
-    "help", "terran-base-attacked",
-    "dead", "explosion-large"} } )
+    "selected", "zerg-sunken-colony-selected",
+    "ready", "zerg-building-ready",
+    "help", "zerg-base-attacked",
+    "dead", "zerg-buildin-blowup"} } )

@@ -563,6 +563,22 @@ MakeSound("zerg-base-attacked", "zerg/units/advisor/upd00.wav")
 
 MakeSound("zerg-building-blowup", "zerg/units/bldgdth.wav")
 
+MakeSound("zerg-spawning-pool-selected", "zerg/units/ch.wav")
+MakeSound("zerg-spawning-pool-selected", "zerg/units/ch.wav")
+MakeSound("zerg-evolution-chamber-selected", "zerg/units/ev.wav")
+MakeSound("zerg-sunken-colony-selected", "zerg/units/lu.wav")
+MakeSound("zerg-creep-colony-selected", "zerg/units/fc.wav")
+MakeSound("zerg-spore-colony-selected", "zerg/units/sc.wav")
+MakeSound("zerg-extractor-selected", "zerg/units/ig.wav")
+MakeSound("zerg-defiler-mound-selected", "zerg/units/mh.wav")
+MakeSound("zerg-queens-nest-selected-", "zerg/units/ne.wav")
+MakeSound("zerg-nydus-canal-selected", "zerg/units/ny.wav")
+MakeSound("zerg-ultralisk-cavern-selected", "zerg/units/rc.wav")
+MakeSound("zerg-hydralisk-den-selected", "zerg/units/sb.wav")
+MakeSound("zerg-spire-selected", "zerg/units/sp.wav")
+MakeSound("zerg-greater-spire-selected", "zerg/units/mc.wav")
+
+
 MakeSound("terran-scv-done", "terran/units/scv/upd00.wav")
 MakeSound("scv-attack", "terran/units/scv/udrrep00.wav")
 ------------------------------------------------------------------------------

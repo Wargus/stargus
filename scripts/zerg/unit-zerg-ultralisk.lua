@@ -38,7 +38,7 @@ DefineAnimations("animations-zerg-ultralisk", {
   },
   Death = {
     "unbreakable begin",
---   "frame 272", "wait 5", "frame 273", "wait 5", "frame 274", "wait 5", "frame 275", "wait 5", "frame 276", "wait 5", "frame 277", "wait 5", "frame 278", "wait 5", "frame 279", "wait 5", "frame 280", "wait 5", "frame 281", "wait 5", "frame 282", "wait 5",
+   "frame 272", "wait 30", "frame 273", "wait 5", "frame 274", "wait 5", "frame 275", "wait 5", "frame 276", "wait 5", "frame 277", "wait 5", "frame 278", "wait 5", "frame 279", "wait 5", "frame 280", "wait 5", "frame 281", "wait 5", "frame 282", "wait 5",
     "unbreakable end", "wait 1",
   },
 })

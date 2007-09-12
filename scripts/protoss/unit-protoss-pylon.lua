@@ -46,6 +46,8 @@ DefineUnitType("unit-protoss-pylon", { Name = "Supply Depot",
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 45,
   Points = 100,
+--  BuilderOutside = true,  --FIXME: Stratagus crashes if enabled (but required for protoss probe to be free while ocnstructing a building)
+  AutoBuildRate = 30,
   Supply = 8,
   Corpse = "unit-destroyed-2x2-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
