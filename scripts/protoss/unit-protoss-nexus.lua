@@ -655,7 +655,7 @@ DefineConstruction("construction-zerg-hatchery", {
 DefineUnitType("unit-protoss-nexus", { Name = "Protoss Nexus",
   Image = {"file", "protoss/units/nexus.png", "size", {192, 224}},
   Shadow = {"file", "protoss/units/pneshad.png", "size", {192, 224}},
-  Animations = "animations-protoss-nexus", Icon = "icon-zerg-hatchery",
+  Animations = "animations-protoss-nexus", Icon = "icon-protoss-nexus",
   Costs = {"time", 255, "minerals", 300},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 0},
@@ -665,7 +665,7 @@ DefineUnitType("unit-protoss-nexus", { Name = "Protoss Nexus",
   DrawLevel = 50,
   TileSize = {4, 3}, BoxSize = {126, 95},
   SightRange = 1, 
---  BuilderOutside = true,  --FIXME: Stratagus crashes if enabled (but required for protoss probe to be free while ocnstructing a building)
+  BuilderOutside = true, 
   AutoBuildRate = 30,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 35, AnnoyComputerFactor = 45,
@@ -677,16 +677,16 @@ DefineUnitType("unit-protoss-nexus", { Name = "Protoss Nexus",
   BuildingRules = { { "distance", { Distance = 3, DistanceType = ">", Type = "unit-minerals1"} } },
   CanStore = {"gas", "minerals"},
   Sounds = {
-    "selected", "zerg-hatchery-selected",
+    "selected", "protoss-nexus-selected",
 --    "ready", "town-hall-ready",
-    "help", "terran-base-attacked",
-    "dead", "explosion-large"} } )
+    "help", "protoss-nexus-attacked",
+    "dead", "protoss-explosion-large"} } )
 
 
 DefineUnitType("unit-protoss-probe", {})
 
 
-DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-drone",
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-protoss-probe",
   Action = "train-unit", Value = "unit-protoss-probe",
   Key = "d", Hint = "Build Probe",
   ForUnit = {"unit-protoss-nexus"} } )

@@ -15,6 +15,7 @@ Load("scripts/zerg/unit-zerg-hydralisk-den.lua")
 Load("scripts/zerg/unit-zerg-ultralisk-cavern.lua")
 Load("scripts/zerg/unit-zerg-evolution-chamber.lua")
 Load("scripts/zerg/unit-zerg-spire.lua")
+Load("scripts/zerg/unit-zerg-greater-spire.lua")
 --
 -- Buttons
 --
@@ -189,7 +190,7 @@ DefineAllow("unit-zerg-hydralisk-den",      "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-ultralisk-cavern",   "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-evolution-chamber",  "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-spire",              "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-science-facility", "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-greater-spire",      "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-starport",         "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-supply-depot",     "AAAAAAAAAAAAAAAA")
 

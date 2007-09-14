@@ -14,6 +14,8 @@ DefineAnimations("animations-terran-scv", {
     "wait 1", "frame 17", "unbreakable end", "wait 1",},
   Repair = {"unbreakable begin", "frame 34", "sound scv-attack",
     "wait 1", "frame 17", "unbreakable end", "wait 1",},
+  Build = {"unbreakable begin", "frame 34", "sound scv-attack",
+    "wait 1", "frame 17", "unbreakable end", "wait 1",},
   Death = {"unbreakable begin", "frame 50", "wait 3", "frame 55", "wait 3", "frame 60", "wait 100",
     "frame 60", "unbreakable end", "wait 1",},
 })

@@ -1,12 +1,14 @@
-DefineAnimations("animations-zerg-spire", {
-  Still = {
-    "frame 0", "wait 4", "frame 1", "wait 4", "frame 2", "wait 4",
+DefineAnimations("animations-protoss-photon-cannon", {
+   Still = {
+    "frame 0", "wait 3", "frame 1", "wait 3", "frame 2", "wait 3",
   },
-  Train = {--[[FIXME: active overlay 276]]
-    "frame 0", "wait 125",
-  },
+  Attack = {
+    "unbreakable begin", "wait 5", "frame 4", "wait 3", "frame 5", "wait 3", "frame 6", "wait 3", "frame 7", "wait 3", "frame 8", "wait 3", "frame 9", "sound sunken-attack", "attack",
+    "unbreakable end", "wait 5",
+  },  
 })
-DefineConstruction("construction-zerg-spire", {
+
+DefineConstruction("construction-protoss-photon-cannon", {
   Files = {
     File = "zerg/units/zbuild.png",
     Size = {160, 192}},
@@ -628,18 +630,18 @@ DefineConstruction("construction-zerg-spire", {
 }
 })
 
-DefineUnitType("unit-zerg-spire", { Name = "Spire",
-  Image = {"file", "zerg/units/spire.png", "size",  {128, 128}},
-  Shadow = {"file", "zerg/units/spire shadow.png", "size",  {128, 128}},
-  Animations = "animations-zerg-spire", Icon = "icon-terran-bunker",
+DefineUnitType("unit-protoss-photon-cannon", { Name = "Photon Canon",
+  Image = {"file", "zerg/units/photon cannon.png", "size",  {64, 128}},
+  Shadow = {"file", "zerg/units/sunken colony shadow.png", "size",  {64, 128}},
+  Animations = "animations-zerg-sunken-colony", Icon = "icon-terran-bunker",
   Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
-  Construction = "construction-zerg-spire",
+  Construction = "construction-zerg-sunken-colony",
   Speed = 0,
   HitPoints = 400,
   DrawLevel = 30,
-  TileSize = {2, 2}, BoxSize = {63, 63},
+  TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,
@@ -647,23 +649,14 @@ DefineUnitType("unit-zerg-spire", { Name = "Spire",
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
   Type = "land",
-  UpgradeTo = 100,
   RightMouseAction = "attack",
+  BuilderLost = true,
   RegenerationRate = 1,
   CanAttack = true,
-  BuilderLost = true,
   CanTargetLand = true,
   Building = true, VisibleUnderFog = true,
   Sounds = {
-    "selected", "zerg-spire-selected",
+    "selected", "zerg-sunken-colony-selected",
     "ready", "zerg-building-ready",
     "help", "zerg-base-attacked",
-    "dead", "zerg-building-blowup"} } )
-	
-CUpgrade:New("zerg-greater-spire")
-	
-DefineButton( { Pos = 1, Level = 0, Icon = "icon-terran-bunker",
-  Action = "upgrade-to", Value = "unit-zerg-greater-spire",
-  Allowed = "check-single-research",
-  Key = "w", Hint = "Mutate to Greater Spire",
-  ForUnit = {"unit-zerg-spawning-pool"} } )
+    "dead", "zerg-buildin-blowup"} } )

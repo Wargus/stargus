@@ -67,7 +67,7 @@ DefineAnimations("animations-protoss-zealot", {
 DefineUnitType("unit-protoss-zealot", { Name = "Zealot",
   Image = {"file", "protoss/units/zealot.png", "size", {128, 128}},
   Shadow = {"file", "protoss/units/pzeshad.png", "size", {128, 128}},
-  Animations = "animations-protoss-zealot", Icon = "icon-zerg-zergling",
+  Animations = "animations-protoss-zealot", Icon = "icon-protoss-zealot",
   Costs = {"time", 60, "minerals", 50},
   Speed = 10, NumDirections = 32,
   HitPoints = 25,
@@ -88,10 +88,10 @@ DefineUnitType("unit-protoss-zealot", { Name = "Zealot",
   organic = true,
   SelectableByRectangle = true,
   Sounds = {
-    "selected", "zerg-zergling-selected",
-    "acknowledge", "zerg-zergling-acknowledge",
-    "ready", "zerg-zergling-ready",
-    "help", "zerg-units-attacked",} } )
+    "selected", "protoss-zealot-selected",
+    "acknowledge", "protoss-zealot-acknowledge",
+    "ready", "protoss-zealot-ready",
+    "help", "protoss-zealot-attacked",} } )
 
 
 

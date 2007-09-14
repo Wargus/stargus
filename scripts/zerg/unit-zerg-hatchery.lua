@@ -690,7 +690,7 @@ DefineUnitType("unit-zerg-queen", {})
 DefineUnitType("unit-zerg-defiler", {})
 DefineUnitType("unit-zerg-mut", {})
 
-DefineButton( { Pos = 1, Level = 0, Icon = "icon-build",
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-larva",
   Action = "button", Value = 1,
   Key = "b", Hint = "Select Larva",
   ForUnit = {"unit-zerg-hatchery"} } )

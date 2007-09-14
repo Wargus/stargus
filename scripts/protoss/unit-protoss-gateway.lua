@@ -53,28 +53,28 @@ DefineUnitType("unit-protoss-gateway", { Name = "Barracks",
   Points = 160,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
---  BuilderOutside = true,  --FIXME: Stratagus crashes if enabled (but required for protoss probe to be free while ocnstructing a building)
+  BuilderOutside = true,  
   AutoBuildRate = 2,
   Type = "land",
   Building = true, VisibleUnderFog = true, 
   BuildingRules = { { "distance", { Distance = 3, DistanceType = "<", Type = "unit-protoss-pylon"} } },
   Sounds = {
-    "selected", "terran-barracks-selected",
-   "ready", "terran-scv-done",
-    "help", "terran-base-attacked",
-    "dead", "explosion-large"} } )
+    "selected", "protoss-gateway-selected",
+   "ready", "protoss-building-done",
+    "help", "protoss-base-attacked",
+    "dead", "protoss-explosion-large"} } )
 
 
 DefineUnitType("unit-protoss-zealot", {})
 DefineUnitType("unit-protoss-dragoon", {})
 
 
-DefineButton( { Pos = 1, Level = 0, Icon = "icon-terran-marine",
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-protoss-zealot",
   Action = "train-unit", Value = "unit-protoss-zealot",
   Key = "m", Hint = "Warp in Zealot",
   ForUnit = {"unit-protoss-gateway"} } )
 
-DefineButton( { Pos = 2, Level = 0, Icon = "icon-terran-marine",
+DefineButton( { Pos = 2, Level = 0, Icon = "icon-protoss-dragoon",
   Action = "train-unit", Value = "unit-protoss-dragoon",
-  Key = "m", Hint = "Warp in Zealot",
+  Key = "m", Hint = "Warp in Dragoon",
   ForUnit = {"unit-protoss-gateway"} } )

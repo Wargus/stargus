@@ -34,7 +34,7 @@ DefineUnitType("unit-protoss-dragoon", { Name = "Dragoon",
 --  Shadow = {"file", "zerg/units/hydralisk.png", "size", {128, 128}, "offset", {0, 7}},
   Image = {"file", "protoss/units/dragoon.png", "size", {96,96}},
   Shadow = {"file", "protoss/units/pdrshad.png", "size", {96,96}, "offset", {0, 7}},
-  Animations = "animations-protoss-dragoon", Icon = "icon-terran-bunker",
+  Animations = "animations-protoss-dragoon", Icon = "icon-protoss-dragoon",
   Costs = {"time", 60, "minerals", 75},
   Speed = 10, NumDirections = 32,
   HitPoints = 80,
@@ -55,9 +55,9 @@ DefineUnitType("unit-protoss-dragoon", { Name = "Dragoon",
   organic = true,
   SelectableByRectangle = true,
   Sounds = {
-    "selected", "zerg-hydralisk-selected",
-    "acknowledge", "zerg-hydralisk-acknowledge",
-    "ready", "zerg-hydralisk-ready",
+    "selected", "protoss-dragoon-selected",
+    "acknowledge", "protoss-dragoon-acknowledge",
+    "ready", "protoss-dragoon-ready",
     "help", "basic human voices help 1",} } )
 
 

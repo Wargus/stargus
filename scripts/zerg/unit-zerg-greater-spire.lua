@@ -1,4 +1,4 @@
-DefineAnimations("animations-zerg-spire", {
+DefineAnimations("animations-zerg-greater-spire", {
   Still = {
     "frame 0", "wait 4", "frame 1", "wait 4", "frame 2", "wait 4",
   },
@@ -6,7 +6,7 @@ DefineAnimations("animations-zerg-spire", {
     "frame 0", "wait 125",
   },
 })
-DefineConstruction("construction-zerg-spire", {
+DefineConstruction("construction-zerg-greater-spire", {
   Files = {
     File = "zerg/units/zbuild.png",
     Size = {160, 192}},
@@ -628,10 +628,10 @@ DefineConstruction("construction-zerg-spire", {
 }
 })
 
-DefineUnitType("unit-zerg-spire", { Name = "Spire",
-  Image = {"file", "zerg/units/spire.png", "size",  {128, 128}},
-  Shadow = {"file", "zerg/units/spire shadow.png", "size",  {128, 128}},
-  Animations = "animations-zerg-spire", Icon = "icon-terran-bunker",
+DefineUnitType("unit-zerg-greater-spire", { Name = "Spire",
+  Image = {"file", "zerg/units/greater spire.png", "size",  {128, 192}},
+  Shadow = {"file", "zerg/units/greater spire shadow.png", "size",  {128, 192}},
+  Animations = "animations-zerg-greater-spire", Icon = "icon-terran-bunker",
   Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
@@ -647,7 +647,6 @@ DefineUnitType("unit-zerg-spire", { Name = "Spire",
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
   Type = "land",
-  UpgradeTo = 100,
   RightMouseAction = "attack",
   RegenerationRate = 1,
   CanAttack = true,
@@ -659,11 +658,3 @@ DefineUnitType("unit-zerg-spire", { Name = "Spire",
     "ready", "zerg-building-ready",
     "help", "zerg-base-attacked",
     "dead", "zerg-building-blowup"} } )
-	
-CUpgrade:New("zerg-greater-spire")
-	
-DefineButton( { Pos = 1, Level = 0, Icon = "icon-terran-bunker",
-  Action = "upgrade-to", Value = "unit-zerg-greater-spire",
-  Allowed = "check-single-research",
-  Key = "w", Hint = "Mutate to Greater Spire",
-  ForUnit = {"unit-zerg-spawning-pool"} } )

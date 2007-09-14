@@ -33,7 +33,7 @@ DefineConstruction("construction-protoss-pylon", {
 DefineUnitType("unit-protoss-pylon", { Name = "Supply Depot",
   Image = {"file", "graphics/protoss/units/pylon.png", "size", {64, 64}},
   Shadow = {"file", "graphics/protoss/units/ppyshad.png", "size", {64, 64}},
-  Animations = "animations-protoss-pylon", Icon = "icon-terran-bunker",
+  Animations = "animations-protoss-pylon", Icon = "icon-protoss-pylon",
   Costs = {"time", 100, "minerals", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
@@ -46,7 +46,7 @@ DefineUnitType("unit-protoss-pylon", { Name = "Supply Depot",
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 45,
   Points = 100,
---  BuilderOutside = true,  --FIXME: Stratagus crashes if enabled (but required for protoss probe to be free while ocnstructing a building)
+  BuilderOutside = true,
   AutoBuildRate = 30,
   Supply = 8,
   Corpse = "unit-destroyed-2x2-place",
@@ -56,7 +56,7 @@ DefineUnitType("unit-protoss-pylon", { Name = "Supply Depot",
   Sounds = {
     "selected", "protoss-pylon-selected",
 --    "acknowledge", "farm-acknowledge",
-   "ready", "terran-scv-done",
-    "help", "terran-base-attacked",
-    "dead", "explosion-large"} } )
+   "ready", "protoss-building-done",
+    "help", "protoss-base-attacked",
+    "dead", "explosion-protoss-large"} } )
 

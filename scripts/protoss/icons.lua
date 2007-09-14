@@ -30,29 +30,29 @@
 
 
 
-local zerg_icons = {
-  {"icon-zerg-larva", 35},
-  {"icon-zerg-drone", 41},
-  {"icon-zerg-zergling", 37},
-  {"icon-zerg-overlord", 40},
-  {"icon-zerg-hydralisk", 38},
-  {"icon-zerg-mutalisk", 43},
-  {"icon-zerg-scourge", 47},
-  {"icon-zerg-queen", 45},
-  {"icon-zerg-ultralisk", 48},
-  {"icon-zerg-defiler", 46},
-  {"icon-zerg-hatchery", 131},
-  {"icon-zerg-extractor", 160},
-  {"icon-zerg-spawning-pool", 142},
-  {"icon-zerg-drone-scv", 7},
-  {"icon-zerg-hatchery", 115},
+local protoss_icons = {
+  {"icon-protoss-nexus", 154},
+  {"icon-protoss-probe", 64},
+  {"icon-protoss-zealot", 65},
+  {"icon-protoss-pylon", 40},
+  {"icon-protoss-dragoon", 66},
+  {"icon-protoss-gateway", 43},
+  {"icon-protoss-scourge", 47},
+  {"icon-protoss-queen", 45},
+  {"icon-protoss-ultralisk", 48},
+  {"icon-protoss-defiler", 46},
+  {"icon-protoss-hatchery", 131},
+  {"icon-protoss-extractor", 160},
+  {"icon-protoss-spawning-pool", 142},
+  {"icon-protoss-drone-scv", 7},
+  {"icon-protoss-hatchery", 115},
 
 }
 
 pos = table.getn(icons)+1;
 
-for i = 1,table.getn(zerg_icons) do
-	icons[pos] = zerg_icons[i]
+for i = 1,table.getn(protoss_icons) do
+	icons[pos] = protoss_icons[i]
 	pos = pos + 1
 end
 

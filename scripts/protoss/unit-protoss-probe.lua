@@ -14,6 +14,8 @@ Still = {"frame 0", "wait 125",},
     "wait 3", "frame 122", "unbreakable end", "wait 3",},
   Repair = {"unbreakable begin", "frame 34", "sound scv-attack",
     "wait 1", "frame 17", "unbreakable end", "wait 1",},
+  Build = {"unbreakable begin", "frame 34", "sound scv-attack",
+    "wait 1", "frame 17", "unbreakable end", "wait 1",},
   Death = {"unbreakable begin", "frame 50", "wait 3", "frame 55", "wait 3", "frame 60", "wait 100",
     "frame 60", "unbreakable end", "wait 1",},
 })
@@ -24,7 +26,7 @@ DefineUnitType("unit-protoss-probe", { Name = "Protoss Probe",
   Shadow = {"file", "protoss/units/pteshad.png", "size", {32, 32}, "offset", {0, -7}},
   NumDirections = 32,
   DrawLevel = 19,
-  Animations = "animations-protoss-probe", Icon = "icon-zerg-drone",
+  Animations = "animations-protoss-probe", Icon = "icon-protoss-probe",
   Costs = {"time", 45, "minerals", 50},
   Speed = 10,
   HitPoints = 60,
@@ -58,11 +60,11 @@ DefineUnitType("unit-protoss-probe", { Name = "Protoss Probe",
   organic = true,
   SelectableByRectangle = true,
   Sounds = {
-    "selected", "zerg-drone-selected",
-    "acknowledge", "zerg-drone-acknowledgement",
-    "ready", "zerg-drone-ready",
-    "help", "terran-units-attacked",
-    "dead", "zerg-drone-death"} } )
+    "selected", "protosss-probe-selected",
+    "acknowledge", "protosss-probe-acknowledgement",
+    "ready", "zprotosss-probe-ready",
+    "help", "protoss-units-attacked",
+    "dead", "protosss-probe-death"} } )
 
 DefineUnitType("unit-protoss-pylon", {})
 DefineUnitType("unit-protoss-nexus", {})
