@@ -26,3 +26,8 @@ DefineMissileType("missile-terran-firebat-flame", {
   Class = "missile-class-point-to-point", Sleep = 1, Speed = 4, Range = 0,
 })
 
+DefineMissileType("missile-terran-vulture-grenade", {
+  File = "neutral/missiles/grenade.png", Size = {16, 16},
+  Frames = 4, NumDirections = 32, DrawLevel = 50,
+  Class = "missile-class-point-to-point", Sleep = 1, Speed = 4, Range = 2,
+})

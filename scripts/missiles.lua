@@ -31,15 +31,15 @@
 
 
 Load("scripts/terran/missiles.lua")
-
+--Load("scripts/zerg/missiles.lua")
 
 DefineMissileType("missile-small-fire",
-  { File = "terran/building burnc.png", Size = {32, 48}, Frames = 6, NumDirections = 1,
-  DrawLevel = 45, Class = "missile-class-fire", Sleep = 8, Speed = 16, Range = 1 } )
+  { File = "terran/building burnc.png", Size = {64, 96}, Frames = 6, NumDirections = 1,
+  DrawLevel = 200, Class = "missile-class-fire", Sleep = 8, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-big-fire",
-  { File = "terran/building burnf.png", Size = {32, 48}, Frames = 10, NumDirections = 1,
-  DrawLevel = 45, Class = "missile-class-fire", Sleep = 8, Speed = 16, Range = 1 } )
+  { File = "terran/building burnf.png", Size = {64, 96}, Frames = 10, NumDirections = 1,
+  DrawLevel = 200, Class = "missile-class-fire", Sleep = 8, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-impact",
   { File = "neutral/missiles/blastcan.png", Size = {32, 32}, Frames = 17, NumDirections = 1,

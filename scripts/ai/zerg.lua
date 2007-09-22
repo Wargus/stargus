@@ -1,22 +1,32 @@
  
 InitFuncs:add(function()
-  ai_terran_func = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+  ai_zerg_func = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 end)
 
 local player
 
-local terran_funcs = {
+local zerg_funcs = {
   function() AiDebug(false) return false end,
   function() return AiSleep(AiGetSleepCycles()) end,
 
 --start of game/building stage
 
-  function() return AiNeed("unit-terran-command-center") end,
-  function() return AiWait("unit-terran-command-center") end,
+  function() return AiNeed("unit-zerg-hatchery") end,
+  function() return AiWait("unit-zerg-hatchery") end,
 
-  function() return AiSet("unit-terran-scv", 7) end,
-  function() return AiWait("unit-terran-scv") end,
+  function() return AiSet("unit-zerg-overlord", 1) end,
+  function() return AiWait("unit-zerg-overlord") end,
 
+  function() return AiSet("unit-zerg-drone", 7) end,
+  function() return AiWait("unit-zerg-drone") end,
+ 
+--[[  function() return AiNeed("unit-zerg-spawning-pool") end,
+  function() return AiWait("unit-zerg-spawning-pool") end,
+  
+  function() return AiSet("unit-zerg-zergling", 7) end,
+  function() return AiWait("unit-zerg-zergling") end,
+  --]]
+--[[
   function() return AiNeed("unit-terran-barracks") end,
 
   function() return AiSet("unit-terran-scv", 8) end,
@@ -180,25 +190,25 @@ local terran_funcs = {
   function() return AiWaitForce(5) end,
   function() return AiSleep(50*GameSettings.Difficulty) end, 
   function() return AiAttackWithForce(5) end,
-
+--]]
 
   function() return true end,
 }
 
-function AiTerran()
+function AiZerg()
   local ret
 
   player = AiPlayer() + 1
 
   while (true) do
-    ret = terran_funcs[ai_terran_func[player]]()
+    ret = zerg_funcs[ai_zerg_func[player]]()
     if (ret) then
       break
     end
-    ai_terran_func[player] = ai_terran_func[player] + 1
+    ai_zerg_func[player] = ai_zerg_func[player] + 1
   end
 end
 
 
-DefineAi("terran-ai", "*", "terran-ai", AiTerran)
+DefineAi("zerg-ai", "*", "zerg-ai", AiZerg)
 

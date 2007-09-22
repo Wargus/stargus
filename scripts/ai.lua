@@ -78,8 +78,34 @@ DefineAiHelper(
 )
 
 
-Load("scripts/ai/terran.lua")
+DefineAiHelper(
+  {"build", "unit-zerg-drone",
+  "unit-zerg-hatchery", "unit-zerg-spawning-pool", "unit-terran-barracks",
+  "unit-terran-bunker", "unit-terran-command-center", "unit-terran-engineering-bay",
+  "unit-terran-factory", "unit-terran-missile-turret", "unit-terran-refinery",
+  "unit-terran-science-facility", "unit-terran-starport", "unit-terran-supply-depot"},
 
+  {"train", "unit-zerg-hatchery", "unit-zerg-zergling", "unit-zerg-drone", "unit-terran-ghost"},
+  {"train", "unit-terran-command-center", "unit-terran-scv"},
+  {"train", "unit-terran-factory", "unit-terran-vulture", "unit-terran-siege-tank", "unit-terran-goliath"},
+  {"train", "unit-terran-starport", "unit-terran-wraith", "unit-terran-dropship", "unit-terran-science-vessel", "unit-terran-battlecruiser"},
+
+  {"research", "unit-terran-academy", "upgrade-terran-u238-shells", "upgrade-terran-stim-pack"},
+  {"research", "unit-terran-engineering-bay",
+  "upgrade-terran-infantry-weapons1", "upgrade-terran-infantry-weapons2", "upgrade-terran-infantry-weapons3",
+  "upgrade-terran-infantry-armor1", "upgrade-terran-infantry-armor2", "upgrade-terran-infantry-armor3"},
+
+  {"repair", "unit-terran-scv",
+  "unit-terran-academy", "unit-terran-armory", "unit-terran-barracks",
+  "unit-terran-bunker", "unit-terran-command-center", "unit-terran-engineering-bay",
+  "unit-terran-factory", "unit-terran-missile-turret", "unit-terran-refinery",
+  "unit-terran-science-facility", "unit-terran-starport", "unit-terran-supply-depot"},
+
+  {"unit-limit", "unit-zerg-overlord", "food"}
+)
+
+Load("scripts/ai/terran.lua")
+Load("scripts/ai/zerg.lua")
 function AiPassive()
 end
 

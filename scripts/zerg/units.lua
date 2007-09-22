@@ -1,3 +1,4 @@
+Load("scripts/zerg/neutral.lua")
 Load("scripts/zerg/unit-zerg-hatchery.lua")
 Load("scripts/zerg/unit-zerg-drone.lua")
 Load("scripts/zerg/unit-zerg-zergling.lua")

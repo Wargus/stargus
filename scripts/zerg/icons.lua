@@ -41,7 +41,7 @@ local zerg_icons = {
   {"icon-zerg-queen", 45},
   {"icon-zerg-ultralisk", 48},
   {"icon-zerg-defiler", 46},
- {"icon-zerg-hatchery", 131},
+  {"icon-zerg-hatchery", 131},
   {"icon-zerg-extractor", 160},
   {"icon-zerg-spawning-pool", 142},
 

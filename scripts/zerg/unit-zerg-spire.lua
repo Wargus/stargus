@@ -664,6 +664,5 @@ CUpgrade:New("zerg-greater-spire")
 	
 DefineButton( { Pos = 1, Level = 0, Icon = "icon-terran-bunker",
   Action = "upgrade-to", Value = "unit-zerg-greater-spire",
-  Allowed = "check-single-research",
   Key = "w", Hint = "Mutate to Greater Spire",
-  ForUnit = {"unit-zerg-spawning-pool"} } )
+  ForUnit = {"unit-zerg-spire"} } )
