@@ -31,7 +31,7 @@
 
 
 Load("scripts/terran/missiles.lua")
---Load("scripts/zerg/missiles.lua")
+Load("scripts/zerg/missiles.lua")
 
 DefineMissileType("missile-small-fire",
   { File = "terran/building burnc.png", Size = {64, 96}, Frames = 6, NumDirections = 1,

@@ -346,3 +346,13 @@ DefineCursor({
   Rate = 67,
   HotSpot = {63, 63},
   Size = {128, 128}})
+
+  --[[
+local race23 = GetPlayerData(GetThisPlayer(), "RaceName")
+    if (race == "terran") then
+      AddFiller("ui/tconsole.png", offx, offy)
+    elseif (race == "zerg") then
+		AddFiller("ui/zconsole.png", offx, offy)
+    else
+		AddFiller("ui/pconsole.png", offx, offy)
+    end--]]

@@ -37,7 +37,7 @@
 local offx = (Video.Width - 640) / 2
 local offy = Video.Height - 480
 
-function TerranScreen(screen_width, screen_height)
+function ZergScreen(screen_width, screen_height)
   local info_panel_x = 0
   local info_panel_y = 160
 
@@ -65,7 +65,6 @@ function AddFiller(file, x, y)
     UI.Fillers:push_back(b)
 end
 
-AddFiller("ui/zconsole.png", offx, offy)
 
 UI.InfoPanel.X = offx + 0
 UI.InfoPanel.Y = offy + 160
