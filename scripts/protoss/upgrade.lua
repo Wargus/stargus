@@ -1,6 +1,6 @@
 --
 --  Upgrades
---
+--[[
 
 upgrades = {
 { "upgrade-zerg-zergling-speed", "icon-zerg-zergling-attack-speed",
@@ -26,6 +26,7 @@ upgrades = {
 for i = 1,table.getn(upgrades) do
   u = CUpgrade:New(upgrades[i][1])
   u.Icon = Icons[upgrades[i][2]]
+  --[[
   for j = 1,table.getn(upgrades[1][3]) do
     u.Costs[j - 1] = upgrades[i][3][j]
   end
@@ -130,3 +131,4 @@ DefineDependency("unit-terran-starport",
 
 DefineDependency("unit-terran-science-facility",
   {"unit-terran-starport"})
+  --]]

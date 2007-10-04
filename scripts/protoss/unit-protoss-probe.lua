@@ -69,6 +69,9 @@ DefineUnitType("unit-protoss-probe", { Name = "Protoss Probe",
 DefineUnitType("unit-protoss-pylon", {})
 DefineUnitType("unit-protoss-nexus", {})
 DefineUnitType("unit-protoss-gateway", {})
+DefineUnitType("unit-protoss-photon-cannon", {})
+DefineUnitType("unit-protoss-assimulator", {})
+
 --
 -- Default
 --
@@ -124,6 +127,16 @@ DefineButton( { Pos = 2, Level = 1, Icon = "icon-zerg-hatchery",
 DefineButton( { Pos = 3, Level = 1, Icon = "icon-zerg-hatchery",
   Action = "build", Value = "unit-protoss-gateway",
   Key = "x", Hint = "Gateway",
+  ForUnit = {"unit-protoss-probe"} } )
+  
+DefineButton( { Pos = 4, Level = 1, Icon = "icon-zerg-hatchery",
+  Action = "build", Value = "unit-protoss-photon-cannon",
+  Key = "c", Hint = "Photon Cannon",
+  ForUnit = {"unit-protoss-probe"} } )
+  
+DefineButton( { Pos = 5, Level = 1, Icon = "icon-zerg-hatchery",
+  Action = "build", Value = "unit-protoss-assimulator",
+  Key = "c", Hint = "Assimulator",
   ForUnit = {"unit-protoss-probe"} } )
 
 DefineButton( { Pos = 9, Level = 1, Icon = "icon-cancel",

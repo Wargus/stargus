@@ -1,7 +1,7 @@
 --
 --  Missiles
 --
-
+--[[
 DefineMissileType("missile-terran-explosion-small", {
   File = "terran/explosion small.png", Size = {128, 128},
   Frames = 9, NumDirections = 1, DrawLevel = 50,
@@ -25,4 +25,4 @@ DefineMissileType("missile-terran-firebat-flame", {
   Frames = 221, NumDirections = 32, DrawLevel = 50,
   Class = "missile-class-point-to-point", Sleep = 1, Speed = 4, Range = 0,
 })
-
+--]]

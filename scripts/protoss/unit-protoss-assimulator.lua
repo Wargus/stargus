@@ -1,14 +1,13 @@
-DefineAnimations("animations-protoss-photon-cannon", {
-   Still = {
-    "frame 0", "wait 3", "frame 1", "wait 3", "frame 2", "wait 3",
+--
+--
+
+DefineAnimations("animations-protoss-assimulator", {
+  Still = {
+    "frame 0", "wait 5", "frame 1", "wait 5", "frame 2", "wait 5", "frame 3", "wait 5",
   },
-  Attack = {
-    "unbreakable begin", "wait 5", "frame 4", "wait 3", "frame 5", "wait 3", "frame 6", "wait 3", "frame 7", "wait 3", "frame 8", "wait 3", "frame 9", "sound sunken-attack", "attack",
-    "unbreakable end", "wait 5",
-  },  
 })
 
-DefineConstruction("construction-protoss-photon-cannon", {
+DefineConstruction("construction-protoss-assimulator", {
   Files = {
     File = "zerg/units/zbuild.png",
     Size = {160, 192}},
@@ -630,35 +629,28 @@ DefineConstruction("construction-protoss-photon-cannon", {
 }
 })
 
-DefineUnitType("unit-protoss-photon-cannon", { Name = "Photon Canon",
-  Image = {"file", "protoss/units/photon cannon.png", "size",  {64, 128}},
-  Shadow = {"file", "protoss/units/ppbshad.png", "size",  {64, 128}},
-  Animations = "animations-protoss-photon-cannon", Icon = "icon-terran-bunker",
-  Costs = {"time", 200, "minerals", 75},
-  RepairHp = 4,
-  RepairCosts = {"minerals", 1, "gas", 1},
-  Construction = "construction-protoss-photon-cannon",
+DefineUnitType("unit-protoss-assimulator", { Name = "Assimulator",
+  Image = {"file", "protoss/units/assimilator.png", "size", {192, 192}},
+  Shadow = {"file", "protoss/units/passhad.png", "size", {192, 192}},
+  Animations = "animations-protoss-assimulator", Icon = "icon-zerg-extractor",
+  Costs = {"time", 200, "minerals", 500},
+  Construction = "construction-protoss-assimulator",
   Speed = 0,
-  HitPoints = 400,
+  HitPoints = 500,
   DrawLevel = 30,
-  TileSize = {3, 2}, BoxSize = {95, 63},
-  SightRange = 7, ComputerReactionRange = 6, PersonReactionRange = 4,
-  Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
-  Priority = 15, AnnoyComputerFactor = 20,
-  MaxAttackRange = 7,
-  Points = 170,
+  TileSize = {4, 2}, BoxSize = {127, 63},
+  SightRange = 1,
+  Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
+  Priority = 20, AnnoyComputerFactor = 20,
+  Points = 160,
   Corpse = "unit-destroyed-3x3-place",
-  ExplodeWhenKilled = "missile-terran-explosion-large",
+  ExplodeWhenKilled = "missile-explosion",
   Type = "land",
-  RightMouseAction = "attack",
-  BuilderOutside = true,
-  AutoBuildRate = 30,
-  CanAttack = true,
-  CanTargetLand = true,
-  Building = true, VisibleUnderFog = true,
-  BuildingRules = { { "distance", { Distance = 3, DistanceType = "<", Type = "unit-protoss-pylon"} } },
+  Building = true, VisibleUnderFog = true, 
+  BuildingRules = { { "ontop", { Type = "unit-vespene-geyser", ReplaceOnDie = true, ReplaceOnBuild = true} } },
+  GivesResource = "gas", CanHarvest = true,
   Sounds = {
-    "selected", "zerg-sunken-colony-selected",
+    "selected", "zerg-extractor-selected",
     "ready", "zerg-building-ready",
     "help", "zerg-base-attacked",
-    "dead", "zerg-buildin-blowup"} } )
+    "dead", "zerg-building-blowup"} } )

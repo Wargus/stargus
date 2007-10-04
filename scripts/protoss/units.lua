@@ -4,6 +4,8 @@ Load("scripts/protoss/unit-protoss-pylon.lua")
 Load("scripts/protoss/unit-protoss-gateway.lua")
 Load("scripts/protoss/unit-protoss-zealot.lua")
 Load("scripts/protoss/unit-protoss-dragoon.lua")
+Load("scripts/protoss/unit-protoss-photon-cannon.lua")
+Load("scripts/protoss/unit-protoss-assimulator.lua")
 --Load("scripts/protoss/unit-protoss-zealot.lua")
 --Load("scripts/protoss/unit-protoss-dragoon.lua")
 --Load("scripts/zerg/unit-zerg-spawning-pool.lua")
@@ -42,8 +44,7 @@ DefineButton( { Pos = 2, Level = 0, Icon = "icon-stop",
     "unit-protoss-dragoon",
     "unit-protoss-probe",
     "unit-protoss-zealot",
-    "terran-group",
-    "unit-terran-battlecruiser",
+    "unit-protoss-photon-cannon",
     "unit-terran-dropship",
     "unit-terran-firebat",
     "unit-terran-ghost",
@@ -65,8 +66,7 @@ DefineButton( { Pos = 3, Level = 0, Icon = "icon-attack",
     "unit-protoss-dragoon",
     "unit-protoss-probe",
     "unit-protoss-zealot",
-    "terran-group",
-    "unit-terran-battlecruiser",
+    "unit-protoss-photon-cannon",
     "unit-terran-firebat",
     "unit-terran-ghost",
     "unit-terran-goliath",
@@ -153,8 +153,8 @@ DefineAllow("unit-terran-wraith",         "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-protoss-nexus",           "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-protoss-pylon",           "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-protoss-gateway",         "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-bunker",           "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-command-center",   "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-protoss-photon-cannon",   "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-protoss-assimulator",   "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-engineering-bay",  "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-factory",          "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-missile-turret",   "AAAAAAAAAAAAAAAA")
