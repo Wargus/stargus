@@ -1,0 +1,23 @@
+Very Simple And Boring TODO List For Stargus
+
+Scripts:
+1. Zerg unit animations
+2. Protoss unit animations
+3. Terran Addons
+4. Spells
+5. In-game UI
+6. Before-game menus
+7. Tilesets
+8. Burning building Animations
+
+Engine:
+1. Larva
+2. Creep
+3. Protoss Shields
+4. Seige Mode
+5. Flying Buildings
+6. Burrow
+7. "Small" Protoss units
+8. Active overlay
+
+Have Fun!

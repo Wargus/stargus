@@ -1,14 +1,14 @@
 InitFuncs:add(function()
   ai_terran_func = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 end)
-
+--WARNING: HARD TO READ CHILDISH COMMENTING BY n0.obAtroN
 local player
 
 local terran_funcs = {
   function() AiDebug(false) return false end,
   function() return AiSleep(AiGetSleepCycles()) end,
 
---start of game/building stage
+--st4rt 0f g4m3/bu1lding st4g3
 
   function() return AiNeed("unit-terran-command-center") end,
   function() return AiWait("unit-terran-command-center") end,
@@ -27,8 +27,8 @@ local terran_funcs = {
   function() return AiWait("unit-terran-supply-depot") end,
 
 
---rush
---rush force is #4
+--ruSh
+--ruSh f0rc3 1s #4
 
   function() return AiForce(4, {"unit-terran-marine", 4}) end,
   function() return AiWaitForce(4) end,
@@ -40,7 +40,7 @@ local terran_funcs = {
   function() return AiSet("unit-terran-scv", 10) end,
   function() return AiWait("unit-terran-scv") end,
 
---base defence force is #1
+--b4s3 d3f3nc3 f0rc3 1s #1
   function() return AiForce(1, {"unit-terran-marine", 2}) end,
   function() return AiWaitForce(1) end,
 --  function() return AiForceRole(1, {"defend"}) end,
@@ -116,8 +116,8 @@ local terran_funcs = {
   function() return AiNeed("unit-terran-barracks") end,
   function() return AiWait("unit-terran-barracks") end,
 
---end of building stage
---war stage
+--3nd of bu1ld1ng st4g3
+--w4r st4g3
 
   function() return AiNeed("unit-terran-supply-depot") end,
   function() return AiWait("unit-terran-supply-depot") end,
@@ -127,7 +127,7 @@ local terran_funcs = {
 --  function() return AiNeed("upgrade-terran-infantry-armor2") end,
 
 
---first attack force is #2
+--f1rst 4tt4ck f0rc3 is #2
 
   function() return AiForce(2, {"unit-terran-marine", 10}) end,
 
@@ -144,7 +144,7 @@ local terran_funcs = {
   function() return AiWait("unit-terran-goliath") end,
   function() return AiWaitForce(2) end,
 
---ATT4CK!!!!!
+--4TT4CK!!!!!
 
   function() return AiAttackWithForce(2) end,
 
@@ -152,7 +152,7 @@ local terran_funcs = {
 
 --  function() return AiNeed("upgrade-terran-infantry-armor3") end,
 
--- start new base
+-- st4rt n3w b4s3
 
   function() return AiNeed("unit-terran-command-center") end,
   function() return AiWait("unit-terran-command-center") end,
@@ -166,7 +166,7 @@ local terran_funcs = {
   function() return AiNeed("unit-terran-starport") end,
   function() return AiWait("unit-terran-starport") end,
 
---next attack force #5 (bigger) 
+--n3xt 4tt4ck f0rc3 #5 (b1gg3r) 
 -- :)
 
 --  function() return AiForce(5, {"unit-terran-wraith", 3}) end,
@@ -184,7 +184,7 @@ local terran_funcs = {
   function() return AiForce(5, {"unit-terran-goliath", 7}) end,
 
   function() return AiWaitForce(5) end,
---attack with #5
+--4tt4ck w1th #5
 
   function() return AiAttackWithForce(5) end,
 
