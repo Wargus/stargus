@@ -1399,6 +1399,8 @@ Control Todo[] = {
 	{G,0,"protoss/units/fleet beacon","unit\\protoss\\warp.grp",0 __3},
 	{G,0,"protoss/units/observer","unit\\protoss\\witness.grp",0 __3},
 	{G,0,"protoss/units/zealot","unit\\protoss\\zealot.grp",0 __3},
+	{G,0,"protoss/units/shield","unit\\thingy\\pshield.grp",0 __3},
+	{G,0,"protoss/units/bluetrail","unit\\thingy\\HKTrail.grp",0 __3},
 
 	// Zerg unit graphics
 	{G,0,"zerg/units/rubble large","unit\\thingy\\ZRubbleL.grp",0 __3},
@@ -1497,6 +1499,16 @@ Control Todo[] = {
 	{G,0,"zerg/units/zzebirth","unit\\zerg\\zzebirth.grp",0 __3},
 	{G,0,"zerg/units/zzedeath","unit\\zerg\\zzeDeath.grp",0 __3},
 	{G,0,"zerg/units/zergling shadow","unit\\zerg\\zzeShad.grp",0 __3},
+	{G,0,"zerg/units/zbba","unit\\thingy\\bblood01.grp",0 __3},
+	{G,0,"zerg/units/zbbb","unit\\thingy\\bblood02.grp",0 __3},
+	{G,0,"zerg/units/zbbc","unit\\thingy\\bblood03.grp",0 __3},
+	{G,0,"zerg/units/zbbd","unit\\thingy\\bblood04.grp",0 __3},
+	{G,0,"zerg/units/zbbd","unit\\thingy\\oFireC.grp",0 __3},
+	{G,0,"zerg/units/zbbd","unit\\thingy\\oFireF.grp",0 __3},
+	{G,0,"zerg/units/zbbd","unit\\thingy\\oFireV.grp",0 __3},
+	//{G,0,"zerg/units/zbbd","unit\\thingy\\oFireC.grp",0 __3},
+	//{G,0,"zerg/units/zbbd","unit\\thingy\\oFireC.grp",0 __3},
+
 
 	// Terran sounds
 	{W,0,"terran/building place","sound\\misc\\tbldgplc.wav" __4},
