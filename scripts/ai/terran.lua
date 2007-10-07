@@ -17,33 +17,39 @@ local terran_funcs = {
   function() return AiWait("unit-terran-scv") end,
 
   function() return AiNeed("unit-terran-barracks") end,
+  function() return AiWait("unit-terran-barracks") end,
+
 
   function() return AiSet("unit-terran-scv", 8) end,
   function() return AiWait("unit-terran-scv") end,
 
   function() return AiNeed("unit-terran-supply-depot") end,
+  function() return AiWait("unit-terran-supply-depot") end,
+
 
 --rush
 --rush force is #4
 
   function() return AiForce(4, {"unit-terran-marine", 4}) end,
   function() return AiWaitForce(4) end,
-  function() return AiSleep(50*GameSettings.Difficulty) end, 
   function() return AiAttackWithForce(4) end,
 
   function() return AiNeed("unit-terran-refinery") end,
   function() return AiWait("unit-terran-refinery") end,
 
   function() return AiSet("unit-terran-scv", 10) end,
+  function() return AiWait("unit-terran-scv") end,
 
 --base defence force is #1
   function() return AiForce(1, {"unit-terran-marine", 2}) end,
+  function() return AiWaitForce(1) end,
 --  function() return AiForceRole(1, {"defend"}) end,
 
   function() return AiSet("unit-terran-scv", 11) end,
   function() return AiWait("unit-terran-scv") end,
 
   function() return AiForce(1, {"unit-terran-marine", 3}) end,
+  function() return AiWaitForce(1) end,
 
   function() return AiSet("unit-terran-scv", 12) end,
   function() return AiWait("unit-terran-scv") end,
@@ -52,11 +58,13 @@ local terran_funcs = {
   function() return AiWait("unit-terran-supply-depot") end,
 
   function() return AiForce(1, {"unit-terran-marine", 4}) end,
+  function() return AiWaitForce(1) end,
 
   function() return AiSet("unit-terran-scv", 13) end,
   function() return AiWait("unit-terran-scv") end,
 
   function() return AiForce(1, {"unit-terran-marine", 5}) end,
+  function() return AiWaitForce(1) end,
 
   function() return AiSet("unit-terran-scv", 14) end,
   function() return AiWait("unit-terran-scv") end,
@@ -71,27 +79,24 @@ local terran_funcs = {
   function() return AiWait("unit-terran-barracks") end,
 
   function() return AiForce(1, {"unit-terran-marine", 6}) end,
+  function() return AiWaitForce(1) end,
 
-  function() return AiSet("unit-terran-scv", 16) end,
-  function() return AiWait("unit-terran-scv") end,
 
   function() return AiNeed("unit-terran-supply-depot") end,
   function() return AiWait("unit-terran-supply-depot") end,
 
   function() return AiForce(1, {"unit-terran-marine", 7}) end,
+  function() return AiWaitForce(1) end,
 
-  function() return AiSet("unit-terran-scv", 17) end,
-  function() return AiWait("unit-terran-scv") end,
 
   function() return AiNeed("unit-terran-refinery") end,
   function() return AiWait("unit-terran-refinery") end,
 
   function() return AiForce(1, {"unit-terran-marine", 8}) end,
-
-  function() return AiSet("unit-terran-scv", 18) end,
-  function() return AiWait("unit-terran-scv") end,
+  function() return AiWaitForce(1) end,
 
   function() return AiNeed("unit-terran-supply-depot") end,
+  function() return AiWait("unit-terran-supply-depot") end,
 
   function() return AiNeed("unit-terran-academy") end,
   function() return AiWait("unit-terran-academy") end,
@@ -103,6 +108,7 @@ local terran_funcs = {
 --  function() return AiNeed("upgrade-terran-infantry-armor1") end,
 
   function() return AiForce(1, {"unit-terran-firebat", 2}) end,
+  function() return AiForceRole(1, {"defend"}) end,
 
   function() return AiNeed("unit-terran-factory") end,
   function() return AiWait("unit-terran-factory") end,
@@ -114,6 +120,8 @@ local terran_funcs = {
 --war stage
 
   function() return AiNeed("unit-terran-supply-depot") end,
+  function() return AiWait("unit-terran-supply-depot") end,
+
 
 --  function() return AiNeed("upgrade-terran-infantry-weapons2") end,
 --  function() return AiNeed("upgrade-terran-infantry-armor2") end,
@@ -126,6 +134,7 @@ local terran_funcs = {
   function() return AiForce(2, {"unit-terran-vulture", 3}) end,
 
   function() return AiNeed("unit-terran-supply-depot") end,
+  function() return AiWait("unit-terran-supply-depot") end,
 
   function() return AiForce(2, {"unit-terran-siege-tank", 2}) end,
 
@@ -133,12 +142,10 @@ local terran_funcs = {
 
   function() return AiForce(2, {"unit-terran-goliath", 5}) end,
   function() return AiWait("unit-terran-goliath") end,
-
-
---ATTACK!!!!!
-
   function() return AiWaitForce(2) end,
-  function() return AiSleep(50*GameSettings.Difficulty) end, 
+
+--ATT4CK!!!!!
+
   function() return AiAttackWithForce(2) end,
 
 --  function() return AiNeed("upgrade-terran-infantry-weapons3") end,
@@ -154,8 +161,10 @@ local terran_funcs = {
   function() return AiWait("unit-terran-refinery") end,
 
   function() return AiNeed("unit-terran-supply-depot") end,
-
+  function() return AiWait("unit-terran-supply-depot") end,
+  
   function() return AiNeed("unit-terran-starport") end,
+  function() return AiWait("unit-terran-starport") end,
 
 --next attack force #5 (bigger) 
 -- :)
@@ -174,12 +183,10 @@ local terran_funcs = {
 
   function() return AiForce(5, {"unit-terran-goliath", 7}) end,
 
+  function() return AiWaitForce(5) end,
 --attack with #5
 
-  function() return AiWaitForce(5) end,
-  function() return AiSleep(50*GameSettings.Difficulty) end, 
   function() return AiAttackWithForce(5) end,
-
 
   function() return true end,
 }

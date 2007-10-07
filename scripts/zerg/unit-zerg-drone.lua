@@ -24,13 +24,13 @@ DefineUnitType("unit-zerg-drone", { Name = "Zerg Drone",
   NumDirections = 32,
   DrawLevel = 19,
   Animations = "animations-zerg-drone", Icon = "icon-zerg-drone",
-  Costs = {"time", 45, "minerals", 50},
+  Costs = {"time", 25, "minerals", 50},
   Speed = 10,
-  HitPoints = 60,
+  HitPoints = 40,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {31, 31},
-  SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
-  BasicDamage = 3, PiercingDamage = 2, Missile = "missile-zerg-spit",
+  SightRange = 7, ComputerReactionRange = 6, PersonReactionRange = 4,
+  BasicDamage = 5, PiercingDamage = 2, Missile = "missile-zerg-spit",
   MaxAttackRange = 1,
   Priority = 50,
   RegenerationRate = 1,
@@ -112,6 +112,8 @@ DefineUnitType("unit-zerg-cc", {})
 DefineUnitType("unit-zerg-hydralisk-den", {})
 DefineUnitType("unit-zerg-ultralisk-cavern", {})
 DefineUnitType("unit-zerg-evolution-chamber", {})
+--DefineUnitType("unit-zerg-sunken-colony", {})
+
 DefineUnitType("unit-zerg-spire", {})
 DefineButton( { Pos = 1, Level = 1, Icon = "icon-zerg-hatchery",
   Action = "build", Value = "unit-zerg-hatchery",

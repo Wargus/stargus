@@ -31,7 +31,7 @@
 
 race1 = "terran"
 race2 = "zerg"
-race3 = "terran"
+race3 = "neutral"
 race4 = "protoss"
 
 
@@ -78,7 +78,7 @@ DefineAiHelper(
 )
 
 
-DefineAiHelper(
+--[[ DefineAiHelper(
   {"build", "unit-zerg-drone",
   "unit-zerg-hatchery", "unit-zerg-spawning-pool", "unit-terran-barracks",
   "unit-terran-bunker", "unit-terran-command-center", "unit-terran-engineering-bay",
@@ -102,10 +102,10 @@ DefineAiHelper(
   "unit-terran-science-facility", "unit-terran-starport", "unit-terran-supply-depot"},
 
   {"unit-limit", "unit-zerg-overlord", "food"}
-)
+) --]]
 
 Load("scripts/ai/terran.lua")
-Load("scripts/ai/zerg.lua")
+--Load("scripts/ai/zerg.lua")
 function AiPassive()
 end
 

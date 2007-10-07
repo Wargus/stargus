@@ -656,3 +656,11 @@ DefineUnitType("unit-zerg-cc", { Name = "Creep Colony",
     "ready", "zerg-building-ready",
     "help", "zerg-base-attacked",
     "dead", "zerg-building-blowup"} } )
+	
+DefineUnitType("unit-zerg-sunken-colony", {})
+
+	
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-spawning-pool",
+  Action = "upgrade-to", Value = "unit-zerg-sunken-colony",
+  Key = "s", Hint = "Spawning Pool",
+  ForUnit = {"unit-zerg-cc"} } )
