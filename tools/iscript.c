@@ -301,7 +301,7 @@ void DecodeAnimation(const unsigned char *data, unsigned short offset)
 
 int main(int argc, char *argv[])
 {
-	char *data;
+	unsigned char *data;
 	unsigned short offset;
 
 	if (argc != 2) {
