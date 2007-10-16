@@ -33,18 +33,6 @@ DefineButton( { Pos = 1, Level = 0, Icon = "icon-move",
 	"unit-zerg-defiler",
 	"unit-zerg-mutalisk",
 	"unit-zerg-queen",
-    "terran-group",
-    "unit-terran-battlecruiser",
-    "unit-terran-dropship",
-    "unit-terran-firebat",
-    "unit-terran-ghost",
-    "unit-terran-goliath",
-    "unit-terran-marine",
-    "unit-terran-science-vessel",
-    "unit-zerg-drone",
-    "unit-terran-siege-tank",
-    "unit-terran-vulture",
-    "unit-terran-wraith",
   } } )
 
 DefineButton( { Pos = 2, Level = 0, Icon = "icon-stop",
@@ -61,19 +49,6 @@ DefineButton( { Pos = 2, Level = 0, Icon = "icon-stop",
 	"unit-zerg-ultralisk",
 	"unit-zerg-defiler",
 	"unit-zerg-sunken-colony",
-    "terran-group",
-    "unit-terran-battlecruiser",
-    "unit-terran-dropship",
-    "unit-terran-firebat",
-    "unit-terran-ghost",
-    "unit-terran-goliath",
-    "unit-terran-marine",
-    "unit-terran-missile-turret",
-    "unit-terran-science-vessel",
-    "unit-zerg-drone",
-    "unit-terran-siege-tank",
-    "unit-terran-vulture",
-    "unit-terran-wraith",
   } } )
 
 DefineButton( { Pos = 3, Level = 0, Icon = "icon-attack",
@@ -87,17 +62,6 @@ DefineButton( { Pos = 3, Level = 0, Icon = "icon-attack",
     "unit-zerg-drone",
     "unit-zerg-zergling",
 	"unit-zerg-sunken-colony",
-    "terran-group",
-    "unit-terran-battlecruiser",
-    "unit-terran-firebat",
-    "unit-terran-ghost",
-    "unit-terran-goliath",
-    "unit-terran-marine",
-    "unit-zerg-drone",
-    "unit-terran-missile-turret",
-    "unit-terran-siege-tank",
-    "unit-terran-vulture",
-    "unit-terran-wraith",
   } } )
 
 DefineButton( { Pos = 4, Level = 0, Icon = "icon-patrol",
@@ -113,18 +77,6 @@ DefineButton( { Pos = 4, Level = 0, Icon = "icon-patrol",
 	"unit-zerg-defiler",
     "unit-zerg-drone",
     "unit-zerg-zergling",
-    "terran-group",
-    "unit-terran-battlecruiser",
-    "unit-terran-dropship",
-    "unit-terran-firebat",
-    "unit-terran-ghost",
-    "unit-terran-goliath",
-    "unit-terran-marine",
-    "unit-terran-missile-turret",
-    "unit-terran-science-vessel",
-    "unit-terran-siege-tank",
-    "unit-terran-vulture",
-    "unit-terran-wraith",
   } } )
 
 DefineButton( { Pos = 5, Level = 0, Icon = "icon-hold-position",
@@ -140,18 +92,6 @@ DefineButton( { Pos = 5, Level = 0, Icon = "icon-hold-position",
     "unit-zerg-ultralisk",
     "unit-zerg-drone",
     "unit-zerg-zergling",
-    "terran-group",
-    "unit-terran-battlecruiser",
-    "unit-terran-dropship",
-    "unit-terran-firebat",
-    "unit-terran-ghost",
-    "unit-terran-goliath",
-    "unit-terran-marine",
-    "unit-terran-missile-turret",
-    "unit-terran-science-vessel",
-    "unit-terran-siege-tank",
-    "unit-terran-vulture",
-    "unit-terran-wraith",
   } } )
 
 DefineButton( { Pos = 6, Level = 0, Icon = "icon-rally-point",
@@ -162,7 +102,6 @@ DefineButton( { Pos = 6, Level = 0, Icon = "icon-rally-point",
     "unit-zerg-hatchery",
     "unit-zerg-lair",
     "unit-zerg-hive",
-    "unit-terran-starport",
   } } )
 
 
@@ -179,8 +118,6 @@ DefineAllow("unit-zerg-overlord",           "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-queen",              "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-drone",              "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-defiler",            "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-vulture",          "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-wraith",           "AAAAAAAAAAAAAAAA")
 
 DefineAllow("unit-zerg-hatchery",           "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-spawning-pool",      "AAAAAAAAAAAAAAAA")
@@ -193,5 +130,4 @@ DefineAllow("unit-zerg-evolution-chamber",  "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-spire",              "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-greater-spire",      "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-rubble-large",       "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-terran-supply-depot",     "AAAAAAAAAAAAAAAA")
 

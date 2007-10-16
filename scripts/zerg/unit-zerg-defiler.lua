@@ -28,27 +28,10 @@ DefineUnitType("unit-zerg-hydralisk-death", { Name = "DEAD HYDRLAISK",
 
 DefineAnimations("animations-zerg-defiler", {
    Still = {
-    "frame 187", "wait 125",
   },
-  Move = {"unbreakable begin",
-    "move 6", "wait 1", "frame 136", "move 3", "wait 1", "frame 153",
-    "move 3", "wait 1", "frame 0", "move 3", "wait 1", "frame 17",
-    "move 5", "wait 1", "frame 34", "move 5", "wait 1", "frame 51",
-    "move 4", "wait 1", "frame 68",
-    --FIXME: sub-tile movement
-    --[["move 8", "wait 1", "frame 85",
-    "move 6", "wait 1", "frame 102", "move 4",
-    "unbreakable end", "wait 1", "frame 119",]]
-    "move 3", "unbreakable end", "wait 1", "frame 119",
-	},
-  Attack = {
-    "unbreakable begin", "wait 5", "frame 68", "sound hydralisk-attack", "attack",
-    "unbreakable end", "wait 5",
-  },
+  Move = {},
+--FIXME:do this
   Death = {
-    "unbreakable begin",
-    "frame 203", "wait 200", "frame 208", "wait 30", "frame 209", "wait 30",
-    "unbreakable end", "wait 1",
   },
 })
 
@@ -61,7 +44,7 @@ DefineUnitType("unit-zerg-defiler", { Name = "Hydralisk",
   HitPoints = 80,
   Mana = 200,
   DrawLevel = 30,
-  TileSize = {1, 1}, BoxSize = {31, 31},
+  TileSize = {1, 1}, BoxSize = {31, 31},--FIXME:wrong boxsize
   SightRange = 10, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 1, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   MaxAttackRange = 0,

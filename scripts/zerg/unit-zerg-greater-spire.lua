@@ -1,13 +1,13 @@
 DefineAnimations("animations-zerg-greater-spire", {
   Still = {
-    "frame 0", "wait 4", "frame 1", "wait 4", "frame 2", "wait 4",
+    "frame 0", "wait 4", "frame 1", "wait 4", "frame 2", "wait 4",--FIXME:not original sc animations
   },
   Train = {--[[FIXME: active overlay 276]]
     "frame 0", "wait 125",
   },
 })
 DefineConstruction("construction-zerg-greater-spire", {
-  Files = {
+  Files = {--FIXME:need support for animations while building
     File = "zerg/units/zbuild.png",
     Size = {160, 192}},
   ShadowFiles = {
@@ -631,7 +631,7 @@ DefineConstruction("construction-zerg-greater-spire", {
 DefineUnitType("unit-zerg-greater-spire", { Name = "Spire",
   Image = {"file", "zerg/units/greater spire.png", "size",  {128, 192}},
   Shadow = {"file", "zerg/units/greater spire shadow.png", "size",  {128, 192}},
-  Animations = "animations-zerg-greater-spire", Icon = "icon-terran-bunker",
+  Animations = "animations-zerg-greater-spire", Icon = "icon-terran-bunker",--FIXME:wrong icon
   Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
@@ -639,7 +639,7 @@ DefineUnitType("unit-zerg-greater-spire", { Name = "Spire",
   Speed = 0,
   HitPoints = 400,
   DrawLevel = 30,
-  TileSize = {2, 2}, BoxSize = {63, 63},
+  TileSize = {2, 2}, BoxSize = {63, 63},--FIXME:wrong box size
   SightRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,

@@ -5,7 +5,7 @@
 
 DefineAnimations("animations-zerg-evolution-chamber", {
   Still = {
-    "frame 0", "random-wait 1 3", "label 4930", "frame 1", "wait 3",
+    "frame 0", "random-wait 1 3", "label 4930", "frame 1", "wait 3",--FIXME: not original sc animations
     "frame 2", "wait 3", "frame 0", "wait 3", "goto 4930",
   },
   Train = {--[[FIXME: active overlay 276]]
@@ -16,7 +16,7 @@ DefineAnimations("animations-zerg-evolution-chamber", {
 
 DefineConstruction("construction-zerg-evolution-chamber", {
   Files = {
-    File = "zerg/units/zbuild.png",
+    File = "zerg/units/zbuild.png",--FIXME:need support for animations while building
     Size = {160, 192}},
   ShadowFiles = {
     File = "zerg/units/zbshad.png",
@@ -639,7 +639,7 @@ DefineConstruction("construction-zerg-evolution-chamber", {
 DefineUnitType("unit-zerg-evolution-chamber", { Name = "Evolution Chamber",
   Image = {"file", "zerg/units/evolution chamber.png", "size",  {96, 128}},
   Shadow = {"file", "zerg/units/evolution chamber shadow.png", "size",  {128, 160}},
-  Animations = "animations-zerg-evolution-chamber", Icon = "icon-terran-bunker",
+  Animations = "animations-zerg-evolution-chamber", Icon = "icon-terran-bunker",--FIXME:icons
   Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
@@ -647,7 +647,7 @@ DefineUnitType("unit-zerg-evolution-chamber", { Name = "Evolution Chamber",
   Speed = 0,
   HitPoints = 400,
   DrawLevel = 30,
-  TileSize = {2, 2}, BoxSize = {63, 63},
+  TileSize = {2, 2}, BoxSize = {63, 63},--FIXME:wrong size
   SightRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,

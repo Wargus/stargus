@@ -25,7 +25,7 @@ DefineAnimations("animations-zerg-zergling", {
       "random-goto 50 710E", "goto 7100",
     "label 710E", "frame 85", "wait 1", "frame 102", "wait 1",
       "random-rotate 3", "wait 1", "frame 85", "wait 1", "goto 70FD",
-    "label 7124", "frame 0", "wait 1", "frame 17", "wait 1", "frame 34",
+    "label 7124", "frame 0", "wait 1", "frame 17", "wait 1", "frame 34",--FIXME:not original sc animations
       "random-goto 75 7170",
       "rotate -2", "wait 3", "rotate -2", "wait 3", "rotate -2", "wait 3",
       "rotate -2", "wait 3", "rotate -2", "wait 3", "wait 6",

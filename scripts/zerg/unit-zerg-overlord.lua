@@ -7,7 +7,7 @@ DefineAnimations("animations-zerg-overlord", {
   Still = {"frame 0", "wait 125",  --[[FIXME: shift down 79A2]]},
   Move = {"unbreakable begin", "frame 0", "move 3", "wait 2", "frame 5", "move 3", "wait 1",
     "frame 10", "move 3", "wait 2", "frame 15", "move 2", "wait 1",
-    "frame 20", "move 3", "wait 1", "frame 25", "move 2", "wait 1",
+    "frame 20", "move 3", "wait 1", "frame 25", "move 2", "wait 1",--FIXME: not original sc animations
     "frame 30", "move 3", "wait 2", "frame 35", "move 3", "wait 1",
     "frame 40", "move 3", "wait 2", "frame 45", "move 2", "wait 1",
     "frame 50", "move 3", "wait 1", "frame 55", "move 2", "unbreakable end", "wait 1",},
@@ -26,7 +26,7 @@ DefineUnitType("unit-zerg-overlord", { Name = "Overlord",
   Speed = 0, NumDirections = 32,
   HitPoints = 500,
   DrawLevel = 45,
-  TileSize = {1, 1}, BoxSize = {63, 63},
+  TileSize = {1, 1}, BoxSize = {63, 63},--FIXME:wrong size
   SightRange = 10,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 45,

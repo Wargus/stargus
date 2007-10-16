@@ -1,13 +1,13 @@
 DefineAnimations("animations-zerg-spire", {
   Still = {
-    "frame 0", "wait 4", "frame 1", "wait 4", "frame 2", "wait 4",
+    "frame 0", "wait 4", "frame 1", "wait 4", "frame 2", "wait 4",--FIXME:not gunuine sc animations
   },
   Train = {--[[FIXME: active overlay 276]]
     "frame 0", "wait 125",
   },
 })
 DefineConstruction("construction-zerg-spire", {
-  Files = {
+  Files = {--FIXME:need support for animations while building
     File = "zerg/units/zbuild.png",
     Size = {160, 192}},
   ShadowFiles = {
@@ -639,7 +639,7 @@ DefineUnitType("unit-zerg-spire", { Name = "Spire",
   Speed = 0,
   HitPoints = 400,
   DrawLevel = 30,
-  TileSize = {2, 2}, BoxSize = {63, 63},
+  TileSize = {2, 2}, BoxSize = {63, 63},--FIXME:wrong size
   SightRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,
@@ -662,7 +662,7 @@ DefineUnitType("unit-zerg-spire", { Name = "Spire",
 	
 CUpgrade:New("upgrade-zerg-greater-spire")
 	
-DefineButton( { Pos = 1, Level = 0, Icon = "icon-terran-bunker",
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-terran-bunker",--FIXME:wrong icons
   Action = "upgrade-to", Value = "unit-zerg-greater-spire",
   Key = "w", Hint = "Mutate to Greater Spire",
   ForUnit = {"unit-zerg-spire"} } )

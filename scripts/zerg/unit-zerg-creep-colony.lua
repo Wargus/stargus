@@ -6,14 +6,14 @@
 DefineAnimations("animations-zerg-creep-colony", {
   Still = {
     "frame 0", "random-wait 1 3", "label 4A8A", "frame 1", "wait 2",
-    "frame 2", "wait 2", "frame 3", "wait 2", "frame 0", "wait 2", "goto 4A8A",
+    "frame 2", "wait 2", "frame 3", "wait 2", "frame 0", "wait 2", "goto 4A8A",--FIXME:not original sc animations
   }, 
 })
 
 
 DefineConstruction("construction-zerg-creep-colony", {
   Files = {
-    File = "zerg/units/zbuild.png",
+    File = "zerg/units/zbuild.png",--FIXME:support for animations while building
     Size = {160, 192}},
   ShadowFiles = {
     File = "zerg/units/zbshad.png",
@@ -644,7 +644,7 @@ DefineUnitType("unit-zerg-creep-colony", { Name = "Creep Colony",
   Speed = 0,
   HitPoints = 400,
   DrawLevel = 30,
-  TileSize = {2, 2}, BoxSize = {63, 63},
+  TileSize = {2, 2}, BoxSize = {63, 63},--FIXME: wrong boxsize
   SightRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,

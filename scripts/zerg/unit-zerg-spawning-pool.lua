@@ -5,7 +5,7 @@
 
 DefineAnimations("animations-zerg-spawning-pool", {
   Still = {
-    "frame 0", "random-wait 1 3", "label 4987", "frame 0", "wait 2",
+    "frame 0", "random-wait 1 3", "label 4987", "frame 0", "wait 2",--FIXME:not original sc animations
     "frame 2", "wait 2", "frame 3", "wait 2", "goto 4987",
   },
   Train = {--[[FIXME: active overlay 276]]
@@ -16,7 +16,7 @@ DefineAnimations("animations-zerg-spawning-pool", {
 
 DefineConstruction("construction-zerg-spawning-pool", {
   Files = {
-    File = "zerg/units/zbuild.png",
+    File = "zerg/units/zbuild.png",--FIXME: need support for animations while building
     Size = {160, 192}},
   ShadowFiles = {
     File = "zerg/units/zbshad.png",
@@ -647,7 +647,7 @@ DefineUnitType("unit-zerg-spawning-pool", { Name = "Spawning Pool",
   Speed = 0,
   HitPoints = 1000,
   DrawLevel = 30,
-  TileSize = {2, 1}, BoxSize = {96, 80},
+  TileSize = {2, 1}, BoxSize = {96, 80},--FIXME:wrong size
   SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 30, AnnoyComputerFactor = 35,

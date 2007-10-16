@@ -1,5 +1,5 @@
 DefineAnimations("animations-zerg-ultralisk-death", {
-  Death = {"unbreakable begin", "frame 0", "wait 50", "frame 1", "wait 50", "frame 2", "wait 50", "frame 3", "wait 50", "frame 4", "wait 50", "unbreakable end", "wait 1", },
+  Death = {"unbreakable begin", "frame 0", "wait 50", "frame 1", "wait 50", "frame 2", "wait 50", "frame 3", "wait 50", "frame 4", "wait 50", "unbreakable end", "wait 1", },--FIXME: animations work but not original sc animation
 })
 
 DefineUnitType("unit-zerg-ultralisk-death", { Name = "Dead Zergling",
@@ -8,7 +8,7 @@ DefineUnitType("unit-zerg-ultralisk-death", { Name = "Dead Zergling",
   NumDirections = 1,
   HitPoints = 255,
   DrawLevel = 30,
-  TileSize = {1, 1}, BoxSize = {31, 31},
+  TileSize = {1, 1}, BoxSize = {31, 31},--FIXME: wrong boxsize
   SightRange = 1,
   BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 0,
@@ -22,7 +22,7 @@ DefineAnimations("animations-zerg-ultralisk", {
     "frame 119", "wait 125",
   },
   Move = {"unbreakable begin",
-    "move 6", "wait 1", "frame 136", "move 3", "wait 1", "frame 153",
+    "move 6", "wait 1", "frame 136", "move 3", "wait 1", "frame 153", --FIXME: animations work but not original sc animation
     "move 3", "wait 1", "frame 0", "move 3", "wait 1", "frame 17",
     "move 5", "wait 1", "frame 34", "move 5", "wait 1", "frame 51",
     "move 4", "wait 1", "frame 68",
@@ -58,7 +58,6 @@ DefineUnitType("unit-zerg-ultralisk", { Name = "Ultralisk",
   Priority = 60,
   Points = 30,
   Demand = 6,
---  ExplodeWhenKilled = "missile-zerg-hydralisk-explode",
   Type = "land",
   RegenerationRate = 1,
   RightMouseAction = "attack",

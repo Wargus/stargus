@@ -4,12 +4,12 @@
 DefineAnimations("animations-zerg-extractor", {
   Still = {
     "frame 0", "wait 5", "frame 1", "wait 5", "frame 2", "wait 5", "frame 3", "wait 5",
-  },
+  },--FIXME:not original sc animations
 })
 
 DefineConstruction("construction-zerg-extractor", {
   Files = {
-    File = "zerg/units/zbuild.png",
+    File = "zerg/units/zbuild.png",--FIXME:need support for animations while building
     Size = {160, 192}},
   ShadowFiles = {
     File = "zerg/units/zbshad.png",
@@ -638,7 +638,7 @@ DefineUnitType("unit-zerg-extractor", { Name = "Extractor",
   Speed = 0,
   HitPoints = 500,
   DrawLevel = 30,
-  TileSize = {4, 2}, BoxSize = {127, 63},
+  TileSize = {4, 2}, BoxSize = {127, 63},--FIXME:wrong boxsize
   SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 20,

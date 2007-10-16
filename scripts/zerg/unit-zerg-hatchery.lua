@@ -5,7 +5,7 @@
 
 DefineAnimations("animations-zerg-hatchery", {
   Still = {
-    "frame 0", "random-wait 1 5", "label 4AEC", "frame 1", "wait 2",
+    "frame 0", "random-wait 1 5", "label 4AEC", "frame 1", "wait 2",--FIXME: not original sc animations
     "frame 2", "wait 2", "frame 3", "wait 4", "frame 2", "wait 2",
     "frame 1", "wait 2", "frame 0", "wait 4", "goto 4AEC",
   },
@@ -26,7 +26,7 @@ DefineUnitType("unit-zerg-hatchery", { Name = "Zerg Hatchery",
   Speed = 0,
   HitPoints = 1500,
   DrawLevel = 30,
-  TileSize = {4, 3}, BoxSize = {126, 95},
+  TileSize = {4, 3}, BoxSize = {126, 95},--FIXME: wrong size
   SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 35, AnnoyComputerFactor = 45,

@@ -32,7 +32,7 @@ DefineAnimations("animations-zerg-hydralisk", {
   },
   Move = {"unbreakable begin",
     "move 6", "wait 1", "frame 136", "move 3", "wait 1", "frame 153",
-    "move 3", "wait 1", "frame 0", "move 3", "wait 1", "frame 17",
+    "move 3", "wait 1", "frame 0", "move 3", "wait 1", "frame 17",--FIXME:not original sc animations
     "move 5", "wait 1", "frame 34", "move 5", "wait 1", "frame 51",
     "move 4", "wait 1", "frame 68",
     --FIXME: sub-tile movement
@@ -60,7 +60,7 @@ DefineUnitType("unit-zerg-hydralisk", { Name = "Hydralisk",
   Speed = 0, NumDirections = 32,
   HitPoints = 80,
   DrawLevel = 40,
-  TileSize = {1, 1}, BoxSize = {31, 31},
+  TileSize = {1, 1}, BoxSize = {31, 31},--FIXME:wrong size
   SightRange = 6, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 2, BasicDamage = 10, PiercingDamage = 4, Missile = "missile-none",
   MaxAttackRange = 5,

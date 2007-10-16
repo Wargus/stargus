@@ -1,6 +1,6 @@
 DefineAnimations("animations-zerg-sunken-colony", {
    Still = {
-    "frame 0", "wait 3", "frame 1", "wait 3", "frame 2", "wait 3",
+    "frame 0", "wait 3", "frame 1", "wait 3", "frame 2", "wait 3",--FIXME: animations work but not original sc animation
   },
   Attack = {
     "unbreakable begin", "wait 5", "frame 4", "wait 3", "frame 5", "wait 3", "frame 6", "wait 3", "frame 7", "wait 3", "frame 8", "wait 3", "frame 9", "sound sunken-attack", "attack",
@@ -9,7 +9,7 @@ DefineAnimations("animations-zerg-sunken-colony", {
 })
 
 DefineConstruction("construction-zerg-sunken-colony", {
-  Files = {
+  Files = {--FIXME: need anim support while building
     File = "zerg/units/zbuild.png",
     Size = {160, 192}},
   ShadowFiles = {
@@ -641,7 +641,7 @@ DefineUnitType("unit-zerg-sunken-colony", { Name = "Sunken Colony",
   Speed = 0,
   HitPoints = 400,
   DrawLevel = 30,
-  TileSize = {3, 2}, BoxSize = {95, 63},
+  TileSize = {3, 2}, BoxSize = {95, 63},--FIXME: wrong box size
   SightRange = 7, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   MaxAttackRange = 7,

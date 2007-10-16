@@ -1,12 +1,12 @@
 DefineAnimations("animations-zerg-ultralisk-cavern", {
   Still = {
-    "frame 0", "wait 3", "frame 1", "wait 3", "frame 2", "wait 3",
+    "frame 0", "wait 3", "frame 1", "wait 3", "frame 2", "wait 3",--FIXME: not original sc animations
   },
   Train = {--[[FIXME: active overlay 276]]
     "frame 0", "wait 125",
   },
 })
-DefineConstruction("construction-zerg-ultralisk-cavern", {
+DefineConstruction("construction-zerg-ultralisk-cavern", {--FIXME:need support for animations while building
   Files = {
     File = "zerg/units/zbuild.png",
     Size = {160, 192}},

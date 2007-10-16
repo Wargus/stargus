@@ -6,7 +6,7 @@ DefineAnimations("animations-zerg-drone", {
 Still = {"frame 0", "wait 125",},
   Move = {"unbreakable begin",
     "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
-    "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
+    "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",--FIXME:not original sc animations
     "move 4", "wait 1", "move 4", "unbreakable end", "wait 1",},
   Attack = {"unbreakable begin", "frame 1", "wait 1", "unbreakable end", "wait 1",},
   Harvest_minerals = {"unbreakable begin", "frame 102", "wait 3", "frame 122", "wait 3", "frame 139", "wait 3", "frame 156", "wait 3", "unbreakable end", "wait 2",
