@@ -94,7 +94,7 @@ DefineDependency("unit-zerg-zergling",
   {"unit-zerg-spawning-pool"})
 DefineDependency("unit-zerg-spawning-pool",
   {"unit-zerg-hatchery"})
-DefineDependency("unit-zerg-cc",
+DefineDependency("unit-zerg-creep-colony",
   {"unit-zerg-hatchery"})
 DefineDependency("unit-zerg-sunken-colony",
   {"unit-zerg-spawning-pool"})

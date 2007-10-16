@@ -108,7 +108,7 @@ DefineButton( { Pos = 8, Level = 0, Icon = "icon-advanced-build",
 --
 DefineUnitType("unit-zerg-extractor", {})
 DefineUnitType("unit-zerg-spawning-pool", {})
-DefineUnitType("unit-zerg-cc", {})
+DefineUnitType("unit-zerg-creep-colony", {})
 DefineUnitType("unit-zerg-hydralisk-den", {})
 DefineUnitType("unit-zerg-ultralisk-cavern", {})
 DefineUnitType("unit-zerg-evolution-chamber", {})
@@ -130,29 +130,29 @@ DefineButton( { Pos = 2, Level = 1, Icon = "icon-zerg-spawning-pool",
   Key = "e", Hint = "Extractor",
   ForUnit = {"unit-zerg-drone"} } )
   
-  DefineButton( { Pos = 4, Level = 1, Icon = "icon-terran-bunker",
-  Action = "build", Value = "unit-zerg-cc",
-  Key = "s", Hint = "Creep Colony",
+  DefineButton( { Pos = 4, Level = 1, Icon = "icon-zerg-creep-colony",
+  Action = "build", Value = "unit-zerg-creep-colony",
+  Key = "c", Hint = "Creep Colony",
   ForUnit = {"unit-zerg-drone"} } )
   
-DefineButton( { Pos = 5, Level = 1, Icon = "icon-terran-bunker",
+DefineButton( { Pos = 5, Level = 1, Icon = "icon-zerg-hydralisk-den",
   Action = "build", Value = "unit-zerg-hydralisk-den",
-  Key = "s", Hint = "Hydralisk Den",
+  Key = "h", Hint = "Hydralisk Den",
   ForUnit = {"unit-zerg-drone"} } )
   
-DefineButton( { Pos = 6, Level = 1, Icon = "icon-terran-bunker",
+DefineButton( { Pos = 6, Level = 1, Icon = "icon-zerg-evolution-chamber",
   Action = "build", Value = "unit-zerg-evolution-chamber",
-  Key = "s", Hint = "Hydralisk Den",
+  Key = "e", Hint = "Evolution Chamber",
   ForUnit = {"unit-zerg-drone"} } )
   
-DefineButton( { Pos = 1, Level = 2, Icon = "icon-terran-bunker",
+DefineButton( { Pos = 1, Level = 2, Icon = "icon-zerg-ultralisk-cavern",
   Action = "build", Value = "unit-zerg-ultralisk-cavern",
   Key = "u", Hint = "Ultralisk Cavern",
   ForUnit = {"unit-zerg-drone"} } )
   
-DefineButton( { Pos = 2, Level = 2, Icon = "icon-terran-bunker",
+DefineButton( { Pos = 2, Level = 2, Icon = "icon-zerg-spire",
   Action = "build", Value = "unit-zerg-spire",
-  Key = "u", Hint = "Ultralisk Cavern",
+  Key = "p", Hint = "Spire",
   ForUnit = {"unit-zerg-drone"} } )
 
   

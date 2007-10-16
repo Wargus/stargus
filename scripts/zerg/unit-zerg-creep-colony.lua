@@ -1,10 +1,17 @@
-DefineAnimations("animations-zerg-cc", {
-   Still = {
-    "frame 0", "wait 3", "frame 1", "wait 3", "frame 2", "wait 3",
+--
+-- unit-zerg-creep-colony
+--
+
+
+DefineAnimations("animations-zerg-creep-colony", {
+  Still = {
+    "frame 0", "random-wait 1 3", "label 4A8A", "frame 1", "wait 2",
+    "frame 2", "wait 2", "frame 3", "wait 2", "frame 0", "wait 2", "goto 4A8A",
   }, 
 })
 
-DefineConstruction("construction-zerg-cc", {
+
+DefineConstruction("construction-zerg-creep-colony", {
   Files = {
     File = "zerg/units/zbuild.png",
     Size = {160, 192}},
@@ -626,14 +633,14 @@ DefineConstruction("construction-zerg-cc", {
 }
 })
 
-DefineUnitType("unit-zerg-cc", { Name = "Creep Colony",
+DefineUnitType("unit-zerg-creep-colony", { Name = "Creep Colony",
   Image = {"file", "zerg/units/creep colony.png", "size",  {128, 64}},
   Shadow = {"file", "zerg/units/creep colony shadow.png", "size",  {128, 96}},
-  Animations = "animations-zerg-cc", Icon = "icon-terran-bunker",
+  Animations = "animations-zerg-creep-colony", Icon = "icon-terran-bunker",
   Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
-  Construction = "construction-zerg-cc",
+  Construction = "construction-zerg-creep-colony",
   Speed = 0,
   HitPoints = 400,
   DrawLevel = 30,
@@ -663,4 +670,4 @@ DefineUnitType("unit-zerg-sunken-colony", {})
 DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-spawning-pool",
   Action = "upgrade-to", Value = "unit-zerg-sunken-colony",
   Key = "s", Hint = "Spawning Pool",
-  ForUnit = {"unit-zerg-cc"} } )
+  ForUnit = {"unit-zerg-creep-colony"} } )
