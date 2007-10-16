@@ -1,11 +1,16 @@
+--
+-- unit-zerg-hydralisk-den
+--
+
+
 DefineAnimations("animations-zerg-hydralisk-den", {
   Still = {
-    "frame 0", "wait 5", "frame 1", "wait 5", "frame 2", "wait 5",
-  },
-  Train = {--[[FIXME: active overlay 276]]
-    "frame 0", "wait 125",
+    "frame 0", "random-wait 1 2", "label 5170", "frame 1", "wait 2",
+    "frame 2", "wait 4", "frame 1", "wait 2", "frame 0", "wait 4", "goto 5170",
   },
 })
+
+
 DefineConstruction("construction-zerg-hydralisk-den", {
   Files = {
     File = "zerg/units/zbuild.png",
@@ -628,10 +633,11 @@ DefineConstruction("construction-zerg-hydralisk-den", {
 }
 })
 
+
 DefineUnitType("unit-zerg-hydralisk-den", { Name = "Hydralisk Den",
   Image = {"file", "zerg/units/hydralisk den.png", "size",  {160, 128}},
   Shadow = {"file", "zerg/units/hydralisk den shadow.png", "size",  {160, 128}},
-  Animations = "animations-zerg-hydralisk-den", Icon = "icon-terran-bunker",
+  Animations = "animations-zerg-hydralisk-den", Icon = "icon-zerg-hydralisk-den",
   Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},

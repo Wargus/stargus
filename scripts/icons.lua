@@ -55,7 +55,6 @@ Load("scripts/protoss/icons.lua")
 
 
 for i = 1,table.getn(icons) do
-	print("loading icon ", icons[i][1])
   icon = CIcon:New(icons[i][1])
   icon.G = CGraphic:New("cmdicons.png", 36, 34)
   icon.Frame = icons[i][2]

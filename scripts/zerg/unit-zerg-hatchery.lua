@@ -3,10 +3,11 @@
 --
 
 
--- n0.obAtroN
 DefineAnimations("animations-zerg-hatchery", {
   Still = {
-    "frame 0", "wait 3", "frame 1", "wait 3", "frame 2", "wait 3", "frame 3", "wait 3", "frame 4", "wait 3",
+    "frame 0", "random-wait 1 5", "label 4AEC", "frame 1", "wait 2",
+    "frame 2", "wait 2", "frame 3", "wait 4", "frame 2", "wait 2",
+    "frame 1", "wait 2", "frame 0", "wait 4", "goto 4AEC",
   },
   Train = {
     "frame 0", "wait 125",
@@ -54,7 +55,7 @@ DefineUnitType("unit-zerg-ultralisk", {})
 DefineUnitType("unit-zerg-overlord", {})
 DefineUnitType("unit-zerg-queen", {})
 DefineUnitType("unit-zerg-defiler", {})
-DefineUnitType("unit-zerg-mut", {})
+DefineUnitType("unit-zerg-mutalisk", {})
 
 DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-larva",
   Action = "button", Value = 1,
@@ -87,7 +88,7 @@ DefineButton( { Pos = 5, Level = 1, Icon = "icon-zerg-overlord",
   ForUnit = {"unit-zerg-hatchery"} } )
 
 DefineButton( { Pos = 7, Level = 1, Icon = "icon-zerg-mutalisk",
-  Action = "train-unit", Value = "unit-zerg-mut",
+  Action = "train-unit", Value = "unit-zerg-mutalisk",
   Key = "m", Hint = "Mutalisk",
   ForUnit = {"unit-zerg-hatchery"} } )
 

@@ -6,7 +6,7 @@ Load("scripts/zerg/unit-zerg-hydralisk.lua")
 Load("scripts/zerg/unit-zerg-spawning-pool.lua")
 Load("scripts/zerg/unit-zerg-ultralisk.lua")
 Load("scripts/zerg/unit-zerg-extractor.lua")
-Load("scripts/zerg/unit-zerg-mut.lua")
+Load("scripts/zerg/unit-zerg-mutalisk.lua")
 Load("scripts/zerg/unit-zerg-overlord.lua")
 Load("scripts/zerg/unit-zerg-queen.lua")
 Load("scripts/zerg/unit-zerg-sunken-colony.lua")
@@ -31,7 +31,7 @@ DefineButton( { Pos = 1, Level = 0, Icon = "icon-move",
     "unit-zerg-hydralisk",
 	"unit-zerg-ultralisk",
 	"unit-zerg-defiler",
-	"unit-zerg-mut",
+	"unit-zerg-mutalisk",
 	"unit-zerg-queen",
     "terran-group",
     "unit-terran-battlecruiser",
@@ -52,7 +52,7 @@ DefineButton( { Pos = 2, Level = 0, Icon = "icon-stop",
   Key = "s", Hint = "~!Stop",
   ForUnit = {
     "zerg-group",
-	"unit-zerg-mut",
+	"unit-zerg-mutalisk",
 	"unit-zerg-overlord",
     "unit-zerg-hydralisk",
 	"unit-zerg-queen",
@@ -81,7 +81,7 @@ DefineButton( { Pos = 3, Level = 0, Icon = "icon-attack",
   Key = "a", Hint = "~!Attack",
   ForUnit = {
     "zerg-group",
-	"unit-zerg-mut",
+	"unit-zerg-mutalisk",
 	"unit-zerg-ultralisk",
     "unit-zerg-hydralisk",
     "unit-zerg-drone",
@@ -105,7 +105,7 @@ DefineButton( { Pos = 4, Level = 0, Icon = "icon-patrol",
   Key = "p", Hint = "~!Patrol",
   ForUnit = {
     "zerg-group",
-	"unit-zerg-mut",
+	"unit-zerg-mutalisk",
 	"unit-zerg-ultralisk",
 	"unit-zerg-overlord",
     "unit-zerg-hydralisk",
@@ -132,7 +132,7 @@ DefineButton( { Pos = 5, Level = 0, Icon = "icon-hold-position",
   Key = "h", Hint = "~!Hold Position",
   ForUnit = {
     "zerg-group",
-	"unit-zerg-mut",
+	"unit-zerg-mutalisk",
 	"unit-zerg-queen",
 	"unit-zerg-overlord",
     "unit-zerg-hydralisk",
@@ -174,7 +174,7 @@ DefineAllow("unit-zerg-drone",              "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-zergling",           "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-hydralisk",          "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-ultralisk",          "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-mut",                "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-mutalisk",           "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-overlord",           "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-queen",              "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-drone",              "AAAAAAAAAAAAAAAA")
