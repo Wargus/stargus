@@ -35,9 +35,13 @@ Load("scripts/widgets.lua")
 --
 
 --ManaSprite("ui/mana.png", -7, -7, 7, 7)
-ManaSprite("ui/ppbrfull.png", 0, -1, 108, 9)
+--ManaSprite("ui/ppbrfull.png", 0, -1, 108, 9)
+DefineSprites({Name="sprite-mana", File="ui/ppbrfull.png",
+  Offset={0, -1}, Size={108, 9}})
 --HealthSprite("ui/health.png", 1, -7, 7, 7)
-HealthSprite("ui/ppbrfull.png", 0, -1, 108, 9)
+--HealthSprite("ui/ppbrfull.png", 0, -1, 108, 9)
+DefineSprites({Name="sprite-health", File="ui/ppbrfull.png",
+  Offset={0, -1}, Size={108, 9}})
 
 --DefineSprites({Name = "sprite-spell", File = "ui/bloodlust,haste,slow,invisible,shield.png",
 --        Offset = {1, 1}, Size = {16, 16}})
@@ -56,19 +60,35 @@ HealthSprite("ui/ppbrfull.png", 0, -1, 108, 9)
 --ShowHealthBar()
 --ShowHealthVertical()
 --ShowHealthHorizontal()
-ShowHealthDot()
+--ShowHealthDot()
+DefineDecorations({Index="HitPoints", HideNeutral=true, CenterX=true,
+  OffsetPercent={50, 100}, Method={"sprite", {"sprite-health"}}})
 
 --ShowManaBar()
 --ShowManaVertical()
 --ShowManaHorizontal()
-ShowManaDot()
+--ShowManaDot()
+DefineDecorations({Index="Mana", HideNeutral=true, CenterX=true,
+  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
+DefineDecorations({Index="Transport", HideNeutral=true, CenterX=true,
+  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
+DefineDecorations({Index="Research", HideNeutral=true, CenterX=true,
+  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
+DefineDecorations({Index="Training", HideNeutral=true, CenterX=true,
+  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
+DefineDecorations({Index="UpgradeTo", HideNeutral=true, CenterX=true,
+  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
+DefineDecorations({Index="GiveResource", HideNeutral=true, CenterX=true,
+  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
+DefineDecorations({Index="CarryResource", HideNeutral=true, CenterX=true,
+  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
 
 --ShowNoFull()
 --ShowFull()
 
 --  Uncomment next, to show bars and dots always on top.
 --  FIXME: planned feature
-DecorationOnTop()
+--DecorationOnTop()
 
 local offx = (Video.Width - 640) / 2
 local offy = Video.Height - 480

@@ -15,8 +15,8 @@ Load("scripts/zerg/unit-zerg-defiler.lua")
 Load("scripts/zerg/unit-zerg-hydralisk-den.lua")
 Load("scripts/zerg/unit-zerg-ultralisk-cavern.lua")
 Load("scripts/zerg/unit-zerg-evolution-chamber.lua")
-Load("scripts/zerg/unit-zerg-spire.lua")
 Load("scripts/zerg/unit-zerg-greater-spire.lua")
+Load("scripts/zerg/unit-zerg-spire.lua")
 --
 -- Buttons
 --

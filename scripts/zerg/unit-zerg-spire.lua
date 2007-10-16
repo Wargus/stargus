@@ -660,7 +660,7 @@ DefineUnitType("unit-zerg-spire", { Name = "Spire",
     "help", "zerg-base-attacked",
     "dead", "zerg-building-blowup"} } )
 	
-CUpgrade:New("zerg-greater-spire")
+CUpgrade:New("upgrade-zerg-greater-spire")
 	
 DefineButton( { Pos = 1, Level = 0, Icon = "icon-terran-bunker",
   Action = "upgrade-to", Value = "unit-zerg-greater-spire",

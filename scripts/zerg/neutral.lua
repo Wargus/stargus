@@ -33,7 +33,7 @@ DefineUnitType("unit-zerg-rubble-large", { Name = "Rubble",
 })
 
 DefineUnitType("unit-zerg-rubble-small", { Name = "Rubble",
-  Image = {"file", "zerg/units/rubble large.png", "size", {96, 96}},
+  Image = {"file", "zerg/units/rubble small.png", "size", {96, 96}},
   Animations = "animations-zerg-rubble-small", Icon = "icon-zerg-hatchery",
   NumDirections = 1,
   HitPoints = 255,
