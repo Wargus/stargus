@@ -6,7 +6,7 @@
 DefineAnimations("animations-zerg-creep-colony", {
   Still = {
     "frame 0", "random-wait 1 3", "label 4A8A", "frame 1", "wait 2",
-    "frame 2", "wait 2", "frame 3", "wait 2", "frame 0", "wait 2", "goto 4A8A",--FIXME:not original sc animations
+    "frame 2", "wait 2", "frame 3", "wait 2", "frame 0", "wait 2", "goto 4A8A",
   }, 
 })
 

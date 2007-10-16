@@ -5,7 +5,7 @@
 
 DefineAnimations("animations-zerg-hatchery", {
   Still = {
-    "frame 0", "random-wait 1 5", "label 4AEC", "frame 1", "wait 2",--FIXME: not original sc animations
+    "frame 0", "random-wait 1 5", "label 4AEC", "frame 1", "wait 2",
     "frame 2", "wait 2", "frame 3", "wait 4", "frame 2", "wait 2",
     "frame 1", "wait 2", "frame 0", "wait 4", "goto 4AEC",
   },

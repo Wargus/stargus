@@ -5,7 +5,7 @@
 
 DefineAnimations("animations-zerg-evolution-chamber", {
   Still = {
-    "frame 0", "random-wait 1 3", "label 4930", "frame 1", "wait 3",--FIXME: not original sc animations
+    "frame 0", "random-wait 1 3", "label 4930", "frame 1", "wait 3",
     "frame 2", "wait 3", "frame 0", "wait 3", "goto 4930",
   },
   Train = {--[[FIXME: active overlay 276]]
