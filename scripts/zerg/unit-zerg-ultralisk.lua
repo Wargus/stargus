@@ -1,6 +1,12 @@
+--
+-- unit-zerg-ultralisk
+--
+
+
 DefineAnimations("animations-zerg-ultralisk-death", {
   Death = {"unbreakable begin", "frame 0", "wait 50", "frame 1", "wait 50", "frame 2", "wait 50", "frame 3", "wait 50", "frame 4", "wait 50", "unbreakable end", "wait 1", },--FIXME: animations work but not original sc animation
 })
+
 
 DefineUnitType("unit-zerg-ultralisk-death", { Name = "Dead Zergling",
   Image = {"file", "zerg/units/ultralisk death.png", "size", {128, 128}},
@@ -18,7 +24,7 @@ DefineUnitType("unit-zerg-ultralisk-death", { Name = "Dead Zergling",
 
 
 DefineAnimations("animations-zerg-ultralisk", {
-   Still = {
+  Still = {
     "frame 119", "wait 125",
   },
   Move = {"unbreakable begin",

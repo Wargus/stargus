@@ -1,4 +1,6 @@
-
+--
+-- unit-zerg-defiler
+--
 
 
 --[[
@@ -24,10 +26,8 @@ DefineUnitType("unit-zerg-hydralisk-death", { Name = "DEAD HYDRLAISK",
 ]]--
 
 
-
-
 DefineAnimations("animations-zerg-defiler", {
-   Still = {
+  Still = {
   },
   Move = {},
 --FIXME:do this

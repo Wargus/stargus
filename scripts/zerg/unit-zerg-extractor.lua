@@ -1,11 +1,14 @@
 --
+-- unit-zerg-extractor
 --
+
 
 DefineAnimations("animations-zerg-extractor", {
   Still = {
     "frame 0", "wait 5", "frame 1", "wait 5", "frame 2", "wait 5", "frame 3", "wait 5",
   },--FIXME:not original sc animations
 })
+
 
 DefineConstruction("construction-zerg-extractor", {
   Files = {

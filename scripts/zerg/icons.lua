@@ -69,11 +69,11 @@ local zerg_icons = {
   {"icon-zerg-cerebrate-daggoth", 152},
 }
 
-local pos = table.getn(icons)+1;
+local pos = table.getn(icons) + 1
 
 for i = 1,table.getn(zerg_icons) do
-	icons[pos] = zerg_icons[i]
-	pos = pos + 1
+  icons[pos] = zerg_icons[i]
+  pos = pos + 1
 end
 
 

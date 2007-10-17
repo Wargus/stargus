@@ -72,11 +72,11 @@ local protoss_icons = {
   {"icon-protoss-temple", 174},
 }
 
-local pos = table.getn(icons)+1;
+local pos = table.getn(icons) + 1
 
 for i = 1,table.getn(protoss_icons) do
-	icons[pos] = protoss_icons[i]
-	pos = pos + 1
+  icons[pos] = protoss_icons[i]
+  pos = pos + 1
 end
 
 

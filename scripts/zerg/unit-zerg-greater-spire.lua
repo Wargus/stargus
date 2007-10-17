@@ -1,11 +1,19 @@
+--
+-- unit-zerg-greater-spire
+--
+
+
 DefineAnimations("animations-zerg-greater-spire", {
   Still = {
-    "frame 0", "wait 4", "frame 1", "wait 4", "frame 2", "wait 4",--FIXME:not original sc animations
+    "frame 0", "random-wait 1 5", "label 4E8C", "frame 0", "wait 2",
+    "frame 1", "wait 2", "frame 2", "wait 2", "goto 4E8C",
   },
   Train = {--[[FIXME: active overlay 276]]
     "frame 0", "wait 125",
   },
 })
+
+
 DefineConstruction("construction-zerg-greater-spire", {
   Files = {--FIXME:need support for animations while building
     File = "zerg/units/building morph.png",

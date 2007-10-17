@@ -2,8 +2,9 @@
 -- unit-zerg-drone
 --
 
+
 DefineAnimations("animations-zerg-drone", {
-Still = {"frame 0", "wait 125",},
+  Still = {"frame 0", "wait 125",},
   Move = {"unbreakable begin",
     "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
     "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",--FIXME:not original sc animations

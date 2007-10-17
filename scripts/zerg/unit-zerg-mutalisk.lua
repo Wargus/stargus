@@ -2,6 +2,7 @@
 -- unit-zerg-mutalisk
 --
 
+
 DefineAnimations("animations-zerg-mutalisk", {
   Still = {"frame 0", "wait 125",--[[FIXME: shift down 79A2]]},
   Move = {"unbreakable begin", "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",
@@ -15,6 +16,7 @@ DefineAnimations("animations-zerg-mutalisk", {
   Death = {"unbreakable begin", "sound zerg-mutalisk-death",
     --[[active overlay 332,0]] "wait 3", "unbreakable end", "wait 1",},
 })
+
 
 DefineUnitType("unit-zerg-mutalisk", { Name = "Mutalisk",
   Image = {"file", "zerg/units/mutalisk.png", "size", {64, 64}},

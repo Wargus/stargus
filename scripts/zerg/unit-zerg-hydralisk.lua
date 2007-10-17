@@ -1,11 +1,13 @@
-
-
+--
+-- unit-zerg-hydralisk
+--
 
 
 DefineAnimations("animations-zerg-hydralisk-death", {
   Death = {"unbreakable begin", "frame 0", "wait 40", "frame 1", "wait 40",
     "frame 2", "wait 40", "frame 3", "wait 40", "frame 4", "unbreakable end", "wait 1", },
 })
+
 
 DefineUnitType("unit-zerg-hydralisk-death", { Name = "DEAD HYDRLAISK",
   Image = {"file", "zerg/units/hydralisk death.png", "size", {128, 128}},
@@ -21,8 +23,6 @@ DefineUnitType("unit-zerg-hydralisk-death", { Name = "DEAD HYDRLAISK",
   SelectableByRectangle = false,
   Vanishes = true,
   Sounds = {} } )
-
-
 
 
 

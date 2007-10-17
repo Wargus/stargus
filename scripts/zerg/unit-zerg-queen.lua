@@ -1,3 +1,6 @@
+--
+-- unit-zerg-queen
+--
 
 
 DefineAnimations("animations-zerg-queen", {
@@ -6,6 +9,7 @@ DefineAnimations("animations-zerg-queen", {
   Attack = {},
   Death = {},
 })
+
 
 DefineUnitType("unit-zerg-queen", { Name = "Queen",
   Image = {"file", "zerg/units/queen.png", "size", {128, 128}},

@@ -91,11 +91,11 @@ local terran_icons = {
   {"icon-terran-nuke", 311},
 }
 
-pos = table.getn(icons)+1;
+local pos = table.getn(icons) + 1
 
 for i = 1,table.getn(terran_icons) do
-	icons[pos] = terran_icons[i]
-	pos = pos + 1
+  icons[pos] = terran_icons[i]
+  pos = pos + 1
 end
 
 

@@ -1,6 +1,12 @@
+--
+-- unit-zerg-zergling
+--
+
+
 DefineAnimations("animations-zerg-zergling-death", {
   Death = {"unbreakable begin", "frame 0", "wait 50", "frame 1", "wait 50", "frame 2", "wait 50", "frame 3", "wait 50", "frame 4", "wait 50", "unbreakable end", "wait 1", },
 })
+
 
 DefineUnitType("unit-zerg-zergling-death", { Name = "Dead Zergling",
   Image = {"file", "zerg/units/zergling death.png", "size", {128, 128}},
