@@ -16,7 +16,7 @@ DefineAnimations("animations-zerg-mutalisk", {
     --[[active overlay 332,0]] "wait 3", "unbreakable end", "wait 1",},
 })
 
-DefineUnitType("unit-zerg-mutalisk", { Name = "Wraith",
+DefineUnitType("unit-zerg-mutalisk", { Name = "Mutalisk",
   Image = {"file", "terran/units/wraith.png", "size", {64, 64}},
   Shadow = {"file", "terran/units/wraith.png", "size", {64, 64}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
