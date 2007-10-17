@@ -26,46 +26,53 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
---      $Id: widgets.lua 1223 2005-06-25 20:49:51Z jsalmon3 $
+--      $Id$
 
 
-DefineButtonStyle("terran menu button", {
-  Size = {64, 20},
-  Font = "font8",
-  TextNormalColor = "white",
-  TextReverseColor = "white",
-  TextAlign = "Center",
-  TextPos = {33, 6},
-  Default = {
-    File = "ui/terran/menu.png",
-  },
-  Hover = {
+function DefineButtonStyles(race)
+  DefineButtonStyle(race.." menu button", {
+    Size = {64, 20},
+    Font = "font8",
     TextNormalColor = "white",
-  },
-  Clicked = {
-    File = "ui/terran/menu pressed.png",
-    TextPos = {31, 4},
-  },
-})
+    TextReverseColor = "white",
+    TextAlign = "Center",
+    TextPos = {33, 6},
+    Default = {
+      File = "ui/"..race.."/menu.png",
+    },
+    Hover = {
+      TextNormalColor = "white",
+    },
+    Clicked = {
+      File = "ui/"..race.."/menu pressed.png",
+      TextPos = {31, 4},
+    },
+  })
 
-DefineButtonStyle("terran diplomacy button", {
-  Size = {64, 20},
-  Font = "font8",
-  TextNormalColor = "white",
-  TextReverseColor = "white",
-  TextAlign = "Center",
-  TextPos = {33, 6},
-  Default = {
-    File = "ui/terran/menu.png",
-  },
-  Hover = {
+  DefineButtonStyle(race.." diplomacy button", {
+    Size = {64, 20},
+    Font = "font8",
     TextNormalColor = "white",
-  },
-  Clicked = {
-    File = "ui/terran/menu pressed.png",
-    TextPos = {31, 4},
-  },
-})
+    TextReverseColor = "white",
+    TextAlign = "Center",
+    TextPos = {33, 6},
+    Default = {
+      File = "ui/"..race.."/menu.png",
+    },
+    Hover = {
+      TextNormalColor = "white",
+    },
+    Clicked = {
+      File = "ui/"..race.."/menu pressed.png",
+      TextPos = {31, 4},
+    },
+  })
+end
+
+DefineButtonStyles("terran")
+DefineButtonStyles("zerg")
+DefineButtonStyles("protoss")
+
 
 DefineButtonStyle("icon", {
   Size = {36, 34},

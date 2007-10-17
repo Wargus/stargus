@@ -60,7 +60,7 @@ DefineUnitType("unit-zerg-drone", { Name = "Zerg Drone",
     "selected", "zerg-drone-selected",
     "acknowledge", "zerg-drone-acknowledgement",
     "ready", "zerg-drone-ready",
-    "help", "terran-units-attacked",
+    "help", "zerg-units-attacked",
     "dead", "zerg-drone-death"} } )
 
 

@@ -26,7 +26,7 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
---      $Id: fonts.lua 1297 2005-10-14 17:52:57Z jsalmon3 $
+--      $Id$
 
 CFont:New("small", CGraphic:New("ui/fonts/font8.png", 8, 11))
 CFont:New("game", CGraphic:New("ui/fonts/font10.png",10, 13))

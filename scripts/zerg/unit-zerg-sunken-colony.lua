@@ -633,7 +633,7 @@ DefineConstruction("construction-zerg-sunken-colony", {
 DefineUnitType("unit-zerg-sunken-colony", { Name = "Sunken Colony",
   Image = {"file", "zerg/units/sunken colony.png", "size",  {128, 128}},
   Shadow = {"file", "zerg/units/sunken colony shadow.png", "size",  {128, 128}},
-  Animations = "animations-zerg-sunken-colony", Icon = "icon-terran-bunker",
+  Animations = "animations-zerg-sunken-colony", Icon = "icon-zerg-sunken-colony",
   Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},

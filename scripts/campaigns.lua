@@ -26,7 +26,7 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
---      $Id: campaigns.lua 940 2004-01-31 05:59:05Z jsalmon3 $
+--      $Id$
 
 --=============================================================================
 --  Define all campaigns.

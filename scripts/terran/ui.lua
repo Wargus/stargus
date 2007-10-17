@@ -8,7 +8,7 @@
 --                        T H E   W A R   B E G I N S
 --         Stratagus - A free fantasy real time strategy game engine
 --
---      ui.lua - Define the human user interface
+--      ui.lua - Define the terran user interface
 --
 --      (c) Copyright 2005-2007 by Jimmy Salmon
 --
@@ -26,7 +26,7 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
---      $Id: ui.lua 1228 2005-06-25 21:43:51Z jsalmon3 $
+--      $Id$
 
 
 

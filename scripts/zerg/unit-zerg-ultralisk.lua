@@ -71,7 +71,7 @@ DefineUnitType("unit-zerg-ultralisk", { Name = "Ultralisk",
     "selected", "zerg-ultralisk-selected",
     "acknowledge", "zerg-ultralisk-acknowledgement",
     "ready", "zerg-ultralisk-ready",
-    "help", "basic human voices help 1",
+    "help", "zerg-units-attacked",
 	"dead", "zerg-ultralisk-death"} } )
 
 

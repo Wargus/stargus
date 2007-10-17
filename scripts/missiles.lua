@@ -27,7 +27,7 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
---      $Id: missiles.lua 1253 2005-07-03 14:48:14Z jsalmon3 $
+--      $Id$
 
 
 Load("scripts/terran/missiles.lua")

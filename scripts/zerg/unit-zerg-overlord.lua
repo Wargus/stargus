@@ -42,5 +42,5 @@ DefineUnitType("unit-zerg-overlord", { Name = "Overlord",
     "selected", "zerg-overlord-selected",
     "acknowledge", "zerg-overlord-acknowledgement",
     "ready", "zerg-overlord-ready",
-    "help", "basic human voices help 1",
+    "help", "zerg-units-attacked",
 	"dead", "zerg-overlord-death"} } )

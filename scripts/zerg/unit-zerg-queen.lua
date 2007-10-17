@@ -29,5 +29,5 @@ DefineUnitType("unit-zerg-queen", { Name = "Queen",
     "selected", "zerg-queen-selected",
     "acknowledge", "zerg-queen-acknowledgement",
     "ready", "zerg-queen-ready",
-    "help", "basic human voices help 1",
+    "help", "zerg-units-attacked",
 	"dead", "zerg-queen-death"} } )

@@ -1,3 +1,8 @@
+-- Basic Zerg sounds
+
+MakeSound("zerg-base-attacked", "zerg/units/advisor/upd00.wav")
+MakeSound("zerg-units-attacked", "zerg/units/advisor/upd01.wav")
+
 -- Zerg Units
 
 MakeSound("zerg-drone-ready", "zerg/units/drone/ready.wav")
@@ -124,7 +129,7 @@ MakeSound("zerg-hatchery-selected", "zerg/units/ha.wav")
 
 MakeSound("zerg-building-ready", "zerg/units/chrdy.wav")
 
-MakeSound("zerg-base-attacked", "zerg/units/advisor/upd00.wav")
+
 
 MakeSound("zerg-building-blowup", "zerg/units/bldgdth.wav")
 

@@ -27,7 +27,7 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
---      $Id: buttons.lua 964 2004-02-09 15:54:43Z nobody_ $
+--      $Id$
 
 -- Load the buttons of all races
 

@@ -639,7 +639,7 @@ DefineConstruction("construction-zerg-evolution-chamber", {
 DefineUnitType("unit-zerg-evolution-chamber", { Name = "Evolution Chamber",
   Image = {"file", "zerg/units/evolution chamber.png", "size",  {96, 128}},
   Shadow = {"file", "zerg/units/evolution chamber shadow.png", "size",  {128, 160}},
-  Animations = "animations-zerg-evolution-chamber", Icon = "icon-terran-bunker",--FIXME:icons
+  Animations = "animations-zerg-evolution-chamber", Icon = "icon-zerg-evolution-chamber",
   Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},

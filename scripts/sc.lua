@@ -26,7 +26,7 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
---      $Id: wc2.lua 1281 2005-07-09 13:01:05Z jsalmon3 $
+--      $Id$
 
 DefineRaceNames(
   "race", {

@@ -26,7 +26,7 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
---      $Id: ui.lua 1242 2005-07-02 16:17:54Z jsalmon3 $
+--      $Id$
 
 Load("scripts/widgets.lua")
 

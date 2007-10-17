@@ -8,7 +8,7 @@
 --                        T H E   W A R   B E G I N S
 --         Stratagus - A free fantasy real time strategy game engine
 --
---      ui.lua - Define the human user interface
+--      ui.lua - Define the zerg user interface
 --
 --      (c) Copyright 2005-2007 by Jimmy Salmon
 --
@@ -26,12 +26,12 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
---      $Id: ui.lua 1228 2005-06-25 21:43:51Z jsalmon3 $
+--      $Id$
 
 
 
 --;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
---  * Race Terran.
+--  * Race Zerg.
 --;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 local offx = (Video.Width - 640) / 2
@@ -230,19 +230,19 @@ UI.Resources[ScoreCost].TextY = 1
 UI.MenuButton.X = offx + 416
 UI.MenuButton.Y = offy + 388
 UI.MenuButton.Text = "MENU"
-UI.MenuButton.Style = FindButtonStyle("terran menu button")
+UI.MenuButton.Style = FindButtonStyle("zerg menu button")
 UI.MenuButton:SetCallback(function() RunGameMenu() end)
 
 UI.NetworkMenuButton.X = offx + 416 
 UI.NetworkMenuButton.Y = offy + 388 
 UI.NetworkMenuButton.Text = "MENU"
-UI.NetworkMenuButton.Style = FindButtonStyle("terran menu button")
+UI.NetworkMenuButton.Style = FindButtonStyle("zerg menu button")
 UI.NetworkMenuButton:SetCallback(function() RunGameMenu() end)
 
 UI.NetworkDiplomacyButton.X = offx + 76
 UI.NetworkDiplomacyButton.Y = offy + 320
 --UI.NetworkDiplomacyButton.Text = "Diplomacy"
-UI.NetworkDiplomacyButton.Style = FindButtonStyle("terran diplomacy button")
+UI.NetworkDiplomacyButton.Style = FindButtonStyle("zerg diplomacy button")
 UI.NetworkDiplomacyButton:SetCallback(function() RunDiplomacyMenu() end)
 
 -- minimap terrain at 3,320

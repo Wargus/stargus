@@ -26,7 +26,7 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
---      $Id: upgrade.lua 1188 2005-06-20 02:29:49Z jsalmon3 $
+--      $Id$
 
 -- Load the different races
 Load("scripts/terran/upgrade.lua")

@@ -26,7 +26,7 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
---      $Id: icons.lua 1264 2005-07-04 13:53:05Z jsalmon3 $
+--      $Id$
 
 
 

@@ -25,7 +25,7 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 --
---	$Id: maps.lua 8539 2007-02-07 19:13:10Z feb $
+--	$Id$
 --
 
 function DefineImageTilemodels(terrain, imgx, imgy)

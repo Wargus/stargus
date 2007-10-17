@@ -80,7 +80,7 @@ DefineUnitType("unit-zerg-hydralisk", { Name = "Hydralisk",
     "selected", "zerg-hydralisk-selected",
     "acknowledge", "zerg-hydralisk-acknowledgement",
     "ready", "zerg-hydralisk-ready",
-    "help", "basic human voices help 1",
+    "help", "zerg-units-attacked",
 	"dead", "zerg-hydralisk-death"} } )
 
 

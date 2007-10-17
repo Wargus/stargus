@@ -26,7 +26,7 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
---      $Id: stratagus.lua 1225 2005-06-25 21:30:39Z jsalmon3 $
+--      $Id$
 
 -- For documentation see stratagus/doc/scripts/scripts.html
 print("Stratagus default config file loading ...\n")

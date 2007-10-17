@@ -17,8 +17,8 @@ DefineAnimations("animations-zerg-mutalisk", {
 })
 
 DefineUnitType("unit-zerg-mutalisk", { Name = "Mutalisk",
-  Image = {"file", "terran/units/wraith.png", "size", {64, 64}},
-  Shadow = {"file", "terran/units/wraith.png", "size", {64, 64}, "offset", {0, 42}},
+  Image = {"file", "zerg/units/mutalisk.png", "size", {64, 64}},
+  Shadow = {"file", "zerg/units/mutalisk.png", "size", {64, 64}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-zerg-mutalisk", Icon = "icon-zerg-mutalisk",
   Costs = {"time", 250, "minerals", 150, "gas", 100},
@@ -45,5 +45,5 @@ DefineUnitType("unit-zerg-mutalisk", { Name = "Mutalisk",
     "selected", "zerg-mutalisk-selected",
     "acknowledge", "zerg-mutalisk-acknowledge",
     "ready", "zerg-mutalisk-ready",
-    "help", "basic human voices help 1",
+    "help", "zerg-units-attacked",
     "dead", "zerg-mutalisk-death"} } )
