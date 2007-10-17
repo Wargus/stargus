@@ -662,7 +662,7 @@ DefineUnitType("unit-zerg-spire", { Name = "Spire",
 	
 CUpgrade:New("upgrade-zerg-greater-spire")
 	
-DefineButton( { Pos = 1, Level = 0, Icon = "icon-terran-bunker",--FIXME:wrong icons
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-greater-spire",
   Action = "upgrade-to", Value = "unit-zerg-greater-spire",
   Key = "w", Hint = "Mutate to Greater Spire",
   ForUnit = {"unit-zerg-spire"} } )
