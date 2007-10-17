@@ -129,5 +129,5 @@ DefineAllow("unit-zerg-ultralisk-cavern",   "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-evolution-chamber",  "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-spire",              "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-greater-spire",      "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-rubble-large",       "AAAAAAAAAAAAAAAA")
+--DefineAllow("unit-zerg-rubble-large",       "AAAAAAAAAAAAAAAA")
 

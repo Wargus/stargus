@@ -16,10 +16,10 @@ DefineAnimations("animations-zerg-spawning-pool", {
 
 DefineConstruction("construction-zerg-spawning-pool", {
   Files = {
-    File = "zerg/units/zbuild.png",--FIXME: need support for animations while building
+    File = "zerg/units/building morph.png",--FIXME: need support for animations while building
     Size = {160, 192}},
   ShadowFiles = {
-    File = "zerg/units/zbshad.png",
+    File = "zerg/units/building morph shadow.png",
     Size = {160, 192}},
   Constructions = {
    {Percent = 0,
@@ -654,7 +654,7 @@ DefineUnitType("unit-zerg-spawning-pool", { Name = "Spawning Pool",
   Points = 160,
   RegenerationRate = 1,
   BuilderLost = true,
-  Corpse = "unit-zerg-rubble-large",
+--  Corpse = "unit-zerg-rubble-large",
   ExplodeWhenKilled = "missile-none",
   Type = "land",
   Building = true, VisibleUnderFog = true, 

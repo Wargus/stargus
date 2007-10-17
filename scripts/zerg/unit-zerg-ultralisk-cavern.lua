@@ -8,10 +8,10 @@ DefineAnimations("animations-zerg-ultralisk-cavern", {
 })
 DefineConstruction("construction-zerg-ultralisk-cavern", {--FIXME:need support for animations while building
   Files = {
-    File = "zerg/units/zbuild.png",
+    File = "zerg/units/building morph.png",
     Size = {160, 192}},
   ShadowFiles = {
-    File = "zerg/units/zbshad.png",
+    File = "zerg/units/building morph shadow.png",
     Size = {160, 192}},
   Constructions = {
    {Percent = 0,

@@ -8,10 +8,10 @@ DefineAnimations("animations-zerg-spire", {
 })
 DefineConstruction("construction-zerg-spire", {
   Files = {--FIXME:need support for animations while building
-    File = "zerg/units/zbuild.png",
+    File = "zerg/units/building morph.png",
     Size = {160, 192}},
   ShadowFiles = {
-    File = "zerg/units/zbshad.png",
+    File = "zerg/units/building morph shadow.png",
     Size = {160, 192}},
   Constructions = {
    {Percent = 0,

@@ -8,7 +8,7 @@ DefineAnimations("animations-zerg-hydralisk-death", {
 })
 
 DefineUnitType("unit-zerg-hydralisk-death", { Name = "DEAD HYDRLAISK",
-  Image = {"file", "zerg/units/zhydeath.png", "size", {128, 128}},
+  Image = {"file", "zerg/units/hydralisk death.png", "size", {128, 128}},
   Animations = "animations-zerg-hydralisk-death", Icon = "icon-zerg-hydralisk",
   NumDirections = 1,
   HitPoints = 255,
