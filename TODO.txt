@@ -19,5 +19,12 @@ Engine:
 6. Burrow
 7. "Small" Protoss units
 8. Active overlay
+9. Scriptable Error messages
+10. Tileset Grids
+11. Terrain Heights
+12. Seperate air/ground attacks
+13. start/end attack animations
+14. Building Addons
+15. Bounce attack effect
 
 Have Fun!
