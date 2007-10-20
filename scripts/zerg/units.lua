@@ -1,4 +1,3 @@
-Load("scripts/zerg/neutral.lua")
 Load("scripts/zerg/unit-zerg-hatchery.lua")
 Load("scripts/zerg/unit-zerg-drone.lua")
 Load("scripts/zerg/unit-zerg-zergling.lua")
@@ -75,7 +74,6 @@ DefineButton( { Pos = 4, Level = 0, Icon = "icon-patrol",
     "unit-zerg-hydralisk",
 	"unit-zerg-queen",
 	"unit-zerg-defiler",
-    "unit-zerg-drone",
     "unit-zerg-zergling",
   } } )
 
@@ -90,7 +88,6 @@ DefineButton( { Pos = 5, Level = 0, Icon = "icon-hold-position",
     "unit-zerg-hydralisk",
 	"unit-zerg-defiler",
     "unit-zerg-ultralisk",
-    "unit-zerg-drone",
     "unit-zerg-zergling",
   } } )
 

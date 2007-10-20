@@ -16,7 +16,7 @@ DefineAnimations("animations-terran-battlecruiser", {
     --[[active overlay 333,0]] "wait 3", "unbreakable end", "wait 1",},
 })
 
-DefineUnitType("unit-terran-battlecruiser", { Name = "Wraith",
+DefineUnitType("unit-terran-battlecruiser", { Name = "Battlecruiser",
   Image = {"file", "terran/units/battlecruiser.png", "size", {120, 120}},
   Shadow = {"file", "terran/units/battlecruiser.png", "size", {120, 120}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
@@ -27,7 +27,7 @@ DefineUnitType("unit-terran-battlecruiser", { Name = "Wraith",
   DrawLevel = 60,
   TileSize = {1, 1}, BoxSize = {63, 63},
   SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
-  Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-griffon-hammer",
+  Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-terran-battlecruiser-laser",
   MaxAttackRange = 4,
   Priority = 65,
   Points = 150,

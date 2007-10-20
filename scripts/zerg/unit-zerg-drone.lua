@@ -77,21 +77,6 @@ DefineUnitType("unit-zerg-drone", { Name = "Zerg Drone",
 --
 -- Default
 --
-DefineButton( { Pos = 1, Level = 0, Icon = "icon-move",
-  Action = "move",
-  Key = "m", Hint = "~!Move",
-  ForUnit = {"unit-zerg-drone"} } )
-
-DefineButton( { Pos = 2, Level = 0, Icon = "icon-stop",
-  Action = "stop",
-  Key = "s", Hint = "~!Stop",
-  ForUnit = {"unit-zerg-drone"} } )
-
-DefineButton( { Pos = 3, Level = 0, Icon = "icon-attack",
-  Action = "attack",
-  Key = "a", Hint = "~!Attack",
-  ForUnit = {"unit-zerg-drone"} } )
-
 DefineButton( { Pos = 4, Level = 0, Icon = "icon-repair",
   Action = "repair",
   Key = "r", Hint = "~!Repair",

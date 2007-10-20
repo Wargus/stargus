@@ -16,7 +16,7 @@ DefineAnimations("animations-terran-science-vessel", {
     --[[active overlay 333,0]] "wait 3", "unbreakable end", "wait 1",},
 })
 
-DefineUnitType("unit-terran-science-vessel", { Name = "Wraith",
+DefineUnitType("unit-terran-science-vessel", { Name = "Science Vessel",
   Image = {"file", "terran/units/science vessel.png", "size", {96, 128}},
   Shadow = {"file", "terran/units/science vessel shadow.png", "size", {96, 128}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 1,
@@ -27,7 +27,7 @@ DefineUnitType("unit-terran-science-vessel", { Name = "Wraith",
   DrawLevel = 60,
   TileSize = {1, 1}, BoxSize = {63, 63},
   SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
-  Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-griffon-hammer",
+  Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-none",
   MaxAttackRange = 4,
   Priority = 65,
   Points = 150,

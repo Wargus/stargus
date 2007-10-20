@@ -3,7 +3,7 @@
 MakeSound("zerg-base-attacked", "zerg/units/advisor/base attacked.wav")
 MakeSound("zerg-units-attacked", "zerg/units/advisor/units attacked.wav")
 MakeSound("zerg-require-more-minerals", "zerg/units/advisor/require minerals.wav")
-MakeSound("zerg-require-more-minerals", "zerg/units/advisor/require gas.wav")
+MakeSound("zerg-require-more-gas", "zerg/units/advisor/require gas.wav")
 MakeSound("zerg-spawn-more-overlords", "zerg/units/advisor/spawn overlords.wav")
 MakeSound("zerg-require-more-energy", "zerg/units/advisor/not enough energy.wav")
 MakeSound("zerg-evolution-complete", "zerg/units/advisor/evolution complete.wav")
