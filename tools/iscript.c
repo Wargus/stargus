@@ -131,6 +131,12 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 				printf("place active underlay: %hu, %hu", s1, s2);
 				break;
 
+			case 0x0D:
+				s1 = ReadShort(&p);
+				s2 = ReadShort(&p);
+				printf("0x0D unknown: %hu, %hu", s1, s2);
+				break;
+
 			case 0x10:
 				s1 = ReadShort(&p);
 				s2 = ReadShort(&p);
@@ -252,6 +258,11 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 				printf("play specific frame: %u", (unsigned)c1);
 				break;
 
+			case 0x38:
+				c1 = ReadByte(&p);
+				printf("unknown 0x38 extractor?: %u", (unsigned)c1);
+				break;
+
 			case 0x3F:
 				s1 = ReadShort(&p);
 				printf("0x3F goto?: %04hX", s1);
@@ -290,6 +301,9 @@ void DecodeAnimation(const unsigned char *data, unsigned short offset)
 		number = ReadShort(&p);
 		printf("number: %hu\n", number);
 
+		if (number < 16) {
+			number = 16;
+		}
 		for (i = 0; i < number; ++i) {
 			printf("%04hX\n", ReadShort(&p));
 		}
