@@ -4,13 +4,18 @@
 
 
 DefineAnimations("animations-zerg-mutalisk", {
-  Still = {"frame 0", "wait 125",--[[FIXME: shift down 79A2]]},
-  Move = {"unbreakable begin", "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",
-    "frame 0", "move 3", "wait 2", "frame 0", "move 2", "wait 1",
-    "frame 0", "move 3", "wait 1", "frame 0", "move 2", "wait 1",
-    "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",--FIXME:not original sc animations
-    "frame 0", "move 3", "wait 2", "frame 0", "move 2", "wait 1",
-    "frame 0", "move 3", "wait 1", "frame 0", "move 2", "unbreakable end", "wait 1",},
+  Still = {
+    "frame 0", "wait 2", "frame 17", "wait 2", "frame 34", "wait 2",
+    "frame 51", "wait 2", "frame 68", "wait 2",
+  },
+  Move = {"unbreakable begin",
+    "frame 0", "move 4", "wait 1", "frame 17", "move 3", "wait 1",
+    "frame 34", "move 3", "wait 1", "frame 51", "move 3", "wait 1",
+    "frame 68", "move 3", "wait 1", "frame 0", "move 4", "wait 1",
+    "frame 17", "move 3", "wait 1", "frame 34", "move 3", "wait 1",
+    "frame 51", "move 3", "wait 1", "frame 68", "move 3",
+    "unbreakable end", "wait 1",
+  },
   Attack = {"unbreakable begin", "attack", "sound zerg-mutalisk-attack",
     "unbreakable end", "wait 1",},
   Death = {"unbreakable begin", "sound zerg-mutalisk-death",
