@@ -1503,6 +1503,7 @@ Control Todo[] = {
 	{G,0,"zerg/units/building blood2","unit\\thingy\\bblood02.grp",0 __3},
 	{G,0,"zerg/units/building blood3","unit\\thingy\\bblood03.grp",0 __3},
 	{G,0,"zerg/units/building blood4","unit\\thingy\\bblood04.grp",0 __3},
+	{G,0,"zerg/units/bdust","unit\\thingy\\bDust.grp",0 __3},
 
 	// Terran sounds
 	{W,0,"terran/building place","sound\\misc\\tbldgplc.wav" __4},
