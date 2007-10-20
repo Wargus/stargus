@@ -127,14 +127,20 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 
 			case 0x09:
 				s1 = ReadShort(&p);
-				s2 = ReadShort(&p);
-				printf("place active underlay: %hu, %hu", s1, s2);
+				c1 = ReadByte(&p);
+				c2 = ReadByte(&p);
+				printf("place active underlay: %hu, %u, %u", s1, (unsigned)c1, (unsigned)c2);
 				break;
 
 			case 0x0D:
 				s1 = ReadShort(&p);
 				s2 = ReadShort(&p);
 				printf("0x0D unknown: %hu, %hu", s1, s2);
+				break;
+
+			case 0x0F:
+				c1 = ReadByte(&p);
+				printf("0x0F unknown: %u", (unsigned)c1);
 				break;
 
 			case 0x10:
