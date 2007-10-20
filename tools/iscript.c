@@ -86,6 +86,7 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 	unsigned short s1, s2;
 	unsigned char opcode;
 	int stop = 0;
+	int i;
 
 	p = data + offset;
 	while (!stop) {
@@ -172,9 +173,11 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 
 			case 0x19:
 				c1 = ReadByte(&p);
-				s1 = ReadShort(&p);
-				s2 = ReadShort(&p);
-				printf("random play sound: %u, %hu, %hu", (unsigned)c1, s1, s2);
+				printf("random play sound: %u", (unsigned)c1);
+				for (i = 0; i < c1; ++i) {
+					s1 = ReadShort(&p);
+					printf(", %hu", s1);
+				}
 				break;
 
 			case 0x1A:
@@ -184,9 +187,12 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 				break;
 
 			case 0x1C:
-				s1 = ReadShort(&p);
-				s2 = ReadShort(&p);
-				printf("melee attack sound: %hu, %hu", s1, s2);
+				c1 = ReadByte(&p);
+				printf("melee attack sound: %u", (unsigned)c1);
+				for (i = 0; i < c1; ++i) {
+					s1 = ReadShort(&p);
+					printf(", %hu", s1);
+				}
 				break;
 
 			case 0x1D:
