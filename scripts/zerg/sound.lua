@@ -211,7 +211,7 @@ MakeSound("zerg-guardian-acknowledgement",
 MakeSound("zerg-guardian-death", "zerg/units/defiler/death/1.wav")
 MakeSound("zerg-guardian-ready", "zerg/units/defiler/ready.wav")
 
-MakeSound("zerg-guardian-attack", "zerg/units/guardian/death/fir00.wav")
+MakeSound("zerg-guardian-attack", "zerg/units/guardian/fir00.wav")
 MakeSound("zerg-guardian-hit", "zerg/units/guardian/hit00.wav")
 
 
@@ -235,7 +235,7 @@ MakeSound("zerg-infested-terran-acknowledgement",
   "zerg/units/infested terran/acknowledgement/3.wav",
   "zerg/units/infested terran/acknowledgement/4.wav"})
 
-MakeSound("zerg-infested-terran-ready", "zerg/units/infested-terran/ready.wav")
+MakeSound("zerg-infested-terran-ready", "zerg/units/infested terran/ready.wav")
 
 
 --larva
@@ -247,7 +247,6 @@ MakeSound("zerg-larva-pissed",
   {"zerg/units/larva/pissed/1.wav"})
 
 MakeSound("zerg-larva-death", "zerg/units/larva/death/1.wav")
-MakeSound("zerg-larva-ready", "zerg/units/larva/ready.wav")
 
 
 --mutalisk
@@ -366,13 +365,13 @@ MakeSound("zerg-nydus-canal-selected", "zerg/units/nydus canal selected.wav")
 MakeSound("zerg-ultralisk-cavern-selected", "zerg/units/ultralisk cavern selected.wav")
 MakeSound("zerg-hydralisk-den-selected", "zerg/units/hydralisk den selected.wav")
 MakeSound("zerg-spire-selected", "zerg/units/spire selected.wav")
-MakeSound("zerg-greater-spire-selected", "zerg/units/greater-spire selected.wav")
+MakeSound("zerg-greater-spire-selected", "zerg/units/greater spire selected.wav")
 
 --Spells
 
-MakeSound("spell-consume", "zerg/spells/defiler/consume.wav")
-MakeSound("spell-plague", "zerg/spells/defiler/plague cast.wav")
-MakeSound("spell-ensnare", "zerg/spells/defiler/ensnare cast.wav")
-MakeSound("spell-parasite", "zerg/spells/defiler/parasite cast.wav")
+MakeSound("spell-consume", "zerg/units/defiler/consume.wav")
+MakeSound("spell-plague", "zerg/units/defiler/plague cast.wav")
+MakeSound("spell-ensnare", "zerg/units/queen/ensnare cast.wav")
+MakeSound("spell-parasite", "zerg/units/queen/parasite cast.wav")
 
 

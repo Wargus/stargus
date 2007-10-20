@@ -168,7 +168,7 @@ MakeSoundGroup("terran-siege-tank-selected",
 MakeSound("terran-scv-ready", "terran/units/scv/ready.wav")
 MakeSound("terran-scv-death", "terran/units/scv/death/1.wav")
 MakeSound("terran-scv-done", "terran/units/scv/upd00.wav")
-MakeSound("terran-scv-attack", "terran/units/scv/udrrep00.wav")
+MakeSound("terran-scv-attack", "terran/units/scv/edrrep00.wav")
 
 MakeSound("terran-scv-acknowledge",
   {"terran/units/scv/acknowledgement/1.wav",
