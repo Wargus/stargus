@@ -1,13 +1,13 @@
 -- Advisor
 
-MakeSound("zerg-base-attacked", "zerg/units/advisor/base-attacked.wav")
-MakeSound("zerg-units-attacked", "zerg/units/advisor/units-attacked.wav")
-MakeSound("zerg-require-more-minerals", "zerg/units/advisor/require-minerals.wav")
-MakeSound("zerg-require-more-minerals", "zerg/units/advisor/require-gas.wav")
-MakeSound("zerg-spawn-more-overlords", "zerg/units/advisor/spawn-overlords.wav")
-MakeSound("zerg-require-more-energy", "zerg/units/advisor/not-enough-energy.wav")
-MakeSound("zerg-evolution-complete", "zerg/units/advisor/evolution-complete.wav")
-MakeSound("zerg-nuclear-luanch-detected", "zerg/units/advisor/nuclear-launch.wav")
+MakeSound("zerg-base-attacked", "zerg/units/advisor/base attacked.wav")
+MakeSound("zerg-units-attacked", "zerg/units/advisor/units attacked.wav")
+MakeSound("zerg-require-more-minerals", "zerg/units/advisor/require minerals.wav")
+MakeSound("zerg-require-more-minerals", "zerg/units/advisor/require gas.wav")
+MakeSound("zerg-spawn-more-overlords", "zerg/units/advisor/spawn overlords.wav")
+MakeSound("zerg-require-more-energy", "zerg/units/advisor/not enough energy.wav")
+MakeSound("zerg-evolution-complete", "zerg/units/advisor/evolution complete.wav")
+MakeSound("zerg-nuclear-launch-detected", "zerg/units/advisor/nuclear launch.wav")
 
 -- drone
 
@@ -346,33 +346,33 @@ MakeSound("zerg-kerrigan-death", "zerg/units/defiler/death/1.wav")
 
 -- Zerg Buildings
 
-MakeSound("zerg-hatchery-selected", "zerg/units/hatchery-selected.wav")
+MakeSound("zerg-hatchery-selected", "zerg/units/hatchery selected.wav")
 
-MakeSound("zerg-building-ready", "zerg/units/morph-complete.wav")
+MakeSound("zerg-building-ready", "zerg/units/morph complete.wav")
 
 
 
-MakeSound("zerg-building-blowup", "zerg/units/building-death.wav")
+MakeSound("zerg-building-blowup", "zerg/units/building death.wav")
 
-MakeSound("zerg-spawning-pool-selected", "zerg/units/spawning-pool-selected.wav")
-MakeSound("zerg-evolution-chamber-selected", "zerg/units/evolution-chamber-selected.wav")
-MakeSound("zerg-sunken-colony-selected", "zerg/units/sunken-colony-selected.wav")
-MakeSound("zerg-creep-colony-selected", "zerg/units/creep-colony-selected.wav")
-MakeSound("zerg-spore-colony-selected", "zerg/units/spore-colony-selected.wav")
-MakeSound("zerg-extractor-selected", "zerg/units/extractor-selected.wav")
-MakeSound("zerg-defiler-mound-selected", "zerg/units/defiler-mound-selected.wav")
-MakeSound("zerg-queens-nest-selected", "zerg/units/queens-nest-selected.wav")
-MakeSound("zerg-nydus-canal-selected", "zerg/units/nydus-canal-selected.wav")
-MakeSound("zerg-ultralisk-cavern-selected", "zerg/units/ultralisk-cavern-selected.wav")
-MakeSound("zerg-hydralisk-den-selected", "zerg/units/hydralisk-den-selected.wav")
-MakeSound("zerg-spire-selected", "zerg/units/spire-selected.wav")
-MakeSound("zerg-greater-spire-selected", "zerg/units/greater-spire-selected.wav")
+MakeSound("zerg-spawning-pool-selected", "zerg/units/spawning pool selected.wav")
+MakeSound("zerg-evolution-chamber-selected", "zerg/units/evolution chamber selected.wav")
+MakeSound("zerg-sunken-colony-selected", "zerg/units/sunken colony selected.wav")
+MakeSound("zerg-creep-colony-selected", "zerg/units/creep colony selected.wav")
+MakeSound("zerg-spore-colony-selected", "zerg/units/spore colony selected.wav")
+MakeSound("zerg-extractor-selected", "zerg/units/extractor selected.wav")
+MakeSound("zerg-defiler-mound-selected", "zerg/units/defiler mound selected.wav")
+MakeSound("zerg-queens-nest-selected", "zerg/units/queens nest selected.wav")
+MakeSound("zerg-nydus-canal-selected", "zerg/units/nydus canal selected.wav")
+MakeSound("zerg-ultralisk-cavern-selected", "zerg/units/ultralisk cavern selected.wav")
+MakeSound("zerg-hydralisk-den-selected", "zerg/units/hydralisk den selected.wav")
+MakeSound("zerg-spire-selected", "zerg/units/spire selected.wav")
+MakeSound("zerg-greater-spire-selected", "zerg/units/greater-spire selected.wav")
 
 --Spells
 
 MakeSound("spell-consume", "zerg/spells/defiler/consume.wav")
-MakeSound("spell-plague", "zerg/spells/defiler/plague-cast.wav")
-MakeSound("spell-ensnare", "zerg/spells/defiler/ensnare-cast.wav")
-MakeSound("spell-parasite", "zerg/spells/defiler/parasite-cast.wav")
+MakeSound("spell-plague", "zerg/spells/defiler/plague cast.wav")
+MakeSound("spell-ensnare", "zerg/spells/defiler/ensnare cast.wav")
+MakeSound("spell-parasite", "zerg/spells/defiler/parasite cast.wav")
 
 
