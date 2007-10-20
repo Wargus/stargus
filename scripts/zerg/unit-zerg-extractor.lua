@@ -4,9 +4,13 @@
 
 
 DefineAnimations("animations-zerg-extractor", {
+  --[[ active overlay 109 ]]
   Still = {
-    "frame 0", "wait 5", "frame 1", "wait 5", "frame 2", "wait 5", "frame 3", "wait 5",
-  },--FIXME:not original sc animations
+    "frame 1", "wait 2", "frame 2", "wait 2", "frame 3", "wait 2",
+    "frame 2", "wait 2", "frame 1", "wait 2", "frame 0", "wait 2",
+    "frame 1", "wait 2", "frame 2", "wait 2", "frame 3", "wait 2",
+    "frame 2", "wait 2", "frame 1", "wait 2", "frame 0", "wait 2",
+  },
 })
 
 
@@ -14,7 +18,7 @@ DefineUnitType("unit-zerg-extractor", { Name = "Extractor",
   Image = {"file", "zerg/units/extractor.png", "size", {128, 192}},
   Shadow = {"file", "zerg/units/extractor shadow.png", "size", {128, 192}},
   Animations = "animations-zerg-extractor", Icon = "icon-zerg-extractor",
-  Costs = {"time", 200, "minerals", 500},
+  Costs = {"time", 200, "minerals", 50},
   Construction = "construction-zerg",
   Speed = 0,
   HitPoints = 500,
