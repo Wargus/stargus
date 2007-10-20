@@ -27,7 +27,7 @@ DefineUnitType("unit-zerg-hydralisk-death", { Name = "DEAD HYDRLAISK",
 
 
 DefineAnimations("animations-zerg-hydralisk", {
-   Still = {
+  Still = {
     "frame 187", "wait 125",
   },
   Move = {"unbreakable begin",
@@ -47,7 +47,7 @@ DefineAnimations("animations-zerg-hydralisk", {
   },
   Death = {
     "unbreakable begin",
-   "frame 208", "wait 3", "frame 209", "wait 3", "frame 210", "wait 3", "frame 211", "wait 3", "frame 212", "wait 3", "frame 213", "wait 3", "frame 214", "wait 3", "frame 215", "wait 3", "frame 216",
+    "frame 208", "wait 3", "frame 209", "wait 3", "frame 210", "wait 3", "frame 211", "wait 3", "frame 212", "wait 3", "frame 213", "wait 3", "frame 214", "wait 3", "frame 215", "wait 3", "frame 216",
     "unbreakable end", "wait 1",
   },
 })

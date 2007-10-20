@@ -5,8 +5,7 @@
 
 DefineAnimations("animations-zerg-spawning-pool", {
   Still = {
-    "frame 0", "random-wait 1 3", "label 4987", "frame 0", "wait 2",
-    "frame 2", "wait 2", "frame 3", "wait 2", "goto 4987",
+    "frame 0", "wait 2", "frame 2", "wait 2", "frame 3", "wait 2",
   },
   Train = {--[[FIXME: active overlay 276]]
     "frame 0", "wait 125",

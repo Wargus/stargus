@@ -5,8 +5,7 @@
 
 DefineAnimations("animations-zerg-sunken-colony", {
   Still = {
-    "frame 0", "random-wait 1 2", "label 4CCC", "frame 0", "wait 2",
-    "frame 1", "wait 2", "frame 2", "wait 2", "goto 4CCC",
+    "frame 0", "wait 2", "frame 1", "wait 2", "frame 2", "wait 2",
   },
   Attack = {
     "unbreakable begin", "wait 5", "frame 4", "wait 3", "frame 5", "wait 3", "frame 6", "wait 3", "frame 7", "wait 3", "frame 8", "wait 3", "frame 9", "sound sunken-attack", "attack",

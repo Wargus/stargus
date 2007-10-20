@@ -5,8 +5,8 @@
 
 DefineAnimations("animations-zerg-hydralisk-den", {
   Still = {
-    "frame 0", "random-wait 1 2", "label 5170", "frame 1", "wait 2",
-    "frame 2", "wait 4", "frame 1", "wait 2", "frame 0", "wait 4", "goto 5170",
+    "frame 1", "wait 2", "frame 2", "wait 4", "frame 1", "wait 2",
+    "frame 0", "wait 4",
   },
 })
 

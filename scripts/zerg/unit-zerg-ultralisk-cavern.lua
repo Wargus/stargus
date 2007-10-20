@@ -5,8 +5,8 @@
 
 DefineAnimations("animations-zerg-ultralisk-cavern", {
   Still = {
-    "frame 0", "random-wait 1 2", "label 443C", "frame 1", "wait 2",
-    "frame 2", "wait 4", "frame 1", "wait 2", "frame 0", "wait 4", "goto 443C",
+    "frame 1", "wait 2", "frame 2", "wait 4", "frame 1", "wait 2",
+    "frame 0", "wait 4",
   },
   Train = {--[[FIXME: active overlay 276]]
     "frame 0", "wait 125",
