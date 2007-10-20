@@ -8,7 +8,8 @@ DefineAnimations("animations-zerg-mutalisk", {
     "frame 0", "wait 2", "frame 17", "wait 2", "frame 34", "wait 2",
     "frame 51", "wait 2", "frame 68", "wait 2",
   },
-  Move = {"unbreakable begin",
+  Move = {
+    "unbreakable begin",
     "frame 0", "move 4", "wait 1", "frame 17", "move 3", "wait 1",
     "frame 34", "move 3", "wait 1", "frame 51", "move 3", "wait 1",
     "frame 68", "move 3", "wait 1", "frame 0", "move 4", "wait 1",
