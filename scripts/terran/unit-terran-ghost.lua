@@ -32,7 +32,7 @@ DefineAnimations("animations-terran-ghost", {
   },
 --  StartAttack = {"frame 0", "wait 1", "frame 17", "wait 1", "frame 34",},
   Attack = {
-    "wait 1", "unbreakable begin", "sound ghost-attack", "attack",
+    "wait 1", "unbreakable begin", "sound terran-ghost-attack", "attack",
     "frame 204", "wait 1", "frame 34", "unbreakable end",
   },
 --  EndAttack = {"frame 17", "wait 1", "frame 0", "wait 1", --[[goto 6E17]]},

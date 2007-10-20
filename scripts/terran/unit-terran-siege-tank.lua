@@ -17,7 +17,7 @@ DefineAnimations("animations-terran-siege-tank", {
     "wait 1", "frame 17",
   },
   Attack = {
-    "unbreakable begin", "sound siege-tank-attack", "attack",
+    "unbreakable begin", "sound terran-siege-tank-attack", "attack",
     "unbreakable end", "wait 1",
   },
   Death = {

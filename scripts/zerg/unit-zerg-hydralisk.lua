@@ -57,7 +57,7 @@ DefineAnimations("animations-zerg-hydralisk", {
   Attack = {
     "frame 0", "wait 1", "unbreakable begin",
     "frame 17", "wait 1", "frame 34", "wait 1", "frame 51", "wait 2",
-    "frame 68", "sound hydralisk-attack", "attack", "wait 1", "frame 51",
+    "frame 68", "sound zerg-hydralisk-attack", "attack", "wait 1", "frame 51",
     "unbreakable end", "wait 1",
   },
   Death = {

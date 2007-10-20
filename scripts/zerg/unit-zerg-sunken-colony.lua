@@ -51,4 +51,4 @@ DefineUnitType("unit-zerg-sunken-colony", { Name = "Sunken Colony",
     "selected", "zerg-sunken-colony-selected",
     "ready", "zerg-building-ready",
     "help", "zerg-base-attacked",
-    "dead", "zerg-buildin-blowup"} } )
+    "dead", "zerg-building-blowup"} } )

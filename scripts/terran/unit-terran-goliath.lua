@@ -19,7 +19,7 @@ DefineAnimations("animations-terran-goliath", {
     "move 3", "unbreakable end", "wait 1", "frame 119",
   },
   Attack = {
-    "unbreakable begin", "sound goliath-attack", "attack",
+    "unbreakable begin", "sound terran-goliath-attack", "attack",
     "unbreakable end", "wait 1",
   },
   Death = {
