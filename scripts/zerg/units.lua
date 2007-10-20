@@ -1,3 +1,5 @@
+Load("scripts/zerg/construction.lua")
+
 Load("scripts/zerg/unit-zerg-hatchery.lua")
 Load("scripts/zerg/unit-zerg-drone.lua")
 Load("scripts/zerg/unit-zerg-zergling.lua")
@@ -16,6 +18,7 @@ Load("scripts/zerg/unit-zerg-ultralisk-cavern.lua")
 Load("scripts/zerg/unit-zerg-evolution-chamber.lua")
 Load("scripts/zerg/unit-zerg-greater-spire.lua")
 Load("scripts/zerg/unit-zerg-spire.lua")
+
 --
 -- Buttons
 --
