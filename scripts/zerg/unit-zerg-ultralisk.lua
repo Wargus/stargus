@@ -4,7 +4,12 @@
 
 
 DefineAnimations("animations-zerg-ultralisk-death", {
-  Death = {"unbreakable begin", "frame 0", "wait 50", "frame 1", "wait 50", "frame 2", "wait 50", "frame 3", "wait 50", "frame 4", "wait 50", "unbreakable end", "wait 1", },--FIXME: animations work but not original sc animation
+  Death = {
+    "unbreakable begin",
+    "frame 0", "wait 50", "frame 1", "wait 50", "frame 2", "wait 50",
+    "frame 3", "wait 50", "frame 4", "wait 50",
+    "unbreakable end", "wait 1",
+  },
 })
 
 
@@ -14,7 +19,7 @@ DefineUnitType("unit-zerg-ultralisk-death", { Name = "Dead Zergling",
   NumDirections = 1,
   HitPoints = 255,
   DrawLevel = 30,
-  TileSize = {1, 1}, BoxSize = {31, 31},--FIXME: wrong boxsize
+  TileSize = {1, 1}, BoxSize = {63, 63},--FIXME: wrong boxsize
   SightRange = 1,
   BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 0,
@@ -25,26 +30,46 @@ DefineUnitType("unit-zerg-ultralisk-death", { Name = "Dead Zergling",
 
 DefineAnimations("animations-zerg-ultralisk", {
   Still = {
-    "frame 119", "wait 125",
+    "label 45F1", "frame 153", "goto 79BA",
+    "label 79BA", "wait 125", "goto 79BA",
+    "random-goto 50 4654",
+    "frame 153", "rotate -2", "wait 1", "frame 0", "rotate -2", "wait 1",
+    "frame 17", "rotate -2", "wait 1", "frame 34", "rotate -2", "wait 1",
+    "frame 51", "rotate -2", "wait 1", "frame 68", "rotate -2", "wait 1",
+    "frame 85", "rotate -2", "wait 1", "frame 102", "rotate -2", "wait 1",
+    "frame 119", "rotate -2", "wait 1", "goto 45F1",
+    "label 4654", "frame 153", "rotate 2", "wait 1", "frame 0", "rotate 2", "wait 1",
+    "frame 17", "rotate 2", "wait 1", "frame 34", "rotate 2", "wait 1",
+    "frame 51", "rotate 2", "wait 1", "frame 68", "rotate 2", "wait 1",
+    "frame 85", "rotate 2", "wait 1", "frame 102", "rotate 2", "wait 1",
+    "frame 119", "rotate 2", "wait 1", "goto 45F1",
   },
-  Move = {"unbreakable begin",
-    "move 6", "wait 1", "frame 136", "move 3", "wait 1", "frame 153", --FIXME: animations work but not original sc animation
-    "move 3", "wait 1", "frame 0", "move 3", "wait 1", "frame 17",
-    "move 5", "wait 1", "frame 34", "move 5", "wait 1", "frame 51",
-    "move 4", "wait 1", "frame 68",
-    --FIXME: sub-tile movement
-    --[["move 8", "wait 1", "frame 85",
-    "move 6", "wait 1", "frame 102", "move 4",
-    "unbreakable end", "wait 1", "frame 119",]]
-    "move 3", "unbreakable end", "wait 1", "frame 119",
+  Move = {
+    "unbreakable begin",
+    "move 3", "wait 1", "frame 0", "move 8", "wait 2", "frame 17",
+    "move 5", "wait 1", "frame 34", "move 4", "wait 1", "frame 51",
+    "move 4", "wait 2", "frame 68", "move 8", "wait 1", "frame 85",
+    "unbreakable end", "wait 1",
+    "unbreakable begin",
+    "move 8", "wait 1", "frame 102", "move 8", "wait 1", "frame 119",
+    "move 8", "wait 1", "frame 136", "move 8",
+    "unbreakable end", "wait 1", "frame 153",
   },
   Attack = {
-    "unbreakable begin", "frame 204", "wait 4", "sound zerg-ultralisk-attack", "frame 221", "wait 4", "frame 238", "wait 4", "attack", "sound zerg-ultralisk-hit",
-    "unbreakable end", "wait 1",
+    "frame 238", "wait 1",
+    "unbreakable begin",
+    "sound zerg-ultralisk-attack", "wait 2", "frame 221", "wait 2",
+    "frame 204", "sound zerg-ultralisk-hit", "attack", "wait 2",
+    "frame 187", "wait 2", "frame 204", "wait 2", "frame 221", "wait 2",
+    "frame 238", "wait 2",
+    "unbreakable end",
   },
   Death = {
     "unbreakable begin",
-   "frame 272", "wait 30", "frame 273", "wait 5", "frame 274", "wait 5", "frame 275", "wait 5", "frame 276", "wait 5", "frame 277", "wait 5", "frame 278", "wait 5", "frame 279", "wait 5", "frame 280", "wait 5", "frame 281", "wait 5", "frame 282", "wait 5",
+    "frame 255", "wait 2", "frame 256", "wait 2", "frame 257", "wait 2",
+    "frame 258", "wait 2", "frame 259", "wait 2", "frame 260", "wait 2",
+    "frame 261", "wait 2", "frame 262", "wait 2", "frame 263", "wait 2",
+    "frame 264", "wait 2",
     "unbreakable end", "wait 1",
   },
 })
