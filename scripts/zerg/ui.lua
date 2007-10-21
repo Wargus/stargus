@@ -65,6 +65,7 @@ function AddFiller(file, x, y)
     UI.Fillers:push_back(b)
 end
 
+AddFiller("ui/zconsole.png", offx, offy)
 
 UI.InfoPanel.X = offx + 0
 UI.InfoPanel.Y = offy + 160

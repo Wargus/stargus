@@ -168,7 +168,7 @@ function DefinePlayerTypes(p1, p2, p3, p4, p5, p6, p7, p8)
   OldDefinePlayerTypes(p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
 end
 
-function LoadMapFinished()
+function MapLoaded()
   for i=0,7 do
     if (Players[i].Type ~= PlayerNobody) then
       if (Players[i].TotalNumUnits == 0) then
@@ -181,5 +181,7 @@ function LoadMapFinished()
       end
     end
   end
+
+  Load("scripts/" .. GetPlayerData(ThisPlayer(), "RaceName") .. "/ui.lua")
 end
 

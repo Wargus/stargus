@@ -1,4 +1,5 @@
---SetPlayerData(GetThisPlayer(), "RaceName", "")
+SetPlayerData(GetThisPlayer(), "RaceName", "terran")
+
 -- Global useful objects for menus  ----------
 dark = Color(38, 38, 78)
 clear = Color(200, 200, 120)
@@ -518,7 +519,7 @@ function RunMap(map, objective, fow, revealmap)
   RunResultsMenu(s)
 
   InitGameSettings()
-  SetPlayerData(GetThisPlayer(), "RaceName", "protoss")
+  SetPlayerData(GetThisPlayer(), "RaceName", "terran")
   SetMusic("menu")
 end
 

@@ -67,7 +67,6 @@ end
 
 AddFiller("ui/pconsole.png", offx, offy)
 
-
 UI.InfoPanel.X = offx + 0
 UI.InfoPanel.Y = offy + 160
 
