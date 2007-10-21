@@ -113,16 +113,12 @@ DefineButton( { Pos = 5, Level = 0, Icon = "icon-hold-position",
     "unit-zerg-zergling",
   } } )
 
-DefineButton( { Pos = 6, Level = 0, Icon = "icon-rally-point",
+--[[
+DefineButton( { Pos = 2, Level = 0, Icon = "icon-rally-point",
   Action = "move",
   Key = "r", Hint = "Set ~!Rally Point",
-  ForUnit = {
-    "zerg-group",
-    "unit-zerg-hatchery",
-    "unit-zerg-lair",
-    "unit-zerg-hive",
-  } } )
-
+  ForUnit = { } } )
+]]
 
 
 --

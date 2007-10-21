@@ -12,6 +12,12 @@ local upgrades = {
 
 { "upgrade-zerg-burrow", "icon-zerg-burrow-down",
   {   200,   100,   100,     0,     0,     0,     0}},
+{ "upgrade-zerg-ventral-sacs", "icon-zerg-ventral-sacs",
+  {   200,   100,   100,     0,     0,     0,     0}},
+{ "upgrade-zerg-antennae", "icon-zerg-antennae",
+  {   200,   100,   100,     0,     0,     0,     0}},
+{ "upgrade-zerg-pneumatized-carapace", "icon-zerg-pneumatized-carapace",
+  {   200,   100,   100,     0,     0,     0,     0}},
 }
 
 for i = 1,table.getn(upgrades) do
@@ -45,7 +51,10 @@ DefineAllow("upgrade-zerg-melee-attacks1", "AAAAAAAAAAAAAAAA")
 DefineAllow("upgrade-zerg-melee-attacks2", "AAAAAAAAAAAAAAAA")
 DefineAllow("upgrade-zerg-melee-attacks3", "AAAAAAAAAAAAAAAA")
 
-DefineAllow("upgrade-zerg-burrow", "AAAAAAAAAAAAAAAA")
+DefineAllow("upgrade-zerg-burrow",         "AAAAAAAAAAAAAAAA")
+DefineAllow("upgrade-zerg-ventral-sacs",   "AAAAAAAAAAAAAAAA")
+DefineAllow("upgrade-zerg-antennae",       "AAAAAAAAAAAAAAAA")
+DefineAllow("upgrade-zerg-pneumatized-carapace", "AAAAAAAAAAAAAAAA")
 
 
 --

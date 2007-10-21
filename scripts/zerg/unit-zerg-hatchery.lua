@@ -50,10 +50,18 @@ DefineUnitType("unit-zerg-hatchery", { Name = "Zerg Hatchery",
 DefineUnitType("unit-zerg-lair", {})
 DefineUnitType("unit-zerg-hive", {})
 CUpgrade:New("upgrade-zerg-burrow")
+CUpgrade:New("upgrade-zerg-ventral-sacs")
+CUpgrade:New("upgrade-zerg-antennae")
+CUpgrade:New("upgrade-zerg-pneumatized-carapace")
 
 DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-larva",
   Action = "button", Value = 1,
-  Key = "b", Hint = "Select Larva",
+  Key = "s", Hint = "~!Select Larva",
+  ForUnit = {"unit-zerg-hatchery", "unit-zerg-lair", "unit-zerg-hive"} } )
+
+DefineButton( { Pos = 2, Level = 0, Icon = "icon-rally-point",
+  Action = "move",
+  Key = "r", Hint = "Set ~!Rally Point",
   ForUnit = {"unit-zerg-hatchery", "unit-zerg-lair", "unit-zerg-hive"} } )
 
 DefineButton( { Pos = 3, Level = 0, Icon = "icon-zerg-burrow-down",
@@ -71,6 +79,24 @@ DefineButton( { Pos = 7, Level = 0, Icon = "icon-zerg-hive",
   Action = "upgrade-to", Value = "unit-zerg-hive",
   Key = "h", Hint = "Mutate into ~!Hive",
   ForUnit = {"unit-zerg-lair"} } )
+
+DefineButton( { Pos = 4, Level = 0, Icon = "icon-zerg-ventral-sacs",
+  Allowed = "check-single-research",
+  Action = "research", Value = "upgrade-zerg-ventral-sacs",
+  Key = "v", Hint = "Evolve ~!Ventral Sacs",
+  ForUnit = {"unit-zerg-lair", "unit-zerg-hive"} } )
+
+DefineButton( { Pos = 5, Level = 0, Icon = "icon-zerg-antennae",
+  Allowed = "check-single-research",
+  Action = "research", Value = "upgrade-zerg-antennae",
+  Key = "a", Hint = "Evolve ~!Antennae",
+  ForUnit = {"unit-zerg-lair", "unit-zerg-hive"} } )
+
+DefineButton( { Pos = 6, Level = 0, Icon = "icon-zerg-pneumatized-carapace",
+  Allowed = "check-single-research",
+  Action = "research", Value = "upgrade-zerg-pneumatized-carapace",
+  Key = "p", Hint = "Evolve ~!Pneumatized Carapace",
+  ForUnit = {"unit-zerg-lair", "unit-zerg-hive"} } )
 
 -- larva
 
