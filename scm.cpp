@@ -1441,8 +1441,6 @@ static void SaveSMS(const char *name, WorldMap *map)
 
 	fprintf(fd, "\n\n");
 
-	fprintf(fd, "LoadMapFinished()\n");
-
 	fclose(fd);
 }
 
