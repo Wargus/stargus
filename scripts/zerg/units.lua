@@ -1,23 +1,30 @@
 Load("scripts/zerg/construction.lua")
 
-Load("scripts/zerg/unit-zerg-hatchery.lua")
-Load("scripts/zerg/unit-zerg-drone.lua")
-Load("scripts/zerg/unit-zerg-zergling.lua")
-Load("scripts/zerg/unit-zerg-hydralisk.lua")
-Load("scripts/zerg/unit-zerg-spawning-pool.lua")
-Load("scripts/zerg/unit-zerg-ultralisk.lua")
+Load("scripts/zerg/unit-zerg-creep-colony.lua")
+Load("scripts/zerg/unit-zerg-defiler-mound.lua")
+Load("scripts/zerg/unit-zerg-evolution-chamber.lua")
 Load("scripts/zerg/unit-zerg-extractor.lua")
+Load("scripts/zerg/unit-zerg-greater-spire.lua")
+Load("scripts/zerg/unit-zerg-hatchery.lua")
+Load("scripts/zerg/unit-zerg-hydralisk-den.lua")
+Load("scripts/zerg/unit-zerg-nydus-canal.lua")
+Load("scripts/zerg/unit-zerg-queens-nest.lua")
+Load("scripts/zerg/unit-zerg-spawning-pool.lua")
+Load("scripts/zerg/unit-zerg-spire.lua")
+Load("scripts/zerg/unit-zerg-sunken-colony.lua")
+Load("scripts/zerg/unit-zerg-ultralisk-cavern.lua")
+
+Load("scripts/zerg/unit-zerg-defiler.lua")
+Load("scripts/zerg/unit-zerg-drone.lua")
+Load("scripts/zerg/unit-zerg-guardian.lua")
+Load("scripts/zerg/unit-zerg-hydralisk.lua")
 Load("scripts/zerg/unit-zerg-mutalisk.lua")
 Load("scripts/zerg/unit-zerg-overlord.lua")
 Load("scripts/zerg/unit-zerg-queen.lua")
-Load("scripts/zerg/unit-zerg-sunken-colony.lua")
-Load("scripts/zerg/unit-zerg-creep-colony.lua")
-Load("scripts/zerg/unit-zerg-defiler.lua")
-Load("scripts/zerg/unit-zerg-hydralisk-den.lua")
-Load("scripts/zerg/unit-zerg-ultralisk-cavern.lua")
-Load("scripts/zerg/unit-zerg-evolution-chamber.lua")
-Load("scripts/zerg/unit-zerg-greater-spire.lua")
-Load("scripts/zerg/unit-zerg-spire.lua")
+Load("scripts/zerg/unit-zerg-scourge.lua")
+Load("scripts/zerg/unit-zerg-ultralisk.lua")
+Load("scripts/zerg/unit-zerg-zergling.lua")
+
 
 --
 -- Buttons
@@ -27,14 +34,16 @@ DefineButton( { Pos = 1, Level = 0, Icon = "icon-move",
   Key = "m", Hint = "~!Move",
   ForUnit = {
     "zerg-group",
-    "unit-zerg-drone",
-    "unit-zerg-zergling",
-	"unit-zerg-overlord",
-    "unit-zerg-hydralisk",
-	"unit-zerg-ultralisk",
 	"unit-zerg-defiler",
+    "unit-zerg-drone",
+    "unit-zerg-guardian",
+    "unit-zerg-hydralisk",
 	"unit-zerg-mutalisk",
+	"unit-zerg-overlord",
 	"unit-zerg-queen",
+	"unit-zerg-scourge",
+	"unit-zerg-ultralisk",
+    "unit-zerg-zergling",
   } } )
 
 DefineButton( { Pos = 2, Level = 0, Icon = "icon-stop",
@@ -42,15 +51,16 @@ DefineButton( { Pos = 2, Level = 0, Icon = "icon-stop",
   Key = "s", Hint = "~!Stop",
   ForUnit = {
     "zerg-group",
-	"unit-zerg-mutalisk",
-	"unit-zerg-overlord",
-    "unit-zerg-hydralisk",
-	"unit-zerg-queen",
+    "unit-zerg-defiler",
     "unit-zerg-drone",
+    "unit-zerg-guardian",
+    "unit-zerg-hydralisk",
+    "unit-zerg-mutalisk",
+    "unit-zerg-overlord",
+    "unit-zerg-queen",
+    "unit-zerg-scourge",
+    "unit-zerg-ultralisk",
     "unit-zerg-zergling",
-	"unit-zerg-ultralisk",
-	"unit-zerg-defiler",
-	"unit-zerg-sunken-colony",
   } } )
 
 DefineButton( { Pos = 3, Level = 0, Icon = "icon-attack",
@@ -58,12 +68,15 @@ DefineButton( { Pos = 3, Level = 0, Icon = "icon-attack",
   Key = "a", Hint = "~!Attack",
   ForUnit = {
     "zerg-group",
-	"unit-zerg-mutalisk",
-	"unit-zerg-ultralisk",
-    "unit-zerg-hydralisk",
+    "unit-zerg-defiler",
     "unit-zerg-drone",
+    "unit-zerg-guardian",
+    "unit-zerg-hydralisk",
+    "unit-zerg-mutalisk",
+    "unit-zerg-queen",
+    "unit-zerg-scourge",
+    "unit-zerg-ultralisk",
     "unit-zerg-zergling",
-	"unit-zerg-sunken-colony",
   } } )
 
 DefineButton( { Pos = 4, Level = 0, Icon = "icon-patrol",
@@ -71,12 +84,13 @@ DefineButton( { Pos = 4, Level = 0, Icon = "icon-patrol",
   Key = "p", Hint = "~!Patrol",
   ForUnit = {
     "zerg-group",
-	"unit-zerg-mutalisk",
-	"unit-zerg-ultralisk",
-	"unit-zerg-overlord",
+    "unit-zerg-defiler",
+    "unit-zerg-guardian",
     "unit-zerg-hydralisk",
-	"unit-zerg-queen",
-	"unit-zerg-defiler",
+    "unit-zerg-mutalisk",
+    "unit-zerg-queen",
+    "unit-zerg-scourge",
+    "unit-zerg-ultralisk",
     "unit-zerg-zergling",
   } } )
 
@@ -85,11 +99,12 @@ DefineButton( { Pos = 5, Level = 0, Icon = "icon-hold-position",
   Key = "h", Hint = "~!Hold Position",
   ForUnit = {
     "zerg-group",
-	"unit-zerg-mutalisk",
-	"unit-zerg-queen",
-	"unit-zerg-overlord",
+    "unit-zerg-defiler",
+    "unit-zerg-guardian",
     "unit-zerg-hydralisk",
-	"unit-zerg-defiler",
+    "unit-zerg-mutalisk",
+    "unit-zerg-queen",
+    "unit-zerg-scourge",
     "unit-zerg-ultralisk",
     "unit-zerg-zergling",
   } } )
@@ -109,25 +124,31 @@ DefineButton( { Pos = 6, Level = 0, Icon = "icon-rally-point",
 --
 -- Allow
 --
+DefineAllow("unit-zerg-defiler",            "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-drone",              "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-zergling",           "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-guardian",           "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-hydralisk",          "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-ultralisk",          "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-mutalisk",           "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-overlord",           "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-queen",              "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-drone",              "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-defiler",            "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-scourge",            "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-ultralisk",          "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-zergling",           "AAAAAAAAAAAAAAAA")
 
-DefineAllow("unit-zerg-hatchery",           "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-spawning-pool",      "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-extractor",          "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-sunken-colony",      "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-creep-colony",       "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-hydralisk-den",      "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-ultralisk-cavern",   "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-defiler-mound",      "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-evolution-chamber",  "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-zerg-spire",              "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-extractor",          "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-greater-spire",      "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-hatchery",           "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-hydralisk-den",      "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-nydus-canal",        "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-queens-nest",        "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-spawning-pool",      "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-spire",              "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-sunken-colony",      "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-ultralisk-cavern",   "AAAAAAAAAAAAAAAA")
+
+
 --DefineAllow("unit-zerg-rubble-large",       "AAAAAAAAAAAAAAAA")
 

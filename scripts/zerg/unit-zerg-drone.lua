@@ -77,11 +77,6 @@ DefineUnitType("unit-zerg-drone", { Name = "Zerg Drone",
 --
 -- Default
 --
-DefineButton( { Pos = 4, Level = 0, Icon = "icon-repair",
-  Action = "repair",
-  Key = "r", Hint = "~!Repair",
-  ForUnit = {"unit-zerg-drone"} } )
-
 DefineButton( { Pos = 5, Level = 0, Icon = "icon-gather",
   Action = "harvest",
   Key = "g", Hint = "~!Gather",
@@ -89,66 +84,87 @@ DefineButton( { Pos = 5, Level = 0, Icon = "icon-gather",
 
 DefineButton( { Pos = 7, Level = 0, Icon = "icon-build",
   Action = "button", Value = 1,
-  Key = "b", Hint = "~!Build Structure",
+  Key = "b", Hint = "~!Basic Mutation",
   ForUnit = {"unit-zerg-drone"} } )
 
 DefineButton( { Pos = 8, Level = 0, Icon = "icon-advanced-build",
   Action = "button", Value = 2,
-  Key = "v", Hint = "Build Ad~!vanced Structure",
+  Key = "v", Hint = "Ad~!vanced Mutation",
   ForUnit = {"unit-zerg-drone"} } )
 
 
 --
 -- Build
 --
+DefineUnitType("unit-zerg-hatchery", {})
+DefineUnitType("unit-zerg-creep-colony", {})
 DefineUnitType("unit-zerg-extractor", {})
 DefineUnitType("unit-zerg-spawning-pool", {})
-DefineUnitType("unit-zerg-creep-colony", {})
-DefineUnitType("unit-zerg-hydralisk-den", {})
-DefineUnitType("unit-zerg-ultralisk-cavern", {})
 DefineUnitType("unit-zerg-evolution-chamber", {})
---DefineUnitType("unit-zerg-sunken-colony", {})
+DefineUnitType("unit-zerg-hydralisk-den", {})
 
 DefineUnitType("unit-zerg-spire", {})
+DefineUnitType("unit-zerg-queens-nest", {})
+DefineUnitType("unit-zerg-nydus-canal", {})
+DefineUnitType("unit-zerg-ultralisk-cavern", {})
+DefineUnitType("unit-zerg-defiler-mound", {})
+
 DefineButton( { Pos = 1, Level = 1, Icon = "icon-zerg-hatchery",
   Action = "build", Value = "unit-zerg-hatchery",
-  Key = "h", Hint = "Hatchery",
+  Key = "h", Hint = "Mutate into ~!Hatchery",
   ForUnit = {"unit-zerg-drone"} } )
 
-DefineButton( { Pos = 2, Level = 1, Icon = "icon-zerg-spawning-pool",
-  Action = "build", Value = "unit-zerg-spawning-pool",
-  Key = "s", Hint = "Spawning Pool",
-  ForUnit = {"unit-zerg-drone"} } )
-  
-  DefineButton( { Pos = 3, Level = 1, Icon = "icon-zerg-extractor",
-  Action = "build", Value = "unit-zerg-extractor",
-  Key = "e", Hint = "Extractor",
-  ForUnit = {"unit-zerg-drone"} } )
-  
-  DefineButton( { Pos = 4, Level = 1, Icon = "icon-zerg-creep-colony",
+DefineButton( { Pos = 2, Level = 1, Icon = "icon-zerg-creep-colony",
   Action = "build", Value = "unit-zerg-creep-colony",
-  Key = "c", Hint = "Creep Colony",
+  Key = "c", Hint = "Mutate into ~!Creep Colony",
   ForUnit = {"unit-zerg-drone"} } )
   
-DefineButton( { Pos = 5, Level = 1, Icon = "icon-zerg-hydralisk-den",
-  Action = "build", Value = "unit-zerg-hydralisk-den",
-  Key = "h", Hint = "Hydralisk Den",
+DefineButton( { Pos = 3, Level = 1, Icon = "icon-zerg-extractor",
+  Action = "build", Value = "unit-zerg-extractor",
+  Key = "e", Hint = "Mutate into ~!Extractor",
   ForUnit = {"unit-zerg-drone"} } )
   
-DefineButton( { Pos = 6, Level = 1, Icon = "icon-zerg-evolution-chamber",
+DefineButton( { Pos = 4, Level = 1, Icon = "icon-zerg-spawning-pool",
+  Action = "build", Value = "unit-zerg-spawning-pool",
+  Key = "s", Hint = "Mutate into ~!Spawning Pool",
+  ForUnit = {"unit-zerg-drone"} } )
+  
+DefineButton( { Pos = 5, Level = 1, Icon = "icon-zerg-evolution-chamber",
   Action = "build", Value = "unit-zerg-evolution-chamber",
-  Key = "e", Hint = "Evolution Chamber",
+  Key = "v", Hint = "Mutate into E~!volution Chamber",
   ForUnit = {"unit-zerg-drone"} } )
   
-DefineButton( { Pos = 1, Level = 2, Icon = "icon-zerg-ultralisk-cavern",
+DefineButton( { Pos = 7, Level = 1, Icon = "icon-zerg-hydralisk-den",
+  Action = "build", Value = "unit-zerg-hydralisk-den",
+  Key = "d", Hint = "Mutate into Hydralisk ~!Den",
+  ForUnit = {"unit-zerg-drone"} } )
+  
+
+DefineButton( { Pos = 1, Level = 2, Icon = "icon-zerg-spire",
+  Action = "build", Value = "unit-zerg-spire",
+  Key = "s", Hint = "Mutate into ~!Spire",
+  ForUnit = {"unit-zerg-drone"} } )
+
+DefineButton( { Pos = 2, Level = 2, Icon = "icon-zerg-queens-nest",
+  Action = "build", Value = "unit-zerg-queens-nest",
+  Key = "q", Hint = "Mutate into ~!Queen's Nest",
+  ForUnit = {"unit-zerg-drone"} } )
+  
+DefineButton( { Pos = 3, Level = 2, Icon = "icon-zerg-nydus-canal",
+  Action = "build", Value = "unit-zerg-nydus-canal",
+  Key = "u", Hint = "Mutate into ~!Nydus Canal",
+  ForUnit = {"unit-zerg-drone"} } )
+  
+DefineButton( { Pos = 4, Level = 2, Icon = "icon-zerg-ultralisk-cavern",
   Action = "build", Value = "unit-zerg-ultralisk-cavern",
   Key = "u", Hint = "Ultralisk Cavern",
   ForUnit = {"unit-zerg-drone"} } )
   
-DefineButton( { Pos = 2, Level = 2, Icon = "icon-zerg-spire",
-  Action = "build", Value = "unit-zerg-spire",
-  Key = "p", Hint = "Spire",
+DefineButton( { Pos = 5, Level = 2, Icon = "icon-zerg-defiler-mound",
+  Action = "build", Value = "unit-zerg-defiler-mound",
+  Key = "u", Hint = "Mutate into ~!Defiler Mound",
   ForUnit = {"unit-zerg-drone"} } )
+  
 
   
 DefineButton( { Pos = 9, Level = 1, Icon = "icon-cancel",
@@ -156,11 +172,8 @@ DefineButton( { Pos = 9, Level = 1, Icon = "icon-cancel",
   Key = "\27", Hint = "~<ESC~> - Cancel",
   ForUnit = {"unit-zerg-drone"} } )
 
---
--- Advanced Build
---
-
 DefineButton( { Pos = 9, Level = 2, Icon = "icon-cancel",
   Action = "button", Value = 0,
   Key = "\27", Hint = "~<ESC~> - Cancel",
   ForUnit = {"unit-zerg-drone"} } )
+
