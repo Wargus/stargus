@@ -67,6 +67,8 @@ local zerg_icons = {
   {"icon-zerg-mature-chrysalis", 150},
   {"icon-zerg-cerebrate", 151},
   {"icon-zerg-cerebrate-daggoth", 152},
+  {"icon-zerg-burrow-down", 259},
+  {"icon-zerg-burrow-up", 259},
 }
 
 local pos = table.getn(icons) + 1

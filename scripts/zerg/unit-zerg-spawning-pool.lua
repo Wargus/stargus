@@ -24,7 +24,7 @@ DefineUnitType("unit-zerg-spawning-pool", { Name = "Spawning Pool",
   Speed = 0,
   HitPoints = 1000,
   DrawLevel = 30,
-  TileSize = {2, 1}, BoxSize = {96, 80},--FIXME:wrong size
+  TileSize = {3, 2}, BoxSize = {127, 63},
   SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 30, AnnoyComputerFactor = 35,

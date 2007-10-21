@@ -2,7 +2,7 @@
 --  Upgrades
 --
 
-upgrades = {
+local upgrades = {
 { "upgrade-terran-infantry-weapons1", "icon-terran-upgrade-infantry-weapons",
   {   200,   100,   100,     0,     0,     0,     0}},
 { "upgrade-terran-infantry-weapons2", "icon-terran-upgrade-infantry-weapons",

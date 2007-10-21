@@ -3,15 +3,17 @@
 --
 
 
---[[
-DefineAnimations("animations-zerg-hydralisk-death", {
-  Death = {"unbreakable begin", "frame 0", "wait 40", "frame 1", "wait 40",
-    "frame 2", "wait 40", "frame 3", "wait 40", "frame 4", "unbreakable end", "wait 1", },
+DefineAnimations("animations-zerg-defiler-death", {
+  Death = {
+    "unbreakable begin", "frame 0", "wait 50", "frame 1", "wait 50",
+    "frame 2", "wait 50", "frame 3", "wait 50", "frame 4", "wait 50",
+    "unbreakable end", "wait 1",
+  },
 })
 
-DefineUnitType("unit-zerg-hydralisk-death", { Name = "DEAD HYDRLAISK",
-  Image = {"file", "zerg/units/hydralisk death.png", "size", {128, 128}},
-  Animations = "animations-zerg-hydralisk-death", Icon = "icon-zerg-hydralisk",
+DefineUnitType("unit-zerg-defiler-death", { Name = "Dead Defiler",
+  Image = {"file", "zerg/units/defiler death.png", "size", {80, 80}},
+  Animations = "animations-zerg-defiler-death", Icon = "icon-zerg-defiler",
   NumDirections = 1,
   HitPoints = 255,
   DrawLevel = 30,
@@ -23,7 +25,6 @@ DefineUnitType("unit-zerg-hydralisk-death", { Name = "DEAD HYDRLAISK",
   SelectableByRectangle = false,
   Vanishes = true,
   Sounds = {} } )
-]]--
 
 
 DefineAnimations("animations-zerg-defiler", {
@@ -65,7 +66,7 @@ DefineUnitType("unit-zerg-defiler", { Name = "Hydralisk",
   Priority = 60,
   Points = 50,
   Demand = 2,
-  Corpse = "unit-zerg-hydralisk-death",
+  Corpse = "unit-zerg-defiler-death",
   RegenerationRate = 1,
   Type = "land",
   RightMouseAction = "attack",

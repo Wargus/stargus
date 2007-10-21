@@ -3,6 +3,31 @@
 --
 
 
+DefineAnimations("animations-zerg-guardian-death", {
+  Death = {
+    "unbreakable begin",
+    "frame 0", "wait 2", --[[ active overlay 58 ]]
+    "unbreakable end", "wait 1",
+  },
+})
+
+
+DefineUnitType("unit-zerg-guardian-death", { Name = "Dead Guardian",
+  Image = {"file", "zerg/units/guardian death.png", "size", {96, 96}},
+  Animations = "animations-zerg-guardian-death", Icon = "icon-zerg-guardian",
+  NumDirections = 1,
+  HitPoints = 255,
+  DrawLevel = 30,
+  TileSize = {1, 1}, BoxSize = {31, 31},
+  SightRange = 1,
+  BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
+  Priority = 0,
+  Type = "land",
+  SelectableByRectangle = false,
+  Vanishes = true,
+  Sounds = {} } )
+
+
 DefineAnimations("animations-zerg-guardian", {
   Still = {
     "frame 0", "wait 2", "frame 17", "wait 2", "frame 34", "wait 2",
@@ -29,13 +54,13 @@ DefineUnitType("unit-zerg-guardian", { Name = "Guardian",
   Shadow = {"file", "zerg/units/guardian.png", "size", {96, 96}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-zerg-guardian", Icon = "icon-zerg-guardian",
-  Costs = {"time", 250, "minerals", 150, "gas", 100},
+  Costs = {"time", 250, "minerals", 150, "gas", 200},
   Speed = 14,
-  HitPoints = 120,
+  HitPoints = 150,
   DrawLevel = 60,
   TileSize = {1, 1}, BoxSize = {63, 63},--FIXME:wrong boxsize
-  SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
-  Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-zerg-guardian-glaive-wurm",
+  SightRange = 11, ComputerReactionRange = 8, PersonReactionRange = 8,
+  Armor = 2, BasicDamage = 20, PiercingDamage = 16, Missile = "missile-zerg-guardian-glaive-wurm",
   MaxAttackRange = 4,
   Priority = 65,
   Points = 150,
