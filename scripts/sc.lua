@@ -182,6 +182,6 @@ function MapLoaded()
     end
   end
 
-  Load("scripts/" .. GetPlayerData(ThisPlayer(), "RaceName") .. "/ui.lua")
+  Load("scripts/" .. GetPlayerData(GetThisPlayer(), "RaceName") .. "/ui.lua")
 end
 
