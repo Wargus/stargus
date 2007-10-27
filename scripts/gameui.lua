@@ -8,7 +8,7 @@
 --                        T H E   W A R   B E G I N S
 --         Stratagus - A free fantasy real time strategy game engine
 --
---      ui.lua - Define the zerg user interface
+--      ui.lua - Define the terran user interface
 --
 --      (c) Copyright 2005-2007 by Jimmy Salmon
 --
@@ -30,27 +30,10 @@
 
 
 
---;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
---  * Race Zerg.
---;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+function LoadUI(race)
 
 local offx = (Video.Width - 640) / 2
 local offy = Video.Height - 480
-
-function ZergScreen(screen_width, screen_height)
-  local info_panel_x = 0
-  local info_panel_y = 160
-
-  local ui = {
-    "info-panel", {
-      "panels", {"panel-general-contents", --[["panel-attack-unit-contents",]]
-        "panel-all-unit-contents", "panel-building-contents"},
-      "completed-bar", {
-        "color", {48, 100, 4}
-      }
-    }
-  }
-end
 
 UI.NormalFontColor = "white"
 UI.ReverseFontColor = "yellow"
@@ -65,14 +48,20 @@ function AddFiller(file, x, y)
     UI.Fillers:push_back(b)
 end
 
-AddFiller("ui/zconsole.png", offx, offy)
+if (race == "terran") then
+  AddFiller("ui/tconsole.png", offx, offy)
+elseif (race == "zerg") then
+  AddFiller("ui/zconsole.png", offx, offy)
+else
+  AddFiller("ui/pconsole.png", offx, offy)
+end
 
-UI.InfoPanel.X = offx + 0
-UI.InfoPanel.Y = offy + 160
+UI.InfoPanel.X = offx + 168
+UI.InfoPanel.Y = offy + 396
 
 b = CUIButton:new()
-b.X = offx + 9
-b.Y = offy + 160 + 9
+b.X = offx + 168
+b.Y = offy + 396
 b.Style = FindButtonStyle("icon")
 UI.SingleSelectedButton = b
 
@@ -86,23 +75,26 @@ function AddSelectedButton(x, y)
     UI.SelectedButtons:push_back(b)
 end
 
-AddSelectedButton(offx + 9,   offy + 160 + 9)
-AddSelectedButton(offx + 65,  offy + 160 + 9)
-AddSelectedButton(offx + 121, offy + 160 + 9)
-AddSelectedButton(offx + 9,   offy + 160 + 63)
-AddSelectedButton(offx + 65,  offy + 160 + 63)
-AddSelectedButton(offx + 121, offy + 160 + 63)
-AddSelectedButton(offx + 9,   offy + 160 + 117)
-AddSelectedButton(offx + 65,  offy + 160 + 117)
-AddSelectedButton(offx + 121, offy + 160 + 117)
+AddSelectedButton(offx + 168, offy + 396)
+AddSelectedButton(offx + 168, offy + 433)
+AddSelectedButton(offx + 204, offy + 396)
+AddSelectedButton(offx + 204, offy + 433)
+AddSelectedButton(offx + 240, offy + 396)
+AddSelectedButton(offx + 240, offy + 433)
+AddSelectedButton(offx + 276, offy + 396)
+AddSelectedButton(offx + 276, offy + 433)
+AddSelectedButton(offx + 312, offy + 396)
+AddSelectedButton(offx + 312, offy + 433)
+AddSelectedButton(offx + 348, offy + 396)
+AddSelectedButton(offx + 348, offy + 433)
 
 UI.MaxSelectedFont = Fonts["game"]
 UI.MaxSelectedTextX = offx + 10
 UI.MaxSelectedTextY = offy + 160 + 10
 
 b = CUIButton:new()
-b.X = offx + 110
-b.Y = offy + 160 + 11 + 70
+b.X = offx + 240
+b.Y = offy + 396
 b.Style = FindButtonStyle("icon")
 UI.SingleTrainingButton = b
 
@@ -116,22 +108,24 @@ function AddTrainingButton(x, y)
     UI.TrainingButtons:push_back(b)
 end
 
-AddTrainingButton(offx + 9,   offy + 219)
-AddTrainingButton(offx + 65,  offy + 219)
-AddTrainingButton(offx + 121, offy + 219)
-AddTrainingButton(offx + 9,   offy + 266)
-AddTrainingButton(offx + 65,  offy + 266)
-AddTrainingButton(offx + 121, offy + 266)
+AddTrainingButton(offx + 240, offy + 396)
+AddTrainingButton(offx + 240, offy + 433)
+AddTrainingButton(offx + 276, offy + 396)
+AddTrainingButton(offx + 276, offy + 433)
+AddTrainingButton(offx + 312, offy + 396)
+AddTrainingButton(offx + 312, offy + 433)
+AddTrainingButton(offx + 348, offy + 396)
+AddTrainingButton(offx + 348, offy + 433)
 
 b = CUIButton:new()
-b.X = offx + 110
-b.Y = offy + 160 + 11 + 70
+b.X = offx + 240
+b.Y = offy + 396
 b.Style = FindButtonStyle("icon")
 UI.UpgradingButton = b
 
 b = CUIButton:new()
-b.X = offx + 110
-b.Y = offy + 160 + 11 + 70
+b.X = offx + 240
+b.Y = offy + 396
 b.Style = FindButtonStyle("icon")
 UI.ResearchingButton = b
 
@@ -145,12 +139,14 @@ function AddTransportingButton(x, y)
     UI.TransportingButtons:push_back(b)
 end
 
-AddTransportingButton(offx + 9,   offy + 223)
-AddTransportingButton(offx + 65,  offy + 223)
-AddTransportingButton(offx + 121, offy + 223)
-AddTransportingButton(offx + 9,   offy + 277)
-AddTransportingButton(offx + 65,  offy + 277)
-AddTransportingButton(offx + 121, offy + 277)
+AddTransportingButton(offx + 240, offy + 396)
+AddTransportingButton(offx + 240, offy + 433)
+AddTransportingButton(offx + 276, offy + 396)
+AddTransportingButton(offx + 276, offy + 433)
+AddTransportingButton(offx + 312, offy + 396)
+AddTransportingButton(offx + 312, offy + 433)
+AddTransportingButton(offx + 348, offy + 396)
+AddTransportingButton(offx + 348, offy + 433)
 
 UI.CompletedBarColorRGB = CColor(48, 100, 4)
 UI.CompletedBarShadow = true
@@ -231,20 +227,22 @@ UI.Resources[ScoreCost].TextY = 1
 UI.MenuButton.X = offx + 416
 UI.MenuButton.Y = offy + 388
 UI.MenuButton.Text = "MENU"
-UI.MenuButton.Style = FindButtonStyle("zerg menu button")
+UI.MenuButton.Style = FindButtonStyle(race .. " menu button")
 UI.MenuButton:SetCallback(function() RunGameMenu() end)
 
 UI.NetworkMenuButton.X = offx + 416 
 UI.NetworkMenuButton.Y = offy + 388 
 UI.NetworkMenuButton.Text = "MENU"
-UI.NetworkMenuButton.Style = FindButtonStyle("zerg menu button")
+UI.NetworkMenuButton.Style = FindButtonStyle(race .. " menu button")
 UI.NetworkMenuButton:SetCallback(function() RunGameMenu() end)
 
 UI.NetworkDiplomacyButton.X = offx + 76
 UI.NetworkDiplomacyButton.Y = offy + 320
 --UI.NetworkDiplomacyButton.Text = "Diplomacy"
-UI.NetworkDiplomacyButton.Style = FindButtonStyle("zerg diplomacy button")
+UI.NetworkDiplomacyButton.Style = FindButtonStyle(race .. " diplomacy button")
 UI.NetworkDiplomacyButton:SetCallback(function() RunDiplomacyMenu() end)
 
 -- minimap terrain at 3,320
+
+end -- function LoadUI
 

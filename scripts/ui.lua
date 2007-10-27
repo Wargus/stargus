@@ -29,6 +29,7 @@
 --      $Id$
 
 Load("scripts/widgets.lua")
+Load("scripts/gameui.lua")
 
 --
 --  Define Decorations.
@@ -237,9 +238,6 @@ DefinePanelContents(
 ]]
   )
 
-Load("scripts/terran/ui.lua")
-Load("scripts/zerg/ui.lua")
-Load("scripts/protoss/ui.lua")
 
 DefineCursor({
   Name = "cursor-point",
