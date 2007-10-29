@@ -40,7 +40,7 @@ DefineUnitType("unit-zerg-spore-colony", { Name = "Spore Colony",
   BuilderLost = true,
   RegenerationRate = 1,
   CanAttack = true,
-  CanTargetLand = true,
+  CanTargetAir = true,
   Building = true, VisibleUnderFog = true,
   Sounds = {
     "selected", "zerg-sunken-colony-selected",
