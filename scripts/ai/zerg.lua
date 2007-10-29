@@ -9,23 +9,38 @@ local zerg_funcs = {
   function() AiDebug(false) return false end,
   function() return AiSleep(AiGetSleepCycles()) end,
 
---start of game/building stage
-
   function() return AiNeed("unit-zerg-hatchery") end,
   function() return AiWait("unit-zerg-hatchery") end,
 
-  function() return AiSet("unit-zerg-overlord", 1) end,
+  function() return AiSet("unit-zerg-overlord", 2) end,
   function() return AiWait("unit-zerg-overlord") end,
 
   function() return AiSet("unit-zerg-drone", 7) end,
   function() return AiWait("unit-zerg-drone") end,
  
---[[  function() return AiNeed("unit-zerg-spawning-pool") end,
+  function() return AiNeed("unit-zerg-spawning-pool") end,
   function() return AiWait("unit-zerg-spawning-pool") end,
   
-  function() return AiSet("unit-zerg-zergling", 7) end,
-  function() return AiWait("unit-zerg-zergling") end,
-  --]]
+  function() return AiForce(4, {"unit-zerg-zergling", 4}) end,
+  function() return AiWaitForce(4) end,
+  function() return AiAttackWithForce(4) end,
+
+  function() return AiNeed("unit-zerg-extractor") end,
+  function() return AiWait("unit-zerg-extractor") end,
+
+  function() return AiNeed("unit-zerg-hydralisk-den") end,
+  function() return AiWait("unit-zerg-hydralisk-den") end,
+
+  function() return AiForce(5, {"unit-zerg-hydralisk", 4}) end,
+
+  function() return AiForce(5, {"unit-zerg-zergling", 4}) end,
+  function() return AiWaitForce(4) end,
+  function() return AiAttackWithForce(4) end,
+
+  function() return AiNeed("unit-zerg-hatchery") end,
+
+
+
 --[[
   function() return AiNeed("unit-terran-barracks") end,
 

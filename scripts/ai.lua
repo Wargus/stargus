@@ -78,14 +78,14 @@ DefineAiHelper(
 )
 
 
---[[ DefineAiHelper(
+DefineAiHelper(
   {"build", "unit-zerg-drone",
-  "unit-zerg-hatchery", "unit-zerg-spawning-pool", "unit-terran-barracks",
-  "unit-terran-bunker", "unit-terran-command-center", "unit-terran-engineering-bay",
+  "unit-zerg-hatchery", "unit-zerg-spawning-pool", "unit-zerg-hydralisk-den",
+  "unit-zerg-creep-colony", "unit-zerg-evolution-chamber", "unit-terran-engineering-bay",
   "unit-terran-factory", "unit-terran-missile-turret", "unit-terran-refinery",
   "unit-terran-science-facility", "unit-terran-starport", "unit-terran-supply-depot"},
 
-  {"train", "unit-zerg-hatchery", "unit-zerg-zergling", "unit-zerg-drone", "unit-terran-ghost"},
+  {"train", "unit-zerg-hatchery", "unit-zerg-zergling", "unit-zerg-drone", "unit-zerg-hydralisk"},
   {"train", "unit-terran-command-center", "unit-terran-scv"},
   {"train", "unit-terran-factory", "unit-terran-vulture", "unit-terran-siege-tank", "unit-terran-goliath"},
   {"train", "unit-terran-starport", "unit-terran-wraith", "unit-terran-dropship", "unit-terran-science-vessel", "unit-terran-battlecruiser"},
@@ -102,10 +102,10 @@ DefineAiHelper(
   "unit-terran-science-facility", "unit-terran-starport", "unit-terran-supply-depot"},
 
   {"unit-limit", "unit-zerg-overlord", "food"}
-) --]]
+)
 
 Load("scripts/ai/terran.lua")
---Load("scripts/ai/zerg.lua")
+Load("scripts/ai/zerg.lua")
 function AiPassive()
 end
 
