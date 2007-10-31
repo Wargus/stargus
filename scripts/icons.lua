@@ -47,6 +47,8 @@ icons = {
   {"icon-patrol", 254},
   {"icon-hold-position", 255},
   {"icon-rally-point", 286},
+  {"icon-zerg-build", 257},
+  {"icon-zerg-advanced-build", 258},
 }
 
 Load("scripts/terran/icons.lua")
