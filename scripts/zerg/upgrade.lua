@@ -6,9 +6,23 @@ local upgrades = {
 { "upgrade-zerg-melee-attacks1", "icon-zerg-upgrade-melee",
   {   200,   100,   100,     0,     0,     0,     0}},
 { "upgrade-zerg-melee-attacks2", "icon-zerg-upgrade-melee",
-  {   200,   100,   100,     0,     0,     0,     0}},
+  {   200,   150,   150,     0,     0,     0,     0}},
 { "upgrade-zerg-melee-attacks3", "icon-zerg-upgrade-melee",
+  {   200,   200,   200,     0,     0,     0,     0}},
+  
+{ "upgrade-zerg-missle-attacks1", "icon-zerg-upgrade-melee",
   {   200,   100,   100,     0,     0,     0,     0}},
+{ "upgrade-zerg-missle-attacks2", "icon-zerg-upgrade-melee",
+  {   200,   150,   150,     0,     0,     0,     0}},
+{ "upgrade-zerg-missle-attacks3", "icon-zerg-upgrade-melee",
+  {   200,   200,   200,     0,     0,     0,     0}},
+  
+{ "upgrade-zerg-carapace", "icon-zerg-upgrade-melee",
+  {   200,   100,   100,     0,     0,     0,     0}},
+{ "upgrade-zerg-carapace", "icon-zerg-upgrade-melee",
+  {   200,   150,   150,     0,     0,     0,     0}},
+{ "upgrade-zerg-carapace", "icon-zerg-upgrade-melee",
+  {   200,   200,   200,     0,     0,     0,     0}},
 
 { "upgrade-zerg-burrow", "icon-zerg-burrow-down",
   {   200,   100,   100,     0,     0,     0,     0}},
@@ -35,13 +49,39 @@ end
 
 DefineModifier("upgrade-zerg-melee-attacks1",
   {"Level", 1}, {"PiercingDamage", 2},
-  {"apply-to", "unit-zerg-zergling"})
+  {"apply-to", "unit-zerg-zergling"}, {"apply-to", "unit-zerg-ultralisk"},
+  {"apply-to", "unit-zerg-drone"})
 DefineModifier("upgrade-zerg-melee-attacks2",
-  {"Level", 1}, {"PiercingDamage", 2},
-  {"apply-to", "unit-zerg-zergling"})
+  {"Level", 2}, {"PiercingDamage", 3},
+  {"apply-to", "unit-zerg-zergling"}, {"apply-to", "unit-zerg-ultralisk"},
+  {"apply-to", "unit-zerg-drone"})
 DefineModifier("upgrade-zerg-melee-attacks3",
+  {"Level", 3}, {"PiercingDamage", 4},
+  {"apply-to", "unit-zerg-zergling"}, {"apply-to", "unit-zerg-ultralisk"},
+  {"apply-to", "unit-zerg-drone"})
+  
+DefineModifier("upgrade-zerg-missle-attacks1",
   {"Level", 1}, {"PiercingDamage", 2},
-  {"apply-to", "unit-zerg-zergling"})
+  {"apply-to", "unit-zerg-hydralisk"})
+DefineModifier("upgrade-zerg-missle-attacks2",
+  {"Level", 2}, {"PiercingDamage", 3},
+  {"apply-to", "unit-zerg-hydralisk"})
+DefineModifier("upgrade-zerg-missle-attacks3",
+  {"Level", 3}, {"PiercingDamage", 4},
+  {"apply-to", "unit-zerg-hydralisk"})
+  
+DefineModifier("upgrade-zerg-carapace1",
+  {"Level", 1}, {"Armor", 2},
+  {"apply-to", "unit-zerg-zergling"}, {"apply-to", "unit-zerg-ultralisk"},
+  {"apply-to", "unit-zerg-drone"}, {"apply-to", "unit-zerg-hydralisk"})
+DefineModifier("upgrade-zerg-carapace2",
+  {"Level", 2}, {"Armor", 3},
+  {"apply-to", "unit-zerg-zergling"}, {"apply-to", "unit-zerg-ultralisk"},
+  {"apply-to", "unit-zerg-drone"}, {"apply-to", "unit-zerg-hydralisk"})
+DefineModifier("upgrade-zerg-carapace3",
+  {"Level", 3}, {"Armor", 4},
+  {"apply-to", "unit-zerg-zergling"}, {"apply-to", "unit-zerg-ultralisk"},
+  {"apply-to", "unit-zerg-drone"}, {"apply-to", "unit-zerg-hydralisk"})
 
 --
 --  Allow
@@ -50,6 +90,14 @@ DefineModifier("upgrade-zerg-melee-attacks3",
 DefineAllow("upgrade-zerg-melee-attacks1", "AAAAAAAAAAAAAAAA")
 DefineAllow("upgrade-zerg-melee-attacks2", "AAAAAAAAAAAAAAAA")
 DefineAllow("upgrade-zerg-melee-attacks3", "AAAAAAAAAAAAAAAA")
+
+DefineAllow("upgrade-zerg-missle-attacks1", "AAAAAAAAAAAAAAAA")
+DefineAllow("upgrade-zerg-missle-attacks2", "AAAAAAAAAAAAAAAA")
+DefineAllow("upgrade-zerg-missle-attacks3", "AAAAAAAAAAAAAAAA")
+
+DefineAllow("upgrade-zerg-carapace1", "AAAAAAAAAAAAAAAA")
+DefineAllow("upgrade-zerg-carapace2", "AAAAAAAAAAAAAAAA")
+DefineAllow("upgrade-zerg-carapace3", "AAAAAAAAAAAAAAAA")
 
 DefineAllow("upgrade-zerg-burrow",         "AAAAAAAAAAAAAAAA")
 DefineAllow("upgrade-zerg-ventral-sacs",   "AAAAAAAAAAAAAAAA")
@@ -66,6 +114,16 @@ DefineDependency("upgrade-zerg-melee-attacks2",
   {"upgrade-zerg-melee-attacks1"})
 DefineDependency("upgrade-zerg-melee-attacks3",
   {"upgrade-zerg-melee-attacks2"})
+  
+DefineDependency("upgrade-zerg-missle-attacks2",
+  {"upgrade-zerg-melee-attacks1"})
+DefineDependency("upgrade-zerg-missle-attacks3",
+  {"upgrade-zerg-melee-attacks2"})
+  
+DefineDependency("upgrade-zerg-carapace2",
+  {"upgrade-zerg-carapace1"})
+DefineDependency("upgrade-zerg-carapace3",
+  {"upgrade-zerg-carapace2"})
 
 
 -- units

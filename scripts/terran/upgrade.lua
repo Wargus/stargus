@@ -41,11 +41,11 @@ DefineModifier("upgrade-terran-infantry-weapons1",
   {"apply-to", "unit-terran-marine"}, {"apply-to", "unit-terran-firebat"},
   {"apply-to", "unit-terran-ghost"})
 DefineModifier("upgrade-terran-infantry-weapons2",
-  {"Level", 2}, {"PiercingDamage", 2},
+  {"Level", 2}, {"PiercingDamage", 3},
   {"apply-to", "unit-terran-marine"}, {"apply-to", "unit-terran-firebat"},
   {"apply-to", "unit-terran-ghost"})
 DefineModifier("upgrade-terran-infantry-weapons3",
-  {"Level", 3}, {"PiercingDamage", 2},
+  {"Level", 3}, {"PiercingDamage", 4},
   {"apply-to", "unit-terran-marine"}, {"apply-to", "unit-terran-firebat"},
   {"apply-to", "unit-terran-ghost"})
 
@@ -54,16 +54,16 @@ DefineModifier("upgrade-terran-infantry-armor1",
   {"apply-to", "unit-terran-marine"}, {"apply-to", "unit-terran-firebat"},
   {"apply-to", "unit-terran-ghost"})
 DefineModifier("upgrade-terran-infantry-armor2",
-  {"Level", 2}, {"Armor", 2},
+  {"Level", 2}, {"Armor", 3},
   {"apply-to", "unit-terran-marine"}, {"apply-to", "unit-terran-firebat"},
   {"apply-to", "unit-terran-ghost"})
 DefineModifier("upgrade-terran-infantry-armor3",
-  {"Level", 3}, {"Armor", 2},
+  {"Level", 3}, {"Armor", 4},
   {"apply-to", "unit-terran-marine"}, {"apply-to", "unit-terran-firebat"},
   {"apply-to", "unit-terran-ghost"})
 
 DefineModifier("upgrade-terran-u238-shells",
-  {"Level", 1}, {"AttackRange", 1},
+  {"Level", 1}, {"AttackRange", 5},
   {"apply-to", "unit-terran-marine"}, {"apply-to", "unit-terran-firebat"},
   {"apply-to", "unit-terran-ghost"})
 
