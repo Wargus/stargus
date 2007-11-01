@@ -72,6 +72,19 @@ local zerg_icons = {
   {"icon-zerg-ventral-sacs", 261},
   {"icon-zerg-antennae", 262},
   {"icon-zerg-pneumatized-carapace", 296},
+--  {"icon-zerg-build", 298},
+--  {"icon-zerg-advanced-build", 299},
+  {"icon-zerg-evolve-adrenal-glands", 264},
+  {"icon-zerg-evolve-metabolic-boost", 265},
+  {"icon-zerg-upgrade-zerg-carapace", 297},
+  {"icon-zerg-upgrade-melee-attack", 299},
+  {"icon-zerg-upgrade-missle-attack", 300},
+  {"icon-zerg-upgrade-flyer-attack", 301},
+  {"icon-zerg-evolve-muscular-augments", 266},
+  {"icon-zerg-evolve-consume", 302},
+  {"icon-zerg-evolve-ensnare", 267},
+  {"icon-zerg-evolve-grooved-spines", 268},
+  {"icon-zerg-research-adrenal-glands", 298},
 }
 
 local pos = table.getn(icons) + 1
