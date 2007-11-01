@@ -17,11 +17,11 @@ local upgrades = {
 { "upgrade-zerg-missle-attacks3", "icon-zerg-upgrade-melee",
   {   200,   200,   200,     0,     0,     0,     0}},
   
-{ "upgrade-zerg-carapace", "icon-zerg-upgrade-melee",
+{ "upgrade-zerg-carapace1", "icon-zerg-upgrade-melee",
   {   200,   100,   100,     0,     0,     0,     0}},
-{ "upgrade-zerg-carapace", "icon-zerg-upgrade-melee",
+{ "upgrade-zerg-carapace2", "icon-zerg-upgrade-melee",
   {   200,   150,   150,     0,     0,     0,     0}},
-{ "upgrade-zerg-carapace", "icon-zerg-upgrade-melee",
+{ "upgrade-zerg-carapace3", "icon-zerg-upgrade-melee",
   {   200,   200,   200,     0,     0,     0,     0}},
 
 { "upgrade-zerg-burrow", "icon-zerg-burrow-down",
