@@ -44,3 +44,64 @@ DefineUnitType("unit-zerg-evolution-chamber", { Name = "Evolution Chamber",
     "ready", "zerg-building-ready",
     "help", "zerg-base-attacked",
     "dead", "zerg-building-blowup"} } )
+
+CUpgrade:New("upgrade-zerg-melee-attacks1")
+CUpgrade:New("upgrade-zerg-melee-attacks2")
+CUpgrade:New("upgrade-zerg-melee-attacks3")
+CUpgrade:New("upgrade-zerg-missle-attacks1")
+CUpgrade:New("upgrade-zerg-missle-attacks2")
+CUpgrade:New("upgrade-zerg-missle-attacks3")
+CUpgrade:New("upgrade-zerg-carapace1")
+CUpgrade:New("upgrade-zerg-carapace2")
+CUpgrade:New("upgrade-zerg-carapace3")
+
+
+
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-upgrade-melee-attack",
+  Action = "research", Value = "upgrade-zerg-melee-attacks1",
+  Allowed = "check-single-research",
+  Key = "w", Hint = "Upgrade Melee Attacks",
+  ForUnit = {"unit-zerg-evolution-chamber"} } )
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-upgrade-melee-attack",
+  Allowed = "check-single-research",
+  Action = "research", Value = "upgrade-zerg-melee-attacks2",
+  Key = "w", Hint = "Upgrade Melee Attacks",
+  ForUnit = {"unit-zerg-evolution-chamber"} } )
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-upgrade-melee-attack",
+  Allowed = "check-single-research",
+  Action = "research", Value = "upgrade-zerg-melee-attacks3",
+  Key = "w", Hint = "Upgrade Melee Attacks",
+  ForUnit = {"unit-zerg-evolution-chamber"} } )
+
+DefineButton( { Pos = 2, Level = 0, Icon = "icon-zerg-upgrade-missle-attack",
+  Action = "research", Value = "upgrade-zerg-missle-attacks1",
+  Allowed = "check-single-research",
+  Key = "a", Hint = "Upgrade Missle Attacks",
+  ForUnit = {"unit-zerg-evolution-chamber"} } )
+DefineButton( { Pos = 2, Level = 0, Icon = "icon-zerg-upgrade-missle-attack",
+  Action = "research", Value = "upgrade-zerg-missle-attacks2",
+  Allowed = "check-single-research",
+  Key = "a", Hint = "Upgrade Missle Attacks",
+  ForUnit = {"unit-zerg-evolution-chamber"} } )
+DefineButton( { Pos = 2, Level = 0, Icon = "icon-zerg-upgrade-missle-attack",
+  Action = "research", Value = "upgrade-zerg-missle-attacks3",
+  Allowed = "check-single-research",
+  Key = "a", Hint = "Upgrade Missle Attacks",
+  ForUnit = {"unit-zerg-evolution-chamber"} } )
+
+DefineButton( { Pos = 3, Level = 0, Icon = "icon-zerg-upgrade-zerg-carapace",
+  Action = "research", Value = "upgrade-zerg-carapace1",
+  Allowed = "check-single-research",
+  Key = "a", Hint = "Upgrade Carapace",
+  ForUnit = {"unit-zerg-evolution-chamber"} } )
+DefineButton( { Pos = 3, Level = 0, Icon = "icon-zerg-upgrade-zerg-carapace",
+  Action = "research", Value = "upgrade-zerg-carapace2",
+  Allowed = "check-single-research",
+  Key = "a", Hint = "Upgrade Carapace",
+  ForUnit = {"unit-zerg-evolution-chamber"} } )
+DefineButton( { Pos = 3, Level = 0, Icon = "icon-zerg-upgrade-zerg-carapace",
+  Action = "research", Value = "upgrade-zerg-carapace3",
+  Allowed = "check-single-research",
+  Key = "a", Hint = "Upgrade Carapace",
+  ForUnit = {"unit-zerg-evolution-chamber"} } )
+

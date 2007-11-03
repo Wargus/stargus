@@ -3,25 +3,39 @@
 --
 
 local upgrades = {
-{ "upgrade-zerg-melee-attacks1", "icon-zerg-upgrade-melee",
+{ "upgrade-zerg-melee-attacks1", "icon-zerg-upgrade-melee-attack",
   {   200,   100,   100,     0,     0,     0,     0}},
-{ "upgrade-zerg-melee-attacks2", "icon-zerg-upgrade-melee",
+{ "upgrade-zerg-melee-attacks2", "icon-zerg-upgrade-melee-attack",
   {   200,   150,   150,     0,     0,     0,     0}},
-{ "upgrade-zerg-melee-attacks3", "icon-zerg-upgrade-melee",
+{ "upgrade-zerg-melee-attacks3", "icon-zerg-upgrade-melee-attack",
   {   200,   200,   200,     0,     0,     0,     0}},
   
-{ "upgrade-zerg-missle-attacks1", "icon-zerg-upgrade-melee",
+{ "upgrade-zerg-missle-attacks1", "icon-zerg-upgrade-missle-attack",
   {   200,   100,   100,     0,     0,     0,     0}},
-{ "upgrade-zerg-missle-attacks2", "icon-zerg-upgrade-melee",
+{ "upgrade-zerg-missle-attacks2", "icon-zerg-upgrade-missle-attack",
   {   200,   150,   150,     0,     0,     0,     0}},
-{ "upgrade-zerg-missle-attacks3", "icon-zerg-upgrade-melee",
+{ "upgrade-zerg-missle-attacks3", "icon-zerg-upgrade-missle-attack",
   {   200,   200,   200,     0,     0,     0,     0}},
   
-{ "upgrade-zerg-carapace1", "icon-zerg-upgrade-melee",
+{ "upgrade-zerg-carapace1", "icon-zerg-upgrade-zerg-carapace",
   {   200,   100,   100,     0,     0,     0,     0}},
-{ "upgrade-zerg-carapace2", "icon-zerg-upgrade-melee",
+{ "upgrade-zerg-carapace2", "icon-zerg-upgrade-zerg-carapace",
   {   200,   150,   150,     0,     0,     0,     0}},
-{ "upgrade-zerg-carapace3", "icon-zerg-upgrade-melee",
+{ "upgrade-zerg-carapace3", "icon-zerg-upgrade-zerg-carapace",
+  {   200,   200,   200,     0,     0,     0,     0}},
+
+{ "upgrade-zerg-flyer-attacks1", "icon-zerg-upgrade-flyer-attack",
+  {   200,   100,   100,     0,     0,     0,     0}},
+{ "upgrade-zerg-flyer-attacks2", "icon-zerg-upgrade-flyer-attack",
+  {   200,   150,   150,     0,     0,     0,     0}},
+{ "upgrade-zerg-flyer-attacks3", "icon-zerg-upgrade-flyer-attack",
+  {   200,   200,   200,     0,     0,     0,     0}},
+  
+{ "upgrade-zerg-flyer-carapace1", "icon-zerg-upgrade-zerg-carapace",
+  {   200,   100,   100,     0,     0,     0,     0}},
+{ "upgrade-zerg-flyer-carapace2", "icon-zerg-upgrade-zerg-carapace",
+  {   200,   150,   150,     0,     0,     0,     0}},
+{ "upgrade-zerg-flyer-carapace3", "icon-zerg-upgrade-zerg-carapace",
   {   200,   200,   200,     0,     0,     0,     0}},
 
 { "upgrade-zerg-burrow", "icon-zerg-burrow-down",
@@ -83,6 +97,26 @@ DefineModifier("upgrade-zerg-carapace3",
   {"apply-to", "unit-zerg-zergling"}, {"apply-to", "unit-zerg-ultralisk"},
   {"apply-to", "unit-zerg-drone"}, {"apply-to", "unit-zerg-hydralisk"})
 
+DefineModifier("upgrade-zerg-flyer-attacks1",
+  {"Level", 1}, {"PiercingDamage", 2},
+  {"apply-to", "unit-zerg-hydralisk"})
+DefineModifier("upgrade-zerg-flyer-attacks2",
+  {"Level", 2}, {"PiercingDamage", 3},
+  {"apply-to", "unit-zerg-mutalisk"})
+DefineModifier("upgrade-zerg-flyer-attacks3",
+  {"Level", 3}, {"PiercingDamage", 4},
+  {"apply-to", "unit-zerg-mutalisk"})
+
+DefineModifier("upgrade-zerg-flyer-carapace1",
+  {"Level", 1}, {"Armor", 2},
+  {"apply-to", "unit-zerg-mutalisk"})
+DefineModifier("upgrade-zerg-flyer-carapace2",
+  {"Level", 2}, {"Armor", 3},
+  {"apply-to", "unit-zerg-mutalisk"})
+DefineModifier("upgrade-zerg-flyer-carapace3",
+  {"Level", 3}, {"Armor", 4},
+  {"apply-to", "unit-zerg-mutalisk"})
+
 --
 --  Allow
 --
@@ -98,6 +132,14 @@ DefineAllow("upgrade-zerg-missle-attacks3", "AAAAAAAAAAAAAAAA")
 DefineAllow("upgrade-zerg-carapace1", "AAAAAAAAAAAAAAAA")
 DefineAllow("upgrade-zerg-carapace2", "AAAAAAAAAAAAAAAA")
 DefineAllow("upgrade-zerg-carapace3", "AAAAAAAAAAAAAAAA")
+
+DefineAllow("upgrade-zerg-flyer-carapace1", "AAAAAAAAAAAAAAAA")
+DefineAllow("upgrade-zerg-flyer-carapace2", "AAAAAAAAAAAAAAAA")
+DefineAllow("upgrade-zerg-flyer-carapace3", "AAAAAAAAAAAAAAAA")
+
+DefineAllow("upgrade-zerg-flyer-attacks1", "AAAAAAAAAAAAAAAA")
+DefineAllow("upgrade-zerg-flyer-attacks2", "AAAAAAAAAAAAAAAA")
+DefineAllow("upgrade-zerg-flyer-attacks3", "AAAAAAAAAAAAAAAA")
 
 DefineAllow("upgrade-zerg-burrow",         "AAAAAAAAAAAAAAAA")
 DefineAllow("upgrade-zerg-ventral-sacs",   "AAAAAAAAAAAAAAAA")

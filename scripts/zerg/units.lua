@@ -65,6 +65,8 @@ DefineButton( { Pos = 2, Level = 0, Icon = "icon-stop",
     "unit-zerg-scourge",
     "unit-zerg-ultralisk",
     "unit-zerg-zergling",
+    "unit-zerg-spore-colony",
+    "unit-zerg-sunken-colony",
   } } )
 
 DefineButton( { Pos = 3, Level = 0, Icon = "icon-attack",
@@ -81,6 +83,8 @@ DefineButton( { Pos = 3, Level = 0, Icon = "icon-attack",
     "unit-zerg-scourge",
     "unit-zerg-ultralisk",
     "unit-zerg-zergling",
+    "unit-zerg-spore-colony",
+    "unit-zerg-sunken-colony",
   } } )
 
 DefineButton( { Pos = 4, Level = 0, Icon = "icon-patrol",

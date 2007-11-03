@@ -81,12 +81,12 @@ DefineButton( { Pos = 5, Level = 0, Icon = "icon-gather",
   Key = "g", Hint = "~!Gather",
   ForUnit = {"unit-zerg-drone"} } )
 
-DefineButton( { Pos = 7, Level = 0, Icon = "icon-build",
+DefineButton( { Pos = 7, Level = 0, Icon = "icon-zerg-build",
   Action = "button", Value = 1,
   Key = "b", Hint = "~!Basic Mutation",
   ForUnit = {"unit-zerg-drone"} } )
 
-DefineButton( { Pos = 8, Level = 0, Icon = "icon-advanced-build",
+DefineButton( { Pos = 8, Level = 0, Icon = "icon-zerg-advanced-build",
   Action = "button", Value = 2,
   Key = "v", Hint = "Ad~!vanced Mutation",
   ForUnit = {"unit-zerg-drone"} } )

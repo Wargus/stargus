@@ -55,3 +55,11 @@ DefineUnitType("unit-zerg-mutalisk", { Name = "Mutalisk",
     "ready", "zerg-mutalisk-ready",
     "help", "zerg-units-attacked",
     "dead", "zerg-mutalisk-death"} } )
+
+DefineUnitType("unit-zerg-lair", {})
+
+
+DefineButton( { Pos = 7, Level = 0, Icon = "icon-zerg-guardian",
+  Action = "upgrade-to", Value = "unit-zerg-guardian",
+  Key = "h", Hint = "Morph into Guardian",
+  ForUnit = {"unit-zerg-guardian"} } )

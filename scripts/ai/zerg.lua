@@ -40,18 +40,18 @@ local zerg_funcs = {
   function() return AiSet("unit-zerg-drone", 15) end,
   function() return AiWait("unit-zerg-drone") end,
   
-  function() return AiSet("unit-zerg-overlord", 3) end,
+  function() return AiSet("unit-zerg-overlord", 4) end,
   function() return AiWait("unit-zerg-overlord") end,
   
 --Mid game rush (hydralisk + zerglings)
   function() return AiForce(5, {"unit-zerg-hydralisk", 4}) end,
 
   function() return AiForce(5, {"unit-zerg-zergling", 4}) end,
-  function() return AiWaitForce(4) end,
-  function() return AiAttackWithForce(4) end,
+  function() return AiWaitForce(5) end,
+  function() return AiAttackWithForce(5) end,
   
 --Prepare for massing + setting up a defence
-  function() return AiSet("unit-zerg-overlord", 4) end,
+  function() return AiSet("unit-zerg-overlord", 5) end,
   function() return AiWait("unit-zerg-overlord") end,
 
   function() return AiNeed("unit-zerg-hatchery") end,
@@ -62,6 +62,12 @@ local zerg_funcs = {
 --FIXME: Upgrade from creep colonies to spore colonies/sunken colonies
   function() return AiSet("unit-zerg-creep-colony", 4) end,
   function() return AiWait("unit-zerg-creep-colony") end,
+
+--Build a mobile defence
+  function() return AiForce(6, {"unit-zerg-hydralisk", 4}) end,
+
+  function() return AiForce(6, {"unit-zerg-zergling", 4}) end,
+
 
 --Build an army + ATTACK!
 

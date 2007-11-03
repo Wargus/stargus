@@ -48,7 +48,49 @@ DefineUnitType("unit-zerg-spire", { Name = "Spire",
 	
 CUpgrade:New("upgrade-zerg-greater-spire")
 	
-DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-greater-spire",
+DefineButton( { Pos = 7, Level = 0, Icon = "icon-zerg-greater-spire",
   Action = "upgrade-to", Value = "unit-zerg-greater-spire",
   Key = "w", Hint = "Mutate to Greater Spire",
+  ForUnit = {"unit-zerg-spire"} } )
+
+
+CUpgrade:New("upgrade-zerg-flyer-attacks1")
+CUpgrade:New("upgrade-zerg-flyer-attacks2")
+CUpgrade:New("upgrade-zerg-flyer-attacks3")
+CUpgrade:New("upgrade-zerg-flyer-carapace1")
+CUpgrade:New("upgrade-zerg-flyer-carapace2")
+CUpgrade:New("upgrade-zerg-flyer-carapace3")
+
+
+
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-upgrade-flyer-attack",
+  Action = "research", Value = "upgrade-zerg-flyer-attacks1",
+  Allowed = "check-single-research",
+  Key = "w", Hint = "Upgrade Flyer Attacks",
+  ForUnit = {"unit-zerg-evolution-chamber"} } )
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-upgrade-flyer-attack",
+  Allowed = "check-single-research",
+  Action = "research", Value = "upgrade-zerg-flyer-attacks2",
+  Key = "w", Hint = "Upgrade Flyer Attacks",
+  ForUnit = {"unit-zerg-spire"} } )
+DefineButton( { Pos = 1, Level = 0, Icon = "icon-zerg-upgrade-flyer-attack",
+  Allowed = "check-single-research",
+  Action = "research", Value = "upgrade-zerg-flyer-attacks3",
+  Key = "w", Hint = "Upgrade Flyer Attacks",
+  ForUnit = {"unit-zerg-spire"} } )
+
+DefineButton( { Pos = 2, Level = 0, Icon = "icon-zerg-upgrade-zerg-carapace",
+  Action = "research", Value = "upgrade-zerg-flyer-carapace1",
+  Allowed = "check-single-research",
+  Key = "a", Hint = "Upgrade Flyer Carapace",
+  ForUnit = {"unit-zerg-spire"} } )
+DefineButton( { Pos = 2, Level = 0, Icon = "icon-zerg-upgrade-zerg-carapace",
+  Action = "research", Value = "upgrade-zerg-flyer-carapace2",
+  Allowed = "check-single-research",
+  Key = "a", Hint = "Upgrade Flyer Carapace",
+  ForUnit = {"unit-zerg-spire"} } )
+DefineButton( { Pos = 2, Level = 0, Icon = "icon-zerg-upgrade-zerg-carapace",
+  Action = "research", Value = "upgrade-zerg-flyer-carapace3",
+  Allowed = "check-single-research",
+  Key = "a", Hint = "Upgrade Flyer Carapace",
   ForUnit = {"unit-zerg-spire"} } )
