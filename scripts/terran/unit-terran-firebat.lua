@@ -67,4 +67,3 @@ DefineUnitType("unit-terran-firebat", { Name = "Firebat",
     "ready", "terran-firebat-ready",
     "help", "terran-units-attacked",} } )
 
-

@@ -10,8 +10,6 @@ DefineAnimations("animations-terran-dropship", {
     "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",
     "frame 0", "move 3", "wait 2", "frame 0", "move 2", "wait 1",
     "frame 0", "move 3", "wait 1", "frame 0", "move 2", "unbreakable end", "wait 1",},
-  Attack = {"unbreakable begin", "attack", "sound terran-dropship-attack",
-    "unbreakable end", "wait 1",},
   Death = {"unbreakable begin", "sound terran-dropship-death",
     --[[active overlay 332,0]] "wait 3", "unbreakable end", "wait 1",},
 })
@@ -46,5 +44,6 @@ DefineUnitType("unit-terran-dropship", { Name = "Wraith",
     "selected", "terran-dropship-selected",
     "acknowledge", "terran-dropship-acknowledge",
     "ready", "terran-dropship-ready",
-    "help", "basic human voices help 1",
+    "help", "terran-units-attacked",
     "dead", "terran-dropship-death"} } )
+

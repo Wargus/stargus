@@ -54,9 +54,8 @@ DefineUnitType("unit-terran-starport", { Name = "Starport",
   Type = "land",
   Building = true, VisibleUnderFog = true, 
   Sounds = {
-    "selected", "terran-starport-selected",
---    "acknowledge", "human-barracks-acknowledge",
-   "ready", "terran-scv-done",
+    "selected", "button",
+    "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
 

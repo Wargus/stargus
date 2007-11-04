@@ -181,3 +181,4 @@ DefineButton( { Pos = 9, Level = 2, Icon = "icon-cancel",
   Action = "button", Value = 0,
   Key = "\27", Hint = "~<ESC~> - Cancel",
   ForUnit = {"unit-terran-scv"} } )
+

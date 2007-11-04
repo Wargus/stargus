@@ -54,7 +54,8 @@ DefineUnitType("unit-terran-bunker", { Name = "Bunker",
   CanTransport = {},
   MaxOnBoard = 4,
   Sounds = {
-    "selected", "terran-bunker-selected",
-   "ready", "terran-scv-done",
+    "selected", "button",
+    "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
+

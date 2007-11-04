@@ -2,7 +2,6 @@
 -- unit-terran-siege-tank
 --
 
-
 DefineAnimations("animations-terran-siege-tank", {
   Still = {
     "frame 0", "wait 125",
@@ -56,5 +55,4 @@ DefineUnitType("unit-terran-siege-tank", { Name = "Siege Tank",
     "ready", "terran-siege-tank-ready",
     "help", "terran-units-attacked",
     "dead", "terran-siege-tank-death"} } )
-
 

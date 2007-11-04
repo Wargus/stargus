@@ -19,7 +19,7 @@ DefineAnimations("animations-protoss-dragoon", {
     "move 3", "unbreakable end", "wait 1", "frame 119",
   },
   Attack = {
-    "unbreakable begin", "sound hydralisk-attack", "attack",
+    "unbreakable begin", "sound protoss-dragoon-attack", "attack",
     "unbreakable end", "wait 1",
   },
   Death = {
@@ -30,8 +30,6 @@ DefineAnimations("animations-protoss-dragoon", {
 })
 
 DefineUnitType("unit-protoss-dragoon", { Name = "Dragoon",
---  Image = {"file", "zerg/units/hydralisk.png", "size", {128, 128}},
---  Shadow = {"file", "zerg/units/hydralisk.png", "size", {128, 128}, "offset", {0, 7}},
   Image = {"file", "protoss/units/dragoon.png", "size", {96,96}},
   Shadow = {"file", "protoss/units/pdrshad.png", "size", {96,96}, "offset", {0, 7}},
   Animations = "animations-protoss-dragoon", Icon = "icon-protoss-dragoon",
@@ -58,6 +56,5 @@ DefineUnitType("unit-protoss-dragoon", { Name = "Dragoon",
     "selected", "protoss-dragoon-selected",
     "acknowledge", "protoss-dragoon-acknowledge",
     "ready", "protoss-dragoon-ready",
-    "help", "basic human voices help 1",} } )
-
+    "help", "protoss-units-attacked",} } )
 

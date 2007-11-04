@@ -35,7 +35,7 @@ DefineUnitType("unit-terran-comsat-station", { Name = "Comsat Station",
   BuildingRules = { { "addon", { OffsetX = 4, OffsetY = -5, Type = "unit-terran-command-center"}}},
   Sounds = {
     "selected", "button",
---    "ready", "town-hall-ready",
+--    "ready", "",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
 

@@ -55,7 +55,7 @@ DefineUnitType("unit-terran-factory", { Name = "Factory",
   Building = true, VisibleUnderFog = true, 
   Sounds = {
     "selected", "terran-factory-selected",
-   "ready", "terran-scv-done",
+    "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
 
@@ -77,3 +77,4 @@ DefineButton( { Pos = 3, Level = 0, Icon = "icon-terran-goliath",
   Action = "train-unit", Value = "unit-terran-goliath",
   Key = "g", Hint = "Build ~!Goliath",
   ForUnit = {"unit-terran-factory"} } )
+

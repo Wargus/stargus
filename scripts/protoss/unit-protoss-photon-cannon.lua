@@ -3,7 +3,7 @@ DefineAnimations("animations-protoss-photon-cannon", {
     "frame 0", "wait 3", "frame 1", "wait 3", "frame 2", "wait 3",
   },
   Attack = {
-    "unbreakable begin", "wait 5", "frame 4", "wait 3", "frame 5", "wait 3", "frame 6", "wait 3", "frame 7", "wait 3", "frame 8", "wait 3", "frame 9", "sound sunken-attack", "attack",
+    "unbreakable begin", "wait 5", "frame 4", "wait 3", "frame 5", "wait 3", "frame 6", "wait 3", "frame 7", "wait 3", "frame 8", "wait 3", "frame 9", "sound protoss-photon-cannon-attack", "attack",
     "unbreakable end", "wait 5",
   },  
 })
@@ -661,4 +661,4 @@ DefineUnitType("unit-protoss-photon-cannon", { Name = "Photon Canon",
     "selected", "zerg-sunken-colony-selected",
     "ready", "zerg-building-ready",
     "help", "zerg-base-attacked",
-    "dead", "zerg-buildin-blowup"} } )
+    "dead", "zerg-building-blowup"} } )

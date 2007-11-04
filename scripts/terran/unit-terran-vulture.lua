@@ -2,7 +2,6 @@
 -- unit-terran-vulture
 --
 
-
 DefineAnimations("animations-terran-vulture", {
   Still = {
     "frame 0", "wait 125",
@@ -52,6 +51,5 @@ DefineUnitType("unit-terran-vulture", { Name = "Vulture",
     "selected", "terran-vulture-selected",
     "acknowledge", "terran-vulture-acknowledge",
     "ready", "terran-vulture-ready",
-    "help", "basic human voices help 1",} } )
-
+    "help", "terran-units-attacked",} } )
 

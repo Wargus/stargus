@@ -45,5 +45,5 @@ DefineUnitType("unit-terran-battlecruiser", { Name = "Battlecruiser",
     "selected", "terran-battlecruiser-selected",
     "acknowledge", "terran-battlecruiser-acknowledge",
     "ready", "terran-battlecruiser-ready",
-    "help", "basic human voices help 1",
+    "help", "terran-units-attacked",
     "dead", "terran-battlecruiser-death"} } )

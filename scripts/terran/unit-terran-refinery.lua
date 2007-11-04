@@ -47,6 +47,7 @@ DefineUnitType("unit-terran-refinery", { Name = "Refinery",
   GivesResource = "gas", CanHarvest = true,
   Sounds = {
     "selected", "terran-refinery-selected",
-   "ready", "terran-scv-done",
+    "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
+

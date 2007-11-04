@@ -45,5 +45,6 @@ DefineUnitType("unit-terran-science-vessel", { Name = "Science Vessel",
     "selected", "terran-science-vessel-selected",
     "acknowledge", "terran-science-vessel-acknowledge",
     "ready", "terran-science-vessel-ready",
-    "help", "basic human voices help 1",
+    "help", "terran-units-attacked",
     "dead", "terran-science-vessel-death"} } )
+

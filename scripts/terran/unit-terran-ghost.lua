@@ -75,4 +75,3 @@ DefineUnitType("unit-terran-ghost", { Name = "Ghost",
     "ready", "terran-ghost-ready",
     "help", "terran-units-attacked",} } )
 
-

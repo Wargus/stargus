@@ -53,8 +53,7 @@ DefineUnitType("unit-terran-supply-depot", { Name = "Supply Depot",
   Building = true, VisibleUnderFog = true, 
   Sounds = {
     "selected", "terran-supply-depot-selected",
---    "acknowledge", "farm-acknowledge",
-   "ready", "terran-scv-done",
+    "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
 

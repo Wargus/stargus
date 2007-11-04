@@ -58,7 +58,7 @@ DefineUnitType("unit-terran-command-center", { Name = "Command Center",
   CanStore = {"gas", "minerals"},
   Sounds = {
     "selected", "button",
-   "ready", "terran-scv-done",
+    "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
 

@@ -99,5 +99,3 @@ DefineUnitType("unit-terran-marine", { Name = "Marine",
     "ready", "terran-marine-ready",
     "help", "terran-units-attacked",} } )
 
-
-

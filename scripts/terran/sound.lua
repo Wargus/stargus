@@ -347,3 +347,4 @@ MakeSound("terran-engineering-bay-selected", "terran/units/engineering bay.wav")
 MakeSound("terran-factory-selected", "terran/units/factory.wav")
 MakeSound("terran-refinery-selected", "terran/units/refinery.wav")
 MakeSound("terran-science-facility-selected", "terran/units/science facility.wav")
+

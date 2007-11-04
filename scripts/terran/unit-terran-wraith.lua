@@ -45,5 +45,6 @@ DefineUnitType("unit-terran-wraith", { Name = "Wraith",
     "selected", "terran-wraith-selected",
     "acknowledge", "terran-wraith-acknowledge",
     "ready", "terran-wraith-ready",
-    "help", "basic human voices help 1",
+    "help", "terran-units-attacked",
     "dead", "terran-wraith-death"} } )
+

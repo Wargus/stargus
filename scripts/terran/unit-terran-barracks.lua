@@ -56,8 +56,8 @@ DefineUnitType("unit-terran-barracks", { Name = "Barracks",
   Type = "land",
   Building = true, VisibleUnderFog = true, 
   Sounds = {
-    "selected", "terran-barracks-selected",
-   "ready", "terran-scv-done",
+    "selected", "button",
+    "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
 

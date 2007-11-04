@@ -62,7 +62,7 @@ DefineUnitType("unit-protoss-probe", { Name = "Protoss Probe",
   Sounds = {
     "selected", "protosss-probe-selected",
     "acknowledge", "protosss-probe-acknowledgement",
-    "ready", "zprotosss-probe-ready",
+    "ready", "protosss-probe-ready",
     "help", "protoss-units-attacked",
     "dead", "protosss-probe-death"} } )
 

@@ -55,7 +55,7 @@ DefineUnitType("unit-terran-engineering-bay", { Name = "Engineering Bay",
   Building = true, VisibleUnderFog = true, 
   Sounds = {
     "selected", "terran-engineering-bay-selected",
-   "ready", "terran-scv-done",
+    "ready", "terran-scv-done",
     "help", "terran-base-attacked",
     "dead", "explosion-large"} } )
 
@@ -97,3 +97,4 @@ DefineButton( { Pos = 2, Level = 0, Icon = "icon-terran-upgrade-infantry-armor",
   Allowed = "check-single-research",
   Key = "a", Hint = "Upgrade Infantry ~!Armor",
   ForUnit = {"unit-terran-engineering-bay"} } )
+
