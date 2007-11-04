@@ -82,7 +82,8 @@ DefineUnitType("unit-zerg-scourge", { Name = "Scourge",
   SelectableByRectangle = true,
   Sounds = {
     "selected", "zerg-scourge-selected",
-    "acknowledge", "zerg-scourge-acknowledge",
+    "acknowledge", "zerg-scourge-acknowledgement",
     "ready", "zerg-scourge-ready",
     "help", "zerg-units-attacked",
     "dead", "zerg-scourge-death"} } )
+
