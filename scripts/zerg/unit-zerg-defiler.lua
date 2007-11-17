@@ -59,7 +59,7 @@ DefineUnitType("unit-zerg-defiler", { Name = "Hydralisk",
   HitPoints = 80,
   Mana = 200,
   DrawLevel = 30,
-  TileSize = {1, 1}, BoxSize = {31, 31},--FIXME:wrong boxsize
+  TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 10, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 1, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   MaxAttackRange = 0,

@@ -64,7 +64,7 @@ DefineUnitType("unit-zerg-scourge", { Name = "Scourge",
   Speed = 14,
   HitPoints = 25,
   DrawLevel = 60,
-  TileSize = {1, 1}, BoxSize = {63, 63},--FIXME:wrong boxsize
+  TileSize = {1, 1}, BoxSize = {63, 63},
   SightRange = 5, ComputerReactionRange = 5, PersonReactionRange = 5,
   Armor = 0, BasicDamage = 110, PiercingDamage = 16, Missile = "missile-zerg-scourge-glaive-wurm",
   MaxAttackRange = 1,

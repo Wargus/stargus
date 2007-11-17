@@ -80,7 +80,7 @@ DefineUnitType("unit-zerg-hydralisk", { Name = "Hydralisk",
   Speed = 0, NumDirections = 32,
   HitPoints = 80,
   DrawLevel = 40,
-  TileSize = {1, 1}, BoxSize = {31, 31},--FIXME:wrong size
+  TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 6, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 2, BasicDamage = 10, PiercingDamage = 4, Missile = "missile-none",
   MaxAttackRange = 5,

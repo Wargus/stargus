@@ -87,5 +87,6 @@ DefineUnitType("unit-zerg-zergling", { Name = "Zergling",
     "selected", "zerg-zergling-selected",
     "acknowledge", "zerg-zergling-acknowledgement",
     "ready", "zerg-zergling-ready",
-    "help", "zerg-units-attacked",} } )
+    "help", "zerg-units-attacked",
+	"dead", "zerg-zergling-death",} } )
 

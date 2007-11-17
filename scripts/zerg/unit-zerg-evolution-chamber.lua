@@ -25,7 +25,7 @@ DefineUnitType("unit-zerg-evolution-chamber", { Name = "Evolution Chamber",
   Speed = 0,
   HitPoints = 400,
   DrawLevel = 30,
-  TileSize = {2, 2}, BoxSize = {63, 63},--FIXME:wrong size
+  TileSize = {2, 2}, BoxSize = {63, 63},
   SightRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,

@@ -25,7 +25,7 @@ DefineUnitType("unit-zerg-hatchery", { Name = "Zerg Hatchery",
   Speed = 0,
   HitPoints = 1500,
   DrawLevel = 30,
-  TileSize = {4, 3}, BoxSize = {126, 95},--FIXME: wrong size
+  TileSize = {4, 3}, BoxSize = {126, 95},
   SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 35, AnnoyComputerFactor = 45,
