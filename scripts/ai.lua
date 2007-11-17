@@ -75,28 +75,26 @@ DefineAiHelper(
   "unit-terran-science-facility", "unit-terran-starport", "unit-terran-supply-depot"},
 
   {"unit-limit", "unit-terran-supply-depot", "food"}
+  {"unit-limit", "unit-terran-command-center", "food"}
 )
 
 
 DefineAiHelper(
   {"build", "unit-zerg-drone",
   "unit-zerg-hatchery", "unit-zerg-spawning-pool", "unit-zerg-hydralisk-den",
-  "unit-zerg-creep-colony", "unit-zerg-evolution-chamber", "unit-terran-engineering-bay",
-  "unit-terran-factory", "unit-terran-missile-turret", "unit-terran-refinery",
-  "unit-terran-science-facility", "unit-terran-starport", "unit-terran-supply-depot"},
+  "unit-zerg-creep-colony", "unit-zerg-evolution-chamber", "unit-zerg-extractor",
+  "unit-zerg-defiler-mound", "unit-zerg-nydus-canal", "unit-zerg-queens-nest",
+  "unit-zerg-spire", "unit-zerg-ultralisk-cavern"},
 
-  {"train", "unit-zerg-hatchery", "unit-zerg-zergling", "unit-zerg-drone", "unit-zerg-hydralisk", "unit-zerg-overlord", "unit-zerg-ultralisk", "unit-zerg-mutalisk", "unit-zerg-queen", "unit-zerg-defiler"},
+  {"train", "unit-zerg-hatchery", "unit-zerg-zergling", "unit-zerg-drone", "unit-zerg-hydralisk", "unit-zerg-overlord", "unit-zerg-ultralisk", "unit-zerg-mutalisk", "unit-zerg-queen", "unit-zerg-defiler", "unit-zerg-scourge"},
 
-  {"research", "unit-terran-academy", "upgrade-terran-u238-shells", "upgrade-terran-stim-pack"},
-  {"research", "unit-terran-engineering-bay",
-  "upgrade-terran-infantry-weapons1", "upgrade-terran-infantry-weapons2", "upgrade-terran-infantry-weapons3",
-  "upgrade-terran-infantry-armor1", "upgrade-terran-infantry-armor2", "upgrade-terran-infantry-armor3"},
-
-  {"repair", "unit-terran-scv",
-  "unit-terran-academy", "unit-terran-armory", "unit-terran-barracks",
-  "unit-terran-bunker", "unit-terran-command-center", "unit-terran-engineering-bay",
-  "unit-terran-factory", "unit-terran-missile-turret", "unit-terran-refinery",
-  "unit-terran-science-facility", "unit-terran-starport", "unit-terran-supply-depot"},
+  {"research", "unit-zerg-evolution-chamber", "upgrade-zerg-melee-attacks1", "upgrade-zerg-melee-attacks2", "upgrade-zerg-melee-attacks3", "upgrade-zerg-missle-attacks1", "upgrade-zerg-missle-attacks2", "upgrade-zerg-missle-attacks3", "upgrade-zerg-carapace1", "upgrade-zerg-carapace2", "upgrade-zerg-carapace3"},
+  {"research", "unit-zerg-spire",
+  "upgrade-zerg-flyer-attacks1", "upgrade-zerg-flyer-attacks2", "upgrade-zerg-flyer-attacks3",
+  "upgrade-zerg-flyer-carapace1", "upgrade-zerg-flyer-carapace2", "upgrade-zerg-flyer-carapace3"},
+  {"research", "unit-zerg-greater-spire",
+  "upgrade-zerg-flyer-attacks1", "upgrade-zerg-flyer-attacks2", "upgrade-zerg-flyer-attacks3",
+  "upgrade-zerg-flyer-carapace1", "upgrade-zerg-flyer-carapace2", "upgrade-zerg-flyer-carapace3"},
 
   {"unit-limit", "unit-zerg-overlord", "food"}
 )
