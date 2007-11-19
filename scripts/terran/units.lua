@@ -166,3 +166,8 @@ DefineAllow("unit-terran-science-facility", "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-starport",         "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-supply-depot",     "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-terran-comsat-station",   "AAAAAAAAAAAAAAAA")
+
+--
+--Flags
+--
+DefineBoolFlags("organic", "hero", "mechanical",)

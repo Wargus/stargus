@@ -36,6 +36,9 @@ local terran_funcs = {
 
   function() return AiNeed("unit-terran-refinery") end,
   function() return AiWait("unit-terran-refinery") end,
+  
+--set income percentage
+  function() return AiSetCollect(0, 75, 25, 0, 0, 0, 0)
 
   function() return AiSet("unit-terran-scv", 10) end,
   function() return AiWait("unit-terran-scv") end,
