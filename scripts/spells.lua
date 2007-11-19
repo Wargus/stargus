@@ -31,6 +31,8 @@
 -- For documentation see stratagus/doc/ccl/ccl.html
 
 DefineBoolFlags("isundead", "organic", "hero", "volatile", "mechanical")
+-- mechanical for goliath, tank, dragoon, etc. Can be repaired by the scv (terran), spawn broodling spell can only hit mechanical units
+--medics (broodwar) can heal organic units; marine, firebat, etc.
 
 --
 --  Speed     : just drawing
