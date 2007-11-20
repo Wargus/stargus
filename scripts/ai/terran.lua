@@ -115,9 +115,11 @@ local terran_funcs = {
 
   function() return AiNeed("unit-terran-factory") end,
   function() return AiWait("unit-terran-factory") end,
-
-  function() return AiNeed("unit-terran-barracks") end,
-  function() return AiWait("unit-terran-barracks") end,
+  
+  function() return AiNeed("unit-terran-starport") end,
+  function() return AiWait("unit-terran-starport") end,
+  
+  function() return AiSet("unit-terran-dropship", 2) end,
 
 --end of building stage
 --war stage
@@ -165,9 +167,6 @@ local terran_funcs = {
 
   function() return AiNeed("unit-terran-supply-depot") end,
   function() return AiWait("unit-terran-supply-depot") end,
-  
-  function() return AiNeed("unit-terran-starport") end,
-  function() return AiWait("unit-terran-starport") end,
 
 --next attack force #5 (bigger) 
 -- :)
@@ -185,6 +184,10 @@ local terran_funcs = {
   function() return AiForce(5, {"unit-terran-firebat", 7}) end,
 
   function() return AiForce(5, {"unit-terran-goliath", 7}) end,
+  
+  function() return AiForce(5, {"unit-terran-wraith", 7}) end,
+  
+  function() return AiForce(5, {"unit-terran-battlecruiser", 7}) end,
 
   function() return AiWaitForce(5) end,
 --attack with #5
