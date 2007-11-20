@@ -31,8 +31,6 @@ local zerg_funcs = {
   function() return AiNeed("unit-zerg-extractor") end,
   function() return AiWait("unit-zerg-extractor") end,
   
---Set income percentages
-  function() return AiSetCollect(0, 75, 25, 0, 0, 0, 0)
 
   function() return AiNeed("unit-zerg-hydralisk-den") end,
   function() return AiWait("unit-zerg-hydralisk-den") end,
@@ -64,11 +62,11 @@ local zerg_funcs = {
 --Build a defence (sunkens + spore colonies)
   function() return AiSet("unit-zerg-creep-colony", 4) end,
   function() return AiWait("unit-zerg-creep-colony") end,
-  function() return AiUpgradeTo("unit-zerg-sunken-colony")
-  function() return AiUpgradeTo("unit-zerg-spore-colony")
+  function() return AiUpgradeTo("unit-zerg-sunken-colony") end,
+  function() return AiUpgradeTo("unit-zerg-spore-colony") end,
   
 --Upgrade Hatchery to lair
-  function() return AiUpgradeTo("unit-zerg-lair")
+  function() return AiUpgradeTo("unit-zerg-lair") end,
 
 --Build a mobile defence
   function() return AiForce(6, {"unit-zerg-hydralisk", 4}) end,
@@ -86,7 +84,7 @@ local zerg_funcs = {
   function() return AiAttackWithForce(7) end,
 
 --Morph Lair to hive
-  function() return AiUpgradeTo("unit-zerg-hive")
+  function() return AiUpgradeTo("unit-zerg-hive") end,
   
   function() return AiNeed("unit-zerg-ultralisk-cavern") end,
   function() return AiWait("unit-zerg-ultralisk-cavern") end,
