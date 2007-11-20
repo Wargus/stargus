@@ -74,7 +74,7 @@ DefineAiHelper(
   "unit-terran-factory", "unit-terran-missile-turret", "unit-terran-refinery",
   "unit-terran-science-facility", "unit-terran-starport", "unit-terran-supply-depot"},
 
-  {"unit-limit", "unit-terran-supply-depot", "food"}
+  {"unit-limit", "unit-terran-supply-depot", "food"},
   {"unit-limit", "unit-terran-command-center", "food"}
 )
 
