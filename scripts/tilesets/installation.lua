@@ -3797,4 +3797,4 @@ DefineTileset(
 "solid", { "light-grass", "land", "unpassable",
 {    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
  }},
-}}})
+})
