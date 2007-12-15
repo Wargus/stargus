@@ -8,16 +8,16 @@ DefineTileset(
 "solid", { "light-grass", "land", "unpassable",
 {  129,  130,  131,  132,  134,  135,  136,  137,  133,  138,  139,  140,  141,    0,    0,    0,	-- 010
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",
 {    1,    2,    3,    4,    5,    6,    7,    8,    9,    0,   10,   11,   12,   13,   14,    0,	-- 020
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",
 {   15,   16,   17,   18,   16,   19,   20,    3,   21,    0,   22,    6,   23,    2,   24,    0,	-- 030
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",
 {   25,   26,   27,   28,   29,   28,   30,   31,   32,    0,   33,   34,   35,   36,   37,    0,	-- 040
  }},
-"solid", { "light-grass", "land", "unpassable",
+"solid", { "light-grass", "land",
 {   29,   38,   39,   40,   41,   42,   43,   44,   27,    0,   45,   46,   46,   47,   48,    0,	-- 050
  }},
 "solid", { "light-grass", "land", "unpassable",
