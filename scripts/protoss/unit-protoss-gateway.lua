@@ -7,9 +7,7 @@ DefineAnimations("animations-protoss-gateway", {
     "frame 0", "wait 125",
   },
   Train = {
-    "frame 7", "wait 4", "frame 8", "wait 2", "frame 7", "wait 2",
-    "frame 8", "wait 2", "frame 7", "wait 4", "frame 8", "wait 2",
-    "frame 7", "wait 2",
+    "frame 0", "wait 125",
   },
 })
 
@@ -35,7 +33,7 @@ DefineConstruction("construction-protoss-gateway", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-gateway", { Name = "Barracks",
+DefineUnitType("unit-protoss-gateway", { Name = "Protoss Gateway",
   Image = {"file", "protoss/units/gateway.png", "size", {128, 160}},
   Shadow = {"file", "protoss/units/pgashad.png", "size", {128, 160}},
   Animations = "animations-protoss-gateway", Icon = "icon-terran-barracks",
@@ -51,8 +49,8 @@ DefineUnitType("unit-protoss-gateway", { Name = "Barracks",
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 30, AnnoyComputerFactor = 35,
   Points = 160,
-  Corpse = "unit-destroyed-3x3-place",
-  ExplodeWhenKilled = "missile-terran-explosion-large",
+  --Corpse = "unit-destroyed-3x3-place",
+  --ExplodeWhenKilled = "missile-terran-explosion-large",
   BuilderOutside = true,  
   AutoBuildRate = 2,
   Type = "land",
@@ -60,7 +58,7 @@ DefineUnitType("unit-protoss-gateway", { Name = "Barracks",
   BuildingRules = { { "distance", { Distance = 3, DistanceType = "<", Type = "unit-protoss-pylon"} } },
   Sounds = {
     "selected", "protoss-gateway-selected",
-   "ready", "protoss-building-done",
+    "ready", "protoss-building-done",
     "help", "protoss-base-attacked",
     "dead", "protoss-explosion-large"} } )
 
