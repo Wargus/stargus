@@ -36,6 +36,7 @@ DefineUnitType("unit-zerg-mutalisk", { Name = "Mutalisk",
   TileSize = {1, 1}, BoxSize = {63, 63},--FIXME:wrong boxsize
   SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
   Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-zerg-mutalisk-glaive-wurm",
+  AnnoyComputerFactor = 55,
   MaxAttackRange = 4,
   Priority = 65,
   Points = 150,

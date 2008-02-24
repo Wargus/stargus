@@ -12,10 +12,7 @@ Still = {"frame 0", "wait 125",},
     "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
     "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
     "move 4", "wait 1", "move 4", "unbreakable end", "wait 1",},
-  Harvest_minerals = {"unbreakable begin",
-    "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
-    "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
-    "move 4", "wait 1", "move 4", "sound protoss-probe-mine", "unbreakable end", "wait 1",},
+  Harvest_minerals = {"unbreakable begin", "sound protoss-probe-mine", "wait 75","sound protoss-probe-mine", "unbreakable end", "wait 1",},
   Repair = {"unbreakable begin",
     "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
     "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
@@ -122,29 +119,29 @@ DefineButton( { Pos = 8, Level = 0, Icon = "icon-advanced-build",
 --
 -- Build
 --
-DefineButton( { Pos = 1, Level = 1, Icon = "icon-zerg-hatchery",
+DefineButton( { Pos = 1, Level = 1, Icon = "icon-protoss-nexus",
   Action = "build", Value = "unit-protoss-nexus",
   Key = "x", Hint = "Nexus",
   ForUnit = {"unit-protoss-probe"} } )
 
-DefineButton( { Pos = 2, Level = 1, Icon = "icon-zerg-hatchery",
+DefineButton( { Pos = 2, Level = 1, Icon = "icon-protoss-pylon",
   Action = "build", Value = "unit-protoss-pylon",
-  Key = "x", Hint = "Pylon",
+  Key = "p", Hint = "Pylon",
   ForUnit = {"unit-protoss-probe"} } )
   
-DefineButton( { Pos = 3, Level = 1, Icon = "icon-zerg-hatchery",
+DefineButton( { Pos = 3, Level = 1, Icon = "icon-protoss-gateway",
   Action = "build", Value = "unit-protoss-gateway",
-  Key = "x", Hint = "Gateway",
+  Key = "g", Hint = "Gateway",
   ForUnit = {"unit-protoss-probe"} } )
   
-DefineButton( { Pos = 4, Level = 1, Icon = "icon-zerg-hatchery",
+DefineButton( { Pos = 4, Level = 1, Icon = "icon-protoss-photon-cannon",
   Action = "build", Value = "unit-protoss-photon-cannon",
   Key = "c", Hint = "Photon Cannon",
   ForUnit = {"unit-protoss-probe"} } )
   
-DefineButton( { Pos = 5, Level = 1, Icon = "icon-zerg-hatchery",
+DefineButton( { Pos = 5, Level = 1, Icon = "icon-protoss-assimilator",
   Action = "build", Value = "unit-protoss-assimulator",
-  Key = "c", Hint = "Assimulator",
+  Key = "a", Hint = "Assimulator",
   ForUnit = {"unit-protoss-probe"} } )
 
 DefineButton( { Pos = 9, Level = 1, Icon = "icon-cancel",
