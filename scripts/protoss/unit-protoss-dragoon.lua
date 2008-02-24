@@ -1,30 +1,32 @@
 --
--- unit-terran-vulture
+-- unit-protoss-dragoon
 --
 
 
 DefineAnimations("animations-protoss-dragoon", {
    Still = {
-    "frame 119", "wait 125",
+    "frame 0", "wait 125",
   },
   Move = {"unbreakable begin",
-    "move 6", "wait 1", "frame 136", "move 3", "wait 1", "frame 153",
-    "move 3", "wait 1", "frame 0", "move 3", "wait 1", "frame 17",
-    "move 5", "wait 1", "frame 34", "move 5", "wait 1", "frame 51",
-    "move 4", "wait 1", "frame 68",
-    --FIXME: sub-tile movement
-    --[["move 8", "wait 1", "frame 85",
-    "move 6", "wait 1", "frame 102", "move 4",
-    "unbreakable end", "wait 1", "frame 119",]]
-    "move 3", "unbreakable end", "wait 1", "frame 119",
+    "move 4", "wait 1", "frame 136",
+    "move 6", "wait 1", "frame 153",
+    "move 8", "wait 1", "frame 170",
+    "move 8", "wait 1", "frame 187",
+    "move 2", "wait 1", "frame 204",
+    "move 2", "wait 1", "frame 221",
+    "move 6", "wait 1", "frame 238",
+    "move 6", "wait 1", "frame 255",
+    "unbreakable end",
   },
   Attack = {
-    "unbreakable begin", "sound protoss-dragoon-attack", "attack",
-    "unbreakable end", "wait 1",
+    "unbreakable begin", "frame 272", "wait 2", "frame 289", "wait 2", "frame 306", "wait 2", "frame 323",
+    "wait 2", "frame 340", "wait 2", "frame 357", "attack",
+    "unbreakable end", "wait 2",
   },
   Death = {
     "unbreakable begin",
-    --[[sound 8]] --[[active overlay 332,0]] "wait 3",
+    "frame 408", "wait 2", "frame 409", "wait 2", "frame 410", "wait 2", "frame 411", "wait 2", "frame 412",
+    "wait 2", "frame 413", "wait 2", "frame 414",
     "unbreakable end", "wait 1",
   },
 })
@@ -44,7 +46,6 @@ DefineUnitType("unit-protoss-dragoon", { Name = "Dragoon",
   Priority = 60,
   Points = 50,
   Demand = 2,
-  ExplodeWhenKilled = "missile-terran-explosion-small",
   Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
