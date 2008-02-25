@@ -76,6 +76,7 @@ DefineUnitType("unit-protoss-nexus", {})
 DefineUnitType("unit-protoss-gateway", {})
 DefineUnitType("unit-protoss-photon-cannon", {})
 DefineUnitType("unit-protoss-assimulator", {})
+DefineUnitType("unit-protoss-forge", {})
 
 --
 -- Default
@@ -142,6 +143,11 @@ DefineButton( { Pos = 4, Level = 1, Icon = "icon-protoss-photon-cannon",
 DefineButton( { Pos = 5, Level = 1, Icon = "icon-protoss-assimilator",
   Action = "build", Value = "unit-protoss-assimulator",
   Key = "a", Hint = "Assimulator",
+  ForUnit = {"unit-protoss-probe"} } )
+
+DefineButton( { Pos = 6, Level = 1, Icon = "icon-protoss-forge",
+  Action = "build", Value = "unit-protoss-forge",
+  Key = "f", Hint = "Forge",
   ForUnit = {"unit-protoss-probe"} } )
 
 DefineButton( { Pos = 9, Level = 1, Icon = "icon-cancel",

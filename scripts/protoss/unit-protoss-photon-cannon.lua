@@ -1,9 +1,9 @@
 DefineAnimations("animations-protoss-photon-cannon", {
    Still = {
-    "frame 0", "wait 3", "frame 1", "wait 3", "frame 2", "wait 3",
+    "frame 0", "wait 125",
   },
   Attack = {
-    "unbreakable begin", "wait 5", "frame 4", "wait 3", "frame 5", "wait 3", "frame 6", "wait 3", "frame 7", "wait 3", "frame 8", "wait 3", "frame 9", "sound protoss-photon-cannon-attack", "attack",
+    "unbreakable begin", "frame 2", "wait 2", "frame 1", "wait 2", "frame 3", "wait 2", "sound protoss-photon-cannon-attack", "attack",
     "unbreakable end", "wait 5",
   },  
 })
