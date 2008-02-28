@@ -1,14 +1,12 @@
 Very Simple And Boring TODO List For Stargus
 
 Scripts:
-1. Zerg unit animations
-2. Protoss unit animations
-3. Terran Addons
-4. Spells
-5. In-game UI
-6. Before-game menus
-7. Tilesets
-8. Burning building Animations
+1. Spells
+2. Before-game menus
+3. Tilesets
+4. Burning building Animations
+5. Protoss Units
+6. Campaigns
 
 Engine:
 1. Larva
@@ -26,5 +24,6 @@ Engine:
 13. start/end attack animations
 14. Building Addons
 15. Bounce attack effect
+16. Sub-tile movement
 
 Have Fun!
