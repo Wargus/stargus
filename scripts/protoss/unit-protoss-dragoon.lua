@@ -2,6 +2,24 @@
 -- unit-protoss-dragoon
 --
 
+DefineAnimations("animations-protoss-dragoon-death", {
+  Death = {"unbreakable begin", "frame 0", "wait 50", "frame 1", "wait 50",
+    "frame 2", "wait 50", "frame 3", "wait 50", "frame 4", "wait 50", "unbreakable end", "wait 1", },
+})
+
+DefineUnitType("unit-protoss-dragoon-death", { Name = "Dead dragoon",
+  Image = {"file", "protoss/units/pdrdeath.png", "size", {96, 96}},
+  Animations = "animations-terran-marine-death", Icon = "icon-terran-marine",
+  NumDirections = 1,
+  HitPoints = 255,
+  DrawLevel = 30,
+  TileSize = {1, 1}, BoxSize = {31, 31},
+  SightRange = 1,
+  BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
+  Priority = 0,
+  Type = "land",
+  Vanishes = true,
+  Sounds = {} } )
 
 DefineAnimations("animations-protoss-dragoon", {
    Still = {
@@ -9,14 +27,14 @@ DefineAnimations("animations-protoss-dragoon", {
   },
   Move = {"unbreakable begin",
     "move 4", "wait 1", "frame 136",
-    "move 6", "wait 1", "frame 153",
-    "move 8", "wait 1", "frame 170",
-    "move 8", "wait 1", "frame 187",
-    "move 2", "wait 1", "frame 204",
-    "move 2", "wait 1", "frame 221",
-    "move 6", "wait 1", "frame 238",
-    "move 6", "wait 1", "frame 255",
-    "unbreakable end",
+    "move 4", "wait 1", "frame 153",
+    "move 4", "wait 1", "frame 170",
+    "move 4", "wait 1", "frame 187",
+    "move 4", "wait 1", "frame 204",
+    "move 4", "wait 1", "frame 221",
+    "move 4", "wait 1", "frame 238", 
+	"move 4", "wait 1", "frame 255", 
+    "unbreakable end", "wait 1",
   },
   Attack = {
     "unbreakable begin", "frame 272", "wait 2", "frame 289", "wait 2", "frame 306", "wait 2", "frame 323",
@@ -27,7 +45,7 @@ DefineAnimations("animations-protoss-dragoon", {
     "unbreakable begin",
     "frame 408", "wait 2", "frame 409", "wait 2", "frame 410", "wait 2", "frame 411", "wait 2", "frame 412",
     "wait 2", "frame 413", "wait 2", "frame 414",
-    "unbreakable end", "wait 1",
+    "unbreakable end", "wait 2",
   },
 })
 
@@ -48,6 +66,7 @@ DefineUnitType("unit-protoss-dragoon", { Name = "Dragoon",
   Demand = 2,
   Type = "land",
   RightMouseAction = "attack",
+  Corpse = "unit-protoss-dragoon-death",
   CanAttack = true,
   CanTargetLand = true,
   LandUnit = true,
