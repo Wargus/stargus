@@ -647,8 +647,8 @@ DefineUnitType("unit-protoss-photon-cannon", { Name = "Photon Canon",
   Priority = 15, AnnoyComputerFactor = 20,
   MaxAttackRange = 7,
   Points = 170,
-  Corpse = "unit-destroyed-3x3-place",
-  ExplodeWhenKilled = "missile-terran-explosion-large",
+  --[[Corpse = "unit-destroyed-3x3-place",
+  ExplodeWhenKilled = "missile-terran-explosion-large",--]]
   Type = "land",
   RightMouseAction = "attack",
   BuilderOutside = true,
@@ -658,7 +658,7 @@ DefineUnitType("unit-protoss-photon-cannon", { Name = "Photon Canon",
   Building = true, VisibleUnderFog = true,
   BuildingRules = { { "distance", { Distance = 3, DistanceType = "<", Type = "unit-protoss-pylon"} } },
   Sounds = {
-    "selected", "zerg-sunken-colony-selected",
-    "ready", "zerg-building-ready",
-    "help", "zerg-base-attacked",
-    "dead", "zerg-building-blowup"} } )
+    "selected", "protoss-photon-cannon-selected",
+    "ready", "protoss-building-ready",
+    "help", "protoss-base-attacked",
+    "dead", "protoss-building-blowup"} } )

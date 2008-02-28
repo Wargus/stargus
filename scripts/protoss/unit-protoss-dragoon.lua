@@ -25,7 +25,8 @@ DefineAnimations("animations-protoss-dragoon", {
    Still = {
     "frame 0", "wait 125",
   },
-  Move = {"unbreakable begin",
+  Move = {
+  "unbreakable begin",
     "move 4", "wait 1", "frame 136",
     "move 4", "wait 1", "frame 153",
     "move 4", "wait 1", "frame 170",
