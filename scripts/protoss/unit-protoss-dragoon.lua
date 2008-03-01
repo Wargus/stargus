@@ -44,9 +44,9 @@ DefineAnimations("animations-protoss-dragoon", {
   },
   Death = {
     "unbreakable begin",
-    "frame 408", "wait 2", "frame 409", "wait 2", "frame 410", "wait 2", "frame 411", "wait 2", "frame 412",
-    "wait 2", "frame 413", "wait 2", "frame 414",
-    "unbreakable end", "wait 2",
+    "frame 408", "wait 1", "frame 409", "wait 1", "frame 410", "wait 1", "frame 411", "wait 1", "frame 412",
+    "wait 1", "frame 413", "wait 1", "frame 414",
+    "unbreakable end", "wait 1",
   },
 })
 
