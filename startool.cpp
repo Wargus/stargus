@@ -1328,6 +1328,14 @@ Control Todo[] = {
 	{G,0,"terran/explosion large","unit\\thingy\\tbangx.grp",3 __3},
 	{G,0,"terran/dark swarm","unit\\thingy\\Dswarm.grp",3 __3},
 	{G,0,"terran/spider mine explosion","unit\\thingy\\tmnExplo.grp",3 __3},
+	{G,0,"terran/spider mine smoke","unit\\thingy\\GreSmoke.grp",3 __3},
+	{G,0,"terran/spider mine hit","unit\\thingy\\efgHit.grp",3 __3},
+	{G,0,"terran/gemini missiles","unit\\thingy\\bsmoke.grp",3 __3},
+	{G,0,"terran/gemini missile trail","unit\\thingy\\smoke.grp",3 __3},
+	{G,0,"terran/tank turret attack overlay","unit\\thingy\\esiFire.grp",3 __3},
+	{G,0,"terran/tank turret attack overlay2","unit\\thingy\\ettFlash.grp",3 __3},
+	{G,0,"terran/laser","unit\\thingy\\elbfireW.grp",3 __3},
+	{G,0,"terran/laser2","unit\\thingy\\elbfire.grp",3 __3},
 
 	// Protoss unit graphics
 	{G,0,"protoss/units/rubble large","unit\\thingy\\prubblel.grp",0 __3},
@@ -1401,6 +1409,17 @@ Control Todo[] = {
 	{G,0,"protoss/units/zealot","unit\\protoss\\zealot.grp",0 __3},
 	{G,0,"protoss/units/shield","unit\\thingy\\pshield.grp",0 __3},
 	{G,0,"protoss/units/bluetrail","unit\\thingy\\HKTrail.grp",0 __3},
+	{G,0,"protoss/units/scout glow","unit\\thingy\\pscGlow.grp",0 __3},
+	{G,0,"protoss/units/shuttle glow","unit\\thingy\\pshGlow.grp",0 __3},
+	{G,0,"protoss/units/carrier glow","unit\\thingy\\pcaGlow.grp",0 __3},
+	{G,0,"protoss/units/scarab explode","unit\\thingy\\psaExplo.grp",0 __3},
+	{G,0,"protoss/units/anti-matter missle","unit\\thingy\\HKexplod.grp",0 __3},
+	{G,0,"protoss/units/plasma shields?","unit\\thingy\\plasma.grp",0 __3},
+	{G,0,"protoss/units/psionic shock wave","unit\\thingy\\emsHit.grp",0 __3},
+	{G,0,"protoss/units/haluciantion cast","unit\\thingy\\eveCast.grp",0 __3},
+	{G,0,"protoss/units/halucination cast 2","unit\\thingy\\halmind.grp",0 __3},
+	{G,0,"protoss/units/psionic storm","unit\\thingy\\psiStorm.grp",0 __3},
+	{G,0,"protoss/units/photon ball","unit\\thingy\\epbBul.grp",0 __3},
 
 	// Zerg unit graphics
 	{G,0,"zerg/units/rubble large","unit\\thingy\\ZRubbleL.grp",0 __3},
@@ -1504,6 +1523,9 @@ Control Todo[] = {
 	{G,0,"zerg/units/building blood3","unit\\thingy\\bblood03.grp",0 __3},
 	{G,0,"zerg/units/building blood4","unit\\thingy\\bblood04.grp",0 __3},
 	{G,0,"zerg/units/bdust","unit\\thingy\\bDust.grp",0 __3},
+	{G,0,"zerg/units/spores","unit\\thingy\\gSmoke.grp",0 __3},
+	{G,0,"zerg/units/glave wurm","unit\\thingy\\SpoTrail.grp",0 __3},
+	{G,0,"zerg/units/guardian attack overlay","unit\\thingy\\eplMuzz.grp",0 __3},
 
 	// Terran sounds
 	{W,0,"terran/building place","sound\\misc\\tbldgplc.wav" __4},

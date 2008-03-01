@@ -1436,7 +1436,7 @@ static void SaveSMS(const char *name, WorldMap *map)
 	fprintf(fd, "\n\n");
 
 	for (i = 0; i < (int)map->Triggers.size(); ++i) {
-//		SaveTrigger(fd, map, &map->Triggers[i]);
+		SaveTrigger(fd, map, &map->Triggers[i]);
 	}
 
 	fprintf(fd, "\n\n");
