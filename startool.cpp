@@ -1330,7 +1330,6 @@ Control Todo[] = {
 	{G,0,"terran/spider mine explosion","unit\\thingy\\tmnExplo.grp",3 __3},
 	{G,0,"terran/spider mine smoke","unit\\thingy\\GreSmoke.grp",3 __3},
 	{G,0,"terran/spider mine hit","unit\\thingy\\efgHit.grp",3 __3},
-	{G,0,"terran/gemini missiles","unit\\thingy\\bsmoke.grp",3 __3},
 	{G,0,"terran/gemini missile trail","unit\\thingy\\smoke.grp",3 __3},
 	{G,0,"terran/tank turret attack overlay","unit\\thingy\\esiFire.grp",3 __3},
 	{G,0,"terran/tank turret attack overlay2","unit\\thingy\\ettFlash.grp",3 __3},
@@ -1419,7 +1418,6 @@ Control Todo[] = {
 	{G,0,"protoss/units/haluciantion cast","unit\\thingy\\eveCast.grp",0 __3},
 	{G,0,"protoss/units/halucination cast 2","unit\\thingy\\halmind.grp",0 __3},
 	{G,0,"protoss/units/psionic storm","unit\\thingy\\psiStorm.grp",0 __3},
-	{G,0,"protoss/units/photon ball","unit\\thingy\\epbBul.grp",0 __3},
 
 	// Zerg unit graphics
 	{G,0,"zerg/units/rubble large","unit\\thingy\\ZRubbleL.grp",0 __3},

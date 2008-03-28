@@ -35,28 +35,35 @@ function HandleCheats(str)
   local resources = { "minerals", "gas" }
 
   if (str == "show me the money") then
+    AddMessage("Cheat Enabled")
     SetPlayerData(GetThisPlayer(), "Resources", "minerals",
       GetPlayerData(GetThisPlayer(), "Resources", "minerals") + 10000)
     SetPlayerData(GetThisPlayer(), "Resources", "gas",
       GetPlayerData(GetThisPlayer(), "Resources", "gas") + 10000)
 
   elseif (str == "whats mine is mine") then
+    AddMessage("Cheat Enabled")
     SetPlayerData(GetThisPlayer(), "Resources", "minerals",
       GetPlayerData(GetThisPlayer(), "Resources", "minerals") + 10000)
 
   elseif (str == "breathe deep") then
+    AddMessage("Cheat Enabled")
     SetPlayerData(GetThisPlayer(), "Resources", "gas",
       GetPlayerData(GetThisPlayer(), "Resources", "gas") + 10000)
 
   elseif (str == "black sheep wall") then
+    AddMessage("Cheat Enabled")
+    SetFogOfWar(false)
     RevealMap()
 
   elseif (str == "war aint what it used to be") then
+    AddMessage("Cheat Enabled")
     SetFogOfWar(false)
 
   elseif (str == "operation cwal") then
     if (speedcheat) then
       speedcheat = false
+      AddMessage("Cheat Disabled")
       for i = 1,table.getn(resources) do
         SetSpeedResourcesHarvest(resources[i], 1)
         SetSpeedResourcesReturn(resources[i], 1)
@@ -67,6 +74,7 @@ function HandleCheats(str)
       SetSpeedResearch(1)
     else
       speedcheat = true
+      AddMessage("Cheat Enabled")
       for i = 1,table.getn(resources) do
         SetSpeedResourcesHarvest(resources[i], 10)
         SetSpeedResourcesReturn(resources[i], 10)
@@ -82,20 +90,22 @@ function HandleCheats(str)
     end
 
   elseif (str == "there is no cow level") then
+    AddMessage("Cheat Enabled")
     ActionVictory()
 
   elseif (str == "game over man") then
+    AddMessage("Cheat Enabled")
     ActionDefeat()
 
   elseif (str == "power overwhelming") then
     if (godcheat) then
       godcheat = false
       SetGodMode(false)
-      AddMessage("God Mode OFF")
+      AddMessage("Cheat Disabled")
     else
       godcheat = true
       SetGodMode(true)
-      AddMessage("God Mode ON")
+      AddMessage("Cheat Enabled")
     end
 
   else

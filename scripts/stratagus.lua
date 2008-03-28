@@ -57,7 +57,7 @@ end
 SetTitleScreens({
   Image = "ui/title.png",
   Music = "music/title.wav",
-  Timeout = 20}
+  Timeout = 5}
 --  {"logo_stratagus.avi"}
 )
 
