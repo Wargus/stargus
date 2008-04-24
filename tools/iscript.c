@@ -1,7 +1,7 @@
 //
 // iscript.bin parser
 //
-// Copyright 2007 Jimmy Salmon
+// Copyright 2008 Jimmy Salmon && Jon Goodliffe
 //
 
 #include <stdio.h>
@@ -48,7 +48,6 @@ Cleanup:
 	return data;
 }
 
-
 unsigned char ReadByte(const unsigned char **p)
 {
 	unsigned char c = *(*p);
@@ -85,18 +84,22 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 	unsigned char c1, c2;
 	unsigned short s1, s2;
 	unsigned char opcode;
+	FILE * log = fopen("out.lua", "r");
 	int stop = 0;
 	int i;
 
 	p = data + offset;
+	fprintf(log, "\nAnimation = {\n");
 	while (!stop) {
 		printf("\n%04hX ", (unsigned short)(p - data));
+		fprintf(log," \"lable %04hX\", ", (unsigned long)p);
 		opcode = ReadByte(&p);
 		switch (opcode)
 		{
 			case 0x00:
 				s1 = ReadShort(&p);
 				printf("play frame from set: %hu", s1);
+				fprintf(log," \"frame %hu\", ", s1);
 				break;
 
 			case 0x03:
@@ -107,17 +110,20 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 			case 0x05:
 				c1 = ReadByte(&p);
 				printf("wait: %u", (unsigned)c1);
+				fprintf(log," \"wait %u\", ", c1);
 				break;
 
 			case 0x06:
 				c1 = ReadByte(&p);
 				c2 = ReadByte(&p);
 				printf("wait random time: %u, %u", (unsigned)c1, (unsigned)c2);
+				fprintf(log," \"random-wait %u %u\", ", (unsigned)c1, (unsigned)c2);
 				break;
 
 			case 0x07:
 				s1 = ReadShort(&p);
 				printf("goto: %04hX", s1);
+				printf(" \"goto %04hX\", ", (unsigned)s1);
 				break;
 
 			case 0x08:
@@ -169,6 +175,7 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 			case 0x18:
 				s1 = ReadShort(&p);
 				printf("play sound: %hu", s1);
+				fprintf(log," \"sound %hu\", ", s1);
 				break;
 
 			case 0x19:
@@ -203,16 +210,19 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 				c1 = ReadByte(&p);
 				s1 = ReadShort(&p);
 				printf("random goto offset: %u, %04hX", (unsigned)c1, s1);
+				fprintf(log," \"random-goto %u, %04hX\", ", (unsigned)c1, s1);
 				break;
 
 			case 0x1F:
 				c1 = ReadByte(&p);
 				printf("turn counterclockwise: %u", (unsigned)c1);
+				fprintf(log," \"rotate %u\", ", (unsigned)c1);
 				break;
 
 			case 0x20:
 				c1 = ReadByte(&p);
 				printf("turn clockwise: %u", (unsigned)c1);
+				fprintf(log," \"rotate %u\", ", (unsigned)c1);
 				break;
 
 			case 0x21:
@@ -222,6 +232,7 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 			case 0x22:
 				c1 = ReadByte(&p);
 				printf("turn graphic in random direction: %u", (unsigned)c1);
+				fprintf(log," \"random-rotate %u\", ", (unsigned)c1);
 				break;
 
 			case 0x24:
@@ -241,6 +252,7 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 			case 0x29:
 				c1 = ReadByte(&p);
 				printf("move %u", (unsigned)c1);
+				fprintf(log," \"move %u\", ", (unsigned)c1);
 				break;
 
 			case 0x2A:
@@ -249,10 +261,12 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 
 			case 0x2E:
 				printf("unbreakable section begin");
+				fprintf(log,"\"unbreakable begin\",");
 				break;
 
 			case 0x2F:
 				printf("unbreakable section end");
+				fprintf(log,"\"unbreakable end\",");
 				break;
 
 			case 0x30:
@@ -268,6 +282,7 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 			case 0x34:
 				c1 = ReadByte(&p);
 				printf("play specific frame: %u", (unsigned)c1);
+				fprintf(log," \"exact-frame %u\", ", (unsigned)c1);
 				break;
 
 			case 0x38:
@@ -287,6 +302,7 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 		}
 	}
 	printf("\n");
+    fprintf(log, "\n},\n");
 }
 
 
@@ -348,4 +364,3 @@ int main(int argc, char *argv[])
 
 	return 0;
 }
-
