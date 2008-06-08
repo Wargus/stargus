@@ -3123,13 +3123,13 @@ int ConvertTileset(char *listfile, char *file)
 	unsigned char *megp;
 	unsigned char *minp;
 	unsigned char *mapp;
-//	unsigned char *flagp;
+	unsigned char *flagp;
 	unsigned char *image;
 	int w;
 	int h;
 	int megl;
 	int mapl;
-//	int flagl;
+	int flagl;
 	char buf[1024];
 
 	if (!strcmp(listfile, "tileset\\Install")) {
@@ -3149,15 +3149,13 @@ int ConvertTileset(char *listfile, char *file)
 	sprintf(buf, "%s.cv5", listfile);
 	mapp = ExtractEntry((unsigned char *)buf);
 	mapl = EntrySize;
-#if 0
+
 	sprintf(buf, "%s.vf4", listfile);
 	flagp = ExtractEntry((unsigned char *)buf);
 	flagl = EntrySize;
-#endif
 
 	image = ConvertTile(minp, (char *)megp, megl, (char *)mapp, mapl, &w, &h);
 
-#if 0
 	sprintf(buf, "%s-flags.txt", strstr(listfile, "\\") + 1);
 	FILE *fd = fopen(buf, "w");
 	int i, j, tiles, start = -1;
@@ -3173,7 +3171,7 @@ int ConvertTileset(char *listfile, char *file)
 			if (start == -1) {
 				start = i;
 			}
-//			fprintf(fd, "tile %d is unpassable\n", i);
+			fprintf(fd, "tile %d is unpassable\n", i);
 		}
 		if (i == flagl / 32 - 1 || tiles < 2) {
 			if (i == flagl / 32 - 1) ++i;
@@ -3188,12 +3186,11 @@ int ConvertTileset(char *listfile, char *file)
 		}
 	}
 	fclose(fd);
-#endif
 
 	free(megp);
 	free(minp);
 	free(mapp);
-//	free(flagp);
+	free(flagp);
 
 	ConvertPaletteRGBXtoRGB(palp);
 
