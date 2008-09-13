@@ -9,6 +9,10 @@ local zerg_funcs = {
   function() AiDebug(false) return false end,
   function() return AiSleep(AiGetSleepCycles()) end,
   
+--cheat a little
+  function() return SetPlayerData(GetThisPlayer(), "Resources", "minerals", + 500) end,
+  function() return SetPlayerData(GetThisPlayer(), "Resources", "gas", + 500) end,
+  
 --get started
   function() return AiNeed("unit-zerg-hatchery") end,
   function() return AiWait("unit-zerg-hatchery") end,
