@@ -1,9 +1,9 @@
-//       _________ __                 __                               
+//       _________ __                 __
 //      /   _____//  |_____________ _/  |______     ____  __ __  ______
 //      \_____  \\   __\_  __ \__  \\   __\__  \   / ___\|  |  \/  ___/
 //      /        \|  |  |  | \// __ \|  |  / __ \_/ /_/  >  |  /\___ |
 //     /_______  /|__|  |__|  (____  /__| (____  /\___  /|____//____  >
-//             \/                  \/          \//_____/            \/ 
+//             \/                  \/          \//_____/            \/
 //  ______________________                           ______________________
 //                        T H E   W A R   B E G I N S
 //         Stratagus - A free fantasy real time strategy game engine
@@ -1447,7 +1447,7 @@ static void SaveSMS(const char *name, WorldMap *map)
 static void SaveMap(const char *name, WorldMap *map)
 {
 	char *fullmapname;
-	
+
 	fullmapname = strdup(name);
 	strcpy(strrchr(fullmapname, '.') + 1, "smp");
 	SaveSMP(fullmapname, map);

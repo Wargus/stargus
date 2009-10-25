@@ -6,7 +6,7 @@
 # TODO: add auto Stratagus update
 # TODO: Add launch icon on desktop
 
-if [ $1 = "--info" ] ; then
+if [ $1 = "--info" ]; then
 	echo "This is automated install script for Stargus < http://stargus.sf.net >
 	Default Install Dir: $HOME/.stargus
 	Launch Script: /usr/bin/stargus"
@@ -56,7 +56,7 @@ echo "Dependencies:
 
 Do you have the above installed? y/n"
 read dep_answer
-if [ $dep_answer = "y" ] ; then
+if [ $dep_answer = "y" ]; then
 	clear
 	echo "what is the path to your cd drive?"
 	echo "Example: /mnt/cdrom"
