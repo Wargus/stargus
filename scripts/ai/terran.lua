@@ -9,8 +9,8 @@ local terran_funcs = {
   function() return AiSleep(AiGetSleepCycles()) end,
   
 --cheat a little
-  function() return SetPlayerData(GetThisPlayer(), "Resources", "minerals", + 500) end,
-  function() return SetPlayerData(GetThisPlayer(), "Resources", "gas", + 500) end,
+  function() return SetPlayerData(GetThisPlayer(), "Resources", "minerals", 50000) end,
+  function() return SetPlayerData(GetThisPlayer(), "Resources", "gas", 50000) end,
   
 --start of game/building stage
   function() return AiNeed("unit-terran-command-center") end,
