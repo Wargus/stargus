@@ -1,0 +1,20 @@
+Installation Instructions
+=========================
+
+NOTE: stratagus ( http://stratagus.org ) is required.
+wargus and stratagus version must match
+(same version or svn from the same date)
+
+The Battle.Net version is NOT supported, you must use the DOS version.
+
+Either the Expansion or Original CD can be used.
+Do not extract from both. Extract from one CD only.
+
+1. extract data: './build.sh -p /path/to/cd [ -o /path/to/outputdir ]'
+	eg:
+	./build.sh -p d:/
+	./build.sh -p /cdrom
+
+2. start stratagus: '/path/to/stratagus -d /path/to/outputdir'
+	eg:	
+	./stratagus -d data.wc2

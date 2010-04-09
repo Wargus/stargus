@@ -1,0 +1,18 @@
+#!/bin/sh -e
+
+# Source debconf library
+. /usr/share/debconf/confmodule
+
+db_input high shared/stargusextractdata || true
+db_get shared/stargusextractdata
+if [ "$RET" = "true" ]; then
+    db_input high shared/starguscdpath || true
+
+    db_go || true
+
+    db_input medium shared/stargusextractvideo || true
+
+    db_go || true
+fi
+db_stop || true
+

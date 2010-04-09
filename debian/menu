@@ -1,0 +1,3 @@
+?package(stargus):needs="x11" section="Games/Strategy" \
+ title="Stargus" command="/usr/games/stargus" \
+ icon="/usr/share/icons/stargus.png"
