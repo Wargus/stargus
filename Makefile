@@ -4,8 +4,8 @@ CC = g++
 CROSSDIR = /usr/local/cross
 STRATAGUSPATH = ../stratagus/
 
-CFLAGS = -I/usr/local/include -Wall -Wsign-compare
-LDFLAGS = -lz -lpng -lm -L/usr/local/lib
+CXXFLAGS = -I/usr/local/include -Wall -Wsign-compare -m32
+LDFLAGS = -lz -lpng -lm -L/usr/local/lib -m32
 
 all: cleanobj startool
 
