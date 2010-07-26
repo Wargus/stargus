@@ -238,6 +238,8 @@ DefinePanelContents(
 ]]
   )
 
+UI.MessageFont = Fonts["game"]
+UI.MessageScrollSpeed = 5
 
 DefineCursor({
   Name = "cursor-point",
