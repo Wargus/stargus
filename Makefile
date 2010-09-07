@@ -16,7 +16,7 @@ cleanobj:
 	rm -f startool.o mpq.o
 
 clean:
-	rm -rf startool startool.exe startool.o data.wc2 stargus-* stargus
+	rm -rf startool startool.exe startool.o data.wc2 stargus-* stargus mpq.o scm.o
 
 strip:
 	strip startool

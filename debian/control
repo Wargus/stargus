@@ -7,7 +7,7 @@ Standards-Version: 3.6.1
 
 Package: stargus
 Architecture: any
-Depends: stratagus-gl|stratagus, vorbis-tools, cdparanoia, vorbis-tools, ${shlibs:Depends}
+Depends: stratagus, ${shlibs:Depends}
 Description: stargus is a game set for the Stratagus engine.
  Stargus can be used to play Starcraft from Blizzard Entertainment.
  .
