@@ -1,47 +1,46 @@
+#
+#    Makefile
+#    Copyright (C) 2010  Pali Rohár <pali.rohar@gmail.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
 
-CC = g++
+CC = gcc
+CXX = g++
+WINDRES = windres
 
-CROSSDIR = /usr/local/cross
-STRATAGUSPATH = ../stratagus/
+CFLAGS = -O2 -W -Wall -fsigned-char
+CXXFLAGS = $(CFLAGS) -Wno-write-strings -m32
+LDFLAGS = -lz -lpng -lm -m32
+GTKFLAGS = $(shell pkg-config --cflags --libs gtk+-2.0)
 
-CXXFLAGS = -I/usr/local/include -Wall -Wsign-compare -m32
-LDFLAGS = -lz -lpng -lm -L/usr/local/lib -m32
+all: startool stargus
 
-all: cleanobj startool
-
-startool: startool.o mpq.o scm.o
-	$(CC) -o $@ $^ $(LDFLAGS)
-
-cleanobj:
-	rm -f startool.o mpq.o
+win32: startool.exe stargus.exe
 
 clean:
-	rm -rf startool startool.exe startool.o data.wc2 stargus-* stargus mpq.o scm.o
+	rm -rf startool startool.exe startool.o stargus stargus.exe stargus.rc.o stargus.o mpq.o scm.o
 
-strip:
-	strip startool
-#	strip startool.exe
+startool startool.exe: startool.o mpq.o scm.o
+	$(CXX) $^ $(LDFLAGS) -o $@
 
-date = $(shell date +%y%m%d)
-ver = 2.1pre2
+stargus: stargus.c
+	$(CC) $^ $(GTKFLAGS) -o $@
 
-release: release-src release-linux
+%.rc.o: %.rc
+	$(WINDRES) $^ -O coff -o $@
 
-release-src: clean cleanobj
-	echo `find Makefile build.* contrib campaigns startool.c startool.ds* scripts maps | grep -v 'CVS' | grep -v '/\.'` > .list
-	mkdir stargus-$(ver); \
-	for i in `cat .list`; do echo $$i; done | cpio -pdml --quiet stargus-$(ver);\
-	rm -rf `find stargus-$(ver) | grep -i cvs`; \
-	tar -zcf stargus-$(ver)-src.tar.gz stargus-$(ver); \
-	zip -qr stargus-$(ver)-src.zip stargus-$(ver); \
-	rm -rf stargus-$(ver) .list;
-
-release-linux: clean startool strip cleanobj
-	pwd
-	cp -f $(STRATAGUSPATH)stratagus .
-	echo `find Makefile build.sh contrib campaigns startool scripts maps stratagus | grep -v 'CVS' | grep -v '/\.'` > .list
-	mkdir stargus-$(ver); \
-	for i in `cat .list`; do echo $$i; done | cpio -pdml --quiet stargus-$(ver);\
-	rm -rf `find stargus-$(ver) | grep -i cvs`; \
-	tar -zcf stargus-$(ver)-linux.tar.gz stargus-$(ver); \
-	rm -rf stargus-$(ver) .list stratagus;
+stargus.exe: stargus.o stargus.rc.o
+	$(CC) $^ -mwindows -o $@
