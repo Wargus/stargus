@@ -1,0 +1,42 @@
+#ifdef _WIN64
+#define NAME "Stargus (64 bit)"
+#else
+#define NAME "Stargus"
+#endif
+
+#define DESCRIPTION NAME
+#define VERSION "0.3"
+#define VERSION_VS 0,3,0,0
+#define HOMEPAGE "https://launchpad.net/stargus"
+#define LICENSE "GPL v2"
+#define COPYRIGHT "Copyright (c) 1998-2010 by The Stratagus Project and Pali Rohar"
+
+1 ICON "contrib/icon.ico"
+1 VERSIONINFO
+FILEVERSION	VERSION_VS
+PRODUCTVERSION	VERSION_VS
+FILEOS		4
+FILETYPE	1
+
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "040904E4"
+		BEGIN
+			VALUE "FileDescription",        DESCRIPTION
+			VALUE "FileVersion",            VERSION
+			VALUE "InternalName",           NAME
+			VALUE "LegalCopyright",         COPYRIGHT
+			VALUE "License",                LICENSE
+			VALUE "Homepage",               HOMEPAGE
+			VALUE "OriginalFilename",       "stargus.exe"
+			VALUE "ProductName",            NAME
+			VALUE "ProductVersion",         VERSION
+		END
+	END
+
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x409, 1252
+	END
+END
