@@ -32,7 +32,7 @@
 
 ;--------------------------------
 
-!define ICON "contrib/icon.ico"
+!define ICON "contrib/stargus.ico"
 !define STARGUS "stargus.exe"
 !define STARTOOL "startool.exe"
 !define UNINSTALL "uninstall.exe"
