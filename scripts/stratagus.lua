@@ -29,10 +29,20 @@
 --      $Id$
 
 -- For documentation see stratagus/doc/scripts/scripts.html
-print("Stratagus default config file loading ...\n")
+--print("Stratagus default config file loading ...\n")
 
 -- Config file version
 --(define media-version (list 'wc2 'class 'wc2 'version '(1 18 0)))
+
+-------------------------------------------------------------------------------
+--  Version
+-------------------------------------------------------------------------------
+
+Name = "Stargus"
+Version = "0.3"
+Homepage = "https://launchpad.net/stargus"
+Licence = "GPL v2"
+Copyright = "Copyright (c) 1998-2010 by The Stratagus Project and Pali Rohar"
 
 -------------------------------------------------------------------------------
 --  Config-Part
@@ -324,9 +334,13 @@ if (preferences == nil) then
     TipNumber = 0,
     ShowTips = true,
     GrabMouse = false,
+    UseOpenGL = false,
+    MaxOpenGLTexture = 0,
   }
 end
 
+SetUseOpenGL(preferences.UseOpenGL)
+SetMaxOpenGLTexture(preferences.MaxOpenGLTexture)
 SetVideoResolution(preferences.VideoWidth, preferences.VideoHeight)
 SetVideoFullScreen(preferences.VideoFullScreen)
 SetLocalPlayerName(preferences.PlayerName)
@@ -357,4 +371,4 @@ Load("scripts/ai.lua")
 Load("scripts/commands.lua")
 Load("scripts/cheats.lua")
 
-print("... ready!\n")
+--print("... ready!\n")
