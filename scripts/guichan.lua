@@ -690,12 +690,16 @@ function BuildProgramStartMenu()
   local offx = (Video.Width - 640) / 2
   local offy = (Video.Height - 480) / 2
 
+  menu:addLabel(Name .. " V" .. Version .. "  " .. Homepage, offx + 320, offy + 426 + 18*0)
+  menu:addLabel("Stratagus V" .. GetStratagusVersion() .. "  " .. GetStratagusHomepage(), offx + 320, offy + 426 + 18*1)
+  menu:addLabel(Copyright, offx + 320, offy + 390 + 18*4)
+
   menu:addFullButton("~!Single Player Game", "s", offx + 208, offy + 104 + 36*0,
     function() RunSinglePlayerGameMenu(); menu:stop(1) end)
   menu:addFullButton("~!Multi Player Game", "m", offx + 208, offy + 104 + 36*1,
     function() RunMultiPlayerGameMenu(); menu:stop(1) end)
   menu:addFullButton("~!Campaign Game", "c", offx + 208, offy + 104 + 36*2,
-    function() RunCampaignGameMenu(); menu:stop(1) end)
+    function() RunCampaignGameMenu(); menu:stop(1) end):setEnabled(false)
   menu:addFullButton("~!Load Game", "l", offx + 208, offy + 104 + 36*3,
     function() RunLoadGameMenu(); menu:stop(1) end)
   menu:addFullButton("~!Replay Game", "r", offx + 208, offy + 104 + 36*4,
