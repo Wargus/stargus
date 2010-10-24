@@ -17,21 +17,24 @@
 #
 #
 
-CC = gcc
-CXX = g++
+STRIP = strip
+UPX = upx
 WINDRES = windres
+NSIS = makensis
 
 CFLAGS = -O2 -W -Wall -fsigned-char
 CXXFLAGS = $(CFLAGS) -Wno-write-strings -m32
 LDFLAGS = -lz -lpng -lm -m32
 GTKFLAGS = $(shell pkg-config --cflags --libs gtk+-2.0)
+UPXFLAGS = -9
+NSISFLAGS =
 
 all: startool stargus
 
 win32: startool.exe stargus.exe
 
 clean:
-	rm -rf startool startool.exe startool.o stargus stargus.exe stargus.rc.o stargus.o mpq.o scm.o
+	$(RM) startool startool.exe startool.o stargus stargus.exe stargus.rc.o stargus.o mpq.o scm.o
 
 startool startool.exe: startool.o mpq.o scm.o
 	$(CXX) $^ $(LDFLAGS) -o $@
@@ -44,3 +47,18 @@ stargus: stargus.c
 
 stargus.exe: stargus.o stargus.rc.o
 	$(CC) $^ -mwindows -o $@
+
+strip: startool stargus
+	$(STRIP) $^
+
+win32-strip: startool.exe stargus.exe
+	$(STRIP) $^
+
+pack: startool stargus
+	$(UPX) $(UPXFLAGS) $^
+
+win32-pack: startool.exe stargus.exe
+	$(UPX) $(UPXFLAGS) $^
+
+win32-installer: startool.exe stargus.exe stargus.nsi
+	$(NSIS) $(NSISFLAGS) stargus.nsi
