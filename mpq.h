@@ -60,7 +60,7 @@ public:
 	~CMpq();
 
 		/// Read mpq info
-	int ReadInfo(FILE* fpMpq);
+	int ReadInfo(FILE* fpMpq, char* list = NULL);
 		/// Extract mpq entry
 	int ExtractTo(unsigned char* mpqbuf, UInt32 entry, FILE* fpMpq);
 

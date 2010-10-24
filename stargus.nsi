@@ -35,6 +35,7 @@
 !define ICON "contrib/stargus.ico"
 !define STARGUS "stargus.exe"
 !define STARTOOL "startool.exe"
+!define MPQLIST "mpqlist.txt"
 !define UNINSTALL "uninstall.exe"
 !define INSTALLER "${NAME}-${VERSION}.exe"
 !define INSTALLDIR "$PROGRAMFILES\${NAME}\"
@@ -248,6 +249,7 @@ Section "${NAME}"
 	SetOutPath "$INSTDIR"
 	File "${STARGUS}"
 	File "${STARTOOL}"
+	File "${MPQLIST}"
 
 	SetOutPath "$INSTDIR\scripts"
 	File /r /x .svn "scripts\"
@@ -311,6 +313,11 @@ Section "un.${NAME}" Executable
 
 	Delete "$INSTDIR\${STARGUS}"
 	Delete "$INSTDIR\${STARTOOL}"
+	Delete "$INSTDIR\${MPQLIST}"
+	Delete "$INSTDIR\graphics\tilesets\fog.png"
+	RMDir "$INSTDIR\graphics\tilesets"
+	RMDir "$INSTDIR\graphics"
+	RMDir /r "$INSTDIR\scripts"
 	RMDir "$INSTDIR"
 
 	!insertmacro MUI_STARTMENU_GETFOLDER Application $STARTMENUDIR

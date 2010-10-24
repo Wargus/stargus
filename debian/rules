@@ -46,6 +46,7 @@ install: build
 	install -m0644 debian/stargus.desktop $(CURDIR)/debian/stargus/usr/share/applications
 
 	install -m0644 contrib/fog.png $(CURDIR)/debian/stargus/usr/share/games/stratagus/stargus/graphics/tilesets
+	install -m0644 mpqlist.txt $(CURDIR)/debian/stargus/usr/share/games/stratagus/stargus
 	convert contrib/stargus.ico $(CURDIR)/debian/stargus/usr/share/pixmaps/stargus.png
 
 # Build architecture-independent files here.

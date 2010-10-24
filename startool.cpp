@@ -2787,7 +2787,10 @@ int OpenArchive(const char *file)
 		return -1;
 	}
 
-	if (Mpq->ReadInfo(MpqFD)) {
+	char buf[1024];
+	sprintf(buf, "%s/mpqlist.txt", Dir);
+
+	if (Mpq->ReadInfo(MpqFD, buf)) {
 		printf("MpqReadInfo failed\n");
 		return -1;
 	}
@@ -3156,7 +3159,8 @@ int ConvertTileset(char *listfile, char *file)
 
 	image = ConvertTile(minp, (char *)megp, megl, (char *)mapp, mapl, &w, &h);
 
-	sprintf(buf, "%s-flags.txt", strstr(listfile, "\\") + 1);
+#ifdef DEBUG
+	sprintf(buf, "%s/%s-flags.txt", Dir, strstr(listfile, "\\") + 1);
 	FILE *fd = fopen(buf, "w");
 	int i, j, tiles, start = -1;
 	for (i = 0; i < flagl / 32; ++i) {
@@ -3186,6 +3190,7 @@ int ConvertTileset(char *listfile, char *file)
 		}
 	}
 	fclose(fd);
+#endif
 
 	free(megp);
 	free(minp);

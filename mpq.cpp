@@ -123,13 +123,13 @@ extern const UInt32 small_tbl2[32];
 /**
 **  Analyzing archive
 */
-int CMpq::ReadInfo(FILE *fpMpq)
+int CMpq::ReadInfo(FILE *fpMpq, char * list)
 {
 	UInt32 mpq_header[2] = { 0x1a51504d, 0x00000020 };
 	int i, j;
 	UInt32 detected = 0;
 	UInt32 tmp, scrc1, scrc2, scrc3, pointer_ht;
-	FILE *fpList;
+	FILE *fpList = NULL;
 	char prnbuf[PATH_MAX+100];
 	static char *name_htable = "(hash table)";		// Name of hash table (used to decode hash table)
 	static char *name_btable = "(block table)";		// Name of block table (used to decode block tabl
@@ -174,11 +174,12 @@ int CMpq::ReadInfo(FILE *fpMpq)
 	tmp = Crc(name_btable, massive_base, 0x300);
 	Decode(BlockTable, massive_base, tmp, length_btbl);
 
-	fpList = fopen(DEFAULT_LIST, "rt");
-	if (!fpList) {
-		sprintf(prnbuf, "tools/%s", DEFAULT_LIST);
-		fpList = fopen(prnbuf, "rt");
-	}
+	if (list)
+		fpList = fopen(list, "rt");
+
+	if (!fpList)
+		fpList = fopen(DEFAULT_LIST, "rt");
+
 	if (fpList) {
 		while (fgets(prnbuf, PATH_MAX, fpList) != 0) {
 			if (*(prnbuf + strlen(prnbuf) - 1) == '\n') {
