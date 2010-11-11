@@ -2,16 +2,17 @@ Source: stargus
 Section: games
 Priority: optional
 Maintainer: Pali Rohár <pali.rohar@gmail.com>
-Build-Depends: debhelper (>> 4.0.0), pkg-config, imagemagick, libx11-dev
- libpng12-dev (>= 1.2.5), libbz2-dev, libhildon1-dev | libgtk2.0-dev
-Standards-Version: 3.6.1
+Build-Depends: debhelper (>> 5), cdbs, pkg-config, imagemagick,
+ sharutils, zlib1g-dev, libbz2-dev, libx11-dev,
+ libpng12-dev (>= 1.2.5), libhildon1-dev | libgtk2.0-dev
+Standards-Version: 3.8.4
 Homepage: https://launchpad.net/stargus
 Vcs-Browser: https://code.launchpad.net/stargus
 Vcs-Bzr: lp:stargus
 
 Package: stargus
 Architecture: any
-Depends: stratagus (>= 2.2.5.4), ${shlibs:Depends}
+Depends: ${stratagus:Depends}, ${misc:Depends}, ${shlibs:Depends}
 Provides: stratagus-data
 Description: Starcraft data game set for the Stratagus engine
  Stargus can be used to play Starcraft from Blizzard Entertainment.

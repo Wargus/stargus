@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=Stargus
-Comment=Stratagus Starcraft data set
+Name=Stargus - Warcraft II
+Comment=Starcraft data game set for the Stratagus engine
 Exec=/usr/games/stargus
-Icon=stargus.png
+Icon=stargus
 Terminal=false
 Type=Application
 Categories=Game;StrategyGame;

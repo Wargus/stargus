@@ -1,19 +1,13 @@
-Template: shared/stargusextractdata
+Template: stargus/extractdata
 Type: boolean
 Default: true
-Description: Extract the data
+Description: Extract Starcraft data files now
 
-Template: shared/starguscdpath
+Template: stargus/cdpath
 Type: string
-Default: /mnt/cdrom
-Description: Path to your Starcraft CD mount point.
+Default: /media/cdrom
+Description: Path to your Starcraft CD mount point
 
-Template: shared/stargusextractvideo
-Type: boolean
-Default: true
-Description: Also extract the video data.
-
-Template: shared/stargusextractmusic
-Type: boolean
-Default: true
-Description: Also extract the audio CD tracks.
+Template: stargus/nodata
+Type: error
+Description: Starcraft data files not found

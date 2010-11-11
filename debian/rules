@@ -1,76 +1,83 @@
 #!/usr/bin/make -f
-# debian/rules that uses debhelper.
-# GNU copyright 1997 to 1999 by Joey Hess.
-# GNU Copyright 2002-2004 by David Martínez Moreno.
+#
+#    debian/rules
+#    Copyright (C) 2010  Pali RohÃ¡r <pali.rohar@gmail.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
 
-# Do you want verbosity...? Uncomment this.
-#export DH_VERBOSE=1
+include /usr/share/cdbs/1/rules/debhelper.mk
 
-export LC_ALL=C
+VERSION := $(shell dpkg-parsechangelog | sed -ne "s/^Version: \(.*\)/\1/p" | sed "s/-[^-]*$$//" )
+DEB_DH_GENCONTROL_ARGS_ALL := -- -c$(CURDIR)/debian/control.new
 
-# We have to honor DEB_BUILD...
-ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-CONFIGURE_FLAGS += --enable-profile
-endif
-
-DEB_BUILD_GNU_CPU ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_CPU)
-
-export CFLAGS
-
-build: 
-	dh_testdir
-	$(MAKE)
-
-clean: 
-	dh_testdir
-	dh_testroot
-
+clean::
 	$(MAKE) clean
+	$(RM) $(CURDIR)/debian/control.new
 
-	dh_clean
-
-install: build
-	dh_testdir
-	dh_testroot
-	dh_clean -k
-	dh_installdirs
-
-	if [ -d .svn ]; then \
-		svn export scripts $(CURDIR)/debian/stargus/usr/share/games/stratagus/stargus/scripts  --force; \
+build:
+	if [ -f /etc/maemo_version ]; then \
+		$(MAKE) all starextract GTKFLAGS="$(shell pkg-config --cflags --libs hildon-1 gtk+-2.0)"; \
 	else \
-		cp -r scripts $(CURDIR)/debian/wargus/usr/share/games/stratagus/wargus/; \
+		$(MAKE); \
+	fi
+	
+install/stargus::
+	convert $(CURDIR)/contrib/stargus.ico $(CURDIR)/debian/stratagus/usr/share/pixmaps/stargus.png
+	if [ -f /etc/maemo_version ]; then \
+		install -m0755 starextract $(CURDIR)/debian/stargus/usr/games; \
 	fi
 
-	install -m0755 startool $(CURDIR)/debian/stargus/usr/games
-	install -m0755 stargus $(CURDIR)/debian/stargus/usr/games
-	install -m0644 debian/stargus.desktop $(CURDIR)/debian/stargus/usr/share/applications
+binary-fixup/stargus::
+	if [ -f /etc/maemo_version ]; then \
+		mkdir -p $(CURDIR)/debian/stargus/usr/share/applications/hildon; \
+		mkdir -p $(CURDIR)/debian/stargus/opt/stratagus/bin; \
+		mkdir -p $(CURDIR)/debian/stargus/opt/stratagus/share/doc; \
+		mkdir -p $(CURDIR)/debian/stargus/opt/man/man6; \
+		mv $(CURDIR)/debian/stargus/usr/games/* $(CURDIR)/debian/stargus/opt/stratagus/bin/; \
+		mv $(CURDIR)/debian/stargus/usr/share/doc/stargus $(CURDIR)/debian/stargus/opt/stratagus/share/doc/; \
+		mv $(CURDIR)/debian/stargus/usr/share/games/stratagus/stargus $(CURDIR)/debian/stargus/opt/stratagus/share/; \
+		mv $(CURDIR)/debian/stargus/usr/share/man/man6/* $(CURDIR)/debian/stargus/opt/man/man6/; \
+		mv $(CURDIR)/debian/stargus/usr/share/applications/stargus.desktop $(CURDIR)/debian/stargus/usr/share/applications/hildon/stargus.desktop; \
+		ln -s /opt/stratagus/bin/starextract $(CURDIR)/debian/stargus/usr/games/starextract; \
+		ln -s /opt/stratagus/bin/startool $(CURDIR)/debian/stargus/usr/games/startool; \
+		ln -s /opt/stratagus/bin/stargus $(CURDIR)/debian/stargus/usr/games/stargus; \
+		ln -s /opt/stratagus/share/stargus $(CURDIR)/debian/stargus/usr/share/games/stratagus/stargus; \
+		ln -s /opt/stratagus/share/doc/stargus $(CURDIR)/debian/stargus/usr/share/doc/stargus; \
+		ln -s /opt/man/man6/stargus.6.gz $(CURDIR)/debian/stargus/usr/share/man/man6/stargus.6.gz; \
+		ln -s /opt/man/man6/startool.6.gz $(CURDIR)/debian/stargus/usr/share/man/man6/startool.6.gz; \
+		echo "X-Osso-Type=application/x-executable" >> $(CURDIR)/debian/stargus/usr/share/applications/hildon/stargus.desktop; \
+		sed "s/Exec=.*/Exec=\/opt\/stratagus\/bin\/stargus/" -i $(CURDIR)/debian/stargus/usr/share/applications/hildon/stargus.desktop; \
+		sed "s/Name=.*/Name=Stargus/" -i $(CURDIR)/debian/stargus/usr/share/applications/hildon/stargus.desktop; \
+	fi
 
-	install -m0644 contrib/fog.png $(CURDIR)/debian/stargus/usr/share/games/stratagus/stargus/graphics/tilesets
-	install -m0644 mpqlist.txt $(CURDIR)/debian/stargus/usr/share/games/stratagus/stargus
-	convert contrib/stargus.ico $(CURDIR)/debian/stargus/usr/share/pixmaps/stargus.png
-
-# Build architecture-independent files here.
-binary-indep: build install
-
-# Build architecture-dependent files here.
-binary-arch: build install
-	dh_testdir
-	dh_testroot
-	dh_installdebconf
-	dh_installdocs
-	dh_installmenu
-	dh_installman
-	dh_desktop
-	dh_installchangelogs
-	dh_strip
-	dh_compress
-	dh_fixperms
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install
-
+binary-predeb/stargus::
+	echo "stratagus:Depends=stratagus (>= $(VERSION))" >> $(CURDIR)/debian/stargus.substvars
+	cp $(CURDIR)/debian/control $(CURDIR)/debian/control.new
+	if [ -f /etc/maemo_version ]; then \
+		sed -n -e "1,/^Depends:.*$$/p" $(CURDIR)/debian/control > $(CURDIR)/debian/control.new; \
+		sed "s/Section: .*/Section: user\/games/" -i $(CURDIR)/debian/control.new; \
+		echo "XSBC-Bugtracker: https://bugs.launchpad.net/stargus" >> $(CURDIR)/debian/control.new; \
+		echo "XB-Maemo-Display-Name: Stargus - Starcraft" >> $(CURDIR)/debian/control.new; \
+		echo "XB-Maemo-Icon-26:" >> $(CURDIR)/debian/control.new; \
+		for line in $(shell convert $(CURDIR)/contrib/stargus.ico -resize 48x48 png:- | uuencode -m - | tail -n +2 | head -n -1); do \
+			echo " $$line" >> $(CURDIR)/debian/control.new; \
+		done; \
+		sed "/^# Source debconf library$$/d;/^. \/usr\/share\/debconf\/confmodule$$/d" -i $(CURDIR)/debian/stargus/DEBIAN/postinst; \
+		bash -c 'sed -n -e "1,/^extract() {$$/p;/^}$$/,\$$p;/extract()/a\\`echo -e "\n\t"`cd /opt/stratagus/share/stargus\\`echo -e "\n\t"`run-standalone.sh /opt/stratagus/bin/starextract\\`echo -e "\n\t"`return $$\?" -i $(CURDIR)/debian/stargus/DEBIAN/postinst'; \
+		rm -f $(CURDIR)/debian/stargus/DEBIAN/config; \
+		rm -f $(CURDIR)/debian/stargus/DEBIAN/templates; \
+		sed -n -e "/^Depends:.*$$/,\$$p" $(CURDIR)/debian/control | tail -n +2 >> $(CURDIR)/debian/control.new; \
+	fi
