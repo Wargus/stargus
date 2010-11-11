@@ -29,7 +29,7 @@ clean::
 
 build:
 	if [ -f /etc/maemo_version ]; then \
-		$(MAKE) all starextract GTKFLAGS="$(shell pkg-config --cflags --libs hildon-1 gtk+-2.0)"; \
+		$(MAKE) all starextract CXXFLAGS="-O2 -W -Wall -fsigned-char -Wno-write-strings" LDFLAGS="-lz -lpng -lm" GTKFLAGS="$(shell pkg-config --cflags --libs hildon-1 gtk+-2.0)"; \
 	else \
 		$(MAKE); \
 	fi

@@ -34,7 +34,7 @@ all: startool stargus
 win32: startool.exe stargus.exe
 
 clean:
-	$(RM) startool startool.exe startool.o stargus stargus.exe stargus.rc.o stargus.o mpq.o scm.o
+	$(RM) startool startool.exe startool.o stargus stargus.exe starextract stargus.rc.o stargus.o mpq.o scm.o
 
 startool startool.exe: startool.o mpq.o scm.o
 	$(CXX) $^ $(LDFLAGS) -o $@
@@ -47,6 +47,9 @@ stargus: stargus.c
 
 stargus.exe: stargus.o stargus.rc.o
 	$(CC) $^ -mwindows -o $@
+
+starextract: starextract.c
+	$(CC) $^ $(CFLAGS) $(GTKFLAGS) $(LDFLAGS) -o $@
 
 strip: startool stargus
 	$(STRIP) $^
