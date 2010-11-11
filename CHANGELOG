@@ -2,9 +2,10 @@ UNRELEASED:
  - Fixed for new Stratagus
  - Compile startool always 32bit
  - Added icon
- - Fixed debian scripts
+ - Rewrited debian scripts
  - Rewrited Makefile
  - Added launcher starcraft.c
  - Rewrited Windows NSIS Installer
  - Fixed Windows resource file
  - Added more resolutions and OpenGL settings in option menu
+ - Ported to Maemo
