@@ -22,8 +22,8 @@
 ;--------------------------------
 
 !define NAME "Stargus"
-!define VERSION "0.3"
-!define VIVERSION "${VERSION}.0.0"
+!define VERSION "2.2.5.4"
+!define VIVERSION "${VERSION}"
 !define HOMEPAGE "https://launchpad.net/stargus"
 !define LICENSE "GPL v2"
 !define COPYRIGHT "Copyright (c) 1998-2010 by The Stratagus Project and Pali Rohar"
