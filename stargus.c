@@ -17,6 +17,10 @@
 
 */
 
+#define GAMENAME "Stargus"
+#define GAMECD "Starcraft CD"
+#define GAME "stargus"
+
 #if defined (MAEMO_GTK) || defined (MAEMO_CHANGES)
 #define MAEMO
 #endif
@@ -62,17 +66,17 @@
 #endif
 
 #if ! defined(WIN32) && ! defined(DATA_PATH)
-#define DATA_PATH "/usr/share/games/stratagus/stargus"
+#define DATA_PATH "/usr/share/games/stratagus/" GAME
 #endif
 
 #if ! defined(WIN32) && ! defined(STRATAGUS_BIN)
 #define STRATAGUS_BIN "/usr/games/stratagus"
 #endif
 
-#define TITLE "Stargus"
-#define STRATAGUS_NOT_FOUND "Stratagus is not installed.\nYou need Stratagus to run Stargus!\nFirst install Stratagus from https://launchpad.net/stratagus"
-#define DATA_NOT_EXTRACTED "Stargus data was not extracted yet.\nYou need extract data from original Starcraft CD first!"
-#define CONSOLE_MODE_NOT_ROOT "You must be root to run Stargus in console framebuffer mode"
+#define TITLE GAMENAME
+#define STRATAGUS_NOT_FOUND "Stratagus is not installed.\nYou need Stratagus to run " GAMENAME "!\nFirst install Stratagus from https://launchpad.net/stratagus"
+#define DATA_NOT_EXTRACTED GAMENAME " data was not extracted yet.\nYou need extract data from original " GAMECD " first!"
+#define CONSOLE_MODE_NOT_ROOT "You must be root to run " GAMENAME " in console framebuffer mode"
 
 #define BUFF_SIZE 1024
 
