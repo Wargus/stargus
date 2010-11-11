@@ -2,19 +2,19 @@ Installation Instructions
 =========================
 
 NOTE: stratagus ( http://stratagus.org ) is required.
-wargus and stratagus version must match
-(same version or svn from the same date)
+stargus and stratagus version must match
 
-The Battle.Net version is NOT supported, you must use the DOS version.
+1. compile: 'make'
 
-Either the Expansion or Original CD can be used.
-Do not extract from both. Extract from one CD only.
-
-1. extract data: './build.sh -p /path/to/cd [ -o /path/to/outputdir ]'
+2. extract data: './startool /path/to/cd /path/to/outputdir'
 	eg:
-	./build.sh -p d:/
-	./build.sh -p /cdrom
+	./startool d:/ data.sg
+	./startool /cdrom data.sg
 
-2. start stratagus: '/path/to/stratagus -d /path/to/outputdir'
+3. copy files:
+	cp -r scripts data.sg
+	cp contrib/fog.png data.sg/graphics/tilesets
+
+4. start stratagus: '/path/to/stratagus -d /path/to/outputdir'
 	eg:	
-	./stratagus -d data.wc2
+	./stratagus -d data.sg
