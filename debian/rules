@@ -35,7 +35,9 @@ build:
 	fi
 	
 install/stargus::
-	convert $(CURDIR)/contrib/stargus.ico $(CURDIR)/debian/stratagus/usr/share/pixmaps/stargus.png
+	convert $(CURDIR)/contrib/stargus.ico $(CURDIR)/debian/stargus/usr/share/pixmaps/stargus.png
+	mv $(CURDIR)/debian/stargus/usr/share/pixmaps/stargus-0.png $(CURDIR)/debian/stargus/usr/share/pixmaps/stargus.png
+	rm -f $(CURDIR)/debian/stargus/usr/share/pixmaps/stargus-1.png
 	if [ -f /etc/maemo_version ]; then \
 		install -m0755 starextract $(CURDIR)/debian/stargus/usr/games; \
 	fi
