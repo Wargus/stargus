@@ -58,7 +58,7 @@
 ;--------------------------------
 
 LangString INSTALLER_RUNNING ${LANG_ENGLISH} "${NAME} Installer is already running."
-LangString NO_STRATAGUS ${LANG_ENGLISH} "${STRATAGUS_NAME} is not installed.$\nYou need ${STRATAGUS_NAME} to run ${NAME}!$\nFirst install ${STRATAGUS_NAME} from ${STRATAGUS_HOMEPAGE}"
+LangString NO_STRATAGUS ${LANG_ENGLISH} "${STRATAGUS_NAME} ${VERSION} is not installed.$\nYou need ${STRATAGUS_NAME} ${VERSION} to run ${NAME}!$\nFirst install ${STRATAGUS_NAME} ${VERSION} from ${STRATAGUS_HOMEPAGE}"
 
 LangString REMOVEPREVIOUS ${LANG_ENGLISH} "Removing previous installation"
 LangString REMOVECONFIGURATION ${LANG_ENGLISH} "Removing configuration and data files:"
@@ -185,7 +185,7 @@ Function .onInit
 !endif
 
 	ReadRegStr $0 HKLM "${STRATAGUS_REGKEY}" "DisplayVersion"
-	StrCmp $0 "" 0 +3
+	StrCmp $0 "${VERSION}" +3
 
 	MessageBox MB_OK|MB_ICONSTOP "$(NO_STRATAGUS)"
 	Abort
@@ -200,6 +200,29 @@ FunctionEnd
 ;--------------------------------
 
 Function PageExtractDataPre
+
+	File "/oname=$TEMP\${STARTOOL}" "${STARTOOL}"
+
+	ClearErrors
+	FileOpen $0 "$INSTDIR\extracted" "r"
+	IfErrors extract
+
+	FileRead $0 $1
+	FileClose $0
+
+	ExecDos::exec /TOSTACK "$\"$TEMP\${STARTOOL}$\" -V"
+	Pop $0
+	Pop $2
+	Delete "$TEMP\${STARTOOL}"
+
+	StrCpy $2 "$2$\r$\n"
+	IntCmp $0 0 0 0 extract
+	StrCmp $1 $2 0 extract
+
+	StrCpy $EXTRACTNEEDED "no"
+	Abort
+
+extract:
 
 	StrCpy $EXTRACTNEEDED "yes"
 
