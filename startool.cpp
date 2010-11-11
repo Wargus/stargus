@@ -31,6 +31,16 @@
 //@{
 
 /*----------------------------------------------------------------------------
+--  General
+----------------------------------------------------------------------------*/
+
+#define VERSION "1.0" // Version of extractor wartool
+
+const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2010 by the Stratagus Project.\n"\
+"  Written by Lutz Sammer, Nehal Mistry, and Jimmy Salmon and Pali Rohar.\n"\
+"  https://launchpad.net/stargus";
+
+/*----------------------------------------------------------------------------
 --		Includes
 ----------------------------------------------------------------------------*/
 
@@ -4103,11 +4113,13 @@ void CreatePanels()
 */
 void Usage(const char* name)
 {
-	printf("startool for Stratagus (c) 2002-2004 by the Stratagus Project\n\
+	printf("%s\n\
 Usage: %s archive-directory [destination-directory]\n\
+\t-V\tShow version\n\
+\t-h\tShow usage\n\
 archive-directory\tDirectory which includes the archives stardat.mpq...\n\
 destination-directory\tDirectory where the extracted files are placed.\n"
-	,name);
+	,NameLine, name);
 }
 
 /**
@@ -4122,6 +4134,7 @@ int main(int argc, char **argv)
 	int video;
 	int a;
 	int i;
+	FILE * f;
 
 	a = 1;
 	video = 0;
@@ -4132,6 +4145,12 @@ int main(int argc, char **argv)
 			++a;
 			--argc;
 			continue;
+		}
+		if (!strcmp(argv[a], "-V")) {
+			printf(VERSION "\n");
+			++a;
+			--argc;
+			exit(0);
 		}
 		if (!strcmp(argv[a], "-h")) {
 			Usage(argv[0]);
@@ -4152,6 +4171,16 @@ int main(int argc, char **argv)
 		Dir = argv[a + 1];
 	} else {
 		Dir = "data";
+	}
+
+	sprintf(buf, "%s/extracted", Dir);
+	f = fopen(buf, "r");
+	if (f) {
+		char version[20];
+		fgets(version, 20, f);
+		fclose(f);
+		if (strcmp(version, VERSION) == 0)
+			printf("Note: Data is already extracted in Dir %s with this version of startool\n", Dir);
 	}
 
 	Mpq = new CMpq;
@@ -4265,6 +4294,11 @@ int main(int argc, char **argv)
 	delete Mpq;
 
 	CreatePanels();
+
+	sprintf(buf, "%s/extracted", Dir);
+	f = fopen(buf, "w");
+	fprintf(f, VERSION "\n");
+	fclose(f);
 
 	printf("DONE!\n");
 
