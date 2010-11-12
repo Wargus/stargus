@@ -136,7 +136,7 @@ static CMpq *Mpq;
 /**
 **		Destination directory of the graphics
 */
-char *Dir = NULL;
+const char *Dir = NULL;
 
 /**
 **		Path to the tileset graphics. (default=$DIR/graphics/tilesets)
@@ -196,8 +196,8 @@ char *Dir = NULL;
 typedef struct _control_ {
 	int				Type;						/// Entry type
 	int				Version;				/// Only in this version
-	char*		File;						/// Save file
-	char*		ListFile;				/// File name in list file
+	const char*     File;					/// Save file
+	const char*     ListFile;				/// File name in list file
 	int				Arg1;						/// Extra argument 1
 	int				Arg2;						/// Extra argument 2
 	int				Arg3;						/// Extra argument 3
@@ -2815,14 +2815,14 @@ int OpenArchive(const char *file)
 **
 **  @return      Pointer to uncompressed entry
 */
-unsigned char *ExtractEntry(unsigned char *name)
+unsigned char *ExtractEntry(const char *name)
 {
 	int i;
 	unsigned char *buf;
 
 	buf = NULL;
 	for (i = 0; i < Mpq->FileCount; ++i) {
-		if (!strcmp((char *)name, Mpq->FilenameTable + i * PATH_MAX)) {
+		if (!strcmp(name, Mpq->FilenameTable + i * PATH_MAX)) {
 			EntrySize = Mpq->BlockTable[i * 4 + 2];
 			buf = (unsigned char *)malloc(EntrySize + 1);
 			Mpq->ExtractTo(buf, i, MpqFD);
@@ -2857,7 +2857,7 @@ int CloseArchive(void)
 /**
 **  Convert map
 */
-int ConvertMap(char *listfile, char *file)
+int ConvertMap(const char *listfile, const char *file)
 {
 	FILE *fd;
 	unsigned char *p;
@@ -2865,7 +2865,7 @@ int ConvertMap(char *listfile, char *file)
 
 	sprintf(buf, "%s/%s", Dir, file);
 	CheckPath(buf);
-	p = ExtractEntry((unsigned char *)listfile);
+	p = ExtractEntry(listfile);
 	fd = fopen(buf, "wb");
 	if (!fd) {
 		free(p);
@@ -2904,7 +2904,7 @@ unsigned char* ConvertPaletteRGBXtoRGB(unsigned char* pal)
 /**
 **  Convert rgb to my format.
 */
-int ConvertRgb(char *listfile, char *file)
+int ConvertRgb(const char *listfile, const char *file)
 {
 	unsigned char *palp;
 	char buf[1024];
@@ -2912,7 +2912,7 @@ int ConvertRgb(char *listfile, char *file)
 	int i;
 
 	sprintf(buf, "%s.wpe", listfile);
-	palp = ExtractEntry((unsigned char *)buf);
+	palp = ExtractEntry(buf);
 	ConvertPaletteRGBXtoRGB(palp);
 
 	//
@@ -3130,7 +3130,7 @@ unsigned char *ConvertTile(unsigned char *mini, const char *mega, int msize,
 /**
 **  Convert a tileset to my format.
 */
-int ConvertTileset(char *listfile, char *file)
+int ConvertTileset(const char *listfile, const char *file)
 {
 	unsigned char *palp;
 	unsigned char *megp;
@@ -3147,24 +3147,24 @@ int ConvertTileset(char *listfile, char *file)
 
 	if (!strcmp(listfile, "tileset\\Install")) {
 		sprintf(buf, "tileset\\install.wpe");
-		palp = ExtractEntry((unsigned char *)buf);
+		palp = ExtractEntry(buf);
 		sprintf(buf, "tileset\\install.vr4");
-		minp = ExtractEntry((unsigned char *)buf);
+		minp = ExtractEntry(buf);
 	} else {
 		sprintf(buf, "%s.wpe", listfile);
-		palp = ExtractEntry((unsigned char *)buf);
+		palp = ExtractEntry(buf);
 		sprintf(buf, "%s.vr4", listfile);
-		minp = ExtractEntry((unsigned char *)buf);
+		minp = ExtractEntry(buf);
 	}
 	sprintf(buf, "%s.vx4", listfile);
-	megp = ExtractEntry((unsigned char *)buf);
+	megp = ExtractEntry(buf);
 	megl = EntrySize;
 	sprintf(buf, "%s.cv5", listfile);
-	mapp = ExtractEntry((unsigned char *)buf);
+	mapp = ExtractEntry(buf);
 	mapl = EntrySize;
 
 	sprintf(buf, "%s.vf4", listfile);
-	flagp = ExtractEntry((unsigned char *)buf);
+	flagp = ExtractEntry(buf);
 	flagl = EntrySize;
 
 	image = ConvertTile(minp, (char *)megp, megl, (char *)mapp, mapl, &w, &h);
@@ -3457,7 +3457,7 @@ void ConvertPal3(unsigned char* image, int w, int h)
 /**
 **  Convert a graphic to my format.
 */
-int ConvertGfx(char* listfile, char* file, int pale)
+int ConvertGfx(const char* listfile, const char* file, int pale)
 {
 	unsigned char* palp;
 	unsigned char* gfxp;
@@ -3467,7 +3467,7 @@ int ConvertGfx(char* listfile, char* file, int pale)
 	int h;
 	char buf[1024];
 
-	gfxp = ExtractEntry((unsigned char *)listfile);
+	gfxp = ExtractEntry(listfile);
 
 	gfxp2 = NULL;
 	image = ConvertGraphic(1, gfxp, &w, &h, gfxp2, 0);
@@ -3492,7 +3492,7 @@ int ConvertGfx(char* listfile, char* file, int pale)
 /**
 **  Convert an uncompressed graphic to my format.
 */
-int ConvertGfu(char* listfile, char* file, int pale)
+int ConvertGfu(const char* listfile, const char* file, int pale)
 {
 	unsigned char* palp;
 	unsigned char* gfup;
@@ -3504,7 +3504,7 @@ int ConvertGfu(char* listfile, char* file, int pale)
 	unsigned char* p;
 	unsigned char* end;
 
-	gfup = ExtractEntry((unsigned char *)listfile);
+	gfup = ExtractEntry(listfile);
 
 	gfup2 = NULL;
 	image = ConvertGraphic(0, gfup, &w, &h, gfup2, 0);
@@ -3576,7 +3576,7 @@ void SaveButton(char *name, unsigned char *image, unsigned char *palp, int size,
 	free(button);
 }
 
-int ConvertWidgets(char* listfile, char* file, int pale)
+int ConvertWidgets(const char* listfile, const char* file, int pale)
 {
 	unsigned char* palp;
 	unsigned char* gfup;
@@ -3588,7 +3588,7 @@ int ConvertWidgets(char* listfile, char* file, int pale)
 	unsigned char* p;
 	unsigned char* end;
 
-	gfup = ExtractEntry((unsigned char *)listfile);
+	gfup = ExtractEntry(listfile);
 
 	gfup2 = NULL;
 	image = ConvertGraphic(0, gfup, &w, &h, gfup2, 0);
@@ -3769,7 +3769,7 @@ void ConvertPcxToRaw(unsigned char *pcx, unsigned char **raw, unsigned char **pa
 /**
 **  Convert a pcx graphic to my format
 */
-void ConvertPcx(char *listfile, char *file)
+void ConvertPcx(const char *listfile, const char *file)
 {
 	unsigned char *palp;
 	unsigned char *pcxp;
@@ -3778,7 +3778,7 @@ void ConvertPcx(char *listfile, char *file)
 	int w;
 	int h;
 
-	pcxp = ExtractEntry((unsigned char *)listfile);
+	pcxp = ExtractEntry(listfile);
 
 	ConvertPcxToRaw(pcxp, &image, &palp, &w, &h);
 	free(pcxp);
@@ -3877,7 +3877,7 @@ unsigned char *ConvertFnt(unsigned char *start, int *wp, int *hp) {
 /**
 **  Convert a font to my format.
 */
-int ConvertFont(char* listfile, char* file, int pale, int fnte __attribute__((unused))) {
+int ConvertFont(const char* listfile, const char* file, int pale, int fnte __attribute__((unused))) {
 	unsigned char* palp;
 	unsigned char* fntp;
 	unsigned char* image;
@@ -3886,7 +3886,7 @@ int ConvertFont(char* listfile, char* file, int pale, int fnte __attribute__((un
 	char buf[1024];
 
 	palp = Palettes[pale];
-	fntp = ExtractEntry((unsigned char *)listfile);
+	fntp = ExtractEntry(listfile);
 
 	image = ConvertFnt(fntp, &w, &h);
 	free(fntp);
@@ -3907,13 +3907,13 @@ int ConvertFont(char* listfile, char* file, int pale, int fnte __attribute__((un
 /**
 **  Convert pud to my format.
 */
-int ConvertWav(char *listfile, char *file, int wave __attribute__((unused)))
+int ConvertWav(const char *listfile, const char *file, int wave __attribute__((unused)))
 {
 	unsigned char *wavp;
 	char buf[1024];
 	gzFile gf;
 
-	wavp = ExtractEntry((unsigned char *)listfile);
+	wavp = ExtractEntry(listfile);
 
 	sprintf(buf, "%s/%s/%s.wav.gz", Dir, SOUND_PATH, file);
 	CheckPath(buf);
@@ -3937,7 +3937,7 @@ int ConvertWav(char *listfile, char *file, int wave __attribute__((unused)))
 /**
 **  Raw extraction
 */
-int RawExtract(char *listfile, char *file)
+int RawExtract(const char *listfile, const char *file)
 {
 	FILE *fd;
 	unsigned char *p;
@@ -3945,7 +3945,7 @@ int RawExtract(char *listfile, char *file)
 
 	sprintf(buf, "%s/%s", Dir, file);
 	CheckPath(buf);
-	p = ExtractEntry((unsigned char *)listfile);
+	p = ExtractEntry(listfile);
 	fd = fopen(buf, "wb");
 	if (!fd) {
 		free(p);
@@ -4192,7 +4192,7 @@ int main(int argc, char **argv)
 		char buf[PATH_MAX];
 		sprintf(buf, "%s/%s", archivedir, "stardat.mpq");
 		OpenArchive(buf);
-		p = ExtractEntry((unsigned char *)"rez\\minimap.bin");
+		p = ExtractEntry("rez\\minimap.bin");
 		fd = fopen("minimap.bin", "wb");
 		fwrite(p, EntrySize, 1, fd);
 		fclose(fd);
