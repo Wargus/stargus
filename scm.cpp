@@ -467,7 +467,7 @@ static char *UnitNames[] = {
 
 static void ExitFatal(int err)
 {
-	exit(-1);
+	exit(err);
 }
 
 /**
@@ -1293,7 +1293,7 @@ static void SaveTrigger(FILE *fd, WorldMap *map, Trigger *trigger)
 				fprintf(fd, "-- MissionBriefing()\n");
 				break;
 			case 14:
-				fprintf(fd, "-- Opponents(%d, %d, %d)\n", c->Group, c->QualifiedNumber);
+				fprintf(fd, "-- Opponents(%d, %d)\n", c->Group, c->QualifiedNumber);
 				break;
 			case 15:
 				fprintf(fd, "-- Deaths(%d, %d, %d)\n", c->Group, c->UnitType, c->QualifiedNumber);
@@ -1356,7 +1356,7 @@ static void SaveTrigger(FILE *fd, WorldMap *map, Trigger *trigger)
 				fprintf(fd, "--  Unpause\n");
 				break;
 			case 7:
-				fprintf(fd, "--  Transmission(%s, %d, [%hu,%hu]-[%hu,%hu], %d, %d, %d, %d, %d)\n",
+				fprintf(fd, "--  Transmission(%s, %d, [%hu,%hu]-[%hu,%hu], %d, %d, %d, %d)\n",
 					map->Strings[a->TriggerNumber - 1].c_str(), a->Status,
 					map->Locations[a->Source].StartX, map->Locations[a->Source].StartY,
 					map->Locations[a->Source].EndX, map->Locations[a->Source].EndY,
@@ -1473,7 +1473,7 @@ void ConvertScm(const char *scmname, const char *newname)
 	FreeMap(&map);
 }
 
-void ConvertChk(const char *scmname, const char *newname, unsigned char *chkdata, int chklen)
+void ConvertChk(const char * /*scmname*/, const char *newname, unsigned char *chkdata, int chklen)
 {
 	WorldMap map;
 	LoadChkFromBuffer(chkdata, chklen, &map);
@@ -1524,7 +1524,7 @@ int main(int argc, char **argv)
 	} else if (strstr(infile, ".chk\0")) {
 		FILE *f;
 		struct stat sb;
-		int len;
+		unsigned int len;
 		unsigned char *buf;
 
 		if (stat(infile, &sb) == -1) {

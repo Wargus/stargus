@@ -1139,7 +1139,7 @@ UInt32 Sub_WavUnp13(UInt32 buf_in, UInt32 size_in, UInt32 flag, UInt32 buf_out, 
 /**
 **
 */
-UInt32 ExtWavUnp1(UInt32 buf_in, UInt32 size_in,
+UInt32 ExtWavUnp1(UInt32 buf_in, UInt32 /*size_in*/,
 		UInt32 buf_out, UInt32 size_out)
 {
 	UInt32 work_buff,base;
