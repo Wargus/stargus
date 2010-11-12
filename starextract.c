@@ -69,7 +69,7 @@ int main(int argc, char * argv[]) {
 	if (f) {
 		fgets(version, 20, f);
 		fclose(f);
-		sprintf(buf, "%s/startool -V", BINPATH);
+		sprintf(buf, "%s -V", EXTRACT_BIN);
 		f = popen(buf, "r");
 		if (f) {
 			fgets(VERSION, 20, f);
