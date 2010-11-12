@@ -17,51 +17,68 @@
 #
 #
 
-STRIP = strip
-UPX = upx
-WINDRES = windres
-NSIS = makensis
+STRIP := strip
+UPX := upx
+WINDRES := windres
+NSIS := makensis
 
-CFLAGS = -O2 -W -Wall -fsigned-char
-CXXFLAGS = $(CFLAGS) -Wno-write-strings -m32
-LDFLAGS = -lz -lpng -lm -m32
-GTKFLAGS = $(shell pkg-config --cflags --libs gtk+-2.0)
-UPXFLAGS = -9
-NSISFLAGS =
+CFLAGS := -O2 -W -Wall -fsigned-char
+CXXFLAGS := $(CFLAGS) -Wno-write-strings
+LDFLAGS :=
+GTKFLAGS := $(shell pkg-config --cflags --libs gtk+-2.0)
+UPXFLAGS := -9
+NSISFLAGS :=
 
-all: startool stargus
+ARCH32 = -m32
 
-win32: startool.exe stargus.exe
+all: startool stargus scmconvert
+
+win32: startool.exe stargus.exe scmconvert.exe
 
 clean:
-	$(RM) startool startool.exe startool.o stargus stargus.exe starextract stargus.rc.o stargus.o mpq.o scm.o
+	$(RM) startool startool.exe startool.o stargus stargus.exe starextract stargus.rc.o stargus.o mpq.o scm.o scm-s.o scmconvert scmconvert.exe
+
+startool.o: startool.cpp
+	$(CXX) -c $^ $(CXXFLAGS) $(ARCH32) -o $@
+
+mpq.o: mpq.cpp
+	$(CXX) -c $^ $(CXXFLAGS) $(ARCH32) -o $@
+
+scm.o: scm.cpp
+	$(CXX) -c $^ $(CXXFLAGS) $(ARCH32) -o $@
 
 startool startool.exe: startool.o mpq.o scm.o
-	$(CXX) $^ $(LDFLAGS) -o $@
+	$(CXX) $^ $(LDFLAGS) -lz -lpng $(ARCH32) -o $@
+
+scm-s.o: scm.cpp
+	$(CXX) -c $^ $(CXXFLAGS) $(ARCH32) -DSTAND_ALONE -o $@
+
+scmconvert scmconvert.exe: mpq.o scm-s.o
+	$(CXX) $^ $(LDFLAGS) $(ARCH32) -o $@
 
 stargus: stargus.c
-	$(CC) $^ $(GTKFLAGS) -o $@
+	$(CC) $^ $(GTKFLAGS) $(LDFLAGS) -o $@
 
 %.rc.o: %.rc
 	$(WINDRES) $^ -O coff -o $@
 
 stargus.exe: stargus.o stargus.rc.o
-	$(CC) $^ -mwindows -o $@
+	$(CC) $^ $(LDFLAGS) -mwindows -o $@
 
 starextract: starextract.c
 	$(CC) $^ $(CFLAGS) $(GTKFLAGS) $(LDFLAGS) -o $@
 
-strip: startool stargus
+strip: startool stargus scmconvert
 	$(STRIP) $^
 
-win32-strip: startool.exe stargus.exe
+win32-strip: startool.exe stargus.exe scmconvert.exe
 	$(STRIP) $^
 
-pack: startool stargus
+pack: startool stargus scmconvert
 	$(UPX) $(UPXFLAGS) $^
 
-win32-pack: startool.exe stargus.exe
+win32-pack: startool.exe stargus.exe scmconvert.exe
 	$(UPX) $(UPXFLAGS) $^
 
-win32-installer: startool.exe stargus.exe stargus.nsi
+win32-installer: startool.exe stargus.exe scmconvert.exe stargus.nsi
 	$(NSIS) $(NSISFLAGS) stargus.nsi
