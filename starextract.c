@@ -30,7 +30,7 @@
 #define TITLE "Stargus"
 #define DATA_NEED_COPY "Note: You need the original Starcraft CD\nto extract the game data files.\nData files are needed to run Stargus.\n\nFirst copy Starcraft CD to folder MyDocs/Starcraft\n"
 #define DATA_FOUND "Starcraft data files was found in folder MyDocs/Starcraft\n\nPlease be patient, the data may take\na couple of minutes to extract...\n\nPress OK to start extracting data now."
-#define DATA_NOT_FOUND "Error: Starcraft data files was not found.\n\nCheck if you have in phone file\nMyDocs/Starcraft/stardat.mpq"
+#define DATA_NOT_FOUND "Error: Starcraft data files was not found.\n\nCheck if you have in phone file\nMyDocs/Starcraft/stardat.mpq\nor MyDocs/Starcraft/install.exe"
 #define EXTRACT_OK "Starcraft data files was successfull extracted."
 #define EXTRACT_FAILED "Error: Cannot extract Starcraft data files,\nextract program crashed."
 
@@ -81,7 +81,7 @@ int main(int argc, char * argv[]) {
 
 	message(TITLE, DATA_NEED_COPY);
 
-	if ( stat("/home/user/MyDocs/Starcraft/stardat.mpq", &st) != 0 ) {
+	if ( stat("/home/user/MyDocs/Starcraft/stardat.mpq", &st) != 0 && stat("/home/user/MyDocs/Starcraft/install.exe", &st) != 0 ) {
 
 		message(TITLE, DATA_NOT_FOUND);
 		return -1;

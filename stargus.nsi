@@ -70,7 +70,7 @@ LangString EXTRACTDATA_PAGE_HEADER_TEXT ${LANG_ENGLISH} "Choose Starcraft Locati
 LangString EXTRACTDATA_PAGE_HEADER_SUBTEXT ${LANG_ENGLISH} "Choose the folder in which are Starcraft data files."
 LangString EXTRACTDATA_PAGE_TEXT_TOP ${LANG_ENGLISH} "Setup will extract Starcraft data files from the following folder. You can specify location of CD or install location of Starcraft data files. Note that you need the original Starcraft CD to extract the game data files."
 LangString EXTRACTDATA_PAGE_TEXT_DESTINATION ${LANG_ENGLISH} "Source Folder"
-LangString EXTRACTDATA_PAGE_NOT_VALID ${LANG_ENGLISH} "This is not valid Starcraft data directory. File $DATADIRstardat.mpq does not exist."
+LangString EXTRACTDATA_PAGE_NOT_VALID ${LANG_ENGLISH} "This is not valid Starcraft data directory. File $DATADIRstardat.mpq or $DATADIRinstall.exe does not exist."
 
 LangString DESC_REMOVEEXE ${LANG_ENGLISH} "Remove ${NAME} binary executables"
 LangString DESC_REMOVECONF ${LANG_ENGLISH} "Remove all other configuration and extracted data files and directories in ${NAME} install directory created by user or ${NAME}"
@@ -240,7 +240,8 @@ FunctionEnd
 
 Function PageExtractDataLeave
 
-	IfFileExists "$DATADIR\stardat.mpq" +3
+	IfFileExists "$DATADIR\stardat.mpq" +4
+	IfFileExists "$DATADIR\install.exe" +3
 
 	MessageBox MB_OK|MB_ICONSTOP "$(EXTRACTDATA_PAGE_NOT_VALID)"
 	Abort
