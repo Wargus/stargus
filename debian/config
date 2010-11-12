@@ -15,7 +15,7 @@ TEMP=$RET
 db_reset stargus/cdpath || true
 db_set stargus/cdpath $TEMP || true
 
-db_reset wargus/extractdata || true
+db_reset stargus/extractdata || true
 
 while true; do
 
