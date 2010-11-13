@@ -139,6 +139,8 @@ static inline unsigned int Swap32(unsigned int D) {
 --  Variables
 ----------------------------------------------------------------------------*/
 
+#define VERSION "1.0"
+
 static char *chk_ptr;			/// FIXME: docu
 static char *chk_endptr;			/// FIXME: docu
 
@@ -1217,6 +1219,10 @@ static void SaveSMP(const char *name, WorldMap *map)
 
 	fd = fopen(name, "wb");
 
+	fprintf(fd, "-- Stratagus Map Presentation\n");
+	fprintf(fd, "-- File generated automatically from scmconvert V" VERSION "\n");
+	fprintf(fd, "\n");
+
 	fprintf(fd, "DefinePlayerTypes(");
 	bool first = true;
 	for (int i = 0; i < PlayerMax; ++i) {
@@ -1399,6 +1405,10 @@ static void SaveSMS(const char *name, WorldMap *map)
 
 	fd = fopen(name, "wb");
 
+	fprintf(fd, "-- Stratagus Map Setup\n");
+	fprintf(fd, "-- File generated automatically from scmconvert V" VERSION "\n");
+	fprintf(fd, "\n");
+
 	for (i = 0; i < PlayerMax; ++i) {
 		if (map->PlayerType[i] == 0) { // inactive
 			continue;
@@ -1486,7 +1496,8 @@ void ConvertChk(const char * /*scmname*/, const char *newname, unsigned char *ch
 void usage()
 {
 	fprintf(stderr, "%s\n%s\n",
-		"scmconvert", "usage: scmconvert inputfile [ outputdir ]\n");
+		"scmconvert V" VERSION,
+		"usage: scmconvert inputfile [ outputdir ]\n");
 	exit(-1);
 }
 
