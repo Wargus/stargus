@@ -23,7 +23,7 @@ WINDRES := windres
 NSIS := makensis
 
 CFLAGS := -O2 -W -Wall -fsigned-char
-CXXFLAGS := $(CFLAGS) -Wno-write-strings
+CXXFLAGS := $(CFLAGS)
 LDFLAGS :=
 GTKFLAGS := $(shell pkg-config --cflags --libs gtk+-2.0)
 UPXFLAGS := -9

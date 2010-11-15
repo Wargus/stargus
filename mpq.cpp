@@ -131,8 +131,8 @@ int CMpq::ReadInfo(FILE *fpMpq, char * list)
 	UInt32 tmp, scrc1, scrc2, scrc3, pointer_ht;
 	FILE *fpList = NULL;
 	char prnbuf[PATH_MAX+100];
-	static char *name_htable = "(hash table)";		// Name of hash table (used to decode hash table)
-	static char *name_btable = "(block table)";		// Name of block table (used to decode block tabl
+	static char name_htable[] = "(hash table)";		// Name of hash table (used to decode hash table)
+	static char name_btable[] = "(block table)";		// Name of block table (used to decode block table)
 
 	while (fread(&tmp, sizeof(UInt32), 1, fpMpq)) {
 		if (mpq_header[0] == tmp) {

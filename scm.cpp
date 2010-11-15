@@ -144,8 +144,8 @@ static inline unsigned int Swap32(unsigned int D) {
 static char *chk_ptr;			/// FIXME: docu
 static char *chk_endptr;			/// FIXME: docu
 
-static char *TypeNames[] = { "nobody", NULL, NULL, "rescue-passive", NULL, "computer", "person", "neutral" };
-static char *RaceNames[] = { "zerg", "terran", "protoss", NULL, "neutral" };
+static const char *TypeNames[] = { "nobody", NULL, NULL, "rescue-passive", NULL, "computer", "person", "neutral" };
+static const char *RaceNames[] = { "zerg", "terran", "protoss", NULL, "neutral" };
 
 
 typedef struct Unit
@@ -232,7 +232,7 @@ typedef struct WorldMap
 
 static CMpq *Mpq;
 
-static char *UnitNames[] = {
+static const char *UnitNames[] = {
 	"unit-terran-marine",
 	"unit-terran-ghost",
 	"unit-terran-vulture",
@@ -655,7 +655,7 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 		if (!memcmp(header, "ERA ", 4)) {
 			if (length == 2) {
 				int t;
-				char *tilesets[] = { "badlands", "platform", "install",
+				const char *tilesets[] = { "badlands", "platform", "install",
 					"ashworld", "jungle", "desert", "arctic", "twilight" };
 
 				t = ChkReadWord();
