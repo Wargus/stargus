@@ -20,7 +20,7 @@ extract() {
 			echo "Extracting data from ${CDPATH} to /usr/share/games/stratagus/stargus"
 
 			cd /usr/share/games/stratagus/stargus
-			startool ${CDPATH} /usr/share/games/stratagus/stargus
+			/usr/games/startool ${CDPATH} /usr/share/games/stratagus/stargus
 			return $?
 
 		else

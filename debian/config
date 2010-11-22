@@ -29,13 +29,13 @@ while true; do
 	EXTRACTDATA=$RET
 
 	db_get stargus/cdpath || true
-	CDPATH=$RET
+	DATADIR=$RET
 
 	if [ "$EXTRACTDATA" = "false" ]; then
 		break
 	fi
 
-	if [ ! -f "$DATADIR/stardat.mpq" ] || [ ! -f "$DATADIR/install.exe" ]; then
+	if [ ! -f "$DATADIR/stardat.mpq" ] && [ ! -f "$DATADIR/install.exe" ]; then
 		db_beginblock || true
 		db_input high stargus/nodata || true
 		db_endblock || true
