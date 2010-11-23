@@ -1,4 +1,4 @@
-UNRELEASED:
+2.2.2.5:
  - Fixed for new Stratagus
  - Compile startool always 32bit
  - Added icon

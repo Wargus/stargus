@@ -1,3 +1,9 @@
+stargus (2.2.5.5-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Pali Rohár <pali.rohar@gmail.com>  Mon, 22 Nov 2010 23:16:16 +0100
+
 stargus (2.1pre2) unstable; urgency=low
 
   * Upstream release
