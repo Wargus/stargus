@@ -21,18 +21,31 @@
 include /usr/share/cdbs/1/rules/debhelper.mk
 
 VERSION := $(shell dpkg-parsechangelog | sed -ne "s/^Version: \(.*\)/\1/p" | sed "s/-[^-]*$$//" )
+DEB_BUILD_ARCH := $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+
+ifeq (amd64, $(DEB_BUILD_ARCH))
+ARCH32="-m32 -L."
+else
+ARCH32=""
+endif
 
 clean::
+ifeq (amd64, $(DEB_BUILD_ARCH))
+	$(RM) libstdc++.so
+endif
 	$(MAKE) clean
 	if [ -f $(CURDIR)/debian/control.orig ]; then \
 		mv $(CURDIR)/debian/control.orig $(CURDIR)/debian/control; \
 	fi
 
 build:
+ifeq (amd64, $(DEB_BUILD_ARCH))
+	ln -s /usr/lib32/libstdc++.so.6 libstdc++.so
+endif
 	if [ -f /etc/maemo_version ]; then \
-		$(MAKE) all starextract ARCH32="" GTKFLAGS="$(shell pkg-config --cflags --libs hildon-1 gtk+-2.0)"; \
+		$(MAKE) all starextract ARCH32=$(ARCH32) GTKFLAGS="$(shell pkg-config --cflags --libs hildon-1 gtk+-2.0)"; \
 	else \
-		$(MAKE); \
+		$(MAKE) ARCH32=$(ARCH32); \
 	fi
 	
 install/stargus::
