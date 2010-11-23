@@ -21,11 +21,12 @@
 include /usr/share/cdbs/1/rules/debhelper.mk
 
 VERSION := $(shell dpkg-parsechangelog | sed -ne "s/^Version: \(.*\)/\1/p" | sed "s/-[^-]*$$//" )
-DEB_DH_GENCONTROL_ARGS_ALL := -- -c$(CURDIR)/debian/control.new
 
 clean::
 	$(MAKE) clean
-	$(RM) $(CURDIR)/debian/control.new
+	if [ -f $(CURDIR)/debian/control.orig ]; then \
+		mv $(CURDIR)/debian/control.orig $(CURDIR)/debian/control; \
+	fi
 
 build:
 	if [ -f /etc/maemo_version ]; then \
@@ -67,19 +68,19 @@ binary-fixup/stargus::
 
 binary-predeb/stargus::
 	echo "stratagus:Depends=stratagus (>= $(VERSION))" >> $(CURDIR)/debian/stargus.substvars
-	cp $(CURDIR)/debian/control $(CURDIR)/debian/control.new
 	if [ -f /etc/maemo_version ]; then \
-		sed -n -e "1,/^Depends:.*$$/p" $(CURDIR)/debian/control > $(CURDIR)/debian/control.new; \
-		sed "s/Section: .*/Section: user\/games/" -i $(CURDIR)/debian/control.new; \
-		echo "XSBC-Bugtracker: https://bugs.launchpad.net/stargus" >> $(CURDIR)/debian/control.new; \
-		echo "XB-Maemo-Display-Name: Stargus - Starcraft" >> $(CURDIR)/debian/control.new; \
-		echo "XB-Maemo-Icon-26:" >> $(CURDIR)/debian/control.new; \
+		cp $(CURDIR)/debian/control $(CURDIR)/debian/control.orig; \
+		sed -n -e "1,/^Depends:.*$$/p" $(CURDIR)/debian/control.orig > $(CURDIR)/debian/control; \
+		sed "s/Section: .*/Section: user\/games/" -i $(CURDIR)/debian/control; \
+		echo "XSBC-Bugtracker: https://bugs.launchpad.net/stargus" >> $(CURDIR)/debian/control; \
+		echo "XB-Maemo-Display-Name: Stargus - Starcraft" >> $(CURDIR)/debian/control; \
+		echo "XB-Maemo-Icon-26:" >> $(CURDIR)/debian/control; \
 		for line in $(shell convert $(CURDIR)/contrib/stargus.ico -resize 48x48 png:- | uuencode -m - | tail -n +2 | head -n -1); do \
-			echo " $$line" >> $(CURDIR)/debian/control.new; \
+			echo " $$line" >> $(CURDIR)/debian/control; \
 		done; \
 		sed "/^# Source debconf library$$/d;/^. \/usr\/share\/debconf\/confmodule$$/d" -i $(CURDIR)/debian/stargus/DEBIAN/postinst; \
 		bash -c 'sed -n -e "1,/^extract() {$$/p;/^}$$/,\$$p;/extract()/a\\`echo -e "\n\t"`cd /opt/stratagus/share/stargus\\`echo -e "\n\t"`run-standalone.sh /opt/stratagus/bin/starextract\\`echo -e "\n\t"`return $$\?" -i $(CURDIR)/debian/stargus/DEBIAN/postinst'; \
 		rm -f $(CURDIR)/debian/stargus/DEBIAN/config; \
 		rm -f $(CURDIR)/debian/stargus/DEBIAN/templates; \
-		sed -n -e "/^Depends:.*$$/,\$$p" $(CURDIR)/debian/control | tail -n +2 >> $(CURDIR)/debian/control.new; \
+		sed -n -e "/^Depends:.*$$/,\$$p" $(CURDIR)/debian/control.orig | tail -n +2 >> $(CURDIR)/debian/control; \
 	fi
