@@ -99,8 +99,12 @@ Load("scripts/protoss/sound.lua")
 --  Define sounds used by game
 --
 DefineGameSounds(
-  "placement-error", SoundForName("buzz"),
-  "placement-success", SoundForName("building-placed"),
+  "placement-error", {"terran", SoundForName("buzz")},
+  "placement-error", {"zerg", SoundForName("buzz")},
+  "placement-error", {"protoss", SoundForName("buzz")},
+  "placement-success", {"terran", SoundForName("building-placed")},
+  "placement-success", {"zerg", SoundForName("building-placed")},
+  "placement-success", {"protoss", SoundForName("building-placed")},
   "click", SoundForName("button")
 
 -- FIXME: Not ready
