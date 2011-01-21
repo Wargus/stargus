@@ -1,0 +1,15 @@
+debian/*.debhelper
+debian/files
+debian/*.log
+debian/stargus
+debian/*.substvars
+*.dll
+*.exe
+ExecDos.zip
+scmconvert
+starextract
+stargus
+Stargus-*.exe.asc
+stargus_*.tar.gz
+stargus_*.tar.gz.asc
+startool
