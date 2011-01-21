@@ -36,7 +36,7 @@
 
 #define EXTRACT_BIN "/opt/stratagus/bin/startool"
 #define DATADIR "/home/user/MyDocs/Starcraft"
-#define EXTRACTDIR "/opt/stratagus/share/stargus"
+#define EXTRACTDIR "/home/user/MyDocs/stratagus/stargus"
 
 #define EXTRACT_COMMAND EXTRACT_BIN " " DATADIR " " EXTRACTDIR
 
