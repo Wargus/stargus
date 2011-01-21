@@ -1514,7 +1514,7 @@ int main(int argc, char **argv)
 	if (argc == 3) {
 		outdir = argv[2];
 	} else {
-		outdir = ".";
+		outdir = strdup(".");
 	}
 
 	if (strstr(infile, ".scm\0")) {
