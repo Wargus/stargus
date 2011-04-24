@@ -315,7 +315,7 @@ Section "${NAME}" ExtractData
 
 	DetailPrint ""
 	DetailPrint "$(EXTRACTDATA_FILES)"
-	ExecDos::exec /DETAILED "$\"$INSTDIR\${STARTOOL}$\" $\"$DATADIR\data$\" $\"$INSTDIR$\""
+	ExecDos::exec /DETAILED "$\"$INSTDIR\${STARTOOL}$\" $\"$DATADIR$\" $\"$INSTDIR$\""
 	Pop $0
 	IntCmp $0 0 +3
 
