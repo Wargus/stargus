@@ -56,7 +56,7 @@ typedef void (*write_data_proc)(UInt8 *buffer, UInt16 size, void *param, UInt32 
 class CMpq
 {
 public:
-	CMpq() {}
+	CMpq();
 	~CMpq();
 
 		/// Read mpq info

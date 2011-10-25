@@ -145,7 +145,6 @@ int CMpq::ReadInfo(FILE *fpMpq, char * list)
 	}
 	if (!detected) {
 //		printf("\nError: File \'%s\' is not valid MPQ archive", file_name);
-		fclose(fpMpq);
 		return -1;
 	}
 	offset_mpq = ftell(fpMpq) - 8;
@@ -161,7 +160,6 @@ int CMpq::ReadInfo(FILE *fpMpq, char * list)
 
 	BuildBaseMassive();
 	if (InitializeLocals()) {
-		fclose(fpMpq);
 		return -2;
 	}
 
@@ -245,6 +243,18 @@ int CMpq::InitializeLocals(void)
 		printf("\nError! Insufficient memory");
 		return -1;
 	}
+}
+
+/**
+**
+*/
+CMpq::CMpq()
+{
+	global_buffer = NULL;
+	hash_table = NULL;
+	BlockTable = NULL;
+	FilenameTable = NULL;
+	IdentifyTable = NULL;
 }
 
 /**
