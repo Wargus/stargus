@@ -10,7 +10,7 @@
 //
 /**@name mpq.h - The mpq headerfile. */
 //
-//      (c) Copyright 2002-2007 by Jimmy Salmon, Lutz Sammer
+//      (c) Copyright 2002-2011 by Jimmy Salmon, Lutz Sammer and Pali Rohár
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -37,14 +37,15 @@
 --  Defines
 ----------------------------------------------------------------------------*/
 
-#define UInt32 unsigned long
+#include <stdint.h>
 
-#define UInt8		unsigned char
-#define UInt16		unsigned short
-#define SInt16		short
-#define UInt32		unsigned long
-#define SInt32		int
-
+#define UInt8		uint8_t
+#define SInt8		int8_t
+#define UInt16		uint16_t
+#define SInt16		int16_t
+#define UInt32		uint32_t
+#define SInt32		int32_t
+#define UIntPtr		uintptr_t
 
 /*----------------------------------------------------------------------------
 --  Declarations

@@ -10,7 +10,7 @@
 //
 /**@name mpq.c - Mpq. */
 //
-//      (c) Copyright 1998-2007 by Lutz Sammer and Jimmy Salmon
+//      (c) Copyright 1998-2011 by Lutz Sammer, Jimmy Salmon and Pali Rohár
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -86,22 +86,22 @@ static UInt16 read_data(UInt8 *buffer, UInt16 size, void *crap);
 static void write_data(UInt8 * buffer, UInt16 size, void *crap, UInt32 *length_write);
 
 
-UInt32		ExtWavUnp1(UInt32,UInt32,UInt32,UInt32);
-UInt32		ExtWavUnp2(UInt32,UInt32,UInt32,UInt32);
-UInt32		ExtWavUnp3(UInt32,UInt32,UInt32,UInt32);
-void		Sub_WavUnp1(UInt32,UInt32);
-UInt32 		Sub_WavUnp2(UInt32,UInt32,UInt32);
-void		Sub_WavUnp3(UInt32);
-void		Sub_WavUnp4(UInt32,UInt32,UInt32,UInt32);
-UInt32		Sub_WavUnp5(UInt32);
-void		Sub_WavUnp6(UInt32);
-UInt32		Sub_WavUnp7(UInt32);
-UInt32		Sub_WavUnp8(UInt32);
-void		Sub_WavUnp9(UInt32,UInt32);
-void		Sub_WavUnp10(UInt32,UInt32);
-UInt32		Sub_WavUnp11(UInt32,UInt32,UInt32,UInt32);
-void		Sub_WavUnp12(UInt32);
-UInt32		Sub_WavUnp13(UInt32,UInt32,UInt32,UInt32,UInt32);
+UIntPtr		ExtWavUnp1(UIntPtr,UIntPtr,UIntPtr,UIntPtr);
+UIntPtr		ExtWavUnp2(UIntPtr,UIntPtr,UIntPtr,UIntPtr);
+UIntPtr		ExtWavUnp3(UIntPtr,UIntPtr,UIntPtr,UIntPtr);
+void		Sub_WavUnp1(UIntPtr,UIntPtr);
+UIntPtr 		Sub_WavUnp2(UIntPtr,UIntPtr,UIntPtr);
+void		Sub_WavUnp3(UIntPtr);
+void		Sub_WavUnp4(UIntPtr,UIntPtr,UIntPtr,UIntPtr);
+UIntPtr		Sub_WavUnp5(UIntPtr);
+void		Sub_WavUnp6(UIntPtr);
+UIntPtr		Sub_WavUnp7(UIntPtr);
+UIntPtr		Sub_WavUnp8(UIntPtr);
+void		Sub_WavUnp9(UIntPtr,UIntPtr);
+void		Sub_WavUnp10(UIntPtr,UIntPtr);
+UIntPtr		Sub_WavUnp11(UIntPtr,UIntPtr,UIntPtr,UIntPtr);
+void		Sub_WavUnp12(UIntPtr);
+UIntPtr		Sub_WavUnp13(UIntPtr,UIntPtr,UIntPtr,UIntPtr,UIntPtr);
 
 
 
@@ -546,8 +546,8 @@ int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 				}
 				if (metod & 0x01) {
 					length_read =
-						ExtWavUnp1((UInt32) read_buffer,
-						(UInt32) length_read, (UInt32) write_buffer,
+						ExtWavUnp1((UIntPtr) read_buffer,
+						(UIntPtr) length_read, (UIntPtr) write_buffer,
 						0x1000);
 					iteration--;
 					if (iteration) {
@@ -557,14 +557,14 @@ int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 				}
 				if (metod & 0x40) {
 					length_read =
-						ExtWavUnp2((UInt32) read_buffer,
-						(UInt32) length_read, (UInt32) write_buffer,
+						ExtWavUnp2((UIntPtr) read_buffer,
+						(UIntPtr) length_read, (UIntPtr) write_buffer,
 						0x1000);
 				}
 				if (metod & 0x80) {
 					length_read =
-						ExtWavUnp3((UInt32) read_buffer,
-						(UInt32) length_read, (UInt32) write_buffer,
+						ExtWavUnp3((UIntPtr) read_buffer,
+						(UIntPtr) length_read, (UIntPtr) write_buffer,
 						0x1000);
 				}
 				memcpy(mpqptr, write_buffer, length_read);
@@ -630,8 +630,8 @@ UInt32 CMpq::explode(read_data_proc read_data, write_data_proc write_data, void 
 
 	work_buff = (UInt8 *) explode_buffer;
 
-	*((UInt32 *) (work_buff + 0x16)) = (UInt32) read_data;
-	*((UInt32 *) (work_buff + 0x1A)) = (UInt32) write_data;
+	*((UIntPtr *) (work_buff + 0x16)) = (UIntPtr) read_data;
+	*((UIntPtr *) (work_buff + 0x1A)) = (UIntPtr) write_data;
 	*((void **)(work_buff + 0x12)) = param;
 	*((UInt16 *) (work_buff + 0x0E)) = 0x0800;
 	read_result = (*read_data)(work_buff + 0x2222, 0x0800, param);
@@ -697,7 +697,7 @@ static UInt16 __explode_1(UInt8 * buf, UInt32 *length_write)
 			*(buf + temp + 0x1E) = (UInt8) result;
 		} else {
 			result -= 0x00FE;
-			s = (UInt8 *) (UInt32)__explode_3(buf, (UInt16) result);
+			s = (UInt8 *) (UIntPtr)__explode_3(buf, (UInt16) result);
 			if (!s) {
 				result = 0x0306;
 				break;
@@ -705,7 +705,7 @@ static UInt16 __explode_1(UInt8 * buf, UInt32 *length_write)
 				temp = *((UInt16 *) (buf + 0x04));
 				d = temp + 0x1E + buf;
 				*((UInt16 *) (buf + 0x04)) = (UInt16) (temp + result);
-				s = (UInt8 *) ((UInt32) d - (UInt32) s);
+				s = (UInt8 *) ((UIntPtr) d - (UIntPtr) s);
 				do {
 					result--;
 					*(d++) = *(s++);
@@ -714,16 +714,16 @@ static UInt16 __explode_1(UInt8 * buf, UInt32 *length_write)
 		}
 		if (*((UInt16 *) (buf + 4)) >= 0x2000) {
 			result = 0x1000;
-			write_data = (write_data_proc) * ((UInt32 *) (buf + 0x1A));
-			param = (void *)*((UInt32 *) (buf + 0x12));
+			write_data = (write_data_proc) * ((UIntPtr *) (buf + 0x1A));
+			param = (void *)*((UIntPtr *) (buf + 0x12));
 			(*write_data)(buf + 0x101E, 0x1000, param, length_write);
 			__explode_7(buf + 0x001E, buf + 0x101E,
 				*((UInt16 *) (buf + 0x04)) - 0x1000);
 			*((UInt16 *) (buf + 0x04)) -= 0x1000;
 		}
 	}
-	write_data = (write_data_proc) * ((UInt32 *) (buf + 0x1A));
-	param = (void *)*((UInt32 *) (buf + 0x12));
+	write_data = (write_data_proc) * ((UIntPtr *) (buf + 0x1A));
+	param = (void *)*((UIntPtr *) (buf + 0x12));
 	(*write_data)(buf + 0x101E,
 		(UInt16) (*((UInt16 *) (buf + 0x04)) - 0x1000), param, length_write);
 	return (UInt16) result;
@@ -840,8 +840,8 @@ static UInt16 __explode_4(UInt8 * buf, UInt32 flag)
 	UInt32 result;
 	UInt16 read_result;
 	read_data_proc read_data =
-		(read_data_proc) * ((UInt32 *) (buf + 0x16));
-	void *param = (void *)*((UInt32 *) (buf + 0x12));
+		(read_data_proc) * ((UIntPtr *) (buf + 0x16));
+	void *param = (void *)*((UIntPtr *) (buf + 0x12));
 
 	result = *((UInt16 *) (buf + 0x0C));
 	if ((UInt16) flag <= result) {
@@ -980,7 +980,7 @@ static void __explode_7(UInt8 *buf, const UInt8 *table, UInt32 count)
 /**
 **
 */
-UInt32 ExtWavUnp3(UInt32 buf_in, UInt32 size_in, UInt32 buf_out, UInt32 size_out)
+UIntPtr ExtWavUnp3(UIntPtr buf_in, UIntPtr size_in, UIntPtr buf_out, UIntPtr size_out)
 {
 	return Sub_WavUnp13(buf_in, size_in, 2, buf_out, size_out);
 }
@@ -988,7 +988,7 @@ UInt32 ExtWavUnp3(UInt32 buf_in, UInt32 size_in, UInt32 buf_out, UInt32 size_out
 /**
 **
 */
-UInt32 ExtWavUnp2(UInt32 buf_in, UInt32 size_in, UInt32 buf_out, UInt32 size_out)
+UIntPtr ExtWavUnp2(UIntPtr buf_in, UIntPtr size_in, UIntPtr buf_out, UIntPtr size_out)
 {
 	return Sub_WavUnp13(buf_in, size_in, 1, buf_out, size_out);
 }
@@ -996,12 +996,12 @@ UInt32 ExtWavUnp2(UInt32 buf_in, UInt32 size_in, UInt32 buf_out, UInt32 size_out
 /**
 **
 */
-UInt32 Sub_WavUnp13(UInt32 buf_in, UInt32 size_in, UInt32 flag, UInt32 buf_out, UInt32 size_out)
+UIntPtr Sub_WavUnp13(UIntPtr buf_in, UIntPtr size_in, UIntPtr flag, UIntPtr buf_out, UIntPtr size_out)
 {
-	UInt32 var14,var18,var1c;
-	UInt32 tmp0,tmp1,tmp2,tmp3,tmp4;
-	UInt32 var8[2];
-	UInt32 var10[2];
+	UIntPtr var14,var18,var1c;
+	UIntPtr tmp0,tmp1,tmp2,tmp3,tmp4;
+	UIntPtr var8[2];
+	UIntPtr var10[2];
 
 	var14=buf_in;
 	size_in+=buf_in;
@@ -1149,14 +1149,14 @@ UInt32 Sub_WavUnp13(UInt32 buf_in, UInt32 size_in, UInt32 flag, UInt32 buf_out, 
 /**
 **
 */
-UInt32 ExtWavUnp1(UInt32 buf_in, UInt32 /*size_in*/,
-		UInt32 buf_out, UInt32 size_out)
+UIntPtr ExtWavUnp1(UIntPtr buf_in, UIntPtr /*size_in*/,
+		UIntPtr buf_out, UIntPtr size_out)
 {
-	UInt32 work_buff,base;
-	UInt32 tmp1,tmp2,tmp3;
+	UIntPtr work_buff,base;
+	UIntPtr tmp1,tmp2,tmp3;
 	SInt32 i;
 
-	work_buff=(UInt32)(UInt8 *)malloc(0x3a80);
+	work_buff=(UIntPtr)(UInt8 *)malloc(0x3a80);
 	*((UInt32 *)work_buff)=buf_in+4;
 	*((UInt32 *)(work_buff+4))=*((UInt32 *)buf_in);
 	*((UInt32 *)(work_buff+8))=0x20;
@@ -1237,9 +1237,9 @@ UInt32 ExtWavUnp1(UInt32 buf_in, UInt32 /*size_in*/,
 /**
 **
 */
-void Sub_WavUnp12(UInt32 base)
+void Sub_WavUnp12(UIntPtr base)
 {
-	UInt32 tmp;
+	UIntPtr tmp;
 	SInt32 i;
 
 	Sub_WavUnp6(base);
@@ -1254,10 +1254,10 @@ void Sub_WavUnp12(UInt32 base)
 /**
 **
 */
-UInt32 Sub_WavUnp11(UInt32 buf_out, UInt32 size_out, UInt32 work_buff, UInt32 base)
+UIntPtr Sub_WavUnp11(UIntPtr buf_out, UIntPtr size_out, UIntPtr work_buff, UIntPtr base)
 {
-	UInt32 var4,var8,varc,var10,var14;
-	UInt32 flag,tmp0,tmp1,tmp2,tmp3,tmp4,tmp5;
+	UIntPtr var4,var8,varc,var10,var14;
+	UIntPtr flag,tmp0,tmp1,tmp2,tmp3,tmp4,tmp5;
 
 #ifdef DEBUG
 	var14=0;				// Disable warning! Correct?
@@ -1450,10 +1450,10 @@ UInt32 Sub_WavUnp11(UInt32 buf_out, UInt32 size_out, UInt32 work_buff, UInt32 ba
 /**
 **
 */
-void Sub_WavUnp1(UInt32 arg1, UInt32 base)
+void Sub_WavUnp1(UIntPtr arg1, UIntPtr base)
 {
-	UInt32 var_4,var_8,var_c;
-	UInt32 tmp0,tmp1,tmp2,tmp3,tmp4;
+	UIntPtr var_4,var_8,var_c;
+	UIntPtr tmp0,tmp1,tmp2,tmp3,tmp4;
 	SInt32 i;
 
 	while((SInt32)*((UInt32 *)(base+0x3064))>0) {
@@ -1479,7 +1479,7 @@ void Sub_WavUnp1(UInt32 arg1, UInt32 base)
 	}
 	var_c=0;
 	var_8=base+0x306C;
-	tmp1=(UInt32)wav_table+(((arg1&0xff)<<7)+(arg1&0xff))*2;
+	tmp1=(UIntPtr)wav_table+(((arg1&0xff)<<7)+(arg1&0xff))*2;
 	var_4=tmp1;
 	tmp0=0;
 	while(tmp0<0x100) {
@@ -1628,9 +1628,9 @@ void Sub_WavUnp1(UInt32 arg1, UInt32 base)
 /**
 **
 */
-void Sub_WavUnp9(UInt32 arg1, UInt32 arg2)
+void Sub_WavUnp9(UIntPtr arg1, UIntPtr arg2)
 {
-	UInt32 var4,var8,tmp0,tmp1,tmp2,tmp3,tmp4;
+	UIntPtr var4,var8,tmp0,tmp1,tmp2,tmp3,tmp4;
 
 	tmp0=*((UInt32 *)(arg2+0x3064));
 	if((SInt32)tmp0<0) {
@@ -1737,38 +1737,38 @@ void Sub_WavUnp9(UInt32 arg1, UInt32 arg2)
 /**
 **
 */
-void Sub_WavUnp6(UInt32 ptr_base)
+void Sub_WavUnp6(UIntPtr ptr_base)
 {
-	UInt32 ptr1;
+	UIntPtr ptr1;
 	SInt32 i;
 
 	ptr1=ptr_base+8;
 	for(i=0x203;i!=0;i--) {
-		*((UInt32 *)ptr1)=0;
-		*((UInt32 *)(ptr1+4))=0;
+		*((UIntPtr *)ptr1)=0;
+		*((UIntPtr *)(ptr1+4))=0;
 		ptr1+=0x18;
 	}
 	ptr1=ptr_base+0x3054;
-	*((UInt32 *)ptr1)=0;
-	*((UInt32 *)(ptr1+4))=0;
-	*((UInt32 *)ptr1)=ptr1;
-	*((UInt32 *)(ptr_base+0x3050))=0;
-	*((UInt32 *)(ptr_base+0x3058))=~ptr1;
+	*((UIntPtr *)ptr1)=0;
+	*((UIntPtr *)(ptr1+4))=0;
+	*((UIntPtr *)ptr1)=ptr1;
+	*((UIntPtr *)(ptr_base+0x3050))=0;
+	*((UIntPtr *)(ptr_base+0x3058))=~ptr1;
 	ptr1=ptr_base+0x3060;
-	*((UInt32 *)ptr1)=0;
-	*((UInt32 *)(ptr1+4))=0;
-	*((UInt32 *)ptr1)=(UInt32) ptr1;
-	*((UInt32 *)(ptr_base+0x305C))=0;
-	*((UInt32 *)(ptr_base+0x3064))=~ptr1;
-	*((UInt32 *)(ptr_base+0x3068))=0;
-	*((UInt32 *)(ptr_base+4))=1;
+	*((UIntPtr *)ptr1)=0;
+	*((UIntPtr *)(ptr1+4))=0;
+	*((UIntPtr *)ptr1)=(UIntPtr) ptr1;
+	*((UIntPtr *)(ptr_base+0x305C))=0;
+	*((UIntPtr *)(ptr_base+0x3064))=~ptr1;
+	*((UIntPtr *)(ptr_base+0x3068))=0;
+	*((UIntPtr *)(ptr_base+4))=1;
 	return;
 }
 
 /**
 **
 */
-UInt32 Sub_WavUnp2(UInt32 arg1, UInt32 arg2, UInt32 arg3)
+UIntPtr Sub_WavUnp2(UIntPtr arg1, UIntPtr arg2, UIntPtr arg3)
 {
 	if(arg1) {
 		return arg3+arg2;
@@ -1779,9 +1779,9 @@ UInt32 Sub_WavUnp2(UInt32 arg1, UInt32 arg2, UInt32 arg3)
 /**
 **
 */
-void Sub_WavUnp3(UInt32 ptr)
+void Sub_WavUnp3(UIntPtr ptr)
 {
-	UInt32 ptr0,ptr1;
+	UIntPtr ptr0,ptr1;
 
 	ptr0=*((UInt32 *)ptr);
 	if(ptr0) {
@@ -1802,9 +1802,9 @@ void Sub_WavUnp3(UInt32 ptr)
 /**
 **
 */
-void Sub_WavUnp4(UInt32 arg1, UInt32 arg2, UInt32 arg3, UInt32 arg4)
+void Sub_WavUnp4(UIntPtr arg1, UIntPtr arg2, UIntPtr arg3, UIntPtr arg4)
 {
-	UInt32 tmp0,tmp1;
+	UIntPtr tmp0,tmp1;
 
 	tmp0=*((UInt32 *)arg1);
 	if(tmp0) {
@@ -1846,9 +1846,9 @@ void Sub_WavUnp4(UInt32 arg1, UInt32 arg2, UInt32 arg3, UInt32 arg4)
 /**
 **
 */
-UInt32 Sub_WavUnp5(UInt32 arg1)
+UIntPtr Sub_WavUnp5(UIntPtr arg1)
 {
-	UInt32 tmp0,tmp1;
+	UIntPtr tmp0,tmp1;
 
 	tmp0=*((UInt32 *)(arg1+4));
 	if((SInt32)tmp0<0) {
@@ -1862,9 +1862,9 @@ UInt32 Sub_WavUnp5(UInt32 arg1)
 /**
 **
 */
-UInt32 Sub_WavUnp7(UInt32 arg1)
+UIntPtr Sub_WavUnp7(UIntPtr arg1)
 {
-	UInt32 tmp;
+	UIntPtr tmp;
 
 	tmp=*((UInt32 *)(arg1+4));
 	if((SInt32)tmp<=0) {
@@ -1876,9 +1876,9 @@ UInt32 Sub_WavUnp7(UInt32 arg1)
 /**
 **
 */
-UInt32 Sub_WavUnp8(UInt32 arg1)
+UIntPtr Sub_WavUnp8(UIntPtr arg1)
 {
-	UInt32 tmp0,tmp1;
+	UIntPtr tmp0,tmp1;
 
 	tmp0=*((UInt32 *)(arg1+4));
 	*((UInt32 *)(arg1+4))=tmp0>>1;
@@ -1896,9 +1896,9 @@ UInt32 Sub_WavUnp8(UInt32 arg1)
 /**
 **
 */
-void Sub_WavUnp10(UInt32 arg1, UInt32 arg2)
+void Sub_WavUnp10(UIntPtr arg1, UIntPtr arg2)
 {
-	UInt32 tmp0,tmp1,tmp2,tmp3,arg2_old;
+	UIntPtr tmp0,tmp1,tmp2,tmp3,arg2_old;
 
 	arg2_old=arg2;
 	while(arg1) {
