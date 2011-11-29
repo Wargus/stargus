@@ -52,7 +52,7 @@
 ----------------------------------------------------------------------------*/
 
 typedef UInt16 (*read_data_proc)(UInt8 *buffer, UInt16 size, void *param);
-typedef void (*write_data_proc)(UInt8 *buffer, UInt16 size, void *param, UInt32 *length_write);
+typedef void (*write_data_proc)(UInt8 *buffer, UInt16 size, void *param, UIntPtr *length_write);
 
 class CMpq
 {
@@ -78,7 +78,7 @@ private:
 	int InitializeLocals(void);
 	void BuildBaseMassive(void);
 	UInt32 GetUnknowCrc(UInt32 entry, FILE *fpMpq, UInt32 *BlockTable);
-	UInt32 explode(read_data_proc read_data, write_data_proc write_data, void *param);
+	UInt32 explode(void *param);
 
 	UInt8 *global_buffer, *read_buffer_start, *write_buffer_start;
 	UInt32 *file_header;
@@ -94,7 +94,7 @@ private:
 	UInt32 *hash_table;				/// Hash table
 	UInt32 massive_base[0x500];		/// This massive is used to calculate crc and decode files
 
-	UInt32 length_write;
+	UIntPtr length_write;
 };
 
 

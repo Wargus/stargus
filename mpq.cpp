@@ -72,7 +72,7 @@ typedef struct {
 	UInt8 *buf_out;
 } params;
 
-static UInt16 __explode_1(UInt8 * buf, UInt32 *length_write);
+static UInt16 __explode_1(UInt8 * buf, UIntPtr *length_write);
 static UInt16 __explode_2(UInt8 * buf);
 static UInt16 __explode_3(UInt8 * buf, UInt16 result);
 static UInt16 __explode_4(UInt8 * buf, UInt32 flag);
@@ -83,7 +83,7 @@ static void __explode_7(UInt8 * buf, const UInt8 * table, UInt32 count);
 static UInt32 Crc(char *string, UInt32 * massive_base, UInt32 massive_base_offset);
 static void Decode(UInt32 * data_in, UInt32 * massive_base, UInt32 crc, UInt32 length);
 static UInt16 read_data(UInt8 *buffer, UInt16 size, void *crap);
-static void write_data(UInt8 * buffer, UInt16 size, void *crap, UInt32 *length_write);
+static void write_data(UInt8 * buffer, UInt16 size, void *crap, UIntPtr *length_write);
 
 
 UIntPtr		ExtWavUnp1(UIntPtr,UIntPtr,UIntPtr,UIntPtr);
@@ -345,7 +345,7 @@ UInt16 read_data(UInt8 *buffer, UInt16 size, void *crap)
 /**
 **		(called by explode)
 */
-void write_data(UInt8 * buffer, UInt16 size, void *crap, UInt32 *length_write)
+void write_data(UInt8 * buffer, UInt16 size, void *crap, UIntPtr *length_write)
 {
 	params *param;
 
@@ -464,10 +464,10 @@ UInt32 CMpq::GetUnknowCrc(UInt32 entry, FILE *fpMpq, UInt32 *BlockTable)
 */
 int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 {
-	UInt32 size_pack, size_unpack;
+	UIntPtr size_pack, size_unpack;
 	UInt8 *read_buffer, *write_buffer;
-	UInt32 i, j, offset_body, flag, crc_file;
-	UInt32 num_block, length_read, iteration;
+	UIntPtr i, j, offset_body, flag, crc_file;
+	UIntPtr num_block, length_read, iteration;
 	char *szNameFile;
 	UInt8 metod;
 	ldiv_t divres;
@@ -536,7 +536,7 @@ int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 					param.buf_in = read_buffer;
 					param.buf_out = write_buffer;
 					length_write = 0;
-					explode(&read_data, &write_data, &param);
+					explode(&param);
 					length_read = length_write;
 					iteration--;
 					if (iteration) {
@@ -621,20 +621,18 @@ int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 /**
 **
 */
-UInt32 CMpq::explode(read_data_proc read_data, write_data_proc write_data, void *param)
+UInt32 CMpq::explode(void *param)
 {
-	UInt32 result;
+	UIntPtr result;
 	UInt16 read_result;
 	const UInt8 *table = dcl_table;
 	UInt8 *work_buff;
 
 	work_buff = (UInt8 *) explode_buffer;
 
-	*((UIntPtr *) (work_buff + 0x16)) = (UIntPtr) read_data;
-	*((UIntPtr *) (work_buff + 0x1A)) = (UIntPtr) write_data;
 	*((void **)(work_buff + 0x12)) = param;
 	*((UInt16 *) (work_buff + 0x0E)) = 0x0800;
-	read_result = (*read_data)(work_buff + 0x2222, 0x0800, param);
+	read_result = read_data(work_buff + 0x2222, 0x0800, param);
 	if (read_result == DCL_ERROR_4) {
 		result = DCL_ERROR_3;
 	} else {
@@ -682,11 +680,10 @@ UInt32 CMpq::explode(read_data_proc read_data, write_data_proc write_data, void 
 /**
 **
 */
-static UInt16 __explode_1(UInt8 * buf, UInt32 *length_write)
+static UInt16 __explode_1(UInt8 * buf, UIntPtr *length_write)
 {
-	UInt32 result, temp;
+	UIntPtr result, temp;
 	UInt8 *s, *d;
-	write_data_proc write_data;
 	void *param;
 
 	*((UInt16 *) (buf + 0x04)) = 0x1000;
@@ -714,17 +711,15 @@ static UInt16 __explode_1(UInt8 * buf, UInt32 *length_write)
 		}
 		if (*((UInt16 *) (buf + 4)) >= 0x2000) {
 			result = 0x1000;
-			write_data = (write_data_proc) * ((UIntPtr *) (buf + 0x1A));
 			param = (void *)*((UIntPtr *) (buf + 0x12));
-			(*write_data)(buf + 0x101E, 0x1000, param, length_write);
+			write_data(buf + 0x101E, 0x1000, param, length_write);
 			__explode_7(buf + 0x001E, buf + 0x101E,
 				*((UInt16 *) (buf + 0x04)) - 0x1000);
 			*((UInt16 *) (buf + 0x04)) -= 0x1000;
 		}
 	}
-	write_data = (write_data_proc) * ((UIntPtr *) (buf + 0x1A));
 	param = (void *)*((UIntPtr *) (buf + 0x12));
-	(*write_data)(buf + 0x101E,
+	write_data(buf + 0x101E,
 		(UInt16) (*((UInt16 *) (buf + 0x04)) - 0x1000), param, length_write);
 	return (UInt16) result;
 }
@@ -734,7 +729,7 @@ static UInt16 __explode_1(UInt8 * buf, UInt32 *length_write)
 */
 static UInt16 __explode_2(UInt8 * buf)
 {
-	UInt32 result, flag, flag_1;
+	UIntPtr result, flag, flag_1;
 
 	if (*((UInt16 *) (buf + 0x0A)) & 0x01) {
 		if (__explode_4(buf, 0x01)) {
@@ -809,7 +804,7 @@ static UInt16 __explode_2(UInt8 * buf)
 */
 static UInt16 __explode_3(UInt8 * buf, UInt16 flag)
 {
-	UInt32 result, flag_1;
+	UIntPtr result, flag_1;
 
 	result = *(buf + ((UInt8) * ((UInt16 *) (buf + 0x0A))) + 0x2A22);
 	if (__explode_4(buf, *(buf + ((UInt16) result) + 0x30A2))) {
@@ -837,10 +832,8 @@ static UInt16 __explode_3(UInt8 * buf, UInt16 flag)
 */
 static UInt16 __explode_4(UInt8 * buf, UInt32 flag)
 {
-	UInt32 result;
+	UIntPtr result;
 	UInt16 read_result;
-	read_data_proc read_data =
-		(read_data_proc) * ((UIntPtr *) (buf + 0x16));
 	void *param = (void *)*((UIntPtr *) (buf + 0x12));
 
 	result = *((UInt16 *) (buf + 0x0C));
@@ -853,7 +846,7 @@ static UInt16 __explode_4(UInt8 * buf, UInt32 flag)
 		result = *((UInt16 *) (buf + 0x0E));
 		if (result == *((UInt16 *) (buf + 0x10))) {
 			*((UInt16 *) (buf + 0x0E)) = 0x0800;
-			read_result = (*read_data)(buf + 0x2222, 0x0800, param);
+			read_result = read_data(buf + 0x2222, 0x0800, param);
 			*((UInt16 *) (buf + 0x10)) = read_result;
 			if (!read_result) {
 				return 0x01;
@@ -878,7 +871,7 @@ static void __explode_5(UInt16 count, UInt8 * buf_1, const UInt8 * table,
 	UInt8 * buf_2)
 {
 	SInt16 i = (SInt16) (count - 1);
-	UInt32 idx_1, idx_2;
+	UIntPtr idx_1, idx_2;
 
 	for (; i >= 0; i--) {
 		idx_1 = *(table + i);
@@ -899,7 +892,7 @@ static void __explode_5(UInt16 count, UInt8 * buf_1, const UInt8 * table,
 static void __explode_6(UInt8 * buf, const UInt8 * table)
 {
 	SInt16 i;
-	UInt32 idx_1, idx_2;
+	UIntPtr idx_1, idx_2;
 
 	for (i = 0x00FF; i >= 0; i--) {
 		idx_1 = *(buf + i + 0x2FA2);
@@ -950,7 +943,7 @@ static void __explode_6(UInt8 * buf, const UInt8 * table)
 */
 static void __explode_7(UInt8 *buf, const UInt8 *table, UInt32 count)
 {
-	UInt32 half_count;
+	UIntPtr half_count;
 	UInt8 *buf_end;
 
 	half_count = count >> 0x02;
@@ -1032,7 +1025,7 @@ UIntPtr Sub_WavUnp13(UIntPtr buf_in, UIntPtr size_in, UIntPtr flag, UIntPtr buf_
 				tmp2=0;
 			}
 		}
-		tmp1=(UInt32)*((UInt8 *)tmp0);
+		tmp1=(UIntPtr)*((UInt8 *)tmp0);
 		tmp0++;
 		buf_in=tmp0;
 		if(tmp1&0x80) {
@@ -1157,77 +1150,77 @@ UIntPtr ExtWavUnp1(UIntPtr buf_in, UIntPtr /*size_in*/,
 	SInt32 i;
 
 	work_buff=(UIntPtr)(UInt8 *)malloc(0x3a80);
-	*((UInt32 *)work_buff)=buf_in+4;
-	*((UInt32 *)(work_buff+4))=*((UInt32 *)buf_in);
-	*((UInt32 *)(work_buff+8))=0x20;
+	*((UIntPtr *)work_buff)=buf_in+4;
+	*((UIntPtr *)(work_buff+4))=*((UIntPtr *)buf_in);
+	*((UIntPtr *)(work_buff+8))=0x20;
 	base=work_buff+0xC;
 	Sub_WavUnp12(base);
 	size_out=Sub_WavUnp11(buf_out,size_out,work_buff,base);
 	while(1) {
-		tmp2=*((UInt32 *)(work_buff+0x3070));
+		tmp2=*((UIntPtr *)(work_buff+0x3070));
 		if((SInt32)tmp2<=0) {
 			break;
 		}
 		tmp3=Sub_WavUnp5(tmp2);
-		*((UInt32 *)tmp3)=*((UInt32 *)tmp2);
-		tmp3=*((UInt32 *)tmp2);
-		*((UInt32 *)(tmp3+4))=*((UInt32 *)(tmp2+4));
-		*((UInt32 *)tmp2)=0;
-		*((UInt32 *)(tmp2+4))=0;
+		*((UIntPtr *)tmp3)=*((UIntPtr *)tmp2);
+		tmp3=*((UIntPtr *)tmp2);
+		*((UIntPtr *)(tmp3+4))=*((UIntPtr *)(tmp2+4));
+		*((UIntPtr *)tmp2)=0;
+		*((UIntPtr *)(tmp2+4))=0;
 	}
-	if(*((UInt32 *)(work_buff+0x306C))) {
-		tmp3=Sub_WavUnp5(*((UInt32 *)(work_buff+0x306C)));
-		*((UInt32 *)tmp3)=*((UInt32 *)(work_buff+0x306C));
-		tmp3=*((UInt32 *)(work_buff+0x306C));
-		*((UInt32 *)(tmp3+4))=*((UInt32 *)(work_buff+0x3070));
-		*((UInt32 *)(work_buff+0x306C))=0;
-		*((UInt32 *)(work_buff+0x3070))=0;
+	if(*((UIntPtr *)(work_buff+0x306C))) {
+		tmp3=Sub_WavUnp5(*((UIntPtr *)(work_buff+0x306C)));
+		*((UIntPtr *)tmp3)=*((UIntPtr *)(work_buff+0x306C));
+		tmp3=*((UIntPtr *)(work_buff+0x306C));
+		*((UIntPtr *)(tmp3+4))=*((UIntPtr *)(work_buff+0x3070));
+		*((UIntPtr *)(work_buff+0x306C))=0;
+		*((UIntPtr *)(work_buff+0x3070))=0;
 	}
 	while(1) {
-		tmp2=*((UInt32 *)(work_buff+0x3064));
+		tmp2=*((UIntPtr *)(work_buff+0x3064));
 		if((SInt32)tmp2<=0) {
 			break;
 		}
 		tmp3=Sub_WavUnp5(tmp2);
-		*((UInt32 *)tmp3)=*((UInt32 *)tmp2);
-		tmp3=*((UInt32 *)tmp2);
-		*((UInt32 *)(tmp3+4))=*((UInt32 *)(tmp2+4));
-		*((UInt32 *)tmp2)=0;
-		*((UInt32 *)(tmp2+4))=0;
+		*((UIntPtr *)tmp3)=*((UIntPtr *)tmp2);
+		tmp3=*((UIntPtr *)tmp2);
+		*((UIntPtr *)(tmp3+4))=*((UIntPtr *)(tmp2+4));
+		*((UIntPtr *)tmp2)=0;
+		*((UIntPtr *)(tmp2+4))=0;
 	}
-	if(*((UInt32 *)(work_buff+0x3060))) {
-		tmp3=Sub_WavUnp5(*((UInt32 *)(work_buff+0x3060)));
-		*((UInt32 *)tmp3)=*((UInt32 *)(work_buff+0x3060));
-		tmp3=*((UInt32 *)(work_buff+0x3060));
-		*((UInt32 *)(tmp3+4))=*((UInt32 *)(work_buff+0x3064));
-		*((UInt32 *)(work_buff+0x3060))=0;
-		*((UInt32 *)(work_buff+0x3064))=0;
+	if(*((UIntPtr *)(work_buff+0x3060))) {
+		tmp3=Sub_WavUnp5(*((UIntPtr *)(work_buff+0x3060)));
+		*((UIntPtr *)tmp3)=*((UIntPtr *)(work_buff+0x3060));
+		tmp3=*((UIntPtr *)(work_buff+0x3060));
+		*((UIntPtr *)(tmp3+4))=*((UIntPtr *)(work_buff+0x3064));
+		*((UIntPtr *)(work_buff+0x3060))=0;
+		*((UIntPtr *)(work_buff+0x3064))=0;
 	}
 	tmp2=work_buff+0x305C;
 	for(i=0x203;i!=0;i--) {
-		tmp3=*((UInt32 *)(tmp2-0x18));
+		tmp3=*((UIntPtr *)(tmp2-0x18));
 		tmp2-=0x18;
 		if(tmp3) {
 			tmp3=Sub_WavUnp5(tmp2);
-			*((UInt32 *)tmp3)=*((UInt32 *)tmp2);
-			tmp3=*((UInt32 *)tmp2);
-			*((UInt32 *)(tmp3+4))=*((UInt32 *)(tmp2+4));
-			*((UInt32 *)tmp2)=0;
-			*((UInt32 *)(tmp2+4))=0;
+			*((UIntPtr *)tmp3)=*((UIntPtr *)tmp2);
+			tmp3=*((UIntPtr *)tmp2);
+			*((UIntPtr *)(tmp3+4))=*((UIntPtr *)(tmp2+4));
+			*((UIntPtr *)tmp2)=0;
+			*((UIntPtr *)(tmp2+4))=0;
 		}
-		tmp1=*((UInt32 *)tmp2);
+		tmp1=*((UIntPtr *)tmp2);
 		if(tmp1) {
-			tmp3=*((UInt32 *)(tmp2+4));
+			tmp3=*((UIntPtr *)(tmp2+4));
 			if((SInt32)tmp3<0) {
 				tmp3=~tmp3;
 			} else {
-				tmp3=tmp2+tmp3-*((UInt32 *)(tmp1+4));
+				tmp3=tmp2+tmp3-*((UIntPtr *)(tmp1+4));
 			}
-			*((UInt32 *)tmp3)=tmp1;
-			tmp3=*((UInt32 *)tmp2);
-			*((UInt32 *)(tmp3+4))=*((UInt32 *)(tmp2+4));
-			*((UInt32 *)tmp2)=0;
-			*((UInt32 *)(tmp2+4))=0;
+			*((UIntPtr *)tmp3)=tmp1;
+			tmp3=*((UIntPtr *)tmp2);
+			*((UIntPtr *)(tmp3+4))=*((UIntPtr *)(tmp2+4));
+			*((UIntPtr *)tmp2)=0;
+			*((UIntPtr *)(tmp2+4))=0;
 		}
 	}
 	free((UInt8 *)work_buff);
@@ -1245,7 +1238,7 @@ void Sub_WavUnp12(UIntPtr base)
 	Sub_WavUnp6(base);
 	tmp=base+0x3474;
 	for(i=0x80; i!=0; --i) {
-		*((UInt32 *)tmp)=0;
+		*((UIntPtr *)tmp)=0;
 		tmp+=0xC;
 	}
 	return;
@@ -1268,13 +1261,13 @@ UIntPtr Sub_WavUnp11(UIntPtr buf_out, UIntPtr size_out, UIntPtr work_buff, UIntP
 		return 0;
 	}
 	tmp0=work_buff;
-	if(*((UInt32 *)(tmp0+8))<=8) {
-		tmp3=*((UInt32 *)tmp0);
-		*((UInt32 *)(tmp0+4))|=((UInt32)*((UInt16 *)tmp3)&0xFFFF)<<(*((UInt32 *)(tmp0+8))&0xFF);
-		*((UInt32 *)(tmp0+8))+=0x10;
-		*((UInt32 *)tmp0)+=2;
+	if(*((UIntPtr *)(tmp0+8))<=8) {
+		tmp3=*((UIntPtr *)tmp0);
+		*((UIntPtr *)(tmp0+4))|=((UIntPtr)*((UInt16 *)tmp3)&0xFFFF)<<(*((UIntPtr *)(tmp0+8))&0xFF);
+		*((UIntPtr *)(tmp0+8))+=0x10;
+		*((UIntPtr *)tmp0)+=2;
 	}
-	*((UInt32 *)(tmp0+8))+=0xFFFFFFF8;
+	*((UIntPtr *)(tmp0+8))+=0xFFFFFFF8;
 	varc=*((UInt32 *)(tmp0+4))&0xFF;
 	*((UInt32 *)(tmp0+4))=*((UInt32 *)(tmp0+4))>>8;
 	Sub_WavUnp1(varc,base);
