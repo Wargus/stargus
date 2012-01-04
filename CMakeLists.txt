@@ -35,26 +35,36 @@ set(STARGUS_VERSION 2.2.6)
 set(scmconvert_SRCS
 	mpq.cpp
 	scm.cpp
+	huff.cpp
 )
 
 set(scmconvert_HDRS
 	mpq.h
+	huff.h
 )
 
 set(startool_SRCS
 	startool.cpp
 	mpq.cpp
 	scm.cpp
+	huff.cpp
 )
 
 set(startool_HDRS
 	mpq.h
+	huff.h
 )
 
 set(stargus_SRCS
 	stargus.c
 )
 
+if(WIN32)
+	set(stargus_SRCS
+		${stargus_SRCS}
+		stargus.rc
+	)
+endif()
 
 set(starextract_SRCS
 	starextract.c
@@ -149,6 +159,7 @@ if(MAEMO)
 	add_definitions(${HILDON_CFLAGS})
 	include_directories(${HILDON_INCLUDE_DIRS})
 	set(stargus_LIBS ${stargus_LIBS} ${HILDON_LIBRARIES})
+	set(starextract_LIBS ${starextract_LIBS} ${GTK2_LIBRARIES} ${HILDON_LIBRARIES})
 endif()
 
 if(ENABLE_STRIP)
@@ -203,12 +214,11 @@ endif()
 
 if(WIN32 AND ENABLE_NSIS AND MAKENSIS_FOUND)
 	file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/COPYING DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-	file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/COPYING-3rd DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 	file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/stargus.ico DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 	add_custom_command(OUTPUT Stargus-${STARGUS_VERSION}${MAKENSIS_SUFFIX}
 		COMMAND ${MAKENSIS}
-		ARGS -DNO_DOWNLOAD ${MAKENSIS_FLAGS} -DCMAKE_CURRENT_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}" -DCMAKE_CURRENT_BINARY_DIR="${CMAKE_CURRENT_BINARY_DIR}" ${CMAKE_CURRENT_SOURCE_DIR}/stargus.nsi
-		DEPENDS stargus.nsi scmconvert stargus startool COPYING COPYING-3rd stargus.ico
+		ARGS ${MAKENSIS_FLAGS} -DCMAKE_CURRENT_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}" -DCMAKE_CURRENT_BINARY_DIR="${CMAKE_CURRENT_BINARY_DIR}" ${CMAKE_CURRENT_SOURCE_DIR}/stargus.nsi
+		DEPENDS stargus.nsi scmconvert stargus startool COPYING stargus.ico
 		COMMENT "Generating Stargus Windows NSIS Installer" VERBATIM
 	)
 	add_custom_target(nsis ALL DEPENDS Stargus-${STARGUS_VERSION}${MAKENSIS_SUFFIX})
@@ -218,14 +228,12 @@ endif()
 
 install(TARGETS stargus DESTINATION games)
 install(TARGETS scmconvert startool DESTINATION bin)
-#install(FILES stargus.png DESTINATION share/pixmaps)
+install(FILES stargus.png DESTINATION share/pixmaps)
 install(FILES stargus.desktop DESTINATION share/applications)
 
-# Don't currently have campaigns or maps
-#install(DIRECTORY campaigns maps scripts DESTINATION share/games/stratagus/stargus)
 install(DIRECTORY scripts DESTINATION share/games/stratagus/stargus)
-# Not actually sure where this should go...
-#install(FILES contrib/fog.png DESTINATION share/games/stratagus/stargus/graphics)
+install(FILES mpqlist.txt DESTINATION share/games/stratagus/stargus)
+install(FILES fog.png DESTINATION usr/share/games/stratagus/stargus/graphics/tilesets)
 
 if(MAEMO)
 	install(TARGETS starextract DESTINATION bin)

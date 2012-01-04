@@ -32,7 +32,7 @@
 
 ;--------------------------------
 
-!define ICON "contrib/stargus.ico"
+!define ICON "stargus.ico"
 !define STARGUS "stargus.exe"
 !define STARTOOL "startool.exe"
 !define MPQLIST "mpqlist.txt"
@@ -272,15 +272,20 @@ Section "${NAME}"
 	SetOutPath "$INSTDIR"
 	File "${STARGUS}"
 	File "${STARTOOL}"
+
+	!cd ${CMAKE_CURRENT_SOURCE_DIR}
+
 	File "${MPQLIST}"
 
 	SetOutPath "$INSTDIR\scripts"
-	File /r /x .svn "scripts\"
+	File /r "scripts\"
 	SetOutPath "$INSTDIR"
 
 	CreateDirectory "$INSTDIR\graphics"
 	CreateDirectory "$INSTDIR\graphics\tilesets"
-	File "/oname=graphics\tilesets\fog.png" "contrib\fog.png"
+	File "/oname=graphics\tilesets\fog.png" "fog.png"
+
+	!cd ${CMAKE_CURRENT_BINARY_DIR}
 
 	!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 	CreateDirectory "$SMPROGRAMS\$STARTMENUDIR"
