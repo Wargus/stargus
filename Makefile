@@ -29,35 +29,36 @@ GTKFLAGS := $(shell pkg-config --cflags --libs gtk+-2.0)
 UPXFLAGS := -9
 NSISFLAGS :=
 
-ARCH32 = -m32
-
 all: startool stargus scmconvert
 
 win32: startool.exe stargus.exe scmconvert.exe
 
 clean:
-	$(RM) startool startool.exe startool.o stargus stargus.exe starextract stargus.rc.o stargus.o mpq.o scm.o scm-s.o scmconvert scmconvert.exe
+	$(RM) startool startool.exe startool.o stargus stargus.exe starextract stargus.rc.o stargus.o huff.o mpq.o scm.o scm-s.o scmconvert scmconvert.exe
 
 startool.o: startool.cpp
-	$(CXX) -c $^ $(CXXFLAGS) $(ARCH32) -o $@
+	$(CXX) -c $^ $(CXXFLAGS) -o $@
+
+huff.o: huff.cpp
+	$(CXX) -c $^ $(CXXFLAGS) -o $@
 
 mpq.o: mpq.cpp
-	$(CXX) -c $^ $(CXXFLAGS) $(ARCH32) -o $@
+	$(CXX) -c $^ $(CXXFLAGS) -o $@
 
 scm.o: scm.cpp
-	$(CXX) -c $^ $(CXXFLAGS) $(ARCH32) -o $@
+	$(CXX) -c $^ $(CXXFLAGS) -o $@
 
-startool startool.exe: startool.o mpq.o scm.o
-	$(CXX) $^ $(LDFLAGS) -lz -lpng $(ARCH32) -o $@
+startool startool.exe: startool.o huff.o mpq.o scm.o
+	$(CXX) $^ $(CFLAGS) $(LDFLAGS) -lz -lpng -o $@
 
 scm-s.o: scm.cpp
-	$(CXX) -c $^ $(CXXFLAGS) $(ARCH32) -DSTAND_ALONE -o $@
+	$(CXX) -c $^ $(CXXFLAGS) -DSTAND_ALONE -o $@
 
-scmconvert scmconvert.exe: mpq.o scm-s.o
-	$(CXX) $^ $(LDFLAGS) $(ARCH32) -o $@
+scmconvert scmconvert.exe: huff.o mpq.o scm-s.o
+	$(CXX) $^ $(CFLAGS) $(LDFLAGS) -o $@
 
 stargus: stargus.c
-	$(CC) $^ $(GTKFLAGS) $(LDFLAGS) -o $@
+	$(CC) $^ $(CFLAGS) $(GTKFLAGS) $(LDFLAGS) -o $@
 
 %.rc.o: %.rc
 	$(WINDRES) $^ -O coff -o $@
