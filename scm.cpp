@@ -536,13 +536,9 @@ static inline int ChkReadByte(void)
 static void ExtractMap(FILE *mpqfd, unsigned char **entry, int *size)
 {
 	int i;
-	unsigned long max;
-	int maxi;
 
 	*entry = NULL;
 	*size = 0;
-	max = 0;
-	maxi = 0;
 
 	for (i = 0; i < Mpq->FileCount; ++i) {
 		if (!strcmp("staredit\\scenario.chk", Mpq->FilenameTable + i * PATH_MAX)) {
@@ -578,8 +574,7 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 		//
 		if (!memcmp(header, "VER ", 4)) {
 			if (length == 2) {
-				int v;
-				v = ChkReadWord();
+				ChkReadWord();
 				continue;
 			}
 			DebugLevel1("Wrong VER  length\n");
@@ -590,8 +585,7 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 		//
 		if (!memcmp(header, "IVER", 4)) {
 			if (length == 2) {
-				int v;
-				v = ChkReadWord();
+				ChkReadWord();
 				continue;
 			}
 			DebugLevel1("Wrong IVER length\n");
@@ -602,8 +596,7 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 		//
 		if (!memcmp(header, "IVE2", 4)) {
 			if (length == 2) {
-				int v;
-				v = ChkReadWord();
+				ChkReadWord();
 				continue;
 			}
 			DebugLevel1("Wrong IVE2 length\n");
@@ -882,20 +875,16 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 			if (length % 10 == 0) {
 				while (length > 0) {
 					int n;
-					int x;
-					int y;
-					int pl;
-					int fl;
 					char buf[30];
 //				    char **unit;
 //				    UnitType *type;
 
 					n = ChkReadWord();    // unit number of the thingy
-					x = ChkReadWord();    // x coordinate
-					y = ChkReadWord();    // y coordinate
-					pl = ChkReadByte();   // player number of owner
+					ChkReadWord();    // x coordinate
+					ChkReadWord();    // y coordinate
+					ChkReadByte();   // player number of owner
 					ChkReadByte();	// unknown
-					fl = ChkReadWord();   // flags
+					ChkReadWord();   // flags
 					length -= 10;
 
 					sprintf(buf, "%d", n);

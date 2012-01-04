@@ -124,7 +124,8 @@ int CMpq::ReadInfo(FILE *fpMpq, char * list)
 
 	while (fread(&tmp, sizeof(UInt32), 1, fpMpq)) {
 		if (mpq_header[0] == tmp) {
-			fread(&tmp, sizeof(UInt32), 1, fpMpq);
+			if (fread(&tmp, sizeof(UInt32), 1, fpMpq) != sizeof(UInt32))
+				return -1;
 			if (mpq_header[1] == tmp) {
 				detected = 1;
 				break;
@@ -136,13 +137,18 @@ int CMpq::ReadInfo(FILE *fpMpq, char * list)
 		return -1;
 	}
 	offset_mpq = ftell(fpMpq) - 8;
-	fread(&length_mpq_part, sizeof(UInt32), 1, fpMpq);
+	if (fread(&length_mpq_part, sizeof(UInt32), 1, fpMpq) != sizeof(UInt32))
+		return -1;
 	fseek(fpMpq, offset_mpq + 16, SEEK_SET);
-	fread(&offset_htbl, sizeof(UInt32), 1, fpMpq);
-	fread(&offset_btbl, sizeof(UInt32), 1, fpMpq);
-	fread(&length_htbl, sizeof(UInt32), 1, fpMpq);
+	if (fread(&offset_htbl, sizeof(UInt32), 1, fpMpq) != sizeof(UInt32))
+		return -1;
+	if (fread(&offset_btbl, sizeof(UInt32), 1, fpMpq) != sizeof(UInt32))
+		return -1;
+	if (fread(&length_htbl, sizeof(UInt32), 1, fpMpq) != sizeof(UInt32))
+		return -1;
 	length_htbl *= 4;
-	fread(&length_btbl, sizeof(UInt32), 1, fpMpq);
+	if (fread(&length_btbl, sizeof(UInt32), 1, fpMpq) != sizeof(UInt32))
+		return -1;
 	FileCount = length_btbl;
 	length_btbl *= 4;
 
@@ -152,9 +158,11 @@ int CMpq::ReadInfo(FILE *fpMpq, char * list)
 	}
 
 	fseek(fpMpq, offset_mpq + offset_htbl, SEEK_SET);
-	fread(hash_table, sizeof(UInt32), length_htbl, fpMpq);
+	if (fread(hash_table, sizeof(UInt32), length_htbl, fpMpq) != sizeof(UInt32))
+		return -1;
 	fseek(fpMpq, offset_mpq + offset_btbl, SEEK_SET);
-	fread(BlockTable, sizeof(UInt32), length_btbl, fpMpq);
+	if (fread(BlockTable, sizeof(UInt32), length_btbl, fpMpq) != sizeof(UInt32))
+		return -1;
 	tmp = Crc(name_htable, massive_base, 0x300);
 	Decode(hash_table, massive_base, tmp, length_htbl);
 	tmp = Crc(name_btable, massive_base, 0x300);
@@ -368,7 +376,7 @@ static void Decode(UInt32 * data_in, UInt32 * massive_base, UInt32 crc, UInt32 l
 UInt32 CMpq::GetUnknowCrc(UInt32 entry, FILE *fpMpq, UInt32 *BlockTable)
 {
 	UInt32 tmp, i, j, coded_dword, crc_file;
-	UInt32 flag, size_pack, size_unpack, num_block, offset_body;
+	UInt32 flag, size_unpack, num_block, offset_body;
 	UInt32 sign_riff1 = 0x46464952;		// 'RIFF'
 	UInt32 sign_riff3 = 0x45564157;		// 'WAVE'
 	UInt32 sign_mpq1 = 0x1a51504d;		// 'MPQ'
@@ -378,18 +386,19 @@ UInt32 CMpq::GetUnknowCrc(UInt32 entry, FILE *fpMpq, UInt32 *BlockTable)
 	offset_body = *(BlockTable + entry * 4);		// get offset of analized file
 	flag = *(BlockTable + entry * 4 + 3);		// get flag of analized file
 	fseek(fpMpq, offset_mpq + offset_body, SEEK_SET);
-	fread(&coded_dword, sizeof(UInt32), 1, fpMpq);		// read first coded dword from file
+	if (fread(&coded_dword, sizeof(UInt32), 1, fpMpq) == 0)		// read first coded dword from file
+		return 0;
 
 	if (flag & 0x200 || flag & 0x100) {		// IF FILE PACKED:
 		size_unpack = *(BlockTable + entry * 4 + 2);		// . get size of unpacked file
-		size_pack = *(BlockTable + entry * 4 + 1);		// . get size of packed file
 		divres = ldiv(size_unpack - 1, 0x1000);
 		num_block = divres.quot + 2;		// . calculate length of file header
 		for (j = 0; j <= 0xff; j++) {		// . now we're gonna find crc_file of 0x100 possible variants
 			crc_file = ((num_block * 4) ^ coded_dword) - 0xeeeeeeee - *(massive_base + 0x400 + j);		// . calculate possible crc
 			if ((crc_file & 0xffL) == j) {		// . IF FIRST CHECK is succesfull - do second one
 				fseek(fpMpq, offset_mpq + offset_body, SEEK_SET);
-				fread(file_header, sizeof(UInt32), num_block, fpMpq);		// . read file header
+				if (fread(file_header, sizeof(UInt32), num_block, fpMpq) == 0)		// . read file header
+					return 0;
 				Decode(file_header, massive_base, crc_file, num_block);		// . decode file header with possible crc
 				tmp = num_block * 4;		// . tmp = size header (bytes)
 				if (tmp == *file_header) {		// . IF SECOND CHECK is succesfull - do third one
@@ -415,7 +424,8 @@ UInt32 CMpq::GetUnknowCrc(UInt32 entry, FILE *fpMpq, UInt32 *BlockTable)
 			crc_file = (sign_riff1 ^ coded_dword) - 0xeeeeeeee - *(massive_base + 0x400 + j);		// . calculate possible crc
 			if ((crc_file & 0xff) == j) {		// . IF FIRST CHECK is succesfull - do second one
 				fseek(fpMpq, offset_mpq + offset_body, SEEK_SET);
-				fread(file_header, sizeof(UInt32), 3, fpMpq);		// . read file file_header
+				if (fread(file_header, sizeof(UInt32), 3, fpMpq) == 0)		// . read file file_header
+					return 0;
 				Decode(file_header, massive_base, crc_file, 3);		// . decode file file_header with possible crc
 				if (sign_riff1 == *file_header) {
 					if (sign_riff3 == *(file_header + 2)) {		// . IF SECOND CHECK is succesfull - we got right crc
@@ -432,7 +442,8 @@ UInt32 CMpq::GetUnknowCrc(UInt32 entry, FILE *fpMpq, UInt32 *BlockTable)
 					0x400 + j);
 				if ((crc_file & 0xffL) == j) {
 					fseek(fpMpq, offset_mpq + offset_body, SEEK_SET);
-					fread(file_header, sizeof(UInt32), 2, fpMpq);
+					if (fread(file_header, sizeof(UInt32), 2, fpMpq) == 0)
+						return 0;
 					Decode(file_header, massive_base, crc_file, 2);
 					if (sign_mpq1 == *file_header) {
 						if (sign_mpq2 == *(file_header + 1)) {
@@ -488,14 +499,16 @@ int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 		divres = ldiv(size_unpack - 1, 0x1000);
 		num_block = divres.quot + 2;		// . calculate length of file header
 		fseek(fpMpq, offset_mpq + offset_body, SEEK_SET);
-		fread(file_header, sizeof(UInt32), num_block, fpMpq);		// . read file header
+		if (fread(file_header, sizeof(UInt32), num_block, fpMpq) == 0)		// . read file header
+			return 1;
 		if (flag & 0x30000) {
 			Decode(file_header, massive_base, (crc_file - 1), num_block);		// . decode file header (if file is coded)
 		}
 		read_buffer = read_buffer_start;
 		for (j = 0; j < (num_block - 1); j++) {
 			length_read = *(file_header + j + 1) - *(file_header + j);		// . get length of block to read
-			fread(read_buffer, sizeof(char), length_read, fpMpq);		// . read block
+			if (fread(read_buffer, sizeof(char), length_read, fpMpq) == 0)		// . read block
+				return 1;
 			if (flag & 0x30000) {
 				Decode((UInt32 *) read_buffer, massive_base, crc_file, length_read / 4);		// . decode block (if file is coded)
 			}
@@ -584,7 +597,8 @@ int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 		}
 		fseek(fpMpq, offset_mpq + offset_body, SEEK_SET);
 		for (j = 0; j < num_block; j++) {
-			fread(read_buffer, 1, length_read, fpMpq);
+			if (fread(read_buffer, 1, length_read, fpMpq) == 0)
+				return 1;
 			if (flag & 0x30000) {
 				Decode((UInt32 *) read_buffer, massive_base, crc_file, length_read / 4);		// if file is coded, decode block
 				crc_file++;				// and calculate crc_file for next block
@@ -594,7 +608,8 @@ int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 //			fwrite(read_buffer, 1, length_read, fp_new);
 		}
 		if (divres.rem) {
-			fread(read_buffer, 1, divres.rem, fpMpq);
+			if (fread(read_buffer, 1, divres.rem, fpMpq) == 0)
+				return 1;
 			if (flag & 0x30000)
 				Decode((UInt32 *) read_buffer, massive_base, crc_file,
 					divres.rem / 4);

@@ -3142,7 +3142,6 @@ int ConvertTileset(const char *listfile, const char *file)
 	int h;
 	int megl;
 	int mapl;
-	int flagl;
 	char buf[1024];
 
 	if (!strcmp(listfile, "tileset\\Install")) {
@@ -3165,11 +3164,11 @@ int ConvertTileset(const char *listfile, const char *file)
 
 	sprintf(buf, "%s.vf4", listfile);
 	flagp = ExtractEntry(buf);
-	flagl = EntrySize;
 
 	image = ConvertTile(minp, (char *)megp, megl, (char *)mapp, mapl, &w, &h);
 
 #ifdef DEBUG
+	int flagl = EntrySize;
 	sprintf(buf, "%s/%s-flags.txt", Dir, strstr(listfile, "\\") + 1);
 	FILE *fd = fopen(buf, "w");
 	int i, j, tiles, start = -1;
@@ -4131,21 +4130,13 @@ int main(int argc, char **argv)
 	unsigned u;
 	char *archivedir;
 	char buf[1024];
-	int video;
 	int a;
 	int i;
 	FILE * f;
 
 	a = 1;
-	video = 0;
 
 	while (argc >= 2) {
-		if (!strcmp(argv[a], "-v")) {
-			video = 1;
-			++a;
-			--argc;
-			continue;
-		}
 		if (!strcmp(argv[a], "-V")) {
 			printf(VERSION "\n");
 			++a;
@@ -4177,10 +4168,14 @@ int main(int argc, char **argv)
 	f = fopen(buf, "r");
 	if (f) {
 		char version[20];
-		fgets(version, 20, f);
+		int len = 0;
+		if (fgets(version, 20, f))
+			len = 1;
 		fclose(f);
-		if (strcmp(version, VERSION) == 0)
-			printf("Note: Data is already extracted in Dir %s with this version of startool\n", Dir);
+		if (len != 0 && strcmp(version, VERSION) == 0) {
+			printf("Note: Data is already extracted in Dir \"%s\" with this version of startool\n", Dir);
+			fflush(stdout);
+		}
 	}
 
 	Mpq = new CMpq;
