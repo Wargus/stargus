@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Stargus - Starcraft
+Comment=Starcraft data game set for the Stratagus engine
+Exec=/usr/games/stargus
+Icon=stargus
+Terminal=false
+Type=Application
+Categories=Game;StrategyGame;
+StartupNotify=false
