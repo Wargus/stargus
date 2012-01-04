@@ -50,6 +50,7 @@ const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2010 by th
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <zlib.h>
 
 #ifdef _MSC_VER
 #define strdup _strdup
@@ -2719,7 +2720,7 @@ int SavePNG(const char *name, unsigned char *image, int w, int h,
 		return 1;
 	}
 
-	if (setjmp(png_ptr->jmpbuf)) {
+	if (setjmp(png_jmpbuf(png_ptr))) {
 		// FIXME: must free buffers!!
 		png_destroy_write_struct(&png_ptr, &info_ptr);
 		fclose(fp);
@@ -2731,14 +2732,9 @@ int SavePNG(const char *name, unsigned char *image, int w, int h,
 	png_set_compression_level(png_ptr ,Z_BEST_COMPRESSION);
 
 	// prepare the file information
-	info_ptr->width = w;
-	info_ptr->height = h;
-	info_ptr->bit_depth = 8;
-	info_ptr->color_type = PNG_COLOR_TYPE_PALETTE;
-	info_ptr->interlace_type = 0;
-	info_ptr->valid |= PNG_INFO_PLTE;
-	info_ptr->palette = (png_colorp)pal;
-	info_ptr->num_palette = 256;
+	png_set_IHDR(png_ptr, info_ptr, w, h, 8, PNG_COLOR_TYPE_PALETTE, 0, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+	png_set_invalid(png_ptr, info_ptr, PNG_INFO_PLTE);
+	png_set_PLTE(png_ptr, info_ptr, (png_colorp) pal, 256);
 
 	if (transparent != -1) {
 		png_byte trans[256];
@@ -4044,7 +4040,7 @@ int SavePanel(int width, int height)
 		return 1;
 	}
 
-	if (setjmp(png_ptr->jmpbuf)) {
+	if (setjmp(png_jmpbuf(png_ptr))) {
 		// FIXME: must free buffers!!
 		png_destroy_write_struct(&png_ptr, &info_ptr);
 		fclose(fp);
@@ -4056,11 +4052,7 @@ int SavePanel(int width, int height)
 	png_set_compression_level(png_ptr, Z_BEST_COMPRESSION);
 
 	// prepare the file information
-	info_ptr->width = width;
-	info_ptr->height = height;
-	info_ptr->bit_depth = 8;
-	info_ptr->color_type = PNG_COLOR_TYPE_RGB_ALPHA;
-	info_ptr->interlace_type = 0;
+	png_set_IHDR(png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGB_ALPHA, 0, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
 
 	buf = CreatePanel(width, height);
 
