@@ -475,9 +475,9 @@ static void ExitFatal(int err)
 /**
 **  Read header
 */
-static int ChkReadHeader(char *header, long *length)
+static int ChkReadHeader(char *header, int32_t *length)
 {
-	long len;
+	int32_t len;
 
 	if (chk_ptr >= chk_endptr) {
 		return 0;
@@ -565,7 +565,7 @@ static void ExtractMap(FILE *mpqfd, unsigned char **entry, int *size)
 void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 {
 	char header[5];
-	long length;
+	int32_t length;
 
 	chk_ptr = (char *)chkdata;
 	chk_endptr = chk_ptr + len;
