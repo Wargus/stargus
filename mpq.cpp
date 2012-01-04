@@ -544,7 +544,7 @@ int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 						write_buffer = read_buffer_start;
 					}
 				}
-				if (metod & 0x01) {
+				if (metod & 0x01) { // Huffman
 					length_read =
 						ExtWavUnp1((UIntPtr) read_buffer,
 						(UIntPtr) length_read, (UIntPtr) write_buffer,
@@ -555,13 +555,13 @@ int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 						write_buffer = read_buffer_start;
 					}
 				}
-				if (metod & 0x40) {
+				if (metod & 0x40) { // Mono ADPCM Wave
 					length_read =
 						ExtWavUnp2((UIntPtr) read_buffer,
 						(UIntPtr) length_read, (UIntPtr) write_buffer,
 						0x1000);
 				}
-				if (metod & 0x80) {
+				if (metod & 0x80) { // Stereo ADPCM Wave
 					length_read =
 						ExtWavUnp3((UIntPtr) read_buffer,
 						(UIntPtr) length_read, (UIntPtr) write_buffer,
@@ -992,9 +992,10 @@ UIntPtr ExtWavUnp2(UIntPtr buf_in, UIntPtr size_in, UIntPtr buf_out, UIntPtr siz
 UIntPtr Sub_WavUnp13(UIntPtr buf_in, UIntPtr size_in, UIntPtr flag, UIntPtr buf_out, UIntPtr size_out)
 {
 	UIntPtr var14,var18,var1c;
-	UIntPtr tmp0,tmp1,tmp2,tmp3,tmp4;
-	UIntPtr var8[2];
-	UIntPtr var10[2];
+	UIntPtr tmp0,tmp1,tmp2,tmp3;
+	UInt32 tmp4;
+	UInt32 var8[2];
+	UInt32 var10[2];
 
 	var14=buf_in;
 	size_in+=buf_in;
