@@ -4142,12 +4142,12 @@ int main(int argc, char **argv)
 	}
 
 	archivedir = argv[1];
-	if (argc == 3) {
+	if (argc >= 3) {
 		Dir = argv[2];
 	} else {
 		Dir = "data";
 	}
-	if (argc == 4) {
+	if (argc >= 4) {
 		strcpy(listfile, argv[3]);
 	} else {
 		sprintf(listfile, "%s/mpqlist.txt", Dir);
