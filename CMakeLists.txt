@@ -233,7 +233,7 @@ install(FILES stargus.desktop DESTINATION share/applications)
 
 install(DIRECTORY scripts DESTINATION share/games/stratagus/stargus)
 install(FILES mpqlist.txt DESTINATION share/games/stratagus/stargus)
-install(FILES fog.png DESTINATION usr/share/games/stratagus/stargus/graphics/tilesets)
+install(FILES fog.png DESTINATION share/games/stratagus/stargus/graphics/tilesets)
 
 if(MAEMO)
 	install(TARGETS starextract DESTINATION bin)
