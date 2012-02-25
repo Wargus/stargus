@@ -10,7 +10,7 @@
 //
 /**@name startool.c - Extract files from star archives. */
 //
-//      (c) Copyright 2002-2007 by Jimmy Salmon
+//      (c) Copyright 2002-2012 by Jimmy Salmon and Pali Rohár
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@
 
 #define VERSION "1.0" // Version of extractor wartool
 
-const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2010 by the Stratagus Project.\n"\
+const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2012 by the Stratagus Project.\n"\
 "  Written by Lutz Sammer, Nehal Mistry, and Jimmy Salmon and Pali Rohar.\n"\
 "  https://launchpad.net/stargus";
 
