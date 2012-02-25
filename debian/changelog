@@ -1,6 +1,27 @@
+stargus (2.2.6-1) unstable; urgency=low
+
+  * Fixed bug #768325 - NSIS: run startool with correct datadir path
+  * Fixed bug #909435 - Rewritten build system to CMake
+  * Fixed bug #910269 - Fixed compilation on OpenBSD 5.0
+  * Fixed bug #914555 - Fixed MPQ code
+  * Rewritten code for supporting 64bit architectures too
+  * Use Huffmann decoding from StormLib library
+  * Rewritten debian files to debhelper 7
+
+ -- Pali Rohár <pali.rohar@gmail.com>  Sat, 25 Feb 2012 13:35:25 +0100
+
 stargus (2.2.5.5-1) unstable; urgency=low
 
-  * New upstream release
+  * Fixed for new Stratagus
+  * Compile startool always 32bit
+  * Added icon
+  * Rewrited debian scripts
+  * Rewrited Makefile
+  * Added launcher starcraft.c
+  * Rewrited Windows NSIS Installer
+  * Fixed Windows resource file
+  * Added more resolutions and OpenGL settings in option menu
+  * Ported to Maemo
 
  -- Pali Rohár <pali.rohar@gmail.com>  Mon, 22 Nov 2010 23:16:16 +0100
 

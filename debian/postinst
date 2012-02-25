@@ -7,34 +7,24 @@ set -e
 extract() {
 
 	db_get stargus/extractdata || true
-
-	if [ "$RET" = "true" ]; then
-
-		db_get stargus/cdpath || true
-
-		CDPATH=${RET}
-
-		if [ -d "${CDPATH}" ]; then
-
-			db_stop || true
-			echo "Extracting data from ${CDPATH} to /usr/share/games/stratagus/stargus"
-
-			cd /usr/share/games/stratagus/stargus
-			/usr/games/startool ${CDPATH} /usr/share/games/stratagus/stargus
-			return $?
-
-		else
-
-			db_stop || true
-			echo "${RET} doesn't exist - can't extract Starcraft data" >&2
-			return 1
-
-		fi
-
+	if [ "$RET" != "true" ]; then
+		db_stop || true
+		return 0
 	fi
 
+	db_get stargus/cdpath || true
+	if ! [ -d "$RET" ]; then
+		db_stop || true
+		echo "${RET} doesn't exist - can't extract Starcraft data" >&2
+		return 1
+	fi
+
+	CDPATH="$RET"
+
 	db_stop || true
-	return 0
+
+	startool "$CDPATH" /usr/share/games/stratagus/stargus
+	return $?
 
 }
 

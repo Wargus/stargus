@@ -1,1 +1,1 @@
-?package(stargus):needs="x11" section="Games/Strategy" title="Stargus - Starcraft" command="/usr/games/stargus" icon="/usr/share/pixmaps/stargus.png"
+?package(stargus):needs="x11" section="Games/Strategy" title="Stargus - Starcraft" command="/usr/games/stargus" icon="/usr/share/pixmaps/stargus.xpm"

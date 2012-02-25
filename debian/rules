@@ -1,7 +1,16 @@
 #!/usr/bin/make -f
+#       _________ __                 __
+#      /   _____//  |_____________ _/  |______     ____  __ __  ______
+#      \_____  \\   __\_  __ \__  \\   __\__  \   / ___\|  |  \/  ___/
+#      /        \|  |  |  | \// __ \|  |  / __ \_/ /_/  >  |  /\___ |
+#     /_______  /|__|  |__|  (____  /__| (____  /\___  /|____//____  >
+#             \/                  \/          \//_____/            \/
+#  ______________________                           ______________________
+#                        T H E   W A R   B E G I N S
+#         Stratagus - A free fantasy real time strategy game engine
 #
 #    debian/rules
-#    Copyright (C) 2010  Pali Rohár <pali.rohar@gmail.com>
+#    Copyright (C) 2010-2011  Pali Rohár <pali.rohar@gmail.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -18,82 +27,66 @@
 #
 #
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-
 VERSION := $(shell dpkg-parsechangelog | sed -ne "s/^Version: \(.*\)/\1/p" | sed "s/-[^-]*$$//" )
-DEB_BUILD_ARCH := $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+MAEMO := $(shell if pkg-config maemo-version 1>/dev/null 2>&1 || test -f "/etc/maemo_version" || osso-product-info -q OSSO_PRODUCT_INFO_RELEASE_NAME 2>/dev/null | grep -q -i maemo; then echo YES; fi)
 
-ifeq (amd64, $(DEB_BUILD_ARCH))
-ARCH32="-m32 -L."
-else
-ARCH32=""
+%:
+	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DCMAKE_INCLUDE_PATH="/usr/lib/$(shell dpkg-architecture -qDEB_BUILD_MULTIARCH)/"
+
+override_dh_install:
+	dh_install
+	convert stargus.png -resize 32x32 debian/stargus/usr/share/pixmaps/stargus.xpm
+
+override_dh_shlibdeps:
+	dh_shlibdeps
+	echo "stratagus:Depends=stratagus (>= $(VERSION))" >> debian/stargus.substvars
+
+ifdef MAEMO
+
+override_dh_fixperms:
+	mkdir -p debian/stargus/usr/share/applications/hildon
+	mkdir -p debian/stargus/opt/stratagus/bin
+	mkdir -p debian/stargus/opt/stratagus/share/doc
+	mkdir -p debian/stargus/opt/man/man6
+	mv debian/stargus/usr/share/applications/stargus.desktop debian/stargus/usr/share/applications/hildon/stargus.desktop
+	mv debian/stargus/usr/bin/* debian/stargus/opt/stratagus/bin/
+	mv debian/stargus/usr/games/* debian/stargus/opt/stratagus/bin/
+	mv debian/stargus/usr/share/doc/stargus debian/stargus/opt/stratagus/share/doc/
+	mv debian/stargus/usr/share/games/stratagus/stargus debian/stargus/opt/stratagus/share/
+	mv debian/stargus/usr/share/man/man6/* debian/stargus/opt/man/man6/
+	ln -s /opt/stratagus/bin/warextract debian/stargus/usr/bin/warextract
+	ln -s /opt/stratagus/bin/stargus debian/stargus/usr/games/stargus
+	ln -s /opt/stratagus/bin/wartool debian/stargus/usr/bin/wartool
+	ln -s /opt/stratagus/bin/pudconvert debian/stargus/usr/bin/pudconvert
+	ln -s /opt/stratagus/share/stargus debian/stargus/usr/share/games/stratagus/stargus
+	ln -s /opt/stratagus/share/doc/stargus debian/stargus/usr/share/doc/stargus
+	ln -s /opt/man/man6/stargus.6.gz debian/stargus/usr/share/man/man6/stargus.6.gz
+	ln -s /opt/man/man6/wartool.6.gz debian/stargus/usr/share/man/man6/wartool.6.gz
+	ln -s /opt/man/man6/pudconvert.6.gz debian/stargus/usr/share/man/man6/pudconvert.6.gz
+	echo "X-Osso-Type=application/x-executable" >> debian/stargus/usr/share/applications/hildon/stargus.desktop
+	sed "s/Exec=.*/Exec=\/opt\/stratagus\/bin\/stargus/" -i debian/stargus/usr/share/applications/hildon/stargus.desktop
+	sed "s/Name=.*/Name=Stargus/" -i debian/stargus/usr/share/applications/hildon/stargus.desktop
+	dh_fixperms
+
+override_dh_gencontrol:
+	dh_gencontrol
+	cp debian/stargus/DEBIAN/control debian/stargus/DEBIAN/control.orig
+	sed -n -e "1,/^Depends:.*$$/p" -i debian/stargus/DEBIAN/control
+	echo "Bugtracker: https://bugs.launchpad.net/stargus" >> debian/stargus/DEBIAN/control
+	echo "Maemo-Display-Name: Stargus - Starcraft" >> debian/stargus/DEBIAN/control
+	echo "Maemo-Icon-26:" >> debian/stargus/DEBIAN/control
+	for line in $(shell convert stargus.png -resize 48x48 png:- | uuencode -m - | tail -n +2 | head -n -1); do \
+		echo " $$line" >> $(CURDIR)/debian/control; \
+	done
+	sed "/^# Source debconf library$$/d;/^. \/usr\/share\/debconf\/confmodule$$/d" -i debian/stargus/DEBIAN/postinst
+	bash -c 'sed -n -e "1,/^extract() {$$/p;/^}$$/,\$$p;/extract()/a\\`echo -e "\n\t"`cd /opt/stratagus/share/stargus\\`echo -e "\n\t"`run-standalone.sh /opt/stratagus/bin/starextract\\`echo -e "\n\t"`return $$\?" -i debian/stargus/DEBIAN/postinst'; \
+	sed -n -e "/^Depends:.*$$/,\$$p" debian/stargus/DEBIAN/control.orig | tail -n +2 >> debian/stargus/DEBIAN/control
+	sed "s/Section: .*/Section: user\/games/" -i debian/stargus/DEBIAN/control
+	rm -f debian/stargus/DEBIAN/config debian/stargus/DEBIAN/templates debian/stargus/DEBIAN/control.orig
+
+override_dh_installdebconf:
+
 endif
-
-clean::
-ifeq (amd64, $(DEB_BUILD_ARCH))
-	$(RM) libstdc++.so
-endif
-	$(MAKE) clean
-	if [ -f $(CURDIR)/debian/control.orig ]; then \
-		mv $(CURDIR)/debian/control.orig $(CURDIR)/debian/control; \
-	fi
-
-build:
-ifeq (amd64, $(DEB_BUILD_ARCH))
-	ln -s /usr/lib32/libstdc++.so.6 libstdc++.so
-endif
-	if [ -f /etc/maemo_version ]; then \
-		$(MAKE) all starextract ARCH32=$(ARCH32) GTKFLAGS="$(shell pkg-config --cflags --libs hildon-1 gtk+-2.0)"; \
-	else \
-		$(MAKE) ARCH32=$(ARCH32); \
-	fi
-	
-install/stargus::
-	convert $(CURDIR)/contrib/stargus.ico $(CURDIR)/debian/stargus/usr/share/pixmaps/stargus.png
-	mv $(CURDIR)/debian/stargus/usr/share/pixmaps/stargus-0.png $(CURDIR)/debian/stargus/usr/share/pixmaps/stargus.png
-	rm -f $(CURDIR)/debian/stargus/usr/share/pixmaps/stargus-1.png
-	if [ -f /etc/maemo_version ]; then \
-		install -m0755 starextract $(CURDIR)/debian/stargus/usr/games; \
-	fi
-
-binary-fixup/stargus::
-	if [ -f /etc/maemo_version ]; then \
-		mkdir -p $(CURDIR)/debian/stargus/usr/share/applications/hildon; \
-		mkdir -p $(CURDIR)/debian/stargus/opt/stratagus/bin; \
-		mkdir -p $(CURDIR)/debian/stargus/opt/stratagus/share/doc; \
-		mkdir -p $(CURDIR)/debian/stargus/opt/man/man6; \
-		mv $(CURDIR)/debian/stargus/usr/games/* $(CURDIR)/debian/stargus/opt/stratagus/bin/; \
-		mv $(CURDIR)/debian/stargus/usr/share/doc/stargus $(CURDIR)/debian/stargus/opt/stratagus/share/doc/; \
-		mv $(CURDIR)/debian/stargus/usr/share/games/stratagus/stargus $(CURDIR)/debian/stargus/opt/stratagus/share/; \
-		mv $(CURDIR)/debian/stargus/usr/share/man/man6/* $(CURDIR)/debian/stargus/opt/man/man6/; \
-		mv $(CURDIR)/debian/stargus/usr/share/applications/stargus.desktop $(CURDIR)/debian/stargus/usr/share/applications/hildon/stargus.desktop; \
-		ln -s /opt/stratagus/bin/starextract $(CURDIR)/debian/stargus/usr/games/starextract; \
-		ln -s /opt/stratagus/bin/startool $(CURDIR)/debian/stargus/usr/games/startool; \
-		ln -s /opt/stratagus/bin/stargus $(CURDIR)/debian/stargus/usr/games/stargus; \
-		ln -s /opt/stratagus/share/stargus $(CURDIR)/debian/stargus/usr/share/games/stratagus/stargus; \
-		ln -s /opt/stratagus/share/doc/stargus $(CURDIR)/debian/stargus/usr/share/doc/stargus; \
-		ln -s /opt/man/man6/stargus.6.gz $(CURDIR)/debian/stargus/usr/share/man/man6/stargus.6.gz; \
-		ln -s /opt/man/man6/startool.6.gz $(CURDIR)/debian/stargus/usr/share/man/man6/startool.6.gz; \
-		echo "X-Osso-Type=application/x-executable" >> $(CURDIR)/debian/stargus/usr/share/applications/hildon/stargus.desktop; \
-		sed "s/Exec=.*/Exec=\/opt\/stratagus\/bin\/stargus/" -i $(CURDIR)/debian/stargus/usr/share/applications/hildon/stargus.desktop; \
-		sed "s/Name=.*/Name=Stargus/" -i $(CURDIR)/debian/stargus/usr/share/applications/hildon/stargus.desktop; \
-	fi
-
-binary-predeb/stargus::
-	echo "stratagus:Depends=stratagus (>= $(VERSION))" >> $(CURDIR)/debian/stargus.substvars
-	if [ -f /etc/maemo_version ]; then \
-		cp $(CURDIR)/debian/control $(CURDIR)/debian/control.orig; \
-		sed -n -e "1,/^Depends:.*$$/p" $(CURDIR)/debian/control.orig > $(CURDIR)/debian/control; \
-		sed "s/Section: .*/Section: user\/games/" -i $(CURDIR)/debian/control; \
-		echo "XSBC-Bugtracker: https://bugs.launchpad.net/stargus" >> $(CURDIR)/debian/control; \
-		echo "XB-Maemo-Display-Name: Stargus - Starcraft" >> $(CURDIR)/debian/control; \
-		echo "XB-Maemo-Icon-26:" >> $(CURDIR)/debian/control; \
-		for line in $(shell convert $(CURDIR)/contrib/stargus.ico -resize 48x48 png:- | uuencode -m - | tail -n +2 | head -n -1); do \
-			echo " $$line" >> $(CURDIR)/debian/control; \
-		done; \
-		sed "/^# Source debconf library$$/d;/^. \/usr\/share\/debconf\/confmodule$$/d" -i $(CURDIR)/debian/stargus/DEBIAN/postinst; \
-		bash -c 'sed -n -e "1,/^extract() {$$/p;/^}$$/,\$$p;/extract()/a\\`echo -e "\n\t"`cd /opt/stratagus/share/stargus\\`echo -e "\n\t"`run-standalone.sh /opt/stratagus/bin/starextract\\`echo -e "\n\t"`return $$\?" -i $(CURDIR)/debian/stargus/DEBIAN/postinst'; \
-		rm -f $(CURDIR)/debian/stargus/DEBIAN/config; \
-		rm -f $(CURDIR)/debian/stargus/DEBIAN/templates; \
-		sed -n -e "/^Depends:.*$$/,\$$p" $(CURDIR)/debian/control.orig | tail -n +2 >> $(CURDIR)/debian/control; \
-	fi

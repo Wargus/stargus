@@ -1,7 +1,0 @@
-scmconvert              usr/games/
-stargus                 usr/games/
-startool                usr/games/
-debian/stargus.desktop  usr/share/applications/
-mpqlist.txt             usr/share/games/stratagus/stargus/
-scripts                 usr/share/games/stratagus/stargus/
-contrib/fog.png         usr/share/games/stratagus/stargus/graphics/tilesets/

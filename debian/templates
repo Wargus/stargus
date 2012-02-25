@@ -1,13 +1,17 @@
 Template: stargus/extractdata
 Type: boolean
 Default: true
-Description: Extract Starcraft data files now
+_Description: Extract Starcraft data files now?
+ Stargus needs data files from original Starcraft CD.
 
 Template: stargus/cdpath
 Type: string
 Default: /media/cdrom
-Description: Path to your Starcraft CD mount point
+_Description: Starcraft CD mount point:
+ Enter path to your Starcraft CD mount point
 
 Template: stargus/nodata
 Type: error
-Description: Starcraft data files not found
+_Description: Data files not found
+ Starcraft CD was not found in specified path. Specify another
+ path which contains correct Starcraft data files.
