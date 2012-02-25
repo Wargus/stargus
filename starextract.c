@@ -34,7 +34,7 @@
 #define GAME "stargus"
 
 #define EXTRACT_BIN "/opt/stratagus/bin/startool"
-#define EXTRACT_COMMAND "/opt/stratagus/bin/startool /home/user/MyDocs/Starcraft /home/user/MyDocs/stratagus/stargus"
+#define EXTRACT_COMMAND "/opt/stratagus/bin/startool /home/user/MyDocs/Starcraft /home/user/MyDocs/stratagus/stargus /opt/stratagus/share/stargus/mpqlist.txt"
 #define EXTRACT_INFO ""
 
 #include <stratagus-maemo-extract.h>
