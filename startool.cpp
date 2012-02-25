@@ -2858,6 +2858,7 @@ int ConvertMap(const char *listfile, const char *file)
 	FILE *fd;
 	unsigned char *p;
 	char buf[1024];
+	char listbuf[1024];
 
 	sprintf(buf, "%s/%s", Dir, file);
 	CheckPath(buf);
@@ -2871,7 +2872,9 @@ int ConvertMap(const char *listfile, const char *file)
 	fclose(fd);
 	free(p);
 
-	ConvertScm(buf, buf);
+	sprintf(listbuf, "%s/mpqlist.txt", Dir);
+
+	ConvertScm(buf, buf, listbuf);
 
 	return 0;
 }
@@ -4189,9 +4192,10 @@ int main(int argc, char **argv)
 	}
 #endif
 
-#ifdef DEBUG
 	printf("Extract from \"%s\" to \"%s\"\n", archivedir, Dir);
-#endif
+	printf("Please be patient, the data may take a couple of minutes to extract...\n");
+	fflush(stdout);
+
 	for (i = 0; i < 2; ++i) {
 		Control *c;
 		unsigned len;
@@ -4215,13 +4219,9 @@ int main(int argc, char **argv)
 					} else {
 						sprintf(buf, "%s/%s", archivedir, c[u].ListFile);
 					}
-#ifdef DEBUG
 					printf("Archive \"%s\"\n", buf);
-#endif
 					if (OpenArchive(buf) == -1) {
-#ifdef DEBUG
 						printf("Could not open archive \"%s\", skipping\n", buf);
-#endif
 						u=len;
 					} else {
 						if (c == CDTodo) {

@@ -61,7 +61,7 @@ public:
 	~CMpq();
 
 		/// Read mpq info
-	int ReadInfo(FILE* fpMpq, char* list = NULL);
+	int ReadInfo(FILE* fpMpq, const char* list = NULL);
 		/// Extract mpq entry
 	int ExtractTo(unsigned char* mpqbuf, UInt32 entry, FILE* fpMpq);
 
@@ -103,7 +103,7 @@ private:
 --  Functions
 ----------------------------------------------------------------------------*/
 
-extern void ConvertScm(const char *scmname, const char *newname);
+extern void ConvertScm(const char *scmname, const char *newname, const char *list = NULL);
 
 
 //@}

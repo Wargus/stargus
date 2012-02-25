@@ -548,7 +548,7 @@ static void ExtractMap(FILE *mpqfd, unsigned char **entry, int *size)
 			return;
 		}
 	}
-	fprintf(stderr, "Could not find staredit\\scenario.chk");
+	fprintf(stderr, "Could not find staredit\\scenario.chk\n");
 }
 
 /**
@@ -1152,7 +1152,7 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 **  @param scm  Name of the scm file
 **  @param map  The map
 */
-void LoadScm(const char *scm, WorldMap *map)
+void LoadScm(const char *scm, WorldMap *map, const char *list)
 {
 	unsigned char *chkdata;
 	char buf[1024];
@@ -1168,7 +1168,7 @@ void LoadScm(const char *scm, WorldMap *map)
 		ExitFatal(-1);
 	}
 
-	if (Mpq->ReadInfo(fpMpq)) {
+	if (Mpq->ReadInfo(fpMpq, list)) {
 		fprintf(stderr, "MpqReadInfo failed\n");
 		ExitFatal(-1);
 	}
@@ -1464,10 +1464,10 @@ void FreeMap(WorldMap *map)
 	free(map->Tiles);
 }
 
-void ConvertScm(const char *scmname, const char *newname)
+void ConvertScm(const char *scmname, const char *newname, const char *list)
 {
 	WorldMap map;
-	LoadScm(scmname, &map);
+	LoadScm(scmname, &map, list);
 	SaveMap(newname, &map);
 	FreeMap(&map);
 }

@@ -111,7 +111,7 @@ extern const UInt32 small_tbl2[32];
 /**
 **  Analyzing archive
 */
-int CMpq::ReadInfo(FILE *fpMpq, char * list)
+int CMpq::ReadInfo(FILE *fpMpq, const char * list)
 {
 	UInt32 mpq_header[2] = { 0x1a51504d, 0x00000020 };
 	int i, j;
@@ -124,7 +124,7 @@ int CMpq::ReadInfo(FILE *fpMpq, char * list)
 
 	while (fread(&tmp, sizeof(UInt32), 1, fpMpq)) {
 		if (mpq_header[0] == tmp) {
-			if (fread(&tmp, sizeof(UInt32), 1, fpMpq) != sizeof(UInt32))
+			if (fread(&tmp, sizeof(UInt32), 1, fpMpq) == 0)
 				return -1;
 			if (mpq_header[1] == tmp) {
 				detected = 1;
@@ -133,21 +133,21 @@ int CMpq::ReadInfo(FILE *fpMpq, char * list)
 		}
 	}
 	if (!detected) {
-//		printf("\nError: File \'%s\' is not valid MPQ archive", file_name);
+		printf("Error: File is not valid MPQ archive\n");
 		return -1;
 	}
 	offset_mpq = ftell(fpMpq) - 8;
-	if (fread(&length_mpq_part, sizeof(UInt32), 1, fpMpq) != sizeof(UInt32))
+	if (fread(&length_mpq_part, sizeof(UInt32), 1, fpMpq) == 0)
 		return -1;
 	fseek(fpMpq, offset_mpq + 16, SEEK_SET);
-	if (fread(&offset_htbl, sizeof(UInt32), 1, fpMpq) != sizeof(UInt32))
+	if (fread(&offset_htbl, sizeof(UInt32), 1, fpMpq) == 0)
 		return -1;
-	if (fread(&offset_btbl, sizeof(UInt32), 1, fpMpq) != sizeof(UInt32))
+	if (fread(&offset_btbl, sizeof(UInt32), 1, fpMpq) == 0)
 		return -1;
-	if (fread(&length_htbl, sizeof(UInt32), 1, fpMpq) != sizeof(UInt32))
+	if (fread(&length_htbl, sizeof(UInt32), 1, fpMpq) == 0)
 		return -1;
 	length_htbl *= 4;
-	if (fread(&length_btbl, sizeof(UInt32), 1, fpMpq) != sizeof(UInt32))
+	if (fread(&length_btbl, sizeof(UInt32), 1, fpMpq) == 0)
 		return -1;
 	FileCount = length_btbl;
 	length_btbl *= 4;
@@ -158,10 +158,10 @@ int CMpq::ReadInfo(FILE *fpMpq, char * list)
 	}
 
 	fseek(fpMpq, offset_mpq + offset_htbl, SEEK_SET);
-	if (fread(hash_table, sizeof(UInt32), length_htbl, fpMpq) != sizeof(UInt32))
+	if (fread(hash_table, sizeof(UInt32), length_htbl, fpMpq) == 0)
 		return -1;
 	fseek(fpMpq, offset_mpq + offset_btbl, SEEK_SET);
-	if (fread(BlockTable, sizeof(UInt32), length_btbl, fpMpq) != sizeof(UInt32))
+	if (fread(BlockTable, sizeof(UInt32), length_btbl, fpMpq) == 0)
 		return -1;
 	tmp = Crc(name_htable, massive_base, 0x300);
 	Decode(hash_table, massive_base, tmp, length_htbl);
