@@ -10,7 +10,7 @@
 #         Stratagus - A free fantasy real time strategy game engine
 #
 #    debian/rules
-#    Copyright (C) 2010-2011  Pali Rohár <pali.rohar@gmail.com>
+#    Copyright (C) 2010-2012  Pali Rohár <pali.rohar@gmail.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -79,10 +79,10 @@ override_dh_gencontrol:
 	echo "Maemo-Display-Name: Stargus - Starcraft" >> debian/stargus/DEBIAN/control
 	echo "Maemo-Icon-26:" >> debian/stargus/DEBIAN/control
 	for line in $(shell convert stargus.png -resize 48x48 png:- | uuencode -m - | tail -n +2 | head -n -1); do \
-		echo " $$line" >> $(CURDIR)/debian/control; \
+		echo " $$line" >> debian/stargus/DEBIAN/control; \
 	done
 	sed "/^# Source debconf library$$/d;/^. \/usr\/share\/debconf\/confmodule$$/d" -i debian/stargus/DEBIAN/postinst
-	bash -c 'sed -n -e "1,/^extract() {$$/p;/^}$$/,\$$p;/extract()/a\\`echo -e "\n\t"`cd /opt/stratagus/share/stargus\\`echo -e "\n\t"`run-standalone.sh /opt/stratagus/bin/starextract\\`echo -e "\n\t"`return $$\?" -i debian/stargus/DEBIAN/postinst'; \
+	bash -c 'sed -n -e "1,/^extract() {$$/p;/^}$$/,\$$p;/extract()/a\\`echo -e "\n\t"`cd /opt/stratagus/share/stargus\\`echo -e "\n\t"`run-standalone.sh /opt/stratagus/bin/starextract\\`echo -e "\n\t"`return $$\?" -i debian/stargus/DEBIAN/postinst'
 	sed -n -e "/^Depends:.*$$/,\$$p" debian/stargus/DEBIAN/control.orig | tail -n +2 >> debian/stargus/DEBIAN/control
 	sed "s/Section: .*/Section: user\/games/" -i debian/stargus/DEBIAN/control
 	rm -f debian/stargus/DEBIAN/config debian/stargus/DEBIAN/templates debian/stargus/DEBIAN/control.orig
