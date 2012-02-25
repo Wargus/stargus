@@ -238,7 +238,7 @@ static void InsertItem(THTreeItem ** itemPtr, THTreeItem * item, unsigned long w
             if(PTR_INVALID(next2))
                 next2 = (THTreeItem *)(item2 - item2->next->prev);
  
-            prev2 += (long) next2;
+            prev2 += (uintptr_t) next2;
             prev2->next = item;
             item2->prev = item;         // Set the next/last item
             return;
@@ -545,7 +545,7 @@ THTreeItem * THuffmannTree::Call1500E740(unsigned int nValue)
             if(PTR_INVALID(pItem305C))
                 pPrev += (THTreeItem *)ppItem - (*ppItem)->prev;
             else
-                pPrev += (long)pItem305C;
+                pPrev += (uintptr_t)pItem305C;
  
             pPrev->next    = pItem1;
             ppItem[1]      = pItem2;
