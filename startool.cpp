@@ -134,6 +134,8 @@ static inline unsigned int Swap32(unsigned int D) {
 FILE *MpqFD;
 static CMpq *Mpq;
 
+char listfile[1024];
+
 /**
 **		Destination directory of the graphics
 */
@@ -2793,10 +2795,7 @@ int OpenArchive(const char *file)
 		return -1;
 	}
 
-	char buf[1024];
-	sprintf(buf, "%s/mpqlist.txt", Dir);
-
-	if (Mpq->ReadInfo(MpqFD, buf)) {
+	if (Mpq->ReadInfo(MpqFD, listfile)) {
 		printf("MpqReadInfo failed\n");
 		return -1;
 	}
@@ -2853,16 +2852,15 @@ int CloseArchive(void)
 /**
 **  Convert map
 */
-int ConvertMap(const char *listfile, const char *file)
+int ConvertMap(const char *mapfile, const char *file)
 {
 	FILE *fd;
 	unsigned char *p;
 	char buf[1024];
-	char listbuf[1024];
 
 	sprintf(buf, "%s/%s", Dir, file);
 	CheckPath(buf);
-	p = ExtractEntry(listfile);
+	p = ExtractEntry(mapfile);
 	fd = fopen(buf, "wb");
 	if (!fd) {
 		free(p);
@@ -2872,9 +2870,7 @@ int ConvertMap(const char *listfile, const char *file)
 	fclose(fd);
 	free(p);
 
-	sprintf(listbuf, "%s/mpqlist.txt", Dir);
-
-	ConvertScm(buf, buf, listbuf);
+	ConvertScm(buf, buf, listfile);
 
 	return 0;
 }
@@ -4108,11 +4104,12 @@ void CreatePanels()
 void Usage(const char* name)
 {
 	printf("%s\n\
-Usage: %s archive-directory [destination-directory]\n\
+Usage: %s archive-directory [destination-directory] [mpqlist-file]\n\
 \t-V\tShow version\n\
 \t-h\tShow usage\n\
-archive-directory\tDirectory which includes the archives stardat.mpq...\n\
-destination-directory\tDirectory where the extracted files are placed.\n"
+archive-directory\tDirectory which include the archive install.exe or stardat.mpq...\n\
+destination-directory\tDirectory where the extracted files are placed.\n\
+mpqlist-file\tmpqlist.txt file which contains mpq file names\n"
 	,NameLine, name);
 }
 
@@ -4125,38 +4122,35 @@ int main(int argc, char **argv)
 	unsigned u;
 	char *archivedir;
 	char buf[1024];
-	int a;
 	int i;
 	FILE * f;
 
-	a = 1;
-
-	while (argc >= 2) {
-		if (!strcmp(argv[a], "-V")) {
+	for (i = 0; i < argc; ++i) {
+		if (!strcmp(argv[i], "-V")) {
 			printf(VERSION "\n");
-			++a;
-			--argc;
-			exit(0);
+			return 0;
 		}
-		if (!strcmp(argv[a], "-h")) {
-			Usage(argv[0]);
-			++a;
-			--argc;
-			continue;
+		if (!strcmp(argv[i], "-h")) {
+			argc = 0;
+			break;
 		}
-		break;
 	}
 
-	if (argc != 2 && argc != 3) {
+	if (argc != 2 && argc != 3 && argc != 4) {
 		Usage(argv[0]);
 		exit(-1);
 	}
 
-	archivedir = argv[a];
+	archivedir = argv[1];
 	if (argc == 3) {
-		Dir = argv[a + 1];
+		Dir = argv[2];
 	} else {
 		Dir = "data";
+	}
+	if (argc == 4) {
+		strcpy(listfile, argv[3]);
+	} else {
+		sprintf(listfile, "%s/mpqlist.txt", Dir);
 	}
 
 	sprintf(buf, "%s/extracted", Dir);
@@ -4193,6 +4187,7 @@ int main(int argc, char **argv)
 #endif
 
 	printf("Extract from \"%s\" to \"%s\"\n", archivedir, Dir);
+	printf("Using mpq list file \"%s\"\n", listfile);
 	printf("Please be patient, the data may take a couple of minutes to extract...\n");
 	fflush(stdout);
 
@@ -4223,6 +4218,10 @@ int main(int argc, char **argv)
 					if (OpenArchive(buf) == -1) {
 						printf("Could not open archive \"%s\", skipping\n", buf);
 						u=len;
+						if (c == Todo) {
+							fprintf(stderr, "Fatal error: Cannot extract data\n");
+							return 1;
+						}
 					} else {
 						if (c == CDTodo) {
 #ifdef DEBUG

@@ -171,6 +171,11 @@ int CMpq::ReadInfo(FILE *fpMpq, const char * list)
 	if (list)
 		fpList = fopen(list, "rt");
 
+	if (list && !fpList) {
+		fprintf(stderr, "Error: Can't open specified list: %s\n", list);
+		return -1;
+	}
+
 	if (!fpList)
 		fpList = fopen(DEFAULT_LIST, "rt");
 
@@ -199,7 +204,7 @@ int CMpq::ReadInfo(FILE *fpMpq, const char * list)
 		}
 		fclose(fpList);
 	} else {
-//		printf("Warning: Can't open default list: %s\n", DEFAULT_LIST);
+		fprintf(stderr, "Warning: Can't open default list: %s\n", DEFAULT_LIST);
 	}
 
 	j = 1;
