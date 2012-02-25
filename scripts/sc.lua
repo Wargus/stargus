@@ -123,10 +123,8 @@ function SetPlayerData(player, data, arg1, arg2)
     -- If this is 1 peasant mode add the peasant now
     if (GameSettings.NumUnits == 1) then
       if (player ~= 15 and Players[player].Type ~= PlayerNobody) then
-        local unittype = ConvertUnitType("unit-terran-scv",
-          GetPlayerData(player, "RaceName"))
-        CreateUnit(unittype, player,
-          {Players[player].StartX, Players[player].StartY})
+        local unittype = ConvertUnitType("unit-terran-scv", GetPlayerData(player, "RaceName"))
+        CreateUnit(unittype, player, {Players[player].StartPos.x, Players[player].StartPos.y})
       end
     end
     -- Set AI
@@ -173,10 +171,10 @@ function MapLoaded()
     if (Players[i].Type ~= PlayerNobody) then
       if (Players[i].TotalNumUnits == 0) then
         CreateUnit(ConvertUnitType("unit-terran-command-center", GetPlayerData(i, "RaceName")),
-          i, {Players[i].StartX, Players[i].StartY})
+          i, {Players[i].StartPos.x, Players[i].StartPos.y})
         for j=0,3 do
           CreateUnit(ConvertUnitType("unit-terran-scv", GetPlayerData(i, "RaceName")),
-            i, {Players[i].StartX+j, Players[i].StartY+3})
+            i, {Players[i].StartPos.x + j, Players[i].StartPos.y + 3})
         end
       end
     end
