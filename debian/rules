@@ -57,15 +57,15 @@ override_dh_fixperms:
 	mv debian/stargus/usr/share/doc/stargus debian/stargus/opt/stratagus/share/doc/
 	mv debian/stargus/usr/share/games/stratagus/stargus debian/stargus/opt/stratagus/share/
 	mv debian/stargus/usr/share/man/man6/* debian/stargus/opt/man/man6/
-	ln -s /opt/stratagus/bin/warextract debian/stargus/usr/bin/warextract
+	ln -s /opt/stratagus/bin/starextract debian/stargus/usr/bin/starextract
 	ln -s /opt/stratagus/bin/stargus debian/stargus/usr/games/stargus
-	ln -s /opt/stratagus/bin/wartool debian/stargus/usr/bin/wartool
-	ln -s /opt/stratagus/bin/pudconvert debian/stargus/usr/bin/pudconvert
+	ln -s /opt/stratagus/bin/starool debian/stargus/usr/bin/startool
+	ln -s /opt/stratagus/bin/scmconvert debian/stargus/usr/bin/scmconvert
 	ln -s /opt/stratagus/share/stargus debian/stargus/usr/share/games/stratagus/stargus
 	ln -s /opt/stratagus/share/doc/stargus debian/stargus/usr/share/doc/stargus
 	ln -s /opt/man/man6/stargus.6.gz debian/stargus/usr/share/man/man6/stargus.6.gz
-	ln -s /opt/man/man6/wartool.6.gz debian/stargus/usr/share/man/man6/wartool.6.gz
-	ln -s /opt/man/man6/pudconvert.6.gz debian/stargus/usr/share/man/man6/pudconvert.6.gz
+	ln -s /opt/man/man6/startool.6.gz debian/stargus/usr/share/man/man6/starool.6.gz
+	ln -s /opt/man/man6/scmconvert.6.gz debian/stargus/usr/share/man/man6/scmconvert.6.gz
 	echo "X-Osso-Type=application/x-executable" >> debian/stargus/usr/share/applications/hildon/stargus.desktop
 	sed "s/Exec=.*/Exec=\/opt\/stratagus\/bin\/stargus/" -i debian/stargus/usr/share/applications/hildon/stargus.desktop
 	sed "s/Name=.*/Name=Stargus/" -i debian/stargus/usr/share/applications/hildon/stargus.desktop
