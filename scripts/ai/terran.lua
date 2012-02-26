@@ -2,10 +2,7 @@ InitFuncs:add(function()
   ai_terran_func = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 end)
 
-local player
-
 local terran_funcs = {
-  function() AiDebug(false) return false end,
   function() return AiSleep(AiGetSleepCycles()) end,
   
 --cheat a little
@@ -21,7 +18,6 @@ local terran_funcs = {
 
   function() return AiNeed("unit-terran-barracks") end,
   function() return AiWait("unit-terran-barracks") end,
-
 
   function() return AiSet("unit-terran-scv", 8) end,
   function() return AiWait("unit-terran-scv") end,
@@ -172,6 +168,7 @@ local terran_funcs = {
 
 function AiTerran()
   local ret
+  local player
 
   player = AiPlayer() + 1
 

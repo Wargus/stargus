@@ -3,10 +3,7 @@ InitFuncs:add(function()
   ai_zerg_func = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 end)
 
-local player
-
 local zerg_funcs = {
-  function() AiDebug(false) return false end,
   function() return AiSleep(AiGetSleepCycles()) end,
   
 --cheat a little
@@ -98,6 +95,7 @@ local zerg_funcs = {
 
 function AiZerg()
   local ret
+  local player
 
   player = AiPlayer() + 1
 
