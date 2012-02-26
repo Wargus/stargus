@@ -7,6 +7,7 @@ DefineAnimations("animations-terran-refinery", {
     "frame 0", "wait 5", "label 691B", --[[0x38 0x00]]
     "wait 20", "random-wait 5 100", "goto 691B",
   },
+  Harvest_gas = {"frame 0", "wait 5"}
 })
 
 DefineConstruction("construction-terran-refinery", {
