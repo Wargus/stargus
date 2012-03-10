@@ -56,7 +56,7 @@ set(startool_HDRS
 )
 
 set(stargus_SRCS
-	stargus.c
+	stargus.cpp
 )
 
 if(WIN32)
@@ -179,7 +179,7 @@ if(MAEMO)
 	target_link_libraries(starextract ${starextract_LIBS})
 endif()
 
-add_executable(stargus WIN32 ${stargus_SRCS} ${stargus_HDRS})
+add_executable(stargus ${stargus_SRCS} ${stargus_HDRS})
 target_link_libraries(stargus ${stargus_LIBS})
 
 add_executable(startool ${startool_SRCS} ${startool_HDRS})
