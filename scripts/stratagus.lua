@@ -200,6 +200,8 @@ DefineDefaultResourceAmounts(
   "minerals", 100000,
   "gas", 50000)
 
+DefineDefaultResourceMaxAmounts(-1, -1, -1, -1, -1, -1)
+  
 -------------------------------------------------------------------------------
 
 DefinePlayerColorIndex(8, 8)
