@@ -169,7 +169,7 @@ end
 function MapLoaded()
   for i=0,7 do
     if (Players[i].Type ~= PlayerNobody) then
-      if (Players[i].TotalNumUnits == 0) then
+      if (Players[i]:GetUnitCount() == 0) then
         CreateUnit(ConvertUnitType("unit-terran-command-center", GetPlayerData(i, "RaceName")),
           i, {Players[i].StartPos.x, Players[i].StartPos.y})
         for j=0,3 do
