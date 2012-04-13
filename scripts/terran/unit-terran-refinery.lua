@@ -6,8 +6,7 @@ DefineAnimations("animations-terran-refinery", {
   Still = {
     "frame 0", "wait 5", "label 691B", --[[0x38 0x00]]
     "wait 20", "random-wait 5 100", "goto 691B",
-  },
-  Harvest_gas = {"frame 0", "wait 5"}
+  }
 })
 
 DefineConstruction("construction-terran-refinery", {
@@ -45,7 +44,7 @@ DefineUnitType("unit-terran-refinery", { Name = "Refinery",
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-explosion",
   Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  Building = true, VisibleUnderFog = true,
   BuildingRules = { { "ontop", { Type = "unit-vespene-geyser", ReplaceOnDie = true, ReplaceOnBuild = true} } },
   GivesResource = "gas", CanHarvest = true,
   Sounds = {
