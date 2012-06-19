@@ -1918,7 +1918,7 @@ Control Todo[] = {
 	{W,0,"protoss/units/arbiter/acknowledgement/1","sound\\protoss\\arbiter\\pabyes00.wav" __4},
 	{W,0,"protoss/units/arbiter/acknowledgement/2","sound\\protoss\\arbiter\\pabyes01.wav" __4},
 	{W,0,"protoss/units/arbiter/acknowledgement/3","sound\\protoss\\arbiter\\pabyes02.wav" __4},
-	{W,0,"protoss/units/arbiter/acknowledgement/4","sound\\protoss\\arbiter\\pabyes03.wav" __4},
+//	{W,0,"protoss/units/arbiter/acknowledgement/4","sound\\protoss\\arbiter\\pabyes03.wav" __4},
 	{W,0,"protoss/units/archon/death/1","sound\\protoss\\archon\\pardth00.wav" __4},
 	{W,0,"protoss/units/archon/min00","sound\\Protoss\\ARCHON\\PArMin00.wav" __4},
 	{W,0,"protoss/units/archon/pissed/1","sound\\protoss\\archon\\parpss00.wav" __4},
