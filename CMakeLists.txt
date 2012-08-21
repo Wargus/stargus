@@ -186,9 +186,9 @@ add_executable(startool ${startool_SRCS} ${startool_HDRS})
 target_link_libraries(startool ${startool_LIBS})
 
 if(WIN32 AND MINGW AND ENABLE_STATIC)
-	set_target_properties(scmconvert PROPERTIES LINK_FLAGS "${LINK_FLAGS} -static-libgcc")
-	set_target_properties(stargus PROPERTIES LINK_FLAGS "${LINK_FLAGS} -static-libgcc")
-	set_target_properties(startool PROPERTIES LINK_FLAGS "${LINK_FLAGS} -static-libgcc")
+	set_target_properties(scmconvert PROPERTIES LINK_FLAGS "${LINK_FLAGS} -static-libgcc -static-libstdc++")
+	set_target_properties(stargus PROPERTIES LINK_FLAGS "${LINK_FLAGS} -static-libgcc -static-libstdc++")
+	set_target_properties(startool PROPERTIES LINK_FLAGS "${LINK_FLAGS} -static-libgcc -static-libstdc++")
 endif()
 
 ########### next target ###############
