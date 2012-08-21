@@ -1,3 +1,7 @@
+2.2.7:
+ - Fixed bug #950442 - Fix script when map is loaded
+ - Fixed bug #931215 - Do not extract file which missing on french CD
+
 2.2.6:
  - Fixed bug #768325 - NSIS: run startool with correct datadir path
  - Fixed bug #909435 - Rewritten build system to CMake

@@ -39,7 +39,7 @@
 -------------------------------------------------------------------------------
 
 Name = "Stargus"
-Version = "2.2.6"
+Version = "2.2.7"
 Homepage = "https://launchpad.net/stargus"
 Licence = "GPL v2"
 Copyright = "Copyright (c) 1998-2012 by The Stratagus Project and Pali Rohar"

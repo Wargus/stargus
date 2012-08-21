@@ -43,7 +43,7 @@
 ;--------------------------------
 
 !define NAME "Stargus"
-!define VERSION "2.2.6"
+!define VERSION "2.2.7"
 !define VIVERSION "${VERSION}.0"
 !define HOMEPAGE "https://launchpad.net/stargus"
 !define LICENSE "GPL v2"
