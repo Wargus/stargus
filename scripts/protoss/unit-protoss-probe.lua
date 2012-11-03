@@ -46,7 +46,7 @@ DefineUnitType("unit-protoss-probe", { Name = "Probe",
   --ExplodeWhenKilled = "missile-terran-explosion-small",
   Type = "land",
   RightMouseAction = "harvest",
-  CanAttack = true, RepairRange = 1,
+  CanAttack = true, RepairRange = 0,
   CanTargetLand = true,
   LandUnit = true,
   Coward = true,
@@ -66,18 +66,18 @@ DefineUnitType("unit-protoss-probe", { Name = "Probe",
   SelectableByRectangle = true,
   Sounds = {
     "selected", "protoss-probe-selected",
-    "acknowledge", "protoss-probe-acknowledgement",
+    "acknowledge", "protoss-probe-acknowledge",
     "ready", "protoss-probe-ready",
     "help", "protoss-units-attacked",
     "dead", "protoss-probe-death"} } )
 
-DefineUnitType("unit-protoss-pylon", {})
-DefineUnitType("unit-protoss-nexus", {})
-DefineUnitType("unit-protoss-gateway", {})
-DefineUnitType("unit-protoss-photon-cannon", {})
-DefineUnitType("unit-protoss-assimulator", {})
-DefineUnitType("unit-protoss-forge", {})
-DefineUnitType("unit-protoss-cybernetics-core", {})
+--DefineUnitType("unit-protoss-pylon", {})
+--DefineUnitType("unit-protoss-nexus", {})
+--DefineUnitType("unit-protoss-gateway", {})
+--DefineUnitType("unit-protoss-photon-cannon", {})
+--DefineUnitType("unit-protoss-assimulator", {})
+--DefineUnitType("unit-protoss-forge", {})
+--DefineUnitType("unit-protoss-cybernetics-core", {})
 
 --
 -- Default

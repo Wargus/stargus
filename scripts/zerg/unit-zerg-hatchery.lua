@@ -106,6 +106,7 @@ DefineUnitType("unit-zerg-hydralisk", {})
 DefineUnitType("unit-zerg-ultralisk", {})
 DefineUnitType("unit-zerg-overlord", {})
 DefineUnitType("unit-zerg-queen", {})
+DefineUnitType("unit-zerg-scourge", {})
 DefineUnitType("unit-zerg-defiler", {})
 DefineUnitType("unit-zerg-mutalisk", {})
 
@@ -119,33 +120,41 @@ DefineButton( { Pos = 2, Level = 1, Icon = "icon-zerg-zergling",
   Key = "z", Hint = "Zergling",
   ForUnit = {"unit-zerg-hatchery", "unit-zerg-lair", "unit-zerg-hive"} } )
 
-DefineButton( { Pos = 3, Level = 1, Icon = "icon-zerg-hydralisk",
-  Action = "train-unit", Value = "unit-zerg-hydralisk",
-  Key = "h", Hint = "Hydralisk",
-  ForUnit = {"unit-zerg-hatchery", "unit-zerg-lair", "unit-zerg-hive"} } )
-  
-DefineButton( { Pos = 4, Level = 1, Icon = "icon-zerg-ultralisk",
-  Action = "train-unit", Value = "unit-zerg-ultralisk",
-  Key = "u", Hint = "Ultralisk",
-  ForUnit = {"unit-zerg-hatchery", "unit-zerg-lair", "unit-zerg-hive"} } )
-  
-DefineButton( { Pos = 5, Level = 1, Icon = "icon-zerg-overlord",
+
+DefineButton( { Pos = 3, Level = 1, Icon = "icon-zerg-overlord",
   Action = "train-unit", Value = "unit-zerg-overlord",
   Key = "o", Hint = "Overlord",
   ForUnit = {"unit-zerg-hatchery", "unit-zerg-lair", "unit-zerg-hive"} } )
 
-DefineButton( { Pos = 7, Level = 1, Icon = "icon-zerg-mutalisk",
+DefineButton( { Pos = 4, Level = 1, Icon = "icon-zerg-hydralisk",
+  Action = "train-unit", Value = "unit-zerg-hydralisk",
+  Key = "h", Hint = "Hydralisk",
+  ForUnit = {"unit-zerg-hatchery", "unit-zerg-lair", "unit-zerg-hive"} } )
+  
+ DefineButton( { Pos = 5, Level = 1, Icon = "icon-zerg-mutalisk",
   Action = "train-unit", Value = "unit-zerg-mutalisk",
   Key = "m", Hint = "Mutalisk",
   ForUnit = {"unit-zerg-hatchery", "unit-zerg-lair", "unit-zerg-hive"} } )
-
-DefineButton( { Pos = 8, Level = 1, Icon = "icon-zerg-queen",
+  
+DefineButton( { Pos = 6, Level = 1, Icon = "icon-zerg-scourge",
+  Action = "train-unit", Value = "unit-zerg-scourge",
+  Key = "s", Hint = "Scourge",
+  ForUnit = {"unit-zerg-hatchery", "unit-zerg-lair", "unit-zerg-hive"} } )
+  
+DefineButton( { Pos = 7, Level = 1, Icon = "icon-zerg-queen",
   Action = "train-unit", Value = "unit-zerg-queen",
   Key = "q", Hint = "Queen",
   ForUnit = {"unit-zerg-hatchery", "unit-zerg-lair", "unit-zerg-hive"} } )
-
+  
+DefineButton( { Pos = 8, Level = 1, Icon = "icon-zerg-ultralisk",
+  Action = "train-unit", Value = "unit-zerg-ultralisk",
+  Key = "u", Hint = "Ultralisk",
+  ForUnit = {"unit-zerg-hatchery", "unit-zerg-lair", "unit-zerg-hive"} } )
+  
 DefineButton( { Pos = 9, Level = 1, Icon = "icon-zerg-defiler",
   Action = "train-unit", Value = "unit-zerg-defiler",
   Key = "d", Hint = "Defiler",
   ForUnit = {"unit-zerg-hatchery", "unit-zerg-lair", "unit-zerg-hive"} } )
+
+
 

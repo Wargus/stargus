@@ -16,7 +16,7 @@ DefineAnimations("animations-zerg-sunken-colony", {
     "frame 32", "wait 1", "frame 31", "wait 1", "frame 30", "wait 1",
     "frame 29", "wait 1", "frame 28", "wait 1", "frame 27", "wait 1",
     "frame 26", "wait 1", "frame 25", "wait 1", "frame 24",
-    "unbreakable end", "wait 5",
+    "unbreakable end", "wait 5", "sound zerg-sunken-colony-hit",  "wait 20",
   },  
 })
 

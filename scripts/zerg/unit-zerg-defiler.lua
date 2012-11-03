@@ -77,11 +77,11 @@ DefineUnitType("unit-zerg-defiler", { Name = "Hydralisk",
   organic = true,
   SelectableByRectangle = true,
   Sounds = {
-    "selected", "zerg-hydralisk-selected",
-    "acknowledge", "zerg-hydralisk-acknowledgement",
-    "ready", "zerg-hydralisk-ready",
+    "selected", "zerg-defiler-selected",
+    "acknowledge", "zerg-defiler-acknowledgement",
+    "ready", "zerg-defiler-ready",
     "help", "zerg-units-attacked",
-	"dead", "zerg-hydralisk-death"} } )
+	"dead", "zerg-defiler-death"} } )
 --[[
 DefineButton( { Pos = 9, Level = 0, Icon = "icon-cancel",
   Action = "cast-spell", Value = "d-s",

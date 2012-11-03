@@ -10,6 +10,7 @@ function RunShowCreditsMenu()
 	"  Nehal Mistry",
 	"  Joris Dauphin",
 	"  Russell Smith",
+	"  Bradley Clemetson",
 	"Patches",
 	"  Martin Renold",
 	"  Carlos Perello Marin",

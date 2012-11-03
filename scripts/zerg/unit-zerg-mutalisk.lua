@@ -18,7 +18,7 @@ DefineAnimations("animations-zerg-mutalisk", {
     "unbreakable end", "wait 1",
   },
   Attack = {"unbreakable begin", "attack", "sound zerg-mutalisk-attack",
-    "unbreakable end", "wait 1",},
+    "unbreakable end", "wait 40",},
   Death = {"unbreakable begin", "sound zerg-mutalisk-death",
     --[[active overlay 41,0]] "wait 1", "unbreakable end", "wait 1",},
 })

@@ -103,8 +103,10 @@ function SetPlayerData(player, data, arg1, arg2)
         arg1 = "terran"
       elseif (GameSettings.Presets[0].Race == 2) then
         arg1 = "zerg"
+	SetMusic("zerg")
       elseif (GameSettings.Presets[0].Race == 3) then
         arg1 = "protoss"
+	SetMusic("protoss")
       end
     end
   elseif (data == "Resources") then

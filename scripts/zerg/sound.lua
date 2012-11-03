@@ -33,6 +33,9 @@ MakeSound("zerg-drone-acknowledgement",
   "zerg/units/drone/acknowledgement/4.wav",
   "zerg/units/drone/acknowledgement/5.wav"})
 
+MakeSound("zerg-drone-gather",
+	{"zerg/units/drone/min00.wav"})
+
 --hydralisk
   
 MakeSound("zerg-hydralisk-selected",
@@ -43,6 +46,9 @@ MakeSound("zerg-hydralisk-selected",
 MakeSound("zerg-hydralisk-pissed",
   {"zerg/units/hydralisk/pissed/1.wav",
   "zerg/units/hydralisk/pissed/2.wav"})
+
+MakeSound("zerg-hydralisk-attack",
+	{"zerg/units/hydralisk/fir00.wav"})
 
 MakeSound("zerg-hydralisk-acknowledgement",
   {"zerg/units/hydralisk/acknowledgement/1.wav",
@@ -72,6 +78,11 @@ MakeSound("zerg-zergling-acknowledgement",
   "zerg/units/zergling/acknowledgement/2.wav",
   "zerg/units/zergling/acknowledgement/3.wav",
   "zerg/units/zergling/acknowledgement/4.wav"})
+
+
+-- FIXME Placeholder Zergling attack noise
+MakeSound("zerg-zergling-attack",
+	{"zer/units/hyfir00"}) 
   
 MakeSound("zerg-zergling-death", "zerg/units/zergling/death/1.wav")
 MakeSound("zerg-zergling-ready", "zerg/units/zergling/ready.wav")
@@ -271,7 +282,7 @@ MakeSound("zerg-mutalisk-acknowledgement",
 
 MakeSound("zerg-mutalisk-death", "zerg/units/mutalisk/death/1.wav")
 MakeSound("zerg-mutalisk-ready", "zerg/units/mutalisk/ready.wav")
-MakeSound("zerg-mutalisk-fire", "zerg/units/mutalisk/fir00.wav")
+MakeSound("zerg-mutalisk-attack", "zerg/units/mutalisk/fir00.wav")
 
 --queen
 
@@ -356,6 +367,8 @@ MakeSound("zerg-building-blowup", "zerg/units/building death.wav")
 MakeSound("zerg-spawning-pool-selected", "zerg/units/spawning pool selected.wav")
 MakeSound("zerg-evolution-chamber-selected", "zerg/units/evolution chamber selected.wav")
 MakeSound("zerg-sunken-colony-selected", "zerg/units/sunken colony selected.wav")
+MakeSound("zerg-sunken-colony-attack", "zerg/units/lufir00.wav")
+MakeSound("zerg-sunken-colony-hit", "zerg/units/luhit00.wav")
 MakeSound("zerg-creep-colony-selected", "zerg/units/creep colony selected.wav")
 MakeSound("zerg-spore-colony-selected", "zerg/units/spore colony selected.wav")
 MakeSound("zerg-extractor-selected", "zerg/units/extractor selected.wav")
