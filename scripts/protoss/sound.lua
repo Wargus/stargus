@@ -22,7 +22,18 @@ MakeSound("protoss-zealot-attack", "protoss/units/zealot/att00.wav")
 MakeSound("protoss-zealot-death", "protoss/units/zealot/death/1.wav")
 MakeSound("protoss-zealot-ready", "protoss/units/zealot/ready.wav")
 MakeSound("protoss-dragoon-ready", "protoss/units/dragoon/ready.wav")
-
+MakeSound("protoss-high-templar-ready", "protoss/units/templar/ready.wav")
+MakeSound("protoss-high-templar-death", "protoss/units/templar/death/1.wav")
+MakeSound("protoss-high-templar-attacked", "protoss/units/advisor/upd01.wav")
+--FIXME SHOULD BE A DARK TEMPLAR READ SOUND HERE!!!
+MakeSound("protoss-dark-templar", "protoss/units/dark templar/death/1.wav")
+MakeSound("protoss-observer-ready", "protoss/units/observer/ready.wav")
+MakeSound("protoss-reaver-ready", "protoss/units/reaver/ready.wav")
+MakeSound("protoss-reaver-death", "protoss/units/reaver/death/1.wav")
+MakeSound("protoss-shuttle-ready", "protoss/units/shuttle/ready.wav")
+MakeSound("protoss-shuttle-death", "protoss/units/shuttle/death/1.wav")
+MakeSound("protoss-scout-ready", "protoss/units/scout/ready.wav")
+MakeSound("protoss-scout-death", "protoss/units/scout/death/1.wav")
 
 MakeSound("protoss-probe-acknowledge",
   {"protoss/units/probe/acknowledgement/1.wav",
@@ -90,3 +101,112 @@ MakeSound("protoss-dragoon-selected",
   "protoss/units/dragoon/selected/7.wav",
   "protoss/units/dragoon/selected/8.wav"})
   
+MakeSound("protoss-high-templar-selected",
+  {"protoss/units/templar/selected/1.wav",
+  "protoss/units/templar/selected/2.wav",
+  "protoss/units/templar/selected/3.wav",
+  "protoss/units/templar/selected/4.wav"})
+ 
+ MakeSound("protoss-high-templar-acknowledge",
+  {"protoss/units/templar/acknowledgement/1.wav",
+  "protoss/units/templar/acknowledgement/2.wav",
+  "protoss/units/templar/acknowledgement/3.wav",
+  "protoss/units/templar/acknowledgement/4.wav"})
+  
+MakeSound("protoss-high-templar-pissed",
+  {"protoss/units/templar/pissed/1.wav",
+  "protoss/units/templar/pissed/2.wav",
+  "protoss/units/templar/pissed/3.wav",
+  "protoss/units/templar/pissed/4.wav"})
+  
+  MakeSound("protoss-dark-templar-selected",
+  {"protoss/units/dark templar/selected/1.wav",
+  "protoss/units/dark templar/selected/2.wav",
+  "protoss/units/dark templar/selected/3.wav",
+  "protoss/units/dark templar/selected/4.wav"})
+ 
+ MakeSound("protoss-dark-templar-acknowledge",
+  {"protoss/units/dark templar/acknowledgement/1.wav",
+  "protoss/units/dark templar/acknowledgement/2.wav",
+  "protoss/units/dark templar/acknowledgement/3.wav",
+  "protoss/units/dark templar/acknowledgement/4.wav"})
+  
+MakeSound("protoss-dark-templar-pissed",
+  {"protoss/units/dark templar/pissed/1.wav",
+  "protoss/units/dark templar/pissed/2.wav",
+  "protoss/units/dark templar/pissed/3.wav",
+  "protoss/units/dark templar/pissed/4.wav"})
+
+MakeSound("protoss-observer-selected",
+  {"protoss/units/observer/selected/1.wav",
+  "protoss/units/observer/selected/2.wav"})
+ 
+MakeSound("protoss-observer-acknowledge",
+  {"protoss/units/observer/acknowledgement/1.wav",
+  "protoss/units/observer/acknowledgement/2.wav"})
+  
+MakeSound("protoss-observer-pissed",
+  {"protoss/units/observer/pissed/1.wav",
+  "protoss/units/observer/pissed/2.wav",
+  "protoss/units/observer/pissed/3.wav",
+  "protoss/units/observer/pissed/4.wav",
+  "protoss/units/observer/pissed/5.wav"})
+
+MakeSound("protoss-observer-death",
+	{"protoss/units/observer/death/1.wav",
+	"protoss/units/observer/death/2.wav"})
+	
+MakeSound("protoss-reaver-selected",
+  {"protoss/units/reaver/selected/1.wav",
+   "protoss/units/reaver/selected/2.wav",
+   "protoss/units/reaver/selected/3.wav",
+   "protoss/units/reaver/selected/4.wav"})
+ 
+MakeSound("protoss-reaver-acknowledge",
+  {"protoss/units/reaver/acknowledgement/1.wav",
+  "protoss/units/reaver/acknowledgement/2.wav",
+  "protoss/units/reaver/acknowledgement/3.wav",
+  "protoss/units/reaver/acknowledgement/4.wav"})
+  
+MakeSound("protoss-reaver-pissed",
+  {"protoss/units/reaver/pissed/1.wav",
+  "protoss/units/reaver/pissed/2.wav",
+  "protoss/units/reaver/pissed/3.wav"})
+  
+MakeSound("protoss-shuttle-selected",
+  {"protoss/units/shuttle/selected/1.wav",
+   "protoss/units/shuttle/selected/2.wav",
+   "protoss/units/shuttle/selected/3.wav",
+   "protoss/units/shuttle/selected/4.wav"})
+ 
+MakeSound("protoss-shuttle-acknowledge",
+  {"protoss/units/shuttle/acknowledgement/1.wav",
+  "protoss/units/shuttle/acknowledgement/2.wav",
+  "protoss/units/shuttle/acknowledgement/3.wav",
+  "protoss/units/shuttle/acknowledgement/4.wav"})
+  
+MakeSound("protoss-shuttle-pissed",
+  {"protoss/units/shuttle/pissed/1.wav",
+  "protoss/units/shuttle/pissed/2.wav",
+  "protoss/units/shuttle/pissed/3.wav",
+  "protoss/units/shuttle/pissed/4.wav",
+  "protoss/units/shuttle/pissed/5.wav"})
+  
+MakeSound("protoss-scout-selected",
+  {"protoss/units/scout/selected/1.wav",
+   "protoss/units/scout/selected/2.wav",
+   "protoss/units/scout/selected/3.wav",
+   "protoss/units/scout/selected/4.wav"})
+ 
+MakeSound("protoss-scout-acknowledge",
+  {"protoss/units/scout/acknowledgement/1.wav",
+  "protoss/units/scout/acknowledgement/2.wav",
+  "protoss/units/scout/acknowledgement/3.wav",
+  "protoss/units/scout/acknowledgement/4.wav"})
+  
+MakeSound("protoss-scout-pissed",
+  {"protoss/units/scout/pissed/1.wav",
+  "protoss/units/scout/pissed/2.wav",
+  "protoss/units/scout/pissed/3.wav",
+  "protoss/units/scout/pissed/4.wav",
+  "protoss/units/scout/pissed/5.wav"})

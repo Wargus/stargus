@@ -65,6 +65,8 @@ DefineUnitType("unit-protoss-gateway", { Name = "Protoss Gateway",
 
 DefineUnitType("unit-protoss-zealot", {})
 DefineUnitType("unit-protoss-dragoon", {})
+DefineUnitType("unit-protoss-high-templar", {})
+DefineUnitType("unit-protoss-dark-templar", {})
 
 
 DefineButton( { Pos = 1, Level = 0, Icon = "icon-protoss-zealot",
@@ -75,4 +77,14 @@ DefineButton( { Pos = 1, Level = 0, Icon = "icon-protoss-zealot",
 DefineButton( { Pos = 2, Level = 0, Icon = "icon-protoss-dragoon",
   Action = "train-unit", Value = "unit-protoss-dragoon",
   Key = "d", Hint = "Warp in Dragoon",
+  ForUnit = {"unit-protoss-gateway"} } )
+
+DefineButton( { Pos = 3, Level = 0, Icon = "icon-protoss-high-templar",
+  Action = "train-unit", Value = "unit-protoss-high-templar",
+  Key = "d", Hint = "Warp in High Templar",
+  ForUnit = {"unit-protoss-gateway"} } )
+  
+  DefineButton( { Pos = 4, Level = 0, Icon = "icon-protoss-dark-templar",
+  Action = "train-unit", Value = "unit-protoss-dark-templar",
+  Key = "d", Hint = "Warp in Dark Templar",
   ForUnit = {"unit-protoss-gateway"} } )
