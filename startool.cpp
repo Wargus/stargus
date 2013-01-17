@@ -67,10 +67,6 @@ const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2012 by th
 
 #include "mpq.h"
 
-#if defined(_MSC_VER) || defined(__MINGW32__) || defined(USE_BEOS)
-	typedef unsigned long u_int32_t;
-#endif
-
 #ifndef __GNUC__
 	#define __attribute__(args)  // Does nothing for non GNU CC
 #endif
@@ -3815,7 +3811,7 @@ unsigned char *ConvertFnt(unsigned char *start, int *wp, int *hp) {
 	max_height = FetchByte(bp);
 
 
-	offsets = (unsigned *)malloc(count * sizeof(u_int32_t));
+	offsets = (unsigned *)malloc(count * sizeof(UInt32));
 	for (i = 0; i < count; ++i) {
 		offsets[i] = FetchLE32(bp);
 	}
