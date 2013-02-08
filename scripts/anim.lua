@@ -27,8 +27,6 @@
 --      along with this program; if not, write to the Free Software
 --      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
---      $Id$
-
 
 UnitStill = {"frame 0", "wait 4", "random-goto 99 no-rotate", "random-rotate 1", "label no-rotate", "wait 1",}
 BuildingStill = {"frame 0", "wait 4", "frame 0", "wait 1",}
