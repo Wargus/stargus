@@ -37,7 +37,7 @@ MakeSound("zerg-drone-gather",
 	{"zerg/units/drone/min00.wav"})
 
 --hydralisk
-  
+
 MakeSound("zerg-hydralisk-selected",
   {"zerg/units/hydralisk/selected/1.wav",
   "zerg/units/hydralisk/selected/2.wav",
@@ -55,13 +55,13 @@ MakeSound("zerg-hydralisk-acknowledgement",
   "zerg/units/hydralisk/acknowledgement/2.wav",
   "zerg/units/hydralisk/acknowledgement/3.wav",
   "zerg/units/hydralisk/acknowledgement/4.wav"})
-  
+
 MakeSound("zerg-hydralisk-death", "zerg/units/hydralisk/death/1.wav")
 
 MakeSound("zerg-hydralisk-ready", "zerg/units/hydralisk/ready.wav")
-  
+
 --zergling
-  
+
 MakeSound("zerg-zergling-selected",
   {"zerg/units/zergling/selected/1.wav",
   "zerg/units/zergling/selected/2.wav",
@@ -81,9 +81,8 @@ MakeSound("zerg-zergling-acknowledgement",
 
 
 -- FIXME Placeholder Zergling attack noise
-MakeSound("zerg-zergling-attack",
-	{"zer/units/hyfir00"}) 
-  
+MakeSound("zerg-zergling-attack", {"zerg/units/hyfir00.wav"})
+
 MakeSound("zerg-zergling-death", "zerg/units/zergling/death/1.wav")
 MakeSound("zerg-zergling-ready", "zerg/units/zergling/ready.wav")
 
@@ -108,11 +107,11 @@ MakeSound("zerg-ultralisk-acknowledgement",
 MakeSound("zerg-ultralisk-hit",
   {"zerg/units/ultralisk/hit00.wav",
   "zerg/units/ultralisk/hit01.wav"})
-  
+
 MakeSound("zerg-ultralisk-attack",
   {"zerg/units/ultralisk/att01.wav",
   "zerg/units/ultralisk/hit01.wav",
-  "zerg/units/ultralisk/att02.wav"})  
+  "zerg/units/ultralisk/att02.wav"})
 
 MakeSound("zerg-ultralisk-death", "zerg/units/ultralisk/death/1.wav")
 MakeSound("zerg-ultralisk-ready", "zerg/units/ultralisk/ready.wav")
