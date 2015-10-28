@@ -54,7 +54,7 @@ Load("scripts/protoss/icons.lua")
 
 for i = 1,table.getn(icons) do
   icon = CIcon:New(icons[i][1])
-  icon.G = CGraphic:New("cmdicons.png", 36, 34)
+  icon.G = CPlayerColorGraphic:New("cmdicons.png", 36, 34)
   icon.Frame = icons[i][2]
 end
 
