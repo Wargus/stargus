@@ -82,7 +82,7 @@ Preference.ShowReactionRange = false
 
 Preference.ShowOrders = 2
 
-SetMetaServer("stratagus.game-host.org", 7775)
+-- SetMetaServer("stratagus.game-host.org", 7775)
 
 --  Enable/disable the short display of the orders after command.
 --  FIXME: planned
