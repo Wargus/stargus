@@ -71,8 +71,9 @@ set(starextract_SRCS
 )
 
 # Additional platform checks
-
-find_package(PkgConfig QUIET REQUIRED)
+if(UNIX)
+	find_package(PkgConfig QUIET REQUIRED)
+endif()
 
 # Check if platform is Maemo
 if(UNIX AND CMAKE_SYSTEM_NAME MATCHES Linux)
