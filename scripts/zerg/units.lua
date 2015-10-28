@@ -17,6 +17,8 @@ Load("scripts/zerg/unit-zerg-spore-colony.lua")
 Load("scripts/zerg/unit-zerg-sunken-colony.lua")
 Load("scripts/zerg/unit-zerg-ultralisk-cavern.lua")
 
+Load("scripts/zerg/unit-zerg-larva.lua")
+
 Load("scripts/zerg/unit-zerg-defiler.lua")
 Load("scripts/zerg/unit-zerg-drone.lua")
 Load("scripts/zerg/unit-zerg-egg.lua")
@@ -129,6 +131,7 @@ DefineButton( { Pos = 2, Level = 0, Icon = "icon-rally-point",
 -- Allow
 --
 DefineAllow("unit-zerg-defiler",            "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-zerg-larva",              "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-drone",              "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-egg",                "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-guardian",           "AAAAAAAAAAAAAAAA")
