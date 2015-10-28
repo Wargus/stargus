@@ -195,9 +195,14 @@ int CMpq::ReadInfo(FILE *fpMpq, const char * list)
 				if ((*(hash_table + pointer_ht) == scrc2)
 					&& (*(hash_table + pointer_ht + 1) == scrc3)) {
 					// - fill FilenameTable
-					sprintf((FilenameTable + PATH_MAX * (*(hash_table + pointer_ht + 3))), "%s", prnbuf);
+					int offset = *(hash_table + pointer_ht + 3);
+					if (offset < 0) {
+						fprintf(stderr, "Cannot add %s to filename table\n", prnbuf);
+						continue;
+					}
+					sprintf(FilenameTable + PATH_MAX * offset, "%s", prnbuf);
 					// . fill IdentifyTable
-					*(IdentifyTable + *(hash_table + pointer_ht + 3)) = 1;
+					*(IdentifyTable + offset) = 1;
 					break;
 				}
 			}
@@ -236,7 +241,7 @@ int CMpq::InitializeLocals(void)
 
 	hash_table = (UInt32 *)malloc(length_htbl * 4);
 	BlockTable = (UInt32 *)malloc(length_btbl * 4);
-	FilenameTable = (char *)calloc(length_btbl / 4, PATH_MAX);
+	FilenameTable = (char *)calloc(length_btbl / 4, sizeof(char) * PATH_MAX);
 	IdentifyTable = (char *)calloc(length_btbl / 4, sizeof(char));
 	if (hash_table && BlockTable && FilenameTable && IdentifyTable) {
 		return 0;

@@ -234,7 +234,7 @@ enum _archive_type_ {
 
 Control CDTodo[] = {
 	{F,0,"","install.exe" __4},
-
+	{F,0,"","starcraft.mpq" __4 },
 	// Fonts
 	{N,0,"font8","files\\font\\font8.fnt" __4},
 	{N,0,"font10","files\\font\\font10.fnt" __4},
@@ -3805,6 +3805,7 @@ unsigned char *ConvertFnt(unsigned char *start, int *wp, int *hp) {
 	unsigned *offsets;
 
 	bp = start + 5;  // skip "FONT "
+	printf("%s %s \n", start, start + 5);
 	count = FetchByte(bp);
 	count -= 32;
 	max_width = FetchByte(bp);
@@ -4187,14 +4188,22 @@ int main(int argc, char **argv)
 	printf("Please be patient, the data may take a couple of minutes to extract...\n");
 	fflush(stdout);
 
-	for (i = 0; i < 2; ++i) {
+	for (i = 0; i < 3; ++i) {
 		Control *c;
 		unsigned len;
 
-		if (i == 0) {				// CD install.exe
+		switch (i)
+		{
+		case 0:
 			c = CDTodo;
-			len=sizeof(CDTodo) / sizeof(*CDTodo);
-		} else {				// stardat.mpq from cd or hard drive
+			len = sizeof(CDTodo) / sizeof(*CDTodo); // CD install.exe
+			break;
+		case 1:
+			c = &(CDTodo[1]);
+			len = sizeof(CDTodo) / sizeof(*CDTodo) - 1; // CD install.exe renamed to starcraft.mpq
+			break;
+		default:
+			// stardat.mpq from cd or hard drive
 			c = Todo;
 			len = sizeof(Todo) / sizeof(*Todo);
 		}
