@@ -1,3 +1,9 @@
+2.3.9
+ - Spawn larva in Zerg hatchery
+ - Initial work on Zerg creep
+ - Run with latest Stratagus
+ - Support Battle.net Installer for extraction
+
 2.2.7:
  - Fixed bug #950442 - Fix script when map is loaded
  - Fixed bug #931215 - Do not extract file which missing on french CD

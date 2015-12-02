@@ -38,10 +38,10 @@
 -------------------------------------------------------------------------------
 
 Name = "Stargus"
-Version = "2.2.7"
-Homepage = "https://launchpad.net/stargus"
+Version = "2.3.9"
+Homepage = "https://github.com/Wargus/stargus"
 Licence = "GPL v2"
-Copyright = "Copyright (c) 1998-2012 by The Stratagus Project and Pali Rohar"
+Copyright = "Copyright (c) 1998-2015 by The Stratagus Project and Pali Rohar"
 
 -------------------------------------------------------------------------------
 --  Config-Part

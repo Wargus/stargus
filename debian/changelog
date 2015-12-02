@@ -1,3 +1,12 @@
+stargus (2.3.9-1) unstable; urgency=low
+
+  * Spawn larva in Zerg hatchery
+  * Initial work on Zerg creep
+  * Run with latest Stratagus
+  * Support Battle.net Installer for extraction
+
+ -- Tim Felgentreff <tim.felgentreff@gmail.com>  Wed, 2 Dec 2015 9:33:12 +0100
+
 stargus (2.2.7-1) unstable; urgency=low
 
   * Fixed bug #950442 - Fix script when map is loaded

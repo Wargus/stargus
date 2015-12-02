@@ -43,13 +43,13 @@
 ;--------------------------------
 
 !define NAME "Stargus"
-!define VERSION "2.2.7"
+!define VERSION "2.3.9"
 !define VIVERSION "${VERSION}.0"
-!define HOMEPAGE "https://launchpad.net/stargus"
+!define HOMEPAGE "https://github.com/Wargus/stargus"
 !define LICENSE "GPL v2"
-!define COPYRIGHT "Copyright (c) 1998-2012 by The Stratagus Project and Pali Rohar"
+!define COPYRIGHT "Copyright (c) 1998-2015 by The Stratagus Project and Pali Rohar"
 !define STRATAGUS_NAME "Stratagus"
-!define STRATAGUS_HOMEPAGE "https://launchpad.net/stratagus"
+!define STRATAGUS_HOMEPAGE "https://github.com/Wargus/stratagus"
 
 ;--------------------------------
 

@@ -28,7 +28,7 @@
 
 project(stargus)
 cmake_minimum_required(VERSION 2.6)
-set(STARGUS_VERSION 2.2.7)
+set(STARGUS_VERSION 2.3.9)
 
 # Stargus sources
 
