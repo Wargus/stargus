@@ -6,9 +6,7 @@ Build-Depends: debhelper (>= 7), cmake (>= 2.6), pkg-config, imagemagick,
  po-debconf, sharutils, zlib1g-dev, libbz2-dev, libx11-dev,
  libpng12-dev (>= 1.2.5), libhildon1-dev | libgtk2.0-dev, stratagus-dev
 Standards-Version: 3.9.2
-Homepage: https://launchpad.net/stargus
-Vcs-Browser: https://code.launchpad.net/stargus
-Vcs-Bzr: lp:stargus
+Homepage: https://github.com/Wargus/stargus
 
 Package: stargus
 Architecture: any
@@ -19,5 +17,4 @@ Description: Starcraft data game set for the Stratagus engine
  .
  You need the original Starcraft CD to extract the game data files.
  .
- Stargus is developed together for Windows, Linux and Linux Maemo based
- devices (Nokia N900).
+ Stargus is developed together for Windows, Linux and Mac OS X.
