@@ -99,8 +99,6 @@ LangString x86_64_ONLY ${LANG_ENGLISH} "This version is for 64 bits computers on
 ;--------------------------------
 
 !ifndef NO_DOWNLOAD
-!system "wget http://nsis.sourceforge.net/mediawiki/images/0/0f/ExecDos.zip -O ExecDos.zip"
-!system "unzip -j -o ExecDos.zip Plugins/ExecDos.dll"
 !endif
 
 !addplugindir .
@@ -218,34 +216,6 @@ FunctionEnd
 
 Function PageExtractDataPre
 
-	File "/oname=$TEMP\${STARTOOL}" "${STARTOOL}"
-
-	ClearErrors
-	FileOpen $0 "$INSTDIR\extracted" "r"
-	IfErrors extract
-
-	FileRead $0 $1
-	FileClose $0
-
-	ExecDos::exec /TOSTACK "$\"$TEMP\${STARTOOL}$\" -V"
-	Pop $0
-	Pop $2
-	Delete "$TEMP\${STARTOOL}"
-
-	IntCmp $0 0 0 0 extract
-
-	StrCmp $1 $2 noextract
-
-	StrCpy $2 "$2$\r$\n"
-	StrCmp $1 $2 0 extract
-
-noextract:
-
-	StrCpy $EXTRACTNEEDED "no"
-	Abort
-
-extract:
-
 	StrCpy $EXTRACTNEEDED "yes"
 
 FunctionEnd
@@ -342,7 +312,7 @@ Section "${NAME}" ExtractData
 
 	DetailPrint ""
 	DetailPrint "$(EXTRACTDATA_FILES)"
-	ExecDos::exec /DETAILED "$\"$INSTDIR\${STARTOOL}$\" $\"$DATADIR$\" $\"$INSTDIR$\""
+	ExecWait "$\"$INSTDIR\${STARTOOL}$\" $\"$DATADIR$\" $\"$INSTDIR$\""
 	Pop $0
 	IntCmp $0 0 +3
 
@@ -422,8 +392,6 @@ ${redefine} UPX_FLAGS "${UPX_FLAGS} -q"
 ;--------------------------------
 
 !ifndef NO_DOWNLOAD
-!delfile "ExecDos.dll"
-!delfile "ExecDos.zip"
 !endif
 
 ;--------------------------------
