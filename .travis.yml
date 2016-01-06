@@ -30,7 +30,7 @@ after_success:
           cmake ..; make;
         cd ..; cd ..;
         curl -O -L https://github.com/Wargus/stratagus/wiki/osx/stratagus;
-        chmod +x ./stratagus
+        chmod +x ./stratagus;
         export STRATAGUS=$(pwd)/stratagus;
         mac/bundle.sh;
         tar czvf Stargus.app.tar.gz mac/Stargus.app;
