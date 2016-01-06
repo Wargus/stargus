@@ -29,7 +29,7 @@ after_success:
         cd toluapp; mkdir build; cd build;
           cmake ..; make;
         cd ..; cd ..;
-        curl -L https://github.com/Wargus/stratagus/wiki/osx/stratagus -O stratagus;
+        curl -O -L https://github.com/Wargus/stratagus/wiki/osx/stratagus;
         chmod +x ./stratagus
         export STRATAGUS=$(pwd)/stratagus;
         mac/bundle.sh;
