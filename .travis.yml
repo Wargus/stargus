@@ -10,6 +10,9 @@ addons:
       - libpng12-dev
       - libgtk2.0-dev
       - zlib1g-dev
+env:
+  global:
+    secure: "D6S9WHacoK6XFQEq4jD7quEbKc6xDA7yMe9pKiQHSdhKhB20UJueBQccPARDEV6zUkp0OWHT3aCiV9PtjBiTewD+0z3Dm2oFZYkTe3ZlOyI+GdODEDztDip27ghTXfedkoFuQJeT++FSz07TSNrmR0jrgZu1aBLr23MefUNURU+8vEb5V5gu+ai0RRSSjLOO45B3Vf1X7oVfowK1bEgZbL9x6yaFLdbJC4orxrZKSsuuErKKpS9RtfaUZUr6M3ghE97BFRqLLWeOD2m2x5UIHR7wccrDoeKwAQgzK142aZfAfzE29iu5TrshZES+SdDWZytQhNpTcKo9Tw3OtRWNDs6/iIl7KCTPgif7M2XYrL8hhs4wQKTjJ+vAUKR8uecajgjS/qybQZiUsRdOHg/bx3HQIQZRhfHK+XKyCHOVcJBe1Nl0rQ7ZbEGgYs2S5oXcAU4pxmrQx9pIG2+6RsHnxKTEW/WN4YSDswFitEMC83bwqzNc2y6uqxlVZbF3XhISRDlVF9o3YjuYEJdvz/OKbnTWj6BVASCVsgRM+cMdswV0Gewz3/9WfRgOucmIixrJq9aOCGDBX8PNFmWr9yWdD0GJzO7dwsn7Z77u8Zyu+ry/8izotXvx6sM6OqzBqaJXVAP2Vw6Y2i1/IWIMFRof+CGvWyAWKxrSey2FvLkvkgQ="
 before_script:
   - mkdir build
   - cd build
@@ -17,3 +20,31 @@ before_script:
   - unzip master.zip
   - cmake -DSTRATAGUS=stratagus -DSTRATAGUS_INCLUDE_DIR="$PWD/stratagus-master/gameheaders" ..
 script: make
+after_success:
+  - "if [ $TRAVIS_OS_NAME == osx ]; then \
+        cd $TRAVIS_BUILD_DIR;
+        ln -s $TRAVIS_BUILD_DIR $TRAVIS_BUILD_DIR/../stratagus;
+        brew install lua51 sdl;
+        git clone https://github.com/LuaDist/toluapp.git;
+        cd toluapp; mkdir build; cd build;
+          cmake ..; make;
+        cd ..; cd ..;
+        curl -L https://github.com/Wargus/stratagus/wiki/osx/stratagus -O stratagus;
+        export STRATAGUS=$(pwd)/stratagus;
+        mac/bundle.sh;
+        tar czvf Stargus.app.tar.gz mac/Stargus.app;
+        if [ $TRAVIS_REPO_SLUG == Wargus/stargus -a \
+             $TRAVIS_BRANCH == master -a \
+             $TRAVIS_PULL_REQUEST == 'false' ]; then \
+           git clone https://${GH_TOKEN}@github.com/Wargus/stratagus.wiki.git;
+           mkdir -p stratagus.wiki/$TRAVIS_OS_NAME;
+           cp Stargus.app.tar.gz stratagus.wiki/$TRAVIS_OS_NAME/;
+           cd stratagus.wiki/;
+           git config --global user.email \"travis-ci@travis.org\";
+           git config --global user.name \"Travis CI\";
+           git add $TRAVIS_OS_NAME/Stargus.app.tar.gz;
+           git commit --amend -C HEAD;
+           git push -fq origin master;
+           cd ..;
+        fi;
+    fi"
