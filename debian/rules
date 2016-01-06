@@ -28,7 +28,6 @@
 #
 
 VERSION := $(shell dpkg-parsechangelog | sed -ne "s/^Version: \(.*\)/\1/p" | sed "s/-[^-]*$$//" )
-MAEMO := $(shell if pkg-config maemo-version 1>/dev/null 2>&1 || test -f "/etc/maemo_version" || osso-product-info -q OSSO_PRODUCT_INFO_RELEASE_NAME 2>/dev/null | grep -q -i maemo; then echo YES; fi)
 
 %:
 	dh $@
@@ -43,50 +42,3 @@ override_dh_install:
 override_dh_shlibdeps:
 	dh_shlibdeps
 	echo "stratagus:Depends=stratagus (>= $(VERSION)~0)" >> debian/stargus.substvars
-
-ifdef MAEMO
-
-override_dh_fixperms:
-	mkdir -p debian/stargus/usr/share/applications/hildon
-	mkdir -p debian/stargus/opt/stratagus/bin
-	mkdir -p debian/stargus/opt/stratagus/share/doc
-	mkdir -p debian/stargus/opt/man/man6
-	mv debian/stargus/usr/share/applications/stargus.desktop debian/stargus/usr/share/applications/hildon/stargus.desktop
-	mv debian/stargus/usr/bin/* debian/stargus/opt/stratagus/bin/
-	mv debian/stargus/usr/games/* debian/stargus/opt/stratagus/bin/
-	mv debian/stargus/usr/share/doc/stargus debian/stargus/opt/stratagus/share/doc/
-	mv debian/stargus/usr/share/games/stratagus/stargus debian/stargus/opt/stratagus/share/
-	mv debian/stargus/usr/share/man/man6/* debian/stargus/opt/man/man6/
-	ln -s /opt/stratagus/bin/starextract debian/stargus/usr/bin/starextract
-	ln -s /opt/stratagus/bin/stargus debian/stargus/usr/games/stargus
-	ln -s /opt/stratagus/bin/startool debian/stargus/usr/bin/startool
-	ln -s /opt/stratagus/bin/scmconvert debian/stargus/usr/bin/scmconvert
-	ln -s /opt/stratagus/share/stargus debian/stargus/usr/share/games/stratagus/stargus
-	ln -s /opt/stratagus/share/doc/stargus debian/stargus/usr/share/doc/stargus
-	ln -s /opt/man/man6/stargus.6.gz debian/stargus/usr/share/man/man6/stargus.6.gz
-	ln -s /opt/man/man6/startool.6.gz debian/stargus/usr/share/man/man6/startool.6.gz
-	ln -s /opt/man/man6/scmconvert.6.gz debian/stargus/usr/share/man/man6/scmconvert.6.gz
-	echo "X-Osso-Type=application/x-executable" >> debian/stargus/usr/share/applications/hildon/stargus.desktop
-	sed "s/Exec=.*/Exec=\/opt\/stratagus\/bin\/stargus/" -i debian/stargus/usr/share/applications/hildon/stargus.desktop
-	sed "s/Name=.*/Name=Stargus/" -i debian/stargus/usr/share/applications/hildon/stargus.desktop
-	dh_fixperms
-
-override_dh_gencontrol:
-	dh_gencontrol
-	cp debian/stargus/DEBIAN/control debian/stargus/DEBIAN/control.orig
-	sed -n -e "1,/^Depends:.*$$/p" -i debian/stargus/DEBIAN/control
-	echo "Bugtracker: https://bugs.launchpad.net/stargus" >> debian/stargus/DEBIAN/control
-	echo "Maemo-Display-Name: Stargus - Starcraft" >> debian/stargus/DEBIAN/control
-	echo "Maemo-Icon-26:" >> debian/stargus/DEBIAN/control
-	for line in $(shell convert stargus.png -resize 48x48 png:- | uuencode -m - | tail -n +2 | head -n -1); do \
-		echo " $$line" >> debian/stargus/DEBIAN/control; \
-	done
-	sed "/^# Source debconf library$$/d;/^. \/usr\/share\/debconf\/confmodule$$/d" -i debian/stargus/DEBIAN/postinst
-	bash -c 'sed -n -e "1,/^extract() {$$/p;/^}$$/,\$$p;/extract()/a\\`echo -e "\n\t"`cd /opt/stratagus/share/stargus\\`echo -e "\n\t"`run-standalone.sh /opt/stratagus/bin/starextract\\`echo -e "\n\t"`return $$\?" -i debian/stargus/DEBIAN/postinst'
-	sed -n -e "/^Depends:.*$$/,\$$p" debian/stargus/DEBIAN/control.orig | tail -n +2 >> debian/stargus/DEBIAN/control
-	sed "s/Section: .*/Section: user\/games/" -i debian/stargus/DEBIAN/control
-	rm -f debian/stargus/DEBIAN/config debian/stargus/DEBIAN/templates debian/stargus/DEBIAN/control.orig
-
-override_dh_installdebconf:
-
-endif

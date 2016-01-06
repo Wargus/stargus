@@ -75,14 +75,6 @@ if(UNIX)
 	find_package(PkgConfig QUIET REQUIRED)
 endif()
 
-# Check if platform is Maemo
-if(UNIX AND CMAKE_SYSTEM_NAME MATCHES Linux)
-	pkg_check_modules(MAEMO_VERSION maemo-version)
-	if(MAEMO_VERSION_FOUND)
-		set(MAEMO true)
-	endif()
-endif()
-
 # Find all libraries
 
 option(ENABLE_STATIC "Compile Stargus binaries as static executable" OFF)
@@ -107,10 +99,6 @@ if(NOT WIN32)
 	if (NOT GTK2_FOUND)
 	  add_definitions("-DNOGTK")
 	endif()
-endif()
-
-if(MAEMO)
-	pkg_check_modules(HILDON REQUIRED hildon-1)
 endif()
 
 find_package(SelfPackers)
@@ -150,20 +138,10 @@ if(NOT WIN32)
 	set(stargus_LIBS ${stargus_LIBS} ${X11_X11_LIB} ${GTK2_LIBRARIES})
 endif()
 
-if (NOT WIN32 AND NOT MAEMO)
+if (NOT WIN32)
 	add_definitions(-DDATA_PATH="${CMAKE_INSTALL_PREFIX}/share/games/stratagus/stargus")
 	add_definitions(-DSCRIPTS_PATH="${CMAKE_INSTALL_PREFIX}/share/games/stratagus/stargus")
 	add_definitions(-DSTRATAGUS_BIN="${STRATAGUS}")
-endif()
-
-if(MAEMO)
-	add_definitions(-DDATA_PATH="/home/user/MyDocs/stratagus/stargus")
-	add_definitions(-DSCRIPTS_PATH="/opt/stratagus/share/stargus")
-	add_definitions(-DSTRATAGUS_BIN="/opt/stratagus/bin/stratagus")
-	add_definitions(${HILDON_CFLAGS})
-	include_directories(${HILDON_INCLUDE_DIRS})
-	set(stargus_LIBS ${stargus_LIBS} ${HILDON_LIBRARIES})
-	set(starextract_LIBS ${starextract_LIBS} ${GTK2_LIBRARIES} ${HILDON_LIBRARIES})
 endif()
 
 if(ENABLE_STRIP)
@@ -177,11 +155,6 @@ endif()
 add_executable(scmconvert ${scmconvert_SRCS} ${scmconvert_HDRS})
 target_link_libraries(scmconvert ${scmconvert_LIBS})
 set_target_properties(scmconvert PROPERTIES COMPILE_DEFINITIONS "STAND_ALONE")
-
-if(MAEMO)
-	add_executable(starextract ${starextract_SRCS} ${starextract_HDRS})
-	target_link_libraries(starextract ${starextract_LIBS})
-endif()
 
 add_executable(stargus WIN32 ${stargus_SRCS} ${stargus_HDRS})
 target_link_libraries(stargus ${stargus_LIBS})
@@ -237,8 +210,4 @@ install(FILES stargus.desktop DESTINATION share/applications)
 
 install(DIRECTORY scripts DESTINATION share/games/stratagus/stargus)
 install(FILES mpqlist.txt DESTINATION share/games/stratagus/stargus)
-install(FILES fog.png DESTINATION share/games/stratagus/stargus/graphics/tilesets)
-
-if(MAEMO)
-	install(TARGETS starextract DESTINATION bin)
-endif()
+install(FILES contrib/fog.png DESTINATION share/games/stratagus/stargus/graphics/tilesets)

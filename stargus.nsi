@@ -280,7 +280,7 @@ Section "${NAME}"
 
 	CreateDirectory "$INSTDIR\graphics"
 	CreateDirectory "$INSTDIR\graphics\tilesets"
-	File "/oname=graphics\tilesets\fog.png" "fog.png"
+	File "/oname=graphics\tilesets\fog.png" "contrib\fog.png"
 
 	!cd ${CMAKE_CURRENT_BINARY_DIR}
 
