@@ -62,6 +62,11 @@
 !define INSTALLDIR "$PROGRAMFILES\${NAME}\"
 !define LANGUAGE "English"
 
+; -- have to try and copy these, VS might have put them under (Release|Debug)
+!system "powershell -Command $\"& {cp **\${STARTOOL} ${STARTOOL}}$\""
+!system "powershell -Command $\"& {cp **\${STARGUS} ${STARGUS}}$\""
+!system "powershell -Command $\"& {cp **\${MPQLIST} ${MPQLIST}}$\""
+
 !ifdef x86_64
 ${redefine} INSTALLER "${NAME}-${VERSION}-x86_64.exe"
 ${redefine} INSTALLDIR "$PROGRAMFILES64\${NAME}\"
