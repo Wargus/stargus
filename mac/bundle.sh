@@ -47,6 +47,6 @@ cd ..
 
 cp ../build/startool Stargus.app/Contents/MacOS
 cp "$STRATAGUS" Stargus.app/Contents/MacOS/stratagus
-cp "$STRATAGUS"/../libs/* War1gus.app/Contents/libs/
+cp "$STRATAGUS"/../../libs/* War1gus.app/Contents/libs/
 
 macdylibbundler/dylibbundler -cd -of -b -x ./Stargus.app/Contents/MacOS/startool -d ./Stargus.app/Contents/libs/
