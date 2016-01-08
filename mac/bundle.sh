@@ -13,7 +13,7 @@ cd "`dirname "$0"`"
 rm -rf Stargus.app
 mkdir -p Stargus.app/Contents/Resources
 mkdir -p Stargus.app/Contents/MacOS
-mkdir -p War1gus.app/Contents/libs
+mkdir -p Stargus.app/Contents/libs
 
 # Copy launchscript and info.plist
 cp Info.plist Stargus.app/Contents/
@@ -47,6 +47,6 @@ cd ..
 
 cp ../build/startool Stargus.app/Contents/MacOS
 cp "$STRATAGUS" Stargus.app/Contents/MacOS/stratagus
-cp "$STRATAGUS"/../../libs/* War1gus.app/Contents/libs/
+cp "$STRATAGUS"/../../libs/* Stargus.app/Contents/libs/
 
 macdylibbundler/dylibbundler -cd -of -b -x ./Stargus.app/Contents/MacOS/startool -d ./Stargus.app/Contents/libs/
