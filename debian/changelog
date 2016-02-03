@@ -1,4 +1,4 @@
-stargus (2.3.9-1) unstable; urgency=low
+stargus (2.4.0-1) unstable; urgency=low
 
   * Spawn larva in Zerg hatchery
   * Initial work on Zerg creep
