@@ -237,7 +237,9 @@ FunctionEnd
 
 Function PageExtractDataLeave
 
-	IfFileExists "$DATADIR\install.exe" +3
+	IfFileExists "$DATADIR\install.exe" +5
+	IfFileExists "$DATADIR\stardat.mpq" +4
+	IfFileExists "$DATADIR\starcraft.mpq" +3
 
 	MessageBox MB_OK|MB_ICONSTOP "$(EXTRACTDATA_PAGE_NOT_VALID)"
 	Abort
