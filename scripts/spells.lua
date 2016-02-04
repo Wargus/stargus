@@ -38,7 +38,7 @@ DefineBoolFlags("isundead", "organic", "hero", "volatile", "mechanical")
 --  ShadowFly : Shadow of flying unit (0:big, 1:normal, 2:small)
 --  Level     : Increase each time an upgrade is applyed to an unit.
 --
-DefineVariables("Speed", "ShadowFly", {Max = 2}, "Level")
+DefineVariables("Speed", "ShadowFly", {Max = 2}, "Level", "LarvaTimeout", {Max = 20})
 
 -- And declare upgrade for dependency...
 -- For human
