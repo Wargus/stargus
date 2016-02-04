@@ -1,5 +1,81 @@
 Load("scripts/zerg/construction.lua")
 
+Load("scripts/zerg/unit-zerg-creep.lua")
+
+local oldDefUnitType = DefineUnitType
+function DefineUnitType(name, spec)
+   if spec.TileSize == nil then
+      return oldDefUnitType(name, spec)
+   end
+   -- all zerg buildings spawn more creep
+   -- TODO: creep should slowly expand?
+   -- TODO: creep shouldn't be a unit, but a tile
+   local xsz = spec.TileSize[1]
+   local ysz = spec.TileSize[2]
+   local function makeCreep(px, py)
+      if (px >= 0 and py >= 0 and Map.Info.MapWidth >= px and Map.Info.MapHeight >= py and
+	     (not (GetTileTerrainHasFlag(px, py, "no-building") or
+		      GetTileTerrainHasFlag(px, py, "water") or
+		      GetTileTerrainHasFlag(px, py, "unpassable") or
+		      GetTileTerrainHasFlag(px, py, "coast") or
+		      GetTileTerrainHasFlag(px, py, "wall") or
+		      GetTileTerrainHasFlag(px, py, "forest") or
+		      GetTileTerrainHasFlag(px, py, "rock")))
+      ) then
+	 CreateUnit("unit-zerg-creep", 15, {px, py})
+      end
+   end
+   local function buildCreep(unit, step)
+      -- draw a rectangle of creeps at step distance to unit
+      local posx = GetUnitVariable(unit, "PosX")
+      local posy = GetUnitVariable(unit, "PosY")
+      local x,y
+      y = -step
+      for x=-step,xsz+step-1,1 do
+	 makeCreep(posx + x, posy + y)
+      end
+      y = step+ysz-1
+      for x=-step,xsz+step-1,1 do
+	 makeCreep(posx + x, posy + y)
+      end
+      x = -step
+      for y=-step+1,step+ysz-1,1 do
+	 makeCreep(posx + x, posy + y)
+      end
+      x = step+xsz-1
+      for y=-step+1,step+ysz-1,1 do
+	 makeCreep(posx + x, posy + y)
+      end
+   end
+   local buildCreepN = 1
+   local oldOnEachSecond = spec.OnEachSecond
+   spec.OnEachSecond = function (unit)
+      local creepdist = GetUnitVariable(unit, "CreepDistance")
+      if creepdist < 10 then
+	 SetUnitVariable(unit, "CreepDistance", creepdist + 1)
+	 buildCreep(unit, creepdist)
+      end
+      if oldOnEachSecond ~= nil then
+      	 oldOnEachSecond(unit)
+      end
+   end
+
+   -- all zerg buildings that do not have other
+   -- building rules must be built on top of creep
+   if spec.BuildingRules then
+      return oldDefUnitType(name, spec)
+   else
+      spec.BuildingRules = {
+	 { "ontop",
+	   { Type = "unit-zerg-creep",
+	     ReplaceOnDie = false,
+	     ReplaceOnBuild = false
+	   }
+	 }
+      }
+      return oldDefUnitType(name, spec)
+   end
+end
 Load("scripts/zerg/unit-zerg-creep-colony.lua")
 Load("scripts/zerg/unit-zerg-defiler-mound.lua")
 Load("scripts/zerg/unit-zerg-evolution-chamber.lua")
@@ -16,9 +92,9 @@ Load("scripts/zerg/unit-zerg-spire.lua")
 Load("scripts/zerg/unit-zerg-spore-colony.lua")
 Load("scripts/zerg/unit-zerg-sunken-colony.lua")
 Load("scripts/zerg/unit-zerg-ultralisk-cavern.lua")
+DefineUnitType = oldDefUnitType
 
 Load("scripts/zerg/unit-zerg-larva.lua")
-
 Load("scripts/zerg/unit-zerg-defiler.lua")
 Load("scripts/zerg/unit-zerg-drone.lua")
 Load("scripts/zerg/unit-zerg-egg.lua")
@@ -143,6 +219,7 @@ DefineAllow("unit-zerg-scourge",            "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-ultralisk",          "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-zergling",           "AAAAAAAAAAAAAAAA")
 
+DefineAllow("unit-zerg-creep",              "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-creep-colony",       "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-defiler-mound",      "AAAAAAAAAAAAAAAA")
 DefineAllow("unit-zerg-evolution-chamber",  "AAAAAAAAAAAAAAAA")
