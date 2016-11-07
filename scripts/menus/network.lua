@@ -64,7 +64,7 @@ function addPlayersList(menu, numplayers)
         connected_players = connected_players + 1
         if ServerSetupState.Ready[i-1] == 1 then
           ready_players = ready_players + 1
-          players_state[i]:setCaption("Ready")    
+          players_state[i]:setCaption("Ready")
         else
           players_state[i]:setCaption("Preparing")
         end
@@ -84,7 +84,7 @@ joincounter = 0
 
 function RunJoiningMapMenu(s)
   local menu
-  local listener  
+  local listener
   local sx = Video.Width / 20
   local sy = Video.Height / 20
   local numplayers = 3
@@ -107,7 +107,7 @@ function RunJoiningMapMenu(s)
   fow:setEnabled(false)
   local revealmap = menu:addCheckBox("Reveal map", sx, sy*3+150, function() end)
   revealmap:setEnabled(false)
-  
+
   menu:writeText("Units:", sx, sy*11)
   local units = menu:addDropDown({"Map Default", "One Peasant Only"}, sx + 100, sy*11,
     function(dd) end)
@@ -195,7 +195,7 @@ function RunJoiningGameMenu(s)
   menu:add(sb, 15, 38)
   sb:setBackgroundColor(dark)
 
-  local function checkconnection() 
+  local function checkconnection()
     NetworkProcessClientRequest()
     percent = percent + 100 / (24 * GetGameSpeed()) -- 24 seconds * fps
     sb:setPercent(percent)
@@ -220,8 +220,8 @@ function RunJoiningGameMenu(s)
     elseif (state == 16) then -- ccs_incompatibleengine
       ErrorMenu("Incompatible engine version")
       menu:stop(1)
-    elseif (state == 17) then -- ccs_incompatiblenetwork
-      ErrorMenu("Incompatible netowrk version")
+    elseif (state == 17) then -- ccs_incompatibleluafiles
+      ErrorMenu("Incompatible lua files")
       menu:stop(1)
     end
   end
@@ -243,18 +243,18 @@ function RunJoinIpMenu()
   local server = menu:addTextInputField("localhost", 40, 38, 212)
 
   menu:addHalfLeftButton("~!OK", "o", 24, 92,
-    function(s) 
+    function(s)
       -- FIXME: allow port ("localhost:1234")
       if (NetworkSetupServerAddress(server:getText()) ~= 0) then
         ErrorMenu("Invalid server name")
         return
       end
-      NetworkInitClientConnect() 
+      NetworkInitClientConnect()
       if (RunJoiningGameMenu() ~= 0) then
         -- connect failed, don't leave this menu
         return
       end
-      menu:stop() 
+      menu:stop()
     end
   )
   menu:addHalfRightButton("~!Cancel", "c", 160, 92,
@@ -281,19 +281,19 @@ function RunServerMultiGameMenu(map, description, numplayers)
   descr = menu:writeText("Unknown map", sx+20, sy*3+90)
 
   local function fowCb(dd)
-    ServerSetupState.FogOfWar = bool2int(dd:isMarked()) 
+    ServerSetupState.FogOfWar = bool2int(dd:isMarked())
     NetworkServerResyncClients()
     GameSettings.NoFogOfWar = not dd:isMarked()
   end
   local fow = menu:addCheckBox("Fog of war", sx, sy*3+120, fowCb)
   fow:setMarked(true)
   local function revealMapCb(dd)
-    ServerSetupState.RevealMap = bool2int(dd:isMarked()) 
+    ServerSetupState.RevealMap = bool2int(dd:isMarked())
     NetworkServerResyncClients()
     GameSettings.RevealMap = bool2int(dd:isMarked())
   end
   local revealmap = menu:addCheckBox("Reveal map", sx, sy*3+150, revealMapCb)
-  
+
   menu:writeText("Units:", sx, sy*11)
   d = menu:addDropDown({"Map Default", "One Peasant Only"}, sx + 100, sy*11,
     function(dd)
@@ -317,13 +317,13 @@ function RunServerMultiGameMenu(map, description, numplayers)
   NetworkMapName = map
   NetworkInitServerConnect(numplayers)
   ServerSetupState.FogOfWar = 1
-  startgame = menu:addFullButton("~!Start Game", "s", sx * 11,  sy*14, 
-    function(s)    
+  startgame = menu:addFullButton("~!Start Game", "s", sx * 11,  sy*14,
+    function(s)
       SetFogOfWar(fow:isMarked())
       if revealmap:isMarked() == true then
         RevealMap()
       end
-      NetworkServerStartGame() 
+      NetworkServerStartGame()
       NetworkGamePrepareGameSettings()
       RunMap(map)
       menu:stop()
@@ -331,7 +331,7 @@ function RunServerMultiGameMenu(map, description, numplayers)
   )
   startgame:setVisible(false)
   local waitingtext = menu:writeText("Waiting for players", sx*11, sy*14)
-  local function updateStartButton(ready) 
+  local function updateStartButton(ready)
     startgame:setVisible(ready)
     waitingtext:setVisible(not ready)
   end
@@ -383,9 +383,9 @@ function RunCreateMultiGameMenu(s)
     maptext:adjustSize()
   end
   browser:setActionCallback(cb)
-  
-  menu:addFullButton("~!Create Game", "c", sx,  sy*11, 
-    function(s)    
+
+  menu:addFullButton("~!Create Game", "c", sx,  sy*11,
+    function(s)
       if (browser:getSelected() < 0) then
         return
       end
