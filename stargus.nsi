@@ -43,7 +43,7 @@
 ;--------------------------------
 
 !define NAME "Stargus"
-!define VERSION "2.4.0"
+!define VERSION "2.4.1"
 !define VIVERSION "${VERSION}.0"
 !define HOMEPAGE "https://github.com/Wargus/stargus"
 !define LICENSE "GPL v2"
