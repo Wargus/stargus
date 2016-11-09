@@ -10,7 +10,7 @@ DefineAnimations("animations-zerg-creep", {
 DefineUnitType(
    "unit-zerg-creep",
    { Name = "Creep",
-     Image = {"file", "tilesets/badlands/creep_wall.png", "size", {32, 32}},
+     Image = {"file", "tilesets/badlands/creep.png", "size", {32, 32}},
      Costs = {"time", 1},
      Animations = "animations-zerg-creep", 
      NeutralMinimapColor = {100, 100, 100},
@@ -32,6 +32,6 @@ DefineUnitType(
      Decoration = true,
      Type = "land", Building = false,
      VisibleUnderFog = true,
-     NumDirections = 16,
+     NumDirections = 37,
      Flip = false
 })

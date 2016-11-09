@@ -2,66 +2,75 @@ Load("scripts/zerg/construction.lua")
 
 Load("scripts/zerg/unit-zerg-creep.lua")
 
+AddTrigger(
+   function()
+      local p,race,units,idx,unit,cd
+      for p=0,15,1 do
+	 r = GetPlayerData(p, "RaceName")
+	 if r == "zerg" then
+	    units = GetUnits(p)
+	    for idx,unit in pairs(units) do
+	       if GetUnitBoolFlag(unit, "Building") then
+		  cd = GetUnitVariable(unit, "CreepDistance")
+		  if cd < 10 then
+		     expandCreepAround(unit, cd)
+		  end
+	       end
+	    end
+	 end
+      end
+      return false
+   end,
+   function() end
+)
+
+-- all zerg buildings spawn more creep
+-- TODO: creep should slowly expand?
+-- TODO: creep shouldn't be a unit, but a tile
+function makeCreep(px, py)
+   if (px >= 0 and py >= 0 and Map.Info.MapWidth >= px and Map.Info.MapHeight >= py and
+	  (not (GetTileTerrainHasFlag(px, py, "no-building") or
+		   GetTileTerrainHasFlag(px, py, "water") or
+		   GetTileTerrainHasFlag(px, py, "unpassable") or
+		   GetTileTerrainHasFlag(px, py, "coast") or
+		   GetTileTerrainHasFlag(px, py, "wall") or
+		   GetTileTerrainHasFlag(px, py, "forest") or
+		   GetTileTerrainHasFlag(px, py, "rock")))
+   ) then
+      CreateUnit("unit-zerg-creep", 15, {px, py})
+   end
+end
+function buildCreep(unit, step)
+   -- draw a rectangle of creeps at step distance to unit
+   local posx = GetUnitVariable(unit, "PosX")
+   local posy = GetUnitVariable(unit, "PosY")
+   local x,y
+   y = -step
+   for x=-step,step-1,1 do
+      makeCreep(posx + x, posy + y)
+   end
+   y = step-1
+   for x=-step,step-1,1 do
+      makeCreep(posx + x, posy + y)
+   end
+   x = -step
+   for y=-step+1,step-1,1 do
+      makeCreep(posx + x, posy + y)
+   end
+   x = step-1
+   for y=-step+1,step-1,1 do
+      makeCreep(posx + x, posy + y)
+   end
+end
+function expandCreepAround(unit, creepdist)
+   SetUnitVariable(unit, "CreepDistance", creepdist + 1)
+   buildCreep(unit, creepdist)
+end
+
+-- all zerg buildings that do not have other
+-- building rules must be built on top of creep
 local oldDefUnitType = DefineUnitType
 function DefineUnitType(name, spec)
-   if spec.TileSize == nil then
-      return oldDefUnitType(name, spec)
-   end
-   -- all zerg buildings spawn more creep
-   -- TODO: creep should slowly expand?
-   -- TODO: creep shouldn't be a unit, but a tile
-   local xsz = spec.TileSize[1]
-   local ysz = spec.TileSize[2]
-   local function makeCreep(px, py)
-      if (px >= 0 and py >= 0 and Map.Info.MapWidth >= px and Map.Info.MapHeight >= py and
-	     (not (GetTileTerrainHasFlag(px, py, "no-building") or
-		      GetTileTerrainHasFlag(px, py, "water") or
-		      GetTileTerrainHasFlag(px, py, "unpassable") or
-		      GetTileTerrainHasFlag(px, py, "coast") or
-		      GetTileTerrainHasFlag(px, py, "wall") or
-		      GetTileTerrainHasFlag(px, py, "forest") or
-		      GetTileTerrainHasFlag(px, py, "rock")))
-      ) then
-	 CreateUnit("unit-zerg-creep", 15, {px, py})
-      end
-   end
-   local function buildCreep(unit, step)
-      -- draw a rectangle of creeps at step distance to unit
-      local posx = GetUnitVariable(unit, "PosX")
-      local posy = GetUnitVariable(unit, "PosY")
-      local x,y
-      y = -step
-      for x=-step,xsz+step-1,1 do
-	 makeCreep(posx + x, posy + y)
-      end
-      y = step+ysz-1
-      for x=-step,xsz+step-1,1 do
-	 makeCreep(posx + x, posy + y)
-      end
-      x = -step
-      for y=-step+1,step+ysz-1,1 do
-	 makeCreep(posx + x, posy + y)
-      end
-      x = step+xsz-1
-      for y=-step+1,step+ysz-1,1 do
-	 makeCreep(posx + x, posy + y)
-      end
-   end
-   local buildCreepN = 1
-   local oldOnEachSecond = spec.OnEachSecond
-   spec.OnEachSecond = function (unit)
-      local creepdist = GetUnitVariable(unit, "CreepDistance")
-      if creepdist < 10 then
-	 SetUnitVariable(unit, "CreepDistance", creepdist + 1)
-	 buildCreep(unit, creepdist)
-      end
-      if oldOnEachSecond ~= nil then
-      	 oldOnEachSecond(unit)
-      end
-   end
-
-   -- all zerg buildings that do not have other
-   -- building rules must be built on top of creep
    if spec.BuildingRules then
       return oldDefUnitType(name, spec)
    else
@@ -94,6 +103,7 @@ Load("scripts/zerg/unit-zerg-sunken-colony.lua")
 Load("scripts/zerg/unit-zerg-ultralisk-cavern.lua")
 DefineUnitType = oldDefUnitType
 
+-- Units
 Load("scripts/zerg/unit-zerg-larva.lua")
 Load("scripts/zerg/unit-zerg-defiler.lua")
 Load("scripts/zerg/unit-zerg-drone.lua")
