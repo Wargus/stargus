@@ -43,7 +43,7 @@
 ;--------------------------------
 
 !define NAME "Stargus"
-!define VERSION "2.4.0"
+!define VERSION "2.4.1"
 !define VIVERSION "${VERSION}.0"
 !define HOMEPAGE "https://github.com/Wargus/stargus"
 !define LICENSE "GPL v2"
@@ -237,7 +237,9 @@ FunctionEnd
 
 Function PageExtractDataLeave
 
-	IfFileExists "$DATADIR\install.exe" +3
+	IfFileExists "$DATADIR\install.exe" +5
+	IfFileExists "$DATADIR\stardat.mpq" +4
+	IfFileExists "$DATADIR\starcraft.mpq" +3
 
 	MessageBox MB_OK|MB_ICONSTOP "$(EXTRACTDATA_PAGE_NOT_VALID)"
 	Abort
@@ -287,6 +289,7 @@ Section "${NAME}"
 	!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 	CreateDirectory "$SMPROGRAMS\$STARTMENUDIR"
 	CreateShortCut "$SMPROGRAMS\$STARTMENUDIR\${NAME}.lnk" "$INSTDIR\${STARGUS}"
+	CreateShortCut "$SMPROGRAMS\$STARTMENUDIR\${NAME} (Retro).lnk" "$INSTDIR\${STARGUS} -Z -x 1"
 	CreateShortCut "$SMPROGRAMS\$STARTMENUDIR\Uninstall.lnk" "$INSTDIR\${UNINSTALL}"
 	CreateShortcut "$DESKTOP\${NAME}.lnk" "$INSTDIR\${STARGUS}"
 	!insertmacro MUI_STARTMENU_WRITE_END
@@ -347,6 +350,7 @@ Section "un.${NAME}" Executable
 
 	!insertmacro MUI_STARTMENU_GETFOLDER Application $STARTMENUDIR
 	Delete "$SMPROGRAMS\$STARTMENUDIR\${NAME}.lnk"
+	Delete "$SMPROGRAMS\$STARTMENUDIR\${NAME} (Retro).lnk"
 	Delete "$SMPROGRAMS\$STARTMENUDIR\Uninstall.lnk"
 	RMDir "$SMPROGRAMS\$STARTMENUDIR"
 	Delete "$DESKTOP\${NAME}.lnk"

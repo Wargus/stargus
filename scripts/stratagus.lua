@@ -38,7 +38,7 @@
 -------------------------------------------------------------------------------
 
 Name = "Stargus"
-Version = "2.4.0"
+Version = "2.4.1"
 Homepage = "https://github.com/Wargus/stargus"
 Licence = "GPL v2"
 Copyright = "Copyright (c) 1998-2015 by The Stratagus Project and Pali Rohar"

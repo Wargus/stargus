@@ -4,7 +4,7 @@ This work was packaged for Debian by:
 
 It was downloaded from:
 
-    https://launchpad.net/stargus
+    https://github.com/Wargus/stargus
 
 Upstream Author(s):
 
@@ -12,10 +12,12 @@ Upstream Author(s):
     Russel Smith <mr-russ@users.sourceforge.net>
     Nehal Mistry <nehalmistry@users.sourceforge.net>
     Pali Rohár <pali.rohar@gmail.com>
+    Tim Felgentreff <timfelgentreff@gmail.com>
 
 Copyright:
 
     (C) 1998-2012 by The Stratagus Project and Pali Rohár
+    (C) 2015-2016 by The Stratagus Project and Tim Felgentreff
 
 License:
 
@@ -36,6 +38,7 @@ License:
 The Debian packaging is:
 
     Copyright (C) 2010-2012 Pali Rohár <pali.rohar@gmail.com>
+    Copyright (C) 2015-2016 Tim Felgentreff <timfelgentreff@gmail.com>
 
 and is licensed under the GPL version 2,
 see "/usr/share/common-licenses/GPL-2".

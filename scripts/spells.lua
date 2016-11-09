@@ -37,8 +37,10 @@ DefineBoolFlags("isundead", "organic", "hero", "volatile", "mechanical")
 --  Speed     : just drawing
 --  ShadowFly : Shadow of flying unit (0:big, 1:normal, 2:small)
 --  Level     : Increase each time an upgrade is applyed to an unit.
+--  CreepDistance : Distance in tiles that creep grows from a Zerg building
+--  LarvaTimeout  : Timeout until a new larva spawns in a Zerg spawning pool
 --
-DefineVariables("Speed", "ShadowFly", {Max = 2}, "Level", "CreepDistance", {Max = 10})
+DefineVariables("Speed", "ShadowFly", {Max = 2}, "Level", "CreepDistance", {Max = 10}, "LarvaTimeout", {Max = 20})
 
 -- And declare upgrade for dependency...
 -- For human

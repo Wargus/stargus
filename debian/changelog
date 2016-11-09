@@ -1,3 +1,10 @@
+stargus (2.4.1-1) unstable; urgency=low
+
+  * Support Stratagus 2.4.1
+  * Correct error message if lua checksums mismatch
+
+ -- Tim Felgentreff <tim.felgentreff@gmail.com>  Tue, 8 Nov 2016 9:33:12 +0100
+
 stargus (2.4.0-1) unstable; urgency=low
 
   * Spawn larva in Zerg hatchery

@@ -13,32 +13,30 @@ DefineAnimations("animations-zerg-hatchery", {
   },
 })
 
-timeout = 1
-
 DefineUnitType("unit-zerg-hatchery", { Name = "Zerg Hatchery",
   Image = {"file", "zerg/units/hatchery.png", "size", {192, 160}},
   Shadow = {"file", "zerg/units/hatchery shadow.png", "size", {192, 160}},
   Animations = "animations-zerg-hatchery", Icon = "icon-zerg-hatchery",
   OnEachSecond = (function (self)
-    timeout = timeout - 1
-	if (timeout == 0) then
-	  local larvacount = 0
-	  local units = GetUnitsAroundUnit(self, 1)
-	  for i,unit in ipairs(units) do
-	    if (GetUnitVariable(unit, "Ident") == "unit-zerg-larva") then
-          larvacount = larvacount + 1
-        end
-      end
-	  if larvacount <= 5 then
-        local posx = GetUnitVariable(self, "PosX")
-        local posy = GetUnitVariable(self, "PosY")
-		if larvacount < 4 then posx = posx - 1
-		elseif larvacount < 5 then posy = posy + larvacount
-		elseif larvacount == 5 then posx = posx + 2; posy = posy + 3 end
-        CreateUnit("unit-zerg-larva", GetUnitVariable(self, "Player"), {posx, posy})
-      end
-	  timeout = 20
-    end
+	local timeout = GetUnitVariable(self, "LarvaTimeout")
+	if (timeout <= 0) then
+	   local larvacount = 0
+	   local units = GetUnitsAroundUnit(self, 1)
+	   local i
+	   for i,unit in ipairs(units) do
+	      if (GetUnitVariable(unit, "Ident") == "unit-zerg-larva") then
+		 larvacount = larvacount + 1
+	      end
+	   end
+	   if larvacount < 3 then
+	      local posx = GetUnitVariable(self, "PosX")
+	      local posy = GetUnitVariable(self, "PosY")
+	      CreateUnit("unit-zerg-larva", GetUnitVariable(self, "Player"), {posx - 1, posy})
+	   end
+	   SetUnitVariable(self, "LarvaTimeout", 20)
+	else
+	   SetUnitVariable(self, "LarvaTimeout", timeout - 1)
+	end
   end),
   Costs = {"time", 255, "minerals", 300},
   RepairHp = 4,

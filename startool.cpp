@@ -34,7 +34,7 @@
 --  General
 ----------------------------------------------------------------------------*/
 
-#define VERSION "1.0" // Version of extractor wartool
+#define VERSION "2.4.1" // Version of extractor wartool
 
 const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2012 by the Stratagus Project.\n"\
 "  Written by Lutz Sammer, Nehal Mistry, and Jimmy Salmon and Pali Rohar.\n"\
