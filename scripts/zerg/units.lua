@@ -4,18 +4,40 @@ Load("scripts/zerg/unit-zerg-creep.lua")
 
 AddTrigger(
    function()
+      -- create creep around zerg buildings on the map
       local p,race,units,idx,unit,cd
-      for p=0,15,1 do
+      for p=0,14,1 do
 	 r = GetPlayerData(p, "RaceName")
 	 if r == "zerg" then
 	    units = GetUnits(p)
 	    for idx,unit in pairs(units) do
 	       if GetUnitBoolFlag(unit, "Building") then
 		  cd = GetUnitVariable(unit, "CreepDistance")
-		  if cd < 10 then
+		  if cd < 5 then
 		     expandCreepAround(unit, cd)
 		  end
 	       end
+	    end
+	 end
+      end
+      -- let creep die that is not close enough to a zerg building
+      local creeps = GetUnits(15)
+      local creep,jdx,shoulddie
+      for jdx,creep in pairs(creeps) do
+	 if GetUnitVariable(creep, "Ident") == "unit-zerg-creep" then
+	    shoulddie = true
+	    units = GetUnitsAroundUnit(creep, 5, true)
+	    for idx, unit in pairs(units) do
+	       if GetUnitBoolFlag(unit, "Building") then
+		  p = GetUnitVariable(unit, "Player")
+		  if GetPlayerData(p, "RaceName") == "zerg" then
+		     shoulddie = false
+		     break
+		  end
+	       end
+	    end
+	    if shoulddie then
+	       RemoveUnit(unit)
 	    end
 	 end
       end
