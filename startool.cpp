@@ -234,7 +234,9 @@ enum _archive_type_ {
 
 Control CDTodo[] = {
 	{F,0,"","install.exe" __4},
+	{F,0,"","Install.exe" __4},
 	{F,0,"","starcraft.mpq" __4 },
+	{F,0,"","StarCraft.mpq" __4 },
 	// Fonts
 	{N,0,"font8","files\\font\\font8.fnt" __4},
 	{N,0,"font10","files\\font\\font10.fnt" __4},
@@ -884,6 +886,7 @@ Control CDTodo[] = {
 
 Control Todo[] = {
 	{F,0,"","stardat.mpq" __4},
+	{F,0,"","StarDat.mpq" __4},
 
 //	{G,0,"ui/blink","game\\blink.grp",0 __3},
 
@@ -4188,7 +4191,7 @@ int main(int argc, char **argv)
 	printf("Please be patient, the data may take a couple of minutes to extract...\n");
 	fflush(stdout);
 
-	for (i = 0; i < 3; ++i) {
+	for (i = 0; i <= 5; ++i) {
 		Control *c;
 		unsigned len;
 
@@ -4200,12 +4203,24 @@ int main(int argc, char **argv)
 			break;
 		case 1:
 			c = &(CDTodo[1]);
-			len = sizeof(CDTodo) / sizeof(*CDTodo) - 1; // CD install.exe renamed to starcraft.mpq
+			len = sizeof(CDTodo) / sizeof(*CDTodo) - 1; // CD Install.exe
 			break;
-		default:
+		case 2:
+			c = &(CDTodo[2]);
+			len = sizeof(CDTodo) / sizeof(*CDTodo) - 2; // CD install.exe renamed to starcraft.mpq
+			break;
+		case 3:
+			c = &(CDTodo[3]);
+			len = sizeof(CDTodo) / sizeof(*CDTodo) - 3; // CD install.exe renamed to StarCraft.mpq
+			break;
+		case 4:
 			// stardat.mpq from cd or hard drive
 			c = Todo;
 			len = sizeof(Todo) / sizeof(*Todo);
+		case 5:
+			// StarDat.mpq from cd or hard drive
+			c = &(Todo[1]);
+			len = sizeof(Todo) / sizeof(*Todo) - 1;
 		}
 
 		for (u = 0; u < len; ++u) {
