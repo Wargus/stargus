@@ -204,12 +204,6 @@ Function .onInit
 
 !endif
 
-	ReadRegStr $0 HKLM "${STRATAGUS_REGKEY}" "DisplayVersion"
-	StrCmp $0 "${VERSION}" +3
-
-	MessageBox MB_OK|MB_ICONSTOP "$(NO_STRATAGUS)"
-	Abort
-
 	ReadRegStr $DATADIR HKLM "${REGKEY}" "DataDir"
 	StrCmp $DATADIR "" 0 +2
 
@@ -271,6 +265,14 @@ Section "${NAME}"
 	SetOutPath "$INSTDIR"
 	File "${STARGUS}"
 	File "${STARTOOL}"
+
+	; -- XXX TODO: include Stratagus and dependencies some better way
+	File "stratagus.exe"
+	File "libfluidsynth.dll"
+	File "libglib-2.0-0.dll"
+	File "libgthread-2.0-0.dll"
+	File "lua51.dll"
+	File "SDL.dll"
 
 	!cd ${CMAKE_CURRENT_SOURCE_DIR}
 
