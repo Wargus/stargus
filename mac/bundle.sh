@@ -17,7 +17,6 @@ mkdir -p Stargus.app/Contents/libs
 
 # Copy launchscript and info.plist
 cp Info.plist Stargus.app/Contents/
-cp launchscript.sh Stargus.app/Contents/MacOS
 
 # Generate icons
 mkdir stargus.iconset
@@ -36,7 +35,9 @@ rm -R stargus.iconset
 mv stargus.icns Stargus.app/Contents/Resources/
 
 # Bundle resources
-cp -R ../contrib ../scripts Stargus.app/Contents/Resources/
+cp -R ../contrib ../scripts Stargus.app/Contents/MacOS/
+cp -R ../scripts ../scripts Stargus.app/Contents/MacOS/
+cp -R ../mpqlist.txt ../scripts Stargus.app/Contents/MacOS/
 
 # Bundle binaries and their dependencies
 rm -rf macdylibbundler
@@ -45,8 +46,10 @@ cd macdylibbundler
 make
 cd ..
 
-cp ../build/startool Stargus.app/Contents/MacOS
+cp ../build/startool Stargus.app/Contents/MacOS/
+cp ../build/stargus Stargus.app/Contents/MacOS/
 cp "$STRATAGUS" Stargus.app/Contents/MacOS/stratagus
 cp "$(dirname "$STRATAGUS")"/../libs/* Stargus.app/Contents/libs/
 
 macdylibbundler/dylibbundler -cd -of -b -x ./Stargus.app/Contents/MacOS/startool -d ./Stargus.app/Contents/libs/
+macdylibbundler/dylibbundler -cd -of -b -x ./Stargus.app/Contents/MacOS/stargus -d ./Stargus.app/Contents/libs/
