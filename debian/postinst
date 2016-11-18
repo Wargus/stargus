@@ -5,27 +5,6 @@ set -e
 . /usr/share/debconf/confmodule
 
 extract() {
-
-	db_get stargus/extractdata || true
-	if [ "$RET" != "true" ]; then
-		db_stop || true
-		return 0
-	fi
-
-	db_get stargus/cdpath || true
-	if ! [ -d "$RET" ]; then
-		db_stop || true
-		echo "${RET} doesn't exist - can't extract Starcraft data" >&2
-		return 1
-	fi
-
-	CDPATH="$RET"
-
-	db_stop || true
-
-	startool "$CDPATH" /usr/share/games/stratagus/stargus
-	return $?
-
 }
 
 if [ "$1" = "configure" ]; then
