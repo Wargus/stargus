@@ -85,15 +85,6 @@ LangString NO_STRATAGUS ${LANG_ENGLISH} "${STRATAGUS_NAME} ${VERSION} is not ins
 LangString REMOVEPREVIOUS ${LANG_ENGLISH} "Removing previous installation"
 LangString REMOVECONFIGURATION ${LANG_ENGLISH} "Removing configuration and data files:"
 
-LangString EXTRACTDATA_FILES ${LANG_ENGLISH} "Extracting Starcraft data files..."
-LangString EXTRACTDATA_FILES_FAILED ${LANG_ENGLISH} "Extracting Starcraft data files failed."
-
-LangString EXTRACTDATA_PAGE_HEADER_TEXT ${LANG_ENGLISH} "Choose Starcraft Location"
-LangString EXTRACTDATA_PAGE_HEADER_SUBTEXT ${LANG_ENGLISH} "Choose the folder in which are Starcraft data files."
-LangString EXTRACTDATA_PAGE_TEXT_TOP ${LANG_ENGLISH} "Setup will extract Starcraft data files from the following folder. You can specify location of CD or install location of Starcraft data files. Note that you need the original Starcraft CD to extract the game data files."
-LangString EXTRACTDATA_PAGE_TEXT_DESTINATION ${LANG_ENGLISH} "Source Folder"
-LangString EXTRACTDATA_PAGE_NOT_VALID ${LANG_ENGLISH} "This is not valid Starcraft data directory. File $DATADIRinstall.exe does not exist."
-
 LangString DESC_REMOVEEXE ${LANG_ENGLISH} "Remove ${NAME} binary executables"
 LangString DESC_REMOVECONF ${LANG_ENGLISH} "Remove all other configuration and extracted data files and directories in ${NAME} install directory created by user or ${NAME}"
 
@@ -113,8 +104,6 @@ LangString x86_64_ONLY ${LANG_ENGLISH} "This version is for 64 bits computers on
 SetCompressor lzma
 
 Var STARTMENUDIR
-Var DATADIR
-Var EXTRACTNEEDED
 
 !define MUI_ICON "${ICON}"
 !define MUI_UNICON "${ICON}"
@@ -131,17 +120,6 @@ Var EXTRACTNEEDED
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "COPYING"
-!insertmacro MUI_PAGE_DIRECTORY
-
-!define MUI_PAGE_HEADER_TEXT "$(EXTRACTDATA_PAGE_HEADER_TEXT)"
-!define MUI_PAGE_HEADER_SUBTEXT "$(EXTRACTDATA_PAGE_HEADER_SUBTEXT)"
-!define MUI_DIRECTORYPAGE_TEXT_TOP "$(EXTRACTDATA_PAGE_TEXT_TOP)"
-!define MUI_DIRECTORYPAGE_TEXT_DESTINATION "$(EXTRACTDATA_PAGE_TEXT_DESTINATION)"
-!define MUI_DIRECTORYPAGE_VARIABLE $DATADIR
-!define MUI_DIRECTORYPAGE_VERIFYONLEAVE
-!define MUI_PAGE_CUSTOMFUNCTION_PRE PageExtractDataPre
-!define MUI_PAGE_CUSTOMFUNCTION_SHOW PageExtractDataShow
-!define MUI_PAGE_CUSTOMFUNCTION_LEAVE PageExtractDataLeave
 !insertmacro MUI_PAGE_DIRECTORY
 
 !insertmacro MUI_PAGE_STARTMENU Application $STARTMENUDIR
@@ -203,40 +181,6 @@ Function .onInit
 	Abort
 
 !endif
-
-	ReadRegStr $DATADIR HKLM "${REGKEY}" "DataDir"
-	StrCmp $DATADIR "" 0 +2
-
-	StrCpy $DATADIR "D:\"
-
-FunctionEnd
-
-;--------------------------------
-
-Function PageExtractDataPre
-
-	StrCpy $EXTRACTNEEDED "yes"
-
-FunctionEnd
-
-Function PageExtractDataShow
-
-	FindWindow $0 "#32770" "" $HWNDPARENT
-	GetDlgItem $1 $0 1023
-	ShowWindow $1 0
-	GetDlgItem $1 $0 1024
-	ShowWindow $1 0
-
-FunctionEnd
-
-Function PageExtractDataLeave
-
-	IfFileExists "$DATADIR\install.exe" +5
-	IfFileExists "$DATADIR\stardat.mpq" +4
-	IfFileExists "$DATADIR\starcraft.mpq" +3
-
-	MessageBox MB_OK|MB_ICONSTOP "$(EXTRACTDATA_PAGE_NOT_VALID)"
-	Abort
 
 FunctionEnd
 
@@ -307,31 +251,9 @@ Section "${NAME}"
 	WriteRegStr HKLM "${REGKEY}" "URLInfoAbout" "${HOMEPAGE}"
 	WriteRegDWORD HKLM "${REGKEY}" "NoModify" 1
 	WriteRegDWORD HKLM "${REGKEY}" "NoRepair" 1
-	WriteRegStr HKLM "${REGKEY}" "DataDir" "$DATADIR"
 	WriteRegStr HKLM "${STRATAGUS_REGKEY}\Games" "${NAME}" "${VERSION}"
 
 	WriteUninstaller "$INSTDIR\${UNINSTALL}"
-
-SectionEnd
-
-Section "${NAME}" ExtractData
-
-	StrCmp "$EXTRACTNEEDED" "no" end
-
-	AddSize 542920
-
-	DetailPrint ""
-	DetailPrint "$(EXTRACTDATA_FILES)"
-	ExecWait "$\"$INSTDIR\${STARTOOL}$\" $\"$DATADIR$\" $\"$INSTDIR$\""
-	Pop $0
-	IntCmp $0 0 +3
-
-	MessageBox MB_OK|MB_ICONSTOP "$(EXTRACTDATA_FILES_FAILED)"
-	Abort
-
-	SetOutPath "$INSTDIR"
-
-end:
 
 SectionEnd
 
