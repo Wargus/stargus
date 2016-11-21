@@ -14,12 +14,13 @@ your Starcraft installation to extract the data to work with Stargus.
 NOTE: stratagus ( https://github.com/Wargus/stratagus ) is required.
 stargus and stratagus version must match
 
-1. compile:
-    mkdir build
-    cd build
-    cmake -DSTRATAGUS=stratagus -DSTRATAGUS_INCLUDE_DIR=${PATH_TO_STRATAGUS_SRC}/gameheaders ../
-    make
-
+```
+mkdir build
+cd build
+cmake -DSTRATAGUS=stratagus -DSTRATAGUS_INCLUDE_DIR=${PATH_TO_STRATAGUS_SRC}/gameheaders ../
+make
+./stargus
+```
 
 ![image](https://cloud.githubusercontent.com/assets/46235/11292960/499a7d3c-8f55-11e5-9356-62c190c57467.png)
 ![image](https://cloud.githubusercontent.com/assets/46235/11292993/9198675c-8f55-11e5-9f74-2f23fb207498.png)
