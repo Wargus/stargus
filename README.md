@@ -1,7 +1,7 @@
 ### Nightly builds are available:
 
 - Windows Installer: https://github.com/Wargus/stargus/releases/tag/master-builds
-- Ubuntu/Debian Packages: https://launchpad.net/~stratagus/+archive/ubuntu/ppa
+- Ubuntu/Debian Packages: https://code.launchpad.net/~timfelgentreff/+archive/ubuntu/stratagus
 - OS X App Bundle: https://github.com/Wargus/stratagus/wiki/osx/Stargus.app.tar.gz
 
 Installation Instructions
