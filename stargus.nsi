@@ -224,6 +224,8 @@ Section "${NAME}"
 
 	SetOutPath "$INSTDIR\scripts"
 	File /r "scripts\"
+	SetOutPath "$INSTDIR\contrib"
+	File /r "contrib\"
 	SetOutPath "$INSTDIR"
 
 	CreateDirectory "$INSTDIR\graphics"
