@@ -23,6 +23,7 @@
 #define GAME "stargus"
 #define EXTRACTOR_TOOL "startool"
 #define EXTRACTOR_ARGS
+#define CHECK_EXTRACTED_VERSION 1
 // contrib has fog.png
 #define CONTRIB_DIRECTORIES { "mpqlist.txt", "mpqlist.txt", \
 			      "contrib", "graphics/tilesets", \
