@@ -3921,9 +3921,9 @@ int ConvertWav(const char *listfile, const char *file, int wave __attribute__((u
 		printf("Can't write %d bytes\n", EntrySize);
 	}
 
-	free(wavp);
-
 	gzclose(gf);
+
+	free(wavp);
 
 	return 0;
 }
