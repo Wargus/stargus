@@ -522,7 +522,9 @@ int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 			if (flag & 0x30000) {
 				Decode((UInt32 *) read_buffer, massive_base, crc_file, length_read / 4);		// . decode block (if file is coded)
 			}
-			if (length_read == 0x1000 || (j == num_block - 2 && length_read == (size_unpack & 0xFFF))) {		// . if block is unpacked (its length=0x1000 or its last block and length=remainder)
+			if (length_read >= 0x1000 || (j == num_block - 2 && length_read == (size_unpack & 0xFFF))) {		// . if block is unpacked (its length=0x1000 or its last block and length=remainder)
+                                if (length_read > 0x1000)
+                                    length_read = 0x1000;
 				memcpy(mpqptr, read_buffer, length_read);
 				mpqptr += length_read;
 //				fwrite(read_buffer, sizeof(char), length_read, fp_new);		// . write block "as is"
@@ -554,6 +556,8 @@ int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 						read_buffer = write_buffer;
 						write_buffer = read_buffer_start;
 					}
+                                        if (length_read > 0x1000)
+                                            length_read = 0x1000;
 				}
 				if (metod & 0x01) { // Huffman
 					length_read =
