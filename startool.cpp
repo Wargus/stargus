@@ -127,7 +127,7 @@ static inline unsigned int Swap32(unsigned int D) {
 /**
 **		Mpq file
 */
-FILE *MpqFD;
+FILE *MpqFD = NULL;
 static CMpq *Mpq;
 
 char listfile[1024];
@@ -236,7 +236,13 @@ Control CDTodo[] = {
 	{F,0,"","install.exe" __4},
 	{F,0,"","Install.exe" __4},
 	{F,0,"","starcraft.mpq" __4 },
+	{F,0,"","Starcraft.mpq" __4 },
 	{F,0,"","StarCraft.mpq" __4 },
+	{F,0,"","installer tome.mpq" __4 },
+	{F,0,"","Installer Tome.mpq" __4 },
+	{F,0,"","starcraft archive" __4 },
+	{F,0,"","StarCraft Archive" __4 },`
+		
 	// Fonts
 	{N,0,"font8","files\\font\\font8.fnt" __4},
 	{N,0,"font10","files\\font\\font10.fnt" __4},
@@ -4190,6 +4196,9 @@ int main(int argc, char **argv)
 	printf("Using mpq list file \"%s\"\n", listfile);
 	printf("Please be patient, the data may take a couple of minutes to extract...\n");
 	fflush(stdout);
+
+	len = sizeof(CDTodo) / sizeof(*CDTodo);
+	while(
 
 	for (i = 0; i <= 5; ++i) {
 		Control *c;
