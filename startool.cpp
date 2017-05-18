@@ -242,7 +242,8 @@ Control CDTodo[] = {
 	{F,0,"","Installer Tome.mpq" __4 },
 	{F,0,"","starcraft archive" __4 },
 	{F,0,"","StarCraft Archive" __4 },`
-		
+	{F,0, 0, 0 __4},
+	
 	// Fonts
 	{N,0,"font8","files\\font\\font8.fnt" __4},
 	{N,0,"font10","files\\font\\font10.fnt" __4},
@@ -893,6 +894,7 @@ Control CDTodo[] = {
 Control Todo[] = {
 	{F,0,"","stardat.mpq" __4},
 	{F,0,"","StarDat.mpq" __4},
+	{F,0, 0, 0 __4},
 
 //	{G,0,"ui/blink","game\\blink.grp",0 __3},
 
@@ -4200,36 +4202,22 @@ int main(int argc, char **argv)
 	len = sizeof(CDTodo) / sizeof(*CDTodo);
 	while(
 
-	for (i = 0; i <= 5; ++i) {
+	for (i = 0; i <= 1; ++i) {
 		Control *c;
 		unsigned len;
 
 		switch (i)
 		{
 		case 0:
+			// CD install.exe renamed to StarCraft.mpq or other main mpq file
 			c = CDTodo;
-			len = sizeof(CDTodo) / sizeof(*CDTodo); // CD install.exe
+			len = sizeof(CDTodo) / sizeof(*CDTodo);  
 			break;
 		case 1:
-			c = &(CDTodo[1]);
-			len = sizeof(CDTodo) / sizeof(*CDTodo) - 1; // CD Install.exe
-			break;
-		case 2:
-			c = &(CDTodo[2]);
-			len = sizeof(CDTodo) / sizeof(*CDTodo) - 2; // CD install.exe renamed to starcraft.mpq
-			break;
-		case 3:
-			c = &(CDTodo[3]);
-			len = sizeof(CDTodo) / sizeof(*CDTodo) - 3; // CD install.exe renamed to StarCraft.mpq
-			break;
-		case 4:
-			// stardat.mpq from cd or hard drive
+			// StarDat.mpq or stardat.mpq from CD or hard drive
 			c = Todo;
 			len = sizeof(Todo) / sizeof(*Todo);
-		case 5:
-			// StarDat.mpq from cd or hard drive
-			c = &(Todo[1]);
-			len = sizeof(Todo) / sizeof(*Todo) - 1;
+			break;
 		}
 
 		for (u = 0; u < len; ++u) {
@@ -4238,27 +4226,36 @@ int main(int argc, char **argv)
 #endif
 			switch (c[u].Type) {
 				case F:
-					if( !strncmp(c[u].ListFile,"remove-",7) ) {
-						sprintf(buf, "%s/%s", Dir, c[u].ListFile);
-					} else {
-						sprintf(buf, "%s/%s", archivedir, c[u].ListFile);
+					if( c[u].File )
+					{	
+						if( !MpqFD )
+						{
+							if( !strncmp(c[u].ListFile,"remove-",7) ) {
+								sprintf(buf, "%s/%s", Dir, c[u].ListFile);
+							} else {
+								sprintf(buf, "%s/%s", archivedir, c[u].ListFile);
+							}
+							printf("Archive \"%s\"\n", buf);
+							if (OpenArchive(buf) == -1) {
+								printf("Could not open archive \"%s\", skipping\n", buf);
+
+							} else {
+								if (i == 0)
+								{
+		#ifdef DEBUG
+									printf("%s:\n", "remove-stardat.mpq");
+		#endif
+									RawExtract("files\\stardat.mpq", "remove-stardat.mpq");
+									Todo[0].ListFile = "remove-stardat.mpq";
+								}
+							}
+						}
+
 					}
-					printf("Archive \"%s\"\n", buf);
-					if (OpenArchive(buf) == -1) {
-						printf("Could not open archive \"%s\", skipping\n", buf);
-						u=len;
-						if (c == Todo) {
-							fprintf(stderr, "Fatal error: Cannot extract data\n");
-							return 1;
-						}
-					} else {
-						if (c == CDTodo) {
-#ifdef DEBUG
-							printf("%s:\n", "remove-stardat.mpq");
-#endif
-							RawExtract("files\\stardat.mpq", "remove-stardat.mpq");
-							Todo[0].ListFile = "remove-stardat.mpq";
-						}
+					else
+					{
+						fprintf(stderr, "Fatal error: Cannot extract data\n");
+						return 1;
 					}
 					break;
 				case M:
