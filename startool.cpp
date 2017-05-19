@@ -241,8 +241,8 @@ Control CDTodo[] = {
 	{F,0,"","installer tome.mpq" __4 },
 	{F,0,"","Installer Tome.mpq" __4 },
 	{F,0,"","starcraft archive" __4 },
-	{F,0,"","StarCraft Archive" __4 },`
-	{F,0, 0, 0 __4},
+	{F,0,"","StarCraft Archive" __4 },
+	{F,0,0 ,0 __4},
 	
 	// Fonts
 	{N,0,"font8","files\\font\\font8.fnt" __4},
@@ -894,7 +894,7 @@ Control CDTodo[] = {
 Control Todo[] = {
 	{F,0,"","stardat.mpq" __4},
 	{F,0,"","StarDat.mpq" __4},
-	{F,0, 0, 0 __4},
+	{F,0,0 ,0 __4},
 
 //	{G,0,"ui/blink","game\\blink.grp",0 __3},
 
@@ -3816,7 +3816,7 @@ unsigned char *ConvertFnt(unsigned char *start, int *wp, int *hp) {
 	unsigned *offsets;
 
 	bp = start + 5;  // skip "FONT "
-	printf("%s %s \n", start, start + 5);
+//	printf("%s %s \n", start, start + 5);
 	count = FetchByte(bp);
 	count -= 32;
 	max_width = FetchByte(bp);
@@ -4199,9 +4199,6 @@ int main(int argc, char **argv)
 	printf("Please be patient, the data may take a couple of minutes to extract...\n\n");
 	fflush(stdout);
 
-	len = sizeof(CDTodo) / sizeof(*CDTodo);
-	while(
-
 	for (i = 0; i <= 1; ++i) {
 		Control *c;
 		unsigned len;
@@ -4237,10 +4234,10 @@ int main(int argc, char **argv)
 							}
 							printf("Archive \"%s\"\n", buf);
 							if (OpenArchive(buf) == -1) {
-								printf(\t"Could not open archive \"%s\", skipping\n", buf);
+								printf("Could not open archive \"%s\", skipping\n\n", buf);
 
 							} else {
-								puts("\n");
+								puts("");
 								if (i == 0)
 								{
 		#ifdef DEBUG
