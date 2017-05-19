@@ -4196,7 +4196,7 @@ int main(int argc, char **argv)
 
 	printf("Extract from \"%s\" to \"%s\"\n", archivedir, Dir);
 	printf("Using mpq list file \"%s\"\n", listfile);
-	printf("Please be patient, the data may take a couple of minutes to extract...\n");
+	printf("Please be patient, the data may take a couple of minutes to extract...\n\n");
 	fflush(stdout);
 
 	len = sizeof(CDTodo) / sizeof(*CDTodo);
@@ -4226,9 +4226,9 @@ int main(int argc, char **argv)
 #endif
 			switch (c[u].Type) {
 				case F:
-					if( c[u].File )
+					if( !MpqFD )
 					{	
-						if( !MpqFD )
+						if( c[u].File )
 						{
 							if( !strncmp(c[u].ListFile,"remove-",7) ) {
 								sprintf(buf, "%s/%s", Dir, c[u].ListFile);
@@ -4237,9 +4237,10 @@ int main(int argc, char **argv)
 							}
 							printf("Archive \"%s\"\n", buf);
 							if (OpenArchive(buf) == -1) {
-								printf("Could not open archive \"%s\", skipping\n", buf);
+								printf(\t"Could not open archive \"%s\", skipping\n", buf);
 
 							} else {
+								puts("\n");
 								if (i == 0)
 								{
 		#ifdef DEBUG
@@ -4250,12 +4251,11 @@ int main(int argc, char **argv)
 								}
 							}
 						}
-
-					}
-					else
-					{
-						fprintf(stderr, "Fatal error: Cannot extract data\n");
-						return 1;
+						else
+						{
+							fprintf(stderr, "Fatal error: Cannot extract data\n");
+							return 1;
+						}
 					}
 					break;
 				case M:
