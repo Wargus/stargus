@@ -4232,6 +4232,7 @@ int main(int argc, char **argv)
 							} else {
 								sprintf(buf, "%s/%s", archivedir, c[u].ListFile);
 							}
+							
 							printf("Archive \"%s\"\n", buf);
 							if (OpenArchive(buf) == -1) {
 								printf("Could not open archive \"%s\", skipping\n\n", buf);
@@ -4300,6 +4301,7 @@ int main(int argc, char **argv)
 			unlink(buf);
 		}
 	}
+	
 	delete Mpq;
 
 	CreatePanels();
