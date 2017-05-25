@@ -549,9 +549,10 @@ int CMpq::ExtractTo(unsigned char *mpqbuf, UInt32 entry, FILE *fpMpq)
 					length_write = 0;
 					explode(&param);
 					length_read = length_write;
-                                        if (length_read > 0x1000)
-					    printf("WARNING metod 0x08 explode calculated larger than 4k read, truncating\n");
-                                            length_read = 0x1000;
+                                        if (length_read > 0x1000) {
+						printf("WARNING metod 0x08 explode calculated larger than 4k read, truncating\n");
+						length_read = 0x1000;
+					}
 					iteration--;
 					if (iteration) {
 						read_buffer = write_buffer;
