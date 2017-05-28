@@ -2774,9 +2774,10 @@ int SavePNG(const char *name, unsigned char *image, int w, int h,
 	png_write_end(png_ptr, info_ptr);
 
 	png_destroy_write_struct(&png_ptr, &info_ptr);
-	fclose(fp);
-
+		
 	free(lines);
+
+	fclose(fp);
 
 	return 0;
 }
@@ -2804,6 +2805,8 @@ int OpenArchive(const char *file)
 
 	if (Mpq->ReadInfo(MpqFD, listfile)) {
 		printf("MpqReadInfo failed\n");
+		fclose(MpqFD);
+		MpqFD = NULL;
 		return -1;
 	}
 
