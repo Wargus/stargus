@@ -1,5 +1,7 @@
 [![Join the chat at https://gitter.im/Wargus](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Wargus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[![Discord](https://img.shields.io/discord/780082494447288340?style=flat-square&logo=discord&label=discord)](https://discord.gg/gHnEMKWF)
+
 ### Nightly builds are available:
 
 - Windows Installer: https://github.com/Wargus/stargus/releases/tag/master-builds
