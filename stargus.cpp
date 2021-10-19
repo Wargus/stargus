@@ -22,7 +22,7 @@
 #define GAME_CD_FILE_PATTERNS "stardat.mpq", "StarDat.mpq", "starcraft.mpq", "StarCraft.mpq"
 #define GAME "stargus"
 #define EXTRACTOR_TOOL "startool"
-#define EXTRACTOR_ARGS
+#define EXTRACTOR_ARGS {}
 #define CHECK_EXTRACTED_VERSION 1
 // contrib has fog.png.
 // TODO: There's a bug in the lua files searching fog.png in the wrong path.
