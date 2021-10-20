@@ -34,11 +34,9 @@
 --  General
 ----------------------------------------------------------------------------*/
 
-#define VERSION "2.4.1" // Version of extractor wartool
+#define VERSION "2.4.1" // Version of extractor startool
 
-const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2012 by the Stratagus Project.\n"\
-"  Written by Lutz Sammer, Nehal Mistry, and Jimmy Salmon and Pali Rohar.\n"\
-"  https://launchpad.net/stargus";
+const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2021 by the Stratagus Project.\n";
 
 /*----------------------------------------------------------------------------
 --		Includes
@@ -51,6 +49,10 @@ const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2012 by th
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <zlib.h>
+
+// C++
+#include <iostream>
+#include <string>
 
 #ifdef _MSC_VER
 #define strdup _strdup
@@ -66,6 +68,9 @@ const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2012 by th
 #include <png.h>
 
 #include "mpq.h"
+
+// activate local debug messages
+#define DEBUG 1
 
 #ifndef __GNUC__
 	#define __attribute__(args)  // Does nothing for non GNU CC
@@ -119,6 +124,7 @@ static inline unsigned int Swap32(unsigned int D) {
 
 #define FetchByte(p) (*((unsigned char*)(p))); ++p
 
+using namespace std;
 
 //----------------------------------------------------------------------------
 //		Config
@@ -4202,23 +4208,24 @@ int main(int argc, char **argv)
 	printf("Please be patient, the data may take a couple of minutes to extract...\n\n");
 	fflush(stdout);
 
-	for (i = 0; i <= 1; ++i) {
+	//for (i = 0; i <= 1; ++i) {
 		Control *c;
+		//printf("loop: %d\n", i);
 		unsigned len;
 
-		switch (i)
+		/*switch (i)
 		{
 		case 0:
 			// CD install.exe renamed to StarCraft.mpq or other main mpq file
 			c = CDTodo;
 			len = sizeof(CDTodo) / sizeof(*CDTodo);  
 			break;
-		case 1:
+		case 1:*/
 			// StarDat.mpq or stardat.mpq from CD or hard drive
 			c = Todo;
 			len = sizeof(Todo) / sizeof(*Todo);
-			break;
-		}
+			//break;
+		//}
 
 		for (u = 0; u < len; ++u) {
 #ifdef DEBUG
@@ -4235,7 +4242,7 @@ int main(int argc, char **argv)
 							} else {
 								sprintf(buf, "%s/%s", archivedir, c[u].ListFile);
 							}
-							
+
 							printf("Archive \"%s\"\n", buf);
 							if (OpenArchive(buf) == -1) {
 								printf("Could not open archive \"%s\", skipping\n\n", buf);
@@ -4303,7 +4310,7 @@ int main(int argc, char **argv)
 			printf("removing \"%s\"\n",buf);
 			unlink(buf);
 		}
-	}
+	//}
 	
 	delete Mpq;
 
