@@ -126,6 +126,9 @@ static inline unsigned int Swap32(unsigned int D) {
 
 using namespace std;
 
+// global needed tor map extraction
+char *archivedir;
+
 //----------------------------------------------------------------------------
 //		Config
 //----------------------------------------------------------------------------
@@ -901,6 +904,47 @@ Control Todo[] = {
 	{F,0,"","stardat.mpq" __4},
 	{F,0,"","StarDat.mpq" __4},
 	{F,0,0 ,0 __4},
+
+	// Maps
+	{M,0,"maps/(2)Challenger.scm","multimaps\\(2)Challenger.scm" __4},
+	{M,0,"maps/(2)River Crossing.scm","multimaps\\(2)River Crossing.scm" __4},
+	{M,0,"maps/(2)Road War.scm","multimaps\\(2)Road War.scm" __4},
+	{M,0,"maps/(2)Space Madness.scm","multimaps\\(2)Space Madness.scm" __4},
+	{M,0,"maps/(2)The Small Divide.scm","multimaps\\(2)The Small Divide.scm" __4},
+	{M,0,"maps/(2)Volcanis.scm","multimaps\\(2)Volcanis.scm" __4},
+	{M,0,"maps/(3)Holy Ground.scm","multimaps\\(3)Holy Ground.scm" __4},
+	{M,0,"maps/(3)Meltdown.scm","multimaps\\(3)Meltdown.scm" __4},
+	{M,0,"maps/(3)Three Kingdoms.scm","multimaps\\(3)Three Kingdoms.scm" __4},
+	{M,0,"maps/(3)Triumvirate.scm","multimaps\\(3)Triumvirate.scm" __4},
+	{M,0,"maps/(4)Alpha Draconis.scm","multimaps\\(4)Alpha Draconis.scm" __4},
+	{M,0,"maps/(4)Blood Bath.scm","multimaps\\(4)Blood Bath.scm" __4},
+	{M,0,"maps/(4)Bridge Too Near.scm","multimaps\\(4)Bridge Too Near.scm" __4},
+	{M,0,"maps/(4)Cyclone.scm","multimaps\\(4)Cyclone.scm" __4},
+	{M,0,"maps/(4)Dark Crystal.scm","multimaps\\(4)Dark Crystal.scm" __4},
+	{M,0,"maps/(4)Dark Star.scm","multimaps\\(4)Dark Star.scm" __4},
+	{M,0,"maps/(4)Lost Civilization.scm","multimaps\\(4)Lost Civilization.scm" __4},
+	{M,0,"maps/(4)Opposing City States '98.scm","multimaps\\(4)Opposing City States '98.scm" __4},
+	{M,0,"maps/(4)Orbital Relay.scm","multimaps\\(4)Orbital Relay.scm" __4},
+	{M,0,"maps/(4)Power Lines.scm","multimaps\\(4)Power Lines.scm" __4},
+	{M,0,"maps/(4)Ruins of the Ancients.scm","multimaps\\(4)Ruins of the Ancients.scm" __4},
+	{M,0,"maps/(4)Tarsonis Orbital.scm","multimaps\\(4)Tarsonis Orbital.scm" __4},
+	{M,0,"maps/(5)Diablo.scm","multimaps\\(5)Diablo.scm" __4},
+	{M,0,"maps/(5)Island Hop.scm","multimaps\\(5)Island Hop.scm" __4},
+	{M,0,"maps/(5)Jeweled River.scm","multimaps\\(5)Jeweled River.scm" __4},
+	{M,0,"maps/(5)Sherwood Forest.scm","multimaps\\(5)Sherwood Forest.scm" __4},
+	{M,0,"maps/(6)Ground Zero.scm","multimaps\\(6)Ground Zero.scm" __4},
+	{M,0,"maps/(6)Hidden Shrine.scm","multimaps\\(6)Hidden Shrine.scm" __4},
+	{M,0,"maps/(6)New Gettysburg.scm","multimaps\\(6)New Gettysburg.scm" __4},
+	{M,0,"maps/(7)Continental Divide.scm","multimaps\\(7)Continental Divide.scm" __4},
+	{M,0,"maps/(7)River War.scm","multimaps\\(7)River War.scm" __4},
+	{M,0,"maps/(8)Bridge to Bridge '98.scm","multimaps\\(8)Bridge to Bridge '98.scm" __4},
+	{M,0,"maps/(8)Char Magma.scm","multimaps\\(8)Char Magma.scm" __4},
+	{M,0,"maps/(8)Homeworld.scm","multimaps\\(8)Homeworld.scm" __4},
+	{M,0,"maps/(8)Killing Fields.scm","multimaps\\(8)Killing Fields.scm" __4},
+	{M,0,"maps/(8)Orbital Death.scm","multimaps\\(8)Orbital Death.scm" __4},
+	{M,0,"maps/(8)Plains of Snow '98.scm","multimaps\\(8)Plains of Snow '98.scm" __4},
+	{M,0,"maps/(8)Station Unrest.scm","multimaps\\(8)Station Unrest.scm" __4},
+	{M,0,"maps/(8)The Hunters.scm","multimaps\\(8)The Hunters.scm" __4},
 
 //	{G,0,"ui/blink","game\\blink.grp",0 __3},
 
@@ -2873,10 +2917,12 @@ int ConvertMap(const char *mapfile, const char *file)
 	FILE *fd;
 	unsigned char *p;
 	char buf[1024];
+	char buf2[1024];
 
 	sprintf(buf, "%s/%s", Dir, file);
+	sprintf(buf2, "%s/%s", archivedir, file);
 	CheckPath(buf);
-	p = ExtractEntry(mapfile);
+	/*p = ExtractEntry(mapfile);
 	fd = fopen(buf, "wb");
 	if (!fd) {
 		free(p);
@@ -2884,9 +2930,9 @@ int ConvertMap(const char *mapfile, const char *file)
 	}
 	fwrite(p, EntrySize, 1, fd);
 	fclose(fd);
-	free(p);
+	free(p);*/
 
-	ConvertScm(buf, buf, listfile);
+	ConvertScm(buf2, buf, listfile);
 
 	return 0;
 }
@@ -4137,7 +4183,6 @@ mpqlist-file\tmpqlist.txt file which contains mpq file names\n"
 int main(int argc, char **argv)
 {
 	unsigned u;
-	char *archivedir;
 	char buf[1024];
 	int i;
 	FILE * f;
@@ -4212,20 +4257,20 @@ int main(int argc, char **argv)
 		Control *c;
 		//printf("loop: %d\n", i);
 		unsigned len;
-
-		/*switch (i)
+		i = 1;
+		switch (i)
 		{
 		case 0:
 			// CD install.exe renamed to StarCraft.mpq or other main mpq file
 			c = CDTodo;
 			len = sizeof(CDTodo) / sizeof(*CDTodo);  
 			break;
-		case 1:*/
+		case 1:
 			// StarDat.mpq or stardat.mpq from CD or hard drive
 			c = Todo;
 			len = sizeof(Todo) / sizeof(*Todo);
-			//break;
-		//}
+			break;
+		}
 
 		for (u = 0; u < len; ++u) {
 #ifdef DEBUG
