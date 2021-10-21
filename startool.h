@@ -85,55 +85,11 @@ const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2021 by th
 	#define O_BINARY 0
 #endif
 
-
-#if  defined(__i386__) || defined(__ia64__) || defined(WIN32) || \
-    (defined(__alpha__) || defined(__alpha)) || \
-     defined(__arm__) || \
-    (defined(__mips__) && defined(__MIPSEL__)) || \
-     defined(__SYMBIAN32__) || \
-     defined(__x86_64__) || \
-     defined(__LITTLE_ENDIAN__)
-#ifdef __cplusplus
-static inline unsigned short FetchLE16(unsigned char*& p) {
-	unsigned short s = *(unsigned short*)p;
-	p += 2;
-	return s;
-}
-static inline unsigned int FetchLE32(unsigned char*& p) {
-	unsigned int s = *(unsigned int*)p;
-	p += 4;
-	return s;
-}
-#else
-#define FetchLE16(p) (*((unsigned short*)(p))); p += 2
-#define FetchLE32(p) (*((unsigned int*)(p))); p += 4
-#endif
-#define AccessLE16(p) (*((unsigned short*)(p)))
-#define AccessLE32(p) (*((unsigned int*)(p)))
-#define ConvertLE16(v) (v)
-#define ConvertLE32(v) (v)
-#else
-static inline unsigned short Swap16(unsigned short D) {
-	return ((D << 8) | (D >> 8));
-}
-static inline unsigned int Swap32(unsigned int D) {
-	return ((D << 24) | ((D << 8) & 0x00FF0000) | ((D >> 8) & 0x0000FF00) | (D >> 24));
-}
-#define FetchLE16(p) Swap16(*((unsigned short*)(p))); p += 2
-#define FetchLE32(p) Swap32(*((unsigned int*)(p))); p += 4
-#define AccessLE16(p) Swap16((*((unsigned short*)(p))))
-#define AccessLE32(p) Swap32(*((unsigned int*)(p)))
-#define ConvertLE16(v) Swap16(v)
-#define ConvertLE32(v) Swap32(v)
-#endif
-
-#define FetchByte(p) (*((unsigned char*)(p))); ++p
-
 using namespace std;
 
 
 //----------------------------------------------------------------------------
-//		Config
+//  Config
 //----------------------------------------------------------------------------
 
 /**
@@ -147,7 +103,7 @@ char listfile[1024];
 /**
 **		Destination directory of the graphics
 */
-const char *Dir = NULL;
+const char* Dir;
 
 /**
 **		Path to the tileset graphics. (default=$DIR/graphics/tilesets)
@@ -157,6 +113,7 @@ const char *Dir = NULL;
 /**
 **		Path to the unit graphics. (default=$DIR/graphics)
 */
+#define GRAPHICS_PATH		"graphics"
 #define UNIT_PATH		"graphics"
 
 /**
@@ -235,6 +192,22 @@ enum _archive_type_ {
 	H,    // Pcx                           (name)
 	E,    // Raw extract                   (name)
 };
+
+#define CD_MAC        (1)
+#define CD_EXPANSION  (1 << 1)
+#define CD_US         (1 << 4)
+#define CD_SPANISH    (1 << 5)
+#define CD_GERMAN     (1 << 6)
+#define CD_UK         (1 << 7)  // also Australian
+#define CD_ITALIAN    (1 << 8)
+#define CD_PORTUGUESE (1 << 9)
+#define CD_FRENCH     (1 << 10)
+#define CD_RUSSIAN    (1 << 11)
+
+#define CD_UPPER      (1 << 13) // Filenames on CD are upper
+#define CD_BNE        (1 << 14) // This is a BNE version
+#define CD_BNE_CAPS   (1 << 15) // This is a BNE version with capitalized Support folder
+#define CD_BNE_UPPER  (1 << 16) // This is a BNE version with upper Support folder
 
 /**
 **		What, where, how to extract.
@@ -902,7 +875,7 @@ Control CDTodo[] = {
 };
 
 Control Todo[] = {
-	{F,0,"","stardat.mpq" __4},
+	//{F,0,"","stardat.mpq" __4},
 	{F,0,"","StarDat.mpq" __4},
 	{F,0,0 ,0 __4},
 
@@ -2520,11 +2493,6 @@ Control Todo[] = {
 //	{G,0,"neutral/units/tpdShad","unit\\neutral\\tpdShad.grp",1 __3},
 //	{G,0,"neutral/units/uraj","unit\\neutral\\uraj.grp",1 __3},
 
-
-/**
-**		File names.
-*/
-char* UnitNames[110];
 
 unsigned char SC_Unit_Palette[]={
 0x00,0x00,0x00,0x23,0x23,0xFF,0x23,0x23,0xFF,0x23,0x23,0xFF,0x23,0x23,0xFF,0x23,

@@ -33,16 +33,48 @@
 --  Includes
 ----------------------------------------------------------------------------*/
 
+#include "endian.h"
 //#include "stargus.h"
 #include "startool.h"
 #include <stratagus-gameutils.h>
+
+//----------------------------------------------------------------------------
+
+/**
+**  Palette N27, for credits cursor
+*/
+static unsigned char* Pal27;
+
+/**
+**  Original archive buffer.
+*/
+static unsigned char* ArchiveBuffer;
 
 /**
 **  Offsets for each entry into original archive buffer.
 */
 static unsigned char** ArchiveOffsets;
 
+/**
+**  Fake empty entry
+*/
+static unsigned int EmptyEntry[] = { 1, 1, 1 };
+
 static char* ArchiveDir;
+
+/**
+**  What CD Type is it?
+*/
+static int CDType;
+
+// Width of game font
+static int game_font_width;
+
+/**
+**  File names.
+*/
+static char* UnitNames[110];
+static int UnitNamesLast = 0;
 
 //----------------------------------------------------------------------------
 //  TOOLS
@@ -86,7 +118,7 @@ void CheckPath(const char* path)
 }
 
 //----------------------------------------------------------------------------
-//		PNG
+//  PNG
 //----------------------------------------------------------------------------
 
 /**
@@ -99,8 +131,8 @@ void CheckPath(const char* path)
 **  @param pal          Palette
 **  @param transparent  Image uses transparency
 */
-int SavePNG(const char *name, unsigned char *image, int w, int h,
-	unsigned char *pal, int transparent)
+int SavePNG(const char* name, unsigned char* image, int w,
+	int h, unsigned char* pal, int transparent)
 {
 	FILE* fp;
 	png_structp png_ptr;
@@ -241,7 +273,7 @@ unsigned char *ExtractEntry(const char *name)
 }
 
 /**
-**		Close the archive file.
+**  Close the archive file.
 */
 int CloseArchive(void)
 {
@@ -411,6 +443,7 @@ int ConvertRgb(const char *listfile, const char *file)
 	char buf[8192] = {'\0'};
 	FILE* f;
 	int i;
+	size_t l;
 
 	sprintf(buf, "%s.wpe", listfile);
 	palp = ExtractEntry(buf);
@@ -452,6 +485,7 @@ int ConvertRgb(const char *listfile, const char *file)
 		// FIXME: insert nice names!
 		fprintf(f, "%d %d %d\t#%d\n", palp[i * 3], palp[i * 3 + 1], palp[i * 3 + 2], i);
 	}
+
 	fclose(f);
 
 	free(palp);
@@ -1016,7 +1050,7 @@ int ConvertGfx(const char* listfile, const char* file, int pale)
 }
 
 /**
-**  Convert an uncompressed graphic to my format.
+**  Convert a uncompressed graphic to my format.
 */
 int ConvertGfu(const char* listfile, const char* file, int pale)
 {
@@ -1455,6 +1489,7 @@ int ConvertWav(const char *listfile, const char *file, int wave __attribute__((u
 	unsigned char* wavp;
 	char buf[8192] = {'\0'};
 	gzFile gf;
+	size_t l;
 
 	wavp = ExtractEntry(listfile);
 
