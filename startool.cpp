@@ -2911,28 +2911,42 @@ int CloseArchive(void)
 
 /**
 **  Convert map
+**
+**  @extracted in case of installation the map files are yet extracted from mpq file
 */
-int ConvertMap(const char *mapfile, const char *file)
+int ConvertMap(const char *mapfile, const char *file, bool extracted)
 {
 	FILE *fd;
-	unsigned char *p;
 	char buf[1024];
 	char buf2[1024];
 
 	sprintf(buf, "%s/%s", Dir, file);
-	sprintf(buf2, "%s/%s", archivedir, file);
 	CheckPath(buf);
-	/*p = ExtractEntry(mapfile);
-	fd = fopen(buf, "wb");
-	if (!fd) {
-		free(p);
-		return -1;
-	}
-	fwrite(p, EntrySize, 1, fd);
-	fclose(fd);
-	free(p);*/
 
-	ConvertScm(buf2, buf, listfile);
+	if(!extracted)
+	{
+		unsigned char *p;
+		p = ExtractEntry(mapfile);
+		fd = fopen(buf, "wb");
+		if (!fd) {
+			free(p);
+			return -1;
+		}
+		fwrite(p, EntrySize, 1, fd);
+		fclose(fd);
+		free(p);
+
+		ConvertScm(buf, buf, listfile);
+	}
+	else
+	{
+		sprintf(buf2, "%s/%s", archivedir, file);
+		CheckPath(buf2);
+
+		ConvertScm(buf2, buf, listfile);
+	}
+
+
 
 	return 0;
 }
@@ -2940,6 +2954,25 @@ int ConvertMap(const char *mapfile, const char *file)
 //----------------------------------------------------------------------------
 //		Palette
 //----------------------------------------------------------------------------
+
+/**
+**  Convert palette.
+**
+**  @param pal  Pointer to palette
+**
+**  @return     Pointer to palette
+*/
+unsigned char* ConvertPalette(unsigned char* pal)
+{
+	int i;
+
+	// PNG needs 0-256
+	for (i = 0; i < 768; ++i) {
+		pal[i] <<= 2;
+	}
+
+	return pal;
+}
 
 /**
 **		Convert rgbx to rgb
@@ -3865,37 +3898,46 @@ unsigned char *ConvertFnt(unsigned char *start, int *wp, int *hp) {
 	int h;
 	int xoff;
 	int yoff;
-	unsigned char *bp;
-	unsigned char *dp;
-	unsigned char *image;
-	unsigned *offsets;
+	unsigned char* bp;
+	unsigned char* dp;
+	unsigned char* image;
+	unsigned* offsets;
+	int image_width;
+	int image_height;
+	int IPR;
 
 	bp = start + 5;  // skip "FONT "
-//	printf("%s %s \n", start, start + 5);
+	//printf("%s %s \n", start, start + 5);
 	count = FetchByte(bp);
 	count -= 32;
 	max_width = FetchByte(bp);
 	max_height = FetchByte(bp);
 
+	IPR = 15;  // 15 characters per row
+	image_width = max_width * IPR;
+	image_height = (count + IPR - 1) / IPR * max_height;
 
-	offsets = (unsigned *)malloc(count * sizeof(UInt32));
+	//printf("Font: count %d max-width %2d max-height %2d\n",
+	//	count, max_width, max_height);
+
+	offsets = (unsigned *)malloc(count * sizeof(uint32_t));
 	for (i = 0; i < count; ++i) {
 		offsets[i] = FetchLE32(bp);
 	}
 
-	image = (unsigned char *)malloc(max_width * max_height * count);
+	image = (unsigned char *)malloc(image_width * image_height);
 	if (!image) {
 		printf("Can't allocate image\n");
-		exit(-1);
+		//error("Memory error", "Could not allocate enough memory to read archive.");
 	}
-	memset(image, 255, max_width * max_height * count);
+	memset(image, 255, image_width * image_height);
 
 	for (i = 0; i < count; ++i) {
 		if (!offsets[i]) {
 			continue;
 		}
 		bp = start + offsets[i];
-		width = FetchByte(bp);
+		width = FetchByte(bp); //crash!!!
 		height = FetchByte(bp);
 		xoff = FetchByte(bp);
 		yoff = FetchByte(bp);
@@ -3940,7 +3982,7 @@ int ConvertFont(const char* listfile, const char* file, int pale, int fnte __att
 	unsigned char* image;
 	int w;
 	int h;
-	char buf[1024];
+	char buf[8192] = {'\0'};
 
 	palp = Palettes[pale];
 	fntp = ExtractEntry(listfile);
@@ -4257,18 +4299,22 @@ int main(int argc, char **argv)
 		Control *c;
 		//printf("loop: %d\n", i);
 		unsigned len;
+		bool extracted = false;
+
 		i = 1;
 		switch (i)
 		{
 		case 0:
 			// CD install.exe renamed to StarCraft.mpq or other main mpq file
 			c = CDTodo;
-			len = sizeof(CDTodo) / sizeof(*CDTodo);  
+			len = sizeof(CDTodo) / sizeof(*CDTodo);
+			extracted = false;
 			break;
 		case 1:
 			// StarDat.mpq or stardat.mpq from CD or hard drive
 			c = Todo;
 			len = sizeof(Todo) / sizeof(*Todo);
+			extracted = true;
 			break;
 		}
 
@@ -4312,7 +4358,7 @@ int main(int argc, char **argv)
 					}
 					break;
 				case M:
-					ConvertMap(c[u].ListFile, c[u].File);
+					ConvertMap(c[u].ListFile, c[u].File, extracted);
 					break;
 				case R:
 					ConvertRgb(c[u].ListFile, c[u].File);
