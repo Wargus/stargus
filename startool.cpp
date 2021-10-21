@@ -45,34 +45,38 @@ static unsigned char** ArchiveOffsets;
 static char* ArchiveDir;
 
 //----------------------------------------------------------------------------
-//		TOOLS
+//  TOOLS
 //----------------------------------------------------------------------------
 
 /**
-**		Check if path exists, if not make all directories.
+**  Check if path exists, if not make all directories.
 */
 void CheckPath(const char* path)
 {
 	char* cp;
 	char* s;
 
-	cp=strdup(path);
-	s=strrchr(cp,'/');
-	if( s ) {
-		*s='\0';						// remove file
-		s=cp;
-		for( ;; ) {						// make each path element
-			s=strchr(s,'/');
-			if( s ) {
-				*s='\0';
-			}
 #ifdef WIN32
-			mkdir(cp);
+	cp = _strdup(path);
 #else
-			mkdir(cp,0777);
+	cp = strdup(path);
 #endif
-			if( s ) {
-				*s++='/';
+	s = strrchr(cp, '/');
+	if (s) {
+		*s = '\0';  // remove file
+		s = cp;
+		for (;;) {  // make each path element
+			s = strchr(s, '/');
+			if (s) {
+				*s = '\0';
+			}
+#if defined(_MSC_VER) || defined(WIN32)
+			_mkdir(cp);
+#else
+			mkdir(cp, 0777);
+#endif
+			if (s) {
+				*s++ = '/';
 			} else {
 				break;
 			}
@@ -148,7 +152,7 @@ int SavePNG(const char *name, unsigned char *image, int w, int h,
 	}
 
 	// write the file header information
-	png_write_info(png_ptr, info_ptr);  // write the file header information
+	png_write_info(png_ptr, info_ptr);
 
 	// set transformation
 
@@ -168,10 +172,9 @@ int SavePNG(const char *name, unsigned char *image, int w, int h,
 	png_write_end(png_ptr, info_ptr);
 
 	png_destroy_write_struct(&png_ptr, &info_ptr);
-		
-	free(lines);
-
 	fclose(fp);
+
+	free(lines);
 
 	return 0;
 }
@@ -807,8 +810,9 @@ void DecodeGfuEntry(int index,unsigned char* start
 		sp+=width;
 	}
 }
+
 /**
-**		Convert graphics into image.
+**  Convert graphics into image.
 */
 unsigned char* ConvertGraphic(int gfx,unsigned char* bp,int *wp,int *hp
 		,unsigned char* bp2,int start2)
