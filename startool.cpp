@@ -180,7 +180,7 @@ int SavePNG(const char *name, unsigned char *image, int w, int h,
 }
 
 //----------------------------------------------------------------------------
-//		Archive
+//  Archive
 //----------------------------------------------------------------------------
 
 /**
@@ -363,7 +363,7 @@ int ExtractMPQFile(char *szArchiveName, char *szArchivedFile, char *szFileName, 
 #endif
 
 //----------------------------------------------------------------------------
-//		Palette
+//  Palette
 //----------------------------------------------------------------------------
 
 /**
@@ -408,8 +408,8 @@ unsigned char* ConvertPaletteRGBXtoRGB(unsigned char* pal)
 int ConvertRgb(const char *listfile, const char *file)
 {
 	unsigned char *palp;
-	char buf[1024];
-	FILE *f;
+	char buf[8192] = {'\0'};
+	FILE* f;
 	int i;
 
 	sprintf(buf, "%s.wpe", listfile);
@@ -417,7 +417,7 @@ int ConvertRgb(const char *listfile, const char *file)
 	ConvertPaletteRGBXtoRGB(palp);
 
 	//
-	//		Generate RGB File.
+	//  Generate RGB File.
 	//
 	sprintf(buf, "%s/%s/%s.rgb", Dir, TILESET_PATH, file);
 	CheckPath(buf);
@@ -425,10 +425,11 @@ int ConvertRgb(const char *listfile, const char *file)
 	if (!f) {
 		perror("");
 		printf("Can't open %s\n", buf);
-		exit(-1);
+		error("Memory error", "Could not allocate enough memory to read archive.");
 	}
 	if (fwrite(palp, 1, 256 * 3, f) != 256 * 3) {
 		printf("Can't write %d bytes\n", 256 * 3);
+		fflush(stdout);
 	}
 
 	fclose(f);
@@ -442,7 +443,7 @@ int ConvertRgb(const char *listfile, const char *file)
 	if (!f) {
 		perror("");
 		printf("Can't open %s\n", buf);
-		exit(-1);
+		error("Memory error", "Could not allocate enough memory to read archive.");
 	}
 	fprintf(f, "GIMP Palette\n# Stratagus %c%s -- GIMP Palette file\n",
 		toupper(*file), file + 1);
@@ -459,7 +460,7 @@ int ConvertRgb(const char *listfile, const char *file)
 }
 
 //----------------------------------------------------------------------------
-//		Tileset
+//  Tileset
 //----------------------------------------------------------------------------
 
 #ifdef MAKE_CCL
@@ -495,15 +496,15 @@ void SaveCCL(const unsigned char *map __attribute__((unused)),
 }
 
 /**
-**		Count used mega tiles for map.
+**  Count used mega tiles for map.
 */
-int CountUsedTiles(const unsigned char *map, const unsigned char *mega,
-	int *map2tile, int mapl)
+int CountUsedTiles(const unsigned char* map, const unsigned char* mega,
+	int* map2tile, int mapl)
 {
 	int i;
 	int j;
 	int used;
-	const unsigned char *tp;
+	const unsigned char* tp;
 	int *img2tile;
 
 	img2tile = (int *)malloc(mapl / 52 * 16 * sizeof(int));
@@ -511,7 +512,7 @@ int CountUsedTiles(const unsigned char *map, const unsigned char *mega,
 	memset(map2tile, 0, sizeof(map2tile));
 
 	//
-	//		Build conversion table.
+	//  Build conversion table.
 	//
 	for (i = 0; i < mapl / 52; ++i) {
 		tp = map + i * 52 + 20;
@@ -521,6 +522,7 @@ int CountUsedTiles(const unsigned char *map, const unsigned char *mega,
 			}
 			map2tile[(i << 4) | j] = AccessLE16(tp + j * 2);
 		}
+//		printf("\n");
 	}
 
 	//
@@ -550,14 +552,15 @@ int CountUsedTiles(const unsigned char *map, const unsigned char *mega,
 			}
 		}
 	}
+//	printf("Used mega tiles %d\n", used);
 #if 0
 	for (i = 0; i < used; ++i) {
 		if (!(i % 16)) {
-			DebugLevel1("\n");
+			printf("\n");
 		}
-		DebugLevel1("%3d " _C_ img2tile[i]);
+		printf("%3d ",img2tile[i]);
 	}
-	DebugLevel1("\n");
+	printf("\n");
 #endif
 
 	return used;
@@ -567,8 +570,8 @@ int CountUsedTiles(const unsigned char *map, const unsigned char *mega,
 /**
 **  Decode a minitile into the image.
 */
-void DecodeMiniTile(unsigned char *image, int ix, int iy, int iadd,
-	unsigned char *mini, int index, int flipx, int flipy)
+void DecodeMiniTile(unsigned char* image, int ix, int iy, int iadd,
+	unsigned char* mini, int index, int flipx, int flipy)
 {
 	for (int y = 0; y < 8; ++y) {
 		for (int x = 0; x < 8; ++x) {
@@ -579,14 +582,14 @@ void DecodeMiniTile(unsigned char *image, int ix, int iy, int iadd,
 }
 
 /**
-**		Convert tiles into image.
+**  Convert tiles into image.
 */
-unsigned char *ConvertTile(unsigned char *mini, const char *mega, int msize,
-	const char *map __attribute__((unused)),
-	int mapl __attribute__((unused)), int *wp, int *hp)
+unsigned char* ConvertTile(unsigned char* mini, const char* mega, int msize,
+	const char* map __attribute__((unused)),	int mapl __attribute__((unused)), int *wp, int *hp)
+
 {
-	unsigned char *image;
-	const unsigned short *mp;
+	unsigned char* image;
+	const unsigned short* mp;
 	int height;
 	int width;
 	int i;
@@ -631,19 +634,19 @@ unsigned char *ConvertTile(unsigned char *mini, const char *mega, int msize,
 /**
 **  Convert a tileset to my format.
 */
-int ConvertTileset(const char *listfile, const char *file)
+int ConvertTileset(const char* listfile, const char* file)
 {
-	unsigned char *palp;
-	unsigned char *megp;
-	unsigned char *minp;
-	unsigned char *mapp;
-	unsigned char *flagp;
-	unsigned char *image;
+	unsigned char* palp;
+	unsigned char* megp;
+	unsigned char* minp;
+	unsigned char* mapp;
+	unsigned char* flagp;
+	unsigned char* image;
 	int w;
 	int h;
 	int megl;
 	int mapl;
-	char buf[1024];
+	char buf[8192] = {'\0'};
 
 	if (!strcmp(listfile, "tileset\\Install")) {
 		sprintf(buf, "tileset\\install.wpe");
@@ -720,14 +723,14 @@ int ConvertTileset(const char *listfile, const char *file)
 }
 
 //----------------------------------------------------------------------------
-//		Graphics
+//  Graphics
 //----------------------------------------------------------------------------
 
 /**
-**		Decode a entry(frame) into image.
+**  Decode a entry(frame) into image.
 */
-void DecodeGfxEntry(int index,unsigned char* start
-		,unsigned char* image,int ix,int iy,int iadd)
+void DecodeGfxEntry(int index, unsigned char* start,
+	unsigned char* image, int ix, int iy, int iadd)
 {
 	unsigned char* bp;
 	unsigned char* sp;
@@ -742,44 +745,53 @@ void DecodeGfxEntry(int index,unsigned char* start
 	int w;
 	int ctrl;
 
-	bp=start+index*8;
-	xoff=FetchByte(bp);
-	yoff=FetchByte(bp);
-	width=FetchByte(bp);
-	height=FetchByte(bp);
-	offset=FetchLE32(bp);
+	bp = start + index * 8;
+	xoff = FetchByte(bp);
+	yoff = FetchByte(bp);
+	width = FetchByte(bp);
+	height = FetchByte(bp);
+	offset = FetchLE32(bp);
 
-	rows=start+offset-6;
-	dp=image+xoff-ix+(yoff-iy)*iadd;
+//	printf("%2d: +x %2d +y %2d width %2d height %2d offset %d\n",
+//		index, xoff, yoff, width, height, offset);
 
-	for( h=0; h<height; ++h ) {
-		sp=rows+AccessLE16(rows+h*2);
-		for( w=0; w<width; ) {
-			ctrl=*sp++;
-			if( ctrl&0x80 ) {				// transparent
-				ctrl&=0x7F;
+	rows = start + offset - 6;
+	dp = image + xoff - ix + (yoff - iy) * iadd;
+
+	for (h = 0; h < height; ++h) {
+//		printf("%2d: row-offset %2d\t", index, AccessLE16(rows + h * 2));
+		sp = rows + AccessLE16(rows + h * 2);
+		for (w = 0; w < width; ) {
+			ctrl = *sp++;
+//			printf("%02X", ctrl);
+			if (ctrl & 0x80) {  // transparent
+				ctrl &= 0x7F;
+//				printf("-%d,", ctrl);
 				memset(dp+h*iadd+w,255,ctrl);
 				w+=ctrl;
-			} else if( ctrl&0x40 ) {		// repeat
-				ctrl&=0x3F;
-				memset(dp+h*iadd+w,*sp++,ctrl);
-				w+=ctrl;
+			} else if (ctrl & 0x40) {  // repeat
+				ctrl &= 0x3F;
+//				printf("*%d,", ctrl);
+				memset(dp + h * iadd + w, *sp++, ctrl);
+				w += ctrl;
 			} else {						// set pixels
-				ctrl&=0x3F;
-				memcpy(dp+h*iadd+w,sp,ctrl);
-				sp+=ctrl;
-				w+=ctrl;
+				ctrl &= 0x3F;
+//				printf("=%d,", ctrl);
+				memcpy(dp + h * iadd + w, sp, ctrl);
+				sp += ctrl;
+				w += ctrl;
 			}
 		}
-		//dp[h*iadd+width-1]=0;
+		//dp[h * iadd + width - 1] = 0;
+//		printf("\n");
 	}
 }
 
 /**
-**		Decode a entry(frame) into image.
+**  Decode a entry(frame) into image.
 */
-void DecodeGfuEntry(int index,unsigned char* start
-		,unsigned char* image,int ix,int iy,int iadd)
+void DecodeGfuEntry(int index, unsigned char* start,
+	unsigned char* image, int ix, int iy, int iadd)
 {
 	unsigned char* bp;
 	unsigned char* sp;
@@ -791,23 +803,27 @@ void DecodeGfuEntry(int index,unsigned char* start
 	int height;
 	int offset;
 
-	bp=start+index*8;
-	xoff=FetchByte(bp);
-	yoff=FetchByte(bp);
-	width=FetchByte(bp);
-	height=FetchByte(bp);
-	offset=FetchLE32(bp);
-	if( offset<0 ) {						// High bit of width
-		offset&=0x7FFFFFFF;
-		width+=256;
+	bp = start + index * 8;
+	xoff = FetchByte(bp);
+	yoff = FetchByte(bp);
+	width = FetchByte(bp);
+	height = FetchByte(bp);
+	offset = FetchLE32(bp);
+	// High bit of width
+	if (offset < 0) {
+		offset &= 0x7FFFFFFF;
+		width += 256;
 	}
 
-	sp=start+offset-6;
-	dp=image+xoff-ix+(yoff-iy)*iadd;
-	for( i=0; i<height; ++i ) {
-		memcpy(dp,sp,width);
-		dp+=iadd;
-		sp+=width;
+//	printf("%2d: +x %2d +y %2d width %2d height %2d offset %d\n",
+//		index, xoff, yoff, width, height, offset);
+
+	sp = start + offset - 6;
+	dp = image + xoff - ix + (yoff - iy) * iadd;
+	for (i = 0; i < height; ++i) {
+		memcpy(dp, sp, width);
+		dp += iadd;
+		sp += width;
 	}
 }
 
@@ -842,6 +858,9 @@ unsigned char* ConvertGraphic(int gfx, unsigned char* bp, int *wp, int *hp,
 	max_height = FetchLE16(bp);
 
 
+//	printf("Entries %2d Max width %3d height %3d, ", count,
+//		max_width, max_height);
+
 	// Find best image size
 	minx = 999;
 	miny = 999;
@@ -861,7 +880,7 @@ unsigned char* ConvertGraphic(int gfx, unsigned char* bp, int *wp, int *hp,
 		height = FetchByte(p);
 		endereco = FetchLE32(p);
 		if( endereco&0x80000000 ) {		// high bit of width
-			width+=256;
+			width += 256;
 		}
 		if( xoff<minx ) minx=xoff;
 		if( yoff<miny ) miny=yoff;
@@ -888,6 +907,8 @@ unsigned char* ConvertGraphic(int gfx, unsigned char* bp, int *wp, int *hp,
 	//best_width -= minx;
 	//best_height -= miny;
 #endif
+
+//	printf("Best image size %3d, %3d\n", best_width, best_height);
 
 	minx = 0;
 	miny = 0;
@@ -1005,7 +1026,7 @@ int ConvertGfu(const char* listfile, const char* file, int pale)
 	unsigned char* image;
 	int w;
 	int h;
-	char buf[1024];
+	char buf[8192] = {'\0'};
 	unsigned char* p;
 	unsigned char* end;
 
@@ -1297,13 +1318,14 @@ void ConvertPcx(const char *listfile, const char *file)
 }
 
 //----------------------------------------------------------------------------
-//		Font
+//  Font
 //----------------------------------------------------------------------------
 
 /**
 **  Convert font into image.
 */
-unsigned char *ConvertFnt(unsigned char *start, int *wp, int *hp) {
+unsigned char* ConvertFnt(unsigned char* start, int *wp, int *hp)
+{
 	int i;
 	int count;
 	int max_width;
@@ -1333,23 +1355,25 @@ unsigned char *ConvertFnt(unsigned char *start, int *wp, int *hp) {
 	image_width = max_width * IPR;
 	image_height = (count + IPR - 1) / IPR * max_height;
 
-	//printf("Font: count %d max-width %2d max-height %2d\n",
-	//	count, max_width, max_height);
+//	printf("Font: count %d max-width %2d max-height %2d\n",
+//		count, max_width, max_height);
 
 	offsets = (unsigned *)malloc(count * sizeof(uint32_t));
 	for (i = 0; i < count; ++i) {
 		offsets[i] = FetchLE32(bp);
+//		printf("%03d: offset %d\n", i, offsets[i]);
 	}
 
 	image = (unsigned char *)malloc(image_width * image_height);
 	if (!image) {
 		printf("Can't allocate image\n");
-		//error("Memory error", "Could not allocate enough memory to read archive.");
+		error("Memory error", "Could not allocate enough memory to read archive.");
 	}
 	memset(image, 255, image_width * image_height);
 
 	for (i = 0; i < count; ++i) {
 		if (!offsets[i]) {
+//			printf("%03d: unused\n", i);
 			continue;
 		}
 		bp = start + offsets[i];
@@ -1357,6 +1381,10 @@ unsigned char *ConvertFnt(unsigned char *start, int *wp, int *hp) {
 		height = FetchByte(bp);
 		xoff = FetchByte(bp);
 		yoff = FetchByte(bp);
+
+//		printf("%03d: width %d height %d xoff %d yoff %d\n",
+//			i, width, height, xoff, yoff);
+
 		dp = image + xoff + yoff * max_width + i * (max_width * max_height);
 		h = w = 0;
 		for (;;) {
@@ -1615,11 +1643,11 @@ void CreatePanels()
 }
 
 //----------------------------------------------------------------------------
-//		Main loop
+//  Main loop
 //----------------------------------------------------------------------------
 
 /**
-**		Display the usage.
+**  Display the usage.
 */
 void Usage(const char* name)
 {
@@ -1637,12 +1665,12 @@ mpqlist-file\tmpqlist.txt file which contains mpq file names\n"
 **		Main
 */
 #undef main
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	unsigned u;
-	char buf[1024];
+	char buf[8192] = {'\0'};
 	int i;
-	FILE * f;
+	FILE* f;
 
 	for (i = 0; i < argc; ++i) {
 		if (!strcmp(argv[i], "-V")) {
@@ -1827,7 +1855,7 @@ int main(int argc, char **argv)
 	fprintf(f, VERSION "\n");
 	fclose(f);
 
-	printf("DONE!\n");
+	printf("Done.\n");
 
 	return 0;
 }
