@@ -201,20 +201,18 @@ const char *Dir = NULL;
 */
 #define TILE_PER_ROW		16
 
-//----------------------------------------------------------------------------
-
 /**
-**		Conversion control sturcture.
+**  Conversion control sturcture.
 */
 typedef struct _control_ {
-	int				Type;						/// Entry type
-	int				Version;				/// Only in this version
-	const char*     File;					/// Save file
+	int   Type;          /// Entry type
+	int   Version;       /// Only in this version
+	const char* File;    /// Save file
 	const char*     ListFile;				/// File name in list file
-	int				Arg1;						/// Extra argument 1
-	int				Arg2;						/// Extra argument 2
-	int				Arg3;						/// Extra argument 3
-	int				Arg4;						/// Extra argument 4
+	int   Arg1;          /// Extra argument 1
+	int   Arg2;          /// Extra argument 2
+	int   Arg3;          /// Extra argument 3
+	int   Arg4;          /// Extra argument 4
 } Control;
 
 /**
@@ -226,18 +224,18 @@ int EntrySize;
 **		Possible entry types of archive file.
 */
 enum _archive_type_ {
-	S,						// Setup
-	F,						// File							(name)
-	M,						// Map							(name)
-	T,						// Tileset						(name,pal,mega,mini,map)
-	R,						// RGB -> gimp					(name,rgb)
-	G,						// Graphics						(name,pal,gfx)
-	U,						// Uncompressed Graphics		(name,pal,gfu)
-	I,                      // Widgets                      (name,pal,gfu)
-	N,						// Font							(name,idx)
-	W,						// Wav							(name,wav)
-	H,						// Pcx							(name)
-	E,						// Raw extract					(name)
+	S,    // Setup
+	F,    // File                          (name)
+	M,    // Map                           (name)
+	T,    // Tileset                       (name,pal,mega,mini,map)
+	R,    // RGB -> gimp                   (name,rgb)
+	G,    // Graphics                      (name,pal,gfx)
+	U,    // Uncompressed Graphics         (name,pal,gfu)
+	I,    // Widgets                       (name,pal,gfu)
+	N,    // Font                          (name,idx)
+	W,    // Wav                           (name,wav)
+	H,    // Pcx                           (name)
+	E,    // Raw extract                   (name)
 };
 
 /**
