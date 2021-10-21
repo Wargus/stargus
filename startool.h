@@ -131,8 +131,6 @@ static inline unsigned int Swap32(unsigned int D) {
 
 using namespace std;
 
-// global needed tor map extraction
-char *archivedir;
 
 //----------------------------------------------------------------------------
 //		Config

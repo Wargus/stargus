@@ -37,6 +37,13 @@
 #include "startool.h"
 #include <stratagus-gameutils.h>
 
+/**
+**  Offsets for each entry into original archive buffer.
+*/
+static unsigned char** ArchiveOffsets;
+
+static char* ArchiveDir;
+
 //----------------------------------------------------------------------------
 //		TOOLS
 //----------------------------------------------------------------------------
@@ -277,7 +284,7 @@ int ConvertMap(const char *mapfile, const char *file, bool extracted)
 	}
 	else
 	{
-		sprintf(buf2, "%s/%s", archivedir, file);
+		sprintf(buf2, "%s/%s", ArchiveDir, file);
 		CheckPath(buf2);
 
 		ConvertScm(buf2, buf, listfile);
@@ -1409,8 +1416,8 @@ int ConvertFont(const char* listfile, const char* file, int pale, int fnte __att
 */
 int ConvertWav(const char *listfile, const char *file, int wave __attribute__((unused)))
 {
-	unsigned char *wavp;
-	char buf[1024];
+	unsigned char* wavp;
+	char buf[8192] = {'\0'};
 	gzFile gf;
 
 	wavp = ExtractEntry(listfile);
@@ -1427,10 +1434,9 @@ int ConvertWav(const char *listfile, const char *file, int wave __attribute__((u
 		printf("Can't write %d bytes\n", EntrySize);
 	}
 
-	gzclose(gf);
-
 	free(wavp);
 
+	gzclose(gf);
 	return 0;
 }
 
@@ -1646,7 +1652,7 @@ int main(int argc, char **argv)
 		exit(-1);
 	}
 
-	archivedir = argv[1];
+	ArchiveDir = argv[1];
 	if (argc >= 3) {
 		Dir = argv[2];
 	} else {
@@ -1691,7 +1697,7 @@ int main(int argc, char **argv)
 	}
 #endif
 
-	printf("Extract from \"%s\" to \"%s\"\n", archivedir, Dir);
+	printf("Extract from \"%s\" to \"%s\"\n", ArchiveDir, Dir);
 	printf("Using mpq list file \"%s\"\n", listfile);
 	printf("Please be patient, the data may take a couple of minutes to extract...\n\n");
 	fflush(stdout);
@@ -1732,7 +1738,7 @@ int main(int argc, char **argv)
 							if( !strncmp(c[u].ListFile,"remove-",7) ) {
 								sprintf(buf, "%s/%s", Dir, c[u].ListFile);
 							} else {
-								sprintf(buf, "%s/%s", archivedir, c[u].ListFile);
+								sprintf(buf, "%s/%s", ArchiveDir, c[u].ListFile);
 							}
 
 							printf("Archive \"%s\"\n", buf);
