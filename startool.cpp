@@ -256,7 +256,12 @@ unsigned char *ExtractEntry(const char *name)
 
 	buf = NULL;
 	for (i = 0; i < Mpq->FileCount; ++i) {
-		if (!strcmp(name, Mpq->FilenameTable + i * PATH_MAX)) {
+		// initially all lowercase
+		char *lowername = strdup(name);
+		for (unsigned int l = 0; l < strlen(lowername); l++) {
+			lowername[l] = tolower(lowername[l]);
+		}
+		if (!strcmp(lowername, Mpq->FilenameTable + i * PATH_MAX)) {
 			EntrySize = Mpq->BlockTable[i * 4 + 2];
 			buf = (unsigned char *)malloc(EntrySize + 1);
 			Mpq->ExtractTo(buf, i, MpqFD);
