@@ -9,6 +9,7 @@ addons:
       - libpng12-dev
       - libgtk2.0-dev
       - zlib1g-dev
+      - libstorm-dev
 before_script:
   - mkdir build
   - cd build
