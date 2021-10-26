@@ -185,88 +185,6 @@ int SavePNG(const char* name, unsigned char* image, int w,
 }
 
 //----------------------------------------------------------------------------
-//  Archive
-//----------------------------------------------------------------------------
-
-/**
-**  Open the archive file.
-**
-**  @param file  Archive file name
-**  @param type  Archive type requested
-*/
-/*int OpenArchive(const char *file)
-{
-	//
-	//  Open the archive file
-	//
-	MpqFD = fopen(file, "rb");
-	if (!MpqFD) {
-		printf("Can't open %s\n", file);
-		return -1;
-	}
-
-	if (Mpq->ReadInfo(MpqFD, mpq_listfile)) {
-		printf("MpqReadInfo failed\n");
-		fclose(MpqFD);
-		MpqFD = NULL;
-		return -1;
-	}
-
-	return 0;
-}*/
-
-/**
-**  Extract/uncompress entry.
-**
-**  @param name  Name of the entry to extract
-**
-**  @return      Pointer to uncompressed entry
-*/
-/*unsigned char *ExtractEntry(const char *name)
-{
-	int i;
-	unsigned char *buf;
-
-	buf = NULL;
-	for (i = 0; i < Mpq->FileCount; ++i) {
-		// initially all lowercase
-		char *lowername = strdup(name);
-		for (unsigned int l = 0; l < strlen(lowername); l++) {
-			lowername[l] = tolower(lowername[l]);
-		}
-		if (!strcmp(lowername, Mpq->FilenameTable + i * PATH_MAX)) {
-			EntrySize = Mpq->BlockTable[i * 4 + 2];
-			buf = (unsigned char *)malloc(EntrySize + 1);
-			Mpq->ExtractTo(buf, i, MpqFD);
-			printf("extracted: %s (%d, %d bytes)\n", name, i, EntrySize);
-			break;
-		}
-	}
-	if (i == Mpq->FileCount) {
-		printf("Not found: %s\n", name);
-		exit(-1);
-	}
-
-	return buf;
-}*/
-
-/**
-**  Close the archive file.
-*/
-/*int CloseArchive(void)
-{
-	if (MpqFD) {
-		fclose(MpqFD);
-		MpqFD = NULL;
-	}
-	return 0;
-}*/
-
-
-
-
-
-//----------------------------------------------------------------------------
 //		Map
 //----------------------------------------------------------------------------
 
@@ -1950,8 +1868,6 @@ int main(int argc, char** argv)
 		unlink(submpqfile.c_str());
 	}
 	
-	//delete Mpq;
-
 	CreatePanels();
 
 	sprintf(buf, "%s/extracted", Dir);
@@ -1964,4 +1880,4 @@ int main(int argc, char** argv)
 	return 0;
 }
 
-//@}
+
