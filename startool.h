@@ -186,6 +186,7 @@ enum _archive_type_ {
 	Q     // MPQ archive
 };
 
+/*// Take over from wargus - remove if not needed for stargus
 #define CD_MAC        (1)
 #define CD_EXPANSION  (1 << 1)
 #define CD_US         (1 << 4)
@@ -201,6 +202,7 @@ enum _archive_type_ {
 #define CD_BNE        (1 << 14) // This is a BNE version
 #define CD_BNE_CAPS   (1 << 15) // This is a BNE version with capitalized Support folder
 #define CD_BNE_UPPER  (1 << 16) // This is a BNE version with upper Support folder
+*/
 
 /**
 **		What, where, how to extract.

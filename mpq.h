@@ -42,20 +42,10 @@
 #include <StormLib.h>
 #include <zlib.h>
 
-#define UInt8		uint8_t
-#define SInt8		int8_t
-#define UInt16		uint16_t
-#define SInt16		int16_t
-#define UInt32		uint32_t
-#define SInt32		int32_t
-#define UIntPtr		uintptr_t
-
 /*----------------------------------------------------------------------------
 --  Declarations
 ----------------------------------------------------------------------------*/
 
-typedef UInt16 (*read_data_proc)(UInt8 *buffer, UInt16 size, void *param);
-typedef void (*write_data_proc)(UInt8 *buffer, UInt16 size, void *param, UIntPtr *length_write);
 
 
 /*----------------------------------------------------------------------------

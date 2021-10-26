@@ -291,6 +291,7 @@ bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool
 
 		if(!extracted)
 		{
+			// TODO: The .scm files could be deleted after conversation
 			int error = ExtractMPQFile(mpqfile, arcfile, buf, false);
 			if (error == ERROR_SUCCESS)
 			{
