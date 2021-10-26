@@ -602,7 +602,7 @@ unsigned char* ConvertTile(unsigned char* mini, const char* mega, int msize,
 /**
 **  Convert a tileset to my format.
 */
-int ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
+bool ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
 {
 	unsigned char* palp;
 	unsigned char* megp;
@@ -615,6 +615,7 @@ int ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
 	int megl;
 	int mapl;
 	char buf[8192] = {'\0'};
+	bool ret = true;
 
 	if (!strcmp(arcfile, "tileset\\Install")) {
 		sprintf(buf, "tileset\\install.wpe");
@@ -633,12 +634,15 @@ int ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
 	}
 	sprintf(buf, "%s.vx4", arcfile);
 	//megp = ExtractEntry(buf);
-	ExtractMPQEntry(mpqfile, buf, &megp, NULL);
-	megl = EntrySize;
+
+	size_t megl_len = 0;
+	ExtractMPQEntry(mpqfile, buf, &megp, &megl_len);
+	megl = megl_len;
 	sprintf(buf, "%s.cv5", arcfile);
 	//mapp = ExtractEntry(buf);
-	ExtractMPQEntry(mpqfile, buf, &mapp, NULL);
-	mapl = EntrySize;
+	size_t mapl_len = 0;
+	ExtractMPQEntry(mpqfile, buf, &mapp, &mapl_len);
+	mapl = mapl_len;
 
 	sprintf(buf, "%s.vf4", arcfile);
 	//flagp = ExtractEntry(buf);
@@ -688,13 +692,14 @@ int ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
 	ConvertPaletteRGBXtoRGB(palp);
 
 	sprintf(buf, "%s/%s/%s.png", Dir, TILESET_PATH, file);
+	printf("tileset png: %s\n", buf);
 	CheckPath(buf);
 	SavePNG(buf, image, w, h, palp, 0);
 
 	free(image);
 	free(palp);
 
-	return 0;
+	return ret;
 }
 
 //----------------------------------------------------------------------------
@@ -1886,9 +1891,11 @@ int main(int argc, char** argv)
 						case_func = ConvertRgb(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
 						break;*/
-					/*case T: // PORTED, but no error check and function untested
-						ConvertTileset(mpqfile.c_str(), c[u].ArcFile, c[u].File);
-						break;*/
+					case T:  // WORKS!
+						printf("ConvertTileset: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						case_func = ConvertTileset(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
 					case G: // WORKS!
 						printf("ConvertGfx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						case_func = ConvertGfx(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
@@ -1909,16 +1916,16 @@ int main(int argc, char** argv)
 						case_func = ConvertFont(mpqfile.c_str(), c[u].ArcFile, c[u].File, 2);
 						printf("...%s\n", case_func ? "ok" : "nok");
 						break;
-					/*case W: // WORKS!
+					case W: // WORKS!
 					    printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 					    case_func = ConvertWav(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
-						break;*/
-				    /*case V: // WORKS!
+						break;
+				    case V: // WORKS!
 					    printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 					    case_func = ConvertVideo(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 					    printf("...%s\n", case_func ? "ok" : "nok");
-						break;*/
+						break;
 					case H: // WORKS!
 						printf("ConvertPcx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						case_func = ConvertPcx(mpqfile.c_str(), c[u].ArcFile, c[u].File);

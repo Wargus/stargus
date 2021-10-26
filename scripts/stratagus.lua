@@ -38,7 +38,7 @@
 -------------------------------------------------------------------------------
 
 Name = "Stargus"
-Version = "2.4.1"
+Version = "3.1.3"
 Homepage = "https://github.com/Wargus/stargus"
 Licence = "GPL v2"
 Copyright = "Copyright (c) 1998-2015 by The Stratagus Project and Pali Rohar"
@@ -63,11 +63,9 @@ end
 --  see preferences.lua
 
 --  Enter your default title screen.
-SetTitleScreens({
-  Image = "ui/title.png",
-  Music = "music/title.wav",
-  Timeout = 5}
---  {"logo_stratagus.avi"}
+SetTitleScreens(
+--  {Image = "videos/blizzard.ogv"},
+  {Image = "ui/title.png", Music = "music/title.wav",  Timeout = 5}
 )
 
 --  Set the game name. It's used so we can mantain different savegames
