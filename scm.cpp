@@ -45,6 +45,8 @@
 #include <sys/stat.h>
 #include <string>
 #include <vector>
+#include <string>
+#include <libgen.h>
 
 #include "mpq.h"
 
@@ -58,6 +60,8 @@
 #include <limits.h>
 #include <unistd.h>
 #endif
+
+using namespace std;
 
 /*----------------------------------------------------------------------------
 --	Definitions
@@ -230,7 +234,7 @@ typedef struct WorldMap
 	std::vector<std::string> Strings;
 } WorldMap;
 
-static CMpq *Mpq;
+//static CMpq *Mpq;
 
 static const char *UnitNames[] = {
 	"unit-terran-marine",
@@ -527,31 +531,6 @@ static inline int ChkReadByte(void)
 }
 
 /**
-**  Extract/uncompress entry.
-**
-**  @param mpqfd  The mpq file
-**  @param entry  Returns the entry, NULL if not found
-**  @param size   Returns the size of the entry
-*/
-static void ExtractMap(FILE *mpqfd, unsigned char **entry, int *size)
-{
-	int i;
-
-	*entry = NULL;
-	*size = 0;
-
-	for (i = 0; i < Mpq->FileCount; ++i) {
-		if (!strcmp("staredit\\scenario.chk", Mpq->FilenameTable + i * PATH_MAX)) {
-			*size = Mpq->BlockTable[i * 4 + 2];
-			*entry = (unsigned char *)malloc(*size + 1);
-			Mpq->ExtractTo(*entry, i, mpqfd);
-			return;
-		}
-	}
-	fprintf(stderr, "Could not find staredit\\scenario.chk\n");
-}
-
-/**
 **	Load chk from buffer
 **
 **	@param chkdata	Buffer containing chk data
@@ -703,9 +682,9 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 				for (int h = 0; h < map->MapHeight; ++h) {
 					for (int w = 0; w < map->MapWidth; ++w) {
 						int v = ConvertLE16(((unsigned short *)chk_ptr)[h * map->MapWidth + w]);
-						if (v > 10000) {
+						/*if (v > 10000) {
 							v = v;
-						}
+						}*/
 						map->Tiles[h * map->MapWidth + w] = v;
 					}
 				}
@@ -1152,39 +1131,19 @@ void LoadChkFromBuffer(unsigned char *chkdata, int len, WorldMap *map)
 **  @param scm  Name of the scm file
 **  @param map  The map
 */
-void LoadScm(const char *scm, WorldMap *map, const char *list)
+void LoadScm(const char *mpqfile, const char *dir, WorldMap *map)
 {
-	unsigned char *chkdata;
-	char buf[1024];
-	FILE *fpMpq;
-	int chklen;
+	unsigned char *chkdata = NULL;
+	size_t chklen = 0;
 
-	Mpq = new CMpq;
-
-	if (!(fpMpq = fopen(scm, "rb"))) {
-		fprintf(stderr, "Try ./path/name\n");
-		sprintf(buf, "scm: fopen(%s)", scm);
-		perror(buf);
-		ExitFatal(-1);
+	int error = ExtractMPQEntry(mpqfile, "staredit\\scenario.chk", &chkdata, &chklen);
+	if (error == ERROR_SUCCESS)
+	{
+		LoadChkFromBuffer(chkdata, chklen, map);
 	}
-
-	if (Mpq->ReadInfo(fpMpq, list)) {
-		fprintf(stderr, "MpqReadInfo failed\n");
-		ExitFatal(-1);
-	}
-
-	ExtractMap(fpMpq, &chkdata, &chklen);
-
-	fclose(fpMpq);
-	if (!chkdata) {
-		fprintf(stderr, "Could not extract map in %s\n", scm);
-		ExitFatal(-1);
-	}
-
-	LoadChkFromBuffer(chkdata, chklen, map);
 
 	free(chkdata);
-	delete Mpq;
+
 }
 
 /**
@@ -1464,11 +1423,16 @@ void FreeMap(WorldMap *map)
 	free(map->Tiles);
 }
 
-void ConvertScm(const char *scmname, const char *newname, const char *list)
+void ConvertScm(const char *mpqfile)
 {
 	WorldMap map;
-	LoadScm(scmname, &map, list);
-	SaveMap(newname, &map);
+
+
+	char *basename_path = basename(strdup(mpqfile));
+	char *dirname_path = dirname(strdup(mpqfile));
+
+	LoadScm(mpqfile, dirname_path, &map);
+	SaveMap(mpqfile, &map);
 	FreeMap(&map);
 }
 
@@ -1519,7 +1483,8 @@ int main(int argc, char **argv)
 			strcat(newname, infile);
 		}
 
-		ConvertScm(infile, newname);
+		// TODO: fix this standalone version
+		//ConvertScm(infile, newname);
 
 	} else if (strstr(infile, ".chk\0")) {
 		FILE *f;
@@ -1575,3 +1540,4 @@ int main(int argc, char **argv)
 	return 0;
 }
 #endif
+

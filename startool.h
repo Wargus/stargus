@@ -49,15 +49,13 @@ const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2021 by th
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <zlib.h>
 
 // C++
 #include <iostream>
 #include <string>
 
-#ifdef USE_STORMLIB
-#include "StormLib.h"
-#endif
+
+
 
 #ifdef _MSC_VER
 #define strdup _strdup
@@ -92,13 +90,7 @@ using namespace std;
 //  Config
 //----------------------------------------------------------------------------
 
-/**
-**		Mpq file
-*/
-FILE *MpqFD = NULL;
-static CMpq *Mpq;
-
-char listfile[1024];
+char mpq_listfile[1024];
 
 /**
 **		Destination directory of the graphics
@@ -114,7 +106,6 @@ const char* Dir;
 **		Path to the unit graphics. (default=$DIR/graphics)
 */
 #define GRAPHICS_PATH		"graphics"
-#define UNIT_PATH		"graphics"
 
 /**
 **		Path the pud files. (default=$DIR)
@@ -142,14 +133,14 @@ const char* Dir;
 #define SOUND_PATH		"sounds"
 
 /**
-**		Path the sound files. (default=$DIR/music)
-*/
-#define MUSIC_PATH		"music"
-
-/**
 **		Path the text files. (default=$DIR/texts)
 */
 #define TEXT_PATH		"campaigns"
+
+/**
+**		Path the video files. (default=$DIR/video)
+*/
+#define VIDEO_PATH		"videos"
 
 /**
 **		How much tiles are stored in a row.
@@ -163,7 +154,7 @@ typedef struct _control_ {
 	int   Type;          /// Entry type
 	int   Version;       /// Only in this version
 	const char* File;    /// Save file
-	const char*     ListFile;				/// File name in list file
+	const char* ArcFile;/// File name in list file
 	int   Arg1;          /// Extra argument 1
 	int   Arg2;          /// Extra argument 2
 	int   Arg3;          /// Extra argument 3
@@ -176,7 +167,7 @@ typedef struct _control_ {
 int EntrySize;
 
 /**
-**		Possible entry types of archive file.
+**  Possible entry types of archive file.
 */
 enum _archive_type_ {
 	S,    // Setup
@@ -191,6 +182,8 @@ enum _archive_type_ {
 	W,    // Wav                           (name,wav)
 	H,    // Pcx                           (name)
 	E,    // Raw extract                   (name)
+	V,    // Video                         (name,video)
+	Q     // MPQ archive
 };
 
 #define CD_MAC        (1)
@@ -249,7 +242,6 @@ Control CDTodo[] = {
 	{M,0,"maps/(3)Three Kingdoms.scm","multimaps\\(3)Three Kingdoms.scm" __4},
 	{M,0,"maps/(3)Triumvirate.scm","multimaps\\(3)Triumvirate.scm" __4},
 	{M,0,"maps/(4)Alpha Draconis.scm","multimaps\\(4)Alpha Draconis.scm" __4},
-	{M,0,"maps/(4)Blood Bath.scm","multimaps\\(4)Blood Bath.scm" __4},
 	{M,0,"maps/(4)Bridge Too Near.scm","multimaps\\(4)Bridge Too Near.scm" __4},
 	{M,0,"maps/(4)Cyclone.scm","multimaps\\(4)Cyclone.scm" __4},
 	{M,0,"maps/(4)Dark Crystal.scm","multimaps\\(4)Dark Crystal.scm" __4},
@@ -277,6 +269,7 @@ Control CDTodo[] = {
 	{M,0,"maps/(8)Plains of Snow '98.scm","multimaps\\(8)Plains of Snow '98.scm" __4},
 	{M,0,"maps/(8)Station Unrest.scm","multimaps\\(8)Station Unrest.scm" __4},
 	{M,0,"maps/(8)The Hunters.scm","multimaps\\(8)The Hunters.scm" __4},
+	//TBD: add all maps from CD/maps subdirs...
 
 	// Terran Campaigns
 	{H,0,"campaigns/terran/palta-blank","glue\\PalTA\\Blank.pcx",0 __3},
@@ -872,55 +865,57 @@ Control CDTodo[] = {
 	{W,0,"music/protoss/3","music\\protoss3.wav" __4},
 	{W,0,"music/protoss/ready room","music\\prdyroom.wav" __4},
 	{W,0,"music/protoss/victory","music\\pvict.wav" __4},
+
+	//Video
+	{V,0,"preprotoss_2.ogv","smk\\preprotoss_2.smk" __4},
+	{V,0,"prezerg_3.ogv","smk\\prezerg_3.smk" __4},
+	{V,0,"preterran_4.ogv","smk\\preterran_4.smk" __4},
+	{V,0,"protoss1.ogv","smk\\protoss1.smk" __4},
+	{V,0,"terran1.ogv","smk\\terran1.smk" __4},
+	{V,0,"terran3.ogv","smk\\terran3.smk" __4},
+	{V,0,"protoss2.ogv","smk\\protoss2.smk" __4},
+	{V,0,"starintr.ogv","smk\\starintr.smk" __4},
+	{V,0,"preprotoss_1.ogv","smk\\preprotoss_1.smk" __4},
+	{V,0,"preprotoss_3.ogv","smk\\preprotoss_3.smk" __4},
+	{V,0,"prezerg_4.ogv","smk\\prezerg_4.smk" __4},
+	{V,0,"preterran_3.ogv","smk\\preterran_3.smk" __4},
+	{V,0,"blizzard.ogv","smk\\blizzard.smk" __4},
+	{V,0,"preterran_1.ogv","smk\\preterran_1.smk" __4},
+	{V,0,"terran4.ogv","smk\\terran4.smk" __4},
+	{V,0,"protoss3.ogv","smk\\protoss3.smk" __4},
+	{V,0,"protoss4.ogv","smk\\protoss4.smk" __4},
+	{V,0,"prezerg_2.ogv","smk\\prezerg_2.smk" __4},
+	{V,0,"preterran_2.ogv","smk\\preterran_2.smk" __4},
+	{V,0,"terran2.ogv","smk\\terran2.smk" __4},
+	{V,0,"zerg2.ogv","smk\\zerg2.smk" __4},
+	{V,0,"zerg3.ogv","smk\\zerg3.smk" __4},
+	{V,0,"zerg4.ogv","smk\\zerg4.smk" __4},
+	{V,0,"zerg1.ogv","smk\\zerg1.smk" __4},
+
+	// Sub MPQ Files (must be at very bottom of this list)
+	{Q,0,"remove-stardat.mpq","files\\stardat.mpq" __4},
 };
 
 Control Todo[] = {
-	//{F,0,"","stardat.mpq" __4},
+	{F,0,"","stardat.mpq" __4},
 	{F,0,"","StarDat.mpq" __4},
+	{F,0,"","remove-stardat.mpq" __4},
 	{F,0,0 ,0 __4},
 
-	// Maps
-	{M,0,"maps/(2)Challenger.scm","multimaps\\(2)Challenger.scm" __4},
-	{M,0,"maps/(2)River Crossing.scm","multimaps\\(2)River Crossing.scm" __4},
-	{M,0,"maps/(2)Road War.scm","multimaps\\(2)Road War.scm" __4},
-	{M,0,"maps/(2)Space Madness.scm","multimaps\\(2)Space Madness.scm" __4},
-	{M,0,"maps/(2)The Small Divide.scm","multimaps\\(2)The Small Divide.scm" __4},
-	{M,0,"maps/(2)Volcanis.scm","multimaps\\(2)Volcanis.scm" __4},
-	{M,0,"maps/(3)Holy Ground.scm","multimaps\\(3)Holy Ground.scm" __4},
-	{M,0,"maps/(3)Meltdown.scm","multimaps\\(3)Meltdown.scm" __4},
-	{M,0,"maps/(3)Three Kingdoms.scm","multimaps\\(3)Three Kingdoms.scm" __4},
-	{M,0,"maps/(3)Triumvirate.scm","multimaps\\(3)Triumvirate.scm" __4},
-	{M,0,"maps/(4)Alpha Draconis.scm","multimaps\\(4)Alpha Draconis.scm" __4},
-	{M,0,"maps/(4)Blood Bath.scm","multimaps\\(4)Blood Bath.scm" __4},
-	{M,0,"maps/(4)Bridge Too Near.scm","multimaps\\(4)Bridge Too Near.scm" __4},
-	{M,0,"maps/(4)Cyclone.scm","multimaps\\(4)Cyclone.scm" __4},
-	{M,0,"maps/(4)Dark Crystal.scm","multimaps\\(4)Dark Crystal.scm" __4},
-	{M,0,"maps/(4)Dark Star.scm","multimaps\\(4)Dark Star.scm" __4},
-	{M,0,"maps/(4)Lost Civilization.scm","multimaps\\(4)Lost Civilization.scm" __4},
-	{M,0,"maps/(4)Opposing City States '98.scm","multimaps\\(4)Opposing City States '98.scm" __4},
-	{M,0,"maps/(4)Orbital Relay.scm","multimaps\\(4)Orbital Relay.scm" __4},
-	{M,0,"maps/(4)Power Lines.scm","multimaps\\(4)Power Lines.scm" __4},
-	{M,0,"maps/(4)Ruins of the Ancients.scm","multimaps\\(4)Ruins of the Ancients.scm" __4},
-	{M,0,"maps/(4)Tarsonis Orbital.scm","multimaps\\(4)Tarsonis Orbital.scm" __4},
-	{M,0,"maps/(5)Diablo.scm","multimaps\\(5)Diablo.scm" __4},
-	{M,0,"maps/(5)Island Hop.scm","multimaps\\(5)Island Hop.scm" __4},
-	{M,0,"maps/(5)Jeweled River.scm","multimaps\\(5)Jeweled River.scm" __4},
-	{M,0,"maps/(5)Sherwood Forest.scm","multimaps\\(5)Sherwood Forest.scm" __4},
-	{M,0,"maps/(6)Ground Zero.scm","multimaps\\(6)Ground Zero.scm" __4},
-	{M,0,"maps/(6)Hidden Shrine.scm","multimaps\\(6)Hidden Shrine.scm" __4},
-	{M,0,"maps/(6)New Gettysburg.scm","multimaps\\(6)New Gettysburg.scm" __4},
-	{M,0,"maps/(7)Continental Divide.scm","multimaps\\(7)Continental Divide.scm" __4},
-	{M,0,"maps/(7)River War.scm","multimaps\\(7)River War.scm" __4},
-	{M,0,"maps/(8)Bridge to Bridge '98.scm","multimaps\\(8)Bridge to Bridge '98.scm" __4},
-	{M,0,"maps/(8)Char Magma.scm","multimaps\\(8)Char Magma.scm" __4},
-	{M,0,"maps/(8)Homeworld.scm","multimaps\\(8)Homeworld.scm" __4},
-	{M,0,"maps/(8)Killing Fields.scm","multimaps\\(8)Killing Fields.scm" __4},
-	{M,0,"maps/(8)Orbital Death.scm","multimaps\\(8)Orbital Death.scm" __4},
-	{M,0,"maps/(8)Plains of Snow '98.scm","multimaps\\(8)Plains of Snow '98.scm" __4},
-	{M,0,"maps/(8)Station Unrest.scm","multimaps\\(8)Station Unrest.scm" __4},
-	{M,0,"maps/(8)The Hunters.scm","multimaps\\(8)The Hunters.scm" __4},
-
 //	{G,0,"ui/blink","game\\blink.grp",0 __3},
+
+	//Video
+	{V,0,"blizzard.ogv","smk\\blizzard.smk" __4},
+
+	// Fonts
+	{N,0,"font10","font\\font10.fnt" __4},
+	{N,0,"font12","font\\font12.fnt" __4},
+	{N,0,"font14","font\\font14.fnt" __4},
+	{N,0,"font16","font\\font16.fnt" __4},
+	{N,0,"font16x","font\\font16x.fnt" __4},
+	{N,0,"font32","font\\font32.fnt" __4},
+	{N,0,"font50","font\\font50.fnt" __4},
+	{N,0,"font8","font\\font8.fnt" __4},
 
 	// UI
 	{U,0,"ui/icons","game\\icons.grp",0 __3},
@@ -1031,19 +1026,6 @@ Control Todo[] = {
 	// Game sounds
 	{W,0,"ui/button","sound\\misc\\button.wav" __4},
 	{W,0,"ui/buzz","sound\\misc\\buzz.wav" __4},
-
-	// Fonts
-	// FIXME: These fonts are in a different format
-#if 0
-	{N,0,"font10","font\\font10.fnt" __4},
-	{N,0,"font12","font\\font12.fnt" __4},
-	{N,0,"font14","font\\font14.fnt" __4},
-	{N,0,"font16","font\\font16.fnt" __4},
-	{N,0,"font16x","font\\font16x.fnt" __4},
-	{N,0,"font32","font\\font32.fnt" __4},
-	{N,0,"font50","font\\font50.fnt" __4},
-	{N,0,"font8","font\\font8.fnt" __4},
-#endif
 
 	// Tilesets
 	{T,0,"ashworld/ashworld","tileset\\AshWorld" __4},

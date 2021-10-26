@@ -34,7 +34,6 @@
 ----------------------------------------------------------------------------*/
 
 #include "endian.h"
-//#include "stargus.h"
 #include "startool.h"
 #include <stratagus-gameutils.h>
 
@@ -80,41 +79,15 @@ static int UnitNamesLast = 0;
 //  TOOLS
 //----------------------------------------------------------------------------
 
-/**
-**  Check if path exists, if not make all directories.
-*/
-void CheckPath(const char* path)
-{
-	char* cp;
-	char* s;
 
-#ifdef WIN32
-	cp = _strdup(path);
-#else
-	cp = strdup(path);
-#endif
-	s = strrchr(cp, '/');
-	if (s) {
-		*s = '\0';  // remove file
-		s = cp;
-		for (;;) {  // make each path element
-			s = strchr(s, '/');
-			if (s) {
-				*s = '\0';
-			}
-#if defined(_MSC_VER) || defined(WIN32)
-			_mkdir(cp);
-#else
-			mkdir(cp, 0777);
-#endif
-			if (s) {
-				*s++ = '/';
-			} else {
-				break;
-			}
-		}
-	}
-	free(cp);
+
+/**
+**  Check if path exists - DOESN'T create any directories/files
+*/
+bool FileExists(const char *filename)
+{
+    struct stat buffer;
+    return stat(filename, &buffer) == 0 ? true : false;
 }
 
 //----------------------------------------------------------------------------
@@ -221,7 +194,7 @@ int SavePNG(const char* name, unsigned char* image, int w,
 **  @param file  Archive file name
 **  @param type  Archive type requested
 */
-int OpenArchive(const char *file)
+/*int OpenArchive(const char *file)
 {
 	//
 	//  Open the archive file
@@ -232,7 +205,7 @@ int OpenArchive(const char *file)
 		return -1;
 	}
 
-	if (Mpq->ReadInfo(MpqFD, listfile)) {
+	if (Mpq->ReadInfo(MpqFD, mpq_listfile)) {
 		printf("MpqReadInfo failed\n");
 		fclose(MpqFD);
 		MpqFD = NULL;
@@ -240,7 +213,7 @@ int OpenArchive(const char *file)
 	}
 
 	return 0;
-}
+}*/
 
 /**
 **  Extract/uncompress entry.
@@ -249,7 +222,7 @@ int OpenArchive(const char *file)
 **
 **  @return      Pointer to uncompressed entry
 */
-unsigned char *ExtractEntry(const char *name)
+/*unsigned char *ExtractEntry(const char *name)
 {
 	int i;
 	unsigned char *buf;
@@ -275,19 +248,23 @@ unsigned char *ExtractEntry(const char *name)
 	}
 
 	return buf;
-}
+}*/
 
 /**
 **  Close the archive file.
 */
-int CloseArchive(void)
+/*int CloseArchive(void)
 {
 	if (MpqFD) {
 		fclose(MpqFD);
 		MpqFD = NULL;
 	}
 	return 0;
-}
+}*/
+
+
+
+
 
 //----------------------------------------------------------------------------
 //		Map
@@ -298,106 +275,45 @@ int CloseArchive(void)
 **
 **  @extracted in case of installation the map files are yet extracted from mpq file
 */
-int ConvertMap(const char *mapfile, const char *file, bool extracted)
+bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool extracted)
 {
 	FILE *fd;
 	char buf[1024];
 	char buf2[1024];
+	bool ret = true;
 
-	sprintf(buf, "%s/%s", Dir, file);
-	CheckPath(buf);
+	ret = FileExists(mpqfile);
 
-	if(!extracted)
-	{
-		unsigned char *p;
-		p = ExtractEntry(mapfile);
-		fd = fopen(buf, "wb");
-		if (!fd) {
-			free(p);
-			return -1;
-		}
-		fwrite(p, EntrySize, 1, fd);
-		fclose(fd);
-		free(p);
+	if(ret) {
 
-		ConvertScm(buf, buf, listfile);
-	}
-	else
-	{
-		sprintf(buf2, "%s/%s", ArchiveDir, file);
-		CheckPath(buf2);
+		sprintf(buf, "%s/%s", Dir, file);
+		CheckPath(buf);
 
-		ConvertScm(buf2, buf, listfile);
-	}
-
-
-
-	return 0;
-}
-
-#ifdef USE_STORMLIB
-int ExtractMPQFile(char *szArchiveName, char *szArchivedFile, char *szFileName, bool compress)
-{
-	HANDLE hMpq   = NULL;          // Open archive handle
-	HANDLE hFile  = NULL;          // Archived file handle
-	FILE   *file  = NULL;          // Disk file handle
-	gzFile gzfile = NULL;          // Compressed file handle
-	int    nError = ERROR_SUCCESS; // Result value
-
-	// Open an archive, e.g. "d2music.mpq"
-	if(nError == ERROR_SUCCESS) {
-		if(!SFileOpenArchive(szArchiveName, 0, STREAM_FLAG_READ_ONLY, &hMpq))
-			nError = GetLastError();
-	}
-
-	// Open a file in the archive, e.g. "data\global\music\Act1\tristram.wav"
-	if(nError == ERROR_SUCCESS) {
-		if(!SFileOpenFileEx(hMpq, szArchivedFile, 0, &hFile))
-			nError = GetLastError();
-	}
-
-	// Create the target file
-	if(nError == ERROR_SUCCESS) {
-		CheckPath(szFileName);
-		if (compress) {
-			gzfile = gzopen(szFileName, "wb9");
-		} else {
-			file = fopen(szFileName, "wb");
-		}
-	}
-
-	// Read the file from the archive
-	if(nError == ERROR_SUCCESS) {
-		char  szBuffer[0x10000];
-		DWORD dwBytes = 1;
-
-		while(dwBytes > 0) {
-			SFileReadFile(hFile, szBuffer, sizeof(szBuffer), &dwBytes, NULL);
-			if(dwBytes > 0) {
-				if (compress) {
-					gzwrite(gzfile, szBuffer, dwBytes);
-				} else {
-					fwrite(szBuffer, 1, dwBytes, file);
-				}
+		if(!extracted)
+		{
+			int error = ExtractMPQFile(mpqfile, arcfile, buf, false);
+			if (error == ERROR_SUCCESS)
+			{
+				ConvertScm(buf);
 			}
+			else
+			{
+				ret = false;
+			}
+
 		}
+		else // local installation filesystem case
+		{
+			sprintf(buf2, "%s/%s", ArchiveDir, file);
+			CheckPath(buf2);
+
+			//ConvertScm(buf2, buf, mpq_listfile);
+		}
+
 	}
 
-	// Cleanup and exit
-	if(file != NULL) {
-		fclose(file);
-	}
-	if(gzfile != NULL) {
-		gzclose(gzfile);
-	}
-	if(hFile != NULL)
-		SFileCloseFile(hFile);
-	if(hMpq != NULL)
-		SFileCloseArchive(hMpq);
-
-	return nError;
+	return ret;
 }
-#endif
 
 //----------------------------------------------------------------------------
 //  Palette
@@ -442,7 +358,7 @@ unsigned char* ConvertPaletteRGBXtoRGB(unsigned char* pal)
 /**
 **  Convert rgb to my format.
 */
-int ConvertRgb(const char *listfile, const char *file)
+bool ConvertRgb(const char *mpqfile, const char *arcfile, const char *file)
 {
 	unsigned char *palp;
 	char buf[8192] = {'\0'};
@@ -450,52 +366,65 @@ int ConvertRgb(const char *listfile, const char *file)
 	int i;
 	size_t l;
 
-	sprintf(buf, "%s.wpe", listfile);
-	palp = ExtractEntry(buf);
-	ConvertPaletteRGBXtoRGB(palp);
+	bool ret = true;
 
-	//
-	//  Generate RGB File.
-	//
-	sprintf(buf, "%s/%s/%s.rgb", Dir, TILESET_PATH, file);
-	CheckPath(buf);
-	f = fopen(buf, "wb");
-	if (!f) {
-		perror("");
-		printf("Can't open %s\n", buf);
-		error("Memory error", "Could not allocate enough memory to read archive.");
+	ret = FileExists(mpqfile);
+	if(ret) {
+
+		sprintf(buf, "%s.wpe", arcfile);
+
+		int err_ret = ExtractMPQEntry(mpqfile, arcfile, &palp, NULL);
+		if (err_ret == ERROR_SUCCESS) {
+
+			ConvertPaletteRGBXtoRGB(palp);
+
+			//
+			//  Generate RGB File.
+			//
+			sprintf(buf, "%s/%s/%s.rgb", Dir, TILESET_PATH, file);
+			CheckPath(buf);
+			f = fopen(buf, "wb");
+			if (!f) {
+				perror("");
+				printf("Can't open %s\n", buf);
+				error("Memory error", "Could not allocate enough memory to read archive.");
+			}
+			if (fwrite(palp, 1, 256 * 3, f) != 256 * 3) {
+				printf("Can't write %d bytes\n", 256 * 3);
+				fflush(stdout);
+			}
+
+			fclose(f);
+
+			//
+			//  Generate GIMP palette
+			//
+			sprintf(buf, "%s/%s/%s.gimp", Dir, TILESET_PATH, file);
+			CheckPath(buf);
+			f = fopen(buf, "wb");
+			if (!f) {
+				perror("");
+				printf("Can't open %s\n", buf);
+				error("Memory error", "Could not allocate enough memory to read archive.");
+			}
+			fprintf(f, "GIMP Palette\n# Stratagus %c%s -- GIMP Palette file\n",
+				toupper(*file), file + 1);
+
+			for (i = 0; i < 256; ++i) {
+				// FIXME: insert nice names!
+				fprintf(f, "%d %d %d\t#%d\n", palp[i * 3], palp[i * 3 + 1], palp[i * 3 + 2], i);
+			}
+
+			fclose(f);
+
+			free(palp);
+		}
+		else {
+			ret = false;
+		}
 	}
-	if (fwrite(palp, 1, 256 * 3, f) != 256 * 3) {
-		printf("Can't write %d bytes\n", 256 * 3);
-		fflush(stdout);
-	}
 
-	fclose(f);
-
-	//
-	//  Generate GIMP palette
-	//
-	sprintf(buf, "%s/%s/%s.gimp", Dir, TILESET_PATH, file);
-	CheckPath(buf);
-	f = fopen(buf, "wb");
-	if (!f) {
-		perror("");
-		printf("Can't open %s\n", buf);
-		error("Memory error", "Could not allocate enough memory to read archive.");
-	}
-	fprintf(f, "GIMP Palette\n# Stratagus %c%s -- GIMP Palette file\n",
-		toupper(*file), file + 1);
-
-	for (i = 0; i < 256; ++i) {
-		// FIXME: insert nice names!
-		fprintf(f, "%d %d %d\t#%d\n", palp[i * 3], palp[i * 3 + 1], palp[i * 3 + 2], i);
-	}
-
-	fclose(f);
-
-	free(palp);
-
-	return 0;
+	return ret;
 }
 
 //----------------------------------------------------------------------------
@@ -673,7 +602,7 @@ unsigned char* ConvertTile(unsigned char* mini, const char* mega, int msize,
 /**
 **  Convert a tileset to my format.
 */
-int ConvertTileset(const char* listfile, const char* file)
+int ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
 {
 	unsigned char* palp;
 	unsigned char* megp;
@@ -687,32 +616,39 @@ int ConvertTileset(const char* listfile, const char* file)
 	int mapl;
 	char buf[8192] = {'\0'};
 
-	if (!strcmp(listfile, "tileset\\Install")) {
+	if (!strcmp(arcfile, "tileset\\Install")) {
 		sprintf(buf, "tileset\\install.wpe");
-		palp = ExtractEntry(buf);
+		//palp = ExtractEntry(buf);
+		ExtractMPQEntry(mpqfile, buf, &palp, NULL);
 		sprintf(buf, "tileset\\install.vr4");
-		minp = ExtractEntry(buf);
+		//minp = ExtractEntry(buf);
+		ExtractMPQEntry(mpqfile, buf, &minp, NULL);
 	} else {
-		sprintf(buf, "%s.wpe", listfile);
-		palp = ExtractEntry(buf);
-		sprintf(buf, "%s.vr4", listfile);
-		minp = ExtractEntry(buf);
+		sprintf(buf, "%s.wpe", arcfile);
+		//palp = ExtractEntry(buf);
+		ExtractMPQEntry(mpqfile, buf, &palp, NULL);
+		sprintf(buf, "%s.vr4", arcfile);
+		//minp = ExtractEntry(buf);
+		ExtractMPQEntry(mpqfile, buf, &minp, NULL);
 	}
-	sprintf(buf, "%s.vx4", listfile);
-	megp = ExtractEntry(buf);
+	sprintf(buf, "%s.vx4", arcfile);
+	//megp = ExtractEntry(buf);
+	ExtractMPQEntry(mpqfile, buf, &megp, NULL);
 	megl = EntrySize;
-	sprintf(buf, "%s.cv5", listfile);
-	mapp = ExtractEntry(buf);
+	sprintf(buf, "%s.cv5", arcfile);
+	//mapp = ExtractEntry(buf);
+	ExtractMPQEntry(mpqfile, buf, &mapp, NULL);
 	mapl = EntrySize;
 
-	sprintf(buf, "%s.vf4", listfile);
-	flagp = ExtractEntry(buf);
+	sprintf(buf, "%s.vf4", arcfile);
+	//flagp = ExtractEntry(buf);
+	ExtractMPQEntry(mpqfile, buf, &flagp, NULL);
 
 	image = ConvertTile(minp, (char *)megp, megl, (char *)mapp, mapl, &w, &h);
 
 #ifdef DEBUG
 	int flagl = EntrySize;
-	sprintf(buf, "%s/%s-flags.txt", Dir, strstr(listfile, "\\") + 1);
+	sprintf(buf, "%s/%s-flags.txt", Dir, strstr(arcfile, "\\") + 1);
 	FILE *fd = fopen(buf, "w");
 	int i, j, tiles, start = -1;
 	for (i = 0; i < flagl / 32; ++i) {
@@ -1022,79 +958,102 @@ void ConvertPal3(unsigned char* image, int w, int h)
 /**
 **  Convert a graphic to my format.
 */
-int ConvertGfx(const char* listfile, const char* file, int pale)
+bool ConvertGfx(const char *mpqfile, const char* arcfile, const char* file, int pale)
 {
-	unsigned char* palp;
-	unsigned char* gfxp;
-	unsigned char* gfxp2;
-	unsigned char* image;
+	unsigned char* palp = NULL;
+	unsigned char* gfxp = NULL;
+	unsigned char* gfxp2 = NULL;
+	unsigned char* image = NULL;
 	int w;
 	int h;
 	char buf[1024];
+	bool ret = true;
 
-	gfxp = ExtractEntry(listfile);
+	ret = FileExists(mpqfile);
 
-	gfxp2 = NULL;
-	image = ConvertGraphic(1, gfxp, &w, &h, gfxp2, 0);
+	if(ret) {
+		int error = ExtractMPQEntry(mpqfile, arcfile, &gfxp, NULL);
+		if (error != ERROR_SUCCESS)
+		{
+			ret = false;
+		}
 
-	palp = Palettes[pale];
+		image = ConvertGraphic(1, gfxp, &w, &h, gfxp2, 0);
 
-	free(gfxp);
+		palp = Palettes[pale];
 
-	if (pale == 3) {
-		ConvertPal3(image, w, h);
+		free(gfxp);
+
+		if (pale == 3) {
+			ConvertPal3(image, w, h);
+		}
+
+		sprintf(buf, "%s/%s/%s.png", Dir, GRAPHICS_PATH, file);
+		CheckPath(buf);
+		SavePNG(buf, image, w, h, palp, 255);
+
+		free(image);
+
+		if (error != ERROR_SUCCESS)
+		{
+			ret = false;
+		}
 	}
 
-	sprintf(buf, "%s/%s/%s.png", Dir, UNIT_PATH, file);
-	CheckPath(buf);
-	SavePNG(buf, image, w, h, palp, 255);
-
-	free(image);
-
-	return 0;
+	return ret;
 }
 
 /**
 **  Convert a uncompressed graphic to my format.
 */
-int ConvertGfu(const char* listfile, const char* file, int pale)
+bool ConvertGfu(const char *mpqfile, const char* arcfile, const char* file, int pale)
 {
-	unsigned char* palp;
-	unsigned char* gfup;
-	unsigned char* gfup2;
-	unsigned char* image;
+	unsigned char* palp = NULL;
+	unsigned char* gfup = NULL;
+	unsigned char* gfup2 = NULL;
+	unsigned char* image = NULL;
 	int w;
 	int h;
 	char buf[8192] = {'\0'};
 	unsigned char* p;
 	unsigned char* end;
+	bool ret = true;
 
-	gfup = ExtractEntry(listfile);
+	ret = FileExists(mpqfile);
 
-	gfup2 = NULL;
-	image = ConvertGraphic(0, gfup, &w, &h, gfup2, 0);
+	if(ret) {
 
-	// 0 and 255 are transparent
-	p = image;
-	end = image + w * h;
-	while (p < end) {
-		if (!*p) {
-			*p = 0xFF;
+		int error = ExtractMPQEntry(mpqfile, arcfile, &gfup, NULL);
+		if (error == ERROR_SUCCESS)
+		{
+			image = ConvertGraphic(0, gfup, &w, &h, gfup2, 0);
+
+			// 0 and 255 are transparent
+			p = image;
+			end = image + w * h;
+			while (p < end) {
+				if (!*p) {
+					*p = 0xFF;
+				}
+				++p;
+			}
+
+			palp = Palettes[pale];
+
+
+
+			sprintf(buf, "%s/%s/%s.png", Dir, GRAPHICS_PATH, file);
+			CheckPath(buf);
+			SavePNG(buf, image, w, h, palp, 255);
+
+			free(image);
+			ret = false;
 		}
-		++p;
+		free(gfup);
+
 	}
 
-	palp = Palettes[pale];
-
-	free(gfup);
-
-	sprintf(buf, "%s/%s/%s.png", Dir, UNIT_PATH, file);
-	CheckPath(buf);
-	SavePNG(buf, image, w, h, palp, 255);
-
-	free(image);
-
-	return 0;
+	return ret;
 }
 
 void SaveImage(char *name, unsigned char *image, unsigned char *palp, int id, int w, int h)
@@ -1141,120 +1100,125 @@ void SaveButton(char *name, unsigned char *image, unsigned char *palp, int size,
 	free(button);
 }
 
-int ConvertWidgets(const char* listfile, const char* file, int pale)
+bool ConvertWidgets(const char *mpqfile, const char* arcfile, const char* file, int pale)
 {
-	unsigned char* palp;
-	unsigned char* gfup;
-	unsigned char* gfup2;
-	unsigned char* image;
+	unsigned char* palp = NULL;
+	unsigned char* gfup = NULL;
+	unsigned char* gfup2 = NULL;
+	unsigned char* image = NULL;
 	int w;
 	int h;
 	char buf[1024];
 	unsigned char* p;
 	unsigned char* end;
+	bool ret = true;
 
-	gfup = ExtractEntry(listfile);
+	ret = FileExists(mpqfile);
 
-	gfup2 = NULL;
-	image = ConvertGraphic(0, gfup, &w, &h, gfup2, 0);
+	if(ret) {
+		int error = ExtractMPQEntry(mpqfile, arcfile, &gfup, NULL);
+		if (error == ERROR_SUCCESS)
+		{
+			image = ConvertGraphic(0, gfup, &w, &h, gfup2, 0);
 
-	// 0 and 255 are transparent
-	p = image;
-	end = image + w * h;
-	while (p < end) {
-		if (!*p) {
-			*p = 0xFF;
+			// 0 and 255 are transparent
+			p = image;
+			end = image + w * h;
+			while (p < end) {
+				if (!*p) {
+					*p = 0xFF;
+				}
+				++p;
+			}
+
+			palp = Palettes[pale];
+
+			free(gfup);
+
+			sprintf(buf, "%s/graphics/%s/", Dir, file);
+			CheckPath(buf);
+
+			sprintf(buf, "%s/graphics/%s/menu.png", Dir, file);
+			SaveImage(buf, image, palp, 1, 64, 20);
+
+			sprintf(buf, "%s/graphics/%s/menu pressed.png", Dir, file);
+			SaveImage(buf, image, palp, 2, 64, 20);
+
+
+			sprintf(buf, "%s/graphics/%s/minimap terrain disabled.png", Dir, file);
+			SaveImage(buf, image, palp, 3, 64, 20);
+
+			sprintf(buf, "%s/graphics/%s/minimap terrain.png", Dir, file);
+			SaveImage(buf, image, palp, 4, 64, 20);
+
+			sprintf(buf, "%s/graphics/%s/minimap terrain pressed.png", Dir, file);
+			SaveImage(buf, image, palp, 5, 64, 20);
+
+
+			sprintf(buf, "%s/graphics/%s/diplomacy disabled.png", Dir, file);
+			SaveImage(buf, image, palp, 83, 64, 20);
+
+			sprintf(buf, "%s/graphics/%s/diplomacy.png", Dir, file);
+			SaveImage(buf, image, palp, 84, 64, 20);
+
+			sprintf(buf, "%s/graphics/%s/diplomacy pressed.png", Dir, file);
+			SaveImage(buf, image, palp, 85, 64, 20);
+
+
+			sprintf(buf, "%s/graphics/%s/button left disabled 224x28.png", Dir, file);
+			SaveButton(buf, image, palp, 224, 104);
+
+			sprintf(buf, "%s/graphics/%s/button left 224x28.png", Dir, file);
+			SaveButton(buf, image, palp, 224, 107);
+
+			sprintf(buf, "%s/graphics/%s/button left pressed 224x28.png", Dir, file);
+			SaveButton(buf, image, palp, 224, 110);
+
+
+			sprintf(buf, "%s/graphics/%s/button left disabled 104x28.png", Dir, file);
+			SaveButton(buf, image, palp, 104, 104);
+
+			sprintf(buf, "%s/graphics/%s/button left 104x28.png", Dir, file);
+			SaveButton(buf, image, palp, 104, 107);
+
+			sprintf(buf, "%s/graphics/%s/button left pressed 104x28.png", Dir, file);
+			SaveButton(buf, image, palp, 104, 110);
+
+
+			sprintf(buf, "%s/graphics/%s/button disabled 224x28.png", Dir, file);
+			SaveButton(buf, image, palp, 224, 113);
+
+			sprintf(buf, "%s/graphics/%s/button 224x28.png", Dir, file);
+			SaveButton(buf, image, palp, 224, 116);
+
+			sprintf(buf, "%s/graphics/%s/button pressed 224x28.png", Dir, file);
+			SaveButton(buf, image, palp, 224, 119);
+
+
+			sprintf(buf, "%s/graphics/%s/button disabled 104x28.png", Dir, file);
+			SaveButton(buf, image, palp, 104, 113);
+
+			sprintf(buf, "%s/graphics/%s/button 104x28.png", Dir, file);
+			SaveButton(buf, image, palp, 104, 116);
+
+			sprintf(buf, "%s/graphics/%s/button pressed 104x28.png", Dir, file);
+			SaveButton(buf, image, palp, 104, 119);
+
+
+			sprintf(buf, "%s/graphics/%s/button right disabled 104x28.png", Dir, file);
+			SaveButton(buf, image, palp, 104, 122);
+
+			sprintf(buf, "%s/graphics/%s/button right 104x28.png", Dir, file);
+			SaveButton(buf, image, palp, 104, 125);
+
+			sprintf(buf, "%s/graphics/%s/button right pressed 104x28.png", Dir, file);
+			SaveButton(buf, image, palp, 104, 128);
 		}
-		++p;
 	}
-
-	palp = Palettes[pale];
-
-	free(gfup);
-
-	sprintf(buf, "%s/graphics/%s/", Dir, file);
-	CheckPath(buf);
-
-	sprintf(buf, "%s/graphics/%s/menu.png", Dir, file);
-	SaveImage(buf, image, palp, 1, 64, 20);
-
-	sprintf(buf, "%s/graphics/%s/menu pressed.png", Dir, file);
-	SaveImage(buf, image, palp, 2, 64, 20);
-
-
-	sprintf(buf, "%s/graphics/%s/minimap terrain disabled.png", Dir, file);
-	SaveImage(buf, image, palp, 3, 64, 20);
-
-	sprintf(buf, "%s/graphics/%s/minimap terrain.png", Dir, file);
-	SaveImage(buf, image, palp, 4, 64, 20);
-
-	sprintf(buf, "%s/graphics/%s/minimap terrain pressed.png", Dir, file);
-	SaveImage(buf, image, palp, 5, 64, 20);
-
-
-	sprintf(buf, "%s/graphics/%s/diplomacy disabled.png", Dir, file);
-	SaveImage(buf, image, palp, 83, 64, 20);
-
-	sprintf(buf, "%s/graphics/%s/diplomacy.png", Dir, file);
-	SaveImage(buf, image, palp, 84, 64, 20);
-
-	sprintf(buf, "%s/graphics/%s/diplomacy pressed.png", Dir, file);
-	SaveImage(buf, image, palp, 85, 64, 20);
-
-
-	sprintf(buf, "%s/graphics/%s/button left disabled 224x28.png", Dir, file);
-	SaveButton(buf, image, palp, 224, 104);
-
-	sprintf(buf, "%s/graphics/%s/button left 224x28.png", Dir, file);
-	SaveButton(buf, image, palp, 224, 107);
-
-	sprintf(buf, "%s/graphics/%s/button left pressed 224x28.png", Dir, file);
-	SaveButton(buf, image, palp, 224, 110);
-
-
-	sprintf(buf, "%s/graphics/%s/button left disabled 104x28.png", Dir, file);
-	SaveButton(buf, image, palp, 104, 104);
-
-	sprintf(buf, "%s/graphics/%s/button left 104x28.png", Dir, file);
-	SaveButton(buf, image, palp, 104, 107);
-
-	sprintf(buf, "%s/graphics/%s/button left pressed 104x28.png", Dir, file);
-	SaveButton(buf, image, palp, 104, 110);
-
-
-	sprintf(buf, "%s/graphics/%s/button disabled 224x28.png", Dir, file);
-	SaveButton(buf, image, palp, 224, 113);
-
-	sprintf(buf, "%s/graphics/%s/button 224x28.png", Dir, file);
-	SaveButton(buf, image, palp, 224, 116);
-
-	sprintf(buf, "%s/graphics/%s/button pressed 224x28.png", Dir, file);
-	SaveButton(buf, image, palp, 224, 119);
-
-
-	sprintf(buf, "%s/graphics/%s/button disabled 104x28.png", Dir, file);
-	SaveButton(buf, image, palp, 104, 113);
-
-	sprintf(buf, "%s/graphics/%s/button 104x28.png", Dir, file);
-	SaveButton(buf, image, palp, 104, 116);
-
-	sprintf(buf, "%s/graphics/%s/button pressed 104x28.png", Dir, file);
-	SaveButton(buf, image, palp, 104, 119);
-
-
-	sprintf(buf, "%s/graphics/%s/button right disabled 104x28.png", Dir, file);
-	SaveButton(buf, image, palp, 104, 122);
-
-	sprintf(buf, "%s/graphics/%s/button right 104x28.png", Dir, file);
-	SaveButton(buf, image, palp, 104, 125);
-
-	sprintf(buf, "%s/graphics/%s/button right pressed 104x28.png", Dir, file);
-	SaveButton(buf, image, palp, 104, 128);
-
 
 	free(image);
 
-	return 0;
+	return ret;
 }
 
 struct PCXheader {
@@ -1333,8 +1297,11 @@ void ConvertPcxToRaw(unsigned char *pcx, unsigned char **raw, unsigned char **pa
 
 /**
 **  Convert a pcx graphic to my format
+**
+**  @param arcfile File identifier in the MPQ file
+**  @param file Place to save the file on the drive (relative)
 */
-void ConvertPcx(const char *listfile, const char *file)
+bool ConvertPcx(const char *mpqfile, const char *arcfile, const char *file)
 {
 	unsigned char *palp;
 	unsigned char *pcxp;
@@ -1342,18 +1309,31 @@ void ConvertPcx(const char *listfile, const char *file)
 	char buf[1024];
 	int w;
 	int h;
+	bool ret = true;
 
-	pcxp = ExtractEntry(listfile);
+	ret = FileExists(mpqfile);
 
-	ConvertPcxToRaw(pcxp, &image, &palp, &w, &h);
-	free(pcxp);
+	if(ret) {
+		int error = ExtractMPQEntry(mpqfile, arcfile, &pcxp, NULL);
+		if (error == ERROR_SUCCESS)
+		{
+			ConvertPcxToRaw(pcxp, &image, &palp, &w, &h);
+			free(pcxp);
 
-	sprintf(buf, "%s/%s/%s.png", Dir, UNIT_PATH, file);
-	CheckPath(buf);
-	SavePNG(buf, image, w, h, palp, 0);
+			sprintf(buf, "%s/%s/%s.png", Dir, GRAPHICS_PATH, file);
+			CheckPath(buf);
+			SavePNG(buf, image, w, h, palp, 0);
 
-	free(image);
-	free(palp);
+			free(image);
+			free(palp);
+		}
+		else
+		{
+			ret = false;
+		}
+	}
+
+	return ret;
 }
 
 //----------------------------------------------------------------------------
@@ -1458,28 +1438,42 @@ unsigned char* ConvertFnt(unsigned char* start, int *wp, int *hp)
 
 /**
 **  Convert a font to my format.
+**
+**  @return true if everything is ok
 */
-int ConvertFont(const char* listfile, const char* file, int pale, int fnte __attribute__((unused))) {
+bool ConvertFont(const char *mpqfile, const char* arcfile, const char* file, int pale) {
 	unsigned char* palp;
 	unsigned char* fntp;
 	unsigned char* image;
 	int w;
 	int h;
 	char buf[8192] = {'\0'};
+	bool ret = true;
 
 	palp = Palettes[pale];
-	fntp = ExtractEntry(listfile);
 
-	image = ConvertFnt(fntp, &w, &h);
-	free(fntp);
+	ret = FileExists(mpqfile);
 
-	sprintf(buf, "%s/%s/%s.png", Dir, FONT_PATH, file);
-	CheckPath(buf);
-	SavePNG(buf, image, w, h, palp, 255);
+	if (ret) {
+		int error = ExtractMPQEntry(mpqfile, arcfile, &fntp, NULL);
+		if (error == ERROR_SUCCESS)
+		{
+			image = ConvertFnt(fntp, &w, &h);
+			free(fntp);
 
-	free(image);
+			sprintf(buf, "%s/%s/%s.png", Dir, FONT_PATH, file);
+			CheckPath(buf);
+			SavePNG(buf, image, w, h, palp, 255);
 
-	return 0;
+			free(image);
+		}
+		else
+		{
+			ret = false;
+		}
+	}
+
+	return ret;
 }
 
 //----------------------------------------------------------------------------
@@ -1487,56 +1481,122 @@ int ConvertFont(const char* listfile, const char* file, int pale, int fnte __att
 //----------------------------------------------------------------------------
 
 /**
-**  Convert pud to my format.
+**  Convert wav to gzipped format
+**
+**  @param arcfile File identifier in the MPQ file
+**  @param file Place to save the file on the drive (relative)
 */
-int ConvertWav(const char *listfile, const char *file, int wave __attribute__((unused)))
+bool ConvertWav(const char *mpqfile, const char *arcfile, const char *file)
 {
-	unsigned char* wavp;
 	char buf[8192] = {'\0'};
-	gzFile gf;
-	size_t l;
+	bool ret = true;
 
-	wavp = ExtractEntry(listfile);
+	ret = FileExists(mpqfile);
 
-	sprintf(buf, "%s/%s/%s.wav.gz", Dir, SOUND_PATH, file);
-	CheckPath(buf);
-	gf = gzopen(buf, "wb9");
-	if (!gf) {
-		perror("");
-		printf("Can't open %s\n", buf);
-		exit(-1);
-	}
-	if (EntrySize != gzwrite(gf, wavp, EntrySize)) {
-		printf("Can't write %d bytes\n", EntrySize);
+	if(ret) {
+		sprintf(buf, "%s/%s/%s.wav.gz", Dir, SOUND_PATH, file);
+		CheckPath(buf);
+
+		int error = ExtractMPQFile(mpqfile, arcfile, buf, true);
+		if (error != ERROR_SUCCESS)
+		{
+			ret = false;
+		}
 	}
 
-	free(wavp);
-
-	gzclose(gf);
-	return 0;
+	return ret;
 }
 
 /**
 **  Raw extraction
+**
+**  @param arcfile File identifier in the MPQ file
+**  @param file Place to save the file on the drive (relative)
 */
-int RawExtract(const char *listfile, const char *file)
+bool RawExtract(const char *mpqfile, const char *arcfile, const char *file)
 {
-	FILE *fd;
-	unsigned char *p;
-	char buf[1024];
+	char buf[8192] = {'\0'};
+	bool ret = true;
 
 	sprintf(buf, "%s/%s", Dir, file);
 	CheckPath(buf);
-	p = ExtractEntry(listfile);
-	fd = fopen(buf, "wb");
-	if (!fd) {
-		free(p);
-		return -1;
+
+	ret = FileExists(mpqfile);
+
+	if(ret) {
+		int error = ExtractMPQFile(mpqfile, arcfile, buf, false);
+
+		if (error != ERROR_SUCCESS)
+		{
+			ret = false;
+		}
 	}
-	fwrite(p, EntrySize, 1, fd);
-	fclose(fd);
-	free(p);
-	return 0;
+
+	return ret;
+}
+
+/**
+**  MPQ Sub-extraction
+**
+**  @param arcfile File identifier in the MPQ file
+**  @param file Place to save the file on the drive (relative)
+*/
+bool MPQSubExtract(const char *mpqfile, const char *arcfile, const char *file)
+{
+	char buf[8192] = {'\0'};
+	bool ret = true;
+	sprintf(buf, "%s/%s", Dir, file);
+	CheckPath(buf);
+
+	int error = ExtractMPQFile(mpqfile, arcfile, buf, false);
+
+	if (error != ERROR_SUCCESS)
+	{
+		ret = false;
+	}
+
+	return ret;
+}
+
+//----------------------------------------------------------------------------
+//  Video
+//----------------------------------------------------------------------------
+
+/**
+**  Convert SMK video to OGV
+*/
+bool ConvertVideo(const char *mpqfile, const char *arcfile, const char *file)
+{
+	char buf[8192] = {'\0'};
+	bool ret = true;
+
+	ret = FileExists(mpqfile);
+
+	if(ret) {
+
+		snprintf(buf,sizeof(buf),"%s/%s/%s.smk", Dir, VIDEO_PATH, file);
+		CheckPath(buf);
+
+		int error = ExtractMPQFile(mpqfile, arcfile, buf, false);
+		if (error != ERROR_SUCCESS)
+		{
+			ret = false;
+		}
+
+		string ffmpeg_str = string("ffmpeg -y -i ") + buf + " -codec:v libtheora -qscale:v 31 -codec:a libvorbis -qscale:a 15 -pix_fmt yuv420p " + Dir + "/" + VIDEO_PATH + "/" + file;
+
+		//cout << "video: " << ffmpeg_str << endl;
+
+		int sys_call = system(ffmpeg_str.c_str());
+		if(sys_call != 0)
+		{
+			ret = false;
+		}
+
+		remove(buf);
+	}
+
+	return ret;
 }
 
 //----------------------------------------------------------------------------
@@ -1735,9 +1795,9 @@ int main(int argc, char** argv)
 		Dir = "data";
 	}
 	if (argc >= 4) {
-		strcpy(listfile, argv[3]);
+		strcpy(mpq_listfile, argv[3]);
 	} else {
-		sprintf(listfile, "%s/mpqlist.txt", Dir);
+		sprintf(mpq_listfile, "%s/mpqlist.txt", Dir);
 	}
 
 	sprintf(buf, "%s/extracted", Dir);
@@ -1754,139 +1814,135 @@ int main(int argc, char** argv)
 		}
 	}
 
-	Mpq = new CMpq;
-
-#if 0
-	{
-		FILE *fd;
-		unsigned char* p;
-		char buf[PATH_MAX];
-		sprintf(buf, "%s/%s", archivedir, "stardat.mpq");
-		OpenArchive(buf);
-		p = ExtractEntry("rez\\minimap.bin");
-		fd = fopen("minimap.bin", "wb");
-		fwrite(p, EntrySize, 1, fd);
-		fclose(fd);
-		free(p);
-		CloseArchive();
-		exit(0);
-	}
-#endif
+	//Mpq = new CMpq;
 
 	printf("Extract from \"%s\" to \"%s\"\n", ArchiveDir, Dir);
-	printf("Using mpq list file \"%s\"\n", listfile);
+	printf("Using mpq list file \"%s\"\n", mpq_listfile);
 	printf("Please be patient, the data may take a couple of minutes to extract...\n\n");
 	fflush(stdout);
 
-	//for (i = 0; i <= 1; ++i) {
-		Control *c;
-		//printf("loop: %d\n", i);
-		unsigned len;
-		bool extracted = false;
+	string mpqfile;
+	string submpqfile;
 
-		i = 1;
-		switch (i)
-		{
-		case 0:
-			// CD install.exe renamed to StarCraft.mpq or other main mpq file
-			c = CDTodo;
-			len = sizeof(CDTodo) / sizeof(*CDTodo);
-			extracted = false;
-			break;
-		case 1:
-			// StarDat.mpq or stardat.mpq from CD or hard drive
-			c = Todo;
-			len = sizeof(Todo) / sizeof(*Todo);
-			extracted = true;
-			break;
-		}
+	/// NEW PARSER CODE
 
-		for (u = 0; u < len; ++u) {
-#ifdef DEBUG
-			printf("%s:\n", c[u].File);
-#endif
-			switch (c[u].Type) {
-				case F:
-					if( !MpqFD )
-					{	
-						if( c[u].File )
-						{
-							if( !strncmp(c[u].ListFile,"remove-",7) ) {
-								sprintf(buf, "%s/%s", Dir, c[u].ListFile);
-							} else {
-								sprintf(buf, "%s/%s", ArchiveDir, c[u].ListFile);
-							}
+	for (i = 0; i <= 1; ++i) {
+			Control *c;
+			printf("Loop: %d\n", i);
+			unsigned len;
+			bool extracted = false;
 
-							printf("Archive \"%s\"\n", buf);
-							if (OpenArchive(buf) == -1) {
-								printf("Could not open archive \"%s\", skipping\n\n", buf);
-
-							} else {
-								puts("");
-								if (i == 0)
-								{
-		#ifdef DEBUG
-									printf("%s:\n", "remove-stardat.mpq");
-		#endif
-									RawExtract("files\\stardat.mpq", "remove-stardat.mpq");
-									Todo[0].ListFile = "remove-stardat.mpq";
-								}
-							}
-						}
-						else
-						{
-							fprintf(stderr, "Fatal error: Cannot extract data\n");
-							return 1;
-						}
-					}
-					break;
-				case M:
-					ConvertMap(c[u].ListFile, c[u].File, extracted);
-					break;
-				case R:
-					ConvertRgb(c[u].ListFile, c[u].File);
-					break;
-				case T:
-					ConvertTileset(c[u].ListFile, c[u].File);
-					break;
-				case G:
-					ConvertGfx(c[u].ListFile, c[u].File, c[u].Arg1);
-					break;
-				case U:
-					ConvertGfu(c[u].ListFile, c[u].File, c[u].Arg1);
-					break;
-				case I:
-					ConvertWidgets(c[u].ListFile, c[u].File, c[u].Arg1);
-					break;
-				case N:
-					ConvertFont(c[u].ListFile, c[u].File, 2, c[u].Arg1);
-					break;
-				case W:
-					ConvertWav(c[u].ListFile, c[u].File, c[u].Arg1);
-					break;
-				case H:
-					ConvertPcx(c[u].ListFile, c[u].File);
-					break;
-				case E:
-					RawExtract(c[u].ListFile, c[u].File);
-					break;
-				default:
-					break;
+			//i = 0;
+			switch (i)
+			{
+			case 0:
+				// CD install.exe renamed to StarCraft.mpq or other main mpq file
+				c = CDTodo;
+				len = sizeof(CDTodo) / sizeof(*CDTodo);
+				extracted = false;
+				break;
+			case 1:
+				// StarDat.mpq or stardat.mpq from CD or hard drive
+				c = Todo;
+				len = sizeof(Todo) / sizeof(*Todo);
+				extracted = true;
+				break;
 			}
-		}
 
-		if( MpqFD ) {
-			CloseArchive();
-		}
+			bool case_func = false;
+			for (u = 0; u < len; ++u) {
 
-		if( !strncmp(c[0].ListFile,"remove-",7) ) {
-			sprintf(buf,"%s/%s",Dir,c[0].ListFile);
-			printf("removing \"%s\"\n",buf);
-			unlink(buf);
-		}
-	//}
+				switch (c[u].Type) {
+					case F:
+						if(submpqfile.empty()) {
+							sprintf(buf, "%s/%s", ArchiveDir, c[u].ArcFile);
+						}
+						else {
+							sprintf(buf, "%s", submpqfile.c_str());
+						}
+						printf("FileExists: %s", buf);
+						case_func = FileExists(buf);
+						if(case_func) {
+							mpqfile = buf;
+						}
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					case Q:
+						printf("MPQSubExtract: %s, %s", c[u].File, c[u].ArcFile);
+						case_func = MPQSubExtract(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						if(case_func) {
+							sprintf(buf, "%s/%s", Dir, c[u].File);
+							submpqfile = buf;
+						}
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					case M: // WORKS!
+						printf("ConvertMap: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						case_func = ConvertMap(mpqfile.c_str(), c[u].ArcFile, c[u].File, extracted);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					/*case R: // UNUSED?
+						printf("ConvertRgb: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						case_func = ConvertRgb(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;*/
+					/*case T: // PORTED, but no error check and function untested
+						ConvertTileset(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						break;*/
+					case G: // WORKS!
+						printf("ConvertGfx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						case_func = ConvertGfx(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					case U: // WORKS!
+						printf("ConvertGfu: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
+						case_func = ConvertGfu(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					case I: // WORKS!
+						printf("ConvertWidgets: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
+						case_func = ConvertWidgets(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					case N: // WORKS!
+						printf("ConvertFont: %s, %s, %s",mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						case_func = ConvertFont(mpqfile.c_str(), c[u].ArcFile, c[u].File, 2);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					/*case W: // WORKS!
+					    printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+					    case_func = ConvertWav(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;*/
+				    /*case V: // WORKS!
+					    printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+					    case_func = ConvertVideo(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+					    printf("...%s\n", case_func ? "ok" : "nok");
+						break;*/
+					case H: // WORKS!
+						printf("ConvertPcx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						case_func = ConvertPcx(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					case E: // WORKS
+					    // ConvertChk() for maps instead of Raw??
+						printf("RawExtract: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						// TBD: I think campaigns this must be somehow converted to stratagus
+						case_func = RawExtract(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					default:
+						break;
+				}
+			}
+	}
+
+	// remove temporary sub files
+	if(!submpqfile.empty()) {
+		unlink(submpqfile.c_str());
+	}
 	
-	delete Mpq;
+	//delete Mpq;
 
 	CreatePanels();
 

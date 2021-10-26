@@ -38,24 +38,20 @@ set(CMAKE_CXX_STANDARD 17)
 set(scmconvert_SRCS
 	mpq.cpp
 	scm.cpp
-	huff.cpp
 )
 
 set(scmconvert_HDRS
 	mpq.h
-	huff.h
 )
 
 set(startool_SRCS
 	startool.cpp
 	mpq.cpp
 	scm.cpp
-	huff.cpp
 )
 
 set(startool_HDRS
 	mpq.h
-	huff.h
 )
 
 set(stargus_SRCS
@@ -224,6 +220,7 @@ if (WITH_STORMLIB)
 		add_definitions(-DUSE_STORMLIB -D__STORMLIB_SELF__)
 		include_directories(${STORMLIB_INCLUDE_DIR})
 		set(startool_LIBS ${startool_LIBS} ${STORMLIB_LIBRARY} ${BZIP2_LIBRARIES})
+		set(scmconvert_LIBS ${scmconvert_LIBS} ${STORMLIB_LIBRARY} ${BZIP2_LIBRARIES})
 	endif()
 endif()
 
