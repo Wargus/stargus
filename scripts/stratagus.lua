@@ -350,9 +350,9 @@ end
 --SetGroupKeys(preferences.GroupKeys)
 --SetGameSpeed(preferences.GameSpeed)
 --SetEffectsEnabled(preferences.EffectsEnabled)
---SetEffectsVolume(preferences.EffectsVolume)
+SetEffectsVolume(preferences.EffectsVolume)
 --SetMusicEnabled(preferences.MusicEnabled)
---SetMusicVolume(preferences.MusicVolume)
+SetMusicVolume(preferences.MusicVolume)
 --SetTranslationsFiles(preferences.StratagusTranslation, preferences.GameTranslation)
 --SetGrabMouse(preferences.GrabMouse)
 
