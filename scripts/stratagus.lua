@@ -342,19 +342,19 @@ end
 
 --SetUseOpenGL(preferences.UseOpenGL)
 --SetMaxOpenGLTexture(preferences.MaxOpenGLTexture)
---SetVideoResolution(preferences.VideoWidth, preferences.VideoHeight)
---SetVideoFullScreen(preferences.VideoFullScreen)
---SetLocalPlayerName(preferences.PlayerName)
---SetFogOfWar(preferences.FogOfWar)
---UI.ButtonPanel.ShowCommandKey = preferences.ShowCommandKey
---SetGroupKeys(preferences.GroupKeys)
---SetGameSpeed(preferences.GameSpeed)
---SetEffectsEnabled(preferences.EffectsEnabled)
+SetVideoResolution(preferences.VideoWidth, preferences.VideoHeight)
+SetVideoFullScreen(preferences.VideoFullScreen)
+SetLocalPlayerName(preferences.PlayerName)
+SetFogOfWar(preferences.FogOfWar)
+UI.ButtonPanel.ShowCommandKey = preferences.ShowCommandKey
+SetGroupKeys(preferences.GroupKeys)
+SetGameSpeed(preferences.GameSpeed)
+SetEffectsEnabled(preferences.EffectsEnabled)
 SetEffectsVolume(preferences.EffectsVolume)
---SetMusicEnabled(preferences.MusicEnabled)
+SetMusicEnabled(preferences.MusicEnabled)
 SetMusicVolume(preferences.MusicVolume)
---SetTranslationsFiles(preferences.StratagusTranslation, preferences.GameTranslation)
---SetGrabMouse(preferences.GrabMouse)
+SetTranslationsFiles(preferences.StratagusTranslation, preferences.GameTranslation)
+SetGrabMouse(preferences.GrabMouse)
 
 --- Uses Stratagus Library path!
 Load("scripts/sc.lua")
