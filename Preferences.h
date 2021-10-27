@@ -21,8 +21,17 @@ public:
   void setVideoExtraction(bool video);
   bool getVideoExtraction();
 
+  void setArchiveDir(const std::string &dir);
+  const std::string getArchiveDir();
+
+  // TODO: not yet used!!
+  void setDataDir(const std::string &dir);
+  const std::string getDataDir();
+
 private:
   bool mVideoExtraction;
+  std::string mArchiveDir;
+  std::string mDataDir;
 };
 
 #endif // PREFERENCES_H

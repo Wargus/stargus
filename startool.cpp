@@ -44,38 +44,38 @@
 /**
 **  Palette N27, for credits cursor
 */
-static unsigned char* Pal27;
+//static unsigned char* Pal27;
 
 /**
 **  Original archive buffer.
 */
-static unsigned char* ArchiveBuffer;
+//static unsigned char* ArchiveBuffer;
 
 /**
 **  Offsets for each entry into original archive buffer.
 */
-static unsigned char** ArchiveOffsets;
+//static unsigned char** ArchiveOffsets;
 
 /**
 **  Fake empty entry
 */
-static unsigned int EmptyEntry[] = { 1, 1, 1 };
+//static unsigned int EmptyEntry[] = { 1, 1, 1 };
 
-string ArchiveDir;
+
 
 /**
 **  What CD Type is it?
 */
-static int CDType;
+//static int CDType;
 
 // Width of game font
-static int game_font_width;
+//static int game_font_width;
 
 /**
 **  File names.
 */
-static char* UnitNames[110];
-static int UnitNamesLast = 0;
+//static char* UnitNames[110];
+//static int UnitNamesLast = 0;
 
 //----------------------------------------------------------------------------
 //  TOOLS
@@ -225,8 +225,8 @@ bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool
 		}
 		else // local installation filesystem case
 		{
-			sprintf(buf2, "%s/%s", ArchiveDir.c_str(), file);
-			CheckPath(buf2);
+			//sprintf(buf2, "%s/%s", ArchiveDir.c_str(), file);
+			//CheckPath(buf2);
 
 			//ConvertScm(buf2, buf, mpq_listfile);
 		}
@@ -1769,7 +1769,7 @@ int parseOptions(int argc, const char **argv)
 	  switch(i) {
 	  	  case 0:
 	  		cout << "archive-directory #" << i << ": " << parse.nonOption(i) << "\n";
-	  		ArchiveDir = parse.nonOption(i);
+	  		preferences.setArchiveDir(parse.nonOption(i));
 	  		break;
 	  	  case 1:
 	  		cout << "destination-directory #" << i << ": " << parse.nonOption(i) << "\n";
@@ -1780,7 +1780,7 @@ int parseOptions(int argc, const char **argv)
 	  }
   }
 
-  if(ArchiveDir.empty()) {
+  if(preferences.getArchiveDir().empty()) {
 	  cerr << "Error: 'archive-directory' not given!" << endl <<  endl;
 	  option::printUsage(std::cout, usage);
 	  exit(1);
@@ -1820,7 +1820,7 @@ int main(int argc, const char** argv)
 		}
 	}
 
-	printf("Extract from \"%s\" to \"%s\"\n", ArchiveDir.c_str(), Dir);
+	printf("Extract from \"%s\" to \"%s\"\n", preferences.getArchiveDir().c_str(), Dir);
 	printf("Please be patient, the data may take a couple of minutes to extract...\n\n");
 	fflush(stdout);
 
@@ -1855,7 +1855,7 @@ int main(int argc, const char** argv)
 				switch (c[u].Type) {
 					case F:
 						if(submpqfile.empty()) {
-							sprintf(buf, "%s/%s", ArchiveDir.c_str(), c[u].ArcFile);
+							sprintf(buf, "%s/%s", preferences.getArchiveDir().c_str(), c[u].ArcFile);
 						}
 						else {
 							sprintf(buf, "%s", submpqfile.c_str());

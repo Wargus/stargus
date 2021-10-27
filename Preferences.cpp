@@ -30,3 +30,22 @@ bool Preferences::getVideoExtraction()
 	return mVideoExtraction;
 }
 
+void Preferences::setArchiveDir(const std::string &dir)
+{
+	mArchiveDir = dir;
+}
+
+const std::string Preferences::getArchiveDir()
+{
+	return mArchiveDir;
+}
+
+void Preferences::setDataDir(const std::string &dir)
+{
+	mDataDir = dir;
+}
+
+const std::string Preferences::getDataDir()
+{
+	return mDataDir;
+}
