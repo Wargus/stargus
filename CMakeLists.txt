@@ -48,10 +48,13 @@ set(startool_SRCS
 	startool.cpp
 	mpq.cpp
 	scm.cpp
+	Preferences.cpp
 )
 
 set(startool_HDRS
+	startool.h
 	mpq.h
+	Preferences.h
 )
 
 set(stargus_SRCS

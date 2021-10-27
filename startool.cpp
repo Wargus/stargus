@@ -36,6 +36,7 @@
 #include "endian.h"
 #include "startool.h"
 #include "optionparser.h"
+#include "Preferences.h"
 #include <stratagus-gameutils.h>
 
 //----------------------------------------------------------------------------
@@ -60,7 +61,7 @@ static unsigned char** ArchiveOffsets;
 */
 static unsigned int EmptyEntry[] = { 1, 1, 1 };
 
-static const char* ArchiveDir = NULL;
+string ArchiveDir;
 
 /**
 **  What CD Type is it?
@@ -75,7 +76,6 @@ static int game_font_width;
 */
 static char* UnitNames[110];
 static int UnitNamesLast = 0;
-bool video = false;
 
 //----------------------------------------------------------------------------
 //  TOOLS
@@ -225,7 +225,7 @@ bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool
 		}
 		else // local installation filesystem case
 		{
-			sprintf(buf2, "%s/%s", ArchiveDir, file);
+			sprintf(buf2, "%s/%s", ArchiveDir.c_str(), file);
 			CheckPath(buf2);
 
 			//ConvertScm(buf2, buf, mpq_listfile);
@@ -1734,7 +1734,7 @@ enum  optionIndex { UNKNOWN, HELP, VIDEO, VERSIONPARAM };
 
 int parseOptions(int argc, const char **argv)
 {
-  //Preferences &preferences = Preferences::instance ();
+  Preferences &preferences = Preferences::getInstance ();
   argc -= (argc > 0); argv += (argc > 0); // skip program name argv[0] if present
   option::Stats  stats(usage, argc, argv);
   option::Option options[stats.options_max], buffer[stats.buffer_max];
@@ -1752,12 +1752,13 @@ int parseOptions(int argc, const char **argv)
   // parse options
   if(options[VIDEO].count() > 0)
   {
-	  video = true;
+	  preferences.setVideoExtraction(true);
   }
 
   if(options[VERSIONPARAM].count() > 0)
   {
 	  printf(VERSION "\n");
+	  exit(0);
   }
 
   for(option::Option* opt = options[UNKNOWN]; opt; opt = opt->next())
@@ -1779,6 +1780,12 @@ int parseOptions(int argc, const char **argv)
 	  }
   }
 
+  if(ArchiveDir.empty()) {
+	  cerr << "Error: 'archive-directory' not given!" << endl <<  endl;
+	  option::printUsage(std::cout, usage);
+	  exit(1);
+  }
+
   return 0;
 }
 
@@ -1792,6 +1799,10 @@ int main(int argc, const char** argv)
 	char buf[8192] = {'\0'};
 	int i;
 	FILE* f;
+
+	Preferences &preferences = Preferences::getInstance ();
+	// initialize all properties once in the beginning of the application
+	preferences.init();
 
 	parseOptions(argc, argv);
 
@@ -1809,14 +1820,12 @@ int main(int argc, const char** argv)
 		}
 	}
 
-	printf("Extract from \"%s\" to \"%s\"\n", ArchiveDir, Dir);
+	printf("Extract from \"%s\" to \"%s\"\n", ArchiveDir.c_str(), Dir);
 	printf("Please be patient, the data may take a couple of minutes to extract...\n\n");
 	fflush(stdout);
 
 	string mpqfile;
 	string submpqfile;
-
-	/// NEW PARSER CODE
 
 	for (i = 0; i <= 1; ++i) {
 			Control *c;
@@ -1846,7 +1855,7 @@ int main(int argc, const char** argv)
 				switch (c[u].Type) {
 					case F:
 						if(submpqfile.empty()) {
-							sprintf(buf, "%s/%s", ArchiveDir, c[u].ArcFile);
+							sprintf(buf, "%s/%s", ArchiveDir.c_str(), c[u].ArcFile);
 						}
 						else {
 							sprintf(buf, "%s", submpqfile.c_str());
@@ -1908,7 +1917,7 @@ int main(int argc, const char** argv)
 						printf("...%s\n", case_func ? "ok" : "nok");
 						break;
 				    case V: // WORKS!
-				    	if(video) {
+				    	if(preferences.getVideoExtraction()) {
 				    		printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 				    		case_func = ConvertVideo(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 				    		printf("...%s\n", case_func ? "ok" : "nok");
