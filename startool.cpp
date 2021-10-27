@@ -35,6 +35,7 @@
 
 #include "endian.h"
 #include "startool.h"
+#include "optionparser.h"
 #include <stratagus-gameutils.h>
 
 //----------------------------------------------------------------------------
@@ -59,7 +60,7 @@ static unsigned char** ArchiveOffsets;
 */
 static unsigned int EmptyEntry[] = { 1, 1, 1 };
 
-static char* ArchiveDir;
+static const char* ArchiveDir = NULL;
 
 /**
 **  What CD Type is it?
@@ -74,6 +75,7 @@ static int game_font_width;
 */
 static char* UnitNames[110];
 static int UnitNamesLast = 0;
+bool video = false;
 
 //----------------------------------------------------------------------------
 //  TOOLS
@@ -1670,59 +1672,128 @@ void CreatePanels()
 //  Main loop
 //----------------------------------------------------------------------------
 
-/**
-**  Display the usage.
-*/
-void Usage(const char* name)
+/** option parser **/
+struct Arg: public option::Arg
 {
-	printf("%s\n\
-Usage: %s archive-directory [destination-directory] [mpqlist-file]\n\
-\t-V\tShow version\n\
-\t-h\tShow usage\n\
-archive-directory\tDirectory which include the archive install.exe or stardat.mpq...\n\
-destination-directory\tDirectory where the extracted files are placed.\n\
-mpqlist-file\tmpqlist.txt file which contains mpq file names\n"
-	,NameLine, name);
+  static void printError(const char* msg1, const option::Option& opt, const char* msg2)
+  {
+    fprintf(stderr, "%s", msg1);
+    fwrite(opt.name, opt.namelen, 1, stderr);
+    fprintf(stderr, "%s", msg2);
+  }
+
+  static option::ArgStatus Unknown(const option::Option& option, bool msg)
+  {
+    if (msg) printError("Unknown option '", option, "'\n");
+
+    return option::ARG_ILLEGAL;
+  }
+
+  static option::ArgStatus Required(const option::Option& option, bool msg)
+  {
+    if (option.arg != 0)
+      return option::ARG_OK;
+
+    if (msg) printError("Option '", option, "' requires an argument\n");
+    return option::ARG_ILLEGAL;
+  }
+
+  static option::ArgStatus NonEmpty(const option::Option& option, bool msg)
+  {
+    if (option.arg != 0 && option.arg[0] != 0)
+      return option::ARG_OK;
+
+    if (msg) printError("Option '", option, "' requires a non-empty argument\n");
+    return option::ARG_ILLEGAL;
+  }
+
+  static option::ArgStatus Numeric(const option::Option& option, bool msg)
+  {
+    char* endptr = 0;
+    if (option.arg != 0 && strtol(option.arg, &endptr, 10)){};
+    if (endptr != option.arg && *endptr == 0)
+      return option::ARG_OK;
+
+    if (msg) printError("Option '", option, "' requires a numeric argument\n");
+    return option::ARG_ILLEGAL;
+  }
+};
+
+enum  optionIndex { UNKNOWN, HELP, VIDEO, VERSIONPARAM };
+ const option::Descriptor usage[] =
+ {
+  {UNKNOWN, 0,"" , ""    ,option::Arg::None, "USAGE: stargus archive-directory [destination-directory]\n\n"
+                                             "Options:" },
+  {HELP,    0,"h" , "help",option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
+  {VIDEO,	0,"v" , "video",Arg::None, "  --video, -v  \t\tExtract and convert videos" },
+  {VERSIONPARAM, 	0,"V" , "version",Arg::None, "  --version, -V  \t\tShow version" },
+  {UNKNOWN, 0,""  ,  ""   ,option::Arg::None, "\narchive-directory \t\tDirectory which include the archive install.exe or stardat.mpq...\n"
+                                              "destination-directory \t\tDirectory where the extracted files are placed.\n""mpqlist-file \t\tmpqlist.txt file which contains mpq file names\n"},
+  {0,0,0,0,0,0}
+ };
+
+int parseOptions(int argc, const char **argv)
+{
+  //Preferences &preferences = Preferences::instance ();
+  argc -= (argc > 0); argv += (argc > 0); // skip program name argv[0] if present
+  option::Stats  stats(usage, argc, argv);
+  option::Option options[stats.options_max], buffer[stats.buffer_max];
+  option::Parser parse(usage, argc, argv, options, buffer);
+
+  if(parse.error())
+	  exit(0);
+
+  if(options[HELP])
+  {
+    option::printUsage(std::cout, usage);
+    exit(0);
+  }
+
+  // parse options
+  if(options[VIDEO].count() > 0)
+  {
+	  video = true;
+  }
+
+  if(options[VERSIONPARAM].count() > 0)
+  {
+	  printf(VERSION "\n");
+  }
+
+  for(option::Option* opt = options[UNKNOWN]; opt; opt = opt->next())
+    std::cout << "Unknown option: " << opt->name << "\n";
+
+  for(int i = 0; i < parse.nonOptionsCount(); ++i)
+  {
+	  switch(i) {
+	  	  case 0:
+	  		cout << "archive-directory #" << i << ": " << parse.nonOption(i) << "\n";
+	  		ArchiveDir = parse.nonOption(i);
+	  		break;
+	  	  case 1:
+	  		cout << "destination-directory #" << i << ": " << parse.nonOption(i) << "\n";
+	  		Dir = parse.nonOption(i);
+	  		break;
+	  	  default:
+	  		break;
+	  }
+  }
+
+  return 0;
 }
 
 /**
 **		Main
 */
 #undef main
-int main(int argc, char** argv)
+int main(int argc, const char** argv)
 {
 	unsigned u;
 	char buf[8192] = {'\0'};
 	int i;
 	FILE* f;
 
-	for (i = 0; i < argc; ++i) {
-		if (!strcmp(argv[i], "-V")) {
-			printf(VERSION "\n");
-			return 0;
-		}
-		if (!strcmp(argv[i], "-h")) {
-			argc = 0;
-			break;
-		}
-	}
-
-	if (argc != 2 && argc != 3 && argc != 4) {
-		Usage(argv[0]);
-		exit(-1);
-	}
-
-	ArchiveDir = argv[1];
-	if (argc >= 3) {
-		Dir = argv[2];
-	} else {
-		Dir = "data";
-	}
-	if (argc >= 4) {
-		strcpy(mpq_listfile, argv[3]);
-	} else {
-		sprintf(mpq_listfile, "%s/mpqlist.txt", Dir);
-	}
+	parseOptions(argc, argv);
 
 	sprintf(buf, "%s/extracted", Dir);
 	f = fopen(buf, "r");
@@ -1738,10 +1809,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	//Mpq = new CMpq;
-
 	printf("Extract from \"%s\" to \"%s\"\n", ArchiveDir, Dir);
-	printf("Using mpq list file \"%s\"\n", mpq_listfile);
 	printf("Please be patient, the data may take a couple of minutes to extract...\n\n");
 	fflush(stdout);
 
@@ -1752,7 +1820,6 @@ int main(int argc, char** argv)
 
 	for (i = 0; i <= 1; ++i) {
 			Control *c;
-			printf("Loop: %d\n", i);
 			unsigned len;
 			bool extracted = false;
 
@@ -1841,9 +1908,11 @@ int main(int argc, char** argv)
 						printf("...%s\n", case_func ? "ok" : "nok");
 						break;
 				    case V: // WORKS!
-					    printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					    case_func = ConvertVideo(mpqfile.c_str(), c[u].ArcFile, c[u].File);
-					    printf("...%s\n", case_func ? "ok" : "nok");
+				    	if(video) {
+				    		printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+				    		case_func = ConvertVideo(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+				    		printf("...%s\n", case_func ? "ok" : "nok");
+				    	}
 						break;
 					case H: // WORKS!
 						printf("ConvertPcx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);

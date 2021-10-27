@@ -90,12 +90,10 @@ using namespace std;
 //  Config
 //----------------------------------------------------------------------------
 
-char mpq_listfile[1024];
-
 /**
 **		Destination directory of the graphics
 */
-const char* Dir;
+const char* Dir = "Data";
 
 /**
 **		Path to the tileset graphics. (default=$DIR/graphics/tilesets)

@@ -37,6 +37,8 @@
 --  Version
 -------------------------------------------------------------------------------
 
+
+
 Name = "Stargus"
 Version = "3.1.3"
 Homepage = "https://github.com/Wargus/stargus"
@@ -64,7 +66,7 @@ end
 
 --  Enter your default title screen.
 SetTitleScreens(
---  {Image = "videos/blizzard.ogv"},
+  {Image = "videos/blizzard.ogv"},
   {Image = "ui/title.png", Music = "music/title.wav",  Timeout = 5}
 )
 
