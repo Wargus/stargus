@@ -540,33 +540,26 @@ bool ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
 
 	if (!strcmp(arcfile, "tileset\\Install")) {
 		sprintf(buf, "tileset\\install.wpe");
-		//palp = ExtractEntry(buf);
 		ExtractMPQEntry(mpqfile, buf, &palp, NULL);
 		sprintf(buf, "tileset\\install.vr4");
-		//minp = ExtractEntry(buf);
 		ExtractMPQEntry(mpqfile, buf, &minp, NULL);
 	} else {
 		sprintf(buf, "%s.wpe", arcfile);
-		//palp = ExtractEntry(buf);
 		ExtractMPQEntry(mpqfile, buf, &palp, NULL);
 		sprintf(buf, "%s.vr4", arcfile);
-		//minp = ExtractEntry(buf);
 		ExtractMPQEntry(mpqfile, buf, &minp, NULL);
 	}
 	sprintf(buf, "%s.vx4", arcfile);
-	//megp = ExtractEntry(buf);
 
 	size_t megl_len = 0;
 	ExtractMPQEntry(mpqfile, buf, &megp, &megl_len);
 	megl = megl_len;
 	sprintf(buf, "%s.cv5", arcfile);
-	//mapp = ExtractEntry(buf);
 	size_t mapl_len = 0;
 	ExtractMPQEntry(mpqfile, buf, &mapp, &mapl_len);
 	mapl = mapl_len;
 
 	sprintf(buf, "%s.vf4", arcfile);
-	//flagp = ExtractEntry(buf);
 	ExtractMPQEntry(mpqfile, buf, &flagp, NULL);
 
 	image = ConvertTile(minp, (char *)megp, megl, (char *)mapp, mapl, &w, &h);
@@ -1801,8 +1794,7 @@ int main(int argc, const char** argv)
 	FILE* f;
 
 	Preferences &preferences = Preferences::getInstance ();
-	// initialize all properties once in the beginning of the application
-	preferences.init();
+	preferences.init(); // initialize all properties once in the beginning of the application
 
 	parseOptions(argc, argv);
 
