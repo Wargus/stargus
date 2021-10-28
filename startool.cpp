@@ -37,6 +37,7 @@
 #include "startool.h"
 #include "optionparser.h"
 #include "Preferences.h"
+#include "scm.h"
 #include <stratagus-gameutils.h>
 
 //----------------------------------------------------------------------------
@@ -76,6 +77,8 @@
 */
 //static char* UnitNames[110];
 //static int UnitNamesLast = 0;
+
+//#define MAKE_CCL 1
 
 //----------------------------------------------------------------------------
 //  TOOLS
@@ -216,6 +219,7 @@ bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool
 			if (error == ERROR_SUCCESS)
 			{
 				ConvertScm(buf);
+				unlink(buf);
 			}
 			else
 			{
@@ -229,6 +233,47 @@ bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool
 			//CheckPath(buf2);
 
 			//ConvertScm(buf2, buf, mpq_listfile);
+		}
+
+	}
+
+	return ret;
+}
+
+//----------------------------------------------------------------------------
+//		Map
+//----------------------------------------------------------------------------
+
+/**
+**  Convert map
+**
+**  @extracted in case of installation the map files are yet extracted from mpq file
+*/
+bool ConvertCampaign(const char *mpqfile, const char *arcfile, const char *file)
+{
+	FILE *fd;
+	char buf[1024];
+	char buf2[1024];
+	bool ret = true;
+	unsigned char *chkdata;
+	size_t chklen;
+
+	ret = FileExists(mpqfile);
+
+	if(ret) {
+
+		sprintf(buf, "%s/%s", Dir, file);
+		CheckPath(buf);
+
+		// TODO: The .chk files could be deleted after conversation
+		int error = ExtractMPQEntry(mpqfile, arcfile, &chkdata, &chklen);
+		if (error == ERROR_SUCCESS)
+		{
+			ConvertChk(buf, chkdata, chklen);
+		}
+		else
+		{
+			ret = false;
 		}
 
 	}
@@ -1873,11 +1918,11 @@ int main(int argc, const char** argv)
 						case_func = ConvertMap(mpqfile.c_str(), c[u].ArcFile, c[u].File, extracted);
 						printf("...%s\n", case_func ? "ok" : "nok");
 						break;
-					/*case R: // UNUSED?
+					case R: // UNUSED?
 						printf("ConvertRgb: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						case_func = ConvertRgb(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
-						break;*/
+						break;
 					case T:  // WORKS!
 						printf("ConvertTileset: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						case_func = ConvertTileset(mpqfile.c_str(), c[u].ArcFile, c[u].File);
@@ -1925,6 +1970,11 @@ int main(int argc, const char** argv)
 						printf("RawExtract: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						// TBD: I think campaigns this must be somehow converted to stratagus
 						case_func = RawExtract(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					case L:
+						printf("ConvertCampaign: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						case_func = ConvertCampaign(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
 						break;
 					default:

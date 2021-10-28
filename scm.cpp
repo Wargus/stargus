@@ -48,6 +48,7 @@
 #include <string>
 #include <libgen.h>
 
+#include "scm.h"
 #include "mpq.h"
 #include "endian.h"
 
@@ -1391,7 +1392,7 @@ void ConvertScm(const char *mpqfile)
 	FreeMap(&map);
 }
 
-void ConvertChk(const char * /*scmname*/, const char *newname, unsigned char *chkdata, int chklen)
+void ConvertChk(const char *newname, unsigned char *chkdata, int chklen)
 {
 	WorldMap map;
 	LoadChkFromBuffer(chkdata, chklen, &map);
@@ -1439,7 +1440,7 @@ int main(int argc, char **argv)
 		}
 
 		// TODO: fix this standalone version
-		//ConvertScm(infile, newname);
+		ConvertScm(infile);
 
 	} else if (strstr(infile, ".chk\0")) {
 		FILE *f;
@@ -1484,7 +1485,7 @@ int main(int argc, char **argv)
 			strcat(newname, infile);
 		}
 
-		ConvertChk(infile, newname, buf, len);
+		ConvertChk(newname, buf, len);
 
 		free(buf);
 	} else {
