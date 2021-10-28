@@ -7,7 +7,7 @@ dist: focal
 addons:
   apt:
     packages:
-      - libpng12-dev
+      - libpng-dev
       - libgtk2.0-dev
       - zlib1g-dev
       - libstorm-dev
