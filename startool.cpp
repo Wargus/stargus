@@ -1913,7 +1913,7 @@ int main(int argc, const char** argv)
 						}
 						printf("...%s\n", case_func ? "ok" : "nok");
 						break;
-					/*case M: // WORKS!
+					case M: // WORKS!
 						printf("ConvertMap: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						case_func = ConvertMap(mpqfile.c_str(), c[u].ArcFile, c[u].File, extracted);
 						printf("...%s\n", case_func ? "ok" : "nok");
@@ -1952,7 +1952,7 @@ int main(int argc, const char** argv)
 					    printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 					    case_func = ConvertWav(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
-						break;*/
+						break;
 				    case V: // WORKS!
 				    	if(preferences.getVideoExtraction()) {
 				    		printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
@@ -1960,7 +1960,7 @@ int main(int argc, const char** argv)
 				    		printf("...%s\n", case_func ? "ok" : "nok");
 				    	}
 						break;
-					/*case H: // WORKS!
+					case H: // WORKS!
 						printf("ConvertPcx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						case_func = ConvertPcx(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
@@ -1975,7 +1975,7 @@ int main(int argc, const char** argv)
 						printf("ConvertCampaign: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						case_func = ConvertCampaign(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
-						break;*/
+						break;
 					default:
 						break;
 				}

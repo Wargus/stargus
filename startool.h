@@ -869,7 +869,7 @@ Control CDTodo[] = {
 	{W,0,"music/protoss/victory","music\\pvict.wav" __4},
 
 	//Video
-	/*{V,0,"preprotoss_2.ogv","smk\\preprotoss_2.smk" __4},
+	{V,0,"preprotoss_2.ogv","smk\\preprotoss_2.smk" __4},
 	{V,0,"prezerg_3.ogv","smk\\prezerg_3.smk" __4},
 	{V,0,"preterran_4.ogv","smk\\preterran_4.smk" __4},
 	{V,0,"protoss1.ogv","smk\\protoss1.smk" __4},
@@ -892,7 +892,7 @@ Control CDTodo[] = {
 	{V,0,"zerg2.ogv","smk\\zerg2.smk" __4},
 	{V,0,"zerg3.ogv","smk\\zerg3.smk" __4},
 	{V,0,"zerg4.ogv","smk\\zerg4.smk" __4},
-	{V,0,"zerg1.ogv","smk\\zerg1.smk" __4},*/
+	{V,0,"zerg1.ogv","smk\\zerg1.smk" __4},
 
 	// Sub MPQ Files (must be at very bottom of this list)
 	{Q,0,"remove-stardat.mpq","files\\stardat.mpq" __4},
