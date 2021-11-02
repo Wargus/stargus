@@ -200,7 +200,7 @@ bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool
 
 	if(ret) {
 
-		sprintf(buf, "%s/%s", Dir, file);
+		sprintf(buf, "%s/%s", DestDir, file);
 		CheckPath(buf);
 
 		if(!extracted)
@@ -253,7 +253,7 @@ bool ConvertCampaign(const char *mpqfile, const char *arcfile, const char *file)
 
 	if(ret) {
 
-		sprintf(buf, "%s/%s", Dir, file);
+		sprintf(buf, "%s/%s", DestDir, file);
 		CheckPath(buf);
 
 		// TODO: The .chk files could be deleted after conversation
@@ -338,7 +338,7 @@ bool ConvertRgb(const char *mpqfile, const char *arcfile, const char *file)
 			//
 			//  Generate RGB File.
 			//
-			sprintf(buf, "%s/%s/%s.rgb", Dir, TILESET_PATH, file);
+			sprintf(buf, "%s/%s/%s.rgb", DestDir, TILESET_PATH, file);
 			CheckPath(buf);
 			f = fopen(buf, "wb");
 			if (!f) {
@@ -356,7 +356,7 @@ bool ConvertRgb(const char *mpqfile, const char *arcfile, const char *file)
 			//
 			//  Generate GIMP palette
 			//
-			sprintf(buf, "%s/%s/%s.gimp", Dir, TILESET_PATH, file);
+			sprintf(buf, "%s/%s/%s.gimp", DestDir, TILESET_PATH, file);
 			CheckPath(buf);
 			f = fopen(buf, "wb");
 			if (!f) {
@@ -602,7 +602,7 @@ bool ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
 
 #ifdef DEBUG
 	int flagl = EntrySize;
-	sprintf(buf, "%s/%s-flags.txt", Dir, strstr(arcfile, "\\") + 1);
+	sprintf(buf, "%s/%s-flags.txt", DestDir, strstr(arcfile, "\\") + 1);
 	FILE *fd = fopen(buf, "w");
 	int i, j, tiles, start = -1;
 	for (i = 0; i < flagl / 32; ++i) {
@@ -641,7 +641,7 @@ bool ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
 
 	ConvertPaletteRGBXtoRGB(palp);
 
-	sprintf(buf, "%s/%s/%s.png", Dir, TILESET_PATH, file);
+	sprintf(buf, "%s/%s/%s.png", DestDir, TILESET_PATH, file);
 	printf("tileset png: %s\n", buf);
 	CheckPath(buf);
 	SavePNG(buf, image, w, h, palp, 0);
@@ -943,7 +943,7 @@ bool ConvertGfx(const char *mpqfile, const char* arcfile, const char* file, int 
 			ConvertPal3(image, w, h);
 		}
 
-		sprintf(buf, "%s/%s/%s.png", Dir, GRAPHICS_PATH, file);
+		sprintf(buf, "%s/%s/%s.png", DestDir, GRAPHICS_PATH, file);
 		CheckPath(buf);
 		SavePNG(buf, image, w, h, palp, 255);
 
@@ -997,7 +997,7 @@ bool ConvertGfu(const char *mpqfile, const char* arcfile, const char* file, int 
 
 
 
-			sprintf(buf, "%s/%s/%s.png", Dir, GRAPHICS_PATH, file);
+			sprintf(buf, "%s/%s/%s.png", DestDir, GRAPHICS_PATH, file);
 			CheckPath(buf);
 			SavePNG(buf, image, w, h, palp, 255);
 
@@ -1098,83 +1098,83 @@ bool ConvertWidgets(const char *mpqfile, const char* arcfile, const char* file, 
 
 			free(gfup);
 
-			sprintf(buf, "%s/graphics/%s/", Dir, file);
+			sprintf(buf, "%s/graphics/%s/", DestDir, file);
 			CheckPath(buf);
 
-			sprintf(buf, "%s/graphics/%s/menu.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/menu.png", DestDir, file);
 			SaveImage(buf, image, palp, 1, 64, 20);
 
-			sprintf(buf, "%s/graphics/%s/menu pressed.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/menu pressed.png", DestDir, file);
 			SaveImage(buf, image, palp, 2, 64, 20);
 
 
-			sprintf(buf, "%s/graphics/%s/minimap terrain disabled.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/minimap terrain disabled.png", DestDir, file);
 			SaveImage(buf, image, palp, 3, 64, 20);
 
-			sprintf(buf, "%s/graphics/%s/minimap terrain.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/minimap terrain.png", DestDir, file);
 			SaveImage(buf, image, palp, 4, 64, 20);
 
-			sprintf(buf, "%s/graphics/%s/minimap terrain pressed.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/minimap terrain pressed.png", DestDir, file);
 			SaveImage(buf, image, palp, 5, 64, 20);
 
 
-			sprintf(buf, "%s/graphics/%s/diplomacy disabled.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/diplomacy disabled.png", DestDir, file);
 			SaveImage(buf, image, palp, 83, 64, 20);
 
-			sprintf(buf, "%s/graphics/%s/diplomacy.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/diplomacy.png", DestDir, file);
 			SaveImage(buf, image, palp, 84, 64, 20);
 
-			sprintf(buf, "%s/graphics/%s/diplomacy pressed.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/diplomacy pressed.png", DestDir, file);
 			SaveImage(buf, image, palp, 85, 64, 20);
 
 
-			sprintf(buf, "%s/graphics/%s/button left disabled 224x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button left disabled 224x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 224, 104);
 
-			sprintf(buf, "%s/graphics/%s/button left 224x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button left 224x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 224, 107);
 
-			sprintf(buf, "%s/graphics/%s/button left pressed 224x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button left pressed 224x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 224, 110);
 
 
-			sprintf(buf, "%s/graphics/%s/button left disabled 104x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button left disabled 104x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 104, 104);
 
-			sprintf(buf, "%s/graphics/%s/button left 104x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button left 104x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 104, 107);
 
-			sprintf(buf, "%s/graphics/%s/button left pressed 104x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button left pressed 104x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 104, 110);
 
 
-			sprintf(buf, "%s/graphics/%s/button disabled 224x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button disabled 224x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 224, 113);
 
-			sprintf(buf, "%s/graphics/%s/button 224x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button 224x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 224, 116);
 
-			sprintf(buf, "%s/graphics/%s/button pressed 224x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button pressed 224x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 224, 119);
 
 
-			sprintf(buf, "%s/graphics/%s/button disabled 104x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button disabled 104x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 104, 113);
 
-			sprintf(buf, "%s/graphics/%s/button 104x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button 104x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 104, 116);
 
-			sprintf(buf, "%s/graphics/%s/button pressed 104x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button pressed 104x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 104, 119);
 
 
-			sprintf(buf, "%s/graphics/%s/button right disabled 104x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button right disabled 104x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 104, 122);
 
-			sprintf(buf, "%s/graphics/%s/button right 104x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button right 104x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 104, 125);
 
-			sprintf(buf, "%s/graphics/%s/button right pressed 104x28.png", Dir, file);
+			sprintf(buf, "%s/graphics/%s/button right pressed 104x28.png", DestDir, file);
 			SaveButton(buf, image, palp, 104, 128);
 		}
 	}
@@ -1209,7 +1209,7 @@ bool ConvertPcx(const char *mpqfile, const char *arcfile, const char *file)
 			ConvertPcxToRaw(pcxp, &image, &palp, &w, &h);
 			free(pcxp);
 
-			sprintf(buf, "%s/%s/%s.png", Dir, GRAPHICS_PATH, file);
+			sprintf(buf, "%s/%s/%s.png", DestDir, GRAPHICS_PATH, file);
 			CheckPath(buf);
 			SavePNG(buf, image, w, h, palp, 0);
 
@@ -1256,7 +1256,7 @@ bool ConvertFont(const char *mpqfile, const char* arcfile, const char* file, int
 			image = ConvertFnt(fntp, &w, &h);
 			free(fntp);
 
-			sprintf(buf, "%s/%s/%s.png", Dir, FONT_PATH, file);
+			sprintf(buf, "%s/%s/%s.png", DestDir, FONT_PATH, file);
 			CheckPath(buf);
 			SavePNG(buf, image, w, h, palp, 255);
 
@@ -1289,7 +1289,7 @@ bool ConvertWav(const char *mpqfile, const char *arcfile, const char *file)
 	ret = FileExists(mpqfile);
 
 	if(ret) {
-		sprintf(buf, "%s/%s/%s.wav.gz", Dir, SOUND_PATH, file);
+		sprintf(buf, "%s/%s/%s.wav.gz", DestDir, SOUND_PATH, file);
 		CheckPath(buf);
 
 		int error = ExtractMPQFile(mpqfile, arcfile, buf, true);
@@ -1313,7 +1313,7 @@ bool RawExtract(const char *mpqfile, const char *arcfile, const char *file)
 	char buf[8192] = {'\0'};
 	bool ret = true;
 
-	sprintf(buf, "%s/%s", Dir, file);
+	sprintf(buf, "%s/%s", DestDir, file);
 	CheckPath(buf);
 
 	ret = FileExists(mpqfile);
@@ -1340,7 +1340,7 @@ bool MPQSubExtract(const char *mpqfile, const char *arcfile, const char *file)
 {
 	char buf[8192] = {'\0'};
 	bool ret = true;
-	sprintf(buf, "%s/%s", Dir, file);
+	sprintf(buf, "%s/%s", DestDir, file);
 	CheckPath(buf);
 
 	int error = ExtractMPQFile(mpqfile, arcfile, buf, false);
@@ -1369,7 +1369,7 @@ bool ConvertVideo(const char *mpqfile, const char *arcfile, const char *file)
 
 	if(ret) {
 
-		snprintf(buf,sizeof(buf),"%s/%s/%s.smk", Dir, VIDEO_PATH, file);
+		snprintf(buf,sizeof(buf),"%s/%s/%s.smk", DestDir, VIDEO_PATH, file);
 		CheckPath(buf);
 
 		int error = ExtractMPQFile(mpqfile, arcfile, buf, false);
@@ -1378,7 +1378,7 @@ bool ConvertVideo(const char *mpqfile, const char *arcfile, const char *file)
 			ret = false;
 		}
 
-		string ffmpeg_str = string("ffmpeg -y -i ") + buf + " -codec:v libtheora -qscale:v 31 -codec:a libvorbis -qscale:a 15 -pix_fmt yuv420p " + Dir + "/" + VIDEO_PATH + "/" + file;
+		string ffmpeg_str = string("ffmpeg -y -i ") + buf + " -codec:v libtheora -qscale:v 31 -codec:a libvorbis -qscale:a 15 -pix_fmt yuv420p " + DestDir + "/" + VIDEO_PATH + "/" + file;
 
 		//cout << "video: " << ffmpeg_str << endl;
 
@@ -1461,7 +1461,7 @@ int SavePanel(int width, int height)
 	char name[256];
 	unsigned char *buf;
 
-	sprintf(name, "%s/graphics/ui/panels/%dx%d.png", Dir, width, height);
+	sprintf(name, "%s/graphics/ui/panels/%dx%d.png", DestDir, width, height);
 	CheckPath(name);
 
 	if (!(fp = fopen(name, "wb"))) {
@@ -1647,7 +1647,7 @@ int parseOptions(int argc, const char **argv)
 	  		break;
 	  	  case 1:
 	  		cout << "destination-directory #" << i << ": " << parse.nonOption(i) << "\n";
-	  		Dir = parse.nonOption(i);
+	  		DestDir = parse.nonOption(i);
 	  		break;
 	  	  default:
 	  		break;
@@ -1678,7 +1678,7 @@ int main(int argc, const char** argv)
 
 	parseOptions(argc, argv);
 
-	sprintf(buf, "%s/extracted", Dir);
+	sprintf(buf, "%s/extracted", DestDir);
 	f = fopen(buf, "r");
 	if (f) {
 		char version[20];
@@ -1687,12 +1687,12 @@ int main(int argc, const char** argv)
 			len = 1;
 		fclose(f);
 		if (len != 0 && strcmp(version, VERSION) == 0) {
-			printf("Note: Data is already extracted in Dir \"%s\" with this version of startool\n", Dir);
+			printf("Note: Data is already extracted in Dir \"%s\" with this version of startool\n", DestDir);
 			fflush(stdout);
 		}
 	}
 
-	printf("Extract from \"%s\" to \"%s\"\n", preferences.getArchiveDir().c_str(), Dir);
+	printf("Extract from \"%s\" to \"%s\"\n", preferences.getArchiveDir().c_str(), DestDir);
 	printf("Please be patient, the data may take a couple of minutes to extract...\n\n");
 	fflush(stdout);
 
@@ -1746,7 +1746,7 @@ int main(int argc, const char** argv)
 						printf("MPQSubExtract: %s, %s", c[u].File, c[u].ArcFile);
 						case_func = MPQSubExtract(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 						if(case_func) {
-							sprintf(buf, "%s/%s", Dir, c[u].File);
+							sprintf(buf, "%s/%s", DestDir, c[u].File);
 							submpqfile = buf;
 						}
 						printf("...%s\n", case_func ? "ok" : "nok");
@@ -1828,7 +1828,7 @@ int main(int argc, const char** argv)
 	
 	CreatePanels();
 
-	sprintf(buf, "%s/extracted", Dir);
+	sprintf(buf, "%s/extracted", DestDir);
 	f = fopen(buf, "w");
 	fprintf(f, VERSION "\n");
 	fclose(f);

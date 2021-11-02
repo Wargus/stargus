@@ -91,9 +91,9 @@ using namespace std;
 //----------------------------------------------------------------------------
 
 /**
-**		Destination directory of the graphics
+**		Destination directory of the data
 */
-const char* Dir = "data";
+const char* DestDir = "data";
 
 /**
 **		Path to the tileset graphics. (default=$DIR/graphics/tilesets)
