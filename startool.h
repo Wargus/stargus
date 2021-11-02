@@ -93,7 +93,7 @@ using namespace std;
 /**
 **		Destination directory of the graphics
 */
-const char* Dir = "Data";
+const char* Dir = "data";
 
 /**
 **		Path to the tileset graphics. (default=$DIR/graphics/tilesets)
@@ -3083,4 +3083,4 @@ unsigned char *Palettes[] = {
 	Orange_Palette,
 };
 
-#endif // _WARTOOL_H
+#endif // _STARTOOL_H

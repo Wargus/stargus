@@ -53,6 +53,7 @@
 #include <ctype.h>
 
 #include "mpq.h"
+#include "FileUtil.h"
 
 
 
@@ -65,42 +66,7 @@
 --  Functions
 ----------------------------------------------------------------------------*/
 
-/**
-**  Check if path exists, if not make all directories.
-*/
-void CheckPath(const char* path)
-{
-	char* cp;
-	char* s;
 
-#ifdef WIN32
-	cp = _strdup(path);
-#else
-	cp = strdup(path);
-#endif
-	s = strrchr(cp, '/');
-	if (s) {
-		*s = '\0';  // remove file
-		s = cp;
-		for (;;) {  // make each path element
-			s = strchr(s, '/');
-			if (s) {
-				*s = '\0';
-			}
-#if defined(_MSC_VER) || defined(WIN32)
-			_mkdir(cp);
-#else
-			mkdir(cp, 0777);
-#endif
-			if (s) {
-				*s++ = '/';
-			} else {
-				break;
-			}
-		}
-	}
-	free(cp);
-}
 
 /**
 **  Extract a file from MPQ archive
@@ -232,6 +198,3 @@ int ExtractMPQEntry(const char *szArchiveName, const char *szArchivedFile, unsig
 	*szEntryBufferPrt = szEntryBuffer;
 	return nError;
 }
-
-
-

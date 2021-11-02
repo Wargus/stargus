@@ -38,6 +38,7 @@
 #include "optionparser.h"
 #include "Preferences.h"
 #include "scm.h"
+#include "FileUtil.h"
 #include <stratagus-gameutils.h>
 
 //----------------------------------------------------------------------------
@@ -80,20 +81,6 @@
 
 //#define MAKE_CCL 1
 
-//----------------------------------------------------------------------------
-//  TOOLS
-//----------------------------------------------------------------------------
-
-
-
-/**
-**  Check if path exists - DOESN'T create any directories/files
-*/
-bool FileExists(const char *filename)
-{
-    struct stat buffer;
-    return stat(filename, &buffer) == 0 ? true : false;
-}
 
 //----------------------------------------------------------------------------
 //  PNG
@@ -1706,6 +1693,11 @@ void CreatePanels()
 	SavePanel(296, 336);
 }
 
+bool cascDataFormatCheck(const std::string &dir)
+{
+	return FileExists(dir + "/.build.info");
+}
+
 //----------------------------------------------------------------------------
 //  Main loop
 //----------------------------------------------------------------------------
@@ -1830,7 +1822,6 @@ int parseOptions(int argc, const char **argv)
 /**
 **		Main
 */
-#undef main
 int main(int argc, const char** argv)
 {
 	unsigned u;
@@ -1887,14 +1878,17 @@ int main(int argc, const char** argv)
 			}
 
 			bool case_func = false;
-			for (u = 0; u < len; ++u) {
-
-				switch (c[u].Type) {
+			for (u = 0; u < len; ++u)
+			{
+				switch (c[u].Type)
+				{
 					case F:
-						if(submpqfile.empty()) {
+						if(submpqfile.empty())
+						{
 							sprintf(buf, "%s/%s", preferences.getArchiveDir().c_str(), c[u].ArcFile);
 						}
-						else {
+						else
+						{
 							sprintf(buf, "%s", submpqfile.c_str());
 						}
 						printf("FileExists: %s", buf);
@@ -1983,7 +1977,8 @@ int main(int argc, const char** argv)
 	}
 
 	// remove temporary sub files
-	if(!submpqfile.empty()) {
+	if (!submpqfile.empty())
+	{
 		unlink(submpqfile.c_str());
 	}
 	

@@ -40,6 +40,8 @@
 #include <stdint.h>
 
 #include <StormLib.h>
+#include <CascLib.h>
+
 #include <zlib.h>
 
 /*----------------------------------------------------------------------------
@@ -52,11 +54,9 @@
 --  Functions
 ----------------------------------------------------------------------------*/
 
-extern void ConvertScm(const char *mpqfile);
-
 int ExtractMPQEntry(const char *szArchiveName, const char *szArchivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen);
 int ExtractMPQFile(const char *szArchiveName, const char *szArchivedFile, const char *szFileName, bool compress);
-void CheckPath(const char* path);
+
 //@}
 
 #endif // !__MPQ_H__

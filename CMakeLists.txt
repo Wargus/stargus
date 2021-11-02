@@ -38,10 +38,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(scmconvert_SRCS
 	mpq.cpp
 	scm.cpp
+	FileUtil.cpp
 )
 
 set(scmconvert_HDRS
 	mpq.h
+	FileUtil.h
 )
 
 set(startool_SRCS
@@ -49,12 +51,14 @@ set(startool_SRCS
 	mpq.cpp
 	scm.cpp
 	Preferences.cpp
+	FileUtil.cpp
 )
 
 set(startool_HDRS
 	startool.h
 	mpq.h
 	Preferences.h
+	FileUtil.h
 )
 
 set(stargus_SRCS
@@ -67,11 +71,6 @@ if(WIN32)
 		stargus.rc
 	)
 endif()
-
-set(starextract_SRCS
-	starextract.c
-)
-
 
 # set hardcoded gdb active (I don't know how to do it good with cmake)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pg -g -ggdb")
@@ -95,6 +94,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_P
 find_package(Stratagus REQUIRED)
 find_package(PNG REQUIRED)
 find_package(ZLIB REQUIRED)
+find_package(CascLib)
 find_package(StormLib)
 
 if(WIN32)
@@ -133,6 +133,7 @@ option(ENABLE_UPX "Compress Stratagus executable binary with UPX packer" OFF)
 option(ENABLE_STRIP "Strip all symbols from executables" OFF)
 
 option(WITH_STORMLIB "Compile startool with StormLib support" ON)
+option(WITH_CASCLIB "Compile startool with CascLib support" ON)
 
 # Stargus definitions
 

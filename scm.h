@@ -10,6 +10,6 @@
 
 
 void ConvertChk(const char *newname, unsigned char *chkdata, int chklen);
-
+void ConvertScm(const char *mpqfile);
 
 #endif /* SCM_H_ */
