@@ -2,7 +2,7 @@
  * FileUtil.cpp
  *
  *  Created on: 02.11.2021
- *      Author: andreas
+ *      Author: Andreas Volz
  */
 
 #include "FileUtil.h"
@@ -23,8 +23,8 @@ bool FileExists(const std::string &filename)
 */
 void CheckPath(const char* path)
 {
-	char* cp;
-	char* s;
+	char* cp = NULL;
+	char* s = NULL;
 
 #ifdef WIN32
 	cp = _strdup(path);

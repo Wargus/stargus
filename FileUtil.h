@@ -2,7 +2,7 @@
  * FileUtil.h
  *
  *  Created on: 02.11.2021
- *      Author: andreas
+ *      Author: Andreas Volz <avolz.mobile@gmail.com>
  */
 
 #ifndef FILEUTIL_H_
@@ -12,6 +12,7 @@
 #include <string>
 
 // C
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>

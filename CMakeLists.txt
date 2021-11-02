@@ -52,6 +52,7 @@ set(startool_SRCS
 	scm.cpp
 	Preferences.cpp
 	FileUtil.cpp
+	Pcx.cpp
 )
 
 set(startool_HDRS
@@ -59,6 +60,7 @@ set(startool_HDRS
 	mpq.h
 	Preferences.h
 	FileUtil.h
+	Pcx.h
 )
 
 set(stargus_SRCS

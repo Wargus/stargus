@@ -39,6 +39,7 @@
 #include "Preferences.h"
 #include "scm.h"
 #include "FileUtil.h"
+#include "Pcx.h"
 #include <stratagus-gameutils.h>
 
 //----------------------------------------------------------------------------
@@ -1007,6 +1008,9 @@ bool ConvertGfu(const char *mpqfile, const char* arcfile, const char* file, int 
 	return ret;
 }
 
+/**
+ * Save Image part of a Widget as PNG file
+ */
 void SaveImage(char *name, unsigned char *image, unsigned char *palp, int id, int w, int h)
 {
 	unsigned char *buf = (unsigned char *)malloc(w * h);
@@ -1021,7 +1025,9 @@ void SaveImage(char *name, unsigned char *image, unsigned char *palp, int id, in
 	free(buf);
 }
 
-
+/**
+ * Save Button part of a Widget as PNG
+ */
 void SaveButton(char *name, unsigned char *image, unsigned char *palp, int size, int id)
 {
 	unsigned char *button;
@@ -1051,6 +1057,9 @@ void SaveButton(char *name, unsigned char *image, unsigned char *palp, int size,
 	free(button);
 }
 
+/**
+ * Convert a widget from data container as several PNG files
+ */
 bool ConvertWidgets(const char *mpqfile, const char* arcfile, const char* file, int pale)
 {
 	unsigned char* palp = NULL;
@@ -1172,82 +1181,8 @@ bool ConvertWidgets(const char *mpqfile, const char* arcfile, const char* file, 
 	return ret;
 }
 
-struct PCXheader {
-	unsigned char Manufacturer;
-	unsigned char Version;
-	unsigned char Encoding;
-	unsigned char BitsPerPixel;
-	short Xmin, Ymin, Xmax, Ymax;
-	short HDpi, VDpi;
-	unsigned char Colormap[48];
-	unsigned char Reserved;
-	unsigned char NPlanes;
-	short BytesPerLine;
-	short PaletteInfo;
-	short HscreenSize;
-	short VscreenSize;
-	unsigned char Filler[54];
-};
-
 /**
-**  Convert 8 bit pcx file to raw image
-*/
-void ConvertPcxToRaw(unsigned char *pcx, unsigned char **raw, unsigned char **pal,
-	int *w, int *h)
-{
-	struct PCXheader pcxh;
-	int y;
-	int i;
-	int count;
-	unsigned char *src;
-	unsigned char *dest;
-	unsigned char ch;
-
-	ch=0;
-	memcpy(&pcxh, pcx, sizeof(struct PCXheader));
-	pcxh.Xmin = ConvertLE16(pcxh.Xmin);
-	pcxh.Ymin = ConvertLE16(pcxh.Ymin);
-	pcxh.Xmax = ConvertLE16(pcxh.Xmax);
-	pcxh.Ymax = ConvertLE16(pcxh.Ymax);
-	pcxh.BytesPerLine = ConvertLE16(pcxh.BytesPerLine);
-
-	*w = pcxh.Xmax - pcxh.Xmin + 1;
-	*h = pcxh.Ymax - pcxh.Ymin + 1;
-
-	*raw = (unsigned char *)malloc(*w * *h);
-	src = pcx + sizeof(struct PCXheader);
-
-	for (y = 0; y < *h; ++y) {
-		count = 0;
-		dest = *raw + y * *w;
-		for (i = 0; i < *w; ++i) {
-			if (!count) {
-				ch = *src++;
-				if ((ch & 0xc0) == 0xc0) {
-					count = ch & 0x3f;
-					ch = *src++;
-				} else {
-					count = 1;
-				}
-			}
-			dest[i] = ch;
-			--count;
-		}
-	}
-
-	*pal = (unsigned char *)malloc(256 * 3);
-	dest = *pal;
-	do {
-		ch = *src++;
-	} while (ch != 12);
-
-	for (i = 0; i < 256 * 3; ++i) {
-		*dest++ = *src++;
-	}
-}
-
-/**
-**  Convert a pcx graphic to my format
+**  Convert a pcx graphic to PNG format
 **
 **  @param arcfile File identifier in the MPQ file
 **  @param file Place to save the file on the drive (relative)
@@ -1693,7 +1628,7 @@ void CreatePanels()
 	SavePanel(296, 336);
 }
 
-bool cascDataFormatCheck(const std::string &dir)
+bool CheckCASCDataFolder(const std::string &dir)
 {
 	return FileExists(dir + "/.build.info");
 }
