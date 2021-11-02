@@ -53,6 +53,7 @@ set(startool_SRCS
 	Preferences.cpp
 	FileUtil.cpp
 	Pcx.cpp
+	Font.cpp
 )
 
 set(startool_HDRS
@@ -61,6 +62,7 @@ set(startool_HDRS
 	Preferences.h
 	FileUtil.h
 	Pcx.h
+	Font.h
 )
 
 set(stargus_SRCS
