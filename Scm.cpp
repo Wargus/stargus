@@ -79,8 +79,6 @@ Scm::~Scm()
 
 void Scm::convert(const char *mpqfile)
 {
-
-
 	char *basename_path = basename(strdup(mpqfile));
 	char *dirname_path = dirname(strdup(mpqfile));
 
