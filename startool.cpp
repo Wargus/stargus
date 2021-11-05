@@ -37,7 +37,7 @@
 #include "startool.h"
 #include "optionparser.h"
 #include "Preferences.h"
-#include "scm.h"
+#include "Scm.h"
 #include "FileUtil.h"
 #include "Pcx.h"
 #include "Font.h"
@@ -84,7 +84,8 @@ bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool
 		result = mpq.extractFile(arcfile, buf, false);
 		if (result)
 		{
-			ConvertScm(buf);
+			Scm scm;
+			scm.convert(buf);
 			unlink(buf); // delete temp mpq after conversation
 		}
 	}
@@ -125,7 +126,8 @@ bool ConvertCampaign(const char *mpqfile, const char *arcfile, const char *file)
 	result = mpq.extractMemory(arcfile, &chkdata, &chklen);
 	if (result)
 	{
-		ConvertChk(buf, chkdata, chklen);
+		Chk chk;
+		chk.ConvertChk(buf, chkdata, chklen);
 	}
 
 	return result;

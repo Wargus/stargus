@@ -49,7 +49,7 @@ set(scmconvert_HDRS
 set(startool_SRCS
 	startool.cpp
 	Storm.cpp
-	scm.cpp
+	Scm.cpp
 	Preferences.cpp
 	FileUtil.cpp
 	Pcx.cpp
@@ -68,6 +68,7 @@ set(startool_SRCS
 set(startool_HDRS
 	startool.h
 	Storm.h
+	Scm.h
 	Preferences.h
 	FileUtil.h
 	Pcx.h

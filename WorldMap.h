@@ -1,8 +1,7 @@
 /*
  * WorldMap.h
  *
- *  Created on: 04.11.2021
- *      Author: andreas
+ *      Author: Andreas Volz
  */
 
 #ifndef WORLDMAP_H_

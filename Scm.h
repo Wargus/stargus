@@ -1,8 +1,7 @@
 /*
  * scm.h
  *
- *  Created on: 28.10.2021
- *      Author: andreas
+ *      Author: Andreas Volz
  */
 #ifndef SCM_H_
 #define SCM_H_
@@ -18,20 +17,22 @@
 --	Definitions
 ----------------------------------------------------------------------------*/
 
+class Scm
+{
+public:
+	Scm();
+	virtual ~Scm();
 
-#ifdef DEBUG
-#define DebugLevel1(x) printf(x)
-#define DebugLevel2(x) printf(x)
-#define _C_ ,
-#else
-#define DebugLevel1(x)
-#define DebugLevel2(x)
-#define _C_
-#endif
+	void convert(const char *mpqfile);
+
+private:
+	void load(const char *mpqfile, const char *dir);
+
+	Chk chk;
+};
 
 
 
-void ConvertChk(const char *newname, unsigned char *chkdata, int chklen);
-void ConvertScm(const char *mpqfile);
+
 
 #endif /* SCM_H_ */
