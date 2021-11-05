@@ -48,7 +48,7 @@ set(scmconvert_HDRS
 
 set(startool_SRCS
 	startool.cpp
-	Mpq.cpp
+	Storm.cpp
 	scm.cpp
 	Preferences.cpp
 	FileUtil.cpp
@@ -61,11 +61,13 @@ set(startool_SRCS
 	Terrain.cpp
 	Panel.cpp
 	Palettes.cpp
+	Hurricane.cpp
+	Casc.cpp
 )
 
 set(startool_HDRS
 	startool.h
-	Mpq.h
+	Storm.h
 	Preferences.h
 	FileUtil.h
 	Pcx.h
@@ -77,6 +79,8 @@ set(startool_HDRS
 	Terrain.h
 	Panel.h
 	Palettes.h
+	Hurricane.h
+	Casc.h
 )
 
 set(stargus_SRCS

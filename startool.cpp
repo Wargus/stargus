@@ -80,7 +80,7 @@ bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool
 
 	if(!extracted)
 	{
-		Mpq mpq(mpqfile);
+		Storm mpq(mpqfile);
 		result = mpq.extractFile(arcfile, buf, false);
 		if (result)
 		{
@@ -121,7 +121,7 @@ bool ConvertCampaign(const char *mpqfile, const char *arcfile, const char *file)
 	sprintf(buf, "%s/%s", preferences.getDestDir().c_str(), file);
 
 	// TODO: The .chk files could be deleted after conversation
-	Mpq mpq(mpqfile);
+	Storm mpq(mpqfile);
 	result = mpq.extractMemory(arcfile, &chkdata, &chklen);
 	if (result)
 	{
@@ -183,7 +183,7 @@ bool ConvertWav(const char *mpqfile, const char *arcfile, const char *file)
 	Preferences &preferences = Preferences::getInstance ();
 	sprintf(buf, "%s/%s/%s.wav.gz", preferences.getDestDir().c_str(), SOUND_PATH, file);
 
-	Mpq mpq(mpqfile);
+	Storm mpq(mpqfile);
 	result = mpq.extractFile(arcfile, buf, true);
 
 	return result;
@@ -202,7 +202,7 @@ bool RawExtract(const char *mpqfile, const char *arcfile, const char *file)
 	Preferences &preferences = Preferences::getInstance ();
 	sprintf(buf, "%s/%s", preferences.getDestDir().c_str(), file);
 
-	Mpq mpq(mpqfile);
+	Storm mpq(mpqfile);
 	result = mpq.extractFile(arcfile, buf, false);
 
 	return result;
@@ -234,7 +234,7 @@ bool ConvertVideo(const char *mpqfile, const char *arcfile, const char *file)
 	Preferences &preferences = Preferences::getInstance ();
 	snprintf(buf,sizeof(buf),"%s/%s/%s.smk", preferences.getDestDir().c_str(), VIDEO_PATH, file);
 
-	Mpq mpq(mpqfile);
+	Storm mpq(mpqfile);
 	result = mpq.extractFile(arcfile, buf, false);
 
 	string ffmpeg_str = string("ffmpeg -y -i ") + buf + " -codec:v libtheora -qscale:v 31 -codec:a libvorbis -qscale:a 15 -pix_fmt yuv420p " + preferences.getDestDir() + "/" + VIDEO_PATH + "/" + file;

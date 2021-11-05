@@ -70,7 +70,7 @@ const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2021 by th
 #include <ctype.h>
 #include <png.h>
 
-#include "Mpq.h"
+#include "Storm.h"
 
 // activate local debug messages
 #define DEBUG 1

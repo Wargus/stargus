@@ -7,7 +7,7 @@
 // Local
 #include "Terrain.h"
 #include "endian.h"
-#include "Mpq.h"
+#include "Storm.h"
 #include "FileUtil.h"
 #include "Png.h"
 #include "Preferences.h"
@@ -72,7 +72,7 @@ bool ConvertRgb(const char *mpqfile, const char *arcfile, const char *file)
 
 	sprintf(buf, "%s.wpe", arcfile);
 
-	Mpq mpq(mpqfile);
+	Storm mpq(mpqfile);
 	result = mpq.extractMemory(arcfile, &palp, NULL);
 	if (result) {
 
@@ -212,7 +212,7 @@ bool ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
 	char buf[8192] = {'\0'};
 	bool ret = true;
 
-	Mpq mpq(mpqfile);
+	Storm mpq(mpqfile);
 
 	if (!strcmp(arcfile, "tileset\\Install")) {
 		sprintf(buf, "tileset\\install.wpe");

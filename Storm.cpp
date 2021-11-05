@@ -53,30 +53,30 @@
 #include <ctype.h>
 #include <iostream>
 
-#include "Mpq.h"
+#include "Storm.h"
 #include "FileUtil.h"
 
 using namespace std;
 
 
-Mpq::Mpq()
+Storm::Storm()
 : mMpqHandle(nullptr)
 {
 
 }
 
-Mpq::Mpq(const std::string &archiveName)
+Storm::Storm(const std::string &archiveName)
 : mMpqHandle(nullptr)
 {
 	openArchive(archiveName);
 }
 
-Mpq::~Mpq()
+Storm::~Storm()
 {
 	closeArchive();
 }
 
-bool Mpq::openArchive(const std::string &archiveName)
+bool Storm::openArchive(const std::string &archiveName)
 {
 	int nError = ERROR_SUCCESS;
 	bool result = true;
@@ -93,7 +93,7 @@ bool Mpq::openArchive(const std::string &archiveName)
 	return result;
 }
 
-void Mpq::closeArchive()
+void Storm::closeArchive()
 {
 	if(mMpqHandle != NULL)
 	{
@@ -101,7 +101,7 @@ void Mpq::closeArchive()
 	}
 }
 
-bool Mpq::extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen)
+bool Storm::extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen)
 {
 	int nError = ERROR_SUCCESS;
 	unsigned char *szEntryBuffer = NULL;
@@ -150,7 +150,7 @@ bool Mpq::extractMemory(const std::string &archivedFile, unsigned char **szEntry
 	return result;
 }
 
-bool Mpq::extractFile(const std::string &archivedFile,const std::string &extractedName, bool compress)
+bool Storm::extractFile(const std::string &archivedFile,const std::string &extractedName, bool compress)
 {
 	HANDLE hFile  = nullptr;          // Archived file handle
 	FILE   *file  = nullptr;          // Disk file handle

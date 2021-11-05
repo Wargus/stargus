@@ -8,7 +8,7 @@
 #include "endian.h"
 #include "Pcx.h"
 #include "Preferences.h"
-#include "Mpq.h"
+#include "Storm.h"
 #include "Png.h"
 
 // System
@@ -127,7 +127,7 @@ bool ConvertPcx(const char *mpqfile, const char *arcfile, const char *file)
 	int h;
 	bool result = true;
 
-	Mpq mpq(mpqfile);
+	Storm mpq(mpqfile);
 	result = mpq.extractMemory(arcfile, &pcxp, NULL);
 	if (result)
 	{

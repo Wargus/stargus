@@ -50,8 +50,9 @@
 
 #include "scm.h"
 #include "Chk.h"
-#include "Mpq.h"
+#include "Storm.h"
 #include "endian.h"
+#include "FileUtil.h"
 
 #ifdef _MSC_VER
 #define strdup _strdup
@@ -318,7 +319,7 @@ void LoadScm(const char *mpqfile, const char *dir, WorldMap *map)
 	unsigned char *chkdata = NULL;
 	size_t chklen = 0;
 
-	Mpq mpq(mpqfile);
+	Storm mpq(mpqfile);
 	bool result = mpq.extractMemory("staredit\\scenario.chk", &chkdata, &chklen);
 	if (result)
 	{
@@ -332,6 +333,8 @@ void LoadScm(const char *mpqfile, const char *dir, WorldMap *map)
 static void SaveSMP(const char *name, WorldMap *map)
 {
 	FILE *fd;
+
+	CheckPath(name);
 
 	fd = fopen(name, "wb");
 
@@ -518,6 +521,8 @@ static void SaveSMS(const char *name, WorldMap *map)
 {
 	FILE *fd;
 	int i;
+
+	CheckPath(name);
 
 	fd = fopen(name, "wb");
 

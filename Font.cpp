@@ -9,7 +9,7 @@
 #include "endian.h"
 #include "Png.h"
 #include "FileUtil.h"
-#include "Mpq.h"
+#include "Storm.h"
 #include "Preferences.h"
 #include "Palettes.h"
 
@@ -51,7 +51,7 @@ bool ConvertFont(const char *mpqfile, const char* arcfile, const char* file, int
 
 	palp = Palettes[pale];
 
-	Mpq mpq(mpqfile);
+	Storm mpq(mpqfile);
 	result = mpq.extractMemory(arcfile, &fntp, NULL);
 	if (result)
 	{

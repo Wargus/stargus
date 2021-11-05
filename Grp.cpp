@@ -8,7 +8,7 @@
 #include "endian.h"
 #include "Png.h"
 #include "FileUtil.h"
-#include "Mpq.h"
+#include "Storm.h"
 #include "Preferences.h"
 #include "Palettes.h"
 
@@ -50,7 +50,7 @@ bool ConvertWidgets(const char *mpqfile, const char* arcfile, const char* file, 
 	result = FileExists(mpqfile);
 
 	if(result) {
-		Mpq mpq(mpqfile);
+		Storm mpq(mpqfile);
 		result = mpq.extractMemory(arcfile, &gfup, NULL);
 		if (result)
 		{
@@ -191,7 +191,7 @@ bool ConvertGfx(const char *mpqfile, const char* arcfile, const char* file, int 
 	char buf[1024];
 	bool result = true;
 
-	Mpq mpq(mpqfile);
+	Storm mpq(mpqfile);
 	result = mpq.extractMemory(arcfile, &gfxp, NULL);
 	if (result)
 	{
@@ -235,7 +235,7 @@ bool ConvertGfu(const char *mpqfile, const char* arcfile, const char* file, int 
 	unsigned char* end;
 	bool result = true;
 
-	Mpq mpq(mpqfile);
+	Storm mpq(mpqfile);
 	result = mpq.extractMemory(arcfile, &gfup, NULL);
 	if (result)
 	{

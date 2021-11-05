@@ -30,18 +30,22 @@
 #ifndef MPQ_H_
 #define MPQ_H_
 
+
+// Local
+#include "Hurricane.h"
+
 // System
 #include <stdint.h>
 #include <StormLib.h>
 #include <zlib.h>
 #include <string>
 
-class Mpq
+class Storm : public Hurricane
 {
 public:
-	Mpq();
-	Mpq(const std::string &archiveName);
-	virtual ~Mpq();
+	Storm();
+	Storm(const std::string &archiveName);
+	virtual ~Storm();
 
 	bool openArchive(const std::string &archiveName);
 	void closeArchive();
