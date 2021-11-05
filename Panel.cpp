@@ -23,11 +23,10 @@ Panel::~Panel()
 
 }
 
-//----------------------------------------------------------------------------
-//		Panels
-//----------------------------------------------------------------------------
-
-unsigned char *CreatePanel(int width, int height)
+/**
+ * TODO: get an understanding why the former developer decided to generate images that high sophisticated
+ */
+unsigned char *Panel::CreatePanel(int width, int height)
 {
 	unsigned char *buf;
 	int i, j;
@@ -80,7 +79,7 @@ unsigned char *CreatePanel(int width, int height)
 	return buf;
 }
 
-int SavePanel(int width, int height)
+int Panel::save(int width, int height)
 {
 	FILE *fp;
 	png_structp png_ptr;

@@ -42,7 +42,7 @@ Terrain::~Terrain()
 /**
 **		Convert rgbx to rgb
 */
-unsigned char* ConvertPaletteRGBXtoRGB(unsigned char* pal)
+unsigned char* Terrain::ConvertPaletteRGBXtoRGB(unsigned char* pal)
 {
 	int i;
 	int j;
@@ -59,7 +59,7 @@ unsigned char* ConvertPaletteRGBXtoRGB(unsigned char* pal)
 /**
 **  Convert rgb to my format.
 */
-bool ConvertRgb(const char *mpqfile, const char *arcfile, const char *file)
+bool Terrain::ConvertRgb(const char *mpqfile, const char *arcfile, const char *file)
 {
 	unsigned char *palp;
 	char buf[8192] = {'\0'};
@@ -133,7 +133,7 @@ bool ConvertRgb(const char *mpqfile, const char *arcfile, const char *file)
 /**
 **  Decode a minitile into the image.
 */
-void DecodeMiniTile(unsigned char* image, int ix, int iy, int iadd,
+void Terrain::DecodeMiniTile(unsigned char* image, int ix, int iy, int iadd,
 	unsigned char* mini, int index, int flipx, int flipy)
 {
 	for (int y = 0; y < 8; ++y) {
@@ -147,7 +147,7 @@ void DecodeMiniTile(unsigned char* image, int ix, int iy, int iadd,
 /**
 **  Convert tiles into image.
 */
-unsigned char* ConvertTile(unsigned char* mini, const char* mega, int msize,
+unsigned char* Terrain::ConvertTile(unsigned char* mini, const char* mega, int msize,
 	const char* map __attribute__((unused)),	int mapl __attribute__((unused)), int *wp, int *hp)
 
 {
@@ -197,7 +197,7 @@ unsigned char* ConvertTile(unsigned char* mini, const char* mega, int msize,
 /**
 **  Convert a tileset to my format.
 */
-bool ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
+bool Terrain::ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
 {
 	unsigned char* palp;
 	unsigned char* megp;
@@ -291,10 +291,6 @@ bool ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
 	return ret;
 }
 
-
-//----------------------------------------------------------------------------
-//  Tileset
-//----------------------------------------------------------------------------
 
 // TODO: is this needed or working??
 

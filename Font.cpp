@@ -35,11 +35,11 @@ Font::~Font()
 }
 
 /**
-**  Convert a font to my format.
+**  Convert a font to PNG image format.
 **
 **  @return true if everything is ok
 */
-bool ConvertFont(const char *mpqfile, const char* arcfile, const char* file, int pale)
+bool Font::convert(const char *mpqfile, const char* arcfile, const char* file, int pale)
 {
 	unsigned char* palp;
 	unsigned char* fntp;
@@ -69,7 +69,7 @@ bool ConvertFont(const char *mpqfile, const char* arcfile, const char* file, int
 }
 
 /**
-**  Convert font into image.
+**  Convert font into raw image data
 */
 unsigned char* Font::convertImage(unsigned char* start, int *wp, int *hp)
 {

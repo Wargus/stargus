@@ -15,6 +15,7 @@ public:
 	Png();
 	virtual ~Png();
 
+	//TODO: un-static this in the design!
 	static int save(const char* name, unsigned char* image, int w,
 		int h, unsigned char* pal, int transparent);
 };

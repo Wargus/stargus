@@ -256,11 +256,12 @@ bool ConvertVideo(const char *mpqfile, const char *arcfile, const char *file)
 
 void CreatePanels()
 {
-	SavePanel(264, 288);
-	SavePanel(384, 256);
-	SavePanel(312, 312);
-	SavePanel(288, 128);
-	SavePanel(296, 336);
+	Panel panel;
+	panel.save(264, 288);
+	panel.save(384, 256);
+	panel.save(312, 312);
+	panel.save(288, 128);
+	panel.save(296, 336);
 }
 
 bool CheckCASCDataFolder(const std::string &dir)
@@ -484,34 +485,52 @@ int main(int argc, const char** argv)
 					printf("...%s\n", case_func ? "ok" : "nok");
 					break;
 				case R: // UNUSED?
+				{
 					printf("ConvertRgb: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					case_func = ConvertRgb(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+					Terrain terrain;
+					case_func = terrain.ConvertRgb(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 					printf("...%s\n", case_func ? "ok" : "nok");
+				}
 					break;
 				case T:  // WORKS!
+				{
 					printf("ConvertTileset: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					case_func = ConvertTileset(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+					Terrain terrain;
+					case_func = terrain.ConvertTileset(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 					printf("...%s\n", case_func ? "ok" : "nok");
+				}
 					break;
 				case G: // WORKS!
+				{
 					printf("ConvertGfx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					case_func = ConvertGfx(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+					Grp grpGfx;
+					case_func = grpGfx.ConvertGfx(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
 					printf("...%s\n", case_func ? "ok" : "nok");
+				}
 					break;
 				case U: // WORKS!
+				{
 					printf("ConvertGfu: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
-					case_func = ConvertGfu(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+					Grp grpGfu;
+					case_func = grpGfu.ConvertGfu(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
 					printf("...%s\n", case_func ? "ok" : "nok");
+				}
 					break;
 				case I: // WORKS!
+				{
 					printf("ConvertWidgets: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
-					case_func = ConvertWidgets(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+					Grp grpWidgets;
+					case_func = grpWidgets.ConvertWidgets(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
 					printf("...%s\n", case_func ? "ok" : "nok");
+				}
 					break;
 				case N: // WORKS!
+				{
 					printf("ConvertFont: %s, %s, %s",mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					case_func = ConvertFont(mpqfile.c_str(), c[u].ArcFile, c[u].File, 2);
+					Font font;
+					case_func = font.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, 2);
 					printf("...%s\n", case_func ? "ok" : "nok");
+				}
 					break;
 				case W: // WORKS!
 					printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
@@ -526,9 +545,12 @@ int main(int argc, const char** argv)
 					}
 					break;
 				case H: // WORKS!
+				{
 					printf("ConvertPcx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					case_func = ConvertPcx(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+					Pcx pcx;
+					case_func = pcx.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 					printf("...%s\n", case_func ? "ok" : "nok");
+				}
 					break;
 				case E: // WORKS
 					printf("RawExtract: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);

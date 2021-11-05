@@ -34,7 +34,7 @@ Grp::~Grp()
 /**
  * Convert a widget from data container as several PNG files
  */
-bool ConvertWidgets(const char *mpqfile, const char* arcfile, const char* file, int pale)
+bool Grp::ConvertWidgets(const char *mpqfile, const char* arcfile, const char* file, int pale)
 {
 	unsigned char* palp = NULL;
 	unsigned char* gfup = NULL;
@@ -162,7 +162,7 @@ bool ConvertWidgets(const char *mpqfile, const char* arcfile, const char* file, 
 
 
 
-void ConvertPal3(unsigned char* image, int w, int h)
+void Grp::ConvertPal3(unsigned char* image, int w, int h)
 {
 	int i;
 
@@ -180,7 +180,7 @@ void ConvertPal3(unsigned char* image, int w, int h)
 /**
 **  Convert a graphic to my format.
 */
-bool ConvertGfx(const char *mpqfile, const char* arcfile, const char* file, int pale)
+bool Grp::ConvertGfx(const char *mpqfile, const char* arcfile, const char* file, int pale)
 {
 	unsigned char* palp = NULL;
 	unsigned char* gfxp = NULL;
@@ -222,7 +222,7 @@ bool ConvertGfx(const char *mpqfile, const char* arcfile, const char* file, int 
 /**
 **  Convert a uncompressed graphic to my format.
 */
-bool ConvertGfu(const char *mpqfile, const char* arcfile, const char* file, int pale)
+bool Grp::ConvertGfu(const char *mpqfile, const char* arcfile, const char* file, int pale)
 {
 	unsigned char* palp = NULL;
 	unsigned char* gfup = NULL;
@@ -273,7 +273,7 @@ bool ConvertGfu(const char *mpqfile, const char* arcfile, const char* file, int 
 /**
  * Save Image part of a Widget as PNG file
  */
-void SaveImage(char *name, unsigned char *image, unsigned char *palp, int id, int w, int h)
+void Grp::SaveImage(char *name, unsigned char *image, unsigned char *palp, int id, int w, int h)
 {
 	unsigned char *buf = (unsigned char *)malloc(w * h);
 	int i;
@@ -290,7 +290,7 @@ void SaveImage(char *name, unsigned char *image, unsigned char *palp, int id, in
 /**
  * Save Button part of a Widget as PNG
  */
-void SaveButton(char *name, unsigned char *image, unsigned char *palp, int size, int id)
+void Grp::SaveButton(char *name, unsigned char *image, unsigned char *palp, int size, int id)
 {
 	unsigned char *button;
 	int i, j;
@@ -323,7 +323,7 @@ void SaveButton(char *name, unsigned char *image, unsigned char *palp, int size,
 /**
 **  Decode a entry(frame) into image.
 */
-void DecodeGfxEntry(int index, unsigned char* start,
+void Grp::DecodeGfxEntry(int index, unsigned char* start,
 	unsigned char* image, int ix, int iy, int iadd)
 {
 	unsigned char* bp;
@@ -384,7 +384,7 @@ void DecodeGfxEntry(int index, unsigned char* start,
 /**
 **  Decode a entry(frame) into image.
 */
-void DecodeGfuEntry(int index, unsigned char* start,
+void Grp::DecodeGfuEntry(int index, unsigned char* start,
 	unsigned char* image, int ix, int iy, int iadd)
 {
 	unsigned char* bp;
@@ -424,7 +424,7 @@ void DecodeGfuEntry(int index, unsigned char* start,
 /**
 **  Convert graphics into image.
 */
-unsigned char* ConvertGraphic(int gfx, unsigned char* bp, int *wp, int *hp,
+unsigned char* Grp::ConvertGraphic(int gfx, unsigned char* bp, int *wp, int *hp,
 	unsigned char* bp2, int start2)
 {
 	int i;

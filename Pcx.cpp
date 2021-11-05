@@ -117,7 +117,7 @@ void Pcx::convertToRawImage(unsigned char *pcx, unsigned char **raw,
 **  @param arcfile File identifier in the MPQ file
 **  @param file Place to save the file on the drive (relative)
 */
-bool ConvertPcx(const char *mpqfile, const char *arcfile, const char *file)
+bool Pcx::convert(const char *mpqfile, const char *arcfile, const char *file)
 {
 	unsigned char *palp;
 	unsigned char *pcxp;
@@ -131,7 +131,7 @@ bool ConvertPcx(const char *mpqfile, const char *arcfile, const char *file)
 	result = mpq.extractMemory(arcfile, &pcxp, NULL);
 	if (result)
 	{
-		Pcx::convertToRawImage(pcxp, &image, &palp, &w, &h);
+		convertToRawImage(pcxp, &image, &palp, &w, &h);
 		free(pcxp);
 		Preferences &preferences = Preferences::getInstance ();
 		sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), GRAPHICS_PATH, file);

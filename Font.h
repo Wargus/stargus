@@ -13,9 +13,12 @@ public:
 	Font();
 	virtual ~Font();
 
-	static unsigned char* convertImage(unsigned char* start, int *wp, int *hp);
+	bool convert(const char *mpqfile, const char* arcfile, const char* file, int pale);
+
+private:
+	unsigned char* convertImage(unsigned char* start, int *wp, int *hp);
 };
 
-bool ConvertFont(const char *mpqfile, const char* arcfile, const char* file, int pale);
+
 
 #endif /* FONT_H_ */
