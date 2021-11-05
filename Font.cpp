@@ -7,12 +7,22 @@
 // Local
 #include "Font.h"
 #include "endian.h"
+#include "Png.h"
+#include "FileUtil.h"
+#include "Mpq.h"
+#include "Preferences.h"
+#include "Palettes.h"
 
 // C
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdint.h>
+
+/**
+**		Path the font files. (default=$DIR/graphics/ui/fonts)
+*/
+#define FONT_PATH		"graphics/ui/fonts"
 
 Font::Font()
 {
@@ -24,6 +34,39 @@ Font::~Font()
 
 }
 
+/**
+**  Convert a font to my format.
+**
+**  @return true if everything is ok
+*/
+bool ConvertFont(const char *mpqfile, const char* arcfile, const char* file, int pale)
+{
+	unsigned char* palp;
+	unsigned char* fntp;
+	unsigned char* image;
+	int w;
+	int h;
+	char buf[8192] = {'\0'};
+	bool result = true;
+
+	palp = Palettes[pale];
+
+	Mpq mpq(mpqfile);
+	result = mpq.extractMemory(arcfile, &fntp, NULL);
+	if (result)
+	{
+		image = Font::convertImage(fntp, &w, &h);
+		free(fntp);
+		Preferences &preferences = Preferences::getInstance ();
+		sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), FONT_PATH, file);
+		CheckPath(buf);
+		Png::save(buf, image, w, h, palp, 255);
+
+		free(image);
+	}
+
+	return result;
+}
 
 /**
 **  Convert font into image.

@@ -91,19 +91,6 @@ using namespace std;
 //----------------------------------------------------------------------------
 
 
-
-
-
-/**
-**		Path the pud files. (default=$DIR)
-*/
-#define PUD_PATH		"."
-
-/**
-**		Path the font files. (default=$DIR/graphics/ui/fonts)
-*/
-#define FONT_PATH		"graphics/ui/fonts"
-
 /**
 **		Path the cursor files. (default=$DIR/graphic/ui/)
 */

@@ -17,6 +17,6 @@ public:
 			unsigned char **pal, int *w, int *h);
 };
 
-
+bool ConvertPcx(const char *mpqfile, const char *arcfile, const char *file);
 
 #endif /* PCX_H_ */

@@ -7,6 +7,9 @@
 // Local
 #include "endian.h"
 #include "Pcx.h"
+#include "Preferences.h"
+#include "Mpq.h"
+#include "Png.h"
 
 // System
 #include <stdlib.h>
@@ -104,4 +107,39 @@ void Pcx::convertToRawImage(unsigned char *pcx, unsigned char **raw,
 	{
 		*dest++ = *src++;
 	}
+}
+
+
+
+/**
+**  Convert a pcx graphic to PNG format
+**
+**  @param arcfile File identifier in the MPQ file
+**  @param file Place to save the file on the drive (relative)
+*/
+bool ConvertPcx(const char *mpqfile, const char *arcfile, const char *file)
+{
+	unsigned char *palp;
+	unsigned char *pcxp;
+	unsigned char *image;
+	char buf[1024];
+	int w;
+	int h;
+	bool result = true;
+
+	Mpq mpq(mpqfile);
+	result = mpq.extractMemory(arcfile, &pcxp, NULL);
+	if (result)
+	{
+		Pcx::convertToRawImage(pcxp, &image, &palp, &w, &h);
+		free(pcxp);
+		Preferences &preferences = Preferences::getInstance ();
+		sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), GRAPHICS_PATH, file);
+		Png::save(buf, image, w, h, palp, 0);
+
+		free(image);
+		free(palp);
+	}
+
+	return result;
 }

@@ -157,77 +157,13 @@ bool ConvertCampaign(const char *mpqfile, const char *arcfile, const char *file)
 
 
 
-/**
-**  Convert a pcx graphic to PNG format
-**
-**  @param arcfile File identifier in the MPQ file
-**  @param file Place to save the file on the drive (relative)
-*/
-bool ConvertPcx(const char *mpqfile, const char *arcfile, const char *file)
-{
-	unsigned char *palp;
-	unsigned char *pcxp;
-	unsigned char *image;
-	char buf[1024];
-	int w;
-	int h;
-	bool result = true;
-
-	Mpq mpq(mpqfile);
-	result = mpq.extractMemory(arcfile, &pcxp, NULL);
-	if (result)
-	{
-		Pcx::convertToRawImage(pcxp, &image, &palp, &w, &h);
-		free(pcxp);
-		Preferences &preferences = Preferences::getInstance ();
-		sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), GRAPHICS_PATH, file);
-		Png::save(buf, image, w, h, palp, 0);
-
-		free(image);
-		free(palp);
-	}
-
-	return result;
-}
-
 //----------------------------------------------------------------------------
 //  Font
 //----------------------------------------------------------------------------
 
 
 
-/**
-**  Convert a font to my format.
-**
-**  @return true if everything is ok
-*/
-bool ConvertFont(const char *mpqfile, const char* arcfile, const char* file, int pale) {
-	unsigned char* palp;
-	unsigned char* fntp;
-	unsigned char* image;
-	int w;
-	int h;
-	char buf[8192] = {'\0'};
-	bool result = true;
 
-	palp = Palettes[pale];
-
-	Mpq mpq(mpqfile);
-	result = mpq.extractMemory(arcfile, &fntp, NULL);
-	if (result)
-	{
-		image = Font::convertImage(fntp, &w, &h);
-		free(fntp);
-		Preferences &preferences = Preferences::getInstance ();
-		sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), FONT_PATH, file);
-		CheckPath(buf);
-		Png::save(buf, image, w, h, palp, 255);
-
-		free(image);
-	}
-
-	return result;
-}
 
 //----------------------------------------------------------------------------
 //		Wav
