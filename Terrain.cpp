@@ -7,7 +7,7 @@
 // Local
 #include "Terrain.h"
 #include "endian.h"
-#include "mpq.h"
+#include "Mpq.h"
 #include "FileUtil.h"
 #include "Png.h"
 #include "Preferences.h"

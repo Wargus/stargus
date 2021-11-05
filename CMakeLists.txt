@@ -36,19 +36,19 @@ set(CMAKE_CXX_STANDARD 17)
 # Stargus sources
 
 set(scmconvert_SRCS
-	mpq.cpp
+	Mpq.cpp
 	scm.cpp
 	FileUtil.cpp
 )
 
 set(scmconvert_HDRS
-	mpq.h
+	Mpq.h
 	FileUtil.h
 )
 
 set(startool_SRCS
 	startool.cpp
-	mpq.cpp
+	Mpq.cpp
 	scm.cpp
 	Preferences.cpp
 	FileUtil.cpp
@@ -65,7 +65,7 @@ set(startool_SRCS
 
 set(startool_HDRS
 	startool.h
-	mpq.h
+	Mpq.h
 	Preferences.h
 	FileUtil.h
 	Pcx.h

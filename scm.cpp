@@ -50,7 +50,7 @@
 
 #include "scm.h"
 #include "Chk.h"
-#include "mpq.h"
+#include "Mpq.h"
 #include "endian.h"
 
 #ifdef _MSC_VER

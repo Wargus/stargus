@@ -8,7 +8,7 @@
 //                        T H E   W A R   B E G I N S
 //         Stratagus - A free fantasy real time strategy game engine
 //
-/**@name mpq.h - The mpq headerfile. */
+/**@name Mpq.h - The mpq headerfile. */
 //
 //      (c) Copyright 2002-2012 by Jimmy Salmon, Lutz Sammer and Pali Rohár
 //

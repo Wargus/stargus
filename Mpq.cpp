@@ -53,7 +53,7 @@
 #include <ctype.h>
 #include <iostream>
 
-#include "mpq.h"
+#include "Mpq.h"
 #include "FileUtil.h"
 
 using namespace std;

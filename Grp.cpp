@@ -8,7 +8,7 @@
 #include "endian.h"
 #include "Png.h"
 #include "FileUtil.h"
-#include "mpq.h"
+#include "Mpq.h"
 #include "Preferences.h"
 #include "Palettes.h"
 
