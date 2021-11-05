@@ -54,6 +54,13 @@ set(startool_SRCS
 	FileUtil.cpp
 	Pcx.cpp
 	Font.cpp
+	Chk.cpp
+	WorldMap.cpp
+	Grp.cpp
+	Png.cpp
+	Terrain.cpp
+	Panel.cpp
+	Palettes.cpp
 )
 
 set(startool_HDRS
@@ -63,6 +70,13 @@ set(startool_HDRS
 	FileUtil.h
 	Pcx.h
 	Font.h
+	Chk.h
+	WorldMap.h
+	Grp.h
+	Png.h
+	Terrain.h
+	Panel.h
+	Palettes.h
 )
 
 set(stargus_SRCS
@@ -234,9 +248,9 @@ endif()
 
 # Compile Stargus
 
-add_executable(scmconvert ${scmconvert_SRCS} ${scmconvert_HDRS})
-target_link_libraries(scmconvert ${scmconvert_LIBS})
-set_target_properties(scmconvert PROPERTIES COMPILE_DEFINITIONS "STAND_ALONE")
+#add_executable(scmconvert ${scmconvert_SRCS} ${scmconvert_HDRS})
+#target_link_libraries(scmconvert ${scmconvert_LIBS})
+#set_target_properties(scmconvert PROPERTIES COMPILE_DEFINITIONS "STAND_ALONE")
 
 add_executable(stargus WIN32 ${stargus_SRCS} ${stargus_HDRS})
 target_link_libraries(stargus ${stargus_LIBS})
@@ -286,7 +300,7 @@ endif()
 ########### install files ###############
 
 install(TARGETS stargus DESTINATION games)
-install(TARGETS scmconvert startool DESTINATION bin)
+#install(TARGETS scmconvert startool DESTINATION bin)
 install(FILES stargus.png DESTINATION share/pixmaps)
 install(FILES stargus.desktop DESTINATION share/applications)
 

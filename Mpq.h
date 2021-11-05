@@ -27,36 +27,45 @@
 //      02111-1307, USA.
 //
 //      $Id$
+#ifndef MPQ_H_
+#define MPQ_H_
 
-#ifndef __MPQ_H__
-#define __MPQ_H__
-
-//@{
-
-/*----------------------------------------------------------------------------
---  Defines
-----------------------------------------------------------------------------*/
-
+// System
 #include <stdint.h>
-
 #include <StormLib.h>
-#include <CascLib.h>
-
 #include <zlib.h>
+#include <string>
 
-/*----------------------------------------------------------------------------
---  Declarations
-----------------------------------------------------------------------------*/
+class Mpq
+{
+public:
+	Mpq();
+	Mpq(const std::string &archiveName);
+	virtual ~Mpq();
+
+	bool openArchive(const std::string &archiveName);
+	void closeArchive();
+
+	/**
+	 * Extract file from MPQ archive and create all directories if not existing
+	 */
+	bool extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress);
+
+	/**
+	 * Attention: This function malloc() bufferLen memory which you've to free yourself!
+	 * TODO: better memory handling needed
+	 */
+	bool extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen);
+
+private:
+	HANDLE mMpqHandle; // Open archive handle
+
+
+};
 
 
 
-/*----------------------------------------------------------------------------
---  Functions
-----------------------------------------------------------------------------*/
 
-int ExtractMPQEntry(const char *szArchiveName, const char *szArchivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen);
-int ExtractMPQFile(const char *szArchiveName, const char *szArchivedFile, const char *szFileName, bool compress);
 
-//@}
 
-#endif // !__MPQ_H__
+#endif /* MPQ_H_ */

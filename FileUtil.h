@@ -1,8 +1,7 @@
 /*
  * FileUtil.h
  *
- *  Created on: 02.11.2021
- *      Author: Andreas Volz <avolz.mobile@gmail.com>
+ *      Author: Andreas Volz
  */
 
 #ifndef FILEUTIL_H_
@@ -21,6 +20,7 @@
 // Function Prototypes
 bool FileExists(const std::string &filename);
 void CheckPath(const char* path);
+void CheckPath(const std::string &path);
 
 
 #endif /* FILEUTIL_H_ */

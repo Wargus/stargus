@@ -18,6 +18,7 @@ Preferences& Preferences::getInstance()
 void Preferences::init ()
 {
 	mVideoExtraction = false;
+	mDestDir = "data";
 }
 
 void Preferences::setVideoExtraction(bool video)
@@ -40,12 +41,12 @@ const std::string Preferences::getArchiveDir()
 	return mArchiveDir;
 }
 
-void Preferences::setDataDir(const std::string &dir)
+void Preferences::setDestDir(const std::string &dir)
 {
-	mDataDir = dir;
+	mDestDir = dir;
 }
 
-const std::string Preferences::getDataDir()
+const std::string Preferences::getDestDir()
 {
-	return mDataDir;
+	return mDestDir;
 }

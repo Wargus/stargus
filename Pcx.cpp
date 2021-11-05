@@ -1,15 +1,26 @@
 /*
  * Pcx.cpp
  *
- *  Created on: 02.11.2021
  *      Author: Andreas Volz
  */
 
+// Local
 #include "endian.h"
+#include "Pcx.h"
 
-// C
+// System
 #include <stdlib.h>
 #include <string.h>
+
+Pcx::Pcx()
+{
+
+}
+
+Pcx::~Pcx()
+{
+
+}
 
 // could stay in cpp files as it's private implementation
 struct PCXheader
@@ -33,7 +44,7 @@ struct PCXheader
 /**
  **  Convert 8 bit pcx file to raw image
  */
-void ConvertPcxToRaw(unsigned char *pcx, unsigned char **raw,
+void Pcx::convertToRawImage(unsigned char *pcx, unsigned char **raw,
 		unsigned char **pal, int *w, int *h)
 {
 	struct PCXheader pcxh;

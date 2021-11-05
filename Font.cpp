@@ -1,10 +1,11 @@
 /*
  * Font.cpp
  *
- *  Created on: 02.11.2021
  *      Author: Andreas Volz
  */
 
+// Local
+#include "Font.h"
 #include "endian.h"
 
 // C
@@ -13,10 +14,21 @@
 #include <stdio.h>
 #include <stdint.h>
 
+Font::Font()
+{
+
+}
+
+Font::~Font()
+{
+
+}
+
+
 /**
 **  Convert font into image.
 */
-unsigned char* ConvertFnt(unsigned char* start, int *wp, int *hp)
+unsigned char* Font::convertImage(unsigned char* start, int *wp, int *hp)
 {
 	int i;
 	int count;
@@ -70,7 +82,7 @@ unsigned char* ConvertFnt(unsigned char* start, int *wp, int *hp)
 			continue;
 		}
 		bp = start + offsets[i];
-		width = FetchByte(bp); //crash!!!
+		width = FetchByte(bp);
 		height = FetchByte(bp);
 		xoff = FetchByte(bp);
 		yoff = FetchByte(bp);

@@ -18,6 +18,11 @@ bool FileExists(const std::string &filename)
     return stat(filename.c_str(), &buffer) == 0 ? true : false;
 }
 
+void CheckPath(const std::string &path)
+{
+	CheckPath(path.c_str());
+}
+
 /**
 **  Check if path exists, if not make all directories.
 */
