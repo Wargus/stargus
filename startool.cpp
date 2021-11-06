@@ -46,6 +46,9 @@
 #include "Terrain.h"
 #include "Panel.h"
 #include "Palettes.h"
+#include "Widgets.h"
+#include "Gfx.h"
+#include "Gfu.h"
 
 //stratagus
 #include <stratagus-gameutils.h>
@@ -503,24 +506,24 @@ int main(int argc, const char** argv)
 				case G: // WORKS!
 				{
 					printf("ConvertGfx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					Grp grpGfx;
-					case_func = grpGfx.ConvertGfx(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+					Gfx gfx;
+					case_func = gfx.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
 					printf("...%s\n", case_func ? "ok" : "nok");
 				}
 					break;
 				case U: // WORKS!
 				{
 					printf("ConvertGfu: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
-					Grp grpGfu;
-					case_func = grpGfu.ConvertGfu(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+					Gfu gfu;
+					case_func = gfu.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
 					printf("...%s\n", case_func ? "ok" : "nok");
 				}
 					break;
 				case I: // WORKS!
 				{
 					printf("ConvertWidgets: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
-					Grp grpWidgets;
-					case_func = grpWidgets.ConvertWidgets(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+					Widgets widgets;
+					case_func = widgets.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
 					printf("...%s\n", case_func ? "ok" : "nok");
 				}
 					break;

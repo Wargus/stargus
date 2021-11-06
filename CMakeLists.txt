@@ -57,6 +57,9 @@ set(startool_SRCS
 	Chk.cpp
 	WorldMap.cpp
 	Grp.cpp
+	Gfx.cpp
+	Gfu.cpp
+	Widgets.cpp
 	Png.cpp
 	Terrain.cpp
 	Panel.cpp
@@ -76,6 +79,9 @@ set(startool_HDRS
 	Chk.h
 	WorldMap.h
 	Grp.h
+	Gfx.h
+	Gfu.h
+	Widgets.h
 	Png.h
 	Terrain.h
 	Panel.h
