@@ -43,15 +43,16 @@
 #include "Font.h"
 #include "Grp.h"
 #include "Png.h"
-#include "Terrain.h"
 #include "Panel.h"
 #include "Palettes.h"
 #include "Widgets.h"
 #include "Gfx.h"
 #include "Gfu.h"
+#include "Tileset.h"
 
 //stratagus
-#include <stratagus-gameutils.h>
+// TODO: not sure if this is really needed to have in startool
+//#include <stratagus-gameutils.h>
 
 //----------------------------------------------------------------------------
 
@@ -62,15 +63,11 @@
 
 //#define MAKE_CCL 1
 
-//----------------------------------------------------------------------------
-//		Map
-//----------------------------------------------------------------------------
-
 /**
-**  Convert map
-**
-**  @extracted in case of installation the map files are yet extracted from mpq file
-*/
+ *  Convert map
+ *
+ *  @extracted in case of installation the map files are yet extracted from mpq file
+ */
 bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool extracted)
 {
 	FILE *fd;
@@ -103,15 +100,10 @@ bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool
 	return result;
 }
 
-//----------------------------------------------------------------------------
-//		Map
-//----------------------------------------------------------------------------
-
 /**
-**  Convert map
-**
-**  @extracted in case of installation the map files are yet extracted from mpq file
-*/
+ *  Convert Campaign
+ *
+ */
 bool ConvertCampaign(const char *mpqfile, const char *arcfile, const char *file)
 {
 	FILE *fd;
@@ -135,40 +127,6 @@ bool ConvertCampaign(const char *mpqfile, const char *arcfile, const char *file)
 
 	return result;
 }
-
-//----------------------------------------------------------------------------
-//  Palette
-//----------------------------------------------------------------------------
-
-/**
-**  Convert palette.
-**
-**  @param pal  Pointer to palette
-**
-**  @return     Pointer to palette
-*/
-// TODO: not needed??
-/*unsigned char* ConvertPalette(unsigned char* pal)
-{
-	int i;
-
-	// PNG needs 0-256
-	for (i = 0; i < 768; ++i) {
-		pal[i] <<= 2;
-	}
-
-	return pal;
-}*/
-
-
-
-//----------------------------------------------------------------------------
-//  Font
-//----------------------------------------------------------------------------
-
-
-
-
 
 //----------------------------------------------------------------------------
 //		Wav
@@ -490,7 +448,7 @@ int main(int argc, const char** argv)
 				case R: // UNUSED?
 				{
 					printf("ConvertRgb: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					Terrain terrain;
+					Tileset terrain;
 					case_func = terrain.ConvertRgb(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 					printf("...%s\n", case_func ? "ok" : "nok");
 				}
@@ -498,7 +456,7 @@ int main(int argc, const char** argv)
 				case T:  // WORKS!
 				{
 					printf("ConvertTileset: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					Terrain terrain;
+					Tileset terrain;
 					case_func = terrain.ConvertTileset(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 					printf("...%s\n", case_func ? "ok" : "nok");
 				}

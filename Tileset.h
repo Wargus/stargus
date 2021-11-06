@@ -4,14 +4,14 @@
  *      Author: Andreas Volz
  */
 
-#ifndef TERRAIN_H_
-#define TERRAIN_H_
+#ifndef TILESET_H_
+#define TILESET_H_
 
-class Terrain
+class Tileset
 {
 public:
-	Terrain();
-	virtual ~Terrain();
+	Tileset();
+	virtual ~Tileset();
 
 	/**
 	 * Not sure, but it seems this function generates some Gimp palette.
@@ -29,4 +29,4 @@ private:
 		unsigned char* mini, int index, int flipx, int flipy);
 };
 
-#endif /* TERRAIN_H_ */
+#endif /* TILESET_H_ */

@@ -5,7 +5,8 @@
  */
 
 // Local
-#include "Terrain.h"
+#include "Tileset.h"
+
 #include "endian.h"
 #include "Storm.h"
 #include "FileUtil.h"
@@ -29,12 +30,12 @@
 **		Destination directory of the data
 */
 
-Terrain::Terrain()
+Tileset::Tileset()
 {
 
 }
 
-Terrain::~Terrain()
+Tileset::~Tileset()
 {
 
 }
@@ -42,7 +43,7 @@ Terrain::~Terrain()
 /**
 **		Convert rgbx to rgb
 */
-unsigned char* Terrain::ConvertPaletteRGBXtoRGB(unsigned char* pal)
+unsigned char* Tileset::ConvertPaletteRGBXtoRGB(unsigned char* pal)
 {
 	int i;
 	int j;
@@ -59,7 +60,7 @@ unsigned char* Terrain::ConvertPaletteRGBXtoRGB(unsigned char* pal)
 /**
 **  Convert rgb to my format.
 */
-bool Terrain::ConvertRgb(const char *mpqfile, const char *arcfile, const char *file)
+bool Tileset::ConvertRgb(const char *mpqfile, const char *arcfile, const char *file)
 {
 	unsigned char *palp;
 	char buf[8192] = {'\0'};
@@ -133,7 +134,7 @@ bool Terrain::ConvertRgb(const char *mpqfile, const char *arcfile, const char *f
 /**
 **  Decode a minitile into the image.
 */
-void Terrain::DecodeMiniTile(unsigned char* image, int ix, int iy, int iadd,
+void Tileset::DecodeMiniTile(unsigned char* image, int ix, int iy, int iadd,
 	unsigned char* mini, int index, int flipx, int flipy)
 {
 	for (int y = 0; y < 8; ++y) {
@@ -147,7 +148,7 @@ void Terrain::DecodeMiniTile(unsigned char* image, int ix, int iy, int iadd,
 /**
 **  Convert tiles into image.
 */
-unsigned char* Terrain::ConvertTile(unsigned char* mini, const char* mega, int msize,
+unsigned char* Tileset::ConvertTile(unsigned char* mini, const char* mega, int msize,
 	const char* map __attribute__((unused)),	int mapl __attribute__((unused)), int *wp, int *hp)
 
 {
@@ -197,7 +198,7 @@ unsigned char* Terrain::ConvertTile(unsigned char* mini, const char* mega, int m
 /**
 **  Convert a tileset to my format.
 */
-bool Terrain::ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
+bool Tileset::ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
 {
 	unsigned char* palp;
 	unsigned char* megp;

@@ -36,13 +36,13 @@ set(CMAKE_CXX_STANDARD 17)
 # Stargus sources
 
 set(scmconvert_SRCS
-	Mpq.cpp
+	Storm.cpp
 	scm.cpp
 	FileUtil.cpp
 )
 
 set(scmconvert_HDRS
-	Mpq.h
+	Storm.h
 	FileUtil.h
 )
 
@@ -61,7 +61,7 @@ set(startool_SRCS
 	Gfu.cpp
 	Widgets.cpp
 	Png.cpp
-	Terrain.cpp
+	Tileset.cpp
 	Panel.cpp
 	Palettes.cpp
 	Hurricane.cpp
@@ -83,7 +83,7 @@ set(startool_HDRS
 	Gfu.h
 	Widgets.h
 	Png.h
-	Terrain.h
+	Tileset.h
 	Panel.h
 	Palettes.h
 	Hurricane.h
