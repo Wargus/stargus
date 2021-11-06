@@ -49,10 +49,14 @@
 #include "Gfx.h"
 #include "Gfu.h"
 #include "Tileset.h"
+#include "DataChunk.h"
 
 //stratagus
 // TODO: not sure if this is really needed to have in startool
 //#include <stratagus-gameutils.h>
+
+// activate local debug messages
+#define DEBUG 1
 
 //----------------------------------------------------------------------------
 
@@ -118,14 +122,17 @@ bool ConvertCampaign(const char *mpqfile, const char *arcfile, const char *file)
 
 	// TODO: The .chk files could be deleted after conversation
 	Storm mpq(mpqfile);
-	result = mpq.extractMemory(arcfile, &chkdata, &chklen);
-	if (result)
+//	result = mpq.extractMemory(arcfile, &chkdata, &chklen);
+
+	shared_ptr<DataChunk> data = mpq.extractDataChunk(arcfile);
+
+	if (data)
 	{
 		Chk chk;
-		chk.ConvertChk(buf, chkdata, chklen);
+		chk.ConvertChk(buf, data->getDataPointer(), data->getSize());
 	}
 
-	return result;
+	return !!data;
 }
 
 //----------------------------------------------------------------------------

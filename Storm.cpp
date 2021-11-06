@@ -52,6 +52,7 @@
 #endif
 #include <ctype.h>
 #include <iostream>
+#include <zlib.h>
 
 #include "Storm.h"
 #include "FileUtil.h"
@@ -99,6 +100,19 @@ void Storm::closeArchive()
 	{
 		SFileCloseArchive(mMpqHandle);
 	}
+}
+
+std::shared_ptr<DataChunk> Storm::extractDataChunk(const std::string &archivedFile)
+{
+	size_t bufferLen = 0;
+	unsigned char *szEntryBufferPrt;
+
+	if(extractMemory(archivedFile, &szEntryBufferPrt, &bufferLen))
+	{
+		shared_ptr<DataChunk> data = make_shared<DataChunk>(&szEntryBufferPrt, bufferLen);
+		return data;
+	}
+	return nullptr;
 }
 
 bool Storm::extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen)

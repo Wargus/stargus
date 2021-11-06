@@ -6,7 +6,6 @@
 
 // Local
 #include "Tileset.h"
-
 #include "endian.h"
 #include "Storm.h"
 #include "FileUtil.h"
@@ -15,6 +14,9 @@
 
 // System
 #include <stdlib.h>
+
+// activate local debug messages
+//#define DEBUG 1
 
 /**
 **		How much tiles are stored in a row.

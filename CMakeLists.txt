@@ -66,6 +66,7 @@ set(startool_SRCS
 	Palettes.cpp
 	Hurricane.cpp
 	Casc.cpp
+	DataChunk.cpp
 )
 
 set(startool_HDRS
@@ -88,6 +89,7 @@ set(startool_HDRS
 	Palettes.h
 	Hurricane.h
 	Casc.h
+	DataChunk.h
 )
 
 set(stargus_SRCS

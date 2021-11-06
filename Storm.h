@@ -33,12 +33,13 @@
 
 // Local
 #include "Hurricane.h"
+#include "DataChunk.h"
 
 // System
 #include <stdint.h>
 #include <StormLib.h>
-#include <zlib.h>
 #include <string>
+#include <memory>
 
 class Storm : public Hurricane
 {
@@ -57,13 +58,18 @@ public:
 
 	/**
 	 * Attention: This function malloc() bufferLen memory which you've to free yourself!
-	 * TODO: better memory handling needed
+	 * Better use extractDataChunk()
 	 */
 	bool extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen);
 
+	/**
+	 * Extract a file in memory
+	 * @return A shared_ptr with DataChunk to have responsibility of memory handling
+	 */
+	std::shared_ptr<DataChunk> extractDataChunk(const std::string &archivedFile);
+
 private:
 	HANDLE mMpqHandle; // Open archive handle
-
 
 };
 
