@@ -368,9 +368,11 @@ int main(int argc, const char** argv)
 	Preferences &preferences = Preferences::getInstance ();
 	preferences.init(); // initialize all properties once in the beginning of the application
 
-	parseOptions(argc, argv);
+	//Casc casc("/home/andreas/BigSpace/Games/StarCraft");
+	//casc.extractFile("SD\\campaign\\EXPTerran\\Terran08\\staredit\\wav\\t8m71dur.wav", "t8m71dur.wav", false);
+	//exit(0);
 
-	//Casc casc;
+	parseOptions(argc, argv);
 
 	sprintf(buf, "%s/extracted", preferences.getDestDir().c_str());
 	f = fopen(buf, "r");

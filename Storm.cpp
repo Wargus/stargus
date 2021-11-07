@@ -53,6 +53,7 @@
 #include <ctype.h>
 #include <iostream>
 #include <zlib.h>
+#include <StormLib.h>
 
 #include "Storm.h"
 #include "FileUtil.h"
@@ -60,8 +61,8 @@
 using namespace std;
 
 
-Storm::Storm()
-: mMpqHandle(nullptr)
+Storm::Storm() :
+	mMpqHandle(nullptr)
 {
 
 }
@@ -79,7 +80,6 @@ Storm::~Storm()
 
 bool Storm::openArchive(const std::string &archiveName)
 {
-	int nError = ERROR_SUCCESS;
 	bool result = true;
 
 	// close it in case it's still open
@@ -88,7 +88,6 @@ bool Storm::openArchive(const std::string &archiveName)
 	// Open an archive, e.g. "d2music.mpq"
 	if(!SFileOpenArchive(archiveName.c_str(), 0, STREAM_FLAG_READ_ONLY, &mMpqHandle))
 	{
-		nError = GetLastError();
 		result = false;
 	}
 	else
@@ -100,7 +99,7 @@ bool Storm::openArchive(const std::string &archiveName)
 
 void Storm::closeArchive()
 {
-	if(mMpqHandle != NULL)
+	if(mMpqHandle != nullptr)
 	{
 		SFileCloseArchive(mMpqHandle);
 		mArchiveName.clear();

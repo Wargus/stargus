@@ -34,8 +34,6 @@ add_project_arguments('-DSCRIPTS_PATH="' + stratagus_prefix + '/share/games/stra
 add_project_arguments('-DSTRATAGUS_BIN=' + stratagus_bin, language: 'cpp')
 add_project_arguments('-DSOURCE_DIR="' + meson.current_source_dir() + '/stargus"', language: 'cpp')
 
-
-
 stargus_sources = files('stargus.cpp')
 
 casc_dep = cpp.find_library('casc', required : false)

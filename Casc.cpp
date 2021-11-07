@@ -15,14 +15,48 @@
 
 using namespace std;
 
-Casc::Casc()
+Casc::Casc() :
+	mStorage(nullptr)
 {
-
 }
+
+Casc::Casc(const std::string &archiveName) :
+	mStorage(nullptr)
+{
+	openArchive(archiveName);
+}
+
 
 Casc::~Casc()
 {
+	closeArchive();
+}
 
+bool Casc::openArchive(const std::string &archiveName)
+{
+	bool result = true;
+
+	// close it in case it's still open
+	closeArchive();
+
+	if(!CascOpenStorage(archiveName.c_str(), 0, &mStorage))
+	{
+		result = false;
+	}
+	else
+	{
+		mArchiveName = archiveName;
+	}
+	return result;
+}
+
+void Casc::closeArchive()
+{
+	if(mStorage != nullptr)
+	{
+		CascCloseStorage(mStorage);
+		mArchiveName.clear();
+	}
 }
 
 // Not in class member to be not expose Casc to public header
@@ -51,69 +85,55 @@ PCASC_FILE_SPAN_INFO GetFileSpanInfo(HANDLE hFile)
 
 bool Casc::extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress)
 {
-    HANDLE hStorage = NULL;        // Open storage handle
-    HANDLE hFile  = NULL;          // Storage file handle
+    HANDLE hFile  = NULL;
     FILE *fileHandle  = NULL;
     bool result = true;
 
-	if(CascOpenStorage(archivedFile.c_str(), 0, &hStorage))
+	// Open a file in the storage
+	if(CascOpenFile(mStorage, archivedFile.c_str(), 0, 0, &hFile))
 	{
-		// Open a file in the storage
-		if(CascOpenFile(hStorage, archivedFile.c_str(), 0, 0, &hFile))
+		// Read the data from the file
+		char  szBuffer[0x10000];
+		DWORD dwBytes = 1;
+
+		// quick check if file has valid info
+		// TODO: later more details to read out!
+		PCASC_FILE_SPAN_INFO cascFileInfo = GetFileSpanInfo(hFile);
+
+		if(cascFileInfo)
 		{
-			// Read the data from the file
-			char  szBuffer[0x10000];
-			DWORD dwBytes = 1;
+			CheckPath(extractedName.c_str());
+			fileHandle = fopen(extractedName.c_str(), "wb");
 
-			// quick check if file has valid info
-			// TODO: later more details to read out!
-			PCASC_FILE_SPAN_INFO cascFileInfo = GetFileSpanInfo(hFile);
-
-			if(cascFileInfo)
+			while(dwBytes != 0)
 			{
-				CheckPath(extractedName.c_str());
-				fileHandle = fopen(extractedName.c_str(), "wb");
+				CascReadFile(hFile, szBuffer, sizeof(szBuffer), &dwBytes);
+				if(dwBytes == 0)
+					break;
 
-				while(dwBytes != 0)
-				{
-					CascReadFile(hFile, szBuffer, sizeof(szBuffer), &dwBytes);
-					if(dwBytes == 0)
-						break;
-
-					fwrite(szBuffer, 1, dwBytes, fileHandle);
-				}
-
-				if(fileHandle != NULL)
-				{
-					fclose(fileHandle);
-				}
-
-				if(hFile != NULL)
-				{
-					CascCloseFile(hFile);
-				}
-			}
-			else
-			{
-				cout << "*NOT* Extracting file (invalid info!): " << extractedName << endl;
+				fwrite(szBuffer, 1, dwBytes, fileHandle);
 			}
 
+			if(fileHandle != NULL)
+			{
+				fclose(fileHandle);
+			}
+
+			if(hFile != NULL)
+			{
+				CascCloseFile(hFile);
+			}
 		}
 		else
 		{
-			cout << "Error: CascOpenFile" << endl;
-			result = false;
+			cout << "*NOT* Extracting file (invalid info!): " << extractedName << endl;
 		}
-
 	}
 	else
 	{
-		cout << "Error: CascOpenStorage" << endl;
+		cout << "Error: CascOpenFile" << endl;
 		result = false;
 	}
-
-    if(hStorage != NULL)
-        CascCloseStorage(hStorage);
 
     return result;
 }

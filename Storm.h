@@ -37,7 +37,6 @@
 
 // System
 #include <stdint.h>
-#include <StormLib.h>
 #include <string>
 #include <memory>
 
@@ -69,7 +68,7 @@ public:
 	std::shared_ptr<DataChunk> extractDataChunk(const std::string &archivedFile);
 
 private:
-	HANDLE mMpqHandle; // Open archive handle
+	void *mMpqHandle; // Open archive handle
 
 };
 
