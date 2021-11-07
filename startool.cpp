@@ -50,10 +50,7 @@
 #include "Gfu.h"
 #include "Tileset.h"
 #include "DataChunk.h"
-
-//stratagus
-// TODO: not sure if this is really needed to have in startool
-//#include <stratagus-gameutils.h>
+#include "Casc.h"
 
 // activate local debug messages
 #define DEBUG 1
@@ -372,6 +369,8 @@ int main(int argc, const char** argv)
 	preferences.init(); // initialize all properties once in the beginning of the application
 
 	parseOptions(argc, argv);
+
+	//Casc casc;
 
 	sprintf(buf, "%s/extracted", preferences.getDestDir().c_str());
 	f = fopen(buf, "r");

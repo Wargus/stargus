@@ -15,7 +15,7 @@ public:
 	Casc();
 	virtual ~Casc();
 
-
+	bool extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress);
 };
 
 #endif /* CASC_H_ */

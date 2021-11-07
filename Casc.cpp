@@ -24,7 +24,8 @@ Casc::~Casc()
 {
 
 }
-#if 0
+
+// Not in class member to be not expose Casc to public header
 PCASC_FILE_SPAN_INFO GetFileSpanInfo(HANDLE hFile)
 {
     PCASC_FILE_SPAN_INFO pSpans = NULL;
@@ -48,8 +49,7 @@ PCASC_FILE_SPAN_INFO GetFileSpanInfo(HANDLE hFile)
     return pSpans;
 }
 
-//const std::string &archivedFile, const std::string &extractedName, bool compress
-int extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress)
+bool Casc::extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress)
 {
     HANDLE hStorage = NULL;        // Open storage handle
     HANDLE hFile  = NULL;          // Storage file handle
@@ -58,15 +58,6 @@ int extractFile(const std::string &archivedFile, const std::string &extractedNam
 
 	if(CascOpenStorage(archivedFile.c_str(), 0, &hStorage))
 	{
-
-		// Access the object through iterator
-
-
-		//string prefixPath = outputDir + "/" + filename;
-		//prefixPath = convertWinToUnixPath(prefixPath);
-		//cout << "filename: " << filename << endl;
-		//cout << "prefixPath: " << prefixPath << endl;
-
 		// Open a file in the storage
 		if(CascOpenFile(hStorage, archivedFile.c_str(), 0, 0, &hFile))
 		{
@@ -82,7 +73,6 @@ int extractFile(const std::string &archivedFile, const std::string &extractedNam
 			{
 				CheckPath(extractedName.c_str());
 				fileHandle = fopen(extractedName.c_str(), "wb");
-				//cout << "Extracting file: " << extractedName << endl;
 
 				while(dwBytes != 0)
 				{
@@ -127,5 +117,5 @@ int extractFile(const std::string &archivedFile, const std::string &extractedNam
 
     return result;
 }
-#endif
+
 

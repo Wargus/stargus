@@ -33,6 +33,7 @@
 			      "contrib", "tilesets", \
 			      "scripts", "scripts", NULL }
 
-const char* SRC_PATH() { return __FILE__; }
+//const char* SRC_PATH() { return __FILE__; }
+const char* SRC_PATH() { return SOURCE_DIR; }
 
 #include "stratagus-game-launcher.h"
