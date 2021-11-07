@@ -1,0 +1,2 @@
+option('STRATAGUS_INCLUDE_DIR', type : 'string', value : '/usr/include/', description : 'Full path to search for "stratagus-game-launcher.h"')
+option('STRATAGUS_BIN', type : 'string', value : 'stratagus', description : 'Full path to "stratagus" binary. In debug case the binary is "stratagus-dbg".')

@@ -82,14 +82,18 @@ bool Storm::openArchive(const std::string &archiveName)
 	int nError = ERROR_SUCCESS;
 	bool result = true;
 
+	// close it in case it's still open
+	closeArchive();
+
 	// Open an archive, e.g. "d2music.mpq"
 	if(!SFileOpenArchive(archiveName.c_str(), 0, STREAM_FLAG_READ_ONLY, &mMpqHandle))
 	{
 		nError = GetLastError();
-	}
-	if(nError != ERROR_SUCCESS)
-	{
 		result = false;
+	}
+	else
+	{
+		mArchiveName = archiveName;
 	}
 	return result;
 }
@@ -99,6 +103,7 @@ void Storm::closeArchive()
 	if(mMpqHandle != NULL)
 	{
 		SFileCloseArchive(mMpqHandle);
+		mArchiveName.clear();
 	}
 }
 

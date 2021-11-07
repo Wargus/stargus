@@ -14,6 +14,8 @@ class Casc : public Hurricane
 public:
 	Casc();
 	virtual ~Casc();
+
+
 };
 
 #endif /* CASC_H_ */

@@ -5,6 +5,3 @@
  */
 
 #include "WorldMap.h"
-
-
-
