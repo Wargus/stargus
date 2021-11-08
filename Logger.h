@@ -21,6 +21,15 @@ public:
   Logger(const std::wstring &name) :
     mLogger(log4cxx::Logger::getLogger(name)) {}
 
+  /**
+   * Deactivate all logging in the application complete
+   */
+  void off()
+  {
+	log4cxx::BasicConfigurator::configure();
+    mLogger->setLevel(log4cxx::Level::getOff());
+  }
+
   log4cxx::LoggerPtr operator = (const Logger &logger)
   {
     return mLogger;

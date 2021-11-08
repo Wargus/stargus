@@ -43,10 +43,13 @@ stargus_sources = files('stargus.cpp')
 casc_dep = cpp.find_library('casc', required : false)
 storm_dep = cpp.find_library('storm', required : false)
 png_dep = cpp.find_library('png', required : true)
-zlib_dep = [dependency('zlib', required : false)]
-imagemagickpp_dep = [dependency('ImageMagick++', required : false)]
+zlib_dep = dependency('zlib', required : false)
+imagemagickpp_dep = dependency('ImageMagick++', required : false)
 
-log4cxx_dep = [dependency('liblog4cxx', required : false)]
+log4cxx_dep = dependency('liblog4cxx', required : false)
+if log4cxx_dep.found()
+  add_project_arguments('-DHAVE_LOG4CXX', language: 'cpp')
+endif
 
 cppunit_dep = [dependency('cppunit', required : false)]
 

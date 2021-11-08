@@ -295,7 +295,7 @@ enum  optionIndex { UNKNOWN, HELP, VIDEO, VERSIONPARAM };
   {VIDEO,	0,"v" , "video",Arg::None, "  --video, -v  \t\tExtract and convert videos" },
   {VERSIONPARAM, 	0,"V" , "version",Arg::None, "  --version, -V  \t\tShow version" },
   {UNKNOWN, 0,""  ,  ""   ,option::Arg::None, "\narchive-directory \t\tDirectory which include the archive install.exe or stardat.mpq...\n"
-                                              "destination-directory \t\tDirectory where the extracted files are placed.\n""mpqlist-file \t\tmpqlist.txt file which contains mpq file names\n"},
+                                              "destination-directory \t\tDirectory where the extracted files are placed.\n"},
   {0,0,0,0,0,0}
  };
 
@@ -362,10 +362,17 @@ int parseOptions(int argc, const char **argv)
 int main(int argc, const char** argv)
 {
 	#ifdef HAVE_LOG4CXX
+	if(FileExists("logging.prop"))
+	{
 	  log4cxx::PropertyConfigurator::configure("logging.prop");
+	}
+	else
+	{
+	  logger.off();
+	}
 	#endif // HAVE_LOG4CXX
 
-	LOG4CXX_INFO(mLogger, "Application start");
+	LOG4CXX_INFO(logger, "Application start");
 
 	unsigned u;
 	char buf[8192] = {'\0'};
