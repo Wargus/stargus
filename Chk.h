@@ -18,9 +18,7 @@ public:
 	void loadFromBuffer(unsigned char *chkdata, int len);
 	void ConvertChk(const char *newname, unsigned char *chkdata, int chklen);
 
-
 	void SaveMap(const char *name);
-
 
 private:
 	void SaveSMS(const char *name);

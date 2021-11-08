@@ -111,20 +111,14 @@ bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool
  */
 bool ConvertCampaign(const char *mpqfile, const char *arcfile, const char *file)
 {
-	FILE *fd;
 	char buf[1024];
-	char buf2[1024];
 	bool result = true;
-	unsigned char *chkdata;
-	size_t chklen;
 
 	Preferences &preferences = Preferences::getInstance ();
 	sprintf(buf, "%s/%s", preferences.getDestDir().c_str(), file);
 
 	// TODO: The .chk files could be deleted after conversation
 	Storm mpq(mpqfile);
-//	result = mpq.extractMemory(arcfile, &chkdata, &chklen);
-
 	shared_ptr<DataChunk> data = mpq.extractDataChunk(arcfile);
 
 	if (data)
