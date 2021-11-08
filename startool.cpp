@@ -399,7 +399,8 @@ int main(int argc, const char** argv)
 	string mpqfile;
 	string submpqfile;
 
-	bool mpq = false;
+	// TODO: set this to true for activating the SC remastered Casc code
+	bool mpq = true;
 
 	if(mpq)
 	{
@@ -562,22 +563,33 @@ int main(int argc, const char** argv)
 	else // Casc
 	{
 		unsigned int len = sizeof(RMTodo) / sizeof(*RMTodo);
-		shared_ptr<Casc> casc = make_shared<Casc>("/home/andreas/BigSpace/Games/StarCraft");
+		shared_ptr<Casc> hurricane = make_shared<Casc>("/home/andreas/BigSpace/Games/StarCraft");
+		Control *c = RMTodo;
+
 
 		bool case_func = false;
 		for (u = 0; u < len; ++u)
 		{
-			switch (RMTodo[u].Type)
+			switch (c[u].Type)
 			{
-			case D:
-			{
-				printf("ConvertDds: %s, %s, %s", mpqfile.c_str(), RMTodo[u].File, RMTodo[u].ArcFile);
+				case D: // WORKS
+				{
+					printf("ConvertDds: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 
-				Dds dds(casc);
-				case_func = dds.convert(RMTodo[1].ArcFile, RMTodo[1].File);
-				printf("...%s\n", case_func ? "ok" : "nok");
-			}
-				break;
+					Dds dds(hurricane);
+					case_func = dds.convert(c[1].ArcFile, c[1].File);
+					printf("...%s\n", case_func ? "ok" : "nok");
+				}
+					break;
+				case N: // WORKS!
+				{
+					printf("ConvertFont: %s, %s, %s",mpqfile.c_str(), c[u].File, c[u].ArcFile);
+
+					Font font(hurricane);
+					case_func = font.convert(c[u].ArcFile, c[u].File, 2);
+					printf("...%s\n", case_func ? "ok" : "nok");
+				}
+					break;
 			}
 		}
 
