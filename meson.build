@@ -43,12 +43,16 @@ stargus_sources = files('stargus.cpp')
 casc_dep = cpp.find_library('casc', required : false)
 storm_dep = cpp.find_library('storm', required : false)
 png_dep = cpp.find_library('png', required : true)
-zlib_dep = [dependency('zlib')]
-imagemagickpp_dep = [dependency('ImageMagick++')]
+zlib_dep = [dependency('zlib', required : false)]
+imagemagickpp_dep = [dependency('ImageMagick++', required : false)]
+
+log4cxx_dep = [dependency('liblog4cxx', required : false)]
+
+cppunit_dep = [dependency('cppunit', required : false)]
 
 executable('startool', 
 	startool_sources,
-	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep],
+	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, cppunit_dep],
 	install : true)
 
 executable('stargus', 

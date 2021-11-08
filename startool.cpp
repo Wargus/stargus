@@ -52,6 +52,7 @@
 #include "DataChunk.h"
 #include "Casc.h"
 #include "Dds.h"
+#include "Logger.h"
 
 // System
 #include <memory>
@@ -60,6 +61,8 @@
 #define DEBUG 1
 
 using namespace std;
+
+Logger logger("startool.main");
 
 //----------------------------------------------------------------------------
 
@@ -358,6 +361,12 @@ int parseOptions(int argc, const char **argv)
 */
 int main(int argc, const char** argv)
 {
+	#ifdef HAVE_LOG4CXX
+	  log4cxx::PropertyConfigurator::configure("logging.prop");
+	#endif // HAVE_LOG4CXX
+
+	LOG4CXX_INFO(mLogger, "Application start");
+
 	unsigned u;
 	char buf[8192] = {'\0'};
 	int i;
