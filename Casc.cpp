@@ -83,6 +83,64 @@ PCASC_FILE_SPAN_INFO GetFileSpanInfo(HANDLE hFile)
     return pSpans;
 }
 
+bool Casc::extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen)
+{
+	HANDLE hFile  = nullptr;
+	bool result = true;
+	unsigned char *szEntryBuffer = nullptr;
+
+	// Open a file in the storage
+	if(CascOpenFile(mStorage, archivedFile.c_str(), 0, 0, &hFile))
+	{
+		// Read the data from the file
+		char  szBuffer[0x10000];
+		DWORD dwBytes = 1;
+
+		// quick check if file has valid info
+		// TODO: later more details to read out!
+		PCASC_FILE_SPAN_INFO cascFileInfo = GetFileSpanInfo(hFile);
+
+		if(cascFileInfo)
+		{
+			int i = 0;
+			size_t len = 0;
+			szEntryBuffer = (unsigned char*) malloc(sizeof(szBuffer));
+			while(dwBytes > 0)
+			{
+				CascReadFile(hFile, szBuffer, sizeof(szBuffer), &dwBytes);
+				if(dwBytes > 0)
+				{
+					len = len + dwBytes;
+					szEntryBuffer = (unsigned char*) realloc(szEntryBuffer, len);
+					memcpy(szEntryBuffer + (i*sizeof(szBuffer)), szBuffer, dwBytes);
+
+				}
+				i++;
+			}
+
+
+
+			if(hFile != nullptr)
+			{
+				CascCloseFile(hFile);
+			}
+		}
+		else
+		{
+			cout << "*NOT* Extracting file (invalid info!): " << archivedFile << endl;
+		}
+	}
+	else
+	{
+		cout << "Error: CascOpenFile" << endl;
+		result = false;
+	}
+
+	*szEntryBufferPrt = szEntryBuffer;
+
+	return result;
+}
+
 bool Casc::extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress)
 {
     HANDLE hFile  = NULL;
@@ -137,5 +195,3 @@ bool Casc::extractFile(const std::string &archivedFile, const std::string &extra
 
     return result;
 }
-
-

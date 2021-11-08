@@ -65,7 +65,7 @@ public:
 	 * Extract a file in memory
 	 * @return A shared_ptr with DataChunk to have responsibility of memory handling
 	 */
-	std::shared_ptr<DataChunk> extractDataChunk(const std::string &archivedFile);
+	//std::shared_ptr<DataChunk> extractDataChunk(const std::string &archivedFile);
 
 private:
 	void *mMpqHandle; // Open archive handle

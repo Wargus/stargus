@@ -10,12 +10,14 @@
 #include "Preferences.h"
 #include "Storm.h"
 #include "Png.h"
+#include "Hurricane.h"
 
 // System
 #include <stdlib.h>
 #include <string.h>
 
-Pcx::Pcx()
+Pcx::Pcx(std::shared_ptr<Hurricane> hurricane) :
+	mHurricane (hurricane)
 {
 
 }
@@ -117,7 +119,7 @@ void Pcx::convertToRawImage(unsigned char *pcx, unsigned char **raw,
 **  @param arcfile File identifier in the MPQ file
 **  @param file Place to save the file on the drive (relative)
 */
-bool Pcx::convert(const char *mpqfile, const char *arcfile, const char *file)
+bool Pcx::convert(const char *arcfile, const char *file)
 {
 	unsigned char *palp;
 	unsigned char *pcxp;
@@ -127,8 +129,7 @@ bool Pcx::convert(const char *mpqfile, const char *arcfile, const char *file)
 	int h;
 	bool result = true;
 
-	Storm mpq(mpqfile);
-	result = mpq.extractMemory(arcfile, &pcxp, NULL);
+	result = mHurricane->extractMemory(arcfile, &pcxp, NULL);
 	if (result)
 	{
 		convertToRawImage(pcxp, &image, &palp, &w, &h);

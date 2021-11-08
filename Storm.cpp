@@ -106,28 +106,16 @@ void Storm::closeArchive()
 	}
 }
 
-std::shared_ptr<DataChunk> Storm::extractDataChunk(const std::string &archivedFile)
-{
-	size_t bufferLen = 0;
-	unsigned char *szEntryBufferPrt;
-
-	if(extractMemory(archivedFile, &szEntryBufferPrt, &bufferLen))
-	{
-		shared_ptr<DataChunk> data = make_shared<DataChunk>(&szEntryBufferPrt, bufferLen);
-		return data;
-	}
-	return nullptr;
-}
-
 bool Storm::extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen)
 {
 	int nError = ERROR_SUCCESS;
-	unsigned char *szEntryBuffer = NULL;
+	unsigned char *szEntryBuffer = nullptr;
 	HANDLE hFile  = nullptr;          // Archived file handle
 	bool result = true;
 
 	// Open a file in the archive, e.g. "data\global\music\Act1\tristram.wav"
-	if(nError == ERROR_SUCCESS) {
+	if(nError == ERROR_SUCCESS)
+	{
 		if(!SFileOpenFileEx(mMpqHandle, archivedFile.c_str(), 0, &hFile))
 			nError = GetLastError();
 	}
@@ -135,18 +123,20 @@ bool Storm::extractMemory(const std::string &archivedFile, unsigned char **szEnt
 	int i = 0;
 	size_t len = 0;
 	// Read the file from the archive
-	if(nError == ERROR_SUCCESS) {
+	if(nError == ERROR_SUCCESS)
+	{
 		char szBuffer[0x10000];
 		szEntryBuffer = (unsigned char*) malloc(sizeof(szBuffer));
 		DWORD dwBytes = 1;
 
-		while(dwBytes > 0) {
+		while(dwBytes > 0)
+		{
 			SFileReadFile(hFile, szBuffer, sizeof(szBuffer), &dwBytes, NULL);
-			if(dwBytes > 0) {
-				len = len + dwBytes; // TODO old was: sizeof(szBuffer) * (i+1);
-				//printf("pcx buffer len: %d\n", len);
+			if(dwBytes > 0)
+			{
+				len = len + dwBytes;
 				szEntryBuffer = (unsigned char*) realloc(szEntryBuffer, len);
-				void *targetBuffer = (unsigned char*) memcpy(szEntryBuffer + (i*sizeof(szBuffer)), szBuffer, dwBytes);
+				memcpy(szEntryBuffer + (i*sizeof(szBuffer)), szBuffer, dwBytes);
 
 			}
 			i++;

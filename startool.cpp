@@ -52,8 +52,13 @@
 #include "DataChunk.h"
 #include "Casc.h"
 
+// System
+#include <memory>
+
 // activate local debug messages
 #define DEBUG 1
+
+using namespace std;
 
 //----------------------------------------------------------------------------
 
@@ -71,9 +76,7 @@
  */
 bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool extracted)
 {
-	FILE *fd;
 	char buf[1024];
-	char buf2[1024];
 	bool result = true;
 
 	Preferences &preferences = Preferences::getInstance ();
@@ -496,16 +499,18 @@ int main(int argc, const char** argv)
 				case N: // WORKS!
 				{
 					printf("ConvertFont: %s, %s, %s",mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					Font font;
-					case_func = font.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, 2);
+					//shared_ptr<Casc> casc = make_shared<Casc>("/home/andreas/BigSpace/Games/StarCraft");
+					shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
+					Font font(storm);
+					case_func = font.convert(string("SD/") + c[u].ArcFile, c[u].File, 2);
 					printf("...%s\n", case_func ? "ok" : "nok");
 				}
 					break;
-				case W: // WORKS!
+				/*case W: // WORKS!
 					printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 					case_func = ConvertWav(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 					printf("...%s\n", case_func ? "ok" : "nok");
-					break;
+					break;*/
 				case V: // WORKS!
 					if(preferences.getVideoExtraction()) {
 						printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
@@ -516,8 +521,10 @@ int main(int argc, const char** argv)
 				case H: // WORKS!
 				{
 					printf("ConvertPcx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					Pcx pcx;
-					case_func = pcx.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+					//shared_ptr<Casc> casc = make_shared<Casc>("/home/andreas/BigSpace/Games/StarCraft");
+					shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
+					Pcx pcx(storm);
+					case_func = pcx.convert(c[u].ArcFile, c[u].File);
 					printf("...%s\n", case_func ? "ok" : "nok");
 				}
 					break;

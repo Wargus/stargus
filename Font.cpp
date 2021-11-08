@@ -24,7 +24,8 @@
 */
 #define FONT_PATH		"graphics/ui/fonts"
 
-Font::Font()
+Font::Font(std::shared_ptr<Hurricane> hurricane) :
+	mHurricane (hurricane)
 {
 
 }
@@ -39,7 +40,7 @@ Font::~Font()
 **
 **  @return true if everything is ok
 */
-bool Font::convert(const char *mpqfile, const char* arcfile, const char* file, int pale)
+bool Font::convert(const std::string &arcfile, const char* file, int pale)
 {
 	unsigned char* palp;
 	unsigned char* fntp;
@@ -51,8 +52,7 @@ bool Font::convert(const char *mpqfile, const char* arcfile, const char* file, i
 
 	palp = Palettes[pale];
 
-	Storm mpq(mpqfile);
-	result = mpq.extractMemory(arcfile, &fntp, NULL);
+	result = mHurricane->extractMemory(arcfile, &fntp, NULL);
 	if (result)
 	{
 		image = Font::convertImage(fntp, &w, &h);
