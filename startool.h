@@ -154,7 +154,8 @@ enum _archive_type_ {
 	E,    // Raw extract                   (name)
 	V,    // Video                         (name,video)
 	L,    // Campaign Levels
-	Q     // MPQ archive
+	Q,    // MPQ archive
+	D     // Graphics in DDS format
 };
 
 /*// Take over from wargus - remove if not needed for stargus
@@ -2859,7 +2860,6 @@ Control Todo[] = {
 	{V,0,"portrait/zzergl/zzetlk01.ogv","portrait\\zzergl\\zzetlk01.smk" __4},
 	{V,0,"portrait/zzergl/zzefid03.ogv","portrait\\zzergl\\zzefid03.smk" __4},
 	{V,0,"portrait/zzergl/zzefid01.ogv","portrait\\zzergl\\zzefid01.smk" __4}
-
 };
 
 
@@ -2878,6 +2878,12 @@ Control Todo[] = {
 //	{G,0,"neutral/units/tpdShad","unit\\neutral\\tpdShad.grp",1 __3},
 //	{G,0,"neutral/units/uraj","unit\\neutral\\uraj.grp",1 __3},
 
+
+Control RMTodo[] = {
+		{D,0,"game/consoles/protoss/conover.png","game/consoles/protoss/conover.DDS" __4},
+		{D,0,"HD2/game/consoles/protoss/console_center.png","HD2/game/consoles/protoss/console_center.DDS" __4}
+
+};
 
 
 

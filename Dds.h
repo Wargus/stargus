@@ -1,11 +1,11 @@
 /*
- * Pcx.h
+ * Dds.h
  *
  *      Author: Andreas Volz
  */
 
-#ifndef PCX_H_
-#define PCX_H_
+#ifndef DDS_H_
+#define DDS_H_
 
 // System
 #include <memory>
@@ -13,21 +13,16 @@
 // Forward declarations
 class Hurricane;
 
-class Pcx
+class Dds
 {
 public:
-	Pcx(std::shared_ptr<Hurricane> hurricane);
-	virtual ~Pcx();
+	Dds(std::shared_ptr<Hurricane> hurricane);
+	virtual ~Dds();
 
 	bool convert(const std::string &arcfile, const std::string &file);
 
 private:
-	void convertToRawImage(unsigned char *pcx, unsigned char **raw,
-			unsigned char **pal, int *w, int *h);
-
 	std::shared_ptr<Hurricane> mHurricane;
 };
 
-
-
-#endif /* PCX_H_ */
+#endif /* DDS_H_ */

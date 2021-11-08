@@ -40,7 +40,7 @@ Font::~Font()
 **
 **  @return true if everything is ok
 */
-bool Font::convert(const std::string &arcfile, const char* file, int pale)
+bool Font::convert(const std::string &arcfile, const std::string &file, int pale)
 {
 	unsigned char* palp;
 	unsigned char* fntp;
@@ -58,7 +58,7 @@ bool Font::convert(const std::string &arcfile, const char* file, int pale)
 		image = Font::convertImage(fntp, &w, &h);
 		free(fntp);
 		Preferences &preferences = Preferences::getInstance ();
-		sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), FONT_PATH, file);
+		sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), FONT_PATH, file.c_str());
 		CheckPath(buf);
 		Png::save(buf, image, w, h, palp, 255);
 

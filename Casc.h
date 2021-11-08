@@ -30,13 +30,6 @@ public:
 	 */
 	bool extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen);
 
-	/**
-	 * Extract a file in memory
-	 * @return A shared_ptr with DataChunk to have responsibility of memory handling
-	 */
-	//std::shared_ptr<DataChunk> extractDataChunk(const std::string &archivedFile);
-
-
 private:
 	void *mStorage;
 };

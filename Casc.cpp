@@ -118,7 +118,10 @@ bool Casc::extractMemory(const std::string &archivedFile, unsigned char **szEntr
 				i++;
 			}
 
-
+			if(bufferLen != NULL)
+			{
+				*bufferLen = len;
+			}
 
 			if(hFile != nullptr)
 			{

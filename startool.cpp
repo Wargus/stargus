@@ -51,6 +51,7 @@
 #include "Tileset.h"
 #include "DataChunk.h"
 #include "Casc.h"
+#include "Dds.h"
 
 // System
 #include <memory>
@@ -398,160 +399,189 @@ int main(int argc, const char** argv)
 	string mpqfile;
 	string submpqfile;
 
-	for (i = 0; i <= 1; ++i)
-	{
-		Control *c;
-		unsigned len;
-		bool extracted = false;
+	bool mpq = false;
 
-		//i = 0;
-		switch (i)
+	if(mpq)
+	{
+		for (i = 0; i <= 1; ++i)
 		{
-		case 0:
-			// CD install.exe renamed to StarCraft.mpq or other main mpq file
-			c = CDTodo;
-			len = sizeof(CDTodo) / sizeof(*CDTodo);
-			extracted = false;
-			break;
-		case 1:
-			// StarDat.mpq or stardat.mpq from CD or hard drive
-			c = Todo;
-			len = sizeof(Todo) / sizeof(*Todo);
-			extracted = true;
-			break;
+			Control *c;
+			unsigned int len;
+			bool extracted = false;
+
+			switch (i)
+			{
+			case 0:
+				// CD install.exe renamed to StarCraft.mpq or other main mpq file
+				c = CDTodo;
+				len = sizeof(CDTodo) / sizeof(*CDTodo);
+				extracted = false;
+				break;
+			case 1:
+				// StarDat.mpq or stardat.mpq from CD or hard drive
+				c = Todo;
+				len = sizeof(Todo) / sizeof(*Todo);
+				extracted = true;
+				break;
+			}
+
+			bool case_func = false;
+			for (u = 0; u < len; ++u)
+			{
+				// This is only for debugging single steps while development!!!
+				//if(c[u].Type != F && c[u].Type != Q && c[u].Type != D)
+					//continue;
+
+				switch (c[u].Type)
+				{
+					case F:
+						if(submpqfile.empty())
+						{
+							sprintf(buf, "%s/%s", preferences.getArchiveDir().c_str(), c[u].ArcFile);
+						}
+						else
+						{
+							sprintf(buf, "%s", submpqfile.c_str());
+						}
+						printf("FileExists: %s", buf);
+						case_func = FileExists(buf);
+						if(case_func) {
+							mpqfile = buf;
+						}
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					case Q:
+						printf("MPQSubExtract: %s, %s", c[u].File, c[u].ArcFile);
+						case_func = MPQSubExtract(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						if(case_func) {
+							sprintf(buf, "%s/%s", preferences.getDestDir().c_str(), c[u].File);
+							submpqfile = buf;
+						}
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					case M: // WORKS!
+						printf("ConvertMap: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						case_func = ConvertMap(mpqfile.c_str(), c[u].ArcFile, c[u].File, extracted);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					case R: // UNUSED?
+					{
+						printf("ConvertRgb: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						Tileset terrain;
+						case_func = terrain.ConvertRgb(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						printf("...%s\n", case_func ? "ok" : "nok");
+					}
+						break;
+					case T:  // WORKS!
+					{
+						printf("ConvertTileset: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						Tileset terrain;
+						case_func = terrain.ConvertTileset(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						printf("...%s\n", case_func ? "ok" : "nok");
+					}
+						break;
+					case G: // WORKS!
+					{
+						printf("ConvertGfx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						Gfx gfx;
+						case_func = gfx.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+						printf("...%s\n", case_func ? "ok" : "nok");
+					}
+						break;
+					case U: // WORKS!
+					{
+						printf("ConvertGfu: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
+						Gfu gfu;
+						case_func = gfu.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+						printf("...%s\n", case_func ? "ok" : "nok");
+					}
+						break;
+					case I: // WORKS!
+					{
+						printf("ConvertWidgets: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
+						Widgets widgets;
+						case_func = widgets.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+						printf("...%s\n", case_func ? "ok" : "nok");
+					}
+						break;
+					case N: // WORKS!
+					{
+						printf("ConvertFont: %s, %s, %s",mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
+						Font font(storm);
+						case_func = font.convert(string("SD/") + c[u].ArcFile, c[u].File, 2);
+						printf("...%s\n", case_func ? "ok" : "nok");
+					}
+						break;
+					case W: // WORKS!
+						printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						case_func = ConvertWav(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					case V: // WORKS!
+						if(preferences.getVideoExtraction()) {
+							printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+							case_func = ConvertVideo(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+							printf("...%s\n", case_func ? "ok" : "nok");
+						}
+						break;
+					case H: // WORKS!
+					{
+						printf("ConvertPcx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
+						Pcx pcx(storm);
+						case_func = pcx.convert(c[u].ArcFile, c[u].File);
+						printf("...%s\n", case_func ? "ok" : "nok");
+					}
+						break;
+
+					case E: // WORKS
+						printf("RawExtract: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						// TBD: I think campaigns this must be somehow converted to stratagus
+						case_func = RawExtract(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					case L:
+						printf("ConvertCampaign: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						case_func = ConvertCampaign(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						printf("...%s\n", case_func ? "ok" : "nok");
+						break;
+					default:
+						break;
+				}
+			}
 		}
+		// remove temporary sub files
+		if (!submpqfile.empty())
+		{
+			unlink(submpqfile.c_str());
+		}
+
+		CreatePanels();
+	}
+	else // Casc
+	{
+		unsigned int len = sizeof(RMTodo) / sizeof(*RMTodo);
+		shared_ptr<Casc> casc = make_shared<Casc>("/home/andreas/BigSpace/Games/StarCraft");
 
 		bool case_func = false;
 		for (u = 0; u < len; ++u)
 		{
-			switch (c[u].Type)
+			switch (RMTodo[u].Type)
 			{
-				case F:
-					if(submpqfile.empty())
-					{
-						sprintf(buf, "%s/%s", preferences.getArchiveDir().c_str(), c[u].ArcFile);
-					}
-					else
-					{
-						sprintf(buf, "%s", submpqfile.c_str());
-					}
-					printf("FileExists: %s", buf);
-					case_func = FileExists(buf);
-					if(case_func) {
-						mpqfile = buf;
-					}
-					printf("...%s\n", case_func ? "ok" : "nok");
-					break;
-				case Q:
-					printf("MPQSubExtract: %s, %s", c[u].File, c[u].ArcFile);
-					case_func = MPQSubExtract(mpqfile.c_str(), c[u].ArcFile, c[u].File);
-					if(case_func) {
-						sprintf(buf, "%s/%s", preferences.getDestDir().c_str(), c[u].File);
-						submpqfile = buf;
-					}
-					printf("...%s\n", case_func ? "ok" : "nok");
-					break;
-				case M: // WORKS!
-					printf("ConvertMap: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					case_func = ConvertMap(mpqfile.c_str(), c[u].ArcFile, c[u].File, extracted);
-					printf("...%s\n", case_func ? "ok" : "nok");
-					break;
-				case R: // UNUSED?
-				{
-					printf("ConvertRgb: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					Tileset terrain;
-					case_func = terrain.ConvertRgb(mpqfile.c_str(), c[u].ArcFile, c[u].File);
-					printf("...%s\n", case_func ? "ok" : "nok");
-				}
-					break;
-				case T:  // WORKS!
-				{
-					printf("ConvertTileset: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					Tileset terrain;
-					case_func = terrain.ConvertTileset(mpqfile.c_str(), c[u].ArcFile, c[u].File);
-					printf("...%s\n", case_func ? "ok" : "nok");
-				}
-					break;
-				case G: // WORKS!
-				{
-					printf("ConvertGfx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					Gfx gfx;
-					case_func = gfx.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
-					printf("...%s\n", case_func ? "ok" : "nok");
-				}
-					break;
-				case U: // WORKS!
-				{
-					printf("ConvertGfu: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
-					Gfu gfu;
-					case_func = gfu.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
-					printf("...%s\n", case_func ? "ok" : "nok");
-				}
-					break;
-				case I: // WORKS!
-				{
-					printf("ConvertWidgets: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
-					Widgets widgets;
-					case_func = widgets.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
-					printf("...%s\n", case_func ? "ok" : "nok");
-				}
-					break;
-				case N: // WORKS!
-				{
-					printf("ConvertFont: %s, %s, %s",mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					//shared_ptr<Casc> casc = make_shared<Casc>("/home/andreas/BigSpace/Games/StarCraft");
-					shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
-					Font font(storm);
-					case_func = font.convert(string("SD/") + c[u].ArcFile, c[u].File, 2);
-					printf("...%s\n", case_func ? "ok" : "nok");
-				}
-					break;
-				/*case W: // WORKS!
-					printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					case_func = ConvertWav(mpqfile.c_str(), c[u].ArcFile, c[u].File);
-					printf("...%s\n", case_func ? "ok" : "nok");
-					break;*/
-				case V: // WORKS!
-					if(preferences.getVideoExtraction()) {
-						printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-						case_func = ConvertVideo(mpqfile.c_str(), c[u].ArcFile, c[u].File);
-						printf("...%s\n", case_func ? "ok" : "nok");
-					}
-					break;
-				case H: // WORKS!
-				{
-					printf("ConvertPcx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					//shared_ptr<Casc> casc = make_shared<Casc>("/home/andreas/BigSpace/Games/StarCraft");
-					shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
-					Pcx pcx(storm);
-					case_func = pcx.convert(c[u].ArcFile, c[u].File);
-					printf("...%s\n", case_func ? "ok" : "nok");
-				}
-					break;
-				case E: // WORKS
-					printf("RawExtract: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					// TBD: I think campaigns this must be somehow converted to stratagus
-					case_func = RawExtract(mpqfile.c_str(), c[u].ArcFile, c[u].File);
-					printf("...%s\n", case_func ? "ok" : "nok");
-					break;
-				case L:
-					printf("ConvertCampaign: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-					case_func = ConvertCampaign(mpqfile.c_str(), c[u].ArcFile, c[u].File);
-					printf("...%s\n", case_func ? "ok" : "nok");
-					break;
-				default:
-					break;
+			case D:
+			{
+				printf("ConvertDds: %s, %s, %s", mpqfile.c_str(), RMTodo[u].File, RMTodo[u].ArcFile);
+
+				Dds dds(casc);
+				case_func = dds.convert(RMTodo[1].ArcFile, RMTodo[1].File);
+				printf("...%s\n", case_func ? "ok" : "nok");
+			}
+				break;
 			}
 		}
-	}
 
-	// remove temporary sub files
-	if (!submpqfile.empty())
-	{
-		unlink(submpqfile.c_str());
 	}
-	
-	CreatePanels();
 
 	sprintf(buf, "%s/extracted", preferences.getDestDir().c_str());
 	f = fopen(buf, "w");
