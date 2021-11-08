@@ -430,7 +430,7 @@ int main(int argc, const char** argv)
 			for (u = 0; u < len; ++u)
 			{
 				// This is only for debugging single steps while development!!!
-				//if(c[u].Type != F && c[u].Type != Q && c[u].Type != D)
+				//if(c[u].Type != F && c[u].Type != Q && c[u].Type != N)
 					//continue;
 
 				switch (c[u].Type)
@@ -510,7 +510,7 @@ int main(int argc, const char** argv)
 						printf("ConvertFont: %s, %s, %s",mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
 						Font font(storm);
-						case_func = font.convert(string("SD/") + c[u].ArcFile, c[u].File, 2);
+						case_func = font.convert(c[u].ArcFile, c[u].File, 2);
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
