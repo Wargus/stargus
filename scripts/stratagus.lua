@@ -37,13 +37,14 @@
 --  Version
 -------------------------------------------------------------------------------
 
-
-
 Name = "Stargus"
 Version = "3.1.3"
 Homepage = "https://github.com/Wargus/stargus"
 Licence = "GPL v2"
 Copyright = "Copyright (c) 1998-2015 by The Stratagus Project and Pali Rohar"
+
+-- activate debugging
+require("scripts/mobdebug").start()
 
 -------------------------------------------------------------------------------
 --  Config-Part
@@ -167,9 +168,6 @@ SetFogOfWarGraphics("tilesets/fog.png")
 --  Choose your default for minimap with/without terrain.
 SetMinimapTerrain(true)
 --SetMinimapTerrain(false)
-
---  Set Fog of War opacity
-SetFogOfWarOpacity(128)
 
 -------------------------------------------------------------------------------
 

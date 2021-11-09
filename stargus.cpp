@@ -14,8 +14,9 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 */
+
+#include <iostream>
 
 #define GAME_NAME "Stargus"
 #define GAME_CD "Starcraft CD or installation stardat.mpq or starcraft.mpq file"
@@ -34,6 +35,8 @@
 			      "scripts", "scripts", NULL }
 
 //const char* SRC_PATH() { return __FILE__; }
-const char* SRC_PATH() { return SOURCE_DIR; }
+const char* SRC_PATH() {
+	std::cout << "sourcedir:" << SOURCE_DIR << std::endl;
+	return SOURCE_DIR; }
 
 #include "stratagus-game-launcher.h"

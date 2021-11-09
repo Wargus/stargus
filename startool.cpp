@@ -372,8 +372,6 @@ int main(int argc, const char** argv)
 	}
 	#endif // HAVE_LOG4CXX
 
-	LOG4CXX_INFO(logger, "Application start");
-
 	unsigned u;
 	char buf[8192] = {'\0'};
 	int i;
@@ -387,6 +385,8 @@ int main(int argc, const char** argv)
 	//exit(0);
 
 	parseOptions(argc, argv);
+
+	LOG4CXX_INFO(logger, "Application start");
 
 	sprintf(buf, "%s/extracted", preferences.getDestDir().c_str());
 	f = fopen(buf, "r");
