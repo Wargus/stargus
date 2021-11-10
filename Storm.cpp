@@ -126,7 +126,8 @@ bool Storm::extractMemory(const std::string &archivedFile, unsigned char **szEnt
 	if(nError == ERROR_SUCCESS)
 	{
 		char szBuffer[0x10000];
-		szEntryBuffer = (unsigned char*) malloc(sizeof(szBuffer));
+
+		szEntryBuffer = (unsigned char*) malloc(sizeof(szBuffer)); // TODO: this might me useless and then free() could be avoid below
 		DWORD dwBytes = 1;
 
 		while(dwBytes > 0)
@@ -150,10 +151,15 @@ bool Storm::extractMemory(const std::string &archivedFile, unsigned char **szEnt
 	if(hFile != NULL)
 		SFileCloseFile(hFile);
 
-	*szEntryBufferPrt = szEntryBuffer;
-
 	if(nError != ERROR_SUCCESS)
+	{
 		result = false;
+		// in case of problem free what ever has been allocated
+		free(szEntryBuffer);
+		szEntryBuffer = nullptr;
+	}
+
+	*szEntryBufferPrt = szEntryBuffer;
 
 	return result;
 }

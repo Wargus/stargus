@@ -93,7 +93,7 @@ bool Casc::extractMemory(const std::string &archivedFile, unsigned char **szEntr
 	if(CascOpenFile(mStorage, archivedFile.c_str(), 0, 0, &hFile))
 	{
 		// Read the data from the file
-		char  szBuffer[0x10000];
+		char szBuffer[0x10000];
 		DWORD dwBytes = 1;
 
 		// quick check if file has valid info
@@ -104,7 +104,8 @@ bool Casc::extractMemory(const std::string &archivedFile, unsigned char **szEntr
 		{
 			int i = 0;
 			size_t len = 0;
-			szEntryBuffer = (unsigned char*) malloc(sizeof(szBuffer));
+
+			szEntryBuffer = (unsigned char*) malloc(sizeof(szBuffer)); // TODO: this might me useless and then free() could be avoid below
 			while(dwBytes > 0)
 			{
 				CascReadFile(hFile, szBuffer, sizeof(szBuffer), &dwBytes);
@@ -137,6 +138,9 @@ bool Casc::extractMemory(const std::string &archivedFile, unsigned char **szEntr
 	{
 		cout << "Error: CascOpenFile" << endl;
 		result = false;
+		// in case of problem free what ever has been allocated
+		free(szEntryBuffer);
+		szEntryBuffer = nullptr;
 	}
 
 	*szEntryBufferPrt = szEntryBuffer;

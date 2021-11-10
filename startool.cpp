@@ -53,6 +53,7 @@
 #include "Casc.h"
 #include "Dds.h"
 #include "Logger.h"
+#include "Breeze.h"
 
 // System
 #include <memory>
@@ -356,6 +357,19 @@ int parseOptions(int argc, const char **argv)
   return 0;
 }
 
+void testHook()
+{
+	LOG4CXX_DEBUG(logger, "testHook()");
+
+	shared_ptr<Breeze> breeze = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/font/");
+
+	Font font(breeze);
+	font.convert("font10.fnt", "font10", 2);
+
+
+	exit(0);
+}
+
 /**
 **		Main
 */
@@ -379,6 +393,8 @@ int main(int argc, const char** argv)
 
 	Preferences &preferences = Preferences::getInstance ();
 	preferences.init(); // initialize all properties once in the beginning of the application
+
+	//testHook();
 
 	parseOptions(argc, argv);
 

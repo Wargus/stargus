@@ -14,12 +14,19 @@
 #include <string>
 #include <memory>
 
+/**
+ * This is the virtual base class for Bl*zz*rd data containers
+ */
 class Hurricane
 {
 public:
 	Hurricane();
 	Hurricane(const std::string &archiveName);
 	virtual ~Hurricane();
+
+	virtual bool openArchive(const std::string &archiveName) = 0;
+
+	virtual void closeArchive() = 0;
 
 	/**
 	 * Extract file from archive and create all directories if not existing
