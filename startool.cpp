@@ -380,10 +380,6 @@ int main(int argc, const char** argv)
 	Preferences &preferences = Preferences::getInstance ();
 	preferences.init(); // initialize all properties once in the beginning of the application
 
-	//Casc casc("/home/andreas/BigSpace/Games/StarCraft");
-	//casc.extractFile("SD\\campaign\\EXPTerran\\Terran08\\staredit\\wav\\t8m71dur.wav", "t8m71dur.wav", false);
-	//exit(0);
-
 	parseOptions(argc, argv);
 
 	LOG4CXX_INFO(logger, "Application start");
@@ -440,8 +436,8 @@ int main(int argc, const char** argv)
 			for (u = 0; u < len; ++u)
 			{
 				// This is only for debugging single steps while development!!!
-				//if(c[u].Type != F && c[u].Type != Q && c[u].Type != N)
-					//continue;
+				if(c[u].Type != F && c[u].Type != Q && c[u].Type != T)
+					continue;
 
 				switch (c[u].Type)
 				{

@@ -18,6 +18,8 @@
 // activate local debug messages
 //#define DEBUG 1
 
+//#define MAKE_CCL
+
 /**
 **		How much tiles are stored in a row.
 */
@@ -27,6 +29,12 @@
 **		Path to the tileset graphics. (default=$DIR/graphics/tilesets)
 */
 #define TILESET_PATH		"graphics/tilesets"
+
+// Function Prototypes
+int CountUsedTiles(const unsigned char* map, const unsigned char* mega,
+	int* map2tile, int mapl);
+void SaveCCL(const std::string &file, const unsigned char *map __attribute__((unused)),
+	const int *map2tile, int mapl);
 
 /**
 **		Destination directory of the data
@@ -150,7 +158,7 @@ void Tileset::DecodeMiniTile(unsigned char* image, int ix, int iy, int iadd,
 /**
 **  Convert tiles into image.
 */
-unsigned char* Tileset::ConvertTile(unsigned char* mini, const char* mega, int msize,
+unsigned char* Tileset::ConvertTile(const std::string &arcfile, unsigned char* mini, const char* mega, int msize,
 	const char* map __attribute__((unused)),	int mapl __attribute__((unused)), int *wp, int *hp)
 
 {
@@ -191,7 +199,7 @@ unsigned char* Tileset::ConvertTile(unsigned char* mini, const char* mega, int m
 	*wp = width;
 	*hp = height;
 #ifdef MAKE_CCL
-	SaveCCL((unsigned char *)map, map2tile, mapl);
+	SaveCCL(arcfile, (unsigned char *)map, map2tile, mapl);
 	free(map2tile);
 #endif
 	return image;
@@ -217,6 +225,7 @@ bool Tileset::ConvertTileset(const char *mpqfile, const char* arcfile, const cha
 
 	Storm mpq(mpqfile);
 
+	// TODO: this seems to be a special fix for one tileset 'installation'. Need to understand this...
 	if (!strcmp(arcfile, "tileset\\Install")) {
 		sprintf(buf, "tileset\\install.wpe");
 		mpq.extractMemory(buf, &palp, NULL);
@@ -241,7 +250,7 @@ bool Tileset::ConvertTileset(const char *mpqfile, const char* arcfile, const cha
 	sprintf(buf, "%s.vf4", arcfile);
 	mpq.extractMemory(buf, &flagp, NULL);
 
-	image = ConvertTile(minp, (char *)megp, megl, (char *)mapp, mapl, &w, &h);
+	image = ConvertTile(file, minp, (char *)megp, megl, (char *)mapp, mapl, &w, &h);
 
 #ifdef DEBUG
 	int flagl = EntrySize;
@@ -298,7 +307,7 @@ bool Tileset::ConvertTileset(const char *mpqfile, const char* arcfile, const cha
 // TODO: is this needed or working??
 
 #ifdef MAKE_CCL
-void SaveCCL(const unsigned char *map __attribute__((unused)),
+void SaveCCL(const std::string &file, const unsigned char *map __attribute__((unused)),
 	const int *map2tile, int mapl)
 {
 	int i;
@@ -311,7 +320,7 @@ void SaveCCL(const unsigned char *map __attribute__((unused)),
 
 	fprintf(f, "DefineTileset(\n");
 	fprintf(f, "  \"name\", \"\",\n");
-	fprintf(f, "  \"image\", \"tilesets/.png\",\n");
+	fprintf(f, "  \"image\", \"tilesets/%s.png\",\n", file.c_str());
 	fprintf(f, "  \"slots\", {\n");
 
 	fprintf(f,"   \"solid\", { \"light-grass\", \"land\", {\n");

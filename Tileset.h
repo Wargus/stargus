@@ -7,6 +7,8 @@
 #ifndef TILESET_H_
 #define TILESET_H_
 
+#include <string>
+
 class Tileset
 {
 public:
@@ -23,7 +25,7 @@ public:
 
 private:
 	unsigned char* ConvertPaletteRGBXtoRGB(unsigned char* pal);
-	unsigned char* ConvertTile(unsigned char* mini, const char* mega, int msize,
+	unsigned char* ConvertTile(const std::string &file, unsigned char* mini, const char* mega, int msize,
 			const char* map __attribute__((unused)),	int mapl __attribute__((unused)), int *wp, int *hp);
 	void DecodeMiniTile(unsigned char* image, int ix, int iy, int iadd,
 		unsigned char* mini, int index, int flipx, int flipy);
