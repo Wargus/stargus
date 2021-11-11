@@ -35,7 +35,7 @@ bool Dds::convert(const std::string &arcfile, const std::string &file)
 	bool result = true;
 
 	shared_ptr<DataChunk> data = mHurricane->extractDataChunk(arcfile);
-	if (result)
+	if (data)
 	{
 		Blob blob(static_cast<void*>(data->getDataPointer()), data->getSize());
 		// Construct the image object. Seperating image construction from the

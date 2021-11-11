@@ -46,7 +46,6 @@ Font::~Font()
 bool Font::convert(const std::string &arcfile, const std::string &file, int pale)
 {
 	unsigned char* palp;
-	unsigned char* fntp;
 	unsigned char* image;
 	int w;
 	int h;
@@ -57,11 +56,10 @@ bool Font::convert(const std::string &arcfile, const std::string &file, int pale
 
 	palp = Palettes[pale];
 
-	result = mHurricane->extractMemory(arcfile, &fntp, NULL);
-	if (result)
+	shared_ptr<DataChunk> data = mHurricane->extractDataChunk(arcfile);
+	if (data)
 	{
-		image = Font::convertImage(fntp, &w, &h);
-		free(fntp);
+		image = Font::convertImage(data->getDataPointer(), &w, &h);
 		Preferences &preferences = Preferences::getInstance ();
 		sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), FONT_PATH, file.c_str());
 		CheckPath(buf);
@@ -74,7 +72,7 @@ bool Font::convert(const std::string &arcfile, const std::string &file, int pale
 }
 
 typedef struct	_FontHeader {
-	char name[5];	//	Always is "FONT"
+	char name[5];	//	[0-4] Always is "FONT"
 	uint8_t lowIndex;	//	Index of the first letter in file
 	uint8_t highIndex;	//	Index of the last letter in file
 	uint8_t maxWidth;	//	Maximum width

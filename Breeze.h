@@ -17,7 +17,7 @@ class Breeze: public Hurricane {
 public:
 	Breeze();
 	/**
-	 * the folder where the extracted files are available
+	 * @param archiveName The folder where the extracted files are available
 	 */
 	Breeze(const std::string &archiveName);
 	virtual ~Breeze();

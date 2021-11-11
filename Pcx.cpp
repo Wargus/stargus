@@ -15,6 +15,9 @@
 // System
 #include <stdlib.h>
 #include <string.h>
+#include <memory>
+
+using namespace std;
 
 Pcx::Pcx(std::shared_ptr<Hurricane> hurricane) :
 	mHurricane (hurricane)
@@ -46,9 +49,30 @@ struct PCXheader
 	unsigned char Filler[54];
 };
 
-/**
- **  Convert 8 bit pcx file to raw image
- */
+bool Pcx::convert(const std::string &arcfile, const std::string &file)
+{
+	unsigned char *palp;
+	unsigned char *image;
+	char buf[1024];
+	int w;
+	int h;
+	bool result = true;
+
+	shared_ptr<DataChunk> data = mHurricane->extractDataChunk(arcfile);
+	if (data)
+	{
+		convertToRawImage(data->getDataPointer(), &image, &palp, &w, &h);
+		Preferences &preferences = Preferences::getInstance ();
+		sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), GRAPHICS_PATH, file.c_str());
+		Png::save(buf, image, w, h, palp, 0);
+
+		free(image);
+		free(palp);
+	}
+
+	return result;
+}
+
 void Pcx::convertToRawImage(unsigned char *pcx, unsigned char **raw,
 		unsigned char **pal, int *w, int *h)
 {
@@ -113,34 +137,4 @@ void Pcx::convertToRawImage(unsigned char *pcx, unsigned char **raw,
 
 
 
-/**
-**  Convert a pcx graphic to PNG format
-**
-**  @param arcfile File identifier in the MPQ file
-**  @param file Place to save the file on the drive (relative)
-*/
-bool Pcx::convert(const std::string &arcfile, const std::string &file)
-{
-	unsigned char *palp;
-	unsigned char *pcxp;
-	unsigned char *image;
-	char buf[1024];
-	int w;
-	int h;
-	bool result = true;
 
-	result = mHurricane->extractMemory(arcfile, &pcxp, NULL);
-	if (result)
-	{
-		convertToRawImage(pcxp, &image, &palp, &w, &h);
-		free(pcxp);
-		Preferences &preferences = Preferences::getInstance ();
-		sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), GRAPHICS_PATH, file.c_str());
-		Png::save(buf, image, w, h, palp, 0);
-
-		free(image);
-		free(palp);
-	}
-
-	return result;
-}
