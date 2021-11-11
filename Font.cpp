@@ -25,8 +25,10 @@
 */
 #define FONT_PATH		"graphics/ui/fonts"
 
+using namespace std;
+
 Font::Font(std::shared_ptr<Hurricane> hurricane) :
-	mHurricane (hurricane), mLogger("startool.Font")
+	mLogger("startool.Font"), mHurricane (hurricane)
 {
 
 }
@@ -59,7 +61,6 @@ bool Font::convert(const std::string &arcfile, const std::string &file, int pale
 	if (result)
 	{
 		image = Font::convertImage(fntp, &w, &h);
-		/*image =*/ Font::convertImage2(fntp, &w, &h);
 		free(fntp);
 		Preferences &preferences = Preferences::getInstance ();
 		sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), FONT_PATH, file.c_str());
@@ -73,171 +74,141 @@ bool Font::convert(const std::string &arcfile, const std::string &file, int pale
 }
 
 typedef struct	_FontHeader {
-	char name[5];	//	Always is "FONT "
-	unsigned int highIndex;	//	Index of the last letter in file
-	unsigned int maxWidth;	//	Maximum width
-	unsigned int maxHeight;	//	Maximum height
+	char name[5];	//	Always is "FONT"
+	uint8_t lowIndex;	//	Index of the first letter in file
+	uint8_t highIndex;	//	Index of the last letter in file
+	uint8_t maxWidth;	//	Maximum width
+	uint8_t maxHeight;	//	Maximum height
 	//DWORD	Unk1;		//	Unknown / Unused
 } FontHeader;
 
-typedef struct  _FontLetterRaw {
-	unsigned int width;		//	Width of the letter
-	unsigned int height;		//	Height of the letter
-	unsigned int xOffset;	//	X Offset for the topleft corner of the letter.
-	unsigned int yOffset;	//	Y Offset for the topleft corner of the letter.
-} FontLetterRaw;
+// size of this header struct has to be 4xbyte!
+typedef struct  _FontLetterHeader {
+	uint8_t width;		//	Width of the letter
+	uint8_t height;		//	Height of the letter
+	uint8_t xOffset;	//	X Offset for the topleft corner of the letter.
+	uint8_t yOffset;	//	Y Offset for the topleft corner of the letter.
+} FontLetterHeader;
 
-
-unsigned char* Font::convertImage2(unsigned char* start, int *wp, int *hp)
+unsigned char* Font::convertImage(unsigned char* start, int *wp, int *hp)
 {
+	char buf[1024];
 	FontHeader header;
-
-	unsigned char* bp;
+	unsigned char *bp = nullptr;
+	unsigned char *image = nullptr;
+	unsigned char *dp = nullptr;
+	unsigned int *offsets = nullptr;
+	int image_width = 0;
+	int image_height = 0;
+	int IPR = 15; // 15 characters per row -> why??
 
 	LOG4CXX_DEBUG(mLogger, "convertImage2");
 
 	bp = start;
+
 	header.name[0] = FetchByte(bp);
 	header.name[1] = FetchByte(bp);
 	header.name[2] = FetchByte(bp);
 	header.name[3] = FetchByte(bp);
-	header.name[4] = '\0'; FetchByte(bp);
+	header.name[4] = '\0';
 
+	header.lowIndex = FetchByte(bp);
 	header.highIndex = FetchByte(bp);
 	header.maxWidth = FetchByte(bp);
 	header.maxHeight = FetchByte(bp);
 
-	if(strncpy(header.name, "FONT", 5))
+	unsigned int letterCount = header.highIndex - header.lowIndex;
+
+	if(!strncmp(header.name, "FONT", 4))
 	{
-		LOG4CXX_DEBUG(mLogger, "FONT header found");
-		LOG4CXX_DEBUG(mLogger, "Header: " +
-				toString(header.highIndex) + "/" +
-				toString(header.maxWidth) + "/" +
-				toString(header.maxHeight));
+		sprintf(buf, "li:%i / hi:%i / mw:%i / mh:%i", header.lowIndex, header.highIndex, header.maxWidth, header.maxHeight);
+		LOG4CXX_DEBUG(mLogger, string("FONT header found: ") + buf);
 
-		bp += 2; // DWORD unused
+		//bp += 2; // DWORD unused
 
-		for(unsigned int i = 0; i < 222; i++) //223 = image size 2899 / 13 => just a hack to understand the algorithm
+		image_width = header.maxWidth * IPR;
+		image_height = (letterCount + IPR - 1) / IPR * header.maxHeight;
+		sprintf(buf, "w:%i / h:%i", image_width, image_height);
+		LOG4CXX_DEBUG(mLogger, string("Image size: ") + buf);
+
+		// calculate the offsets for each font letter header
+		offsets = (unsigned int*)malloc(letterCount * sizeof(FontLetterHeader));
+		for (unsigned int i = 0; i < letterCount; ++i)
 		{
-			FontLetterRaw letter;
+			offsets[i] = FetchLE32(bp);
+		}
+
+		image = (unsigned char *)malloc(image_width * image_height);
+		if (!image)
+		{
+			LOG4CXX_FATAL(mLogger, "Can't allocate image memory");
+		}
+
+		// Give image a transparent background
+		memset(image, 255, image_width * image_height);
+
+		// do this for all letters
+		for(unsigned int i = 0; i < letterCount; i++)
+		{
+			if (!offsets[i])
+			{
+				continue;
+			}
+
+			FontLetterHeader letter;
+
+			// set pointer to each letter header start...
+			bp = start + offsets[i];
+
 			letter.width = FetchByte(bp);
 			letter.height = FetchByte(bp);
 			letter.xOffset = FetchByte(bp);
 			letter.yOffset = FetchByte(bp);
-			LOG4CXX_DEBUG(mLogger, "FontLetterRaw: " +
-					toString(letter.width) + "/" +
-					toString(letter.height) + "/" +
-					toString(letter.xOffset) + "/" +
-					toString(letter.yOffset));
-		}
-	}
-/*
-	bp = start + 5;  // skip "FONT "
-	//printf("%s %s \n", start, start + 5);
-	count = FetchByte(bp);
-	count -= 32;
-	max_width = FetchByte(bp);
-	max_height = FetchByte(bp);
+			sprintf(buf, "%i# w:%i / h:%i / x:%i / y:%i", i, letter.width, letter.height, letter.xOffset, letter.yOffset);
+			LOG4CXX_DEBUG(mLogger, string("FontLetterRaw: ") + buf);
 
-*/
-	return NULL;
-}
+			dp = image + letter.xOffset + letter.yOffset * header.maxWidth  + i * (header.maxWidth  * header.maxHeight);
+			int w = 0;
+			int h = 0;
 
-/**
-**  Convert font into raw image data
-*/
-unsigned char* Font::convertImage(unsigned char* start, int *wp, int *hp)
-{
-	int i;
-	int count;
-	int max_width;
-	int max_height;
-	int width;
-	int height;
-	int w;
-	int h;
-	int xoff;
-	int yoff;
-	unsigned char* bp;
-	unsigned char* dp;
-	unsigned char* image;
-	unsigned* offsets;
-	int image_width;
-	int image_height;
-	int IPR;
-
-	bp = start + 5;  // skip "FONT "
-	//printf("%s %s \n", start, start + 5);
-	count = FetchByte(bp);
-	count -= 32;
-	max_width = FetchByte(bp);
-	max_height = FetchByte(bp);
-
-	IPR = 15;  // 15 characters per row
-	image_width = max_width * IPR;
-	image_height = (count + IPR - 1) / IPR * max_height;
-
-//	printf("Font: count %d max-width %2d max-height %2d\n",
-//		count, max_width, max_height);
-
-	offsets = (unsigned *)malloc(count * sizeof(uint32_t));
-	for (i = 0; i < count; ++i) {
-		offsets[i] = FetchLE32(bp);
-//		printf("%03d: offset %d\n", i, offsets[i]);
-	}
-
-	image = (unsigned char *)malloc(image_width * image_height);
-	if (!image) {
-		printf("Can't allocate image\n");
-		// TODO: more flexible error handling than calling GUI dialog from conversation routine needed
-		//error("Memory error", "Could not allocate enough memory to read archive.");
-	}
-	memset(image, 255, image_width * image_height);
-
-	for (i = 0; i < count; ++i) {
-		if (!offsets[i]) {
-//			printf("%03d: unused\n", i);
-			continue;
-		}
-		bp = start + offsets[i];
-		width = FetchByte(bp);
-		height = FetchByte(bp);
-		xoff = FetchByte(bp);
-		yoff = FetchByte(bp);
-
-//		printf("%03d: width %d height %d xoff %d yoff %d\n",
-//			i, width, height, xoff, yoff);
-
-		dp = image + xoff + yoff * max_width + i * (max_width * max_height);
-		h = w = 0;
-		for (;;) {
-			int ctrl;
-			ctrl = FetchByte(bp);
-			w += (ctrl >> 3) & 0x1F;
-			if (w >= width) {
-				w -= width;
-				++h;
-				if (h >= height) {
-					break;
+			// copy all data from each letter and convert it
+			// who ever coded this algorithm didn't document it - but it seems to work!!
+			for (;;) {
+				int ctrl;
+				ctrl = FetchByte(bp);
+				w += (ctrl >> 3) & 0x1F;
+				if (w >= letter.width) {
+					w -= letter.width;
+					++h;
+					if (h >= letter.height) {
+						break;
+					}
 				}
-			}
-			dp[h * max_width + w] = ctrl & 0x07;
-			++w;
-			if (w >= width) {
-				w -= width;
-				++h;
-				if (h >= height) {
-					break;
+				dp[h * header.maxWidth + w] = ctrl & 0x07;
+				++w;
+				if (w >= letter.width) {
+					w -= letter.width;
+					++h;
+					if (h >= letter.height) {
+						break;
+					}
 				}
 			}
 		}
 	}
+	else
+	{
+		LOG4CXX_WARN(mLogger, "No Font Header found!");
+	}
+
+	*wp = header.maxWidth;
+	*hp = header.maxHeight * letterCount;
+
+	// free the offset memory as it's not longer used
 	free(offsets);
-
-	*wp = max_width;
-	*hp = max_height * count;
 
 	return image;
 }
+
 
 

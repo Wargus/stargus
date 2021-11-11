@@ -25,11 +25,12 @@ public:
 	bool convert(const std::string &arcfile, const std::string &file, int pale);
 
 private:
+	/**
+	**  Convert font into raw image data
+	*/
 	unsigned char* convertImage(unsigned char* start, int *wp, int *hp);
-	unsigned char* convertImage2(unsigned char* start, int *wp, int *hp);
 
 	Logger mLogger;
-
 	std::shared_ptr<Hurricane> mHurricane;
 };
 

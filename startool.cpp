@@ -357,15 +357,21 @@ int parseOptions(int argc, const char **argv)
   return 0;
 }
 
+/**
+ * The only purpose of this function is to have a hook to develop/test single functions and then exit
+ */
 void testHook()
 {
 	LOG4CXX_DEBUG(logger, "testHook()");
 
-	shared_ptr<Breeze> breeze = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/font/");
+	string font_path = "/home/andreas/src/git/stargus/work_font/classic/files/font/";
+	string font_path_rm = "/home/andreas/src/git/stargus/work_font/remastered/SD/font/";
+	string font_path_hd = "/home/andreas/src/git/stargus/work_font/remastered/font/"; // problem!
+
+	shared_ptr<Breeze> breeze = make_shared<Breeze>(font_path_rm);
 
 	Font font(breeze);
-	font.convert("font10.fnt", "font10", 2);
-
+	font.convert("font16.fnt", "font16", 2);
 
 	exit(0);
 }
@@ -421,7 +427,7 @@ int main(int argc, const char** argv)
 	string mpqfile;
 	string submpqfile;
 
-	// TODO: set this to true for activating the SC remastered Casc code
+	// set this to false for activating the SC remastered Casc code while development
 	bool mpq = true;
 
 	if(mpq)
@@ -452,8 +458,8 @@ int main(int argc, const char** argv)
 			for (u = 0; u < len; ++u)
 			{
 				// This is only for debugging single steps while development!!!
-				if(c[u].Type != F && c[u].Type != Q && c[u].Type != T)
-					continue;
+				//if(c[u].Type != F && c[u].Type != Q && c[u].Type != N)
+					//continue;
 
 				switch (c[u].Type)
 				{
