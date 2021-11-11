@@ -100,7 +100,6 @@ unsigned char* Font::convertImage(unsigned char* start, int *wp, int *hp)
 	unsigned int *offsets = nullptr;
 	int image_width = 0;
 	int image_height = 0;
-	int IPR = 15; // 15 characters per row -> why??
 
 	LOG4CXX_DEBUG(mLogger, "convertImage2");
 
@@ -126,8 +125,8 @@ unsigned char* Font::convertImage(unsigned char* start, int *wp, int *hp)
 
 		//bp += 2; // DWORD unused
 
-		image_width = header.maxWidth * IPR;
-		image_height = (letterCount + IPR - 1) / IPR * header.maxHeight;
+		image_width = header.maxWidth;
+		image_height = letterCount * header.maxHeight;
 		sprintf(buf, "w:%i / h:%i", image_width, image_height);
 		LOG4CXX_DEBUG(mLogger, string("Image size: ") + buf);
 
@@ -138,6 +137,7 @@ unsigned char* Font::convertImage(unsigned char* start, int *wp, int *hp)
 			offsets[i] = FetchLE32(bp);
 		}
 
+		// allocate the memory to fill with raw image data
 		image = (unsigned char *)malloc(image_width * image_height);
 		if (!image)
 		{

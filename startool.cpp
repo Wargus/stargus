@@ -563,7 +563,6 @@ int main(int argc, const char** argv)
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
-
 					case E: // WORKS
 						printf("RawExtract: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						// TBD: I think campaigns this must be somehow converted to stratagus
