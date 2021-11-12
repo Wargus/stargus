@@ -23,7 +23,8 @@ startool_sources = files(
 	'Storm.cpp',
 	'WorldMap.cpp',
 	'Dds.cpp',
-	'Breeze.cpp')
+	'Breeze.cpp',
+	'Video.cpp')
 	
 stratagus_prefix = get_option('prefix')
 stratagus_bin = get_option('STRATAGUS_BIN')

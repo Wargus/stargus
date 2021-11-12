@@ -105,10 +105,7 @@ using namespace std;
 */
 #define TEXT_PATH		"campaigns"
 
-/**
-**		Path the video files. (default=$DIR/video)
-*/
-#define VIDEO_PATH		"videos"
+
 
 
 

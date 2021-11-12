@@ -54,6 +54,7 @@
 #include "Dds.h"
 #include "Logger.h"
 #include "Breeze.h"
+#include "Video.h"
 
 // System
 #include <memory>
@@ -186,39 +187,6 @@ bool RawExtract(const char *mpqfile, const char *arcfile, const char *file)
 bool MPQSubExtract(const char *mpqfile, const char *arcfile, const char *file)
 {
 	return RawExtract(mpqfile, arcfile, file);
-}
-
-//----------------------------------------------------------------------------
-//  Video
-//----------------------------------------------------------------------------
-
-/**
-**  Convert SMK video to OGV
-*/
-bool ConvertVideo(const char *mpqfile, const char *arcfile, const char *file)
-{
-	char buf[8192] = {'\0'};
-	bool result = true;
-
-	Preferences &preferences = Preferences::getInstance ();
-	snprintf(buf,sizeof(buf),"%s/%s/%s.smk", preferences.getDestDir().c_str(), VIDEO_PATH, file);
-
-	Storm mpq(mpqfile);
-	result = mpq.extractFile(arcfile, buf, false);
-
-	string ffmpeg_str = string("ffmpeg -y -i ") + buf + " -codec:v libtheora -qscale:v 31 -codec:a libvorbis -qscale:a 15 -pix_fmt yuv420p " + preferences.getDestDir() + "/" + VIDEO_PATH + "/" + file;
-
-	//cout << "video: " << ffmpeg_str << endl;
-
-	int sys_call = system(ffmpeg_str.c_str());
-	if(sys_call != 0)
-	{
-		result = false;
-	}
-
-	remove(buf);
-
-	return result;
 }
 
 void CreatePanels()
@@ -552,7 +520,9 @@ int main(int argc, const char** argv)
 					case V: // WORKS!
 						if(preferences.getVideoExtraction()) {
 							printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-							case_func = ConvertVideo(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+							shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
+							Video video(storm);
+							case_func = video.ConvertVideo(c[u].ArcFile, c[u].File);
 							printf("...%s\n", case_func ? "ok" : "nok");
 						}
 						break;

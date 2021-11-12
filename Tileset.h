@@ -23,9 +23,9 @@ public:
 	 * Not sure, but it seems this function generates some Gimp palette.
 	 * Maybe there is an external Gimp workflow...
 	 */
-	bool ConvertRgb(const char *arcfile, const char *file);
+	bool ConvertRgb(const std::string &arcfile, const std::string &file);
 
-	bool ConvertTileset(const char* arcfile, const char* file);
+	bool ConvertTileset(const std::string &arcfile, const std::string &file);
 
 private:
 	unsigned char* ConvertPaletteRGBXtoRGB(unsigned char* pal);

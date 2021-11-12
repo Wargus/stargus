@@ -74,9 +74,8 @@ unsigned char* Tileset::ConvertPaletteRGBXtoRGB(unsigned char* pal)
 /**
 **  Convert rgb to my format.
 */
-bool Tileset::ConvertRgb(const char *arcfile, const char *file)
+bool Tileset::ConvertRgb(const std::string &arcfile, const std::string &file)
 {
-	unsigned char *palp;
 	char buf[8192] = {'\0'};
 	FILE* f;
 	int i;
@@ -84,18 +83,19 @@ bool Tileset::ConvertRgb(const char *arcfile, const char *file)
 	bool result = true;
 	Preferences &preferences = Preferences::getInstance ();
 
-	sprintf(buf, "%s.wpe", arcfile);
+	sprintf(buf, "%s.wpe", arcfile.c_str());
 
 	shared_ptr<DataChunk> data = mHurricane->extractDataChunk(arcfile);
+	unsigned char *palp = data->getDataPointer();
 	if (data) {
 
 		// Hint: ConvertPaletteRGBXtoRGB() changes the data content direct!
-		ConvertPaletteRGBXtoRGB(data->getDataPointer());
+		ConvertPaletteRGBXtoRGB(palp);
 
 		//
 		//  Generate RGB File.
 		//
-		sprintf(buf, "%s/%s/%s.rgb", preferences.getDestDir().c_str(), TILESET_PATH, file);
+		sprintf(buf, "%s/%s/%s.rgb", preferences.getDestDir().c_str(), TILESET_PATH, file.c_str());
 		CheckPath(buf);
 		f = fopen(buf, "wb");
 		if (!f) {
@@ -114,7 +114,7 @@ bool Tileset::ConvertRgb(const char *arcfile, const char *file)
 		//
 		//  Generate GIMP palette
 		//
-		sprintf(buf, "%s/%s/%s.gimp", preferences.getDestDir().c_str(), TILESET_PATH, file);
+		sprintf(buf, "%s/%s/%s.gimp", preferences.getDestDir().c_str(), TILESET_PATH, file.c_str());
 		CheckPath(buf);
 		f = fopen(buf, "wb");
 		if (!f) {
@@ -123,8 +123,9 @@ bool Tileset::ConvertRgb(const char *arcfile, const char *file)
 			// TODO: more flexible error handling than calling GUI dialog from conversation routine needed
 			//error("Memory error", "Could not allocate enough memory to read archive.");
 		}
-		fprintf(f, "GIMP Palette\n# Stratagus %c%s -- GIMP Palette file\n",
-			toupper(*file), file + 1);
+		// TODO: check that correct string is printed with C++
+		//fprintf(f, "GIMP Palette\n# Stratagus %c%s -- GIMP Palette file\n",
+			//toupper(*file), file + 1);
 
 		for (i = 0; i < 256; ++i) {
 			// FIXME: insert nice names!
@@ -211,7 +212,7 @@ unsigned char* Tileset::ConvertTile(const std::string &arcfile, unsigned char* m
 /**
 **  Convert a tileset to my format.
 */
-bool Tileset::ConvertTileset(const char* arcfile, const char* file)
+bool Tileset::ConvertTileset(const std::string &arcfile, const std::string &file)
 {
 	shared_ptr<DataChunk> palp;
 	shared_ptr<DataChunk> megp;
@@ -226,10 +227,8 @@ bool Tileset::ConvertTileset(const char* arcfile, const char* file)
 	char buf[8192] = {'\0'};
 	bool ret = true;
 
-
-
 	// TODO: this seems to be a special fix for one tileset 'installation'. Need to understand this...
-	if (!strcmp(arcfile, "tileset\\Install"))
+	if (!strcmp(arcfile.c_str(), "tileset\\Install"))
 	{
 		sprintf(buf, "tileset\\install.wpe");
 		palp = mHurricane->extractDataChunk(buf);
@@ -239,21 +238,21 @@ bool Tileset::ConvertTileset(const char* arcfile, const char* file)
 	}
 	else
 	{
-		sprintf(buf, "%s.wpe", arcfile);
+		sprintf(buf, "%s.wpe", arcfile.c_str());
 		palp = mHurricane->extractDataChunk(buf);
-		sprintf(buf, "%s.vr4", arcfile);
+		sprintf(buf, "%s.vr4", arcfile.c_str());
 		minp = mHurricane->extractDataChunk(buf);
 	}
-	sprintf(buf, "%s.vx4", arcfile);
+	sprintf(buf, "%s.vx4", arcfile.c_str());
 
 	megp = mHurricane->extractDataChunk(buf);
 	megl = megp->getSize();
-	sprintf(buf, "%s.cv5", arcfile);
+	sprintf(buf, "%s.cv5", arcfile.c_str());
 
 	mapp = mHurricane->extractDataChunk(buf);
 	mapl = mapp->getSize();
 
-	sprintf(buf, "%s.vf4", arcfile);
+	sprintf(buf, "%s.vf4", arcfile.c_str());
 	flagp = mHurricane->extractDataChunk(buf);
 
 	// TODO: give DataChunk to this function and wrap image class
@@ -295,7 +294,7 @@ bool Tileset::ConvertTileset(const char* arcfile, const char* file)
 
 	ConvertPaletteRGBXtoRGB(palp->getDataPointer()); // write to memory pointer!
 	Preferences &preferences = Preferences::getInstance ();
-	sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), TILESET_PATH, file);
+	sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), TILESET_PATH, file.c_str());
 	printf("tileset png: %s\n", buf);
 	Png::save(buf, image, w, h, palp->getDataPointer(), 0);
 
