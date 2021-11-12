@@ -406,7 +406,7 @@ int main(int argc, const char** argv)
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
-					/*case R: // UNUSED?
+					case R: // UNUSED?
 					{
 						printf("ConvertRgb: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
@@ -485,7 +485,7 @@ int main(int argc, const char** argv)
 						// TBD: I think campaigns this must be somehow converted to stratagus
 						case_func = RawExtract(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
-						break;*/
+						break;
 					case L:
 					{
 						printf("ConvertCampaign (.chk): %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
