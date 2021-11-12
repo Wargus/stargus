@@ -496,16 +496,18 @@ int main(int argc, const char** argv)
 					case R: // UNUSED?
 					{
 						printf("ConvertRgb: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-						Tileset terrain;
-						case_func = terrain.ConvertRgb(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
+						Tileset terrain(storm);
+						case_func = terrain.ConvertRgb(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
 					case T:  // WORKS!
 					{
 						printf("ConvertTileset: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-						Tileset terrain;
-						case_func = terrain.ConvertTileset(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
+						Tileset terrain(storm);
+						case_func = terrain.ConvertTileset(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;

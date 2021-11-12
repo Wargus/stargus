@@ -11,6 +11,7 @@
 #include "FileUtil.h"
 #include "Png.h"
 #include "Preferences.h"
+#include <Hurricane.h>
 
 // System
 #include <stdlib.h>
@@ -36,11 +37,14 @@ int CountUsedTiles(const unsigned char* map, const unsigned char* mega,
 void SaveCCL(const std::string &file, const unsigned char *map __attribute__((unused)),
 	const int *map2tile, int mapl);
 
+using namespace std;
+
 /**
 **		Destination directory of the data
 */
 
-Tileset::Tileset()
+Tileset::Tileset(std::shared_ptr<Hurricane> hurricane) :
+		mHurricane (hurricane)
 {
 
 }
@@ -70,24 +74,23 @@ unsigned char* Tileset::ConvertPaletteRGBXtoRGB(unsigned char* pal)
 /**
 **  Convert rgb to my format.
 */
-bool Tileset::ConvertRgb(const char *mpqfile, const char *arcfile, const char *file)
+bool Tileset::ConvertRgb(const char *arcfile, const char *file)
 {
 	unsigned char *palp;
 	char buf[8192] = {'\0'};
 	FILE* f;
 	int i;
-	size_t l;
 
 	bool result = true;
 	Preferences &preferences = Preferences::getInstance ();
 
 	sprintf(buf, "%s.wpe", arcfile);
 
-	Storm mpq(mpqfile);
-	result = mpq.extractMemory(arcfile, &palp, NULL);
-	if (result) {
+	shared_ptr<DataChunk> data = mHurricane->extractDataChunk(arcfile);
+	if (data) {
 
-		ConvertPaletteRGBXtoRGB(palp);
+		// Hint: ConvertPaletteRGBXtoRGB() changes the data content direct!
+		ConvertPaletteRGBXtoRGB(data->getDataPointer());
 
 		//
 		//  Generate RGB File.
@@ -158,8 +161,8 @@ void Tileset::DecodeMiniTile(unsigned char* image, int ix, int iy, int iadd,
 /**
 **  Convert tiles into image.
 */
-unsigned char* Tileset::ConvertTile(const std::string &arcfile, unsigned char* mini, const char* mega, int msize,
-	const char* map __attribute__((unused)),	int mapl __attribute__((unused)), int *wp, int *hp)
+unsigned char* Tileset::ConvertTile(const std::string &arcfile, unsigned char* mini, unsigned char* mega, int msize,
+	unsigned char* map __attribute__((unused)),	int mapl __attribute__((unused)), int *wp, int *hp)
 
 {
 	unsigned char* image;
@@ -208,13 +211,13 @@ unsigned char* Tileset::ConvertTile(const std::string &arcfile, unsigned char* m
 /**
 **  Convert a tileset to my format.
 */
-bool Tileset::ConvertTileset(const char *mpqfile, const char* arcfile, const char* file)
+bool Tileset::ConvertTileset(const char* arcfile, const char* file)
 {
-	unsigned char* palp;
-	unsigned char* megp;
-	unsigned char* minp;
-	unsigned char* mapp;
-	unsigned char* flagp;
+	shared_ptr<DataChunk> palp;
+	shared_ptr<DataChunk> megp;
+	shared_ptr<DataChunk> minp;
+	shared_ptr<DataChunk> mapp;
+	shared_ptr<DataChunk> flagp;
 	unsigned char* image;
 	int w;
 	int h;
@@ -223,34 +226,38 @@ bool Tileset::ConvertTileset(const char *mpqfile, const char* arcfile, const cha
 	char buf[8192] = {'\0'};
 	bool ret = true;
 
-	Storm mpq(mpqfile);
+
 
 	// TODO: this seems to be a special fix for one tileset 'installation'. Need to understand this...
-	if (!strcmp(arcfile, "tileset\\Install")) {
+	if (!strcmp(arcfile, "tileset\\Install"))
+	{
 		sprintf(buf, "tileset\\install.wpe");
-		mpq.extractMemory(buf, &palp, NULL);
+		palp = mHurricane->extractDataChunk(buf);
+
 		sprintf(buf, "tileset\\install.vr4");
-		mpq.extractMemory(buf, &minp, NULL);
-	} else {
+		minp = mHurricane->extractDataChunk(buf);
+	}
+	else
+	{
 		sprintf(buf, "%s.wpe", arcfile);
-		mpq.extractMemory(buf, &palp, NULL);
+		palp = mHurricane->extractDataChunk(buf);
 		sprintf(buf, "%s.vr4", arcfile);
-		mpq.extractMemory(buf, &minp, NULL);
+		minp = mHurricane->extractDataChunk(buf);
 	}
 	sprintf(buf, "%s.vx4", arcfile);
 
-	size_t megl_len = 0;
-	mpq.extractMemory(buf, &megp, &megl_len);
-	megl = megl_len;
+	megp = mHurricane->extractDataChunk(buf);
+	megl = megp->getSize();
 	sprintf(buf, "%s.cv5", arcfile);
-	size_t mapl_len = 0;
-	mpq.extractMemory(buf, &mapp, &mapl_len);
-	mapl = mapl_len;
+
+	mapp = mHurricane->extractDataChunk(buf);
+	mapl = mapp->getSize();
 
 	sprintf(buf, "%s.vf4", arcfile);
-	mpq.extractMemory(buf, &flagp, NULL);
+	flagp = mHurricane->extractDataChunk(buf);
 
-	image = ConvertTile(file, minp, (char *)megp, megl, (char *)mapp, mapl, &w, &h);
+	// TODO: give DataChunk to this function and wrap image class
+	image = ConvertTile(file, minp->getDataPointer(), megp->getDataPointer(), megl, mapp->getDataPointer(), mapl, &w, &h);
 
 #ifdef DEBUG
 	int flagl = EntrySize;
@@ -286,19 +293,14 @@ bool Tileset::ConvertTileset(const char *mpqfile, const char* arcfile, const cha
 	fclose(fd);
 #endif
 
-	free(megp);
-	free(minp);
-	free(mapp);
-	free(flagp);
-
-	ConvertPaletteRGBXtoRGB(palp);
+	ConvertPaletteRGBXtoRGB(palp->getDataPointer()); // write to memory pointer!
 	Preferences &preferences = Preferences::getInstance ();
 	sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), TILESET_PATH, file);
 	printf("tileset png: %s\n", buf);
-	Png::save(buf, image, w, h, palp, 0);
+	Png::save(buf, image, w, h, palp->getDataPointer(), 0);
 
+	// freeing the image is still needed as this isn't wrapped in a smart pointer
 	free(image);
-	free(palp);
 
 	return ret;
 }
