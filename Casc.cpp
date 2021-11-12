@@ -148,6 +148,7 @@ bool Casc::extractMemory(const std::string &archivedFile, unsigned char **szEntr
 	return result;
 }
 
+// TODO 'compress' doesn't work!!
 bool Casc::extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress)
 {
     HANDLE hFile  = NULL;

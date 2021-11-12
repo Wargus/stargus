@@ -4,13 +4,15 @@
  *      Author: Andreas Volz
  */
 
+// Local
 #include "Chk.h"
 #include "WorldMap.h"
 #include "endian.h"
-#include "Storm.h"
+#include "Hurricane.h"
 #include "FileUtil.h"
+#include "Preferences.h"
 
-// C++
+// System
 #include <cstring>
 #include <cstdint>
 #include <stdlib.h>
@@ -25,8 +27,11 @@
 #define _C_
 #endif
 
-Chk::Chk() :
- map(new WorldMap())
+using namespace std;
+
+Chk::Chk(std::shared_ptr<Hurricane> hurricane) :
+ map(new WorldMap()),
+ mHurricane (hurricane)
 {
 
 }
@@ -1173,18 +1178,27 @@ void Chk::SaveSMS(const char *name)
 	fclose(fd);
 }
 
-void Chk::SaveMap(const char *name)
+void Chk::SaveMap(const char *savedir)
 {
-	char *fullmapname;
+	char buf[1024];
+	char buf2[1024];
 
-	fullmapname = strdup(name);
-	strcpy(strrchr(fullmapname, '.') + 1, "smp");
-	SaveSMP(fullmapname);
+	// if a map ends with a dot (.) then it adds .sms and .scp otherwise a dir with scenario.sms/scenario.smp
+	// TODO: if you give something unexpected to savedir - bye bye
+	if(savedir[strlen(savedir)-1] == '.')
+	{
+		sprintf(buf, "%s", savedir);
+	}
+	else
+	{
+		sprintf(buf, "%s/scenario.", savedir);
+	}
 
-	strcpy(strrchr(fullmapname, '.') + 1, "sms");
-	SaveSMS(fullmapname);
+	sprintf(buf2, "%ssmp", savedir);
+	SaveSMP(buf2);
 
-	free(fullmapname);
+	sprintf(buf2, "%ssms", savedir);
+	SaveSMS(buf2);
 }
 
 void Chk::FreeMap()
@@ -1196,10 +1210,29 @@ void Chk::FreeMap()
 }
 
 
-void Chk::ConvertChk(const char *newname, unsigned char *chkdata, int chklen)
+void Chk::ConvertChk(const char *savedir, unsigned char *chkdata, int chklen)
 {
 	loadFromBuffer(chkdata, chklen);
-	SaveMap(newname);
+	SaveMap(savedir);
 }
 
+
+bool Chk::convert(const std::string &arcfile, const std::string &file)
+{
+	char buf[1024];
+	bool result = false;
+
+	Preferences &preferences = Preferences::getInstance ();
+	sprintf(buf, "%s/%s", preferences.getDestDir().c_str(), file.c_str());
+
+	shared_ptr<DataChunk> data = mHurricane->extractDataChunk(arcfile);
+	if (data)
+	{
+		ConvertChk(buf, data->getDataPointer(), data->getSize());
+
+		result = true;
+	}
+
+	return result;
+}
 

@@ -6,29 +6,37 @@
 #ifndef SCM_H_
 #define SCM_H_
 
+// Local
 #include "Chk.h"
 
-// C++
+// System
 #include <cstring>
 #include <vector>
 #include <string>
+#include <memory>
 
-/*----------------------------------------------------------------------------
---	Definitions
-----------------------------------------------------------------------------*/
+// Forward declarations
+class Hurricane;
 
+
+/**
+ * Map Container
+ *
+ * The .scm is MPQ encoded and will be decoded to a .ckk and then further processed by Chk class
+ * At the end .scm is only useful with Storm
+ */
 class Scm
 {
 public:
-	Scm();
+	Scm(std::shared_ptr<Hurricane> hurricane);
 	virtual ~Scm();
 
-	void convert(const char *mpqfile);
+	bool convert(const std::string &arcfile, const std::string &file);
 
 private:
-	void load(const char *mpqfile, const char *dir);
+	//void load(const char *mpqfile, const char *dir);
 
-	Chk chk;
+	std::shared_ptr<Hurricane> mHurricane;
 };
 
 

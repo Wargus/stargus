@@ -30,14 +30,16 @@
 
 //@{
 
-/*----------------------------------------------------------------------------
---	Includes
-----------------------------------------------------------------------------*/
+// Lcoal
+#include "Scm.h"
+#include "Chk.h"
+#include "Hurricane.h"
+#include "endian.h"
+#include "FileUtil.h"
+#include "Preferences.h"
+#include "Storm.h"
 
-#ifdef _MSC_VER
-#pragma warning(disable:4786)
-#endif
-
+// System
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -47,12 +49,6 @@
 #include <vector>
 #include <string>
 #include <libgen.h>
-
-#include "Scm.h"
-#include "Chk.h"
-#include "Storm.h"
-#include "endian.h"
-#include "FileUtil.h"
 
 #ifdef _MSC_VER
 #define strdup _strdup
@@ -67,7 +63,8 @@
 
 using namespace std;
 
-Scm::Scm()
+Scm::Scm(std::shared_ptr<Hurricane> hurricane) :
+	mHurricane (hurricane)
 {
 
 }
@@ -77,13 +74,27 @@ Scm::~Scm()
 
 }
 
-void Scm::convert(const char *mpqfile)
+bool Scm::convert(const std::string &arcfile, const std::string &file)
 {
-	char *basename_path = basename(strdup(mpqfile));
-	char *dirname_path = dirname(strdup(mpqfile));
+	char buf[1024];
+	bool result = true;
 
-	load(mpqfile, dirname_path);
-	chk.SaveMap(mpqfile);
+	Preferences &preferences = Preferences::getInstance ();
+	sprintf(buf, "%s/%sscm", preferences.getDestDir().c_str(), file.c_str());
+
+	result = mHurricane->extractFile(arcfile, buf);
+	if (result)
+	{
+		// call the Chk converter with temp file...
+		shared_ptr<Storm> storm = make_shared<Storm>(buf);
+		Chk chk(storm);
+		result = chk.convert("staredit\\scenario.chk", file.c_str());
+
+		// delete the temporary .chk file -> below don't access 'breeze' any more!
+		//unlink(buf);
+	}
+
+	return result;
 }
 
 /**
@@ -92,7 +103,7 @@ void Scm::convert(const char *mpqfile)
 **  @param scm  Name of the scm file
 **  @param map  The map
 */
-void Scm::load(const char *mpqfile, const char *dir)
+/*void Scm::load(const char *mpqfile, const char *dir)
 {
 	unsigned char *chkdata = NULL;
 	size_t chklen = 0;
@@ -106,7 +117,7 @@ void Scm::load(const char *mpqfile, const char *dir)
 
 	free(chkdata);
 
-}
+}*/
 
 #ifdef STAND_ALONE
 void usage()

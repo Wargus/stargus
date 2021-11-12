@@ -30,8 +30,9 @@ public:
 
 	/**
 	 * Extract file from archive and create all directories if not existing
+	 * TODO: implement 'compress' in a generic way. currently works only for Storm!
 	 */
-	virtual bool extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress) = 0;
+	virtual bool extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress = false) = 0;
 
 	/**
 	 * Attention: This function malloc() bufferLen memory which you've to free yourself!

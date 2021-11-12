@@ -40,6 +40,7 @@ void Breeze::closeArchive()
 	mArchiveName.clear();
 }
 
+// TODO 'compress' doesn't work!!
 bool Breeze::extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress)
 {
 	unsigned char *szEntryBuffer = nullptr;

@@ -7,13 +7,14 @@
 #ifndef BREEZE_H_
 #define BREEZE_H_
 
-/**
- * This has the same interface but is only a dummy file provider to provide extracted files to the converters.
- * Mainly used for development and testing.
- */
 #include "Hurricane.h"
 
-class Breeze: public Hurricane {
+/**
+ * This has the same interface as Hurricane but is
+ * a dummy file provider to provide extracted files to the converters.
+ */
+class Breeze: public Hurricane
+{
 public:
 	Breeze();
 	/**

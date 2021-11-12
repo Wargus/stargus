@@ -75,65 +75,6 @@ Logger logger("startool.main");
 
 //#define MAKE_CCL 1
 
-/**
- *  Convert map
- *
- *  @extracted in case of installation the map files are yet extracted from mpq file
- */
-bool ConvertMap(const char *mpqfile, const char *arcfile, const char *file, bool extracted)
-{
-	char buf[1024];
-	bool result = true;
-
-	Preferences &preferences = Preferences::getInstance ();
-	sprintf(buf, "%s/%s", preferences.getDestDir().c_str(), file);
-
-	if(!extracted)
-	{
-		Storm mpq(mpqfile);
-		result = mpq.extractFile(arcfile, buf, false);
-		if (result)
-		{
-			Scm scm;
-			scm.convert(buf);
-			unlink(buf); // delete temp mpq after conversation
-		}
-	}
-	else // local installation filesystem case
-	{
-		//sprintf(buf2, "%s/%s", ArchiveDir.c_str(), file);
-		//CheckPath(buf2);
-
-		//ConvertScm(buf2, buf, mpq_listfile);
-	}
-
-	return result;
-}
-
-/**
- *  Convert Campaign
- *
- */
-bool ConvertCampaign(const char *mpqfile, const char *arcfile, const char *file)
-{
-	char buf[1024];
-	bool result = true;
-
-	Preferences &preferences = Preferences::getInstance ();
-	sprintf(buf, "%s/%s", preferences.getDestDir().c_str(), file);
-
-	// TODO: The .chk files could be deleted after conversation
-	Storm mpq(mpqfile);
-	shared_ptr<DataChunk> data = mpq.extractDataChunk(arcfile);
-
-	if (data)
-	{
-		Chk chk;
-		chk.ConvertChk(buf, data->getDataPointer(), data->getSize());
-	}
-
-	return !!data;
-}
 
 //----------------------------------------------------------------------------
 //		Wav
@@ -426,7 +367,7 @@ int main(int argc, const char** argv)
 			for (u = 0; u < len; ++u)
 			{
 				// This is only for debugging single steps while development!!!
-				//if(c[u].Type != F && c[u].Type != Q && c[u].Type != N)
+				//if(c[u].Type != F && c[u].Type != Q && c[u].Type != M)
 					//continue;
 
 				switch (c[u].Type)
@@ -457,9 +398,13 @@ int main(int argc, const char** argv)
 						printf("...%s\n", case_func ? "ok" : "nok");
 						break;
 					case M: // WORKS!
+					{
 						printf("ConvertMap: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-						case_func = ConvertMap(mpqfile.c_str(), c[u].ArcFile, c[u].File, extracted);
+						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
+						Scm scm(storm);
+						case_func = scm.convert(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
+					}
 						break;
 					case R: // UNUSED?
 					{
@@ -542,9 +487,13 @@ int main(int argc, const char** argv)
 						printf("...%s\n", case_func ? "ok" : "nok");
 						break;
 					case L:
-						printf("ConvertCampaign: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-						case_func = ConvertCampaign(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+					{
+						printf("ConvertCampaign (.chk): %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
+						Chk chk(storm);
+						case_func = chk.convert(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
+					}
 						break;
 					default:
 						break;
@@ -563,6 +512,7 @@ int main(int argc, const char** argv)
 	{
 		unsigned int len = sizeof(RMTodo) / sizeof(*RMTodo);
 		shared_ptr<Casc> hurricane = make_shared<Casc>("/home/andreas/BigSpace/Games/StarCraft");
+		preferences.setDestDir("data.Stargus.RM");
 		Control *c = RMTodo;
 
 
