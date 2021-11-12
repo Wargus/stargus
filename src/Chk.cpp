@@ -1180,25 +1180,32 @@ void Chk::SaveSMS(const char *name)
 
 void Chk::SaveMap(const char *savedir)
 {
-	char buf[1024];
-	char buf2[1024];
+	string sms(savedir);
+	string smp(savedir);
 
 	// if a map ends with a dot (.) then it adds .sms and .scp otherwise a dir with scenario.sms/scenario.smp
-	// TODO: if you give something unexpected to savedir - bye bye
+	// TODO: if you give something unexpected to savedir - bye bye => rework later
+	int x = strlen(savedir);
+	char y = savedir[strlen(savedir)-1];
 	if(savedir[strlen(savedir)-1] == '.')
 	{
-		sprintf(buf, "%s", savedir);
+		sms += "sms";
+		smp += "smp";
+		//sprintf(buf, "%s", savedir);
 	}
-	else
+	else if(savedir[strlen(savedir)-1] == '/')
 	{
-		sprintf(buf, "%s/scenario.", savedir);
+		sms += "scenario.sms";
+		smp += "scenario.smp";
+		//bu+f = savedir + "scenario.";
+		//sprintf(buf, "%sscenario.", savedir);
 	}
 
-	sprintf(buf2, "%ssmp", savedir);
-	SaveSMP(buf2);
+	//sprintf(buf2, "%ssmp", buf);
+	SaveSMP(smp.c_str());
 
-	sprintf(buf2, "%ssms", savedir);
-	SaveSMS(buf2);
+	//sprintf(buf2, "%ssms", buf);
+	SaveSMS(sms.c_str());
 }
 
 void Chk::FreeMap()
