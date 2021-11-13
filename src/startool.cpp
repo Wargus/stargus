@@ -280,7 +280,7 @@ void testHook()
 	shared_ptr<Breeze> breeze = make_shared<Breeze>(font_path_rm);
 
 	Font font(breeze);
-	font.convert("font16.fnt", "font16", 2);
+	font.convert("font16.fnt", "font16");
 
 	exit(0);
 }
@@ -453,15 +453,15 @@ int main(int argc, const char** argv)
 						printf("ConvertFont: %s, %s, %s",mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
 						Font font(storm);
-						case_func = font.convert(c[u].ArcFile, c[u].File, 2);
+						case_func = font.convert(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
-					case W: // WORKS!
+					/*case W: // WORKS!
 						printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						case_func = ConvertWav(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
-						break;
+						break;*/
 					case V: // WORKS!
 						if(preferences.getVideoExtraction()) {
 							printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
@@ -535,7 +535,7 @@ int main(int argc, const char** argv)
 					printf("ConvertFont: %s, %s, %s",mpqfile.c_str(), c[u].File, c[u].ArcFile);
 
 					Font font(hurricane);
-					case_func = font.convert(c[u].ArcFile, c[u].File, 2);
+					case_func = font.convert(c[u].ArcFile, c[u].File);
 					printf("...%s\n", case_func ? "ok" : "nok");
 				}
 					break;

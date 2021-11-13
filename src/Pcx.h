@@ -7,13 +7,16 @@
 #ifndef PCX_H_
 #define PCX_H_
 
+// Local
+#include <Converter.h>
+
 // System
 #include <memory>
 
 // Forward declarations
 class Hurricane;
 
-class Pcx
+class Pcx : public Converter
 {
 public:
 	Pcx(std::shared_ptr<Hurricane> hurricane);
@@ -34,7 +37,6 @@ private:
 	void convertToRawImage(unsigned char *pcx, unsigned char **raw,
 			unsigned char **pal, int *w, int *h);
 
-	std::shared_ptr<Hurricane> mHurricane;
 };
 
 

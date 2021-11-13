@@ -20,7 +20,7 @@
 using namespace std;
 
 Pcx::Pcx(std::shared_ptr<Hurricane> hurricane) :
-	mHurricane (hurricane)
+	Converter(hurricane)
 {
 
 }

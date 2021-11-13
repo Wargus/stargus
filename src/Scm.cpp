@@ -64,7 +64,7 @@
 using namespace std;
 
 Scm::Scm(std::shared_ptr<Hurricane> hurricane) :
-	mHurricane (hurricane)
+	Converter(hurricane)
 {
 
 }
@@ -96,28 +96,6 @@ bool Scm::convert(const std::string &arcfile, const std::string &file)
 
 	return result;
 }
-
-/**
-**  Load scm
-**
-**  @param scm  Name of the scm file
-**  @param map  The map
-*/
-/*void Scm::load(const char *mpqfile, const char *dir)
-{
-	unsigned char *chkdata = NULL;
-	size_t chklen = 0;
-
-	Storm mpq(mpqfile);
-	bool result = mpq.extractMemory("staredit\\scenario.chk", &chkdata, &chklen);
-	if (result)
-	{
-		chk.loadFromBuffer(chkdata, chklen);
-	}
-
-	free(chkdata);
-
-}*/
 
 #ifdef STAND_ALONE
 void usage()

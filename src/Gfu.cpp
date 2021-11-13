@@ -56,6 +56,7 @@ bool Gfu::convert(const char *mpqfile, const char* arcfile, const char* file, in
 			++p;
 		}
 
+		printf("Palette: %d", pale);
 		palp = Palettes[pale];
 
 

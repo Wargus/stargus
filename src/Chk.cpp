@@ -1185,8 +1185,6 @@ void Chk::SaveMap(const char *savedir)
 
 	// if a map ends with a dot (.) then it adds .sms and .scp otherwise a dir with scenario.sms/scenario.smp
 	// TODO: if you give something unexpected to savedir - bye bye => rework later
-	int x = strlen(savedir);
-	char y = savedir[strlen(savedir)-1];
 	if(savedir[strlen(savedir)-1] == '.')
 	{
 		sms += "sms";

@@ -22,7 +22,8 @@ startool_sources = files(
 	'WorldMap.cpp',
 	'Dds.cpp',
 	'Breeze.cpp',
-	'Video.cpp')
+	'Video.cpp',
+	'Converter.cpp')
 	
 stratagus_prefix = get_option('prefix')
 stratagus_bin = get_option('STRATAGUS_BIN')

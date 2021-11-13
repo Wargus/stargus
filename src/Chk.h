@@ -28,14 +28,14 @@ public:
 	Chk(std::shared_ptr<Hurricane> hurricane);
 	virtual ~Chk();
 
-	bool convert(const std::string &arcfile, const std::string &file);
+	virtual bool convert(const std::string &arcfile, const std::string &file);
 
+private:
 	void loadFromBuffer(unsigned char *chkdata, int len);
 	void ConvertChk(const char *savedir, unsigned char *chkdata, int chklen);
 
 	void SaveMap(const char *savedir);
 
-private:
 	void SaveSMS(const char *name);
 	void SaveTrigger(FILE *fd, Trigger *trigger);
 	void SaveSMP(const char *name);

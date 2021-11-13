@@ -8,6 +8,7 @@
 
 // Local
 #include "Chk.h"
+#include <Converter.h>
 
 // System
 #include <cstring>
@@ -18,14 +19,13 @@
 // Forward declarations
 class Hurricane;
 
-
 /**
  * Map Container
  *
  * The .scm is MPQ encoded and will be decoded to a .ckk and then further processed by Chk class
  * At the end .scm is only useful with Storm
  */
-class Scm
+class Scm : public Converter
 {
 public:
 	Scm(std::shared_ptr<Hurricane> hurricane);
@@ -34,9 +34,7 @@ public:
 	bool convert(const std::string &arcfile, const std::string &file);
 
 private:
-	//void load(const char *mpqfile, const char *dir);
 
-	std::shared_ptr<Hurricane> mHurricane;
 };
 
 

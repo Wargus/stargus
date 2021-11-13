@@ -22,7 +22,7 @@ public:
 	Font(std::shared_ptr<Hurricane> hurricane);
 	virtual ~Font();
 
-	bool convert(const std::string &arcfile, const std::string &file, int pale);
+	bool convert(const std::string &arcfile, const std::string &file);
 
 private:
 	/**

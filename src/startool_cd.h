@@ -71,7 +71,32 @@ Control CDTodo[] = {
 	{M,0,"maps/(8)Plains of Snow '98.","multimaps\\(8)Plains of Snow '98.scm" __4},
 	{M,0,"maps/(8)Station Unrest.","multimaps\\(8)Station Unrest.scm" __4},
 	{M,0,"maps/(8)The Hunters.","multimaps\\(8)The Hunters.scm" __4},
-	//TBD: add all maps from CD/maps subdirs...
+
+	// some maps from subdirs
+	{M,0,"maps/campaign/(1)enslavers01.","multimaps\\campaign\\(1)enslavers01.scm" __4},
+	{M,0,"maps/campaign/(1)enslavers02a.","multimaps\\campaign\\(1)enslavers02a.scm" __4},
+	{M,0,"maps/campaign/(1)enslavers02b.","multimaps\\campaign\\(1)enslavers02b.scm" __4},
+	{M,0,"maps/campaign/(1)enslavers03a.","multimaps\\campaign\\(1)enslavers03a.scm" __4},
+	{M,0,"maps/campaign/(1)enslavers03b.","multimaps\\campaign\\(1)enslavers03b.scm" __4},
+
+	{M,0,"maps/ladder/(2)discovery.","multimaps\\ladder\\(2)discovery.scm" __4},
+	{M,0,"maps/ladder/(2)river styx.","multimaps\\ladder\\(2)river styx.scm" __4},
+	{M,0,"maps/ladder/(2)solar station.","multimaps\\ladder\\(2)solar station.scm" __4},
+	{M,0,"maps/ladder/(4)crusader.","multimaps\\ladder\\(4)crusader.scm" __4},
+	{M,0,"maps/ladder/(4)dire straits.","multimaps\\ladder\\(4)dire straits.scm" __4},
+	{M,0,"maps/ladder/(4)rivalry.","multimaps\\ladder\\(4)rivalry.scm" __4},
+	{M,0,"maps/ladder/(4)lost temple.","multimaps\\ladder\\(4)lost temple.scm" __4},
+
+	{M,0,"maps/scenario/(2)pro bowl.","multimaps\\scenario\\(2)pro bowl.scm" __4},
+	{M,0,"maps/scenario/(2)wakka wakka.","multimaps\\scenario\\(2)wakka wakka.scm" __4},
+	{M,0,"maps/scenario/(3)defenders of the galaxy.","multimaps\\scenario\\(3)defenders of the galaxy.scm" __4},
+	{M,0,"maps/scenario/(4)king of the hill.","multimaps\\scenario\\(4)king of the hill.scm" __4},
+	{M,0,"maps/scenario/(4)old faithful.","multimaps\\scenario\\(4)old faithful.scm" __4},
+	{M,0,"maps/scenario/(4)steal the bacon.","multimaps\\scenario\\(4)steal the bacon.scm" __4},
+	{M,0,"maps/scenario/(4)zergling round-up.","multimaps\\scenario\\(4)zergling round-up.scm" __4},
+	{M,0,"maps/scenario/(4)zoo keeper.","multimaps\\scenario\\(4)zoo keeper.scm" __4},
+	{M,0,"maps/scenario/(5)race of death.","multimaps\\scenario\\(5)race of death.scm" __4},
+	{M,0,"maps/scenario/(8)starcraft fortress.","multimaps\\scenario\\(8)starcraft fortress.scm" __4},
 
 	// Terran Campaigns
 	{H,0,"campaigns/terran/palta-blank","glue\\PalTA\\Blank.pcx",0 __3},
@@ -460,7 +485,7 @@ Control CDTodo[] = {
 	{W,0,"campaigns/zerg/08/Z8M42uki","campaign\\zerg\\zerg08\\staredit\\wav\\Z8M42uki.wav" __4},
 	{W,0,"campaigns/zerg/08/Z8M60uki","campaign\\zerg\\zerg08\\staredit\\wav\\Z8M60uki.wav" __4},
 	// "campaigns/zerg/09/scenario.chk" => crash in importer with CompaignConverter!
-	{E,0,"campaigns/zerg/09/","campaign\\zerg\\zerg09\\staredit\\scenario.chk" __4},
+	//{L,0,"campaigns/zerg/09/","campaign\\zerg\\zerg09\\staredit\\scenario.chk" __4},
 	{W,0,"campaigns/zerg/09/ComBeep0","campaign\\zerg\\zerg09\\staredit\\wav\\ComBeep0.wav" __4},
 	{W,0,"campaigns/zerg/09/Z9B00zad","campaign\\zerg\\zerg09\\staredit\\wav\\Z9B00zad.wav" __4},
 	{W,0,"campaigns/zerg/09/Z9B01zad","campaign\\zerg\\zerg09\\staredit\\wav\\Z9B01zad.wav" __4},

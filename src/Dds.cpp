@@ -19,7 +19,7 @@ using namespace std;
 using namespace Magick;
 
 Dds::Dds(std::shared_ptr<Hurricane> hurricane) :
-	mHurricane (hurricane)
+		Converter(hurricane)
 {
 	// TODO: might be needed for Windows/OSX regarding docu...
 	//InitializeMagick(*argv);

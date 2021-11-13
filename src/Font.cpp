@@ -43,7 +43,7 @@ Font::~Font()
 **
 **  @return true if everything is ok
 */
-bool Font::convert(const std::string &arcfile, const std::string &file, int pale)
+bool Font::convert(const std::string &arcfile, const std::string &file)
 {
 	unsigned char* palp;
 	unsigned char* image;
@@ -51,6 +51,7 @@ bool Font::convert(const std::string &arcfile, const std::string &file, int pale
 	int h;
 	char buf[8192] = {'\0'};
 	bool result = true;
+	int pale = 2; // Cmdicons_Palette -> but no Idea why this palette is applied for fonts
 
 	LOG4CXX_TRACE(mLogger, "convert:" + arcfile + "," + file);
 

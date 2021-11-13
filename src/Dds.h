@@ -7,13 +7,16 @@
 #ifndef DDS_H_
 #define DDS_H_
 
+// Local
+#include "Converter.h"
+
 // System
 #include <memory>
 
 // Forward declarations
 class Hurricane;
 
-class Dds
+class Dds : public Converter
 {
 public:
 	Dds(std::shared_ptr<Hurricane> hurricane);
@@ -22,7 +25,7 @@ public:
 	bool convert(const std::string &arcfile, const std::string &file);
 
 private:
-	std::shared_ptr<Hurricane> mHurricane;
+
 };
 
 #endif /* DDS_H_ */
