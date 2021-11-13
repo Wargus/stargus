@@ -28,7 +28,8 @@
 using namespace std;
 
 Font::Font(std::shared_ptr<Hurricane> hurricane) :
-	mLogger("startool.Font"), mHurricane (hurricane)
+	mLogger("startool.Font"),
+	mHurricane (hurricane)
 {
 
 }

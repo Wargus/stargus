@@ -16,6 +16,7 @@
 #include <cstring>
 #include <cstdint>
 #include <stdlib.h>
+#include <algorithm>
 
 #ifdef DEBUG
 #define DebugLevel1(x) printf(x)
@@ -30,8 +31,9 @@
 using namespace std;
 
 Chk::Chk(std::shared_ptr<Hurricane> hurricane) :
- map(new WorldMap()),
- mHurricane (hurricane)
+		mLogger("startool.Chk"),
+		map(new WorldMap()),
+		mHurricane (hurricane)
 {
 
 }
@@ -95,13 +97,6 @@ static inline int ChkReadByte(void)
 	return c;
 }
 
-/**
-**	Load chk from buffer
-**
-**	@param chkdata	Buffer containing chk data
-**	@param len	Length of chk buffer
-**	@param map	The map
-*/
 void Chk::loadFromBuffer(unsigned char *chkdata, int len)
 {
 	char header[5];
@@ -476,7 +471,16 @@ void Chk::loadFromBuffer(unsigned char *chkdata, int len)
 			num = ChkReadWord();
 			for (i = 0; i < num; ++i) {
 				s = ChkReadWord();
-				map->Strings.push_back(cptr + s);
+
+				string str (cptr + s);
+
+				// replace incompatible line endings of multiline strings
+				// TODO: this might look ugle, but doesn't crash the LUA function at least
+				// TODO: need to find a good way when the GUI supports that... maybe remove all multible spaces...
+				str.erase(remove(str.begin(), str.end(), '\r'), str.end());
+				str.erase(remove(str.begin(), str.end(), '\n'), str.end());
+
+				map->Strings.push_back(str);
 			}
 			map->Description = strdup("none");
 			chk_ptr += length - 2050;
@@ -1189,20 +1193,15 @@ void Chk::SaveMap(const char *savedir)
 	{
 		sms += "sms";
 		smp += "smp";
-		//sprintf(buf, "%s", savedir);
 	}
 	else if(savedir[strlen(savedir)-1] == '/')
 	{
 		sms += "scenario.sms";
 		smp += "scenario.smp";
-		//bu+f = savedir + "scenario.";
-		//sprintf(buf, "%sscenario.", savedir);
 	}
 
-	//sprintf(buf2, "%ssmp", buf);
 	SaveSMP(smp.c_str());
 
-	//sprintf(buf2, "%ssms", buf);
 	SaveSMS(sms.c_str());
 }
 

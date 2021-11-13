@@ -367,8 +367,8 @@ int main(int argc, const char** argv)
 			for (u = 0; u < len; ++u)
 			{
 				// This is only for debugging single steps while development!!!
-				//if(c[u].Type != F && c[u].Type != Q && c[u].Type != M)
-					//continue;
+				if(c[u].Type != F && c[u].Type != Q && c[u].Type != M)
+					continue;
 
 				switch (c[u].Type)
 				{
