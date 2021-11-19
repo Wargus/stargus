@@ -23,7 +23,10 @@ startool_sources = files(
 	'Dds.cpp',
 	'Breeze.cpp',
 	'Video.cpp',
-	'Converter.cpp')
+	'Converter.cpp',
+	'kaitai/kaitaistream.cpp',
+	'kaitai/units_dat.cpp',
+	'Units.cpp'	)
 	
 stratagus_prefix = get_option('prefix')
 stratagus_bin = get_option('STRATAGUS_BIN')
@@ -34,8 +37,8 @@ stratagus_incdir = include_directories(stratagus_includedir)
 add_project_arguments('-DDATA_PATH="' + stratagus_prefix + '/share/games/stratagus/stargus"', language: 'cpp')
 add_project_arguments('-DSCRIPTS_PATH="' + stratagus_prefix + '/share/games/stratagus/stargus"', language: 'cpp')
 add_project_arguments('-DSTRATAGUS_BIN=' + stratagus_bin, language: 'cpp')
-#add_project_arguments('-DSOURCE_DIR="' + meson.current_source_dir() + '/stargus"', language: 'cpp')
 add_project_arguments('-DSOURCE_DIR="' + meson.current_source_dir() + '/../"', language: 'cpp')
+add_project_arguments('-DKS_STR_ENCODING_ICONV', language: 'cpp')
 
 # inform about which stratagus binary is used
 message('Using stratagus: ' + stratagus_bin)

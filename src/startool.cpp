@@ -55,6 +55,7 @@
 #include "Logger.h"
 #include "Breeze.h"
 #include "Video.h"
+#include "Units.h"
 
 // System
 #include <memory>
@@ -281,6 +282,8 @@ void testHook()
 
 	Font font(breeze);
 	font.convert("font16.fnt", "font16");
+
+	Units units;
 
 	exit(0);
 }
