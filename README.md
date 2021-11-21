@@ -19,12 +19,12 @@ NOTE: stratagus ( https://github.com/Wargus/stratagus ) is required.
 stargus and stratagus version must match
 
 ```
-mkdir build
-cd build
-cmake -DSTRATAGUS=stratagus -DSTRATAGUS_INCLUDE_DIR=${PATH_TO_STRATAGUS_SRC}/gameheaders ../
-make
+meson build
+ninja -C build
 ./stargus
 ```
+
+Please take a look into meson_options.txt for possible build options. Special -DSTRATAGUS_INCLUDE_DIR and -DSTRATAGUS_BIN.
 
 ![image](https://cloud.githubusercontent.com/assets/46235/11292960/499a7d3c-8f55-11e5-9356-62c190c57467.png)
 ![image](https://cloud.githubusercontent.com/assets/46235/11292993/9198675c-8f55-11e5-9f74-2f23fb207498.png)
