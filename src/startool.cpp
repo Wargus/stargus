@@ -56,6 +56,7 @@
 #include "Breeze.h"
 #include "Video.h"
 #include "Units.h"
+#include "Weapons.h"
 
 // System
 #include <memory>
@@ -274,16 +275,21 @@ void testHook()
 {
 	LOG4CXX_DEBUG(logger, "testHook()");
 
-	string font_path = "/home/andreas/src/git/stargus/work_font/classic/files/font/";
+	/*string font_path = "/home/andreas/src/git/stargus/work_font/classic/files/font/";
 	string font_path_rm = "/home/andreas/src/git/stargus/work_font/remastered/SD/font/";
 	string font_path_hd = "/home/andreas/src/git/stargus/work_font/remastered/font/"; // problem!
 
 	shared_ptr<Breeze> breeze = make_shared<Breeze>(font_path_rm);
 
 	Font font(breeze);
-	font.convert("font16.fnt", "font16");
+	font.convert("font16.fnt", "font16");*/
 
-	Units units;
+	//shared_ptr<Breeze> breeze = make_shared<Breeze>("/home/andreas/src/git/stargus/kaitai");
+	//Units units(breeze);
+
+	shared_ptr<Storm> storm = make_shared<Storm>("/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
+	Weapons units(storm);
+	units.convert("arr\\weapons.dat", "weapons.txt");
 
 	exit(0);
 }

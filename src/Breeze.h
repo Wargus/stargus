@@ -40,6 +40,7 @@ public:
 	 */
 	virtual bool extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen);
 
+	//virtual std::istream getStream(const std::string &archivedFile);
 };
 
 #endif /* BREEZE_H_ */

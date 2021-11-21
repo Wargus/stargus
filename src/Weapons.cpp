@@ -1,35 +1,30 @@
 /*
- * Units.cpp
+ * Weapons.cpp
  *
  *      Author: Andreas Volz
  */
 
 // Local
-#include "Units.h"
-#include "Hurricane.h"
+#include "Weapons.h"
+#include "kaitai/weapons_dat.h"
 
 // System
-#include <iostream>
-#include <fstream>
-#include <string>
+#include "Hurricane.h"
 
 using namespace std;
 
-Units::Units(std::shared_ptr<Hurricane> hurricane) :
-	Converter(hurricane),
-	mLogger("startool.Units")
-{
-
-
-
-}
-
-Units::~Units()
+Weapons::Weapons(std::shared_ptr<Hurricane> hurricane) :
+	Converter(hurricane)
 {
 
 }
 
-bool Units::convert(const std::string &arcfile, const std::string &file)
+Weapons::~Weapons()
+{
+
+}
+
+bool Weapons::convert(const std::string &arcfile, const std::string &file)
 {
 	shared_ptr<DataChunk> data = mHurricane->extractDataChunk(arcfile);
 	if (data)
@@ -42,14 +37,14 @@ bool Units::convert(const std::string &arcfile, const std::string &file)
 		std::string str( reinterpret_cast<char const*>(data->getDataPointer()), data->getSize() ) ;
 		kaitai::kstream ks(str);
 
-		units_dat_t g = units_dat_t(&ks);
+		weapons_dat_t g = weapons_dat_t(&ks);
 
-		std::vector<uint8_t>* gidvec = g.graphic_id();
+		std::vector<uint16_t>* gidvec = g.weapon_label();
 
-		for(vector<uint8_t>::iterator git = gidvec->begin(); git != gidvec->end(); git++)
+		for(vector<uint16_t>::iterator git = gidvec->begin(); git != gidvec->end(); git++)
 		{
 			uint8_t gt = *git;
-			printf("graphicid=%d\n", gt);
+			printf("weapon_label=%d\n", gt);
 		}
 	}
 

@@ -7,12 +7,27 @@
 #ifndef UNITS_H_
 #define UNITS_H_
 
+// Local
 #include "kaitai/units_dat.h"
+#include "Logger.h"
+#include "Converter.h"
 
-class Units {
+// System
+#include <memory>
+
+// Forward declarations
+class Hurricane;
+
+class Units : public Converter
+{
 public:
-	Units();
+	Units(std::shared_ptr<Hurricane> hurricane);
 	virtual ~Units();
+
+	virtual bool convert(const std::string &arcfile, const std::string &file);
+
+private:
+	Logger mLogger;
 };
 
 #endif /* UNITS_H_ */

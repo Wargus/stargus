@@ -10,12 +10,6 @@
 // Local
 #include <Converter.h>
 
-// System
-#include <memory>
-
-// Forward declarations
-class Hurricane;
-
 class Pcx : public Converter
 {
 public:

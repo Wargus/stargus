@@ -10,7 +10,7 @@
 // System
 #include <stdio.h>
 #include <string.h>
-
+#include <fstream>
 
 using namespace std;
 
@@ -91,6 +91,7 @@ bool Breeze::extractMemory(const std::string &archivedFile, unsigned char **szEn
 			}
 		}
 		i++;
+		*bufferLen = len;
 	}
 	else
 	{
@@ -101,3 +102,4 @@ bool Breeze::extractMemory(const std::string &archivedFile, unsigned char **szEn
 
 	return result;
 }
+
