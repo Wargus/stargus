@@ -57,6 +57,7 @@
 #include "Video.h"
 #include "Units.h"
 #include "Weapons.h"
+#include "Tbl.h"
 
 // System
 #include <memory>
@@ -288,8 +289,8 @@ void testHook()
 	//Units units(breeze);
 
 	shared_ptr<Storm> storm = make_shared<Storm>("/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
-	Weapons units(storm);
-	units.convert("arr\\weapons.dat", "weapons.txt");
+	Tbl units(storm);
+	units.convert("rez\\stat_txt.tbl", "test");
 
 	exit(0);
 }

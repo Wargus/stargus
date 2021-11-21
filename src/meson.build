@@ -28,7 +28,9 @@ startool_sources = files(
 	'kaitai/units_dat.cpp',
 	'Units.cpp',
 	'kaitai/weapons_dat.cpp',
-	'Weapons.cpp'	
+	'Weapons.cpp',
+	'Tbl.cpp',
+	'kaitai/file_tbl.cpp'
 	)
 	
 stratagus_prefix = get_option('prefix')

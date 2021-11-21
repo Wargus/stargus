@@ -5,3 +5,4 @@
 
 kaitai-struct-compiler units_dat.ksy -t cpp_stl
 kaitai-struct-compiler weapons_dat.ksy -t cpp_stl
+kaitai-struct-compiler file_tbl.ksy -t cpp_stl

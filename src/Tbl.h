@@ -1,28 +1,25 @@
 /*
- * Units.h
+ * Tbl.h
  *
  *      Author: Andreas Volz
  */
 
-#ifndef UNITS_H_
-#define UNITS_H_
+#ifndef TBL_H_
+#define TBL_H_
 
 // Local
-#include "kaitai/units_dat.h"
-#include "Logger.h"
+#include "kaitai/file_tbl.h"
 #include "Converter.h"
-
-// System
-
+#include "Logger.h"
 
 // Forward declarations
 class Hurricane;
 
-class Units : public Converter
+class Tbl: public Converter
 {
 public:
-	Units(std::shared_ptr<Hurricane> hurricane);
-	virtual ~Units();
+	Tbl(std::shared_ptr<Hurricane> hurricane);
+	virtual ~Tbl();
 
 	virtual bool convert(const std::string &arcfile, const std::string &file);
 
@@ -30,4 +27,4 @@ private:
 	Logger mLogger;
 };
 
-#endif /* UNITS_H_ */
+#endif /* TBL_H_ */
