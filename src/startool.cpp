@@ -319,7 +319,7 @@ int main(int argc, const char** argv)
 	Preferences &preferences = Preferences::getInstance ();
 	preferences.init(); // initialize all properties once in the beginning of the application
 
-	//testHook();
+	testHook();
 
 	parseOptions(argc, argv);
 

@@ -10,6 +10,24 @@
 // C++
 #include <sstream>
 #include <iomanip>
+#include <iostream>
+
+/**
+ * print Vector on std::cout
+ */
+template <typename T>
+void printVector(std::vector<T> iv)
+{
+  std::cout << "[";
+  for (unsigned i = 0; i < iv.size(); i++)
+  {
+    std::cout << iv[i];
+    if (i < iv.size() - 1)
+      std::cout << ",";
+  }
+  std::cout << "]" << std::endl;
+}
+
 
 /**
  * create std::string from any number

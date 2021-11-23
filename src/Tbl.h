@@ -15,6 +15,21 @@
 // Forward declarations
 class Hurricane;
 
+class TblEntry
+{
+public:
+	TblEntry()
+	{
+		shortcut_pos = -1;
+		shortcut = ' ';
+	}
+	std::string name;
+	std::string category1;
+	std::string category2;
+	int shortcut_pos;
+	char shortcut;
+};
+
 class Tbl: public Converter
 {
 public:

@@ -7,6 +7,7 @@
 // Local
 #include "Tbl.h"
 #include "Hurricane.h"
+#include "StringUtil.h"
 
 // System
 #include <iostream>
@@ -32,9 +33,14 @@ Tbl::~Tbl()
 
 /**
  * TODO: this is just a raw format parser. Not yet decided what to do with the format
+ * a debug output looks like this if you uncomment the printf() below. The format isn't yet complete
+ * understood. But somehow there're shortcuts and a marker which char should be highlighted in the GUI...
+ * r<EOT>Pa<ETX>r<SOH>asit entwickeln<LF>(Für Königin)<NULL>
  */
 bool Tbl::convert(const std::string &arcfile, const std::string &file)
 {
+	bool result = true;
+
 	shared_ptr<DataChunk> data = mHurricane->extractDataChunk(arcfile);
 	if (data)
 	{
@@ -51,6 +57,7 @@ bool Tbl::convert(const std::string &arcfile, const std::string &file)
 		std::vector<file_tbl_t::tbl_entry_t*>* file_tbl_entry_vec = file_tbl.tbl_entries();
 
 		unsigned int i = 0;
+		vector<TblEntry> tbl_entry_vec;
 		for(vector<file_tbl_t::tbl_entry_t*>::iterator file_tbl_entry_it = file_tbl_entry_vec->begin(); file_tbl_entry_it != file_tbl_entry_vec->end(); file_tbl_entry_it++)
 		{
 			file_tbl_t::tbl_entry_t *file_entry = *file_tbl_entry_it;
@@ -60,7 +67,10 @@ bool Tbl::convert(const std::string &arcfile, const std::string &file)
 			cout << i << ":";
 			//"#entry: " << entry_char_vec->size() << endl;
 
-			uint8_t last_control = 0;
+			//uint8_t last_control = 0;
+			TblEntry tbl_entry;
+			string entry_str_tmp;
+			unsigned int null_counter = 0;
 			for(unsigned int n = 0; n < entry_char_vec->size(); n++)
 			{
 				uint8_t entry_char = entry_char_vec->at(n);
@@ -71,74 +81,114 @@ bool Tbl::convert(const std::string &arcfile, const std::string &file)
 					switch(entry_char)
 					{
 					case 0x0: // ' '
-						printf("<NULL>");
+						//printf("<NULL>");
+						if(null_counter == 0)
+						{
+							tbl_entry.name = entry_str_tmp;
+							entry_str_tmp.clear();
+						}
+						else if(null_counter == 1)
+						{
+							tbl_entry.category1 = entry_str_tmp;
+							entry_str_tmp.clear();
+						}
+						else if(null_counter == 2)
+						{
+							tbl_entry.category2 = entry_str_tmp;
+							entry_str_tmp.clear();
+						}
+						null_counter++;
 						break;
 					case 0x0a: // Line Feed
-						printf("<LF>");
+						//printf("<LF>");
+						entry_str_tmp += " ";
 						break;
 					case 0x01: // Start of Heading
-						printf("<SOH>");
+						//printf("<SOH>");
 						break;
 					case 0x02: // Start of Text
-						printf("<STX>");
+						//printf("<STX>");
+						tbl_entry.shortcut = entry_char_vec->at(n-1);
+						entry_str_tmp.clear();
 						break;
 					case 0x03: // End of Text
-						printf("<ETX>");
+						//printf("<ETX>");
 						break;
 					case 0x4: // End of Transmission, diamonds card suit
-						printf("<EOT>");
+						//printf("<EOT>");
 						break;
 					case 0x6: // Acknowledgement, spade card suit
-						printf("<ACK>");
+						//printf("<ACK>");
 						break;
 					case 0x7: // Bell
-						printf("<BEL>");
+						//printf("<BEL>");
 						break;
 					case 0x1B: // Escape
-						printf("<ESC>");
+						//printf("<ESC>");
 						break;
 					case 0x2a: // '*'
-						printf("<ASTERISK>");
+						//printf("<ASTERISK>");
+						entry_str_tmp += entry_char;
 						break;
 					default:
-						printf("<unhandled>: %x", entry_char);
+						//printf("<unhandled>: %x", entry_char);
 						break;
 					}
 
-					last_control = entry_char;
+					//last_control = entry_char;
 				}
 				// printable ASCII characters
 				else if(entry_char >= 32 && entry_char <= 126)
 				{
-					printf("%c", entry_char);
+					//printf("%c", entry_char);
+
+					entry_str_tmp += entry_char;
 				}
 				// printable extendes ASCII characters
 				else if(entry_char >= 120 && entry_char <= 255)
 				{
-					//printf("0x%X", entry_char);
-
 					char inBuf[1024];
 					inBuf[0] = (char) entry_char;
 					inBuf[1] = '\0';
 					char *utf8 = iconvISO2UTF8(inBuf);
-					cout << utf8;
-					free(utf8);
+					if(utf8)
+					{
+						cout << utf8;
+
+						entry_str_tmp += utf8;
+						free(utf8);
+					}
+					else
+					{
+						result = false;
+					}
 				}
 				else
 				{
 					LOG4CXX_ERROR(mLogger, "ASCII characters > 255 should not be possible!");
+					result = false;
 				}
 			}
 			cout << endl;
 
 			i++;
+			tbl_entry_vec.push_back(tbl_entry);
+		}
+
+		for(vector<TblEntry>::iterator it = tbl_entry_vec.begin(); it != tbl_entry_vec.end(); it++)
+		{
+			TblEntry tbl = *it;
+
+			string err = "[";
+			err += tbl.name + "," + tbl.category1 + "," + tbl.category2 + "]" + " sc=" + tbl.shortcut + " sc_pos:";
+			//cout << err << endl;
 		}
 	}
 
-
-	return true;
+	return result;
 }
 
+// TODO: check if this helps to detect encoding https://github.com/freedesktop/uchardet
 char *Tbl::iconvISO2UTF8(char *iso)
 {
 	char buf[1024] = {'\0'};
