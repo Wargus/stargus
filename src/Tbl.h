@@ -24,6 +24,11 @@ public:
 	virtual bool convert(const std::string &arcfile, const std::string &file);
 
 private:
+	/**
+	 *  @return a UTF-8 string that has to be free()d after usage
+	 */
+	char *iconvISO2UTF8(char *iso);
+
 	Logger mLogger;
 };
 

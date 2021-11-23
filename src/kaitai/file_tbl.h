@@ -29,7 +29,7 @@ public:
 
     public:
 
-        tbl_entry_t(int16_t p_i, kaitai::kstream* p__io, file_tbl_t* p__parent = 0, file_tbl_t* p__root = 0);
+        tbl_entry_t(uint16_t p_i, kaitai::kstream* p__io, file_tbl_t* p__parent = 0, file_tbl_t* p__root = 0);
 
     private:
         void _read();
@@ -39,19 +39,40 @@ public:
         ~tbl_entry_t();
 
     private:
-        bool f_entry;
-        std::string m_entry;
+        bool f_len;
+        int32_t m_len;
 
     public:
-        std::string entry();
+        int32_t len();
 
     private:
-        int16_t m_i;
+        bool f_file_end;
+        int32_t m_file_end;
+
+    public:
+        int32_t file_end();
+
+    private:
+        bool f_dyn_end;
+        int32_t m_dyn_end;
+
+    public:
+        int32_t dyn_end();
+
+    private:
+        bool f_entry;
+        std::vector<uint8_t>* m_entry;
+
+    public:
+        std::vector<uint8_t>* entry();
+
+    private:
+        uint16_t m_i;
         file_tbl_t* m__root;
         file_tbl_t* m__parent;
 
     public:
-        int16_t i() const { return m_i; }
+        uint16_t i() const { return m_i; }
         file_tbl_t* _root() const { return m__root; }
         file_tbl_t* _parent() const { return m__parent; }
     };
@@ -64,14 +85,14 @@ public:
     std::vector<tbl_entry_t*>* tbl_entries();
 
 private:
-    int16_t m_num_offsets;
-    std::vector<int16_t>* m_ofs_files;
+    uint16_t m_num_offsets;
+    std::vector<uint16_t>* m_ofs_files;
     file_tbl_t* m__root;
     kaitai::kstruct* m__parent;
 
 public:
-    int16_t num_offsets() const { return m_num_offsets; }
-    std::vector<int16_t>* ofs_files() const { return m_ofs_files; }
+    uint16_t num_offsets() const { return m_num_offsets; }
+    std::vector<uint16_t>* ofs_files() const { return m_ofs_files; }
     file_tbl_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };

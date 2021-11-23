@@ -1,8 +1,13 @@
 #!/bin/bash
 
-## TODO: think about to generate this with build system on-the-fly.
-## But for now we re-generate by need and commit the files to repo
+KSY_FILES="units_dat weapons_dat file_tbl"
 
-kaitai-struct-compiler units_dat.ksy -t cpp_stl
-kaitai-struct-compiler weapons_dat.ksy -t cpp_stl
-kaitai-struct-compiler file_tbl.ksy -t cpp_stl
+echo "Clean old generated source files..."
+for item in $KSY_FILES
+do
+  rm -f $item.cpp $item.h
+  KSY=$item.ksy
+  echo "Generating source from: $KSY"
+  kaitai-struct-compiler $KSY -t cpp_stl
+done
+

@@ -5,24 +5,31 @@ meta:
   
 seq:
   - id: num_offsets
-    type: s2
+    type: u2
   # Just read offsets normally
   - id: ofs_files
-    type: s2
+    type: u2
     repeat: expr
     repeat-expr: num_offsets
 instances:
   tbl_entries:
     type: tbl_entry(_index)
     repeat: expr
-    repeat-expr: num_offsets - 1
+    repeat-expr: num_offsets
 types:
   tbl_entry:
     params:
       - id: i
-        type: s2
+        type: u2
     instances:
+      len:
+        value: '_parent.ofs_files[i + 1] - _parent.ofs_files[i]'
+      file_end:
+        value: 0x8b39
+      dyn_end:
+        value: 'i + 1 < _parent.num_offsets ? len : _io.size - _parent.ofs_files[i]'
       entry:
         pos: _parent.ofs_files[i]
-        size: _parent.ofs_files[i + 1] - _parent.ofs_files[i]
-        type: str
+        type: u1
+        repeat: expr
+        repeat-expr: dyn_end
