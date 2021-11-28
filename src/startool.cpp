@@ -289,8 +289,10 @@ void testHook()
 	//Units units(breeze);
 
 	shared_ptr<Storm> storm = make_shared<Storm>("/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
-	Tbl units(storm);
-	units.convert("rez\\stat_txt.tbl", "test");
+	//Tbl units(storm);
+	Units units(storm);
+	//units.convert("rez\\stat_txt.tbl", "test");
+	units.convert("arr\\units.dat", "test");
 
 	exit(0);
 }
@@ -319,7 +321,7 @@ int main(int argc, const char** argv)
 	Preferences &preferences = Preferences::getInstance ();
 	preferences.init(); // initialize all properties once in the beginning of the application
 
-	testHook();
+	//testHook();
 
 	parseOptions(argc, argv);
 

@@ -42,9 +42,9 @@ bool Units::convert(const std::string &arcfile, const std::string &file)
 		std::string str( reinterpret_cast<char const*>(data->getDataPointer()), data->getSize() ) ;
 		kaitai::kstream ks(str);
 
-		units_dat_t g = units_dat_t(&ks);
+		units_dat_t unit = units_dat_t(false, false, false, &ks);
 
-		std::vector<uint8_t>* gidvec = g.graphic_id();
+		std::vector<uint8_t>* gidvec = unit.graphics();
 
 		for(vector<uint8_t>::iterator git = gidvec->begin(); git != gidvec->end(); git++)
 		{
