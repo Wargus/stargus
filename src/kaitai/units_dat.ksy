@@ -564,7 +564,12 @@ types:
         
   staredit_group_flags_type:
     seq:
-      - type: b3  # 0b0000_0111
+      - id: zerg
+        type: b1  # 0b0000_0001 = 0x01
+      - id: terran
+        type: b1  # 0b0000_0010 = 0x02
+      - id: protoss
+        type: b1  # 0b0000_0100 = 0x04
       - id: men
         type: b1  # 0b0000_1000 = 0x08
       - id: building
@@ -576,6 +581,9 @@ types:
       - id: neutral
         type: b1  # 0b1000_0000 = 0x80
     doc: |
+      zerg: Unit is from race "Zerg"
+      terran: Unit is from race "Terran"
+      protoss: Unit is from race "Protoss"
       men: Unit is a "Men"-type unit for triggers.
       building: Unit is a "Building"-type unit for triggers.
       factory: Unit is a "Factory"-type unit for triggers.

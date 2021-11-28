@@ -49,6 +49,9 @@ public:
     ~units_dat_t();
 
     /**
+     * zerg: Unit is from race "Zerg"
+     * terran: Unit is from race "Terran"
+     * protoss: Unit is from race "Protoss"
      * men: Unit is a "Men"-type unit for triggers.
      * building: Unit is a "Building"-type unit for triggers.
      * factory: Unit is a "Factory"-type unit for triggers.
@@ -71,7 +74,9 @@ public:
         ~staredit_group_flags_type_t();
 
     private:
-        uint64_t m__unnamed0;
+        bool m_zerg;
+        bool m_terran;
+        bool m_protoss;
         bool m_men;
         bool m_building;
         bool m_factory;
@@ -81,7 +86,9 @@ public:
         units_dat_t* m__parent;
 
     public:
-        uint64_t _unnamed0() const { return m__unnamed0; }
+        bool zerg() const { return m_zerg; }
+        bool terran() const { return m_terran; }
+        bool protoss() const { return m_protoss; }
         bool men() const { return m_men; }
         bool building() const { return m_building; }
         bool factory() const { return m_factory; }

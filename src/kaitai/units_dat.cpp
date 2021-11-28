@@ -673,7 +673,9 @@ units_dat_t::staredit_group_flags_type_t::staredit_group_flags_type_t(kaitai::ks
 }
 
 void units_dat_t::staredit_group_flags_type_t::_read() {
-    m__unnamed0 = m__io->read_bits_int_le(3);
+    m_zerg = m__io->read_bits_int_le(1);
+    m_terran = m__io->read_bits_int_le(1);
+    m_protoss = m__io->read_bits_int_le(1);
     m_men = m__io->read_bits_int_le(1);
     m_building = m__io->read_bits_int_le(1);
     m_factory = m__io->read_bits_int_le(1);
