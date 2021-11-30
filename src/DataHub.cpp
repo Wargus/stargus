@@ -60,12 +60,15 @@ bool DataHub::convert(const std::string &arcfile, const std::string &file)
 	shared_ptr<kaitai::kstream> units_ks = getKaitaiStream(sc_arr_units_dat);
 	units_dat_t units = units_dat_t(false, false, false, units_ks.get());
 	std::vector<uint8_t>* graphics_vec = units.graphics();
+	std::vector<uint8_t>* ground_weapon_vec = units.ground_weapon();
 	std::vector<units_dat_t::staredit_group_flags_type_t*>* se_group_flags_vec = units.staredit_group_flags();
 
 	// Weapons
 	shared_ptr<kaitai::kstream> weapons_ks = getKaitaiStream(sc_arr_weapons_dat);
-	weapons_dat_t weapons = weapons_dat_t(weapons_ks.get());
-	std::vector<uint16_t>* weapon_vec = weapons.label();
+	// give 100 here, but more flexible would be to check what is biggest weapon id and give it here
+	weapons_dat_t weapons = weapons_dat_t(100, weapons_ks.get());
+	std::vector<uint16_t>* weapon_label_vec = weapons.label();
+	std::vector<uint16_t>* weapon_error_message_vec = weapons.error_message();
 
 	// Flingy
 	shared_ptr<kaitai::kstream> flingy_ks = getKaitaiStream(sc_arr_flingy_dat);
@@ -112,17 +115,25 @@ bool DataHub::convert(const std::string &arcfile, const std::string &file)
 		uint16_t sprite_id = flingy_vec->at(graphic_id);
 		printf(" sprite:%d ", sprite_id);
 
+		uint16_t weapon_id = ground_weapon_vec->at(i);
+		printf("  weapon:%d ", weapon_id);
+
 		cout << endl;
 	}
 
-	unsigned int weapon_start = 228;
-	for(unsigned int i = 0; i < weapon_vec->size(); i++)
+	for(unsigned int i = 0; i < weapon_label_vec->size(); i++)
 	{
-		uint16_t label_id = weapon_vec->at(i);
-		printf("[%d] weapon=%d\t ", i, label_id);
+		uint16_t label_id = weapon_label_vec->at(i);
+		printf("[%d] weapon=%d\t", i, label_id);
 
-		TblEntry tblEntry = stat_txt_vec.at(i + weapon_start);
-		cout << tblEntry.name;
+		TblEntry tblEntry_label = stat_txt_vec.at(label_id);
+		cout << " weapon=" << tblEntry_label.name;
+
+		uint16_t error_id = weapon_error_message_vec->at(i);
+		printf(" error=%d\t", error_id);
+
+				TblEntry tblEntry_error = stat_txt_vec.at(error_id);
+		cout << " error=" << tblEntry_error.name;
 
 		cout << endl;
 	}

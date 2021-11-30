@@ -56,8 +56,6 @@
 #include "Logger.h"
 #include "Breeze.h"
 #include "Video.h"
-#include "Units.h"
-#include "Weapons.h"
 #include "DataHub.h"
 
 // System

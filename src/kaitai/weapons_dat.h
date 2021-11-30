@@ -31,7 +31,7 @@ public:
         WEAPON_TYPE_ENUM_IGNORE_AMOR = 4
     };
 
-    weapons_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, weapons_dat_t* p__root = 0);
+    weapons_dat_t(uint8_t p_num_lines, kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, weapons_dat_t* p__root = 0);
 
 private:
     void _read();
@@ -43,8 +43,8 @@ public:
 private:
     std::vector<uint16_t>* m_label;
     std::vector<uint32_t>* m_graphics;
-    std::vector<uint8_t>* m_special_attack;
-    std::vector<attack_type_enum_t>* m_attack_type;
+    std::vector<uint8_t>* m_explosion;
+    std::vector<attack_type_enum_t>* m_target_flags;
     std::vector<uint32_t>* m_minimum_range;
     std::vector<uint32_t>* m_maximum_range;
     std::vector<uint8_t>* m_damage_upgrade;
@@ -65,6 +65,7 @@ private:
     std::vector<uint8_t>* m_y_offset;
     std::vector<uint16_t>* m_error_message;
     std::vector<uint16_t>* m_icon;
+    uint8_t m_num_lines;
     weapons_dat_t* m__root;
     kaitai::kstruct* m__parent;
 
@@ -81,6 +82,8 @@ public:
     std::vector<uint32_t>* graphics() const { return m_graphics; }
 
     /**
+     * Effect the weapon has on the area around the target after hitting its target. Used to determine different type of spell effects and splash damage.
+     * TODO: create enum
      * 0 = Nothing
      * 1 = Lockdown
      * 2 = Irradiate
@@ -108,22 +111,24 @@ public:
      * 24 = Normal
      * 25 = 1/3 Damage?
      */
-    std::vector<uint8_t>* special_attack() const { return m_special_attack; }
-    std::vector<attack_type_enum_t>* attack_type() const { return m_attack_type; }
+    std::vector<uint8_t>* explosion() const { return m_explosion; }
+    std::vector<attack_type_enum_t>* target_flags() const { return m_target_flags; }
 
     /**
      * Minimal range from which the weapon can be used.
+     * TODO: StaDat shows here value/16 but no sure why.
      */
     std::vector<uint32_t>* minimum_range() const { return m_minimum_range; }
 
     /**
      * Maximal range from which the weapon can be used.
+     * TODO: StaDat shows here value/16 but no sure why.
      */
     std::vector<uint32_t>* maximum_range() const { return m_maximum_range; }
 
     /**
      * The upgrade that will increase the damage dealt by the weapon by the "Bonus" value.
-     * Pointer to [upgrades.dat] ??
+     * Pointer to [upgrades.dat and/or stat_txt.tbl] ??
      */
     std::vector<uint8_t>* damage_upgrade() const { return m_damage_upgrade; }
 
@@ -134,7 +139,7 @@ public:
 
     /**
      * Determines how the weapon sprite will "behave" when it attacks the target. Weapon behaviours that "Follow" will track the target as it moves, those that "Don't Follow" will strike the place where the target was at the moment of attack.
-     * TODO: take values from StarDat
+     * TODO: take enum values from StarDat
      */
     std::vector<uint8_t>* weapon_behaviour() const { return m_weapon_behaviour; }
 
@@ -212,6 +217,7 @@ public:
      * The icon used for the weapon. [pointer to a frame in unit\cmdbtns\cmdicons.grp]
      */
     std::vector<uint16_t>* icon() const { return m_icon; }
+    uint8_t num_lines() const { return m_num_lines; }
     weapons_dat_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };
