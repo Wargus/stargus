@@ -5,28 +5,30 @@
 weapons_dat_t::weapons_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, weapons_dat_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = this;
-    m_weapon_label = 0;
-    m_missile_sprite = 0;
+    m_label = 0;
+    m_graphics = 0;
     m_special_attack = 0;
     m_attack_type = 0;
     m_minimum_range = 0;
     m_maximum_range = 0;
-    m_upgrade_group = 0;
+    m_damage_upgrade = 0;
     m_weapon_type = 0;
     m_weapon_behaviour = 0;
-    m_missile_type = 0;
+    m_remove_after = 0;
     m_explosive_type = 0;
-    m_splash_minimum = 0;
-    m_splash_medium = 0;
-    m_splash_maximum = 0;
-    m_damage = 0;
-    m_bonus = 0;
-    m_delay = 0;
-    m_factor = 0;
-    m_coordinate_group1 = 0;
-    m_coordinate_group2 = 0;
+    m_inner_splash_range = 0;
+    m_medium_splash_range = 0;
+    m_outer_splash_range = 0;
+    m_damage_amount = 0;
+    m_damage_bonus = 0;
+    m_weapon_cooldown = 0;
+    m_damage_factor = 0;
+    m_attack_angle = 0;
+    m_launch_spin = 0;
+    m_x_offset = 0;
+    m_y_offset = 0;
     m_error_message = 0;
-    m_weapon_icon = 0;
+    m_icon = 0;
 
     try {
         _read();
@@ -37,17 +39,17 @@ weapons_dat_t::weapons_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent,
 }
 
 void weapons_dat_t::_read() {
-    int l_weapon_label = 100;
-    m_weapon_label = new std::vector<uint16_t>();
-    m_weapon_label->reserve(l_weapon_label);
-    for (int i = 0; i < l_weapon_label; i++) {
-        m_weapon_label->push_back(m__io->read_u2le());
+    int l_label = 100;
+    m_label = new std::vector<uint16_t>();
+    m_label->reserve(l_label);
+    for (int i = 0; i < l_label; i++) {
+        m_label->push_back(m__io->read_u2le());
     }
-    int l_missile_sprite = 100;
-    m_missile_sprite = new std::vector<uint32_t>();
-    m_missile_sprite->reserve(l_missile_sprite);
-    for (int i = 0; i < l_missile_sprite; i++) {
-        m_missile_sprite->push_back(m__io->read_u4le());
+    int l_graphics = 100;
+    m_graphics = new std::vector<uint32_t>();
+    m_graphics->reserve(l_graphics);
+    for (int i = 0; i < l_graphics; i++) {
+        m_graphics->push_back(m__io->read_u4le());
     }
     int l_special_attack = 100;
     m_special_attack = new std::vector<uint8_t>();
@@ -56,10 +58,10 @@ void weapons_dat_t::_read() {
         m_special_attack->push_back(m__io->read_u1());
     }
     int l_attack_type = 100;
-    m_attack_type = new std::vector<attack_type_value_t>();
+    m_attack_type = new std::vector<attack_type_enum_t>();
     m_attack_type->reserve(l_attack_type);
     for (int i = 0; i < l_attack_type; i++) {
-        m_attack_type->push_back(static_cast<weapons_dat_t::attack_type_value_t>(m__io->read_u2le()));
+        m_attack_type->push_back(static_cast<weapons_dat_t::attack_type_enum_t>(m__io->read_u2le()));
     }
     int l_minimum_range = 100;
     m_minimum_range = new std::vector<uint32_t>();
@@ -73,17 +75,17 @@ void weapons_dat_t::_read() {
     for (int i = 0; i < l_maximum_range; i++) {
         m_maximum_range->push_back(m__io->read_u4le());
     }
-    int l_upgrade_group = 100;
-    m_upgrade_group = new std::vector<uint8_t>();
-    m_upgrade_group->reserve(l_upgrade_group);
-    for (int i = 0; i < l_upgrade_group; i++) {
-        m_upgrade_group->push_back(m__io->read_u1());
+    int l_damage_upgrade = 100;
+    m_damage_upgrade = new std::vector<uint8_t>();
+    m_damage_upgrade->reserve(l_damage_upgrade);
+    for (int i = 0; i < l_damage_upgrade; i++) {
+        m_damage_upgrade->push_back(m__io->read_u1());
     }
     int l_weapon_type = 100;
-    m_weapon_type = new std::vector<uint8_t>();
+    m_weapon_type = new std::vector<weapon_type_enum_t>();
     m_weapon_type->reserve(l_weapon_type);
     for (int i = 0; i < l_weapon_type; i++) {
-        m_weapon_type->push_back(m__io->read_u1());
+        m_weapon_type->push_back(static_cast<weapons_dat_t::weapon_type_enum_t>(m__io->read_u1()));
     }
     int l_weapon_behaviour = 100;
     m_weapon_behaviour = new std::vector<uint8_t>();
@@ -91,11 +93,11 @@ void weapons_dat_t::_read() {
     for (int i = 0; i < l_weapon_behaviour; i++) {
         m_weapon_behaviour->push_back(m__io->read_u1());
     }
-    int l_missile_type = 100;
-    m_missile_type = new std::vector<uint8_t>();
-    m_missile_type->reserve(l_missile_type);
-    for (int i = 0; i < l_missile_type; i++) {
-        m_missile_type->push_back(m__io->read_u1());
+    int l_remove_after = 100;
+    m_remove_after = new std::vector<uint8_t>();
+    m_remove_after->reserve(l_remove_after);
+    for (int i = 0; i < l_remove_after; i++) {
+        m_remove_after->push_back(m__io->read_u1());
     }
     int l_explosive_type = 100;
     m_explosive_type = new std::vector<uint8_t>();
@@ -103,59 +105,71 @@ void weapons_dat_t::_read() {
     for (int i = 0; i < l_explosive_type; i++) {
         m_explosive_type->push_back(m__io->read_u1());
     }
-    int l_splash_minimum = 100;
-    m_splash_minimum = new std::vector<uint16_t>();
-    m_splash_minimum->reserve(l_splash_minimum);
-    for (int i = 0; i < l_splash_minimum; i++) {
-        m_splash_minimum->push_back(m__io->read_u2le());
+    int l_inner_splash_range = 100;
+    m_inner_splash_range = new std::vector<uint16_t>();
+    m_inner_splash_range->reserve(l_inner_splash_range);
+    for (int i = 0; i < l_inner_splash_range; i++) {
+        m_inner_splash_range->push_back(m__io->read_u2le());
     }
-    int l_splash_medium = 100;
-    m_splash_medium = new std::vector<uint16_t>();
-    m_splash_medium->reserve(l_splash_medium);
-    for (int i = 0; i < l_splash_medium; i++) {
-        m_splash_medium->push_back(m__io->read_u2le());
+    int l_medium_splash_range = 100;
+    m_medium_splash_range = new std::vector<uint16_t>();
+    m_medium_splash_range->reserve(l_medium_splash_range);
+    for (int i = 0; i < l_medium_splash_range; i++) {
+        m_medium_splash_range->push_back(m__io->read_u2le());
     }
-    int l_splash_maximum = 100;
-    m_splash_maximum = new std::vector<uint16_t>();
-    m_splash_maximum->reserve(l_splash_maximum);
-    for (int i = 0; i < l_splash_maximum; i++) {
-        m_splash_maximum->push_back(m__io->read_u2le());
+    int l_outer_splash_range = 100;
+    m_outer_splash_range = new std::vector<uint16_t>();
+    m_outer_splash_range->reserve(l_outer_splash_range);
+    for (int i = 0; i < l_outer_splash_range; i++) {
+        m_outer_splash_range->push_back(m__io->read_u2le());
     }
-    int l_damage = 100;
-    m_damage = new std::vector<uint16_t>();
-    m_damage->reserve(l_damage);
-    for (int i = 0; i < l_damage; i++) {
-        m_damage->push_back(m__io->read_u2le());
+    int l_damage_amount = 100;
+    m_damage_amount = new std::vector<uint16_t>();
+    m_damage_amount->reserve(l_damage_amount);
+    for (int i = 0; i < l_damage_amount; i++) {
+        m_damage_amount->push_back(m__io->read_u2le());
     }
-    int l_bonus = 100;
-    m_bonus = new std::vector<uint16_t>();
-    m_bonus->reserve(l_bonus);
-    for (int i = 0; i < l_bonus; i++) {
-        m_bonus->push_back(m__io->read_u2le());
+    int l_damage_bonus = 100;
+    m_damage_bonus = new std::vector<uint16_t>();
+    m_damage_bonus->reserve(l_damage_bonus);
+    for (int i = 0; i < l_damage_bonus; i++) {
+        m_damage_bonus->push_back(m__io->read_u2le());
     }
-    int l_delay = 100;
-    m_delay = new std::vector<uint8_t>();
-    m_delay->reserve(l_delay);
-    for (int i = 0; i < l_delay; i++) {
-        m_delay->push_back(m__io->read_u1());
+    int l_weapon_cooldown = 100;
+    m_weapon_cooldown = new std::vector<uint8_t>();
+    m_weapon_cooldown->reserve(l_weapon_cooldown);
+    for (int i = 0; i < l_weapon_cooldown; i++) {
+        m_weapon_cooldown->push_back(m__io->read_u1());
     }
-    int l_factor = 100;
-    m_factor = new std::vector<uint8_t>();
-    m_factor->reserve(l_factor);
-    for (int i = 0; i < l_factor; i++) {
-        m_factor->push_back(m__io->read_u1());
+    int l_damage_factor = 100;
+    m_damage_factor = new std::vector<uint8_t>();
+    m_damage_factor->reserve(l_damage_factor);
+    for (int i = 0; i < l_damage_factor; i++) {
+        m_damage_factor->push_back(m__io->read_u1());
     }
-    int l_coordinate_group1 = 100;
-    m_coordinate_group1 = new std::vector<coordinate_group_type_t*>();
-    m_coordinate_group1->reserve(l_coordinate_group1);
-    for (int i = 0; i < l_coordinate_group1; i++) {
-        m_coordinate_group1->push_back(new coordinate_group_type_t(m__io, this, m__root));
+    int l_attack_angle = 100;
+    m_attack_angle = new std::vector<uint8_t>();
+    m_attack_angle->reserve(l_attack_angle);
+    for (int i = 0; i < l_attack_angle; i++) {
+        m_attack_angle->push_back(m__io->read_u1());
     }
-    int l_coordinate_group2 = 100;
-    m_coordinate_group2 = new std::vector<coordinate_group_type_t*>();
-    m_coordinate_group2->reserve(l_coordinate_group2);
-    for (int i = 0; i < l_coordinate_group2; i++) {
-        m_coordinate_group2->push_back(new coordinate_group_type_t(m__io, this, m__root));
+    int l_launch_spin = 100;
+    m_launch_spin = new std::vector<uint8_t>();
+    m_launch_spin->reserve(l_launch_spin);
+    for (int i = 0; i < l_launch_spin; i++) {
+        m_launch_spin->push_back(m__io->read_u1());
+    }
+    int l_x_offset = 100;
+    m_x_offset = new std::vector<uint8_t>();
+    m_x_offset->reserve(l_x_offset);
+    for (int i = 0; i < l_x_offset; i++) {
+        m_x_offset->push_back(m__io->read_u1());
+    }
+    int l_y_offset = 100;
+    m_y_offset = new std::vector<uint8_t>();
+    m_y_offset->reserve(l_y_offset);
+    for (int i = 0; i < l_y_offset; i++) {
+        m_y_offset->push_back(m__io->read_u1());
     }
     int l_error_message = 100;
     m_error_message = new std::vector<uint16_t>();
@@ -163,11 +177,11 @@ void weapons_dat_t::_read() {
     for (int i = 0; i < l_error_message; i++) {
         m_error_message->push_back(m__io->read_u2le());
     }
-    int l_weapon_icon = 100;
-    m_weapon_icon = new std::vector<uint16_t>();
-    m_weapon_icon->reserve(l_weapon_icon);
-    for (int i = 0; i < l_weapon_icon; i++) {
-        m_weapon_icon->push_back(m__io->read_u2le());
+    int l_icon = 100;
+    m_icon = new std::vector<uint16_t>();
+    m_icon->reserve(l_icon);
+    for (int i = 0; i < l_icon; i++) {
+        m_icon->push_back(m__io->read_u2le());
     }
 }
 
@@ -176,11 +190,11 @@ weapons_dat_t::~weapons_dat_t() {
 }
 
 void weapons_dat_t::_clean_up() {
-    if (m_weapon_label) {
-        delete m_weapon_label; m_weapon_label = 0;
+    if (m_label) {
+        delete m_label; m_label = 0;
     }
-    if (m_missile_sprite) {
-        delete m_missile_sprite; m_missile_sprite = 0;
+    if (m_graphics) {
+        delete m_graphics; m_graphics = 0;
     }
     if (m_special_attack) {
         delete m_special_attack; m_special_attack = 0;
@@ -194,8 +208,8 @@ void weapons_dat_t::_clean_up() {
     if (m_maximum_range) {
         delete m_maximum_range; m_maximum_range = 0;
     }
-    if (m_upgrade_group) {
-        delete m_upgrade_group; m_upgrade_group = 0;
+    if (m_damage_upgrade) {
+        delete m_damage_upgrade; m_damage_upgrade = 0;
     }
     if (m_weapon_type) {
         delete m_weapon_type; m_weapon_type = 0;
@@ -203,73 +217,49 @@ void weapons_dat_t::_clean_up() {
     if (m_weapon_behaviour) {
         delete m_weapon_behaviour; m_weapon_behaviour = 0;
     }
-    if (m_missile_type) {
-        delete m_missile_type; m_missile_type = 0;
+    if (m_remove_after) {
+        delete m_remove_after; m_remove_after = 0;
     }
     if (m_explosive_type) {
         delete m_explosive_type; m_explosive_type = 0;
     }
-    if (m_splash_minimum) {
-        delete m_splash_minimum; m_splash_minimum = 0;
+    if (m_inner_splash_range) {
+        delete m_inner_splash_range; m_inner_splash_range = 0;
     }
-    if (m_splash_medium) {
-        delete m_splash_medium; m_splash_medium = 0;
+    if (m_medium_splash_range) {
+        delete m_medium_splash_range; m_medium_splash_range = 0;
     }
-    if (m_splash_maximum) {
-        delete m_splash_maximum; m_splash_maximum = 0;
+    if (m_outer_splash_range) {
+        delete m_outer_splash_range; m_outer_splash_range = 0;
     }
-    if (m_damage) {
-        delete m_damage; m_damage = 0;
+    if (m_damage_amount) {
+        delete m_damage_amount; m_damage_amount = 0;
     }
-    if (m_bonus) {
-        delete m_bonus; m_bonus = 0;
+    if (m_damage_bonus) {
+        delete m_damage_bonus; m_damage_bonus = 0;
     }
-    if (m_delay) {
-        delete m_delay; m_delay = 0;
+    if (m_weapon_cooldown) {
+        delete m_weapon_cooldown; m_weapon_cooldown = 0;
     }
-    if (m_factor) {
-        delete m_factor; m_factor = 0;
+    if (m_damage_factor) {
+        delete m_damage_factor; m_damage_factor = 0;
     }
-    if (m_coordinate_group1) {
-        for (std::vector<coordinate_group_type_t*>::iterator it = m_coordinate_group1->begin(); it != m_coordinate_group1->end(); ++it) {
-            delete *it;
-        }
-        delete m_coordinate_group1; m_coordinate_group1 = 0;
+    if (m_attack_angle) {
+        delete m_attack_angle; m_attack_angle = 0;
     }
-    if (m_coordinate_group2) {
-        for (std::vector<coordinate_group_type_t*>::iterator it = m_coordinate_group2->begin(); it != m_coordinate_group2->end(); ++it) {
-            delete *it;
-        }
-        delete m_coordinate_group2; m_coordinate_group2 = 0;
+    if (m_launch_spin) {
+        delete m_launch_spin; m_launch_spin = 0;
+    }
+    if (m_x_offset) {
+        delete m_x_offset; m_x_offset = 0;
+    }
+    if (m_y_offset) {
+        delete m_y_offset; m_y_offset = 0;
     }
     if (m_error_message) {
         delete m_error_message; m_error_message = 0;
     }
-    if (m_weapon_icon) {
-        delete m_weapon_icon; m_weapon_icon = 0;
+    if (m_icon) {
+        delete m_icon; m_icon = 0;
     }
-}
-
-weapons_dat_t::coordinate_group_type_t::coordinate_group_type_t(kaitai::kstream* p__io, weapons_dat_t* p__parent, weapons_dat_t* p__root) : kaitai::kstruct(p__io) {
-    m__parent = p__parent;
-    m__root = p__root;
-
-    try {
-        _read();
-    } catch(...) {
-        _clean_up();
-        throw;
-    }
-}
-
-void weapons_dat_t::coordinate_group_type_t::_read() {
-    m_x = m__io->read_u1();
-    m_y = m__io->read_u1();
-}
-
-weapons_dat_t::coordinate_group_type_t::~coordinate_group_type_t() {
-    _clean_up();
-}
-
-void weapons_dat_t::coordinate_group_type_t::_clean_up() {
 }

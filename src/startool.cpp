@@ -33,6 +33,7 @@
 --  Includes
 ----------------------------------------------------------------------------*/
 
+#include <StatTxtTbl.h>
 #include "endian.h"
 #include "startool.h"
 #include "optionparser.h"
@@ -57,7 +58,7 @@
 #include "Video.h"
 #include "Units.h"
 #include "Weapons.h"
-#include "Tbl.h"
+#include "DataHub.h"
 
 // System
 #include <memory>
@@ -285,14 +286,10 @@ void testHook()
 	Font font(breeze);
 	font.convert("font16.fnt", "font16");*/
 
-	//shared_ptr<Breeze> breeze = make_shared<Breeze>("/home/andreas/src/git/stargus/kaitai");
-	//Units units(breeze);
 
 	shared_ptr<Storm> storm = make_shared<Storm>("/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
-	//Tbl units(storm);
-	Units units(storm);
-	//units.convert("rez\\stat_txt.tbl", "test");
-	units.convert("arr\\units.dat", "test");
+	DataHub datahub(storm);
+	datahub.convert("test", "test");
 
 	exit(0);
 }
@@ -321,7 +318,7 @@ int main(int argc, const char** argv)
 	Preferences &preferences = Preferences::getInstance ();
 	preferences.init(); // initialize all properties once in the beginning of the application
 
-	//testHook();
+	testHook();
 
 	parseOptions(argc, argv);
 

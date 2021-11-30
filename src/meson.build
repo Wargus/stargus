@@ -1,7 +1,10 @@
 cpp = meson.get_compiler('cpp')
 
+subdir('kaitai')
+
 startool_sources = files(
-	'Casc.cpp', 'FileUtil.cpp',
+	'Casc.cpp', 
+	'FileUtil.cpp',
 	'Gfx.cpp',
 	'Palettes.cpp',
 	'Png.cpp', 
@@ -24,13 +27,8 @@ startool_sources = files(
 	'Breeze.cpp',
 	'Video.cpp',
 	'Converter.cpp',
-	'kaitai/kaitaistream.cpp',
-	'kaitai/units_dat.cpp',
-	'Units.cpp',
-	'kaitai/weapons_dat.cpp',
-	'Weapons.cpp',
-	'Tbl.cpp',
-	'kaitai/file_tbl.cpp'
+	'StatTxtTbl.cpp',
+	'DataHub.cpp'
 	)
 	
 stratagus_prefix = get_option('prefix')
@@ -65,6 +63,7 @@ cppunit_dep = [dependency('cppunit', required : false)]
 
 executable('startool', 
 	startool_sources,
+	startool_kaitai_sources,
 	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, cppunit_dep],
 	install : true)
 

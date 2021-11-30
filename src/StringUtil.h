@@ -11,6 +11,7 @@
 #include <sstream>
 #include <iomanip>
 #include <iostream>
+#include <vector>
 
 /**
  * print Vector on std::cout

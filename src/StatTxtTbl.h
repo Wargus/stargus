@@ -1,19 +1,18 @@
 /*
- * Tbl.h
+ * StatTxtTbl.h
  *
  *      Author: Andreas Volz
  */
 
-#ifndef TBL_H_
-#define TBL_H_
+#ifndef STAT_TXT_TBL_H_
+#define STAT_TXT_TBL_H_
 
 // Local
-#include "kaitai/file_tbl.h"
-#include "Converter.h"
 #include "Logger.h"
+#include "kaitai/file_tbl.h"
 
-// Forward declarations
-class Hurricane;
+// System
+#include <memory>
 
 class TblEntry
 {
@@ -30,13 +29,13 @@ public:
 	char shortcut;
 };
 
-class Tbl: public Converter
+class StatTxtTbl
 {
 public:
-	Tbl(std::shared_ptr<Hurricane> hurricane);
-	virtual ~Tbl();
+	StatTxtTbl();
+	virtual ~StatTxtTbl();
 
-	virtual bool convert(const std::string &arcfile, const std::string &file);
+	std::vector<TblEntry> convertFromStream(std::shared_ptr<kaitai::kstream> ks);
 
 private:
 	/**
@@ -47,4 +46,4 @@ private:
 	Logger mLogger;
 };
 
-#endif /* TBL_H_ */
+#endif /* STAT_TXT_TBL_H_ */

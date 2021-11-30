@@ -1,30 +1,60 @@
 meta:
   id: weapons_dat
   endian: le
+  
 seq:
-  - id: weapon_label
+  - id: label
     type: u2
     repeat: expr
     repeat-expr: 100
-    # 200 bytes | 1 Integer / Weapon
+    doc: |
+      The name of the weapon, displayed when you highlight its icon in the control bar. [pointer to stat_txt.tbl]
     
-  - id: missile_sprite
+  - id: graphics
     type: u4
     repeat: expr
     repeat-expr: 100
-    # 400 Bytes | 1 Long / Weapon
+    doc: |
+      The main graphics that the weapon uses. 0-Scourge = No graphics.[pointer to flingy.dat]
     
   - id: special_attack
     type: u1
     repeat: expr
     repeat-expr: 100
-    # 100 Bytes | 1 Byte / Weapon
-    
+    doc: |
+      0 = Nothing
+      1 = Lockdown
+      2 = Irradiate
+      3 = Spider Mines (Chase Unit)
+      4 = Normal
+      5 = No Damage
+      6 = No Damage
+      7 = EMP Shockwave
+      8 = Yamato Gun
+      9 = No Damage
+      10 = No Damage
+      11 = No Damage
+      12 = No Damage
+      13 = Broodling
+      14 = Dark Swarm
+      15 = Plague
+      16 = Consume
+      17 = Ensnare
+      18 = Parasite
+      19 = Psi Storm
+      20 = Normal
+      21 = Normal
+      22 = Stasis
+      23 = 1/4 Damage?
+      24 = Normal
+      25 = 1/3 Damage?
+
   - id: attack_type
     type: u2
     repeat: expr
     repeat-expr: 100
-    enum: attack_type_value
+    enum: attack_type_enum
+    # TODO: work on this bitfield!
     # 200 Bytes | 1 Integer / Weapon
     #  1 = Attacks Air only
     #  2 = Attacks Ground only
@@ -36,19 +66,23 @@ seq:
     type: u4
     repeat: expr
     repeat-expr: 100
-    # 400 Bytes |	1 Long / Weapon
+    doc: |
+      Minimal range from which the weapon can be used.
     
   - id: maximum_range
     type: u4
     repeat: expr
     repeat-expr: 100
-    # 400 Bytes |	1 Long / Weapon
+    doc: |
+      Maximal range from which the weapon can be used.
     
-  - id: upgrade_group
+  - id: damage_upgrade
     type: u1
     repeat: expr
     repeat-expr: 100
-    # 100 Bytes |	1 Byte / Weapon
+    doc: |
+      The upgrade that will increase the damage dealt by the weapon by the "Bonus" value.
+      Pointer to [upgrades.dat] ??
     #  7 = Terran Infantry Weapons
     #  8 = Terran Vehicle Weapons
     #  9 = Terran Ship Weapons
@@ -62,18 +96,19 @@ seq:
     
   - id: weapon_type
     type: u1
+    enum: weapon_type_enum
     repeat: expr
     repeat-expr: 100
-    # 100 Bytes | 1	Byte / Weapon
-    # 1 = Explosive
-    # 2 = Concussive
-    # 3 = Normal
-    
+    doc: |
+      The type of damage the weapon does. Normal, Explosive and Concussive do different amount of damage to units of different Size (Small, Medium or Large): Normal does equal damage to Small, Medium and Large. Explosive does 50% to Small and 75% to Medium. Concussive does 50% to Medium and 25% to Large.  Independent deals 1 point of damage every second attack, regardless of target's armor.
+
   - id: weapon_behaviour
     type: u1
     repeat: expr
     repeat-expr: 100
-    # 100 Bytes |	1 Byte / Weapon
+    doc: |
+      Determines how the weapon sprite will "behave" when it attacks the target. Weapon behaviours that "Follow" will track the target as it moves, those that "Don't Follow" will strike the place where the target was at the moment of attack.
+      TODO: take values from StarDat
     # 0 = Flies to target
     # 1 = Seeks Target
     # 2 = Appears on Target
@@ -82,20 +117,20 @@ seq:
     # 6 = Suicide
     # 7 = Bounce
 
-  - id: missile_type
+  - id: remove_after
     type: u1
     repeat: expr
     repeat-expr: 100
-    # 100 Bytes |	1 Byte / Weapon
-    #  30 = Homing Missile
-    #  60 = Unknown
-    # 255 = Normal
-    
+    doc: |
+      Time until the weapon is removed if it does not hit a target. 1 game second equals: on Fastest-24, on Faster-21, on Fast-18, on Normal-15, on Slow-12, on Slower-9 and on Slowest-6.
+
   - id: explosive_type
     type: u1
     repeat: expr
     repeat-expr: 100
-    # 100 Bytes | 1 Byte / Weapon
+    doc: |
+      Effect the weapon has on the area around the target after hitting its target. Used to determine different type of spell effects and splash damage.
+    # TODO: copy values from StarDat
     #  1 = Normal
     #  2 = Normal
     #  3 = Normal
@@ -112,88 +147,109 @@ seq:
     # 14 = Normal
     # 15 = Normal
     
-  - id: splash_minimum
+  - id: inner_splash_range
     type: u2
     repeat: expr
     repeat-expr: 100
-    # 200 Bytes |	1 Integer / Weapon 	
+    doc: |
+      Distance from the target at which the weapon will deal 100% of its base damage. Works ONLY if the "Explosion" is set to "Nuclear Missile", "Splash (Radial)", "Splash (Enemy)" or "Splash (Air)".
     
-  - id: splash_medium
+  - id: medium_splash_range
     type: u2
     repeat: expr
     repeat-expr: 100
-    # 200 Bytes |	1 Integer / Weapon 	
+    doc: |
+      Distance from the target at which the weapon will deal 50% of its base damage. Works ONLY if the "Explosion" is set to "Nuclear Missile", "Splash (Radial)", "Splash (Enemy)" or "Splash (Air)".
     
-  - id: splash_maximum
+  - id: outer_splash_range
     type: u2
     repeat: expr
     repeat-expr: 100
-    # 200 Bytes |	1 Integer / Weapon
+    doc: |
+      Distance from the target at which the weapon will deal 25% of its base damage. Works ONLY if the "Explosion" is set to "Nuclear Missile", "Splash (Radial)", "Splash (Enemy)" or "Splash (Air)".
     
-  - id: damage
+  - id: damage_amount
     type: u2
     repeat: expr
     repeat-expr: 100
-    # 200 Bytes |	1 Integer / Weapon
+    doc: |
+      The basic amount of damage the weapon will inflict when it hits.
     
-  - id: bonus
+  - id: damage_bonus
     type: u2
     repeat: expr
     repeat-expr: 100
-    # 200 Bytes | 1 Integer / Weapon
+    doc: |
+      The amount of damage added to the basic value for each level of the upgrade.
     
-  - id: delay
+  - id: weapon_cooldown
     type: u1
     repeat: expr
     repeat-expr: 100
-    # 100 Bytes |	1 Byte / Weapon
+    doc: |
+      "Reload time" - time delay between two attacks. Depends on the game speed used. 1 game second equals: on Fastest-24, on Faster-21, on Fast-18, on Normal-15, on Slow-12, on Slower-9 and on Slowest-6. Value of 0 will crash the game.
     
-  - id: factor
+  - id: damage_factor
     type: u1
     repeat: expr
     repeat-expr: 100
-    # 100 Bytes |	1 Byte / Weapon
+    doc: |
+      Usually, multiple this value by the Damage Amount to get the total damage that is DISPLAYED for the weapon. To a degree also the number of weapons used per attack, but anything other than 2 will result in 1 weapon being used. (e.g. Goliath, Scout and Valkyrie use 2 missiles per attack).
     
-  - id: coordinate_group1
-    type: coordinate_group_type
+  - id: attack_angle
+    type: u1
     repeat: expr
     repeat-expr: 100
-    # 200 Bytes |	2 Bytes / Weapon
-    # X Coordinate (Byte)
-    # Y Coordinate (Byte)
-    
-  - id: coordinate_group2
-    type: coordinate_group_type
+    doc: |
+      Angle within which the weapon can be fired without waiting for the unit's graphics to turn. 128 = 180 degrees.
+      
+  - id: launch_spin
+    type: u1
     repeat: expr
     repeat-expr: 100
-    # 200 Bytes |	2 Bytes / Weapon
-    # X Coordinate (Byte)
-    # Y Coordinate (Byte)
-    
+    doc: |
+      Angle by which the weapon's sprite will spin after it is spawned. 128 = 180 degrees.
+
+  - id: x_offset
+    type: u1
+    repeat: expr
+    repeat-expr: 100
+    doc: |
+      Distance (in pixels) from the front of the attacking unit (depending on which direction it is facing), at which the weapon's sprite will be spawned.
+
+  - id: y_offset
+    type: u1
+    repeat: expr
+    repeat-expr: 100
+    doc: |
+      Distance (in pixels) from the top of the attacking unit, at which the weapon's sprite will be spawned.
+
   - id: error_message
     type: u2
     repeat: expr
     repeat-expr: 100
-    # 200 Bytes |	1 Integer / Weapon 	
+    doc: |
+      The line displayed when the weapon is to acquire an invalid target (e.g. attacking a Mutalisk with a ground-only weapon, like Flamethrower) [pointer to stat_txt.tbl]
     
-  - id: weapon_icon
+  - id: icon
     type: u2
     repeat: expr
     repeat-expr: 100
-    # 200 Bytes |	1 Integer / Weapon
+    doc: |
+      The icon used for the weapon. [pointer to a frame in unit\cmdbtns\cmdicons.grp]
     
 enums:
-  attack_type_value:
+  attack_type_enum:
     1: air_only
     2: ground_only
     3: ground_and_air
     4: units_only # no buildings
     18: ground_units_only # no hover units
     
-types:
-  coordinate_group_type:
-    seq:
-      - id: x
-        type: u1
-      - id: y
-        type: u1
+  weapon_type_enum:
+    0: ndependent
+    1: explosive
+    2: concussive
+    3: normal
+    4: ignore_amor
+    
