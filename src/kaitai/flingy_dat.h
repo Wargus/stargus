@@ -15,7 +15,7 @@ class flingy_dat_t : public kaitai::kstruct {
 
 public:
 
-    flingy_dat_t(bool p_has_unused, bool p_has_movement_control, kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, flingy_dat_t* p__root = 0);
+    flingy_dat_t(uint8_t p_num_lines, kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, flingy_dat_t* p__root = 0);
 
 private:
     void _read();
@@ -31,21 +31,8 @@ private:
     std::vector<uint32_t>* m_halt_distance;
     std::vector<uint8_t>* m_turn_radius;
     std::vector<uint8_t>* m_unused;
-    bool n_unused;
-
-public:
-    bool _is_null_unused() { unused(); return n_unused; };
-
-private:
     std::vector<uint8_t>* m_movement_control;
-    bool n_movement_control;
-
-public:
-    bool _is_null_movement_control() { movement_control(); return n_movement_control; };
-
-private:
-    bool m_has_unused;
-    bool m_has_movement_control;
+    uint8_t m_num_lines;
     flingy_dat_t* m__root;
     kaitai::kstruct* m__parent;
 
@@ -85,8 +72,7 @@ public:
      * Indicates the mechanism that is used to control the movement of the flingy.dat entry. "Flingy.dat Control" makes use of the Acceleration, Speed, Turn Style and Turn Radius properties, i.e. the values in this editor will be used. "Iscript.bin Control" ignores these properties and follows only the Iscript opcode sequence. "Partially Mobile/Weapon" is used for various weapons sprites, not completely understood.
      */
     std::vector<uint8_t>* movement_control() const { return m_movement_control; }
-    bool has_unused() const { return m_has_unused; }
-    bool has_movement_control() const { return m_has_movement_control; }
+    uint8_t num_lines() const { return m_num_lines; }
     flingy_dat_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };

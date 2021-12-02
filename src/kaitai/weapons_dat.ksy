@@ -3,15 +3,7 @@ meta:
   endian: le
   
 # There're some different weapons.dat versions out there available.
-# Here is a list of files with md5sums which have been identified until now:
-# It seems 'num_lines' == number of highest air_weapon|ground_weapon in units.dat
-#
-# -e11807cf99262fd850b47c26111ce71f
-# -122a34bc49c58ee7aacc695d7ce3322a
-#   num_lines=130
-#
-# -993f5ce8460c7501c147fce63d138431
-#   num_lines=100
+# 'num_lines' == number of highest air_weapon|ground_weapon +1 in units.dat
 #
 params:
   - id: num_lines
