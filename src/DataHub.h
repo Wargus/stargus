@@ -8,11 +8,7 @@
 #define DATAHUB_H_
 
 // Local
-#include "kaitai/units_dat.h"
-#include "kaitai/weapons_dat.h"
-#include "kaitai/flingy_dat.h"
-#include "kaitai/sprites_dat.h"
-#include "kaitai/images_dat.h"
+#include "kaitai/kaitaistream.h"
 #include "Logger.h"
 #include "Converter.h"
 

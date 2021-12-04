@@ -9,6 +9,12 @@
 #include "DataHub.h"
 #include "Hurricane.h"
 #include "StringUtil.h"
+#include "kaitai/units_dat.h"
+#include "kaitai/weapons_dat.h"
+#include "kaitai/flingy_dat.h"
+#include "kaitai/sprites_dat.h"
+#include "kaitai/images_dat.h"
+#include "kaitai/sfxdata_dat.h"
 
 // System
 #include <iostream>
@@ -70,6 +76,17 @@ void DataHub::printCSV()
 	string sc_arr_sprites_dat = "arr\\sprites.dat";
 	string sc_arr_images_dat = "arr\\images.dat";
 	string sc_arr_images_tbl = "arr\\images.tbl";
+	string sc_arr_sfxdata_dat = "arr\\sfxdata.dat";
+	string sc_arr_sfxdata_tbl = "arr\\sfxdata.tbl";
+
+	/*string sc_rez_stat_txt_tbl ="stat_txt.tbl";
+	string sc_arr_units_dat = "units.dat";
+	string sc_arr_weapons_dat = "weapons.dat";
+	string sc_arr_flingy_dat = "flingy.dat";
+	string sc_arr_sprites_dat = "sprites.dat";
+	string sc_arr_images_dat = "images.dat";
+	string sc_arr_images_tbl = "images.tbl";
+	string sc_arr_sfxdata_dat = "sfxdata.dat";*/
 
 
 	// stat_txt.tbl
@@ -80,10 +97,18 @@ void DataHub::printCSV()
 	// units.dat
 	shared_ptr<kaitai::kstream> units_ks = getKaitaiStream(sc_arr_units_dat);
 	units_dat_t units = units_dat_t(false, false, false, units_ks.get());
+	//units_dat_t units = units_dat_t(true, true, true, units_ks.get()); // stardat15 data
 	std::vector<uint8_t>* units_graphics_vec = units.graphics();
 	std::vector<uint8_t>* units_ground_weapon_vec = units.ground_weapon();
 	std::vector<uint8_t>* units_air_weapon_vec = units.air_weapon();
 	std::vector<units_dat_t::staredit_group_flags_type_t*>* se_group_flags_vec = units.staredit_group_flags();
+	std::vector<uint16_t>* units_ready_sound_vec = units.ready_sound();
+	std::vector<uint16_t>* units_what_sound_start_vec = units.what_sound_start();
+	std::vector<uint16_t>* units_what_sound_end_vec = units.what_sound_end();
+	std::vector<uint16_t>* units_piss_sound_start_vec = units.piss_sound_start();
+	std::vector<uint16_t>* units_piss_sound_end_vec = units.piss_sound_end();
+	std::vector<uint16_t>* units_yes_sound_start_vec = units.yes_sound_start();
+	std::vector<uint16_t>* units_yes_sound_end_vec = units.yes_sound_end();
 
 	// weapons.dat
 	int ground_weapon_max = *max_element(units_ground_weapon_vec->begin(), units_ground_weapon_vec->end());
@@ -131,9 +156,31 @@ void DataHub::printCSV()
 	// images.tbl
 	StatTxtTbl images_tbl;
 	shared_ptr<kaitai::kstream> images_tbl_ks = getKaitaiStream(sc_arr_images_tbl);
-	std::vector<TblEntry> images_tbl_vec = stat_txt.convertFromStream(images_tbl_ks);
+	std::vector<TblEntry> images_tbl_vec = images_tbl.convertFromStream(images_tbl_ks);
 
-	// Units.dat
+	//sfxdata.data
+	vector<uint16_t> units_sound_max_vec;
+	units_sound_max_vec.push_back(*max_element(units_ready_sound_vec->begin(), units_ready_sound_vec->end()));
+	units_sound_max_vec.push_back(*max_element(units_what_sound_start_vec->begin(), units_what_sound_start_vec->end()));
+	units_sound_max_vec.push_back(*max_element(units_what_sound_end_vec->begin(), units_what_sound_end_vec->end()));
+	units_sound_max_vec.push_back(*max_element(units_piss_sound_start_vec->begin(), units_piss_sound_start_vec->end()));
+	units_sound_max_vec.push_back(*max_element(units_piss_sound_end_vec->begin(), units_piss_sound_end_vec->end()));
+	units_sound_max_vec.push_back(*max_element(units_yes_sound_start_vec->begin(), units_yes_sound_start_vec->end()));
+	units_sound_max_vec.push_back(*max_element(units_yes_sound_end_vec->begin(), units_yes_sound_end_vec->end()));
+	uint16_t unit_sound_max = *max_element(units_sound_max_vec.begin(), units_sound_max_vec.end());
+	printVector(*units_ready_sound_vec);
+	printf("unit_sound_max=%d\n", unit_sound_max);
+	shared_ptr<kaitai::kstream> sfxdata_ks = getKaitaiStream(sc_arr_sfxdata_dat);
+	// add +1 and 0 means "no sound"
+	sfxdata_dat_t sfxdata = sfxdata_dat_t(unit_sound_max+1, sfxdata_ks.get());
+	std::vector<uint32_t>* sfxdata_sound_file_vec = sfxdata.sound_file();
+
+	// sfdata.tbl
+	StatTxtTbl sfxdata_tbl;
+	shared_ptr<kaitai::kstream> sfxdata_tbl_ks = getKaitaiStream(sc_arr_sfxdata_tbl);
+	std::vector<TblEntry> sfxdata_tbl_vec = sfxdata_tbl.convertFromStream(sfxdata_tbl_ks);
+
+	// units.dat
 	for(unsigned int i = 0; i < units_graphics_vec->size(); i++)
 	{
 		csv_dat += "units.dat";
@@ -184,6 +231,14 @@ void DataHub::printCSV()
 		uint16_t weapon_id = units_ground_weapon_vec->at(i);
 		sprintf(buf, "weapon=%d", weapon_id);
 		csv_dat += buf;
+
+		if(i < 106)
+		{
+			csv_dat += CSV_SEPARATOR;
+			uint16_t ready_sound_id = units_ready_sound_vec->at(i);
+			sprintf(buf, "ready_sound=%d", ready_sound_id);
+			csv_dat += buf;
+		}
 
 		csv_dat += CSV_SEPARATOR;
 
@@ -290,6 +345,31 @@ void DataHub::printCSV()
 		csv_dat += CSV_SEPARATOR;
 
 		TblEntry tblEntry = images_tbl_vec.at(grp_id-1); // spec says first index is -1
+		csv_dat += "ref:name=" + tblEntry.name;
+
+		csv_dat += CSV_SEPARATOR;
+
+		csv_dat += CSV_ENDLINE;
+	}
+
+	// sfxdata.dat
+	for(unsigned int i = 0; i < sfxdata_sound_file_vec->size(); i++)
+	{
+		csv_dat += "sfxdata.dat";
+
+		csv_dat += CSV_SEPARATOR;
+
+		csv_dat += "id=" + toString(i);
+
+		csv_dat += CSV_SEPARATOR;
+
+		uint32_t sound_file = sfxdata_sound_file_vec->at(i);
+		sprintf(buf, "sound_file=%d", sound_file);
+		csv_dat += buf;
+
+		csv_dat += CSV_SEPARATOR;
+
+		TblEntry tblEntry = sfxdata_tbl_vec.at(sound_file);
 		csv_dat += "ref:name=" + tblEntry.name;
 
 		csv_dat += CSV_SEPARATOR;

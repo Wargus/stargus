@@ -5,5 +5,6 @@ startool_kaitai_sources = files(
 	'file_tbl.cpp',
 	'flingy_dat.cpp',
 	'sprites_dat.cpp',
-	'images_dat.cpp'
+	'images_dat.cpp',
+	'sfxdata_dat.cpp'
 )
