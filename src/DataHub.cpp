@@ -15,6 +15,7 @@
 #include "kaitai/sprites_dat.h"
 #include "kaitai/images_dat.h"
 #include "kaitai/sfxdata_dat.h"
+#include "kaitai/portdata_dat.h"
 
 // System
 #include <iostream>
@@ -78,6 +79,8 @@ void DataHub::printCSV()
 	string sc_arr_images_tbl = "arr\\images.tbl";
 	string sc_arr_sfxdata_dat = "arr\\sfxdata.dat";
 	string sc_arr_sfxdata_tbl = "arr\\sfxdata.tbl";
+	string sc_arr_portdata_dat = "arr\\portdata.dat";
+	string sc_arr_portdata_tbl = "arr\\portdata.tbl";
 
 	/*string sc_rez_stat_txt_tbl ="stat_txt.tbl";
 	string sc_arr_units_dat = "units.dat";
@@ -86,7 +89,11 @@ void DataHub::printCSV()
 	string sc_arr_sprites_dat = "sprites.dat";
 	string sc_arr_images_dat = "images.dat";
 	string sc_arr_images_tbl = "images.tbl";
-	string sc_arr_sfxdata_dat = "sfxdata.dat";*/
+	string sc_arr_sfxdata_dat = "sfxdata.dat";
+	string sc_arr_sfxdata_tbl = "sfxdata.tbl";
+	string sc_arr_portdata_dat = "portdata.dat";
+	string sc_arr_portdata_tbl = "portdata.tbl";*/
+
 
 
 	// stat_txt.tbl
@@ -109,6 +116,7 @@ void DataHub::printCSV()
 	std::vector<uint16_t>* units_piss_sound_end_vec = units.piss_sound_end();
 	std::vector<uint16_t>* units_yes_sound_start_vec = units.yes_sound_start();
 	std::vector<uint16_t>* units_yes_sound_end_vec = units.yes_sound_end();
+	std::vector<uint16_t>* units_portrait_vec = units.portrait();
 
 	// weapons.dat
 	int ground_weapon_max = *max_element(units_ground_weapon_vec->begin(), units_ground_weapon_vec->end());
@@ -168,17 +176,36 @@ void DataHub::printCSV()
 	units_sound_max_vec.push_back(*max_element(units_yes_sound_start_vec->begin(), units_yes_sound_start_vec->end()));
 	units_sound_max_vec.push_back(*max_element(units_yes_sound_end_vec->begin(), units_yes_sound_end_vec->end()));
 	uint16_t unit_sound_max = *max_element(units_sound_max_vec.begin(), units_sound_max_vec.end());
-	printVector(*units_ready_sound_vec);
 	printf("unit_sound_max=%d\n", unit_sound_max);
 	shared_ptr<kaitai::kstream> sfxdata_ks = getKaitaiStream(sc_arr_sfxdata_dat);
-	// add +1 and 0 means "no sound"
-	sfxdata_dat_t sfxdata = sfxdata_dat_t(unit_sound_max+1, sfxdata_ks.get());
+	// 0 means "no sound"
+	// TODO: find out if unit_sound_max+1 is needed or not! In some case data seams ok, in others it crash
+	sfxdata_dat_t sfxdata = sfxdata_dat_t(unit_sound_max, sfxdata_ks.get());
 	std::vector<uint32_t>* sfxdata_sound_file_vec = sfxdata.sound_file();
 
 	// sfdata.tbl
 	StatTxtTbl sfxdata_tbl;
 	shared_ptr<kaitai::kstream> sfxdata_tbl_ks = getKaitaiStream(sc_arr_sfxdata_tbl);
 	std::vector<TblEntry> sfxdata_tbl_vec = sfxdata_tbl.convertFromStream(sfxdata_tbl_ks);
+
+	// portdata.dat
+	shared_ptr<kaitai::kstream> portrait_ks = getKaitaiStream(sc_arr_portdata_dat);
+	int units_portrait_max = *max_element(units_portrait_vec->begin(), units_portrait_vec->end(), portdataCompare);
+	printf("units_portrait_max=%d\n", units_portrait_max);
+	printVector(*units_portrait_vec);
+	// 1. units_portrait_max => idle portraits
+	// 2. 4x flags => idle portraits
+	// 3. units_portrait_max => talking portraits
+	// 4. 4x flags => talking portraits
+	// 5. +2 because index starting at zero
+	portdata_dat_t portrait = portdata_dat_t(units_portrait_max+2*4, portrait_ks.get());
+	std::vector<uint32_t>* portdata_portrait_file_vec = portrait.portrait_file();
+
+	// portdata.tbl
+	StatTxtTbl portdata_tbl;
+	shared_ptr<kaitai::kstream> portdata_tbl_ks = getKaitaiStream(sc_arr_portdata_tbl);
+	std::vector<TblEntry> portdata_tbl_vec = portdata_tbl.convertFromStream(portdata_tbl_ks);
+	printf("portdata_tbl_vec: %d\n", (int) portdata_tbl_vec.size());
 
 	// units.dat
 	for(unsigned int i = 0; i < units_graphics_vec->size(); i++)
@@ -238,6 +265,42 @@ void DataHub::printCSV()
 			uint16_t ready_sound_id = units_ready_sound_vec->at(i);
 			sprintf(buf, "ready_sound=%d", ready_sound_id);
 			csv_dat += buf;
+		}
+
+		csv_dat += CSV_SEPARATOR;
+
+		uint32_t units_portrait_file= units_portrait_vec->at(i);
+		sprintf(buf, "portrait=%d", units_portrait_file);
+		csv_dat += buf;
+
+		csv_dat += CSV_SEPARATOR;
+
+		if(units_portrait_file != 65535)
+		{
+			uint32_t portrait_file = portdata_portrait_file_vec->at(units_portrait_file);
+			sprintf(buf, "ref:portrait_idle_file=%d", portrait_file-1);
+			csv_dat += buf;
+
+			csv_dat += CSV_SEPARATOR;
+
+			TblEntry tblEntry_portrait = portdata_tbl_vec.at(portrait_file-1);
+			csv_dat += "ref:portrait_idle=" + tblEntry_portrait.name;
+
+			csv_dat += CSV_SEPARATOR;
+		}
+
+		if(units_portrait_file != 65535)
+		{
+			uint32_t portrait_file = portdata_portrait_file_vec->at(units_portrait_file);
+			sprintf(buf, "ref:portrait_talking_file=%d", portrait_file);
+			csv_dat += buf;
+
+			csv_dat += CSV_SEPARATOR;
+
+			TblEntry tblEntry_portrait = portdata_tbl_vec.at(portrait_file);
+			csv_dat += "ref:portrait_talking=" + tblEntry_portrait.name;
+
+			csv_dat += CSV_SEPARATOR;
 		}
 
 		csv_dat += CSV_SEPARATOR;
@@ -379,4 +442,16 @@ void DataHub::printCSV()
 
 	// stdout
 	cout << csv_dat;
+}
+
+bool DataHub::portdataCompare(int val1, int val2)
+{
+	bool result = false;
+
+	if(val2 != 65535)
+	{
+		result = val1 < val2;
+	}
+
+	return result;
 }

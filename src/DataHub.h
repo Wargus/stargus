@@ -27,6 +27,8 @@ private:
 
 	std::shared_ptr<kaitai::kstream> getKaitaiStream(const std::string &file);
 
+	static bool portdataCompare(int val1, int val2);
+
 	void printCSV();
 };
 
