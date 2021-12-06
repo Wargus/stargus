@@ -2,10 +2,10 @@
 
 #include "units_dat.h"
 
-units_dat_t::units_dat_t(bool p_has_brood_war_unit_flag, bool p_has_max_air_hits, bool p_has_max_ground_hits, kaitai::kstream* p__io, kaitai::kstruct* p__parent, units_dat_t* p__root) : kaitai::kstruct(p__io) {
+units_dat_t::units_dat_t(bool p_has_broodwar_flag, bool p_has_max_air_hits, bool p_has_max_ground_hits, kaitai::kstream* p__io, kaitai::kstruct* p__parent, units_dat_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = this;
-    m_has_brood_war_unit_flag = p_has_brood_war_unit_flag;
+    m_has_broodwar_flag = p_has_broodwar_flag;
     m_has_max_air_hits = p_has_max_air_hits;
     m_has_max_ground_hits = p_has_max_ground_hits;
     m_graphics = 0;
@@ -64,7 +64,7 @@ units_dat_t::units_dat_t(bool p_has_brood_war_unit_flag, bool p_has_max_air_hits
     m_build_score = 0;
     m_destroy_score = 0;
     m_unit_map_string = 0;
-    m_brood_war_unit_flag = 0;
+    m_broodwar_flag = 0;
     m_staredit_availability_flags = 0;
     m__raw_staredit_availability_flags = 0;
     m__io__raw_staredit_availability_flags = 0;
@@ -412,14 +412,14 @@ void units_dat_t::_read() {
     for (int i = 0; i < l_unit_map_string; i++) {
         m_unit_map_string->push_back(m__io->read_u2le());
     }
-    n_brood_war_unit_flag = true;
-    if (has_brood_war_unit_flag() == true) {
-        n_brood_war_unit_flag = false;
-        int l_brood_war_unit_flag = 228;
-        m_brood_war_unit_flag = new std::vector<uint8_t>();
-        m_brood_war_unit_flag->reserve(l_brood_war_unit_flag);
-        for (int i = 0; i < l_brood_war_unit_flag; i++) {
-            m_brood_war_unit_flag->push_back(m__io->read_u1());
+    n_broodwar_flag = true;
+    if (has_broodwar_flag() == true) {
+        n_broodwar_flag = false;
+        int l_broodwar_flag = 228;
+        m_broodwar_flag = new std::vector<uint8_t>();
+        m_broodwar_flag->reserve(l_broodwar_flag);
+        for (int i = 0; i < l_broodwar_flag; i++) {
+            m_broodwar_flag->push_back(m__io->read_u1());
         }
     }
     int l_staredit_availability_flags = 228;
@@ -638,9 +638,9 @@ void units_dat_t::_clean_up() {
     if (m_unit_map_string) {
         delete m_unit_map_string; m_unit_map_string = 0;
     }
-    if (!n_brood_war_unit_flag) {
-        if (m_brood_war_unit_flag) {
-            delete m_brood_war_unit_flag; m_brood_war_unit_flag = 0;
+    if (!n_broodwar_flag) {
+        if (m_broodwar_flag) {
+            delete m_broodwar_flag; m_broodwar_flag = 0;
         }
     }
     if (m__raw_staredit_availability_flags) {

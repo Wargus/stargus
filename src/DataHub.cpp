@@ -16,6 +16,7 @@
 #include "kaitai/images_dat.h"
 #include "kaitai/sfxdata_dat.h"
 #include "kaitai/portdata_dat.h"
+#include "kaitai/upgrades_dat.h"
 
 // System
 #include <iostream>
@@ -70,6 +71,10 @@ void DataHub::printCSV()
 	const string CSV_ENDLINE = "\n";
 	const string CSV_SEPARATOR = ";";
 
+	bool has_broodwar_flag = false;
+	bool has_max_air_hits = false;
+	bool has_max_ground_hits = false;
+
 	string sc_rez_stat_txt_tbl ="rez\\stat_txt.tbl";
 	string sc_arr_units_dat = "arr\\units.dat";
 	string sc_arr_weapons_dat = "arr\\weapons.dat";
@@ -81,6 +86,7 @@ void DataHub::printCSV()
 	string sc_arr_sfxdata_tbl = "arr\\sfxdata.tbl";
 	string sc_arr_portdata_dat = "arr\\portdata.dat";
 	string sc_arr_portdata_tbl = "arr\\portdata.tbl";
+	string sc_arr_upgrades_dat = "arr\\upgrades.dat";
 
 	/*string sc_rez_stat_txt_tbl ="stat_txt.tbl";
 	string sc_arr_units_dat = "units.dat";
@@ -92,7 +98,10 @@ void DataHub::printCSV()
 	string sc_arr_sfxdata_dat = "sfxdata.dat";
 	string sc_arr_sfxdata_tbl = "sfxdata.tbl";
 	string sc_arr_portdata_dat = "portdata.dat";
-	string sc_arr_portdata_tbl = "portdata.tbl";*/
+	string sc_arr_portdata_tbl = "portdata.tbl";
+	has_broodwar_flag = true;
+	has_max_air_hits = false;
+	has_max_ground_hits = false;*/
 
 
 
@@ -103,8 +112,7 @@ void DataHub::printCSV()
 
 	// units.dat
 	shared_ptr<kaitai::kstream> units_ks = getKaitaiStream(sc_arr_units_dat);
-	units_dat_t units = units_dat_t(false, false, false, units_ks.get());
-	//units_dat_t units = units_dat_t(true, true, true, units_ks.get()); // stardat15 data
+	units_dat_t units = units_dat_t(has_broodwar_flag, has_max_air_hits, has_max_ground_hits, units_ks.get());
 	std::vector<uint8_t>* units_graphics_vec = units.graphics();
 	std::vector<uint8_t>* units_ground_weapon_vec = units.ground_weapon();
 	std::vector<uint8_t>* units_air_weapon_vec = units.air_weapon();
@@ -117,6 +125,7 @@ void DataHub::printCSV()
 	std::vector<uint16_t>* units_yes_sound_start_vec = units.yes_sound_start();
 	std::vector<uint16_t>* units_yes_sound_end_vec = units.yes_sound_end();
 	std::vector<uint16_t>* units_portrait_vec = units.portrait();
+	std::vector<uint8_t>* units_armor_upgrade_vec = units.armor_upgrade();
 
 	// weapons.dat
 	int ground_weapon_max = *max_element(units_ground_weapon_vec->begin(), units_ground_weapon_vec->end());
@@ -131,6 +140,7 @@ void DataHub::printCSV()
 	std::vector<uint16_t>* weapon_label_vec = weapons.label();
 	std::vector<uint32_t>* weapon_graphics_vec = weapons.graphics();
 	std::vector<uint16_t>* weapon_error_message_vec = weapons.error_message();
+	std::vector<uint8_t>* weapon_damage_upgrade_vec = weapons.damage_upgrade();
 
 	// flingy.dat
 	shared_ptr<kaitai::kstream> flingy_ks = getKaitaiStream(sc_arr_flingy_dat);
@@ -192,7 +202,7 @@ void DataHub::printCSV()
 	shared_ptr<kaitai::kstream> portrait_ks = getKaitaiStream(sc_arr_portdata_dat);
 	int units_portrait_max = *max_element(units_portrait_vec->begin(), units_portrait_vec->end(), portdataCompare);
 	printf("units_portrait_max=%d\n", units_portrait_max);
-	printVector(*units_portrait_vec);
+	//printVector(*units_portrait_vec);
 	// 1. units_portrait_max => idle portraits
 	// 2. 4x flags => idle portraits
 	// 3. units_portrait_max => talking portraits
@@ -206,6 +216,18 @@ void DataHub::printCSV()
 	shared_ptr<kaitai::kstream> portdata_tbl_ks = getKaitaiStream(sc_arr_portdata_tbl);
 	std::vector<TblEntry> portdata_tbl_vec = portdata_tbl.convertFromStream(portdata_tbl_ks);
 	printf("portdata_tbl_vec: %d\n", (int) portdata_tbl_vec.size());
+
+	// upgrades.dat
+	shared_ptr<kaitai::kstream> upgrades_ks = getKaitaiStream(sc_arr_upgrades_dat);
+	vector<uint8_t> units_upgrade_vec;
+	units_upgrade_vec.push_back(*max_element(units_armor_upgrade_vec->begin(), units_armor_upgrade_vec->end()));
+	units_upgrade_vec.push_back(*max_element(weapon_damage_upgrade_vec->begin(), weapon_damage_upgrade_vec->end()));
+	uint16_t units_upgrade_max = *max_element(units_upgrade_vec.begin(), units_upgrade_vec.end());
+	upgrades_dat_t upgrades = upgrades_dat_t(has_broodwar_flag, units_upgrade_max+1, upgrades_ks.get());
+	printf("units_upgrade_max=%d\n", units_upgrade_max+1);
+	std::vector<uint16_t>* upgrades_label_vec = upgrades.label();
+	std::vector<uint16_t>* upgrades_graphics_vec = upgrades.icon();
+	printVector(*upgrades_label_vec);
 
 	// units.dat
 	for(unsigned int i = 0; i < units_graphics_vec->size(); i++)
@@ -304,6 +326,18 @@ void DataHub::printCSV()
 		}
 
 		csv_dat += CSV_SEPARATOR;
+
+		uint8_t units_armor_upgrade = units_armor_upgrade_vec->at(i);
+		sprintf(buf, "units_armor_upgrade=%d", units_armor_upgrade);
+		csv_dat += buf;
+
+		csv_dat += CSV_SEPARATOR;
+
+		/*uint16_t armor_label = upgrades_label_vec->at(units_armor_upgrade);
+		sprintf(buf, "ref:armor_label=%d", armor_label);
+		csv_dat += buf;
+
+		csv_dat += CSV_SEPARATOR;*/
 
 		csv_dat += CSV_ENDLINE;
 	}
@@ -439,6 +473,59 @@ void DataHub::printCSV()
 
 		csv_dat += CSV_ENDLINE;
 	}
+
+	// portrait.dat
+	for(unsigned int i = 0; i < portdata_portrait_file_vec->size(); i++)
+	{
+		csv_dat += "portrait.dat";
+
+		csv_dat += CSV_SEPARATOR;
+
+		csv_dat += "id=" + toString(i);
+
+		csv_dat += CSV_SEPARATOR;
+
+		uint32_t portrait_file = portdata_portrait_file_vec->at(i);
+		sprintf(buf, "portrait_file=%d", portrait_file);
+		csv_dat += buf;
+
+		csv_dat += CSV_SEPARATOR;
+
+		TblEntry tblEntry = portdata_tbl_vec.at(portrait_file);
+		csv_dat += "ref:file=" + tblEntry.name;
+
+		csv_dat += CSV_SEPARATOR;
+
+		csv_dat += CSV_ENDLINE;
+	}
+
+	// upgrades.dat
+	for(unsigned int i = 0; i < upgrades_label_vec->size(); i++)
+	{
+		csv_dat += "upgrades.dat";
+
+		csv_dat += CSV_SEPARATOR;
+
+		csv_dat += "id=" + toString(i);
+
+		csv_dat += CSV_SEPARATOR;
+
+		uint16_t upgrades_label = upgrades_label_vec->at(i);
+		sprintf(buf, "upgrades_label=%d", upgrades_label);
+		csv_dat += buf;
+
+		csv_dat += CSV_SEPARATOR;
+
+		TblEntry tblEntry = stat_txt_vec.at(upgrades_label);
+		csv_dat += "ref:label=" + tblEntry.name;
+
+		csv_dat += CSV_SEPARATOR;
+
+		csv_dat += CSV_ENDLINE;
+	}
+
+
+
 
 	// stdout
 	cout << csv_dat;

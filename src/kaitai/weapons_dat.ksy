@@ -3,7 +3,7 @@ meta:
   endian: le
   
 # There're some different weapons.dat versions out there available.
-# 'num_lines' == number of highest air_weapon|ground_weapon +1 in units.dat
+# 'num_lines' == number of highest air_weapon|ground_weapon in units.dat
 #
 params:
   - id: num_lines
@@ -93,18 +93,8 @@ seq:
     repeat-expr: num_lines
     doc: |
       The upgrade that will increase the damage dealt by the weapon by the "Bonus" value.
-      Pointer to [upgrades.dat and/or stat_txt.tbl] ??
-    #  7 = Terran Infantry Weapons
-    #  8 = Terran Vehicle Weapons
-    #  9 = Terran Ship Weapons
-    # 10 = Zerg Melee Attacks
-    # 11 = Zerg Missile Attacks
-    # 12 = Zerg Flyer Attacks
-    # 13 = Protoss Ground Weapons
-    # 14 = Protoss Air Weapons
-    # 35 = Scarab
-    # 45 = No upgrades
-    
+      Pointer to [upgrades.dat]
+
   - id: weapon_type
     type: u1
     enum: weapon_type_enum

@@ -18,7 +18,7 @@ meta:
 #   has_max_ground_hits=true
 #
 params:
-  - id: has_brood_war_unit_flag
+  - id: has_broodwar_flag
     type: b1
   - id: has_max_air_hits
     type: b1
@@ -402,11 +402,11 @@ seq:
     doc: |
       If this property is different from 0, the unit's name will be read from the strings stored within the map (CHK) that is currently loaded, instead of the stat_txt.tbl file.
 
-  - id: brood_war_unit_flag
+  - id: broodwar_flag
     type: u1
     repeat: expr
     repeat-expr: 228
-    if: has_brood_war_unit_flag == true
+    if: has_broodwar_flag == true
     doc: |
       Makes the unit available only while playing BroodWar expansion set.
       Only some variants of units.dat have this data block. If your version has this block activate the parameter.
@@ -422,7 +422,7 @@ seq:
 # set those intances to debug the values while development
 # in this case the parameters at top of this file have to be commented out
 #instances:
-#  has_brood_war_unit_flag:
+#  has_broodwar_flag:
 #    value: false
 #  has_max_air_hits:
 #    value: false

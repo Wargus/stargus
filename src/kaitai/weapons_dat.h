@@ -128,7 +128,7 @@ public:
 
     /**
      * The upgrade that will increase the damage dealt by the weapon by the "Bonus" value.
-     * Pointer to [upgrades.dat and/or stat_txt.tbl] ??
+     * Pointer to [upgrades.dat]
      */
     std::vector<uint8_t>* damage_upgrade() const { return m_damage_upgrade; }
 

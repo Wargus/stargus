@@ -39,7 +39,7 @@ public:
         RIGHT_CLICK_ACTION_ENUM_NOTHING_WITH_INDICATOR = 6
     };
 
-    units_dat_t(bool p_has_brood_war_unit_flag, bool p_has_max_air_hits, bool p_has_max_ground_hits, kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, units_dat_t* p__root = 0);
+    units_dat_t(bool p_has_broodwar_flag, bool p_has_max_air_hits, bool p_has_max_ground_hits, kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, units_dat_t* p__root = 0);
 
 private:
     void _read();
@@ -450,15 +450,15 @@ private:
     std::vector<uint16_t>* m_build_score;
     std::vector<uint16_t>* m_destroy_score;
     std::vector<uint16_t>* m_unit_map_string;
-    std::vector<uint8_t>* m_brood_war_unit_flag;
-    bool n_brood_war_unit_flag;
+    std::vector<uint8_t>* m_broodwar_flag;
+    bool n_broodwar_flag;
 
 public:
-    bool _is_null_brood_war_unit_flag() { brood_war_unit_flag(); return n_brood_war_unit_flag; };
+    bool _is_null_broodwar_flag() { broodwar_flag(); return n_broodwar_flag; };
 
 private:
     std::vector<staredit_availability_flags_type_t*>* m_staredit_availability_flags;
-    bool m_has_brood_war_unit_flag;
+    bool m_has_broodwar_flag;
     bool m_has_max_air_hits;
     bool m_has_max_ground_hits;
     units_dat_t* m__root;
@@ -742,13 +742,13 @@ public:
      * Makes the unit available only while playing BroodWar expansion set.
      * Only some variants of units.dat have this data block. If your version has this block activate the parameter.
      */
-    std::vector<uint8_t>* brood_war_unit_flag() const { return m_brood_war_unit_flag; }
+    std::vector<uint8_t>* broodwar_flag() const { return m_broodwar_flag; }
 
     /**
      * Flags used in StarEdit. Check the type for detail specification.
      */
     std::vector<staredit_availability_flags_type_t*>* staredit_availability_flags() const { return m_staredit_availability_flags; }
-    bool has_brood_war_unit_flag() const { return m_has_brood_war_unit_flag; }
+    bool has_broodwar_flag() const { return m_has_broodwar_flag; }
     bool has_max_air_hits() const { return m_has_max_air_hits; }
     bool has_max_ground_hits() const { return m_has_max_ground_hits; }
     units_dat_t* _root() const { return m__root; }
