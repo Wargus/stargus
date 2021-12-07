@@ -17,6 +17,7 @@
 #include "kaitai/sfxdata_dat.h"
 #include "kaitai/portdata_dat.h"
 #include "kaitai/upgrades_dat.h"
+#include "kaitai/orders_dat.h"
 
 // System
 #include <iostream>
@@ -87,6 +88,7 @@ void DataHub::printCSV()
 	string sc_arr_portdata_dat = "arr\\portdata.dat";
 	string sc_arr_portdata_tbl = "arr\\portdata.tbl";
 	string sc_arr_upgrades_dat = "arr\\upgrades.dat";
+	string sc_arr_orders_dat = "arr\\orders.dat";
 
 	/*string sc_rez_stat_txt_tbl ="stat_txt.tbl";
 	string sc_arr_units_dat = "units.dat";
@@ -99,6 +101,7 @@ void DataHub::printCSV()
 	string sc_arr_sfxdata_tbl = "sfxdata.tbl";
 	string sc_arr_portdata_dat = "portdata.dat";
 	string sc_arr_portdata_tbl = "portdata.tbl";
+	string sc_arr_upgrades_dat = "orders.dat";
 	has_broodwar_flag = true;
 	has_max_air_hits = false;
 	has_max_ground_hits = false;*/
@@ -126,6 +129,11 @@ void DataHub::printCSV()
 	std::vector<uint16_t>* units_yes_sound_end_vec = units.yes_sound_end();
 	std::vector<uint16_t>* units_portrait_vec = units.portrait();
 	std::vector<uint8_t>* units_armor_upgrade_vec = units.armor_upgrade();
+	std::vector<uint8_t>* units_ai_attack_move_vec = units.ai_attack_move();
+	std::vector<uint8_t>* units_ai_attack_unit_vec = units.ai_attack_unit();
+	std::vector<uint8_t>* units_ai_computer_idle_vec = units.ai_computer_idle();
+	std::vector<uint8_t>* units_ai_human_idle_vec = units.ai_human_idle();
+	std::vector<uint8_t>* units_ai_return_to_idle_vec = units.ai_return_to_idle();
 
 	// weapons.dat
 	int ground_weapon_max = *max_element(units_ground_weapon_vec->begin(), units_ground_weapon_vec->end());
@@ -226,8 +234,20 @@ void DataHub::printCSV()
 	upgrades_dat_t upgrades = upgrades_dat_t(has_broodwar_flag, units_upgrade_max+1, upgrades_ks.get());
 	printf("units_upgrade_max=%d\n", units_upgrade_max+1);
 	std::vector<uint16_t>* upgrades_label_vec = upgrades.label();
-	std::vector<uint16_t>* upgrades_graphics_vec = upgrades.icon();
-	printVector(*upgrades_label_vec);
+	//printVector(*upgrades_label_vec);
+
+	// orders.dat
+	shared_ptr<kaitai::kstream> orders_ks = getKaitaiStream(sc_arr_orders_dat);
+	vector<uint8_t> units_ai_max_vec;
+	units_ai_max_vec.push_back(*max_element(units_ai_attack_move_vec->begin(), units_ai_attack_move_vec->end()));
+	units_ai_max_vec.push_back(*max_element(units_ai_attack_unit_vec->begin(), units_ai_attack_unit_vec->end()));
+	units_ai_max_vec.push_back(*max_element(units_ai_computer_idle_vec->begin(), units_ai_computer_idle_vec->end()));
+	units_ai_max_vec.push_back(*max_element(units_ai_human_idle_vec->begin(), units_ai_human_idle_vec->end()));
+	units_ai_max_vec.push_back(*max_element(units_ai_return_to_idle_vec->begin(), units_ai_return_to_idle_vec->end()));
+	uint8_t units_ai_max = *max_element(units_ai_max_vec.begin(), units_ai_max_vec.end());
+	orders_dat_t orders = orders_dat_t(units_ai_max+1, orders_ks.get());
+	printf("units_ai_max=%d\n", units_ai_max+1);
+	std::vector<uint16_t>* orders_label_vec = orders.label();
 
 	// units.dat
 	for(unsigned int i = 0; i < units_graphics_vec->size(); i++)
@@ -517,6 +537,31 @@ void DataHub::printCSV()
 		csv_dat += CSV_SEPARATOR;
 
 		TblEntry tblEntry = stat_txt_vec.at(upgrades_label);
+		csv_dat += "ref:label=" + tblEntry.name;
+
+		csv_dat += CSV_SEPARATOR;
+
+		csv_dat += CSV_ENDLINE;
+	}
+
+	// orders.dat
+	for(unsigned int i = 0; i < orders_label_vec->size(); i++)
+	{
+		csv_dat += "orders.dat";
+
+		csv_dat += CSV_SEPARATOR;
+
+		csv_dat += "id=" + toString(i);
+
+		csv_dat += CSV_SEPARATOR;
+
+		uint16_t orders_label = orders_label_vec->at(i);
+		sprintf(buf, "orders_label=%d", orders_label);
+		csv_dat += buf;
+
+		csv_dat += CSV_SEPARATOR;
+
+		TblEntry tblEntry = stat_txt_vec.at(orders_label);
 		csv_dat += "ref:label=" + tblEntry.name;
 
 		csv_dat += CSV_SEPARATOR;
