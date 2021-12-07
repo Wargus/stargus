@@ -1,11 +1,11 @@
-<mxfile host="app.diagrams.net" modified="2021-12-07T17:58:27.761Z" agent="5.0 (X11)" etag="ZQirj1MtBKqKE0zBaPXD" version="15.9.1" type="github">
+<mxfile host="app.diagrams.net" modified="2021-12-07T18:01:19.926Z" agent="5.0 (X11)" etag="FEVCUqjiR8Rtpn1Juw-i" version="15.9.1" type="github">
   <diagram id="pLGyL3gJlz5I7s2QdtuP" name="Page-1">
-    <mxGraphModel dx="2666" dy="1894" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="2897" dy="2058" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="PzZqxms0mEW9Ky41_EIL-1" value="units.dat" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
-          <mxGeometry x="70" y="-10" width="170" height="205" as="geometry">
+          <mxGeometry x="70" y="-10" width="170" height="235" as="geometry">
             <mxRectangle x="160" y="80" width="80" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -26,6 +26,9 @@
         </mxCell>
         <mxCell id="wQT6I2i7r7E7tcLqA3oX-38" value="portrait" style="text;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" parent="PzZqxms0mEW9Ky41_EIL-1" vertex="1">
           <mxGeometry y="175" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Gw3u6BSb_nzoXdGkpCYS-13" value="ai_*" style="text;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="PzZqxms0mEW9Ky41_EIL-1">
+          <mxGeometry y="205" width="170" height="30" as="geometry" />
         </mxCell>
         <mxCell id="PzZqxms0mEW9Ky41_EIL-5" value="weapons.dat" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
           <mxGeometry x="70" y="307" width="170" height="175" as="geometry" />
@@ -392,6 +395,21 @@
         </mxCell>
         <mxCell id="Gw3u6BSb_nzoXdGkpCYS-11" value="index pointer" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;" connectable="0" vertex="1" parent="Gw3u6BSb_nzoXdGkpCYS-10">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Gw3u6BSb_nzoXdGkpCYS-14" value="" style="endArrow=classic;html=1;rounded=0;entryX=-0.028;entryY=0.086;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Gw3u6BSb_nzoXdGkpCYS-13" target="Gw3u6BSb_nzoXdGkpCYS-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-10" y="209" as="sourcePoint" />
+            <mxPoint x="-10" y="1069.7500000000005" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-260" y="209" />
+              <mxPoint x="-260" y="1273" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gw3u6BSb_nzoXdGkpCYS-15" value="index pointer" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Gw3u6BSb_nzoXdGkpCYS-14">
+          <mxGeometry x="0.3263" y="3" relative="1" as="geometry">
+            <mxPoint x="-13" y="-83" as="offset" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
