@@ -9,5 +9,6 @@ startool_kaitai_sources = files(
 	'sfxdata_dat.cpp',
 	'portdata_dat.cpp',
 	'upgrades_dat.cpp',
-	'orders_dat.cpp'
+	'orders_dat.cpp',
+	'techdata_dat.cpp'
 )

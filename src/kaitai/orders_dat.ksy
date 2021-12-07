@@ -16,7 +16,7 @@ seq:
     repeat: expr
     repeat-expr: num_lines
     doc: |
-      Probably the label of the order. Doesn't do anything - used only for convenience.[pointer to stat_txt.tbl?]
+      Probably the label of the order. Doesn't do anything - used only for convenience.[pointer to stat_txt.tbl]
     
   - id: use_weapon_targeting
     type: u1

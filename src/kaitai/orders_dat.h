@@ -51,7 +51,7 @@ private:
 public:
 
     /**
-     * Probably the label of the order. Doesn't do anything - used only for convenience.[pointer to stat_txt.tbl?]
+     * Probably the label of the order. Doesn't do anything - used only for convenience.[pointer to stat_txt.tbl]
      */
     std::vector<uint16_t>* label() const { return m_label; }
 

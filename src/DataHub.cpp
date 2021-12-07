@@ -18,6 +18,7 @@
 #include "kaitai/portdata_dat.h"
 #include "kaitai/upgrades_dat.h"
 #include "kaitai/orders_dat.h"
+#include "kaitai/techdata_dat.h"
 
 // System
 #include <iostream>
@@ -89,8 +90,14 @@ void DataHub::printCSV()
 	string sc_arr_portdata_tbl = "arr\\portdata.tbl";
 	string sc_arr_upgrades_dat = "arr\\upgrades.dat";
 	string sc_arr_orders_dat = "arr\\orders.dat";
+	string sc_arr_techdata_dat = "arr\\techdata.dat";
 
-	/*string sc_rez_stat_txt_tbl ="stat_txt.tbl";
+	/*
+	has_broodwar_flag = true;
+	has_max_air_hits = false;
+	has_max_ground_hits = false;
+
+	string sc_rez_stat_txt_tbl ="stat_txt.tbl";
 	string sc_arr_units_dat = "units.dat";
 	string sc_arr_weapons_dat = "weapons.dat";
 	string sc_arr_flingy_dat = "flingy.dat";
@@ -102,9 +109,9 @@ void DataHub::printCSV()
 	string sc_arr_portdata_dat = "portdata.dat";
 	string sc_arr_portdata_tbl = "portdata.tbl";
 	string sc_arr_upgrades_dat = "orders.dat";
-	has_broodwar_flag = true;
-	has_max_air_hits = false;
-	has_max_ground_hits = false;*/
+
+	string sc_arr_orders_dat = "techdata.dat";
+	*/
 
 
 
@@ -135,12 +142,27 @@ void DataHub::printCSV()
 	std::vector<uint8_t>* units_ai_human_idle_vec = units.ai_human_idle();
 	std::vector<uint8_t>* units_ai_return_to_idle_vec = units.ai_return_to_idle();
 
+	// orders.dat
+	shared_ptr<kaitai::kstream> orders_ks = getKaitaiStream(sc_arr_orders_dat);
+	vector<uint8_t> units_ai_max_vec;
+	units_ai_max_vec.push_back(*max_element(units_ai_attack_move_vec->begin(), units_ai_attack_move_vec->end()));
+	units_ai_max_vec.push_back(*max_element(units_ai_attack_unit_vec->begin(), units_ai_attack_unit_vec->end()));
+	units_ai_max_vec.push_back(*max_element(units_ai_computer_idle_vec->begin(), units_ai_computer_idle_vec->end()));
+	units_ai_max_vec.push_back(*max_element(units_ai_human_idle_vec->begin(), units_ai_human_idle_vec->end()));
+	units_ai_max_vec.push_back(*max_element(units_ai_return_to_idle_vec->begin(), units_ai_return_to_idle_vec->end()));
+	uint8_t units_ai_max = *max_element(units_ai_max_vec.begin(), units_ai_max_vec.end());
+	orders_dat_t orders = orders_dat_t(units_ai_max+1, orders_ks.get());
+	printf("units_ai_max=%d\n", units_ai_max+1);
+	std::vector<uint16_t>* orders_label_vec = orders.label();
+	std::vector<uint8_t>* orders_energy_vec = orders.energy();
+	std::vector<uint8_t>* orders_targeting_vec = orders.targeting();
+
 	// weapons.dat
-	int ground_weapon_max = *max_element(units_ground_weapon_vec->begin(), units_ground_weapon_vec->end());
-	int air_weapon_max = *max_element(units_air_weapon_vec->begin(), units_air_weapon_vec->end());
-	int weapon_max = ground_weapon_max;
-	if(air_weapon_max > ground_weapon_max)
-		weapon_max = air_weapon_max;
+	vector<uint8_t> weapons_max_vec;
+	weapons_max_vec.push_back(*max_element(units_ground_weapon_vec->begin(), units_ground_weapon_vec->end()));
+	weapons_max_vec.push_back(*max_element(units_air_weapon_vec->begin(), units_air_weapon_vec->end()));
+	weapons_max_vec.push_back(*max_element(orders_targeting_vec->begin(), orders_targeting_vec->end()));
+	uint8_t weapon_max = *max_element(weapons_max_vec.begin(), weapons_max_vec.end());;
 	shared_ptr<kaitai::kstream> weapons_ks = getKaitaiStream(sc_arr_weapons_dat);
 	//configure weapons parser with max size of weapons
 	printf("weapon_max=%d\n", weapon_max);
@@ -234,20 +256,13 @@ void DataHub::printCSV()
 	upgrades_dat_t upgrades = upgrades_dat_t(has_broodwar_flag, units_upgrade_max+1, upgrades_ks.get());
 	printf("units_upgrade_max=%d\n", units_upgrade_max+1);
 	std::vector<uint16_t>* upgrades_label_vec = upgrades.label();
-	//printVector(*upgrades_label_vec);
 
-	// orders.dat
-	shared_ptr<kaitai::kstream> orders_ks = getKaitaiStream(sc_arr_orders_dat);
-	vector<uint8_t> units_ai_max_vec;
-	units_ai_max_vec.push_back(*max_element(units_ai_attack_move_vec->begin(), units_ai_attack_move_vec->end()));
-	units_ai_max_vec.push_back(*max_element(units_ai_attack_unit_vec->begin(), units_ai_attack_unit_vec->end()));
-	units_ai_max_vec.push_back(*max_element(units_ai_computer_idle_vec->begin(), units_ai_computer_idle_vec->end()));
-	units_ai_max_vec.push_back(*max_element(units_ai_human_idle_vec->begin(), units_ai_human_idle_vec->end()));
-	units_ai_max_vec.push_back(*max_element(units_ai_return_to_idle_vec->begin(), units_ai_return_to_idle_vec->end()));
-	uint8_t units_ai_max = *max_element(units_ai_max_vec.begin(), units_ai_max_vec.end());
-	orders_dat_t orders = orders_dat_t(units_ai_max+1, orders_ks.get());
-	printf("units_ai_max=%d\n", units_ai_max+1);
-	std::vector<uint16_t>* orders_label_vec = orders.label();
+	// techdata.dat
+	shared_ptr<kaitai::kstream> techdata_ks = getKaitaiStream(sc_arr_techdata_dat);
+	uint8_t orders_energy_max = *max_element(orders_energy_vec->begin(), orders_energy_vec->end());
+	techdata_dat_t techdata = techdata_dat_t(has_broodwar_flag, orders_energy_max, techdata_ks.get());
+	printf("orders_energy_max=%d\n", orders_energy_max);
+	std::vector<uint16_t>* techdata_label_vec = techdata.label();
 
 	// units.dat
 	for(unsigned int i = 0; i < units_graphics_vec->size(); i++)
@@ -569,7 +584,30 @@ void DataHub::printCSV()
 		csv_dat += CSV_ENDLINE;
 	}
 
+	// techdata.dat
+	for(unsigned int i = 0; i < techdata_label_vec->size(); i++)
+	{
+		csv_dat += "techdata.dat";
 
+		csv_dat += CSV_SEPARATOR;
+
+		csv_dat += "id=" + toString(i);
+
+		csv_dat += CSV_SEPARATOR;
+
+		uint16_t techdata_label = techdata_label_vec->at(i);
+		sprintf(buf, "techdata_label=%d", techdata_label);
+		csv_dat += buf;
+
+		csv_dat += CSV_SEPARATOR;
+
+		TblEntry tblEntry = stat_txt_vec.at(techdata_label);
+		csv_dat += "ref:label=" + tblEntry.name;
+
+		csv_dat += CSV_SEPARATOR;
+
+		csv_dat += CSV_ENDLINE;
+	}
 
 
 	// stdout
