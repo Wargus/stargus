@@ -19,6 +19,7 @@
 #include "kaitai/upgrades_dat.h"
 #include "kaitai/orders_dat.h"
 #include "kaitai/techdata_dat.h"
+#include "kaitai/mapdata_dat.h"
 
 // System
 #include <iostream>
@@ -91,11 +92,13 @@ void DataHub::printCSV()
 	string sc_arr_upgrades_dat = "arr\\upgrades.dat";
 	string sc_arr_orders_dat = "arr\\orders.dat";
 	string sc_arr_techdata_dat = "arr\\techdata.dat";
+	string sc_arr_mapdata_dat = "arr\\mapdata.dat";
+	string sc_arr_mapdata_tbl = "arr\\mapdata.tbl";
 
 	/*
 	has_broodwar_flag = true;
-	has_max_air_hits = false;
-	has_max_ground_hits = false;
+	has_max_air_hits = true;
+	has_max_ground_hits = true;
 
 	string sc_rez_stat_txt_tbl ="stat_txt.tbl";
 	string sc_arr_units_dat = "units.dat";
@@ -108,12 +111,12 @@ void DataHub::printCSV()
 	string sc_arr_sfxdata_tbl = "sfxdata.tbl";
 	string sc_arr_portdata_dat = "portdata.dat";
 	string sc_arr_portdata_tbl = "portdata.tbl";
-	string sc_arr_upgrades_dat = "orders.dat";
-
-	string sc_arr_orders_dat = "techdata.dat";
+	string sc_arr_upgrades_dat = "upgrades.dat";
+	string sc_arr_orders_dat = "orders.dat";
+	string sc_arr_techdata_dat = "techdata.dat";
+	string sc_arr_mapdata_dat = "mapdata.dat";
+	string sc_arr_mapdata_tbl = "mapdata.tbl";
 	*/
-
-
 
 	// stat_txt.tbl
 	StatTxtTbl stat_txt;
@@ -223,7 +226,7 @@ void DataHub::printCSV()
 	sfxdata_dat_t sfxdata = sfxdata_dat_t(unit_sound_max, sfxdata_ks.get());
 	std::vector<uint32_t>* sfxdata_sound_file_vec = sfxdata.sound_file();
 
-	// sfdata.tbl
+	// sfxdata.tbl
 	StatTxtTbl sfxdata_tbl;
 	shared_ptr<kaitai::kstream> sfxdata_tbl_ks = getKaitaiStream(sc_arr_sfxdata_tbl);
 	std::vector<TblEntry> sfxdata_tbl_vec = sfxdata_tbl.convertFromStream(sfxdata_tbl_ks);
@@ -245,7 +248,6 @@ void DataHub::printCSV()
 	StatTxtTbl portdata_tbl;
 	shared_ptr<kaitai::kstream> portdata_tbl_ks = getKaitaiStream(sc_arr_portdata_tbl);
 	std::vector<TblEntry> portdata_tbl_vec = portdata_tbl.convertFromStream(portdata_tbl_ks);
-	printf("portdata_tbl_vec: %d\n", (int) portdata_tbl_vec.size());
 
 	// upgrades.dat
 	shared_ptr<kaitai::kstream> upgrades_ks = getKaitaiStream(sc_arr_upgrades_dat);
@@ -263,6 +265,17 @@ void DataHub::printCSV()
 	techdata_dat_t techdata = techdata_dat_t(has_broodwar_flag, orders_energy_max, techdata_ks.get());
 	printf("orders_energy_max=%d\n", orders_energy_max);
 	std::vector<uint16_t>* techdata_label_vec = techdata.label();
+
+	// mapdata.dat
+	shared_ptr<kaitai::kstream> mapdata_ks = getKaitaiStream(sc_arr_mapdata_dat);
+	mapdata_dat_t mapdata = mapdata_dat_t(mapdata_ks.get());
+	std::vector<uint32_t>* mapdata_mission_dir_vec = mapdata.mission_dir();
+
+	// mapdata.tbl
+	StatTxtTbl mapdata_tbl;
+	shared_ptr<kaitai::kstream> mapdata_tbl_ks = getKaitaiStream(sc_arr_mapdata_tbl);
+	std::vector<TblEntry> mapdata_tbl_vec = sfxdata_tbl.convertFromStream(mapdata_tbl_ks);
+
 
 	// units.dat
 	for(unsigned int i = 0; i < units_graphics_vec->size(); i++)
@@ -609,6 +622,30 @@ void DataHub::printCSV()
 		csv_dat += CSV_ENDLINE;
 	}
 
+	// mapdata.dat
+	for(unsigned int i = 0; i < mapdata_mission_dir_vec->size(); i++)
+	{
+		csv_dat += "mapdata.dat";
+
+		csv_dat += CSV_SEPARATOR;
+
+		csv_dat += "id=" + toString(i);
+
+		csv_dat += CSV_SEPARATOR;
+
+		uint32_t mapdata_label = mapdata_mission_dir_vec->at(i);
+		sprintf(buf, "mapdata_label=%d", mapdata_label);
+		csv_dat += buf;
+
+		csv_dat += CSV_SEPARATOR;
+
+		TblEntry tblEntry = mapdata_tbl_vec.at(mapdata_label-1);
+		csv_dat += "ref:dir=" + tblEntry.name;
+
+		csv_dat += CSV_SEPARATOR;
+
+		csv_dat += CSV_ENDLINE;
+	}
 
 	// stdout
 	cout << csv_dat;

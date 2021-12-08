@@ -10,5 +10,6 @@ startool_kaitai_sources = files(
 	'portdata_dat.cpp',
 	'upgrades_dat.cpp',
 	'orders_dat.cpp',
-	'techdata_dat.cpp'
+	'techdata_dat.cpp',
+	'mapdata_dat.cpp'
 )
