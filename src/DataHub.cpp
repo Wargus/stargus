@@ -193,7 +193,8 @@ void DataHub::printCSV()
 	int flingy_sprites_max = *max_element(flingy_sprites_vec->begin(), flingy_sprites_vec->end());
 	printf("flingy_sprites_max=%d\n", flingy_sprites_max);
 	// add +1 because start counting from 0
-	sprites_dat_t sprites = sprites_dat_t(flingy_sprites_max+1, sprites_ks.get());
+	// TODO: why 208? how could I calculate this??
+	sprites_dat_t sprites = sprites_dat_t(flingy_sprites_max+1, 208, sprites_ks.get());
 	std::vector<uint16_t>* sprites_images_vec = sprites.image_file();
 
 	// images.dat
@@ -256,7 +257,7 @@ void DataHub::printCSV()
 	units_upgrade_vec.push_back(*max_element(weapon_damage_upgrade_vec->begin(), weapon_damage_upgrade_vec->end()));
 	uint16_t units_upgrade_max = *max_element(units_upgrade_vec.begin(), units_upgrade_vec.end());
 	upgrades_dat_t upgrades = upgrades_dat_t(has_broodwar_flag, units_upgrade_max+1, upgrades_ks.get());
-	printf("units_upgrade_max=%d\n", units_upgrade_max+1);
+	printf("units_upgrade_max=%d\n", units_upgrade_max);
 	std::vector<uint16_t>* upgrades_label_vec = upgrades.label();
 
 	// techdata.dat
@@ -380,12 +381,6 @@ void DataHub::printCSV()
 		csv_dat += buf;
 
 		csv_dat += CSV_SEPARATOR;
-
-		/*uint16_t armor_label = upgrades_label_vec->at(units_armor_upgrade);
-		sprintf(buf, "ref:armor_label=%d", armor_label);
-		csv_dat += buf;
-
-		csv_dat += CSV_SEPARATOR;*/
 
 		csv_dat += CSV_ENDLINE;
 	}

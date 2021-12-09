@@ -12,6 +12,9 @@
 #include "Logger.h"
 #include "Converter.h"
 
+// System
+#include <memory>
+
 class DataHub : public Converter
 {
 public:
@@ -24,6 +27,8 @@ public:
 
 private:
 	Logger mLogger;
+
+	// private functions
 
 	std::shared_ptr<kaitai::kstream> getKaitaiStream(const std::string &file);
 
