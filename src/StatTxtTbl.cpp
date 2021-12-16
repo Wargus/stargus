@@ -19,6 +19,11 @@
 
 using namespace std;
 
+// this is a very local debug print concept. But for this use case of sequence character debugging perfect...
+int no_printf(const char *format, ...){	return 0;}
+//#define dbg_printf printf
+#define dbg_printf no_printf
+
 StatTxtTbl::StatTxtTbl() :
 	mLogger("startool.StatTxtTbl")
 {
@@ -50,7 +55,8 @@ vector<TblEntry> StatTxtTbl::convertFromStream(std::shared_ptr<kaitai::kstream> 
 
 		std::vector<uint8_t> *entry_char_vec = file_entry->entry();
 
-		//cout << i << ":";
+		dbg_printf("%d:", i);
+
 		//"#entry: " << entry_char_vec->size() << endl;
 
 		//uint8_t last_control = 0;
@@ -67,7 +73,7 @@ vector<TblEntry> StatTxtTbl::convertFromStream(std::shared_ptr<kaitai::kstream> 
 				switch(entry_char)
 				{
 				case 0x0: // ' '
-					//printf("<NULL>");
+					dbg_printf("<NULL>");
 					if(null_counter == 0)
 					{
 						tbl_entry.name = entry_str_tmp;
@@ -86,38 +92,44 @@ vector<TblEntry> StatTxtTbl::convertFromStream(std::shared_ptr<kaitai::kstream> 
 					null_counter++;
 					break;
 				case 0x0a: // Line Feed
-					//printf("<LF>");
+					dbg_printf("<LF>");
 					entry_str_tmp += " ";
 					break;
 				case 0x01: // Start of Heading
-					//printf("<SOH>");
+					dbg_printf("<SOH>");
 					break;
 				case 0x02: // Start of Text
-					//printf("<STX>");
+					dbg_printf("<STX>");
 					tbl_entry.shortcut = entry_char_vec->at(n-1);
 					entry_str_tmp.clear();
 					break;
 				case 0x03: // End of Text
-					//printf("<ETX>");
+					dbg_printf("<ETX>");
+					tbl_entry.shortcut_pos = entry_str_tmp.length();
 					break;
 				case 0x4: // End of Transmission, diamonds card suit
-					//printf("<EOT>");
+					dbg_printf("<EOT>");
+					if(n > 0)
+					{
+						tbl_entry.shortcut = entry_char_vec->at(n-1);
+						entry_str_tmp.clear();
+					}
 					break;
 				case 0x6: // Acknowledgement, spade card suit
-					//printf("<ACK>");
+					dbg_printf("<ACK>");
 					break;
 				case 0x7: // Bell
-					//printf("<BEL>");
+					dbg_printf("<BEL>");
 					break;
 				case 0x1B: // Escape
-					//printf("<ESC>");
+					dbg_printf("<ESC>");
 					break;
 				case 0x2a: // '*'
-					//printf("<ASTERISK>");
+					dbg_printf("<ASTERISK>");
 					entry_str_tmp += entry_char;
 					break;
 				default:
-					//printf("<unhandled>: %x", entry_char);
+					dbg_printf("<unhandled>: %x", entry_char);
 					break;
 				}
 
@@ -126,7 +138,7 @@ vector<TblEntry> StatTxtTbl::convertFromStream(std::shared_ptr<kaitai::kstream> 
 			// printable ASCII characters
 			else if(entry_char >= 32 && entry_char <= 126)
 			{
-				//printf("%c", entry_char);
+				dbg_printf("%c", entry_char);
 
 				entry_str_tmp += entry_char;
 			}
@@ -136,10 +148,11 @@ vector<TblEntry> StatTxtTbl::convertFromStream(std::shared_ptr<kaitai::kstream> 
 				char inBuf[1024];
 				inBuf[0] = (char) entry_char;
 				inBuf[1] = '\0';
+				// TODO: valgrind detects this as problem:
 				char *utf8 = iconvISO2UTF8(inBuf);
 				if(utf8)
 				{
-					//cout << utf8;
+					dbg_printf("%s", utf8);
 
 					entry_str_tmp += utf8;
 					free(utf8);
@@ -154,7 +167,7 @@ vector<TblEntry> StatTxtTbl::convertFromStream(std::shared_ptr<kaitai::kstream> 
 				LOG4CXX_ERROR(mLogger, "ASCII characters > 255 should not be possible!");
 			}
 		}
-		//cout << endl;
+		dbg_printf("\n");
 
 		i++;
 		tbl_entry_vec.push_back(tbl_entry);
