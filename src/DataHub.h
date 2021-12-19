@@ -22,6 +22,7 @@
 #include "kaitai/orders_dat.h"
 #include "kaitai/techdata_dat.h"
 #include "kaitai/mapdata_dat.h"
+#include <sqlite3.h>
 
 // System
 #include <memory>
@@ -69,6 +70,15 @@ private:
 	std::shared_ptr<upgrades_dat_t> upgrades;
 	std::shared_ptr<techdata_dat_t> techdata;
 	std::shared_ptr<mapdata_dat_t> mapdata;
+
+	// Tbl vectors
+	std::vector<TblEntry> stat_txt_vec;
+	std::vector<TblEntry> images_tbl_vec;
+	std::vector<uint32_t>* sfxdata_sound_file_vec;
+	std::vector<TblEntry> sfxdata_tbl_vec;
+	std::vector<TblEntry> portdata_tbl_vec;
+	std::vector<uint32_t>* mapdata_mission_dir_vec;
+	std::vector<TblEntry> mapdata_tbl_vec;
 
 	std::shared_ptr<kaitai::kstream> getKaitaiStream(const std::string &file);
 

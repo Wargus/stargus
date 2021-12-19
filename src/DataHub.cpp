@@ -5,7 +5,7 @@
  */
 
 // Local
-#include <StatTxtTbl.h>
+#include <Tbl.h>
 #include "DataHub.h"
 #include "Hurricane.h"
 #include "StringUtil.h"
@@ -197,30 +197,45 @@ void DataHub::init_stat_txt_tbl()
 {
 	string sc_rez_stat_txt_tbl ="rez\\stat_txt.tbl";
 	stat_txt_ks = getKaitaiStream(sc_rez_stat_txt_tbl);
+
+	Tbl stat_txt;
+	stat_txt_vec = stat_txt.convertFromStream(stat_txt_ks);
 }
 
 void DataHub::init_images_tbl()
 {
 	string sc_arr_images_tbl = "arr\\images.tbl";
 	images_tbl_ks = getKaitaiStream(sc_arr_images_tbl);
+
+	Tbl images_tbl;
+	images_tbl_vec = images_tbl.convertFromStream(images_tbl_ks);
 }
 
 void DataHub::init_sfxdata_tbl()
 {
 	string sc_arr_sfxdata_tbl = "arr\\sfxdata.tbl";
 	sfxdata_tbl_ks = getKaitaiStream(sc_arr_sfxdata_tbl);
+
+	Tbl sfxdata_tbl;
+	sfxdata_tbl_vec = sfxdata_tbl.convertFromStream(sfxdata_tbl_ks);
 }
 
 void DataHub::init_portdata_tbl()
 {
 	string sc_arr_portdata_tbl = "arr\\portdata.tbl";
 	portdata_tbl_ks = getKaitaiStream(sc_arr_portdata_tbl);
+
+	Tbl portdata_tbl;
+	portdata_tbl_vec = portdata_tbl.convertFromStream(portdata_tbl_ks);
 }
 
 void DataHub::init_mapdata_tbl()
 {
 	string sc_arr_mapdata_tbl = "arr\\mapdata.tbl";
 	mapdata_tbl_ks = getKaitaiStream(sc_arr_mapdata_tbl);
+
+	Tbl mapdata_tbl;
+	mapdata_tbl_vec = mapdata_tbl.convertFromStream(mapdata_tbl_ks);
 }
 
 int DataHub::get_dat_ai_max() const
@@ -365,11 +380,6 @@ void DataHub::printCSV()
 	const string CSV_ENDLINE = "\n";
 	const string CSV_SEPARATOR = ";";
 
-	// stat_txt.tbl
-	StatTxtTbl stat_txt;
-	std::vector<TblEntry> stat_txt_vec;
-	stat_txt_vec = stat_txt.convertFromStream(stat_txt_ks);
-
 	// units.dat
 	std::vector<uint8_t>* units_graphics_vec = units->graphics();
 	std::vector<uint8_t>* units_ground_weapon_vec = units->ground_weapon();
@@ -393,23 +403,9 @@ void DataHub::printCSV()
 
 	std::vector<uint32_t>* images_grp_vec = images->grp_file();
 
-	// images.tbl
-	StatTxtTbl images_tbl;
-	std::vector<TblEntry> images_tbl_vec = images_tbl.convertFromStream(images_tbl_ks);
-
-	//sfxdata.data
-	std::vector<uint32_t>* sfxdata_sound_file_vec = sfxdata->sound_file();
-
-	// sfxdata.tbl
-	StatTxtTbl sfxdata_tbl;
-	std::vector<TblEntry> sfxdata_tbl_vec = sfxdata_tbl.convertFromStream(sfxdata_tbl_ks);
-
+	sfxdata_sound_file_vec = sfxdata->sound_file();
 
 	std::vector<uint32_t>* portdata_portrait_file_vec = portrait->portrait_file();
-
-	// portdata.tbl
-	StatTxtTbl portdata_tbl;
-	std::vector<TblEntry> portdata_tbl_vec = portdata_tbl.convertFromStream(portdata_tbl_ks);
 
 	// upgrades.dat
 	std::vector<uint16_t>* upgrades_label_vec = upgrades->label();
@@ -421,11 +417,7 @@ void DataHub::printCSV()
 	std::vector<uint16_t>* techdata_label_vec = techdata->label();
 
 	// mapdata.dat
-	std::vector<uint32_t>* mapdata_mission_dir_vec = mapdata->mission_dir();
-
-	// mapdata.tbl
-	StatTxtTbl mapdata_tbl;
-	std::vector<TblEntry> mapdata_tbl_vec = sfxdata_tbl.convertFromStream(mapdata_tbl_ks);
+	mapdata_mission_dir_vec = mapdata->mission_dir();
 
 	// units.dat
 	for(unsigned int i = 0; i < units_graphics_vec->size(); i++)

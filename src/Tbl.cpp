@@ -15,7 +15,7 @@
 #include <iconv.h>
 #include <string.h>
 #include <stdlib.h>
-#include "StatTxtTbl.h"
+#include <Tbl.h>
 
 using namespace std;
 
@@ -24,13 +24,13 @@ int no_printf(const char *format, ...){	return 0;}
 //#define dbg_printf printf
 #define dbg_printf no_printf
 
-StatTxtTbl::StatTxtTbl() :
+Tbl::Tbl() :
 	mLogger("startool.StatTxtTbl")
 {
 
 }
 
-StatTxtTbl::~StatTxtTbl()
+Tbl::~Tbl()
 {
 
 }
@@ -41,7 +41,7 @@ StatTxtTbl::~StatTxtTbl()
  * understood. But somehow there're shortcuts and a marker which char should be highlighted in the GUI...
  * r<EOT>Pa<ETX>r<SOH>asit entwickeln<LF>(Für Königin)<NULL>
  */
-vector<TblEntry> StatTxtTbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
+vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
 {
 	file_tbl_t file_tbl = file_tbl_t(ks.get());
 
@@ -177,7 +177,7 @@ vector<TblEntry> StatTxtTbl::convertFromStream(std::shared_ptr<kaitai::kstream> 
 }
 
 // TODO: check if this helps to detect encoding https://github.com/freedesktop/uchardet
-char *StatTxtTbl::iconvISO2UTF8(char *iso)
+char *Tbl::iconvISO2UTF8(char *iso)
 {
 	char buf[1024] = {'\0'};
     iconv_t iconvDesc = iconv_open ("UTF-8//TRANSLIT//IGNORE", "ISO−8859-1");

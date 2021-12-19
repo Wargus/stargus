@@ -29,11 +29,11 @@ public:
 	char shortcut;
 };
 
-class StatTxtTbl
+class Tbl
 {
 public:
-	StatTxtTbl();
-	virtual ~StatTxtTbl();
+	Tbl();
+	virtual ~Tbl();
 
 	std::vector<TblEntry> convertFromStream(std::shared_ptr<kaitai::kstream> ks);
 

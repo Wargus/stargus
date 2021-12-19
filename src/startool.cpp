@@ -33,7 +33,7 @@
 --  Includes
 ----------------------------------------------------------------------------*/
 
-#include <StatTxtTbl.h>
+#include <Tbl.h>
 #include "endian.h"
 #include "startool.h"
 #include "optionparser.h"
