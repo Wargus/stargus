@@ -22,11 +22,30 @@ public:
 		shortcut_pos = -1;
 		shortcut = ' ';
 	}
-	std::string name;
-	std::string category1;
-	std::string category2;
+	std::string name1;
+	std::string name2;
+	std::string name3;
 	int shortcut_pos;
-	char shortcut;
+	std::string shortcut;
+
+	void removeSpaces()
+	{
+		size_t pos;
+		while( ( pos = name1.find( "  " ) )!=std::string::npos )
+		{
+			name1 = name1.replace( pos, 2, " " );
+		}
+
+		while( ( pos = name2.find( "  " ) )!=std::string::npos )
+		{
+			name2 = name2.replace( pos, 2, " " );
+		}
+
+		while( ( pos = name3.find( "  " ) )!=std::string::npos )
+		{
+			name3 = name3.replace( pos, 2, " " );
+		}
+	}
 };
 
 class Tbl

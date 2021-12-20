@@ -16,7 +16,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <Tbl.h>
-
 using namespace std;
 
 // this is a very local debug print concept. But for this use case of sequence character debugging perfect...
@@ -25,7 +24,7 @@ int no_printf(const char *format, ...){	return 0;}
 #define dbg_printf no_printf
 
 Tbl::Tbl() :
-	mLogger("startool.StatTxtTbl")
+	mLogger("startool.Tbl")
 {
 
 }
@@ -63,6 +62,7 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
 		TblEntry tbl_entry;
 		string entry_str_tmp;
 		unsigned int null_counter = 0;
+		bool etx = false;
 		for(unsigned int n = 0; n < entry_char_vec->size(); n++)
 		{
 			uint8_t entry_char = entry_char_vec->at(n);
@@ -74,22 +74,35 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
 				{
 				case 0x0: // ' '
 					dbg_printf("<NULL>");
-					if(null_counter == 0)
+					if(n == 1) // first char is shortcut special case
 					{
-						tbl_entry.name = entry_str_tmp;
-						entry_str_tmp.clear();
+						uint8_t last = entry_char_vec->at(n-1);
+						// TODO: special handling of ESC key if I ever come to this point...
+						if(last != 0x1B) // !Escape
+						{
+							tbl_entry.shortcut = last;
+							entry_str_tmp.clear();
+						}
 					}
-					else if(null_counter == 1)
+					else
 					{
-						tbl_entry.category1 = entry_str_tmp;
-						entry_str_tmp.clear();
+						if(null_counter == 0)
+						{
+							tbl_entry.name1 = entry_str_tmp;
+							entry_str_tmp.clear();
+						}
+						else if(null_counter == 1)
+						{
+							tbl_entry.name2 = entry_str_tmp;
+							entry_str_tmp.clear();
+						}
+						else if(null_counter == 2)
+						{
+							tbl_entry.name3 = entry_str_tmp;
+							entry_str_tmp.clear();
+						}
+						null_counter++;
 					}
-					else if(null_counter == 2)
-					{
-						tbl_entry.category2 = entry_str_tmp;
-						entry_str_tmp.clear();
-					}
-					null_counter++;
 					break;
 				case 0x0a: // Line Feed
 					dbg_printf("<LF>");
@@ -97,6 +110,11 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
 					break;
 				case 0x01: // Start of Heading
 					dbg_printf("<SOH>");
+					if(!etx) // <ETX><SOH> is a special case
+					{
+						tbl_entry.shortcut = entry_char_vec->at(n-1);
+						entry_str_tmp.clear();
+					}
 					break;
 				case 0x02: // Start of Text
 					dbg_printf("<STX>");
@@ -105,7 +123,16 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
 					break;
 				case 0x03: // End of Text
 					dbg_printf("<ETX>");
-					tbl_entry.shortcut_pos = entry_str_tmp.length();
+					if(n == 1) // first char is shortcut special case
+					{
+						tbl_entry.shortcut = entry_char_vec->at(n-1);
+						entry_str_tmp.clear();
+					}
+					else
+					{
+						tbl_entry.shortcut_pos = entry_str_tmp.length();
+						etx = true;
+					}
 					break;
 				case 0x4: // End of Transmission, diamonds card suit
 					dbg_printf("<EOT>");
@@ -139,10 +166,9 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
 			else if(entry_char >= 32 && entry_char <= 126)
 			{
 				dbg_printf("%c", entry_char);
-
 				entry_str_tmp += entry_char;
 			}
-			// printable extendes ASCII characters
+			// printable extended ASCII characters
 			else if(entry_char >= 120 && entry_char <= 255)
 			{
 				char inBuf[1024];
@@ -168,6 +194,20 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
 			}
 		}
 		dbg_printf("\n");
+
+		// fix trailing characters
+		if(tbl_entry.shortcut == " ")
+		{
+			tbl_entry.shortcut = "";
+		}
+
+		tbl_entry.removeSpaces();
+
+		dbg_printf("tbl_entry.name(): %s\n", tbl_entry.name1.c_str());
+		dbg_printf("tbl_entry.category1(): %s\n", tbl_entry.name2.c_str());
+		dbg_printf("tbl_entry.category2(): %s\n", tbl_entry.name3.c_str());
+		dbg_printf("tbl_entry.shortcut(): %s\n", tbl_entry.shortcut.c_str());
+		dbg_printf("tbl_entry.shortcut_pos(): %d\n", tbl_entry.shortcut_pos);
 
 		i++;
 		tbl_entry_vec.push_back(tbl_entry);

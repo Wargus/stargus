@@ -80,6 +80,16 @@ private:
 	std::vector<uint32_t>* mapdata_mission_dir_vec;
 	std::vector<TblEntry> mapdata_tbl_vec;
 
+	sqlite3 *db;
+
+	int sqlite_open(const std::string dbname);
+
+	int sqlite_close();
+
+	void sqlite_stat_txt_tbl();
+
+	void sqlite_unit_dat();
+
 	std::shared_ptr<kaitai::kstream> getKaitaiStream(const std::string &file);
 
 	void initKaitaiStreams();
