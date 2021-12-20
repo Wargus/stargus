@@ -29,7 +29,7 @@ DataHub::DataHub(std::shared_ptr<Hurricane> hurricane) :
 	bool has_max_air_hits = false;
 	bool has_max_ground_hits = false;
 
-	/*init_units_dat(has_broodwar_flag, has_max_air_hits, has_max_ground_hits);
+	init_units_dat(has_broodwar_flag, has_max_air_hits, has_max_ground_hits);
 
 	init_orders_dat(get_dat_ai_max());
 
@@ -49,22 +49,22 @@ DataHub::DataHub(std::shared_ptr<Hurricane> hurricane) :
 
 	init_techdata_dat(get_dat_energy_max(), has_broodwar_flag);
 
-	init_mapdata_dat();*/
+	init_mapdata_dat();
 
 	init_stat_txt_tbl();
 
-	/*init_images_tbl();
+	init_images_tbl();
 
 	init_sfxdata_tbl();
 
 	init_portdata_tbl();
 
-	init_mapdata_tbl();*/
+	init_mapdata_tbl();
 
 	if(sqlite_open("stargus.db") == SQLITE_OK)
 	{
 		sqlite_stat_txt_tbl();
-		//sqlite_unit_dat();
+		sqlite_unit_dat();
 	}
 }
 
@@ -155,7 +155,7 @@ void DataHub::sqlite_unit_dat()
 	string csv_str;
 	char buf[1024];
 
-	string sql_tabble_drop = "DROP TABLE IF EXISTS units;";
+	string sql_tabble_drop = "DROP TABLE IF EXISTS units_dat;";
 	string sql_table_headers = 	"CREATE TABLE units_dat("
 								"id INT PRIMARY KEY, "
 								"graphics INT"
