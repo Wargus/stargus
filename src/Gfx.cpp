@@ -5,10 +5,10 @@
  */
 
 // Local
+#include <Palette.h>
 #include "Gfx.h"
 #include "endian.h"
 #include "Preferences.h"
-#include "Palettes.h"
 #include "Png.h"
 #include "Storm.h"
 
@@ -16,18 +16,22 @@
 #include <cstring>
 
 
-Gfx::Gfx()
+Gfx::Gfx(std::shared_ptr<Hurricane> hurricane) :
+	Converter(hurricane)
 {
-	// TODO Auto-generated constructor stub
 
 }
 
 Gfx::~Gfx()
 {
-	// TODO Auto-generated destructor stub
+
+}
+bool Gfx::convert(const std::string &arcfile, const std::string &file)
+{
+	return convert(arcfile, file, 0);
 }
 
-bool Gfx::convert(const char *mpqfile, const char* arcfile, const char* file, int pale)
+bool Gfx::convert(const std::string &arcfile, const std::string &file, int pale)
 {
 	unsigned char* palp = NULL;
 	unsigned char* gfxp = NULL;
@@ -38,8 +42,7 @@ bool Gfx::convert(const char *mpqfile, const char* arcfile, const char* file, in
 	char buf[1024];
 	bool result = true;
 
-	Storm mpq(mpqfile);
-	result = mpq.extractMemory(arcfile, &gfxp, NULL);
+	result = mHurricane->extractMemory(arcfile, &gfxp, NULL);
 	if (result)
 	{
 
@@ -53,7 +56,7 @@ bool Gfx::convert(const char *mpqfile, const char* arcfile, const char* file, in
 			ConvertPal3(image, w, h);
 		}
 		Preferences &preferences = Preferences::getInstance ();
-		sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), GRAPHICS_PATH, file);
+		sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), GRAPHICS_PATH, file.c_str());
 		Png::save(buf, image, w, h, palp, 255);
 
 		free(image);
@@ -65,6 +68,3 @@ bool Gfx::convert(const char *mpqfile, const char* arcfile, const char* file, in
 
 	return result;
 }
-
-
-

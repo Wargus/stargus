@@ -4,9 +4,15 @@
  *      Author: Andreas Volz
  */
 
-#ifndef PALETTES_H_
-#define PALETTES_H_
+#ifndef PALETTE_H_
+#define PALETTE_H_
 
+// Local
+#include "DataChunk.h"
+#include "Logger.h"
+
+// C++
+#include <memory>
 
 // TODO: unextern this !!
 extern unsigned char SC_Unit_Palette[];
@@ -16,14 +22,17 @@ extern unsigned char Orange_Palette[];
 extern unsigned char *Palettes[];
 
 /**
- * TODO: Handle palette data in a good C++ way. With flexible arrays and extern it's not nice!
+ *
  */
-class Palettes
+class Palette
 {
 public:
-	Palettes();
-	virtual ~Palettes();
+	Palette();
+	virtual ~Palette();
 
+
+private:
+	Logger mLogger;
 };
 
-#endif /* PALETTES_H_ */
+#endif /* PALETTE_H_ */

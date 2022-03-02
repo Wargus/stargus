@@ -5,11 +5,11 @@
  */
 
 // Local
+#include <Palette.h>
 #include "Gfu.h"
 #include "endian.h"
 #include "Storm.h"
 #include "Preferences.h"
-#include "Palettes.h"
 #include "Png.h"
 
 // System

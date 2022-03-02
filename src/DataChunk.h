@@ -7,8 +7,12 @@
 #ifndef DATACHUNK_H_
 #define DATACHUNK_H_
 
+// Local
+#include "Logger.h"
+
 // System
 #include <stdlib.h>
+#include <string>
 
 class DataChunk
 {
@@ -34,7 +38,10 @@ public:
 
 	size_t getSize() const;
 
+	bool write(const std::string filename);
+
 private:
+	Logger mLogger;
 	unsigned char *mData;
 	size_t mSize;
 };

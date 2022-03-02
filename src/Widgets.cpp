@@ -4,11 +4,11 @@
  *      Author: Andreas Volz
  */
 
+#include <Palette.h>
 #include "Widgets.h"
 #include "Storm.h"
 #include "Preferences.h"
 #include "FileUtil.h"
-#include "Palettes.h"
 #include "Png.h"
 
 Widgets::Widgets()

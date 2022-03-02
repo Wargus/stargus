@@ -45,7 +45,7 @@ public:
 
     /**
      * The length of the Hit Points/Shields/Energy bar below the sprite, in pixels. The way the actual number of "boxes" is calculated is the following: substract 1 from the value, divide the result by 3 and round it down. Even though a sprite may actually USE less than 6 boxes, 6 boxes is the minimal amount that will be SHOWN in-game (just that some will not be functional). Values below 6 will all result in 1 box being USED.
-     * This property is only available from unit index 130 to 516
+     * This property is only available from unit index 130 to num_lines
      */
     std::vector<uint8_t>* heath_bar() const { return m_heath_bar; }
 

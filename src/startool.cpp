@@ -33,6 +33,7 @@
 --  Includes
 ----------------------------------------------------------------------------*/
 
+#include <Palette.h>
 #include <Tbl.h>
 #include "endian.h"
 #include "startool.h"
@@ -45,7 +46,6 @@
 #include "Grp.h"
 #include "Png.h"
 #include "Panel.h"
-#include "Palettes.h"
 #include "Widgets.h"
 #include "Gfx.h"
 #include "Gfu.h"
@@ -67,6 +67,9 @@
 using namespace std;
 
 Logger logger("startool.main");
+
+// test only
+void testHook();
 
 //----------------------------------------------------------------------------
 
@@ -198,13 +201,14 @@ struct Arg: public option::Arg
   }
 };
 
-enum  optionIndex { UNKNOWN, HELP, VIDEO, VERSIONPARAM };
+enum  optionIndex { UNKNOWN, HELP, VIDEO, VERSIONPARAM, DEV };
  const option::Descriptor usage[] =
  {
   {UNKNOWN, 0,"" , ""    ,option::Arg::None, "USAGE: stargus archive-directory [destination-directory]\n\n"
                                              "Options:" },
   {HELP,    0,"h" , "help",option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
   {VIDEO,	0,"v" , "video",Arg::None, "  --video, -v  \t\tExtract and convert videos" },
+  {DEV,	0,"d" , "dev",Arg::None, "  --dev, -d  \t\tSome test hooks while development. Don't use it if you don't know what it does!" },
   {VERSIONPARAM, 	0,"V" , "version",Arg::None, "  --version, -V  \t\tShow version" },
   {UNKNOWN, 0,""  ,  ""   ,option::Arg::None, "\narchive-directory \t\tDirectory which include the archive install.exe or stardat.mpq...\n"
                                               "destination-directory \t\tDirectory where the extracted files are placed.\n"},
@@ -232,6 +236,12 @@ int parseOptions(int argc, const char **argv)
   if(options[VIDEO].count() > 0)
   {
 	  preferences.setVideoExtraction(true);
+  }
+
+  // parse options
+  if(options[DEV].count() > 0)
+  {
+	  testHook();
   }
 
   if(options[VERSIONPARAM].count() > 0)
@@ -288,7 +298,13 @@ void testHook()
 	shared_ptr<Storm> storm = make_shared<Storm>("/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
 	//shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
 	DataHub datahub(storm);
-	datahub.convert("test", "test");
+	//datahub.convert("test", "test");
+
+	//Pcx pcx1(storm, "game\\tunit.pcx");
+	Pcx pcx1(storm, "glue\\PalTv\\Backgnd.pcx");
+
+	pcx1.savePNG("/tmp/tunit.png");
+	pcx1.getPalette()->write("/tmp/tunit.pal");
 
 	exit(0);
 }
@@ -316,8 +332,6 @@ int main(int argc, const char** argv)
 
 	Preferences &preferences = Preferences::getInstance ();
 	preferences.init(); // initialize all properties once in the beginning of the application
-
-	//testHook();
 
 	parseOptions(argc, argv);
 
@@ -405,7 +419,7 @@ int main(int argc, const char** argv)
 						}
 						printf("...%s\n", case_func ? "ok" : "nok");
 						break;
-					case M: // WORKS!
+					/*case M: // WORKS!
 					{
 						printf("ConvertMap: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
@@ -431,16 +445,17 @@ int main(int argc, const char** argv)
 						case_func = terrain.ConvertTileset(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
-						break;
+						break;*/
 					case G: // WORKS!
 					{
 						printf("ConvertGfx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-						Gfx gfx;
-						case_func = gfx.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
+						Gfx gfx(storm);
+						case_func = gfx.convert(c[u].ArcFile, c[u].File, c[u].Arg1);
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
-					case U: // WORKS!
+					/*case U: // WORKS!
 					{
 						printf("ConvertGfu: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
 						Gfu gfu;
@@ -483,8 +498,8 @@ int main(int argc, const char** argv)
 					{
 						printf("ConvertPcx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
-						Pcx pcx(storm);
-						case_func = pcx.convert(c[u].ArcFile, c[u].File);
+						Pcx pcx(storm, c[u].ArcFile);
+						case_func = pcx.savePNG(string(c[u].File) + ".png");
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
@@ -502,7 +517,7 @@ int main(int argc, const char** argv)
 						case_func = chk.convert(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
-						break;
+						break;*/
 					default:
 						break;
 				}

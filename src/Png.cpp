@@ -33,7 +33,7 @@ Png::~Png()
 **  @param image        Graphic data
 **  @param w            Graphic width
 **  @param h            Graphic height
-**  @param pal          Palette
+**  @param pal          Palette (256*3 colors/bytes)
 **  @param transparent  Image uses transparency
 */
 int Png::save(const char* name, unsigned char* image, int w,

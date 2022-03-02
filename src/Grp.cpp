@@ -4,15 +4,13 @@
  *      Author: Andreas Volz
  */
 
+#include <Palette.h>
 #include "Grp.h"
 #include "endian.h"
 #include "Png.h"
 #include "FileUtil.h"
 #include "Storm.h"
 #include "Preferences.h"
-#include "Palettes.h"
-
-// C++
 #include <cstring>
 #include <cstdio>
 #include <stdlib.h>

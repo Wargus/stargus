@@ -10,7 +10,7 @@
 #include "Hurricane.h"
 #include "StringUtil.h"
 
-
+#include "Gfx.h"
 
 // System
 #include <iostream>
@@ -22,8 +22,7 @@ using namespace std;
 
 DataHub::DataHub(std::shared_ptr<Hurricane> hurricane) :
 	Converter(hurricane),
-	mLogger("startool.DataHub"),
-	db(nullptr)
+	mLogger("startool.DataHub")
 {
 	bool has_broodwar_flag = false;
 	bool has_max_air_hits = false;
@@ -60,211 +59,14 @@ DataHub::DataHub(std::shared_ptr<Hurricane> hurricane) :
 	init_portdata_tbl();
 
 	init_mapdata_tbl();
-
-	if(sqlite_open("stargus.db") == SQLITE_OK)
-	{
-		sqlite_stat_txt_tbl();
-		sqlite_unit_dat();
-	}
 }
 
 DataHub::~DataHub()
 {
-	sqlite_close();
 }
 
-int DataHub::sqlite_open(const std::string dbname)
-{
-	int rc = sqlite3_open(dbname.c_str(), &db);
-
-	if (rc != SQLITE_OK) {
-
-		fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
-		sqlite3_close(db);
-	}
-
-	return rc;
-}
-
-int DataHub::sqlite_close()
-{
-	return sqlite3_close(db);
-}
-
-void DataHub::sqlite_stat_txt_tbl()
-{
-	char *err_msg = 0;
-	vector<string> sql_line_vec;
-	const string NEXT_PARAM = ", ";
-	const string QUOTE = "\"";
-
-	string sql_tabble_drop = "DROP TABLE IF EXISTS stat_txt_tbl;";
-
-	string sql_table_headers = 	"CREATE TABLE stat_txt_tbl("
-									"id INT PRIMARY KEY, "
-									"name1 TEXT, "
-									"name2 TEXT, "
-									"name3 TEXT, "
-									"shortcut TEXT, "
-									"shortcut_pos INT"
-									");";
-
-	for(unsigned int id = 0; id < stat_txt_vec.size(); id++)
-	{
-		string sql_line = "INSERT INTO stat_txt_tbl VALUES(";
-
-		sql_line += toString(id) + ", ";
-
-		TblEntry tblEntry = stat_txt_vec.at(id);
-		sql_line += QUOTE + tblEntry.name1 + QUOTE + NEXT_PARAM;
-		sql_line += QUOTE + tblEntry.name2 + QUOTE + NEXT_PARAM;
-		sql_line += QUOTE + tblEntry.name3 + QUOTE + NEXT_PARAM;
-		sql_line += QUOTE + tblEntry.shortcut + QUOTE + NEXT_PARAM;
-		sql_line += toString(tblEntry.shortcut_pos);
-
-		sql_line += ");";
-		sql_line_vec.push_back(sql_line);
-	}
-
-	string sql = sql_tabble_drop + sql_table_headers;
-
-	for(vector<string>::iterator sql_it = sql_line_vec.begin(); sql_it != sql_line_vec.end(); sql_it++)
-	{
-		string sql_line = *sql_it;
-		sql += sql_line + '\n';
-	}
-
-	cout << sql << endl;
-
-	int rc = sqlite3_exec(db, sql.c_str(), 0, 0, &err_msg);
-
-	if (rc != SQLITE_OK ) {
-
-		fprintf(stderr, "SQL error: %s\n", err_msg);
-
-		sqlite3_free(err_msg);
-		sqlite3_close(db);
-
-		return;
-	}
-}
-
-void DataHub::sqlite_unit_dat()
-{
-	char *err_msg = 0;
-	string csv_str;
-	char buf[1024];
-
-	string sql_tabble_drop = "DROP TABLE IF EXISTS units_dat;";
-	string sql_table_headers = 	"CREATE TABLE units_dat("
-								"id INT PRIMARY KEY, "
-								"graphics INT"
-								");";
-
-	vector<string> sql_line_vec;
-
-	// get kaitai vectors
-	std::vector<uint8_t>* units_graphics_vec = units->graphics();
-	std::vector<units_dat_t::staredit_group_flags_type_t*>* se_group_flags_vec = units->staredit_group_flags();
-	std::vector<uint16_t>* flingy_sprites_vec = flingy->sprite();
-	std::vector<uint8_t>* units_ground_weapon_vec = units->ground_weapon();
-	std::vector<uint16_t>* units_ready_sound_vec = units->ready_sound();
-	std::vector<uint16_t>* units_portrait_vec = units->portrait();
-	std::vector<uint32_t>* portdata_portrait_file_vec = portrait->portrait_file();
-	std::vector<uint8_t>* units_armor_upgrade_vec = units->armor_upgrade();
-
-	for(unsigned int id = 0; id < units_graphics_vec->size(); id++)
-	{
-		string sql_line = "INSERT INTO units_dat VALUES(";
-
-		sql_line += toString(id) + ", ";
-
-		int graphics = static_cast<int>(units_graphics_vec->at(id));
-		sql_line += toString(graphics);
-
-		units_dat_t::staredit_group_flags_type_t *se_group_flags = se_group_flags_vec->at(id);
-		bool zerg = se_group_flags->zerg();
-		bool terran = se_group_flags->terran();
-		bool protoss = se_group_flags->protoss();
-
-		if(zerg)
-		{
-			csv_str += "race=zerg";
-		}
-		else if(terran)
-		{
-			csv_str += "race=terran";
-		}
-		else if(protoss)
-		{
-			csv_str += "race=protoss";
-		}
-
-		TblEntry tblEntry = stat_txt_vec.at(id);
-
-		uint16_t sprite_id = flingy_sprites_vec->at(graphics);
-		sprintf(buf, "ref:sprite=%d", sprite_id);
-
-		uint16_t weapon_id = units_ground_weapon_vec->at(id);
-		sprintf(buf, "weapon=%d", weapon_id);
-
-		if(id < 106)
-		{
-			uint16_t ready_sound_id = units_ready_sound_vec->at(id);
-			sprintf(buf, "ready_sound=%d", ready_sound_id);
-		}
-
-		uint32_t units_portrait_file= units_portrait_vec->at(id);
-		sprintf(buf, "portrait=%d", units_portrait_file);
-
-		if(units_portrait_file != 65535)
-		{
-			uint32_t portrait_file = portdata_portrait_file_vec->at(units_portrait_file);
-			sprintf(buf, "ref:portrait_idle_file=%d", portrait_file-1);
-
-			TblEntry tblEntry_portrait = portdata_tbl_vec.at(portrait_file-1);
-			csv_str += "ref:portrait_idle=" + tblEntry_portrait.name1;
-		}
-
-		if(units_portrait_file != 65535)
-		{
-			uint32_t portrait_file = portdata_portrait_file_vec->at(units_portrait_file);
-			sprintf(buf, "ref:portrait_talking_file=%d", portrait_file);
-
-			TblEntry tblEntry_portrait = portdata_tbl_vec.at(portrait_file);
-			csv_str += "ref:portrait_talking=" + tblEntry_portrait.name1;
-		}
-
-		uint8_t units_armor_upgrade = units_armor_upgrade_vec->at(id);
-		sprintf(buf, "units_armor_upgrade=%d", units_armor_upgrade);
 
 
-		sql_line += ");";
-		sql_line_vec.push_back(sql_line);
-	}
-
-	string sql = sql_tabble_drop + sql_table_headers;
-
-	for(vector<string>::iterator sql_it = sql_line_vec.begin(); sql_it != sql_line_vec.end(); sql_it++)
-	{
-		string sql_line = *sql_it;
-		sql += sql_line + '\n';
-	}
-
-	cout << sql << endl;
-
-	int rc = sqlite3_exec(db, sql.c_str(), 0, 0, &err_msg);
-
-	if (rc != SQLITE_OK ) {
-
-		fprintf(stderr, "SQL error: %s\n", err_msg);
-
-		sqlite3_free(err_msg);
-		sqlite3_close(db);
-
-		return;
-	}
-}
 
 std::shared_ptr<kaitai::kstream> DataHub::getKaitaiStream(const std::string &file)
 {
@@ -569,7 +371,36 @@ bool DataHub::convert(const std::string &arcfile, const std::string &file)
 {
 	//printCSV();
 
+	convertImages();
+
 	return true;
+}
+
+void DataHub::convertImages()
+{
+	std::vector<uint8_t>* units_graphics_vec = units->graphics();
+	std::vector<uint16_t>* flingy_sprites_vec = flingy->sprite();
+	std::vector<uint16_t>* sprites_images_vec = sprites->image_file();
+	std::vector<uint32_t>* images_grp_vec = images->grp_file();
+
+
+	// units.dat
+	for(unsigned int i = 0; i < units_graphics_vec->size(); i++)
+	{
+		uint8_t graphic_id = units_graphics_vec->at(i);
+
+		uint16_t sprite_id = flingy_sprites_vec->at(graphic_id);
+
+		uint16_t image_id = sprites_images_vec->at(sprite_id);
+
+		uint16_t grp_id = images_grp_vec->at(image_id);
+
+		TblEntry tblEntry = images_tbl_vec.at(grp_id-1); // spec says first index is -1
+		string grp_str = "unit\\" + tblEntry.name1;
+
+		//Gfx gfx;
+		//bool conv_ret = gfx.convert(mpqfile, c[u].ArcFile, c[u].File, c[u].Arg1);
+	}
 }
 
 void DataHub::printCSV()
@@ -670,7 +501,7 @@ void DataHub::printCSV()
 		sprintf(buf, "weapon=%d", weapon_id);
 		csv_dat += buf;
 
-		if(i < 106)
+		if(i < units_units_ready_sound_end)
 		{
 			csv_dat += CSV_SEPARATOR;
 			uint16_t ready_sound_id = units_ready_sound_vec->at(i);
@@ -686,7 +517,7 @@ void DataHub::printCSV()
 
 		csv_dat += CSV_SEPARATOR;
 
-		if(units_portrait_file != 65535)
+		if(units_portrait_file != units_portrait_none)
 		{
 			uint32_t portrait_file = portdata_portrait_file_vec->at(units_portrait_file);
 			sprintf(buf, "ref:portrait_idle_file=%d", portrait_file-1);
@@ -700,7 +531,7 @@ void DataHub::printCSV()
 			csv_dat += CSV_SEPARATOR;
 		}
 
-		if(units_portrait_file != 65535)
+		if(units_portrait_file != units_portrait_none)
 		{
 			uint32_t portrait_file = portdata_portrait_file_vec->at(units_portrait_file);
 			sprintf(buf, "ref:portrait_talking_file=%d", portrait_file);
@@ -999,7 +830,7 @@ bool DataHub::portdataCompare(int val1, int val2)
 {
 	bool result = false;
 
-	if(val2 != 65535)
+	if(val2 != units_portrait_none)
 	{
 		result = val1 < val2;
 	}

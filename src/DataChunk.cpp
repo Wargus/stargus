@@ -10,15 +10,21 @@
 // System
 #include <stdlib.h>
 #include <string.h>
+#include <iostream>
+#include <fstream>
 
-DataChunk::DataChunk()
-: mData(nullptr),
+using namespace std;
+
+DataChunk::DataChunk() :
+  mLogger("startool.DataChunk"),
+  mData(nullptr),
   mSize(0)
 {
 
 }
 
-DataChunk::DataChunk(unsigned char **data, const size_t size)
+DataChunk::DataChunk(unsigned char **data, const size_t size) :
+	mLogger("startool.DataChunk")
 {
 	mData = *data;
 	mSize = size;
@@ -43,4 +49,27 @@ unsigned char *DataChunk::getDataPointer() const
 size_t DataChunk::getSize() const
 {
 	return mSize;
+}
+
+bool DataChunk::write(const std::string filename)
+{
+	bool result = true;
+
+	ofstream wf(filename, ios::out | ios::binary);
+
+	if(wf)
+	{
+		 for(size_t i = 0; i < mSize; i++)
+		 {
+			 wf.write((char *) &mData[i], sizeof(unsigned char));
+		 }
+		 wf.close();
+	}
+	else
+	{
+		LOG4CXX_DEBUG(mLogger, string("Couldn't write in: ") + filename);
+		result = false;
+	}
+
+	return result;
 }

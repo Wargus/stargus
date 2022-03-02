@@ -22,7 +22,6 @@
 #include "kaitai/orders_dat.h"
 #include "kaitai/techdata_dat.h"
 #include "kaitai/mapdata_dat.h"
-#include <sqlite3.h>
 
 // System
 #include <memory>
@@ -35,10 +34,11 @@ public:
 
 	virtual bool convert(const std::string &arcfile, const std::string &file);
 
-
-
 private:
 	Logger mLogger;
+
+	static const int units_portrait_none = 65535;
+	static const int units_units_ready_sound_end = 106;
 
 	// Kaitai streams
 	std::shared_ptr<kaitai::kstream> stat_txt_ks;
@@ -80,15 +80,7 @@ private:
 	std::vector<uint32_t>* mapdata_mission_dir_vec;
 	std::vector<TblEntry> mapdata_tbl_vec;
 
-	sqlite3 *db;
-
-	int sqlite_open(const std::string dbname);
-
-	int sqlite_close();
-
-	void sqlite_stat_txt_tbl();
-
-	void sqlite_unit_dat();
+	void convertImages();
 
 	std::shared_ptr<kaitai::kstream> getKaitaiStream(const std::string &file);
 

@@ -4,14 +4,20 @@
  *      Author: Andreas Volz
  */
 
-#include "Palettes.h"
+#include <Palette.h>
 
-Palettes::Palettes()
+// C++
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+Palette::Palette() :
+	mLogger("startool.Palette")
 {
 
 }
-
-Palettes::~Palettes()
+Palette::~Palette()
 {
 
 }
@@ -192,22 +198,4 @@ unsigned char *Palettes[] = {
 	Orange_Palette,
 };
 
-/**
-**  Convert palette.
-**
-**  @param pal  Pointer to palette
-**
-**  @return     Pointer to palette
-*/
-// TODO: not needed??
-/*unsigned char* ConvertPalette(unsigned char* pal)
-{
-	int i;
 
-	// PNG needs 0-256
-	for (i = 0; i < 768; ++i) {
-		pal[i] <<= 2;
-	}
-
-	return pal;
-}*/

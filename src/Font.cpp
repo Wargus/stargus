@@ -5,13 +5,13 @@
  */
 
 // Local
+#include <Palette.h>
 #include "Font.h"
 #include "endian.h"
 #include "Png.h"
 #include "FileUtil.h"
 #include "Storm.h"
 #include "Preferences.h"
-#include "Palettes.h"
 #include "StringUtil.h"
 
 // C
