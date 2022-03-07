@@ -36,6 +36,10 @@ public:
 
 	unsigned char *getDataPointer() const;
 
+	std::vector<unsigned char> getUCharVector() const;
+
+	std::vector<char> getCharVector() const;
+
 	size_t getSize() const;
 
 	bool write(const std::string filename);

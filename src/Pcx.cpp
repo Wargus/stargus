@@ -75,7 +75,7 @@ bool Pcx::savePNG(const std::string &filename)
 	{
 		Preferences &preferences = Preferences::getInstance ();
 		sprintf(buf, "%s/%s/%s", preferences.getDestDir().c_str(), GRAPHICS_PATH, filename.c_str());
-		Png::save(buf, rawImage, mWidth, mHeight, mPalette->getDataPointer(), 0);
+		Png::save(buf, rawImage, mWidth, mHeight, mPalette->getDataChunk()->getDataPointer(), 0);
 	}
 	else
 	{
@@ -85,7 +85,7 @@ bool Pcx::savePNG(const std::string &filename)
 	return result;
 }
 
-std::shared_ptr<DataChunk> Pcx::getPalette()
+std::shared_ptr<Palette> Pcx::getPalette()
 {
 	return mPalette;
 }
@@ -165,7 +165,8 @@ void Pcx::extractPalette()
 
 		}
 
-		mPalette = make_shared<DataChunk>(&pal, rgb_size);
+		std::shared_ptr<DataChunk> data = make_shared<DataChunk>(&pal, rgb_size);
+		mPalette = make_shared<Palette>(data);
 	}
 }
 

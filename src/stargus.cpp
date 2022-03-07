@@ -18,6 +18,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 #define GAME_NAME "Stargus"
 #define GAME_CD "Starcraft CD or installation stardat.mpq or starcraft.mpq file"
 #define GAME_CD_FILE_PATTERNS "install.exe", "Install.exe", "stardat.mpq", "StarDat.mpq", "starcraft.mpq", "StarCraft.mpq"

@@ -7,16 +7,42 @@
 #ifndef GRP_H_
 #define GRP_H_
 
+// Local
+#include "Converter.h"
+#include "Palette.h"
+
+// System
+#include <libgrp/libgrp.hpp>
+
 /**
  * Put the code for decoding of Gfu and Gfx in Gfu parent as workaround.
  * Reason seems to be a workaround for "Hardcoded support for worker with resource repairing"
  * TODO: Find a better solution and move to to Gfx/Gfu class
  */
-class Grp
+class Grp : public Converter
 {
 public:
-	Grp();
+	Grp(std::shared_ptr<Hurricane> hurricane);
+	Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile);
+	Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<Palette> pal);
+	Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, const std::string &palFile);
 	virtual ~Grp();
+
+	bool load(const std::string &arcfile);
+
+	bool save(const std::string &filename);
+
+	void setPalette(std::shared_ptr<Palette> pal);
+
+	void setPalette(const std::string &palFile);
+
+	/**
+	 *  Convert a Grp graphic to PNG format
+	 *
+	 *  @param arcfile File identifier in the MPQ file
+	 *  @param file Place to save the file on the drive (relative to game dir)
+	 */
+	bool savePNG(const std::string &filename);
 
 protected:
 	/**
@@ -40,8 +66,10 @@ protected:
 	void ConvertPal3(unsigned char* image, int w, int h);
 
 private:
-
-
+	Logger mLogger;
+	std::shared_ptr<Palette> mPal;
+	std::string mPalFile;
+	std::string mArcfile;
 };
 
 #endif /* GRP_H_ */

@@ -17,7 +17,7 @@
 
 
 Gfx::Gfx(std::shared_ptr<Hurricane> hurricane) :
-	Converter(hurricane)
+	Grp(hurricane)
 {
 
 }

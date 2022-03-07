@@ -25,11 +25,11 @@ public:
 	 *  Convert a pcx graphic to PNG format
 	 *
 	 *  @param arcfile File identifier in the MPQ file
-	 *  @param file Place to save the file on the drive (relative) (don't give .png extension, will be added)
+	 *  @param file Place to save the file on the drive (relative to game dir)
 	 */
 	bool savePNG(const std::string &filename);
 
-	std::shared_ptr<DataChunk> getPalette();
+	std::shared_ptr<Palette> getPalette();
 
 private:
 	struct PCXheader
@@ -60,7 +60,7 @@ private:
 	void extractPalette();
 
 	Logger mLogger;
-	std::shared_ptr<DataChunk> mPalette;
+	std::shared_ptr<Palette> mPalette;
 	std::shared_ptr<DataChunk> mRawData;
 	struct PCXheader pcxh;
 	unsigned char *rawImage;

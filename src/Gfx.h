@@ -11,10 +11,9 @@
 #include <string>
 
 // Local
-#include <Converter.h>
 #include "Grp.h"
 
-class Gfx: public Grp, Converter
+class Gfx: public Grp
 {
 public:
 	Gfx(std::shared_ptr<Hurricane> hurricane);

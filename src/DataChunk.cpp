@@ -51,6 +51,16 @@ size_t DataChunk::getSize() const
 	return mSize;
 }
 
+std::vector<unsigned char> DataChunk::getUCharVector() const
+{
+	return std::vector<unsigned char> (mData, mData + mSize);
+}
+
+std::vector<char> DataChunk::getCharVector() const
+{
+	return std::vector<char> (mData, mData + mSize);
+}
+
 bool DataChunk::write(const std::string filename)
 {
 	bool result = true;

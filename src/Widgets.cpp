@@ -11,15 +11,15 @@
 #include "FileUtil.h"
 #include "Png.h"
 
-Widgets::Widgets()
+Widgets::Widgets(std::shared_ptr<Hurricane> hurricane)  :
+	Grp(hurricane)
 {
-	// TODO Auto-generated constructor stub
 
 }
 
 Widgets::~Widgets()
 {
-	// TODO Auto-generated destructor stub
+
 }
 
 

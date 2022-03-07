@@ -4,22 +4,112 @@
  *      Author: Andreas Volz
  */
 
-#include <Palette.h>
+// Local
 #include "Grp.h"
 #include "endian.h"
 #include "Png.h"
 #include "FileUtil.h"
 #include "Storm.h"
 #include "Preferences.h"
+
+// System
 #include <cstring>
 #include <cstdio>
 #include <stdlib.h>
 
+using namespace std;
 
-
-Grp::Grp()
+Grp::Grp(std::shared_ptr<Hurricane> hurricane) :
+	Converter(hurricane),
+	mLogger("startool.Grp")
 {
+}
 
+Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
+	Converter(hurricane),
+	mLogger("startool.Grp")
+{
+	load(arcfile);
+}
+
+Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<Palette> pal) :
+	Converter(hurricane),
+	mLogger("startool.Grp"),
+	mPal(pal)
+{
+	load(arcfile);
+}
+
+Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, const std::string &palFile) :
+		Converter(hurricane),
+		mLogger("startool.Grp"),
+		mPalFile(palFile)
+{
+	load(arcfile);
+}
+
+void Grp::setPalette(std::shared_ptr<Palette> pal)
+{
+	mPal = pal;
+	mPalFile.clear();
+}
+
+void Grp::setPalette(const std::string &palFile)
+{
+	mPalFile = palFile;
+	mPal = nullptr;
+}
+
+bool Grp::load(const std::string &arcfile)
+{
+	mArcfile = arcfile;
+
+	return true;
+}
+
+bool Grp::save(const std::string &filename)
+{
+	bool result = true;
+
+	std::shared_ptr<DataChunk> rawData = mHurricane->extractDataChunk(mArcfile);
+	if (rawData)
+	{
+		vector<char> img_vec = rawData->getCharVector();
+
+		GRPImage myGRPImage(&img_vec, false);
+
+		if(mPal)
+		{
+			ColorPalette myGRPPallete;
+
+			std::shared_ptr<DataChunk> rawPal = mPal->getDataChunk();
+			rawPal->write("/tmp/ghost.pal");
+
+			std::vector<char> pal_vec = mPal->getDataChunk()->getCharVector();
+			myGRPPallete.LoadPalette(&pal_vec);
+
+			myGRPImage.SetColorPalette(&myGRPPallete);
+
+			myGRPImage.SaveConvertedImage(filename, 0, myGRPImage.getNumberOfFrames(), true, 17);
+		}
+		else if(!mPalFile.empty())
+		{
+			ColorPalette myGRPPallete;
+
+			myGRPPallete.LoadPalette(mPalFile);
+
+			myGRPImage.SetColorPalette(&myGRPPallete);
+
+			myGRPImage.SaveConvertedImage(filename, 0, myGRPImage.getNumberOfFrames(), true, 17);
+		}
+
+	}
+	else
+	{
+		result = false;
+	}
+
+	return result;
 }
 
 Grp::~Grp()

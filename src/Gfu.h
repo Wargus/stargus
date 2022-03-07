@@ -12,7 +12,7 @@
 class Gfu: public Grp
 {
 public:
-	Gfu();
+	Gfu(std::shared_ptr<Hurricane> hurricane);
 	virtual ~Gfu();
 
 	/**

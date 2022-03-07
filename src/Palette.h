@@ -27,12 +27,20 @@ extern unsigned char *Palettes[];
 class Palette
 {
 public:
-	Palette();
+	/**
+	 * Create Palette from memory. The Palette class takes over responsibility for deleting the memory.
+	 *
+	 * @rapam palData Size has to be 256 bytes * 3 (rgb). If you don't respect this it will crash!
+	 */
+	Palette(std::shared_ptr<DataChunk> palData);
+
 	virtual ~Palette();
 
+	std::shared_ptr<DataChunk> getDataChunk();
 
 private:
 	Logger mLogger;
+	std::shared_ptr<DataChunk> mPalData;
 };
 
 #endif /* PALETTE_H_ */

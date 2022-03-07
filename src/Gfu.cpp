@@ -15,15 +15,15 @@
 // System
 #include <cstring>
 
-Gfu::Gfu()
+Gfu::Gfu(std::shared_ptr<Hurricane> hurricane) :
+	Grp(hurricane)
 {
-	// TODO Auto-generated constructor stub
 
 }
 
 Gfu::~Gfu()
 {
-	// TODO Auto-generated destructor stub
+
 }
 
 

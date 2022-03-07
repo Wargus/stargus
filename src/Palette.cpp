@@ -12,14 +12,21 @@
 
 using namespace std;
 
-Palette::Palette() :
-	mLogger("startool.Palette")
+Palette::Palette(std::shared_ptr<DataChunk> palData) :
+	mLogger("startool.Palette"),
+	mPalData(palData)
 {
 
 }
+
+
 Palette::~Palette()
 {
+}
 
+std::shared_ptr<DataChunk> Palette::getDataChunk()
+{
+	return mPalData;
 }
 
 unsigned char SC_Unit_Palette[]={

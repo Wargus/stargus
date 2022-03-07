@@ -61,6 +61,9 @@
 // System
 #include <memory>
 
+// TODO: move to sub-class logic?
+#include <libgrp/libgrp.hpp>
+
 // activate local debug messages
 #define DEBUG 1
 
@@ -300,12 +303,17 @@ void testHook()
 	DataHub datahub(storm);
 	//datahub.convert("test", "test");
 
-	//Pcx pcx1(storm, "game\\tunit.pcx");
-	Pcx pcx1(storm, "glue\\PalTv\\Backgnd.pcx");
+	Pcx pcx1(storm, "game\\tunit.pcx");
 
 	pcx1.savePNG("/tmp/tunit.png");
-	pcx1.getPalette()->write("/tmp/tunit.pal");
+	std::shared_ptr<Palette> pal = pcx1.getPalette();
 
+	string grp_file2 = "unit\\terran\\ghost.grp";
+	Grp grp1(storm, grp_file2, pal);
+
+	grp1.save("/tmp/ghost.png");
+
+    cout << "end testHook()" << endl;
 	exit(0);
 }
 
@@ -419,7 +427,7 @@ int main(int argc, const char** argv)
 						}
 						printf("...%s\n", case_func ? "ok" : "nok");
 						break;
-					/*case M: // WORKS!
+					case M: // WORKS!
 					{
 						printf("ConvertMap: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
@@ -445,7 +453,7 @@ int main(int argc, const char** argv)
 						case_func = terrain.ConvertTileset(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
-						break;*/
+						break;
 					case G: // WORKS!
 					{
 						printf("ConvertGfx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
@@ -455,19 +463,19 @@ int main(int argc, const char** argv)
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
-					/*case U: // WORKS!
+					case U: // WORKS!
 					{
 						printf("ConvertGfu: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
-						Gfu gfu;
-						case_func = gfu.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+						//Gfu gfu;
+						//case_func = gfu.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
 					case I: // WORKS!
 					{
 						printf("ConvertWidgets: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
-						Widgets widgets;
-						case_func = widgets.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+						//Widgets widgets;
+						//case_func = widgets.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
@@ -517,7 +525,7 @@ int main(int argc, const char** argv)
 						case_func = chk.convert(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
-						break;*/
+						break;
 					default:
 						break;
 				}

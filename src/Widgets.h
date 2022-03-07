@@ -9,10 +9,10 @@
 
 #include "Grp.h"
 
-class Widgets: public Grp
+class Widgets : public Grp
 {
 public:
-	Widgets();
+	Widgets(std::shared_ptr<Hurricane> hurricane);
 	virtual ~Widgets();
 
 	/**
