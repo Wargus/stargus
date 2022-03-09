@@ -31,6 +31,15 @@ public:
 
 	std::shared_ptr<Palette> getPalette();
 
+	/**
+	 * Take 8*3 palette bytes (rgb) from one place in the palette and copy them into another place
+	 *
+	 * @param start where to place the copy in the palette position
+	 * @param length the length of one color index
+	 * @param index the color index
+	 */
+	void copyIndexPalette(int start, int length, int index);
+
 private:
 	struct PCXheader
 	{
@@ -67,6 +76,8 @@ private:
 	unsigned char *mImageParserPos;
 	int mWidth;
 	int mHeight;
+	const int RGB_BYTE_SIZE = 3;
+	const int RGB_SIZE = 256 * RGB_BYTE_SIZE;
 };
 
 #endif /* PCX_H_ */

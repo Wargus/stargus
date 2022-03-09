@@ -47,7 +47,6 @@
 #include "Png.h"
 #include "Panel.h"
 #include "Widgets.h"
-#include "Gfx.h"
 #include "Gfu.h"
 #include "Tileset.h"
 #include "DataChunk.h"
@@ -304,14 +303,23 @@ void testHook()
 	//datahub.convert("test", "test");
 
 	Pcx pcx1(storm, "game\\tunit.pcx");
+	Pcx pcx2(storm, "game\\tselect.pcx");
 
 	pcx1.savePNG("/tmp/tunit.png");
 	std::shared_ptr<Palette> pal = pcx1.getPalette();
+	pal->getDataChunk()->write("/tmp/tunit.pal");
 
-	string grp_file2 = "unit\\terran\\ghost.grp";
-	Grp grp1(storm, grp_file2, pal);
+	pcx2.savePNG("/tmp/tselect.png");
 
-	grp1.save("/tmp/ghost.png");
+	pcx2.copyIndexPalette(1, 8, 0);
+
+	std::shared_ptr<Palette> pal2 = pcx2.getPalette();
+	pal2->getDataChunk()->write("/tmp/tselect.pal");
+
+	string grp_file2 = "unit\\thingy\\o022.grp";
+	Grp grp1(storm, grp_file2, pal2);
+
+	grp1.save("/tmp/o022.png");
 
     cout << "end testHook()" << endl;
 	exit(0);
@@ -400,6 +408,25 @@ int main(int argc, const char** argv)
 				//if(c[u].Type != F && c[u].Type != Q && c[u].Type != M)
 					//continue;
 
+				shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
+
+				Pcx pcx_tunit(storm, "game\\tunit.pcx");
+				std::shared_ptr<Palette> pal_tunit = pcx_tunit.getPalette();
+
+				Pcx pcx_tselect(storm, "game\\tselect.pcx");
+				pcx_tselect.copyIndexPalette(1, 8, 0);
+				std::shared_ptr<Palette> pal_tselect = pcx_tselect.getPalette();
+
+				// just select on orange fire palette as test
+				Pcx pcx_ofire(storm, "tileset\\ashworld\\ofire.pcx");
+				pcx_ofire.copyIndexPalette(0, 256, 0);
+				std::shared_ptr<Palette> pal_ofire = pcx_ofire.getPalette();
+
+				// just select on orange fire palette as test
+				Pcx pcx_ticon(storm, "unit\\cmdbtns\\ticon.pcx");
+				pcx_ticon.copyIndexPalette(1, 16, 0);
+				std::shared_ptr<Palette> pal_ticon = pcx_ticon.getPalette();
+
 				switch (c[u].Type)
 				{
 					case F:
@@ -430,7 +457,6 @@ int main(int argc, const char** argv)
 					case M: // WORKS!
 					{
 						printf("ConvertMap: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
 						Scm scm(storm);
 						case_func = scm.convert(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
@@ -439,7 +465,6 @@ int main(int argc, const char** argv)
 					case R: // UNUSED?
 					{
 						printf("ConvertRgb: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
 						Tileset terrain(storm);
 						case_func = terrain.ConvertRgb(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
@@ -448,7 +473,6 @@ int main(int argc, const char** argv)
 					case T:  // WORKS!
 					{
 						printf("ConvertTileset: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
 						Tileset terrain(storm);
 						case_func = terrain.ConvertTileset(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
@@ -457,32 +481,48 @@ int main(int argc, const char** argv)
 					case G: // WORKS!
 					{
 						printf("ConvertGfx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
-						Gfx gfx(storm);
-						case_func = gfx.convert(c[u].ArcFile, c[u].File, c[u].Arg1);
+						Grp grp(storm, c[u].ArcFile);
+
+						if(c[u].Arg1 == 4)
+						{
+							grp.setPalette(pal_ticon);
+						}
+						else if(c[u].Arg1 == 3)
+						{
+							grp.setPalette(pal_ofire);
+						}
+						else if(c[u].Arg1 == 2)
+						{
+							grp.setPalette(pal_tselect);
+						}
+						else // default palette
+						{
+							grp.setPalette(pal_tunit);
+						}
+
+						case_func = grp.save(string(c[u].File) + ".png");
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
 					case U: // WORKS!
 					{
 						printf("ConvertGfu: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
-						//Gfu gfu;
-						//case_func = gfu.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+						Gfu gfu(storm);
+						case_func = gfu.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
 					case I: // WORKS!
 					{
 						printf("ConvertWidgets: %s, %s, %s",mpqfile.c_str(),  c[u].File, c[u].ArcFile);
-						//Widgets widgets;
-						//case_func = widgets.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+						Widgets widgets(storm);
+						case_func = widgets.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
 					case N: // WORKS!
 					{
 						printf("ConvertFont: %s, %s, %s",mpqfile.c_str(), c[u].File, c[u].ArcFile);
-						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
 						Font font(storm);
 						case_func = font.convert(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
@@ -496,7 +536,6 @@ int main(int argc, const char** argv)
 					case V: // WORKS!
 						if(preferences.getVideoExtraction()) {
 							printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-							shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
 							Video video(storm);
 							case_func = video.ConvertVideo(c[u].ArcFile, c[u].File);
 							printf("...%s\n", case_func ? "ok" : "nok");
@@ -505,7 +544,6 @@ int main(int argc, const char** argv)
 					case H: // WORKS!
 					{
 						printf("ConvertPcx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
 						Pcx pcx(storm, c[u].ArcFile);
 						case_func = pcx.savePNG(string(c[u].File) + ".png");
 						printf("...%s\n", case_func ? "ok" : "nok");
@@ -520,7 +558,6 @@ int main(int argc, const char** argv)
 					case L:
 					{
 						printf("ConvertCampaign (.chk): %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-						shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
 						Chk chk(storm);
 						case_func = chk.convert(c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");

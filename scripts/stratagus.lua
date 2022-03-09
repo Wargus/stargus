@@ -76,7 +76,7 @@ SetTitleScreens(
 SetGameName("sc")
 SetFullGameName(Name)
 
-SetSelectionStyle("corners")
+SetSelectionStyle("circle")
 Preference.ShowSightRange = false
 Preference.ShowAttackRange = false
 Preference.ShowReactionRange = false

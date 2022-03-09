@@ -70,6 +70,7 @@ bool Grp::load(const std::string &arcfile)
 bool Grp::save(const std::string &filename)
 {
 	bool result = true;
+	char buf[8192] = {'\0'};
 
 	std::shared_ptr<DataChunk> rawData = mHurricane->extractDataChunk(mArcfile);
 	if (rawData)
@@ -78,19 +79,22 @@ bool Grp::save(const std::string &filename)
 
 		GRPImage myGRPImage(&img_vec, false);
 
+		Preferences &preferences = Preferences::getInstance ();
+		sprintf(buf, "%s/%s/%s", preferences.getDestDir().c_str(), GRAPHICS_PATH, filename.c_str());
+		CheckPath(buf);
+
 		if(mPal)
 		{
 			ColorPalette myGRPPallete;
 
 			std::shared_ptr<DataChunk> rawPal = mPal->getDataChunk();
-			rawPal->write("/tmp/ghost.pal");
 
 			std::vector<char> pal_vec = mPal->getDataChunk()->getCharVector();
 			myGRPPallete.LoadPalette(&pal_vec);
 
 			myGRPImage.SetColorPalette(&myGRPPallete);
 
-			myGRPImage.SaveConvertedImage(filename, 0, myGRPImage.getNumberOfFrames(), true, 17);
+			myGRPImage.SaveConvertedImage(buf, 0, myGRPImage.getNumberOfFrames(), true, 17);
 		}
 		else if(!mPalFile.empty())
 		{
@@ -100,7 +104,11 @@ bool Grp::save(const std::string &filename)
 
 			myGRPImage.SetColorPalette(&myGRPPallete);
 
-			myGRPImage.SaveConvertedImage(filename, 0, myGRPImage.getNumberOfFrames(), true, 17);
+			myGRPImage.SaveConvertedImage(buf, 0, myGRPImage.getNumberOfFrames(), true, 17);
+		}
+		else
+		{
+			myGRPImage.SaveConvertedImage(buf, 0, myGRPImage.getNumberOfFrames(), true, 17);
 		}
 
 	}

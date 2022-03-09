@@ -16,7 +16,10 @@ Palette::Palette(std::shared_ptr<DataChunk> palData) :
 	mLogger("startool.Palette"),
 	mPalData(palData)
 {
-
+	if((int)mPalData->getSize() != RGB_SIZE)
+	{
+		LOG4CXX_FATAL(mLogger, "Palette size != " + RGB_SIZE);
+	}
 }
 
 
@@ -28,6 +31,11 @@ std::shared_ptr<DataChunk> Palette::getDataChunk()
 {
 	return mPalData;
 }
+/*std::shared_ptr<Palette> Palette::copy()
+{
+	std::shared_ptr<DataChunk> data = make_shared<DataChunk>(mPalData->copy());
+	return make_shared<Palette>(data);
+}*/
 
 unsigned char SC_Unit_Palette[]={
 0x00,0x00,0x00,0x23,0x23,0xFF,0x23,0x23,0xFF,0x23,0x23,0xFF,0x23,0x23,0xFF,0x23,

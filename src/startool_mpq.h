@@ -110,10 +110,10 @@ Control Todo[] = {
 	{H,0,"ui/readyt/tframeh3","glue\\ReadyT\\TFrameH3.pcx",0 __3},
 	{H,0,"ui/readyt/tframeh4","glue\\ReadyT\\TFrameH4.pcx",0 __3},
 	{H,0,"ui/readyt/tutbtn","Glue\\ReadyT\\TutBtn.pcx",0 __3},
-	{G,0,"cmdicons","unit\\cmdbtns\\cmdicons.grp",2 __3},
-	{G,0,"pcmdbtns","unit\\cmdbtns\\pcmdbtns.grp",2 __3},
-	{G,0,"tcmdbtns","unit\\cmdbtns\\tcmdbtns.grp",2 __3},
-	{G,0,"zcmdbtns","unit\\cmdbtns\\zcmdbtns.grp",2 __3},
+	{G,0,"cmdicons","unit\\cmdbtns\\cmdicons.grp",4 __3},
+	{G,0,"pcmdbtns","unit\\cmdbtns\\pcmdbtns.grp",4 __3},
+	{G,0,"tcmdbtns","unit\\cmdbtns\\tcmdbtns.grp",4 __3},
+	{G,0,"zcmdbtns","unit\\cmdbtns\\zcmdbtns.grp",4 __3},
 
 	// Cursors
 	{G,0,"ui/cursors/arrow","cursor\\arrow.grp",0 __3},

@@ -28,7 +28,7 @@ class Palette
 {
 public:
 	/**
-	 * Create Palette from memory. The Palette class takes over responsibility for deleting the memory.
+	 * Create Palette from DataChunk
 	 *
 	 * @rapam palData Size has to be 256 bytes * 3 (rgb). If you don't respect this it will crash!
 	 */
@@ -38,9 +38,12 @@ public:
 
 	std::shared_ptr<DataChunk> getDataChunk();
 
+	//std::shared_ptr<Palette> copy();
+
 private:
 	Logger mLogger;
 	std::shared_ptr<DataChunk> mPalData;
+	const int RGB_SIZE = 256 * 3;
 };
 
 #endif /* PALETTE_H_ */

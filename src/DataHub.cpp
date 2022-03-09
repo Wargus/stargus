@@ -10,8 +10,6 @@
 #include "Hurricane.h"
 #include "StringUtil.h"
 
-#include "Gfx.h"
-
 // System
 #include <iostream>
 #include <fstream>

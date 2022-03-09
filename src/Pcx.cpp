@@ -90,6 +90,31 @@ std::shared_ptr<Palette> Pcx::getPalette()
 	return mPalette;
 }
 
+void Pcx::copyIndexPalette(int start, int length, int index)
+{
+	if(mPalette)
+	{
+		unsigned char *pal = mPalette->getDataChunk()->getDataPointer();
+		int pos_r = 0;
+		int pos_g = 1;
+		int pos_b = 2;
+
+		for(unsigned int i = 0; i < length; i++)
+		{
+			int rel_index = i + (index * length);
+
+			//printf("pal_pos: %d\n", rawImage[rel_index]);
+			//printf("-> r:%x / g:%x / b:%x\n", pal[rawImage[rel_index]*3], pal[rawImage[rel_index]*3+1], pal[rawImage[rel_index]*3+2]);
+
+			int start_pal_dest = start*RGB_BYTE_SIZE + i * RGB_BYTE_SIZE;
+
+			pal[start_pal_dest+pos_r] = pal[rawImage[rel_index]*RGB_BYTE_SIZE+pos_r];
+			pal[start_pal_dest+pos_g] = pal[rawImage[rel_index]*RGB_BYTE_SIZE+pos_g];
+			pal[start_pal_dest+pos_b] = pal[rawImage[rel_index]*RGB_BYTE_SIZE+pos_b];
+		}
+	}
+}
+
 void Pcx::extractHeader()
 {
 	if(mRawData)
@@ -145,13 +170,13 @@ void Pcx::extractPalette()
 {
 	unsigned char *dest = NULL;
 	unsigned char ch = 0;
-	int rgb_size = 256 * 3;
+
 	unsigned char *pal = NULL;
 
 	if(mRawData)
 	{
 		// allocate enough space for RGB information
-		pal = (unsigned char*) malloc(rgb_size);
+		pal = (unsigned char*) malloc(RGB_SIZE); // memory management later given to DataChunk...
 		dest = pal;
 		do
 		{
@@ -159,13 +184,12 @@ void Pcx::extractPalette()
 		} while (ch != 0x0c); // search the 'magic ID' that shows the start of RGB information next
 
 		// copy RGB information to destination
-		for (int i = 0; i < rgb_size; ++i)
+		for (int i = 0; i < RGB_SIZE; ++i)
 		{
 			*dest++ = *mImageParserPos++;
-
 		}
 
-		std::shared_ptr<DataChunk> data = make_shared<DataChunk>(&pal, rgb_size);
+		std::shared_ptr<DataChunk> data = make_shared<DataChunk>(&pal, RGB_SIZE);
 		mPalette = make_shared<Palette>(data);
 	}
 }

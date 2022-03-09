@@ -44,6 +44,10 @@ public:
 
 	bool write(const std::string filename);
 
+	DataChunk *copy();
+
+	unsigned char at(size_t pos);
+
 private:
 	Logger mLogger;
 	unsigned char *mData;

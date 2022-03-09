@@ -77,6 +77,18 @@ public:
 
     /**
      * An additional remapping "palette" that is to be used. Each tileset has its own files responsible for remapping. Used only if the Draw property is set to "9-Use Remapping". Values 8 and 9 produce a weird effect and most probably are a result of an error in Starcraft.
+     * If 'draw_function' is 9:
+     * 0 = No remapping
+     * 1 = ofire.pcx (Orange)
+     * 2 = gfire.pcx (Green)
+     * 3 = bfire.pcx (Blue)
+     * 4 = bexpl.pcx (Blue2)
+     * 5 = Special (Own cloak)
+     * 6 = (crash)
+     * 7 = (crash)
+     * 8 = Unk8 (?)
+     * 9 = Unk9 (?)
+     *     
      */
     std::vector<uint8_t>* remapping() const { return m_remapping; }
 

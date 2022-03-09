@@ -52,14 +52,43 @@ seq:
     repeat-expr: num_lines
     doc: |
       The drawing function used for the image. This property has rather various effects and not all options works with all entries so expect crashes. It can produce very interesting effects though, especially spell-related.
-      
+      0 - normal
+      1 - doesn't draw hallucination
+      2 - non-vision cloaking
+      3 - non-vision cloaked
+      4 - non-vision uncloaking
+      5 - vision cloaking
+      6 - vision cloaked
+      7 - vision uncloaking
+      8 - EMP
+      9 - uses remapping
+      10 - shadow
+      11 - HP bar
+      12 - warp texture
+      13 - selection circle remapping
+      14 - draw original player color (used for flags -- player color stored in coloring data)
+      15 - draw update rect
+      16 - hallucination
+      17 - warp flash
+
   - id: remapping
     type: u1
     repeat: expr
     repeat-expr: num_lines
     doc: |
       An additional remapping "palette" that is to be used. Each tileset has its own files responsible for remapping. Used only if the Draw property is set to "9-Use Remapping". Values 8 and 9 produce a weird effect and most probably are a result of an error in Starcraft.
-    
+      If 'draw_function' is 9:
+      0 = No remapping
+      1 = ofire.pcx (Orange)
+      2 = gfire.pcx (Green)
+      3 = bfire.pcx (Blue)
+      4 = bexpl.pcx (Blue2)
+      5 = Special (Own cloak)
+      6 = (crash)
+      7 = (crash)
+      8 = Unk8 (?)
+      9 = Unk9 (?)
+          
   - id: iscript_id
     type: u4
     repeat: expr

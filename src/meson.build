@@ -5,7 +5,6 @@ subdir('kaitai')
 startool_sources = files(
 	'Casc.cpp', 
 	'FileUtil.cpp',
-	'Gfx.cpp',
 	'Palette.cpp',
 	'Png.cpp', 
 	'Tileset.cpp',
@@ -55,6 +54,7 @@ zlib_dep = dependency('zlib', required : false)
 imagemagickpp_dep = dependency('ImageMagick++', required : false)
 #libgrp_dep = cpp.find_library('grp', required : true)
 libgrp_dep = dependency('libgrp', required : true)
+# https://github.com/andreas-volz/libgrp
 
 log4cxx_dep = dependency('liblog4cxx', required : false)
 if log4cxx_dep.found()
