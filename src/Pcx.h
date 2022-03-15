@@ -40,6 +40,8 @@ public:
 	 */
 	void copyIndexPalette(int start, int length, int index);
 
+	void copy2DPalette(int start, int length, int index);
+
 private:
 	struct PCXheader
 	{

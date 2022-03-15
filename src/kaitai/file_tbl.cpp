@@ -51,7 +51,6 @@ file_tbl_t::tbl_entry_t::tbl_entry_t(uint16_t p_i, kaitai::kstream* p__io, file_
     m_i = p_i;
     m_entry = 0;
     f_len = false;
-    f_file_end = false;
     f_dyn_end = false;
     f_entry = false;
 
@@ -84,14 +83,6 @@ int32_t file_tbl_t::tbl_entry_t::len() {
     m_len = (_parent()->ofs_files()->at((i() + 1)) - _parent()->ofs_files()->at(i()));
     f_len = true;
     return m_len;
-}
-
-int32_t file_tbl_t::tbl_entry_t::file_end() {
-    if (f_file_end)
-        return m_file_end;
-    m_file_end = 35641;
-    f_file_end = true;
-    return m_file_end;
 }
 
 int32_t file_tbl_t::tbl_entry_t::dyn_end() {

@@ -46,13 +46,6 @@ public:
         int32_t len();
 
     private:
-        bool f_file_end;
-        int32_t m_file_end;
-
-    public:
-        int32_t file_end();
-
-    private:
         bool f_dyn_end;
         int32_t m_dyn_end;
 

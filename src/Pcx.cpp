@@ -90,8 +90,31 @@ std::shared_ptr<Palette> Pcx::getPalette()
 	return mPalette;
 }
 
+void Pcx::copy2DPalette(int start, int length, int index)
+{
+
+}
+
 void Pcx::copyIndexPalette(int start, int length, int index)
 {
+	int max_index = ((mWidth * mHeight) / length) - 1;
+	int remain_pixel = (mWidth * mHeight) % length;
+	bool dynamic_index = false;
+
+	//printf("max index: %d\n", max_index);
+	//printf("remain_pixel: %d\n", remain_pixel);
+
+	if(index > max_index)
+	{
+		//printf("max index reached!\n");
+	}
+
+	if(index == -1)
+	{
+		dynamic_index = true;
+	}
+
+
 	if(mPalette)
 	{
 		unsigned char *pal = mPalette->getDataChunk()->getDataPointer();
@@ -99,8 +122,15 @@ void Pcx::copyIndexPalette(int start, int length, int index)
 		int pos_g = 1;
 		int pos_b = 2;
 
+		//printf("w: %d / h:%d\n", mWidth, mHeight);
+
 		for(unsigned int i = 0; i < length; i++)
 		{
+			if(dynamic_index)
+			{
+				index++;
+			}
+
 			int rel_index = i + (index * length);
 
 			//printf("pal_pos: %d\n", rawImage[rel_index]);

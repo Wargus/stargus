@@ -24,8 +24,6 @@ types:
     instances:
       len:
         value: '_parent.ofs_files[i + 1] - _parent.ofs_files[i]'
-      file_end:
-        value: 0x8b39
       dyn_end:
         value: 'i + 1 < _parent.num_offsets ? len : _io.size - _parent.ofs_files[i]'
       entry:

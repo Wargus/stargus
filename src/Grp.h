@@ -10,9 +10,12 @@
 // Local
 #include "Converter.h"
 #include "Palette.h"
+#include "kaitai/kaitaistream.h"
+#include "kaitai/grp_file.h"
 
 // System
-#include <libgrp/libgrp.hpp>
+#include <string.h>
+#include <memory>
 
 /**
  * Put the code for decoding of Gfu and Gfx in Gfu parent as workaround.
@@ -27,6 +30,8 @@ public:
 	Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<Palette> pal);
 	Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, const std::string &palFile);
 	virtual ~Grp();
+
+	std::shared_ptr<kaitai::kstream> getKaitaiStream(const std::string &file);
 
 	bool load(const std::string &arcfile);
 
@@ -70,6 +75,12 @@ private:
 	std::shared_ptr<Palette> mPal;
 	std::string mPalFile;
 	std::string mArcfile;
+
+	// Kaitai streams
+	std::shared_ptr<kaitai::kstream> mGrp_ks;
+
+	// Kaitai parser objects
+	std::shared_ptr<grp_file_t> mGrp_ko;
 };
 
 #endif /* GRP_H_ */

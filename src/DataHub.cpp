@@ -63,9 +63,6 @@ DataHub::~DataHub()
 {
 }
 
-
-
-
 std::shared_ptr<kaitai::kstream> DataHub::getKaitaiStream(const std::string &file)
 {
 	std::shared_ptr<DataChunk> data = mHurricane->extractDataChunk(file);

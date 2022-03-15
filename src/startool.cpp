@@ -302,24 +302,32 @@ void testHook()
 	DataHub datahub(storm);
 	//datahub.convert("test", "test");
 
+	/// Image 1
 	Pcx pcx1(storm, "game\\tunit.pcx");
-	Pcx pcx2(storm, "game\\tselect.pcx");
-
 	pcx1.savePNG("/tmp/tunit.png");
 	std::shared_ptr<Palette> pal = pcx1.getPalette();
 	pal->getDataChunk()->write("/tmp/tunit.pal");
 
-	pcx2.savePNG("/tmp/tselect.png");
 
-	pcx2.copyIndexPalette(1, 8, 0);
-
+	// Image 2
+	Pcx pcx2(storm, "unit\\cmdbtns\\ticon.pcx");
+	pcx2.savePNG("/tmp/ticon.png");
+	pcx2.copyIndexPalette(0, 16, 0);
 	std::shared_ptr<Palette> pal2 = pcx2.getPalette();
-	pal2->getDataChunk()->write("/tmp/tselect.pal");
+	pal2->getDataChunk()->write("/tmp/ticon.pal");
 
-	string grp_file2 = "unit\\thingy\\o022.grp";
-	Grp grp1(storm, grp_file2, pal2);
 
-	grp1.save("/tmp/o022.png");
+	// Image 3
+	/*Pcx pcx3(storm, "tileset\\ashworld\\ofire.pcx");
+	pcx3.savePNG("/tmp/ofire.png");
+	pcx3.copyIndexPalette(0, 256, -1);
+	std::shared_ptr<Palette> pal3 = pcx3.getPalette();
+	pal3->getDataChunk()->write("/tmp/ofire.pal");*/
+
+	string grp_file = "unit\\terran\\marine.grp";
+	Grp grp(storm, grp_file, pal);
+
+	grp.save("/tmp/marine.png");
 
     cout << "end testHook()" << endl;
 	exit(0);
@@ -418,13 +426,13 @@ int main(int argc, const char** argv)
 				std::shared_ptr<Palette> pal_tselect = pcx_tselect.getPalette();
 
 				// just select on orange fire palette as test
-				Pcx pcx_ofire(storm, "tileset\\ashworld\\ofire.pcx");
-				pcx_ofire.copyIndexPalette(0, 256, 0);
-				std::shared_ptr<Palette> pal_ofire = pcx_ofire.getPalette();
+				/*Pcx pcx_ofire(storm, "tileset\\ashworld\\ofire.pcx");
+				pcx_ofire.copyIndexPalette(0, 256, -1);
+				std::shared_ptr<Palette> pal_ofire = pcx_ofire.getPalette();*/
 
 				// just select on orange fire palette as test
 				Pcx pcx_ticon(storm, "unit\\cmdbtns\\ticon.pcx");
-				pcx_ticon.copyIndexPalette(1, 16, 0);
+				pcx_ticon.copyIndexPalette(0, 16, 0);
 				std::shared_ptr<Palette> pal_ticon = pcx_ticon.getPalette();
 
 				switch (c[u].Type)
@@ -487,10 +495,10 @@ int main(int argc, const char** argv)
 						{
 							grp.setPalette(pal_ticon);
 						}
-						else if(c[u].Arg1 == 3)
+						/*else if(c[u].Arg1 == 3)
 						{
 							grp.setPalette(pal_ofire);
-						}
+						}*/
 						else if(c[u].Arg1 == 2)
 						{
 							grp.setPalette(pal_tselect);
@@ -528,11 +536,11 @@ int main(int argc, const char** argv)
 						printf("...%s\n", case_func ? "ok" : "nok");
 					}
 						break;
-					case W: // WORKS!
+					/*case W: // WORKS!
 						printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
 						case_func = ConvertWav(mpqfile.c_str(), c[u].ArcFile, c[u].File);
 						printf("...%s\n", case_func ? "ok" : "nok");
-						break;
+						break;*/
 					case V: // WORKS!
 						if(preferences.getVideoExtraction()) {
 							printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);

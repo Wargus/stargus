@@ -72,6 +72,24 @@ public:
 
     /**
      * The drawing function used for the image. This property has rather various effects and not all options works with all entries so expect crashes. It can produce very interesting effects though, especially spell-related.
+     * 0 - normal
+     * 1 - doesn't draw hallucination
+     * 2 - non-vision cloaking
+     * 3 - non-vision cloaked
+     * 4 - non-vision uncloaking
+     * 5 - vision cloaking
+     * 6 - vision cloaked
+     * 7 - vision uncloaking
+     * 8 - EMP
+     * 9 - uses remapping
+     * 10 - shadow
+     * 11 - HP bar
+     * 12 - warp texture
+     * 13 - selection circle remapping
+     * 14 - draw original player color (used for flags -- player color stored in coloring data)
+     * 15 - draw update rect
+     * 16 - hallucination
+     * 17 - warp flash
      */
     std::vector<uint8_t>* draw_function() const { return m_draw_function; }
 
