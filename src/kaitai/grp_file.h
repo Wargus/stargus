@@ -30,7 +30,7 @@ public:
 
     public:
 
-        image_frame_type_t(kaitai::kstream* p__io, grp_file_t* p__parent = 0, grp_file_t* p__root = 0);
+        image_frame_type_t(uint16_t p_frame_id, kaitai::kstream* p__io, grp_file_t* p__parent = 0, grp_file_t* p__root = 0);
 
     private:
         void _read();
@@ -52,6 +52,7 @@ public:
         uint8_t m_width;
         uint8_t m_height;
         uint32_t m_line_offset;
+        uint16_t m_frame_id;
         grp_file_t* m__root;
         grp_file_t* m__parent;
 
@@ -81,6 +82,7 @@ public:
          * test
          */
         uint32_t line_offset() const { return m_line_offset; }
+        uint16_t frame_id() const { return m_frame_id; }
         grp_file_t* _root() const { return m__root; }
         grp_file_t* _parent() const { return m__parent; }
     };
@@ -89,7 +91,7 @@ public:
 
     public:
 
-        line_offset_type_t(uint16_t p_index, bool p_has_next, kaitai::kstream* p__io, grp_file_t::image_frame_type_t* p__parent = 0, grp_file_t* p__root = 0);
+        line_offset_type_t(uint16_t p_index, bool p_has_line, kaitai::kstream* p__io, grp_file_t::image_frame_type_t* p__parent = 0, grp_file_t* p__root = 0);
 
     private:
         void _read();
@@ -99,6 +101,43 @@ public:
         ~line_offset_type_t();
 
     private:
+        bool f_last_line_len;
+        int32_t m_last_line_len;
+
+    public:
+
+        /**
+         * if a next frame is available then
+         *   take the line_offset from the next frame AND substract start
+         * else (last frame)
+         *   from last position in the file substract the start position
+         * => the result is the length of the last line of a frame
+         */
+        int32_t last_line_len();
+
+    private:
+        bool f_start;
+        int32_t m_start;
+
+    public:
+
+        /**
+         * start position of the current RLE line
+         */
+        int32_t start();
+
+    private:
+        bool f_has_frame;
+        bool m_has_frame;
+
+    public:
+
+        /**
+         * boolean value if the current frame is followed by another frame
+         */
+        bool has_frame();
+
+    private:
         bool f_rle_offsets;
         std::string m_rle_offsets;
 
@@ -106,9 +145,31 @@ public:
         std::string rle_offsets();
 
     private:
+        bool f_file_size;
+        int32_t m_file_size;
+
+    public:
+
+        /**
+         * size of the complete file
+         */
+        int32_t file_size();
+
+    private:
+        bool f_len;
+        int32_t m_len;
+
+    public:
+
+        /**
+         * check if there is another line following and depending in the result take next offset or complex calculation of last line
+         */
+        int32_t len();
+
+    private:
         uint16_t m_offset;
         uint16_t m_index;
-        bool m_has_next;
+        bool m_has_line;
         grp_file_t* m__root;
         grp_file_t::image_frame_type_t* m__parent;
 
@@ -119,7 +180,11 @@ public:
          */
         uint16_t offset() const { return m_offset; }
         uint16_t index() const { return m_index; }
-        bool has_next() const { return m_has_next; }
+
+        /**
+         * boolean value if the current line is followed by another line in the same frame
+         */
+        bool has_line() const { return m_has_line; }
         grp_file_t* _root() const { return m__root; }
         grp_file_t::image_frame_type_t* _parent() const { return m__parent; }
     };

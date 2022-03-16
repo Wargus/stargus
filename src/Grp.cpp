@@ -96,28 +96,32 @@ bool Grp::save(const std::string &filename)
 {
 	std::vector<grp_file_t::image_frame_type_t*>* frames_vec = mGrp_ko->image_frames();
 
-	for(unsigned int i = 0; i < frames_vec->size(); i++)
+	for(unsigned int frame_counter = 0; frame_counter < frames_vec->size(); frame_counter++)
 	{
-		grp_file_t::image_frame_type_t *frame =  frames_vec->at(i);
+		grp_file_t::image_frame_type_t *frame =  frames_vec->at(frame_counter);
+		cout << "+frame: " << frame_counter << endl;
 
 		std::vector<grp_file_t::line_offset_type_t*>* line_offset_vec = frame->line_offsets();
 
-		for(unsigned int n = 0; n < line_offset_vec->size(); n++)
+		for(unsigned int line_counter = 0; line_counter < line_offset_vec->size(); line_counter++)
 		{
-			grp_file_t::line_offset_type_t* line_offset = line_offset_vec->at(n);
+			grp_file_t::line_offset_type_t* line_offset = line_offset_vec->at(line_counter);
+			cout << "  +line: " << line_counter << endl;
 
 			u_int16_t offset = line_offset->offset();
-			//cout << "offset: " << offset << endl;
 
 			const string &rle_offset = line_offset->rle_offsets();
 
+			cout << "    ";
 			for(const char& c : rle_offset)
 			{
-				printf("%d ", (unsigned char)c);
+				printf(" %d ", (unsigned char)c);
 			}
-
 			cout << endl;
+
+			cout << "  -line: " << line_counter << endl;
 		}
+		cout << "-frame: " << frame_counter << endl;
 	}
 
 	return true;

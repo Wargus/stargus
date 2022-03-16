@@ -324,7 +324,7 @@ void testHook()
 	std::shared_ptr<Palette> pal3 = pcx3.getPalette();
 	pal3->getDataChunk()->write("/tmp/ofire.pal");*/
 
-	string grp_file = "unit\\terran\\marine.grp";
+	string grp_file = "unit\\terran\\comsatc.grp";
 	Grp grp(storm, grp_file, pal);
 
 	grp.save("/tmp/marine.png");
