@@ -17,52 +17,52 @@
 class TblEntry
 {
 public:
-	TblEntry()
-	{
-		shortcut_pos = -1;
-		shortcut = ' ';
-	}
-	std::string name1;
-	std::string name2;
-	std::string name3;
-	int shortcut_pos;
-	std::string shortcut;
+  TblEntry()
+  {
+    shortcut_pos = -1;
+    shortcut = ' ';
+  }
+  std::string name1;
+  std::string name2;
+  std::string name3;
+  int shortcut_pos;
+  std::string shortcut;
 
-	void removeSpaces()
-	{
-		size_t pos;
-		while( ( pos = name1.find( "  " ) )!=std::string::npos )
-		{
-			name1 = name1.replace( pos, 2, " " );
-		}
+  void removeSpaces()
+  {
+    size_t pos;
+    while ((pos = name1.find("  ")) != std::string::npos)
+    {
+      name1 = name1.replace(pos, 2, " ");
+    }
 
-		while( ( pos = name2.find( "  " ) )!=std::string::npos )
-		{
-			name2 = name2.replace( pos, 2, " " );
-		}
+    while ((pos = name2.find("  ")) != std::string::npos)
+    {
+      name2 = name2.replace(pos, 2, " ");
+    }
 
-		while( ( pos = name3.find( "  " ) )!=std::string::npos )
-		{
-			name3 = name3.replace( pos, 2, " " );
-		}
-	}
+    while ((pos = name3.find("  ")) != std::string::npos)
+    {
+      name3 = name3.replace(pos, 2, " ");
+    }
+  }
 };
 
 class Tbl
 {
 public:
-	Tbl();
-	virtual ~Tbl();
+  Tbl();
+  virtual ~Tbl();
 
-	std::vector<TblEntry> convertFromStream(std::shared_ptr<kaitai::kstream> ks);
+  std::vector<TblEntry> convertFromStream(std::shared_ptr<kaitai::kstream> ks);
 
 private:
-	/**
-	 *  @return a UTF-8 string that has to be free()d after usage
-	 */
-	char *iconvISO2UTF8(char *iso);
+  /**
+   *  @return a UTF-8 string that has to be free()d after usage
+   */
+  char* iconvISO2UTF8(char *iso);
 
-	Logger mLogger;
+  Logger mLogger;
 };
 
 #endif /* STAT_TXT_TBL_H_ */

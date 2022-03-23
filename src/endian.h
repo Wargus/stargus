@@ -26,7 +26,6 @@
 //      Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 //      02111-1307, USA.
 //
-
 #ifndef __WENDIAN_H__
 #define __WENDIAN_H__
 
@@ -49,15 +48,17 @@
      defined(__x86_64__) || \
      defined(__LITTLE_ENDIAN__)
 #ifdef __cplusplus
-static inline unsigned short FetchLE16(unsigned char*& p) {
-	unsigned short s = *(unsigned short*)p;
-	p += 2;
-	return s;
+static inline unsigned short FetchLE16(unsigned char *&p)
+{
+  unsigned short s = *(unsigned short*) p;
+  p += 2;
+  return s;
 }
-static inline unsigned int FetchLE32(unsigned char*& p) {
-	unsigned int s = *(unsigned int*)p;
-	p += 4;
-	return s;
+static inline unsigned int FetchLE32(unsigned char *&p)
+{
+  unsigned int s = *(unsigned int*) p;
+  p += 4;
+  return s;
 }
 #else
 #define FetchLE16(p) (*((unsigned short*)(p))); p += 2

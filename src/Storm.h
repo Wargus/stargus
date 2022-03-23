@@ -30,7 +30,6 @@
 #ifndef STORM_H_
 #define STORM_H_
 
-
 // Local
 #include "Hurricane.h"
 #include "DataChunk.h"
@@ -40,29 +39,31 @@
 #include <string>
 #include <memory>
 
-class Storm : public Hurricane
+class Storm: public Hurricane
 {
 public:
-	Storm();
-	Storm(const std::string &archiveName);
-	virtual ~Storm();
+  Storm();
+  Storm(const std::string &archiveName);
+  virtual ~Storm();
 
-	bool openArchive(const std::string &archiveName);
-	void closeArchive();
+  bool openArchive(const std::string &archiveName);
+  void closeArchive();
 
-	/**
-	 * Extract file from MPQ archive and create all directories if not existing
-	 */
-	bool extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress);
+  /**
+   * Extract file from MPQ archive and create all directories if not existing
+   */
+  bool extractFile(const std::string &archivedFile,
+      const std::string &extractedName, bool compress);
 
-	/**
-	 * Attention: This function malloc() bufferLen memory which you've to free yourself!
-	 * Better use extractDataChunk()
-	 */
-	bool extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen);
+  /**
+   * Attention: This function malloc() bufferLen memory which you've to free yourself!
+   * Better use extractDataChunk()
+   */
+  bool extractMemory(const std::string &archivedFile,
+      unsigned char **szEntryBufferPrt, size_t *bufferLen);
 
 private:
-	void *mMpqHandle; // Open archive handle
+  void *mMpqHandle; // Open archive handle
 
 };
 

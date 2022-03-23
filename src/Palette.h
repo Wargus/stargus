@@ -27,23 +27,23 @@ extern unsigned char *Palettes[];
 class Palette
 {
 public:
-	/**
-	 * Create Palette from DataChunk
-	 *
-	 * @rapam palData Size has to be 256 bytes * 3 (rgb). If you don't respect this it will crash!
-	 */
-	Palette(std::shared_ptr<DataChunk> palData);
+  /**
+   * Create Palette from DataChunk
+   *
+   * @rapam palData Size has to be 256 bytes * 3 (rgb). If you don't respect this it will crash!
+   */
+  Palette(std::shared_ptr<DataChunk> palData);
 
-	virtual ~Palette();
+  virtual ~Palette();
 
-	std::shared_ptr<DataChunk> getDataChunk();
+  std::shared_ptr<DataChunk> getDataChunk();
 
-	//std::shared_ptr<Palette> copy();
+  //std::shared_ptr<Palette> copy();
 
 private:
-	Logger mLogger;
-	std::shared_ptr<DataChunk> mPalData;
-	const int RGB_SIZE = 256 * 3;
+  Logger mLogger;
+  std::shared_ptr<DataChunk> mPalData;
+  const int RGB_SIZE = 256 * 3;
 };
 
 #endif /* PALETTE_H_ */

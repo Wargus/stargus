@@ -16,27 +16,29 @@ class Hurricane;
 class Tileset
 {
 public:
-	Tileset(std::shared_ptr<Hurricane> hurricane);
-	virtual ~Tileset();
+  Tileset(std::shared_ptr<Hurricane> hurricane);
+  virtual ~Tileset();
 
-	/**
-	 * Not sure, but it seems this function generates some Gimp palette.
-	 * Maybe there is an external Gimp workflow...
-	 */
-	bool ConvertRgb(const std::string &arcfile, const std::string &file);
+  /**
+   * Not sure, but it seems this function generates some Gimp palette.
+   * Maybe there is an external Gimp workflow...
+   */
+  bool ConvertRgb(const std::string &arcfile, const std::string &file);
 
-	bool ConvertTileset(const std::string &arcfile, const std::string &file);
+  bool ConvertTileset(const std::string &arcfile, const std::string &file);
 
 private:
-	unsigned char* ConvertPaletteRGBXtoRGB(unsigned char* pal);
+  unsigned char* ConvertPaletteRGBXtoRGB(unsigned char *pal);
 
-	unsigned char* ConvertTile(const std::string &arcfile, unsigned char* mini, unsigned char* mega, int msize,
-		unsigned char* map __attribute__((unused)),	int mapl __attribute__((unused)), int *wp, int *hp);
+  unsigned char* ConvertTile(const std::string &arcfile, unsigned char *mini,
+      unsigned char *mega, int msize,
+      unsigned char *map __attribute__((unused)),
+      int mapl __attribute__((unused)), int *wp, int *hp);
 
-	void DecodeMiniTile(unsigned char* image, int ix, int iy, int iadd,
-		unsigned char* mini, int index, int flipx, int flipy);
+  void DecodeMiniTile(unsigned char *image, int ix, int iy, int iadd,
+      unsigned char *mini, int index, int flipx, int flipy);
 
-	std::shared_ptr<Hurricane> mHurricane;
+  std::shared_ptr<Hurricane> mHurricane;
 };
 
 #endif /* TILESET_H_ */

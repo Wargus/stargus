@@ -19,8 +19,7 @@
 
 // Function Prototypes
 bool FileExists(const std::string &filename);
-void CheckPath(const char* path);
+void CheckPath(const char *path);
 void CheckPath(const std::string &path);
-
 
 #endif /* FILEUTIL_H_ */

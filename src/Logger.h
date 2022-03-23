@@ -70,8 +70,12 @@ private:
 class Logger
 {
 public:
-  Logger(const std::string &name) {}
-  Logger(const std::wstring &name) {}
+  Logger(const std::string &name)
+  {
+  }
+  Logger(const std::wstring &name)
+  {
+  }
 };
 
 #endif // HAVE_LOG4CXX

@@ -25,20 +25,16 @@ class Hurricane;
  * The .scm is MPQ encoded and will be decoded to a .ckk and then further processed by Chk class
  * At the end .scm is only useful with Storm
  */
-class Scm : public Converter
+class Scm: public Converter
 {
 public:
-	Scm(std::shared_ptr<Hurricane> hurricane);
-	virtual ~Scm();
+  Scm(std::shared_ptr<Hurricane> hurricane);
+  virtual ~Scm();
 
-	bool convert(const std::string &arcfile, const std::string &file);
+  bool convert(const std::string &arcfile, const std::string &file);
 
 private:
 
 };
-
-
-
-
 
 #endif /* SCM_H_ */

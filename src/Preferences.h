@@ -4,8 +4,8 @@
 #include <string>
 
 /**
-**		Path to the unit graphics. (default=$DIR/graphics)
-*/
+ **		Path to the unit graphics. (default=$DIR/graphics)
+ */
 #define GRAPHICS_PATH		"graphics"
 
 class Preferences
@@ -14,12 +14,17 @@ public: // Singleton
   static Preferences& getInstance();
 
 private: // Singleton
-  Preferences() {}; // @suppress("Class members should be properly initialized")
+  Preferences()
+  {
+  }
+  ; // @suppress("Class members should be properly initialized")
   Preferences(const Preferences&);
   //Preferences(Preferences&);
-  virtual ~Preferences() {}
+  virtual ~Preferences()
+  {
+  }
   //void operator = (const Preferences&);
-  
+
 public:
   void init();
 
@@ -30,8 +35,8 @@ public:
   const std::string getArchiveDir();
 
   /**
-  **		Destination directory of the data
-  */
+   **		Destination directory of the data
+   */
   void setDestDir(const std::string &dir);
   const std::string getDestDir();
 

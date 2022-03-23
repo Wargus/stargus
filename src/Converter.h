@@ -17,13 +17,13 @@ class Hurricane;
 class Converter
 {
 public:
-	Converter(std::shared_ptr<Hurricane> hurricane);
-	virtual ~Converter();
+  Converter(std::shared_ptr<Hurricane> hurricane);
+  virtual ~Converter();
 
-	//virtual bool convert(const std::string &arcfile, const std::string &file) = 0;
+  //virtual bool convert(const std::string &arcfile, const std::string &file) = 0;
 
 protected:
-	std::shared_ptr<Hurricane> mHurricane;
+  std::shared_ptr<Hurricane> mHurricane;
 };
 
 #endif /* ONVERTER_H_ */

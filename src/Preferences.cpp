@@ -15,38 +15,38 @@ Preferences& Preferences::getInstance()
   return instance;
 }
 
-void Preferences::init ()
+void Preferences::init()
 {
-	mVideoExtraction = false;
-	mDestDir = "data";
+  mVideoExtraction = false;
+  mDestDir = "data";
 }
 
 void Preferences::setVideoExtraction(bool video)
 {
-	mVideoExtraction = video;
+  mVideoExtraction = video;
 }
 
 bool Preferences::getVideoExtraction()
 {
-	return mVideoExtraction;
+  return mVideoExtraction;
 }
 
 void Preferences::setArchiveDir(const std::string &dir)
 {
-	mArchiveDir = dir;
+  mArchiveDir = dir;
 }
 
 const std::string Preferences::getArchiveDir()
 {
-	return mArchiveDir;
+  return mArchiveDir;
 }
 
 void Preferences::setDestDir(const std::string &dir)
 {
-	mDestDir = dir;
+  mDestDir = dir;
 }
 
 const std::string Preferences::getDestDir()
 {
-	return mDestDir;
+  return mDestDir;
 }

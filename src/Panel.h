@@ -10,13 +10,13 @@
 class Panel
 {
 public:
-	Panel();
-	virtual ~Panel();
+  Panel();
+  virtual ~Panel();
 
-	int save(int width, int height);
+  int save(int width, int height);
 
 private:
-	unsigned char *CreatePanel(int width, int height);
+  unsigned char* CreatePanel(int width, int height);
 };
 
 #endif /* PANEL_H_ */

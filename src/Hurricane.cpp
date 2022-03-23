@@ -22,16 +22,18 @@ Hurricane::~Hurricane()
 
 }
 
-std::shared_ptr<DataChunk> Hurricane::extractDataChunk(const std::string &archivedFile)
+std::shared_ptr<DataChunk> Hurricane::extractDataChunk(
+    const std::string &archivedFile)
 {
-	size_t bufferLen = 0;
-	unsigned char *szEntryBufferPrt = nullptr;
+  size_t bufferLen = 0;
+  unsigned char *szEntryBufferPrt = nullptr;
 
-	if(extractMemory(archivedFile, &szEntryBufferPrt, &bufferLen))
-	{
-		shared_ptr<DataChunk> data = make_shared<DataChunk>(&szEntryBufferPrt, bufferLen);
-		return data;
-	}
+  if (extractMemory(archivedFile, &szEntryBufferPrt, &bufferLen))
+  {
+    shared_ptr<DataChunk> data = make_shared<DataChunk>(&szEntryBufferPrt,
+        bufferLen);
+    return data;
+  }
 
-	return nullptr;
+  return nullptr;
 }

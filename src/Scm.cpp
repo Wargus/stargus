@@ -27,9 +27,7 @@
 //      02111-1307, USA.
 //
 //	$Id$
-
 //@{
-
 // Lcoal
 #include "Scm.h"
 #include "Chk.h"
@@ -64,7 +62,7 @@
 using namespace std;
 
 Scm::Scm(std::shared_ptr<Hurricane> hurricane) :
-	Converter(hurricane)
+    Converter(hurricane)
 {
 
 }
@@ -76,25 +74,25 @@ Scm::~Scm()
 
 bool Scm::convert(const std::string &arcfile, const std::string &file)
 {
-	char buf[1024];
-	bool result = true;
+  char buf[1024];
+  bool result = true;
 
-	Preferences &preferences = Preferences::getInstance ();
-	sprintf(buf, "%s/%sscm", preferences.getDestDir().c_str(), file.c_str());
+  Preferences &preferences = Preferences::getInstance();
+  sprintf(buf, "%s/%sscm", preferences.getDestDir().c_str(), file.c_str());
 
-	result = mHurricane->extractFile(arcfile, buf);
-	if (result)
-	{
-		// call the Chk converter with temp file...
-		shared_ptr<Storm> storm = make_shared<Storm>(buf);
-		Chk chk(storm);
-		result = chk.convert("staredit\\scenario.chk", file.c_str());
+  result = mHurricane->extractFile(arcfile, buf);
+  if (result)
+  {
+    // call the Chk converter with temp file...
+    shared_ptr<Storm> storm = make_shared<Storm>(buf);
+    Chk chk(storm);
+    result = chk.convert("staredit\\scenario.chk", file.c_str());
 
-		// delete the temporary .chk file -> below don't access 'breeze' any more!
-		unlink(buf);
-	}
+    // delete the temporary .chk file -> below don't access 'breeze' any more!
+    unlink(buf);
+  }
 
-	return result;
+  return result;
 }
 
 #ifdef STAND_ALONE

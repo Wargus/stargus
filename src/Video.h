@@ -13,18 +13,19 @@
 // Forward declarations
 class Hurricane;
 
-class Video {
+class Video
+{
 public:
-	Video(std::shared_ptr<Hurricane> hurricane);
-	virtual ~Video();
+  Video(std::shared_ptr<Hurricane> hurricane);
+  virtual ~Video();
 
-	/**
-	 *  Convert SMK video to OGV
-	 */
-	bool ConvertVideo(const std::string &arcfile, const std::string &file);
+  /**
+   *  Convert SMK video to OGV
+   */
+  bool ConvertVideo(const std::string &arcfile, const std::string &file);
 
 private:
-	std::shared_ptr<Hurricane> mHurricane;
+  std::shared_ptr<Hurricane> mHurricane;
 };
 
 #endif /* VIDEO_H_ */

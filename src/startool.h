@@ -27,21 +27,21 @@
 //      Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 //      02111-1307, USA.
 //
-
 #ifndef _STARTOOL_H
 #define _STARTOOL_H
 
 /*----------------------------------------------------------------------------
---  General
-----------------------------------------------------------------------------*/
+ --  General
+ ----------------------------------------------------------------------------*/
 
 #define VERSION "2.4.1" // Version of extractor startool
 
-const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2021 by the Stratagus Project.\n";
+const char NameLine[] =
+    "startool V" VERSION " for Stratagus (c) 2002-2021 by the Stratagus Project.\n";
 
 /*----------------------------------------------------------------------------
---  Includes
-----------------------------------------------------------------------------*/
+ --  Includes
+ ----------------------------------------------------------------------------*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -74,75 +74,71 @@ const char NameLine[] = "startool V" VERSION " for Stratagus (c) 2002-2021 by th
 #endif
 
 #ifndef O_BINARY
-	#define O_BINARY 0
+#define O_BINARY 0
 #endif
 
 using namespace std;
-
 
 //----------------------------------------------------------------------------
 //  Config
 //----------------------------------------------------------------------------
 
-
 /**
-**		Path the cursor files. (default=$DIR/graphic/ui/)
-*/
+ **		Path the cursor files. (default=$DIR/graphic/ui/)
+ */
 #define CURSOR_PATH		"graphics/ui"
 
 /**
-**		Path the graphic files. (default=$DIR/graphic)
-*/
+ **		Path the graphic files. (default=$DIR/graphic)
+ */
 #define GRAPHIC_PATH		"graphics"
 
 /**
-**		Path the sound files. (default=$DIR/sounds)
-*/
+ **		Path the sound files. (default=$DIR/sounds)
+ */
 #define SOUND_PATH		"sounds"
 
 /**
-**		Path the text files. (default=$DIR/texts)
-*/
+ **		Path the text files. (default=$DIR/texts)
+ */
 #define TEXT_PATH		"campaigns"
 
-
-
-
-
 /**
-**  Conversion control sturcture.
-*/
-typedef struct _control_ {
-	int   Type;          /// Entry type
-	int   Version;       /// Only in this version
-	const char* File;    /// Save file
-	const char* ArcFile;/// File name in list file
-	int   Arg1;          /// Extra argument 1
-	int   Arg2;          /// Extra argument 2
-	int   Arg3;          /// Extra argument 3
-	int   Arg4;          /// Extra argument 4
+ **  Conversion control sturcture.
+ */
+typedef struct _control_
+{
+  int Type;          /// Entry type
+  int Version;       /// Only in this version
+  const char *File;    /// Save file
+  const char *ArcFile;    /// File name in list file
+  int Arg1;          /// Extra argument 1
+  int Arg2;          /// Extra argument 2
+  int Arg3;          /// Extra argument 3
+  int Arg4;          /// Extra argument 4
 } Control;
 
 /**
-**  Possible entry types of archive file.
-*/
-enum _archive_type_ {
-	S,    // Setup
-	F,    // File                          (name)
-	M,    // Map                           (name)
-	T,    // Tileset                       (name,pal,mega,mini,map)
-	R,    // RGB -> gimp                   (name,rgb)
-	G,    // Graphics                      (name,pal,gfx)
-	U,    // Uncompressed Graphics         (name,pal,gfu)
-	I,    // Widgets                       (name,pal,gfu)
-	N,    // Font                          (name,idx)
-	W,    // Wav                           (name,wav)
-	H,    // Pcx                           (name)
-	E,    // Raw extract                   (name)
-	V,    // Video                         (name,video)
-	L,    // Campaign Levels
-	Q,    // MPQ archive
-	D     // Graphics in DDS format
+ **  Possible entry types of archive file.
+ */
+enum _archive_type_
+{
+  S,    // Setup
+  F,    // File                          (name)
+  M,    // Map                           (name)
+  T,    // Tileset                       (name,pal,mega,mini,map)
+  R,    // RGB -> gimp                   (name,rgb)
+  G,    // Graphics                      (name,pal,gfx)
+  U,    // Uncompressed Graphics         (name,pal,gfu)
+  I,    // Widgets                       (name,pal,gfu)
+  N,    // Font                          (name,idx)
+  W,    // Wav                           (name,wav)
+  H,    // Pcx                           (name)
+  E,    // Raw extract                   (name)
+  V,    // Video                         (name,video)
+  L,    // Campaign Levels
+  Q,    // MPQ archive
+  D     // Graphics in DDS format
 };
 
 #define __3 ,0,0,0

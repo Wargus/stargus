@@ -16,31 +16,33 @@
 class Breeze: public Hurricane
 {
 public:
-	Breeze();
-	/**
-	 * @param archiveName The folder where the extracted files are available
-	 */
-	Breeze(const std::string &archiveName);
-	virtual ~Breeze();
+  Breeze();
+  /**
+   * @param archiveName The folder where the extracted files are available
+   */
+  Breeze(const std::string &archiveName);
+  virtual ~Breeze();
 
-	bool openArchive(const std::string &archiveName);
+  bool openArchive(const std::string &archiveName);
 
-	void closeArchive();
+  void closeArchive();
 
-	/* In fact copy files and create all directories if not existing. Not really useful, just to provide data for converters.
-	 *
-	 * @param archivedFile is the source
-	 * @param extractedName is the target
-	 */
-	virtual bool extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress);
+  /* In fact copy files and create all directories if not existing. Not really useful, just to provide data for converters.
+   *
+   * @param archivedFile is the source
+   * @param extractedName is the target
+   */
+  virtual bool extractFile(const std::string &archivedFile,
+      const std::string &extractedName, bool compress);
 
-	/**
-	 * Attention: This function malloc() bufferLen memory which you've to free yourself!
-	 * Better use extractDataChunk()
-	 */
-	virtual bool extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen);
+  /**
+   * Attention: This function malloc() bufferLen memory which you've to free yourself!
+   * Better use extractDataChunk()
+   */
+  virtual bool extractMemory(const std::string &archivedFile,
+      unsigned char **szEntryBufferPrt, size_t *bufferLen);
 
-	//virtual std::istream getStream(const std::string &archivedFile);
+  //virtual std::istream getStream(const std::string &archivedFile);
 };
 
 #endif /* BREEZE_H_ */

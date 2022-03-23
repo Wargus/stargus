@@ -16,13 +16,13 @@
 // Forward declarations
 class Hurricane;
 
-class Dds : public Converter
+class Dds: public Converter
 {
 public:
-	Dds(std::shared_ptr<Hurricane> hurricane);
-	virtual ~Dds();
+  Dds(std::shared_ptr<Hurricane> hurricane);
+  virtual ~Dds();
 
-	bool convert(const std::string &arcfile, const std::string &file);
+  bool convert(const std::string &arcfile, const std::string &file);
 
 private:
 

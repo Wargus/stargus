@@ -26,34 +26,32 @@ class Hurricane;
 class Chk
 {
 public:
-	Chk(std::shared_ptr<Hurricane> hurricane);
-	virtual ~Chk();
+  Chk(std::shared_ptr<Hurricane> hurricane);
+  virtual ~Chk();
 
-	virtual bool convert(const std::string &arcfile, const std::string &file);
+  virtual bool convert(const std::string &arcfile, const std::string &file);
 
 private:
-	/**
-	**	Load chk from buffer
-	**
-	**	@param chkdata	Buffer containing chk data
-	**	@param len	Length of chk buffer
-	**	@param map	The map
-	*/
-	void loadFromBuffer(unsigned char *chkdata, int len);
-	void ConvertChk(const char *savedir, unsigned char *chkdata, int chklen);
+  /**
+   **	Load chk from buffer
+   **
+   **	@param chkdata	Buffer containing chk data
+   **	@param len	Length of chk buffer
+   **	@param map	The map
+   */
+  void loadFromBuffer(unsigned char *chkdata, int len);
+  void ConvertChk(const char *savedir, unsigned char *chkdata, int chklen);
 
-	void SaveMap(const char *savedir);
+  void SaveMap(const char *savedir);
 
-	void SaveSMS(const char *name);
-	void SaveTrigger(FILE *fd, Trigger *trigger);
-	void SaveSMP(const char *name);
-	void FreeMap();
+  void SaveSMS(const char *name);
+  void SaveTrigger(FILE *fd, Trigger *trigger);
+  void SaveSMP(const char *name);
+  void FreeMap();
 
-	Logger mLogger;
-	WorldMap *map;
-	std::shared_ptr<Hurricane> mHurricane;
+  Logger mLogger;
+  WorldMap *map;
+  std::shared_ptr<Hurricane> mHurricane;
 };
-
-
 
 #endif /* CHK_H_ */
