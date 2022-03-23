@@ -7,24 +7,24 @@ seq:
   - id: num_images
     type: u2
     doc: |
-      test
+      todo
       
   - id: max_width
     type: u2
     doc: |
-      test
+      todo
       
   - id: max_height
     type: u2
     doc: |
-      test
+      todo
 
   - id: image_frames
     type: image_frame_type(_index)
     repeat: expr
     repeat-expr: num_images
     doc: |
-      test
+      todo
 
 types:
   image_frame_type:
@@ -36,27 +36,27 @@ types:
       - id: x_offset
         type: u1
         doc: |
-          test
+          todo
           
       - id: y_offset
         type: u1
         doc: |
-          test
+          todo
           
       - id: width
         type: u1
         doc: |
-          test
+          todo
           
       - id: height
         type: u1
         doc: |
-          test
+          todo
           
       - id: line_offset
         type: u4
         doc: |
-         test
+          todo
          
     instances:
       line_offsets:
@@ -79,7 +79,7 @@ types:
       - id: offset
         type: u2
         doc: |
-          test
+          todo
           
     instances:
       start:
@@ -98,7 +98,7 @@ types:
           boolean value if the current frame is followed by another frame
         
       last_line_len:
-        value: 'has_frame ? _root.image_frames[_parent.frame_id+1].line_offset - start : file_size - start'
+        value: 'has_frame ? _root.image_frames[_parent.frame_id+1].line_offsets[0].offset : file_size - start'
         doc: |
           if a next frame is available then
             take the line_offset from the next frame AND substract start

@@ -59,27 +59,27 @@ public:
     public:
 
         /**
-         * test
+         * todo
          */
         uint8_t x_offset() const { return m_x_offset; }
 
         /**
-         * test
+         * todo
          */
         uint8_t y_offset() const { return m_y_offset; }
 
         /**
-         * test
+         * todo
          */
         uint8_t width() const { return m_width; }
 
         /**
-         * test
+         * todo
          */
         uint8_t height() const { return m_height; }
 
         /**
-         * test
+         * todo
          */
         uint32_t line_offset() const { return m_line_offset; }
         uint16_t frame_id() const { return m_frame_id; }
@@ -176,7 +176,7 @@ public:
     public:
 
         /**
-         * test
+         * todo
          */
         uint16_t offset() const { return m_offset; }
         uint16_t index() const { return m_index; }
@@ -200,22 +200,22 @@ private:
 public:
 
     /**
-     * test
+     * todo
      */
     uint16_t num_images() const { return m_num_images; }
 
     /**
-     * test
+     * todo
      */
     uint16_t max_width() const { return m_max_width; }
 
     /**
-     * test
+     * todo
      */
     uint16_t max_height() const { return m_max_height; }
 
     /**
-     * test
+     * todo
      */
     std::vector<image_frame_type_t*>* image_frames() const { return m_image_frames; }
     grp_file_t* _root() const { return m__root; }

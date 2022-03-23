@@ -41,147 +41,52 @@ Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::
 	load(arcfile);
 }
 
-Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, const std::string &palFile) :
-		Converter(hurricane),
-		mLogger("startool.Grp"),
-		mPalFile(palFile)
-{
-	load(arcfile);
-}
-
-std::shared_ptr<kaitai::kstream> Grp::getKaitaiStream(const std::string &file)
-{
-	std::shared_ptr<DataChunk> data = mHurricane->extractDataChunk(file);
-	if (data)
-	{
-		//std::ifstream ifs(arcfile, std::ifstream::binary);
-		//kaitai::kstream ks(&ifs);
-
-		// TODO: for now just create from complete string instead of istream. Maybe change the complete
-		// reader to stream based concept...
-		std::string str( reinterpret_cast<char const*>(data->getDataPointer()), data->getSize() ) ;
-		std::shared_ptr<kaitai::kstream> ks = make_shared<kaitai::kstream>(str);
-		return ks;
-	}
-
-	// TODO: hm, better create an exception
-	return nullptr;
-}
-
 void Grp::setPalette(std::shared_ptr<Palette> pal)
 {
 	mPal = pal;
-	mPalFile.clear();
-}
-
-void Grp::setPalette(const std::string &palFile)
-{
-	mPalFile = palFile;
-	mPal = nullptr;
 }
 
 bool Grp::load(const std::string &arcfile)
 {
 	mArcfile = arcfile;
 
-	mGrp_ks = getKaitaiStream(mArcfile);
-
-	std::shared_ptr<grp_file_t> grp_loc(new grp_file_t(mGrp_ks.get()));
-	mGrp_ko = grp_loc;
-
 	return true;
 }
 
-bool Grp::save(const std::string &filename)
+bool Grp::save(const std::string &file)
 {
-	std::vector<grp_file_t::image_frame_type_t*>* frames_vec = mGrp_ko->image_frames();
-
-	for(unsigned int frame_counter = 0; frame_counter < frames_vec->size(); frame_counter++)
-	{
-		grp_file_t::image_frame_type_t *frame =  frames_vec->at(frame_counter);
-		cout << "+frame: " << frame_counter << endl;
-
-		std::vector<grp_file_t::line_offset_type_t*>* line_offset_vec = frame->line_offsets();
-
-		for(unsigned int line_counter = 0; line_counter < line_offset_vec->size(); line_counter++)
-		{
-			grp_file_t::line_offset_type_t* line_offset = line_offset_vec->at(line_counter);
-			cout << "  +line: " << line_counter << endl;
-
-			u_int16_t offset = line_offset->offset();
-
-			const string &rle_offset = line_offset->rle_offsets();
-
-			cout << "    ";
-			for(const char& c : rle_offset)
-			{
-				printf(" %d ", (unsigned char)c);
-			}
-			cout << endl;
-
-			cout << "  -line: " << line_counter << endl;
-		}
-		cout << "-frame: " << frame_counter << endl;
-	}
-
-	return true;
-}
-#if 0
+	unsigned char* palp = NULL;
+	unsigned char* gfxp = NULL;
+	unsigned char* gfxp2 = NULL;
+	unsigned char* image = NULL;
+	int w;
+	int h;
+	char buf[1024];
 	bool result = true;
-	char buf[8192] = {'\0'};
 
-	std::shared_ptr<DataChunk> rawData = mHurricane->extractDataChunk(mArcfile);
-	if (rawData)
+	result = mHurricane->extractMemory(mArcfile, &gfxp, NULL);
+	if (result)
 	{
-		vector<char> img_vec = rawData->getCharVector();
 
-		//GRPImage myGRPImage(&img_vec, false);
+		image = ConvertGraphic(1, gfxp, &w, &h, gfxp2, 0);
+
+		palp = mPal->getDataChunk()->getDataPointer();
+
+		free(gfxp);
 
 		Preferences &preferences = Preferences::getInstance ();
-		sprintf(buf, "%s/%s/%s", preferences.getDestDir().c_str(), GRAPHICS_PATH, filename.c_str());
-		CheckPath(buf);
+		sprintf(buf, "%s/%s/%s", preferences.getDestDir().c_str(), GRAPHICS_PATH, file.c_str());
 
 		if(mPal)
 		{
-			/*ColorPalette myGRPPallete;
-
-			std::shared_ptr<DataChunk> rawPal = mPal->getDataChunk();
-
-			std::vector<char> pal_vec = mPal->getDataChunk()->getCharVector();
-			myGRPPallete.LoadPalette(&pal_vec);
-
-			myGRPImage.SetColorPalette(&myGRPPallete);*/
-
-			//myGRPImage.SaveConvertedImage(buf, 0, myGRPImage.getNumberOfFrames(), true, 17);
-
-			unsigned char *img = nullptr;
-			int image_width = 0;
-			int image_height = 0;
-			//myGRPImage.GetConvertedImage(&img, &image_width, &image_height, 0, myGRPImage.getNumberOfFrames(), true, 17);
-
-			sprintf(buf, "%s/%s/%s", preferences.getDestDir().c_str(), GRAPHICS_PATH, filename.c_str());
-			//Png::save(buf, img, image_width, image_height, mPal->getDataChunk()->getDataPointer(), 0);
-
-			//printf("w:%d, h:%d\n", myGRPImage.getMaxImageWidth(), myGRPImage.getMaxImageHeight());
-
-		}
-		else if(!mPalFile.empty())
-		{
-			/*ColorPalette myGRPPallete;
-
-			myGRPPallete.LoadPalette(mPalFile);
-
-			myGRPImage.SetColorPalette(&myGRPPallete);*/
-
-			//myGRPImage.SaveConvertedImage(buf, 0, myGRPImage.getNumberOfFrames(), true, 17);
+			Png::save(buf, image, w, h, palp, 255);
 		}
 		else
 		{
-			//myGRPImage.SaveConvertedImage(buf, 0, myGRPImage.getNumberOfFrames(), true, 17);
+			Png::save(buf, image, w, h, NULL, 255);
 		}
 
-
-
+		free(image);
 	}
 	else
 	{
@@ -190,7 +95,7 @@ bool Grp::save(const std::string &filename)
 
 	return result;
 }
-#endif
+
 Grp::~Grp()
 {
 

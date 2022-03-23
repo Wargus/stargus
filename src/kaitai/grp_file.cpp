@@ -130,7 +130,7 @@ void grp_file_t::line_offset_type_t::_clean_up() {
 int32_t grp_file_t::line_offset_type_t::last_line_len() {
     if (f_last_line_len)
         return m_last_line_len;
-    m_last_line_len = ((has_frame()) ? ((_root()->image_frames()->at((_parent()->frame_id() + 1))->line_offset() - start())) : ((file_size() - start())));
+    m_last_line_len = ((has_frame()) ? (_root()->image_frames()->at((_parent()->frame_id() + 1))->line_offsets()->at(0)->offset()) : ((file_size() - start())));
     f_last_line_len = true;
     return m_last_line_len;
 }

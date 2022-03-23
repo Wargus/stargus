@@ -324,7 +324,7 @@ void testHook()
 	std::shared_ptr<Palette> pal3 = pcx3.getPalette();
 	pal3->getDataChunk()->write("/tmp/ofire.pal");*/
 
-	string grp_file = "unit\\terran\\comsatc.grp";
+	string grp_file = "unit\\terran\\marine.grp";
 	Grp grp(storm, grp_file, pal);
 
 	grp.save("/tmp/marine.png");
@@ -426,11 +426,10 @@ int main(int argc, const char** argv)
 				std::shared_ptr<Palette> pal_tselect = pcx_tselect.getPalette();
 
 				// just select on orange fire palette as test
-				/*Pcx pcx_ofire(storm, "tileset\\ashworld\\ofire.pcx");
+				Pcx pcx_ofire(storm, "tileset\\ashworld\\ofire.pcx");
 				pcx_ofire.copyIndexPalette(0, 256, -1);
-				std::shared_ptr<Palette> pal_ofire = pcx_ofire.getPalette();*/
+				std::shared_ptr<Palette> pal_ofire = pcx_ofire.getPalette();
 
-				// just select on orange fire palette as test
 				Pcx pcx_ticon(storm, "unit\\cmdbtns\\ticon.pcx");
 				pcx_ticon.copyIndexPalette(0, 16, 0);
 				std::shared_ptr<Palette> pal_ticon = pcx_ticon.getPalette();
@@ -495,10 +494,10 @@ int main(int argc, const char** argv)
 						{
 							grp.setPalette(pal_ticon);
 						}
-						/*else if(c[u].Arg1 == 3)
+						else if(c[u].Arg1 == 3)
 						{
 							grp.setPalette(pal_ofire);
-						}*/
+						}
 						else if(c[u].Arg1 == 2)
 						{
 							grp.setPalette(pal_tselect);
