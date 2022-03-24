@@ -89,7 +89,7 @@ bool Tileset::ConvertRgb(const std::string &arcfile, const std::string &file)
 
   sprintf(buf, "%s.wpe", arcfile.c_str());
 
-  shared_ptr<DataChunk> data = mHurricane->extractDataChunk(arcfile);
+  shared_ptr<DataChunk> data = mHurricane->extractDataChunk(buf);
   unsigned char *palp = data->getDataPointer();
   if (data)
   {
@@ -145,8 +145,6 @@ bool Tileset::ConvertRgb(const std::string &arcfile, const std::string &file)
     }
 
     fclose(f);
-
-    free(palp);
   }
   else
   {
