@@ -21,19 +21,25 @@
 using namespace std;
 
 Grp::Grp(std::shared_ptr<Hurricane> hurricane) :
-    Converter(hurricane), mLogger("startool.Grp")
+    Converter(hurricane),
+    mLogger("startool.Grp"),
+    mRGBA(false)
 {
 }
 
 Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
-    Converter(hurricane), mLogger("startool.Grp")
+    Converter(hurricane),
+    mLogger("startool.Grp"),
+    mRGBA(false)
 {
   load(arcfile);
 }
 
-Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile,
-    std::shared_ptr<Palette> pal) :
-    Converter(hurricane), mLogger("startool.Grp"), mPal(pal)
+Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<Palette> pal) :
+    Converter(hurricane),
+    mLogger("startool.Grp"),
+    mPal(pal),
+    mRGBA(false)
 {
   load(arcfile);
 }
@@ -42,6 +48,17 @@ void Grp::setPalette(std::shared_ptr<Palette> pal)
 {
   mPal = pal;
 }
+
+void Grp::setRGBA(bool rgba)
+{
+  mRGBA = rgba;
+}
+
+bool Grp::getRGBA()
+{
+  return mRGBA;
+}
+
 
 bool Grp::load(const std::string &arcfile)
 {
@@ -72,16 +89,15 @@ bool Grp::save(const std::string &file)
     free(gfxp);
 
     Preferences &preferences = Preferences::getInstance();
-    sprintf(buf, "%s/%s/%s", preferences.getDestDir().c_str(), GRAPHICS_PATH,
-        file.c_str());
+    sprintf(buf, "%s/%s/%s", preferences.getDestDir().c_str(), GRAPHICS_PATH, file.c_str());
 
-    if (mPal)
+    if (!getRGBA())
     {
       Png::save(buf, image, w, h, palp, 255);
     }
     else
     {
-      Png::save(buf, image, w, h, NULL, 255);
+      Png::saveRGBA(buf, image, w, h, palp, 255);
     }
 
     free(image);
@@ -99,8 +115,7 @@ Grp::~Grp()
 
 }
 
-void Grp::DecodeGfuEntry(int index, unsigned char *start, unsigned char *image,
-    int ix, int iy, int iadd)
+void Grp::DecodeGfuEntry(int index, unsigned char *start, unsigned char *image, int ix, int iy, int iadd)
 {
   unsigned char *bp;
   unsigned char *sp;
@@ -142,8 +157,7 @@ void Grp::DecodeGfuEntry(int index, unsigned char *start, unsigned char *image,
   }
 }
 
-void Grp::DecodeGfxEntry(int index, unsigned char *start, unsigned char *image,
-    int ix, int iy, int iadd)
+void Grp::DecodeGfxEntry(int index, unsigned char *start, unsigned char *image, int ix, int iy, int iadd)
 {
   unsigned char *bp;
   unsigned char *sp;
@@ -225,8 +239,7 @@ void Grp::ConvertPal3(unsigned char *image, int w, int h)
   }
 }
 
-unsigned char* Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp,
-    unsigned char *bp2, int start2)
+unsigned char* Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp, unsigned char *bp2, int start2)
 {
   int i;
   int count;
@@ -361,16 +374,12 @@ unsigned char* Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp,
       // Hardcoded support for worker with resource repairing
       if (i >= start2 && bp2)
       {
-        DecodeGfxEntry(i, bp2,
-            image + best_width * (i % IPR)
-                + best_height * best_width * IPR * (i / IPR), minx, miny,
+        DecodeGfxEntry(i, bp2, image + best_width * (i % IPR) + best_height * best_width * IPR * (i / IPR), minx, miny,
             best_width * IPR);
       }
       else
       {
-        DecodeGfxEntry(i, bp,
-            image + best_width * (i % IPR)
-                + best_height * best_width * IPR * (i / IPR), minx, miny,
+        DecodeGfxEntry(i, bp, image + best_width * (i % IPR) + best_height * best_width * IPR * (i / IPR), minx, miny,
             best_width * IPR);
       }
     }
@@ -379,9 +388,7 @@ unsigned char* Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp,
   {
     for (i = 0; i < count; ++i)
     {
-      DecodeGfuEntry(i, bp,
-          image + best_width * (i % IPR)
-              + best_height * best_width * IPR * (i / IPR), minx, miny,
+      DecodeGfuEntry(i, bp, image + best_width * (i % IPR) + best_height * best_width * IPR * (i / IPR), minx, miny,
           best_width * IPR);
     }
   }

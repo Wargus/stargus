@@ -340,10 +340,10 @@ void testHook()
    std::shared_ptr<Palette> pal3 = pcx3.getPalette();
    pal3->getDataChunk()->write("/tmp/ofire.pal");*/
 
-  string grp_file = "unit\\terran\\marine.grp";
+  string grp_file = "unit\\neutral\\Khyad01.grp";
   Grp grp(storm, grp_file, pal);
 
-  grp.save("/tmp/marine.png");
+  grp.save("/tmp/Khyad01.png");
 
   cout << "end testHook()" << endl;
   exit(0);
@@ -524,6 +524,7 @@ int main(int argc, const char **argv)
             if (c[u].Arg1 == 4)
             {
               grp.setPalette(pal_ticon);
+              grp.setRGBA(true);
             }
             else if (c[u].Arg1 == 3)
             {
@@ -532,6 +533,11 @@ int main(int argc, const char **argv)
             else if (c[u].Arg1 == 2)
             {
               grp.setPalette(pal_tselect);
+            }
+            else if (c[u].Arg1 == 1)
+            {
+              grp.setPalette(pal_tunit);
+              //grp.setRGBA(true);
             }
             else // default palette
             {
@@ -571,11 +577,11 @@ int main(int argc, const char **argv)
             printf("...%s\n", case_func ? "ok" : "nok");
           }
             break;
-            /*case W: // WORKS!
+            case W: // WORKS!
              printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
              case_func = ConvertWav(mpqfile.c_str(), c[u].ArcFile, c[u].File);
              printf("...%s\n", case_func ? "ok" : "nok");
-             break;*/
+             break;
           case V: // WORKS!
             if (preferences.getVideoExtraction())
             {

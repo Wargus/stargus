@@ -29,6 +29,14 @@ public:
       std::shared_ptr<Palette> pal);
   virtual ~Grp();
 
+  /**
+   * Set if the Grp image is saved as 8-bit RGBA or palette PNG
+   * Default is palette PNG
+   */
+  void setRGBA(bool rgba);
+
+  bool getRGBA();
+
   bool load(const std::string &arcfile);
 
   bool save(const std::string &filename);
@@ -68,6 +76,7 @@ private:
   Logger mLogger;
   std::shared_ptr<Palette> mPal;
   std::string mArcfile;
+  bool mRGBA;
 
 };
 

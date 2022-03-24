@@ -21,14 +21,12 @@
 using namespace std;
 
 Pcx::Pcx(std::shared_ptr<Hurricane> hurricane) :
-    Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(
-        nullptr), mWidth(0), mHeight(0)
+    Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(nullptr), mWidth(0), mHeight(0)
 {
 }
 
 Pcx::Pcx(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
-    Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(
-        nullptr), mWidth(0), mHeight(0)
+    Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(nullptr), mWidth(0), mHeight(0)
 {
   load(arcfile);
 }
@@ -67,10 +65,8 @@ bool Pcx::savePNG(const std::string &filename)
   if (mRawData)
   {
     Preferences &preferences = Preferences::getInstance();
-    sprintf(buf, "%s/%s/%s", preferences.getDestDir().c_str(), GRAPHICS_PATH,
-        filename.c_str());
-    Png::save(buf, rawImage, mWidth, mHeight,
-        mPalette->getDataChunk()->getDataPointer(), 0);
+    sprintf(buf, "%s/%s/%s", preferences.getDestDir().c_str(), GRAPHICS_PATH, filename.c_str());
+    Png::save(buf, rawImage, mWidth, mHeight, mPalette->getDataChunk()->getDataPointer(), 0);
   }
   else
   {
@@ -132,12 +128,9 @@ void Pcx::copyIndexPalette(int start, int length, int index)
 
       int start_pal_dest = start * RGB_BYTE_SIZE + i * RGB_BYTE_SIZE;
 
-      pal[start_pal_dest + pos_r] = pal[rawImage[rel_index] * RGB_BYTE_SIZE
-          + pos_r];
-      pal[start_pal_dest + pos_g] = pal[rawImage[rel_index] * RGB_BYTE_SIZE
-          + pos_g];
-      pal[start_pal_dest + pos_b] = pal[rawImage[rel_index] * RGB_BYTE_SIZE
-          + pos_b];
+      pal[start_pal_dest + pos_r] = pal[rawImage[rel_index] * RGB_BYTE_SIZE + pos_r];
+      pal[start_pal_dest + pos_g] = pal[rawImage[rel_index] * RGB_BYTE_SIZE + pos_g];
+      pal[start_pal_dest + pos_b] = pal[rawImage[rel_index] * RGB_BYTE_SIZE + pos_b];
     }
   }
 }
