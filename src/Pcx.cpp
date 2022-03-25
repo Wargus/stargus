@@ -81,11 +81,6 @@ std::shared_ptr<Palette> Pcx::getPalette()
   return mPalette;
 }
 
-void Pcx::copy2DPalette(int start, int length, int index)
-{
-
-}
-
 void Pcx::copyIndexPalette(int start, int length, int index)
 {
   int max_index = ((mWidth * mHeight) / length) - 1;

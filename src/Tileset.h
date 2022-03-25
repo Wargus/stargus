@@ -7,8 +7,12 @@
 #ifndef TILESET_H_
 #define TILESET_H_
 
+// System
 #include <string>
 #include <memory>
+
+// Local
+#include <Palette.h>
 
 // Forward declarations
 class Hurricane;
@@ -27,8 +31,10 @@ public:
 
   bool ConvertTileset(const std::string &arcfile, const std::string &file);
 
+  // FIXME: made this static just to test terrein palette
+  static unsigned char* ConvertPaletteRGBXtoRGB(unsigned char *pal);
+
 private:
-  unsigned char* ConvertPaletteRGBXtoRGB(unsigned char *pal);
 
   unsigned char* ConvertTile(const std::string &arcfile, unsigned char *mini,
       unsigned char *mega, int msize,
