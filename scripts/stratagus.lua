@@ -76,7 +76,7 @@ SetTitleScreens(
 SetGameName("sc")
 SetFullGameName(Name)
 
-SetSelectionStyle("circle")
+SetSelectionStyle("ellipse", 0.5)
 Preference.ShowSightRange = false
 Preference.ShowAttackRange = false
 Preference.ShowReactionRange = false
@@ -162,6 +162,8 @@ SetHoldClickDelay(1000)
 --    disabled is a C&C like fog of war.
 SetFogOfWar(true)
 --SetFogOfWar(false)
+
+SetFogOfWarType("fast")
 
 SetFogOfWarGraphics("tilesets/fog.png")
 
