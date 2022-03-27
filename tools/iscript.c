@@ -84,7 +84,7 @@ void DoDecode(const unsigned char *data, unsigned short offset)
 	unsigned char c1, c2;
 	unsigned short s1, s2;
 	unsigned char opcode;
-	FILE * log = fopen("out.lua", "r");
+	FILE * log = fopen("out.lua", "w+");
 	int stop = 0;
 	int i;
 
@@ -352,6 +352,7 @@ int main(int argc, char *argv[])
 	}
 
 	offset = (unsigned short)strtoul(argv[1], NULL, 16);
+	printf("offset: %X\n", offset);
 
 	data = ReadFile("iscript.bin");
 	if (!data) {
