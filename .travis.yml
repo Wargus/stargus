@@ -16,7 +16,7 @@ addons:
 before_script:
   - curl -L https://github.com/Wargus/stratagus/archive/master.zip -O master.zip || true
   - unzip master.zip
-  - meson build -DSTRATAGUS_BIN='"stratagus"' -DSTRATAGUS_INCLUDE_DIR="$HOME/stratagus-master/gameheaders"
+  - meson build -DSTRATAGUS_BIN='"stratagus"' -DSTRATAGUS_INCLUDE_DIR="/home/travis/build/andreas-volz/stargus/stratagus-master/gameheaders"
 script: ninja -C build
 after_success:
   - "if [ $TRAVIS_OS_NAME == osx ]; then \
