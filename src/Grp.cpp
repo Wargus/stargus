@@ -127,14 +127,10 @@ void Grp::DecodeGfuEntry(int index, unsigned char *start, unsigned char *image, 
   int offset;
 
   bp = start + index * 8;
-  xoff = FetchByte(bp)
-         ;
-  yoff = FetchByte(bp)
-         ;
-  width = FetchByte(bp)
-          ;
-  height = FetchByte(bp)
-           ;
+  xoff = FetchByte(bp);
+  yoff = FetchByte(bp);
+  width = FetchByte(bp);
+  height = FetchByte(bp);
   offset = FetchLE32(bp);
   // High bit of width
   if (offset < 0)
@@ -172,14 +168,10 @@ void Grp::DecodeGfxEntry(int index, unsigned char *start, unsigned char *image, 
   int ctrl;
 
   bp = start + index * 8;
-  xoff = FetchByte(bp)
-         ;
-  yoff = FetchByte(bp)
-         ;
-  width = FetchByte(bp)
-          ;
-  height = FetchByte(bp)
-           ;
+  xoff = FetchByte(bp);
+  yoff = FetchByte(bp);
+  width = FetchByte(bp);
+  height = FetchByte(bp);
   offset = FetchLE32(bp);
 
 //	printf("%2d: +x %2d +y %2d width %2d height %2d offset %d\n",

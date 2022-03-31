@@ -571,11 +571,11 @@ int main(int argc, const char **argv)
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
-        /*case W: // WORKS!
+        case W: // WORKS!
          printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
          case_func = ConvertWav(mpqfile.c_str(), c[u].ArcFile, c[u].File);
          printf("...%s\n", case_func ? "ok" : "nok");
-         break;*/
+         break;
         case V: // WORKS!
           if (preferences.getVideoExtraction())
           {

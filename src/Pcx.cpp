@@ -84,7 +84,7 @@ std::shared_ptr<Palette> Pcx::getPalette()
 void Pcx::copyIndexPalette(int start, int length, int index)
 {
   int max_index = ((mWidth * mHeight) / length) - 1;
-  int remain_pixel = (mWidth * mHeight) % length;
+  //int remain_pixel = (mWidth * mHeight) % length;
   bool dynamic_index = false;
 
   //printf("max index: %d\n", max_index);
@@ -109,7 +109,7 @@ void Pcx::copyIndexPalette(int start, int length, int index)
 
     //printf("w: %d / h:%d\n", mWidth, mHeight);
 
-    for (unsigned int i = 0; i < length; i++)
+    for (int i = 0; i < length; i++)
     {
       if (dynamic_index)
       {

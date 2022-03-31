@@ -30,12 +30,6 @@
 #define SettingsNumUnitsMapDefault  SettingsPresetMapDefault
 #define SettingsNumUnits1    0
 
-static const char *TypeNames[] =
-    { "nobody", NULL, NULL, "rescue-passive", NULL, "computer", "person",
-        "neutral" };
-static const char *RaceNames[] =
-{ "zerg", "terran", "protoss", NULL, "neutral" };
-
 typedef struct Unit
 {
   unsigned short X;
