@@ -3,6 +3,7 @@
  *
  *      Author: Andreas Volz
  */
+#ifdef HAVE_CASC
 
 // Local
 #include "Casc.h"
@@ -205,3 +206,5 @@ bool Casc::extractFile(const std::string &archivedFile,
 
   return result;
 }
+
+#endif /* HAVE_CASC */

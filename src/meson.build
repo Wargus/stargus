@@ -61,6 +61,14 @@ if log4cxx_dep.found()
   add_project_arguments('-DHAVE_LOG4CXX', language: 'cpp')
 endif
 
+if casc_dep.found()
+	add_project_arguments('-DHAVE_CASC', language: 'cpp')
+endif
+
+if imagemagickpp_dep.found()
+	add_project_arguments('-DHAVE_IMAGEMAGICKPP', language: 'cpp')
+endif
+
 cppunit_dep = [dependency('cppunit', required : false)]
 
 executable('startool', 

@@ -4,6 +4,8 @@
  *      Author: Andreas Volz
  */
 
+#ifdef HAVE_IMAGEMAGICKPP
+
 #ifndef DDS_H_
 #define DDS_H_
 
@@ -29,3 +31,5 @@ private:
 };
 
 #endif /* DDS_H_ */
+
+#endif /* HAVE_IMAGEMAGICKPP */

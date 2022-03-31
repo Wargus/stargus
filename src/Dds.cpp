@@ -4,6 +4,8 @@
  *      Author: Andreas Volz
  */
 
+#ifdef HAVE_IMAGEMAGICKPP
+
 // Local
 #include "Dds.h"
 #include "Hurricane.h"
@@ -64,3 +66,5 @@ bool Dds::convert(const std::string &arcfile, const std::string &file)
 
   return result;
 }
+
+#endif /* HAVE_IMAGEMAGICKPP */

@@ -624,6 +624,7 @@ int main(int argc, const char **argv)
   }
   else // Casc
   {
+#ifdef HAVE_CASC
     unsigned int len = sizeof(RMTodo) / sizeof(*RMTodo);
     shared_ptr<Casc> hurricane = make_shared<Casc>("/home/andreas/BigSpace/Games/StarCraft");
     preferences.setDestDir("data.Stargus.RM");
@@ -654,7 +655,7 @@ int main(int argc, const char **argv)
       break;
       }
     }
-
+#endif /* HAVE_CASC */
   }
 
   sprintf(buf, "%s/extracted", preferences.getDestDir().c_str());

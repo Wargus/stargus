@@ -3,6 +3,7 @@
  *
  *      Author: Andreas Volz
  */
+#ifdef HAVE_CASC
 
 #include "Hurricane.h"
 
@@ -36,4 +37,7 @@ private:
   void *mStorage;
 };
 
+
 #endif /* CASC_H_ */
+
+#endif /* HAVE_CASC */
