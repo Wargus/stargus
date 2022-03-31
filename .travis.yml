@@ -11,6 +11,8 @@ addons:
       - libgtk2.0-dev
       - zlib1g-dev
       - libstorm-dev
+      - meson
+      - ninja-build
 before_script:
   - mkdir build
   - cd build
