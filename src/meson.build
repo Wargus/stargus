@@ -68,12 +68,10 @@ if imagemagickpp_dep.found()
 	add_project_arguments('-DHAVE_IMAGEMAGICKPP', language: 'cpp')
 endif
 
-cppunit_dep = [dependency('cppunit', required : false)]
-
 executable('startool', 
 	startool_sources,
 	startool_kaitai_sources,
-	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, cppunit_dep],
+	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep],
 	install : true)
 
 executable('stargus', 
