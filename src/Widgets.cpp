@@ -12,7 +12,7 @@
 #include "Png.h"
 
 Widgets::Widgets(std::shared_ptr<Hurricane> hurricane) :
-    Grp(hurricane)
+  Grp(hurricane)
 {
 
 }
@@ -23,7 +23,7 @@ Widgets::~Widgets()
 }
 
 bool Widgets::convert(const char *mpqfile, const char *arcfile,
-    const char *file, int pale)
+                      const char *file, int pale)
 {
   unsigned char *palp = NULL;
   unsigned char *gfup = NULL;
@@ -66,95 +66,95 @@ bool Widgets::convert(const char *mpqfile, const char *arcfile,
       sprintf(buf, "%s/graphics/%s/", preferences.getDestDir().c_str(), file);
 
       sprintf(buf, "%s/graphics/%s/menu.png", preferences.getDestDir().c_str(),
-          file);
+              file);
       SaveImage(buf, image, palp, 1, 64, 20);
 
       sprintf(buf, "%s/graphics/%s/menu pressed.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveImage(buf, image, palp, 2, 64, 20);
 
       sprintf(buf, "%s/graphics/%s/minimap terrain disabled.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveImage(buf, image, palp, 3, 64, 20);
 
       sprintf(buf, "%s/graphics/%s/minimap terrain.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveImage(buf, image, palp, 4, 64, 20);
 
       sprintf(buf, "%s/graphics/%s/minimap terrain pressed.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveImage(buf, image, palp, 5, 64, 20);
 
       sprintf(buf, "%s/graphics/%s/diplomacy disabled.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveImage(buf, image, palp, 83, 64, 20);
 
       sprintf(buf, "%s/graphics/%s/diplomacy.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveImage(buf, image, palp, 84, 64, 20);
 
       sprintf(buf, "%s/graphics/%s/diplomacy pressed.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveImage(buf, image, palp, 85, 64, 20);
 
       sprintf(buf, "%s/graphics/%s/button left disabled 224x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 224, 104);
 
       sprintf(buf, "%s/graphics/%s/button left 224x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 224, 107);
 
       sprintf(buf, "%s/graphics/%s/button left pressed 224x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 224, 110);
 
       sprintf(buf, "%s/graphics/%s/button left disabled 104x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 104, 104);
 
       sprintf(buf, "%s/graphics/%s/button left 104x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 104, 107);
 
       sprintf(buf, "%s/graphics/%s/button left pressed 104x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 104, 110);
 
       sprintf(buf, "%s/graphics/%s/button disabled 224x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 224, 113);
 
       sprintf(buf, "%s/graphics/%s/button 224x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 224, 116);
 
       sprintf(buf, "%s/graphics/%s/button pressed 224x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 224, 119);
 
       sprintf(buf, "%s/graphics/%s/button disabled 104x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 104, 113);
 
       sprintf(buf, "%s/graphics/%s/button 104x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 104, 116);
 
       sprintf(buf, "%s/graphics/%s/button pressed 104x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 104, 119);
 
       sprintf(buf, "%s/graphics/%s/button right disabled 104x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 104, 122);
 
       sprintf(buf, "%s/graphics/%s/button right 104x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 104, 125);
 
       sprintf(buf, "%s/graphics/%s/button right pressed 104x28.png",
-          preferences.getDestDir().c_str(), file);
+              preferences.getDestDir().c_str(), file);
       SaveButton(buf, image, palp, 104, 128);
     }
     else
@@ -169,9 +169,9 @@ bool Widgets::convert(const char *mpqfile, const char *arcfile,
 }
 
 void Widgets::SaveImage(char *name, unsigned char *image, unsigned char *palp,
-    int id, int w, int h)
+                        int id, int w, int h)
 {
-  unsigned char *buf = (unsigned char*) malloc(w * h);
+  unsigned char *buf = (unsigned char *) malloc(w * h);
   int i;
 
   for (i = 0; i < h; ++i)
@@ -185,12 +185,12 @@ void Widgets::SaveImage(char *name, unsigned char *image, unsigned char *palp,
 }
 
 void Widgets::SaveButton(char *name, unsigned char *image, unsigned char *palp,
-    int size, int id)
+                         int size, int id)
 {
   unsigned char *button;
   int i, j;
 
-  button = (unsigned char*) malloc(size * 28);
+  button = (unsigned char *) malloc(size * 28);
 
 #define copyimage(dst, src) \
 	for (j = 0; j < 28; ++j) { \

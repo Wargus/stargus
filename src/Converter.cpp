@@ -7,7 +7,7 @@
 #include "Converter.h"
 
 Converter::Converter(std::shared_ptr<Hurricane> hurricane) :
-    mHurricane(hurricane)
+  mHurricane(hurricane)
 {
 
 }

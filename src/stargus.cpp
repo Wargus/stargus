@@ -37,7 +37,7 @@ using namespace std;
 			      "scripts", "scripts", NULL }
 
 //const char* SRC_PATH() { return __FILE__; }
-const char* SRC_PATH()
+const char *SRC_PATH()
 {
   std::cout << "sourcedir:" << SOURCE_DIR << std::endl;
   return SOURCE_DIR;

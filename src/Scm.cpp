@@ -62,7 +62,7 @@
 using namespace std;
 
 Scm::Scm(std::shared_ptr<Hurricane> hurricane) :
-    Converter(hurricane)
+  Converter(hurricane)
 {
 
 }
@@ -98,96 +98,119 @@ bool Scm::convert(const std::string &arcfile, const std::string &file)
 #ifdef STAND_ALONE
 void usage()
 {
-	fprintf(stderr, "%s\n%s\n",
-		"scmconvert V" VERSION,
-		"usage: scmconvert inputfile [ outputdir ]\n");
-	exit(-1);
+  fprintf(stderr, "%s\n%s\n",
+          "scmconvert V" VERSION,
+          "usage: scmconvert inputfile [ outputdir ]\n");
+  exit(-1);
 }
 
 int main(int argc, char **argv)
 {
-	char *infile;
-	char *outdir;
+  char *infile;
+  char *outdir;
 
-	if (argc < 2 || argc > 3) {
-		usage();
-	}
+  if (argc < 2 || argc > 3)
+  {
+    usage();
+  }
 
-	infile = argv[1];
-	if (argc == 3) {
-		outdir = argv[2];
-	} else {
-		outdir = strdup(".");
-	}
+  infile = argv[1];
+  if (argc == 3)
+  {
+    outdir = argv[2];
+  }
+  else
+  {
+    outdir = strdup(".");
+  }
 
-	if (strstr(infile, ".scm\0")) {
-		char *tmp;
-		char newname[1024];
+  if (strstr(infile, ".scm\0"))
+  {
+    char *tmp;
+    char newname[1024];
 
-		sprintf(newname, "%s/", outdir);
-		if ((tmp = strrchr(infile, '/'))) {
-			strcat(newname, tmp + 1);
-		} else if ((tmp = strrchr(infile, '\\'))) {
-			strcat(newname, tmp + 1);
-		} else {
-			strcat(newname, infile);
-		}
+    sprintf(newname, "%s/", outdir);
+    if ((tmp = strrchr(infile, '/')))
+    {
+      strcat(newname, tmp + 1);
+    }
+    else if ((tmp = strrchr(infile, '\\')))
+    {
+      strcat(newname, tmp + 1);
+    }
+    else
+    {
+      strcat(newname, infile);
+    }
 
-		// TODO: fix this standalone version
-		convert(infile);
+    // TODO: fix this standalone version
+    convert(infile);
 
-	} else if (strstr(infile, ".chk\0")) {
-		FILE *f;
-		struct stat sb;
-		unsigned int len;
-		unsigned char *buf;
+  }
+  else if (strstr(infile, ".chk\0"))
+  {
+    FILE *f;
+    struct stat sb;
+    unsigned int len;
+    unsigned char *buf;
 
-		if (stat(infile, &sb) == -1) {
-			fprintf(stderr, "error finding file: %s\n", infile);
-			return -1;
-		}
-		len = sb.st_size;
+    if (stat(infile, &sb) == -1)
+    {
+      fprintf(stderr, "error finding file: %s\n", infile);
+      return -1;
+    }
+    len = sb.st_size;
 
-		f = fopen(infile, "rb");
-		if (f == NULL) {
-			fprintf(stderr, "error opening file: %s\n", infile);
-			return -1;
-		}
+    f = fopen(infile, "rb");
+    if (f == NULL)
+    {
+      fprintf(stderr, "error opening file: %s\n", infile);
+      return -1;
+    }
 
-		buf = (unsigned char *)malloc(len);
-		if (fread(buf, 1, len, f) != len) {
-			fprintf(stderr, "error reading from file: %s\n", infile);
-			free(buf);
-			return -1;
-		}
+    buf = (unsigned char *)malloc(len);
+    if (fread(buf, 1, len, f) != len)
+    {
+      fprintf(stderr, "error reading from file: %s\n", infile);
+      free(buf);
+      return -1;
+    }
 
-		if (fclose(f)) {
-			fprintf(stderr, "error closing file: %s\n", infile);
-			free(buf);
-			return -1;
-		}
+    if (fclose(f))
+    {
+      fprintf(stderr, "error closing file: %s\n", infile);
+      free(buf);
+      return -1;
+    }
 
-		char *tmp;
-		char newname[1024];
+    char *tmp;
+    char newname[1024];
 
-		sprintf(newname, "%s/", outdir);
-		if ((tmp = strrchr(infile, '/'))) {
-			strcat(newname, tmp + 1);
-		} else if ((tmp = strrchr(infile, '\\'))) {
-			strcat(newname, tmp + 1);
-		} else {
-			strcat(newname, infile);
-		}
+    sprintf(newname, "%s/", outdir);
+    if ((tmp = strrchr(infile, '/')))
+    {
+      strcat(newname, tmp + 1);
+    }
+    else if ((tmp = strrchr(infile, '\\')))
+    {
+      strcat(newname, tmp + 1);
+    }
+    else
+    {
+      strcat(newname, infile);
+    }
 
-		ConvertChk(newname, buf, len);
+    ConvertChk(newname, buf, len);
 
-		free(buf);
-	} else {
-		fprintf(stderr, "Invalid input file: %s\n", infile);
-		return -1;
-	}
+    free(buf);
+  }
+  else
+  {
+    fprintf(stderr, "Invalid input file: %s\n", infile);
+    return -1;
+  }
 
-	return 0;
+  return 0;
 }
 #endif
 

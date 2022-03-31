@@ -42,7 +42,7 @@ void Breeze::closeArchive()
 
 // TODO 'compress' doesn't work!!
 bool Breeze::extractFile(const std::string &archivedFile,
-    const std::string &extractedName, bool compress)
+                         const std::string &extractedName, bool compress)
 {
   unsigned char *szEntryBuffer = nullptr;
   size_t bufferLen = 0;
@@ -66,7 +66,7 @@ bool Breeze::extractFile(const std::string &archivedFile,
 }
 
 bool Breeze::extractMemory(const std::string &archivedFile,
-    unsigned char **szEntryBufferPrt, size_t *bufferLen)
+                           unsigned char **szEntryBufferPrt, size_t *bufferLen)
 {
   FILE *f;
   bool result = true;
@@ -88,7 +88,7 @@ bool Breeze::extractMemory(const std::string &archivedFile,
       if (dwBytes > 0)
       {
         len = len + dwBytes;
-        szEntryBuffer = (unsigned char*) realloc(szEntryBuffer, len);
+        szEntryBuffer = (unsigned char *) realloc(szEntryBuffer, len);
         memcpy(szEntryBuffer + (i * sizeof(szBuffer)), szBuffer, dwBytes);
       }
     }

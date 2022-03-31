@@ -21,8 +21,8 @@ Load("scripts/protoss/unit-protoss-high-templar.lua")
 Load("scripts/protoss/unit-protoss-dark-templar.lua")
 Load("scripts/protoss/unit-protoss-observer.lua")
 Load("scripts/protoss/unit-protoss-reaver.lua")
-Load("scripts/protoss/unit-protoss-shuttle.lua")
---Load("scipts/protoss/unit-protoss-scout.lua")
+--Load("scripts/protoss/unit-protoss-shuttle.lua")
+--Load("scripts/protoss/unit-protoss-scout.lua")
 
 
 --

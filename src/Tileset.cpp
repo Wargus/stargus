@@ -33,10 +33,10 @@
 
 // Function Prototypes
 int CountUsedTiles(const unsigned char *map, const unsigned char *mega,
-    int *map2tile, int mapl);
+                   int *map2tile, int mapl);
 void SaveCCL(const std::string &file,
-    const unsigned char *map __attribute__((unused)), const int *map2tile,
-    int mapl);
+             const unsigned char *map __attribute__((unused)), const int *map2tile,
+             int mapl);
 
 using namespace std;
 
@@ -45,7 +45,7 @@ using namespace std;
  */
 
 Tileset::Tileset(std::shared_ptr<Hurricane> hurricane) :
-    mHurricane(hurricane)
+  mHurricane(hurricane)
 {
 
 }
@@ -58,7 +58,7 @@ Tileset::~Tileset()
 /**
  **		Convert rgbx to rgb
  */
-unsigned char* Tileset::ConvertPaletteRGBXtoRGB(unsigned char *pal)
+unsigned char *Tileset::ConvertPaletteRGBXtoRGB(unsigned char *pal)
 {
   int i;
   int j;
@@ -101,7 +101,7 @@ bool Tileset::ConvertRgb(const std::string &arcfile, const std::string &file)
     //  Generate RGB File.
     //
     sprintf(buf, "%s/%s/%s.rgb", preferences.getDestDir().c_str(), TILESET_PATH,
-        file.c_str());
+            file.c_str());
     CheckPath(buf);
     f = fopen(buf, "wb");
     if (!f)
@@ -123,7 +123,7 @@ bool Tileset::ConvertRgb(const std::string &arcfile, const std::string &file)
     //  Generate GIMP palette
     //
     sprintf(buf, "%s/%s/%s.gimp", preferences.getDestDir().c_str(),
-        TILESET_PATH, file.c_str());
+            TILESET_PATH, file.c_str());
     CheckPath(buf);
     f = fopen(buf, "wb");
     if (!f)
@@ -141,7 +141,7 @@ bool Tileset::ConvertRgb(const std::string &arcfile, const std::string &file)
     {
       // FIXME: insert nice names!
       fprintf(f, "%d %d %d\t#%d\n", palp[i * 3], palp[i * 3 + 1],
-          palp[i * 3 + 2], i);
+              palp[i * 3 + 2], i);
     }
 
     fclose(f);
@@ -158,7 +158,7 @@ bool Tileset::ConvertRgb(const std::string &arcfile, const std::string &file)
  **  Decode a minitile into the image.
  */
 void Tileset::DecodeMiniTile(unsigned char *image, int ix, int iy, int iadd,
-    unsigned char *mini, int index, int flipx, int flipy)
+                             unsigned char *mini, int index, int flipx, int flipy)
 {
   for (int y = 0; y < 8; ++y)
   {
@@ -173,10 +173,10 @@ void Tileset::DecodeMiniTile(unsigned char *image, int ix, int iy, int iadd,
 /**
  **  Convert tiles into image.
  */
-unsigned char* Tileset::ConvertTile(const std::string &arcfile,
-    unsigned char *mini, unsigned char *mega, int msize,
-    unsigned char *map __attribute__((unused)),
-    int mapl __attribute__((unused)), int *wp, int *hp)
+unsigned char *Tileset::ConvertTile(const std::string &arcfile,
+                                    unsigned char *mini, unsigned char *mega, int msize,
+                                    unsigned char *map __attribute__((unused)),
+                                    int mapl __attribute__((unused)), int *wp, int *hp)
 
 {
   unsigned char *image;
@@ -189,29 +189,29 @@ unsigned char* Tileset::ConvertTile(const std::string &arcfile,
   int offset;
   int numtiles;
 #ifdef MAKE_CCL
-	int *map2tile;
+  int *map2tile;
 
-	map2tile = (int *)malloc(mapl / 52 * 16 * sizeof(int));
-	CountUsedTiles((unsigned char *)map, (unsigned char *)mega, map2tile, mapl);
+  map2tile = (int *)malloc(mapl / 52 * 16 * sizeof(int));
+  CountUsedTiles((unsigned char *)map, (unsigned char *)mega, map2tile, mapl);
 #endif
   numtiles = msize / 32;
 
   width = TILE_PER_ROW * 32;
   height = ((numtiles + TILE_PER_ROW - 1) / TILE_PER_ROW) * 32;
-  image = (unsigned char*) calloc(1, height * width);
+  image = (unsigned char *) calloc(1, height * width);
 
   for (i = 0; i < numtiles; ++i)
   {
     //mp = (const unsigned short *)(mega + img2tile[i] * 32);
-    mp = (const unsigned short*) (mega + i * 32);
+    mp = (const unsigned short *)(mega + i * 32);
     for (y = 0; y < 4; ++y)
     {
       for (x = 0; x < 4; ++x)
       {
         offset = ConvertLE16(mp[x + y * 4]);
         DecodeMiniTile(image, x + ((i % TILE_PER_ROW) * 4),
-            y + (i / TILE_PER_ROW) * 4, width, mini, (offset / 2) * 64,
-            offset & 1, 0);
+                       y + (i / TILE_PER_ROW) * 4, width, mini, (offset / 2) * 64,
+                       offset & 1, 0);
       }
     }
   }
@@ -219,8 +219,8 @@ unsigned char* Tileset::ConvertTile(const std::string &arcfile,
   *wp = width;
   *hp = height;
 #ifdef MAKE_CCL
-	SaveCCL(arcfile, (unsigned char *)map, map2tile, mapl);
-	free(map2tile);
+  SaveCCL(arcfile, (unsigned char *)map, map2tile, mapl);
+  free(map2tile);
 #endif
   return image;
 }
@@ -229,7 +229,7 @@ unsigned char* Tileset::ConvertTile(const std::string &arcfile,
  **  Convert a tileset to my format.
  */
 bool Tileset::ConvertTileset(const std::string &arcfile,
-    const std::string &file)
+                             const std::string &file)
 {
   shared_ptr<DataChunk> palp;
   shared_ptr<DataChunk> megp;
@@ -275,46 +275,56 @@ bool Tileset::ConvertTileset(const std::string &arcfile,
 
   // TODO: give DataChunk to this function and wrap image class
   image = ConvertTile(file, minp->getDataPointer(), megp->getDataPointer(),
-      megl, mapp->getDataPointer(), mapl, &w, &h);
+                      megl, mapp->getDataPointer(), mapl, &w, &h);
 
 #ifdef DEBUG
-	int flagl = EntrySize;
-	sprintf(buf, "%s/%s-flags.txt", DestDir, strstr(arcfile, "\\") + 1);
-	FILE *fd = fopen(buf, "w");
-	int i, j, tiles, start = -1;
-	for (i = 0; i < flagl / 32; ++i) {
-		unsigned short *s = (unsigned short *)(flagp + 32 * i);
-		tiles = 0;
-		for (j = 0; j < 16; ++j) {
-			if (s[j] == 0) {
-				++tiles;
-			}
-		}
-		if (tiles >= 2) {
-			if (start == -1) {
-				start = i;
-			}
-			fprintf(fd, "tile %d is unpassable\n", i);
-		}
-		if (i == flagl / 32 - 1 || tiles < 2) {
-			if (i == flagl / 32 - 1) ++i;
-			if (start != -1) {
-				if (start != i - 1) {
-					fprintf(fd, "tile %d-%d unpassable\n", start, i - 1);
-				} else {
-					fprintf(fd, "tile %d unpassable\n", start);
-				}
-				start = -1;
-			}
-		}
-	}
-	fclose(fd);
+  int flagl = EntrySize;
+  sprintf(buf, "%s/%s-flags.txt", DestDir, strstr(arcfile, "\\") + 1);
+  FILE *fd = fopen(buf, "w");
+  int i, j, tiles, start = -1;
+  for (i = 0; i < flagl / 32; ++i)
+  {
+    unsigned short *s = (unsigned short *)(flagp + 32 * i);
+    tiles = 0;
+    for (j = 0; j < 16; ++j)
+    {
+      if (s[j] == 0)
+      {
+        ++tiles;
+      }
+    }
+    if (tiles >= 2)
+    {
+      if (start == -1)
+      {
+        start = i;
+      }
+      fprintf(fd, "tile %d is unpassable\n", i);
+    }
+    if (i == flagl / 32 - 1 || tiles < 2)
+    {
+      if (i == flagl / 32 - 1) ++i;
+      if (start != -1)
+      {
+        if (start != i - 1)
+        {
+          fprintf(fd, "tile %d-%d unpassable\n", start, i - 1);
+        }
+        else
+        {
+          fprintf(fd, "tile %d unpassable\n", start);
+        }
+        start = -1;
+      }
+    }
+  }
+  fclose(fd);
 #endif
 
   ConvertPaletteRGBXtoRGB(palp->getDataPointer()); // write to memory pointer!
   Preferences &preferences = Preferences::getInstance();
   sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), TILESET_PATH,
-      file.c_str());
+          file.c_str());
   printf("tileset png: %s\n", buf);
   Png::save(buf, image, w, h, palp->getDataPointer(), 0);
 
@@ -328,105 +338,122 @@ bool Tileset::ConvertTileset(const std::string &arcfile,
 
 #ifdef MAKE_CCL
 void SaveCCL(const std::string &file, const unsigned char *map __attribute__((unused)),
-	const int *map2tile, int mapl)
+             const int *map2tile, int mapl)
 {
-	int i;
-	FILE *f;
-	static int savecount = 0;
-	char buf[1024];
+  int i;
+  FILE *f;
+  static int savecount = 0;
+  char buf[1024];
 
-	sprintf(buf, "save%02d.ccl", savecount++);
-	f = fopen(buf, "w");
+  sprintf(buf, "save%02d.ccl", savecount++);
+  f = fopen(buf, "w");
 
-	fprintf(f, "DefineTileset(\n");
-	fprintf(f, "  \"name\", \"\",\n");
-	fprintf(f, "  \"image\", \"tilesets/%s.png\",\n", file.c_str());
-	fprintf(f, "  \"slots\", {\n");
+  fprintf(f, "DefineTileset(\n");
+  fprintf(f, "  \"name\", \"\",\n");
+  fprintf(f, "  \"image\", \"tilesets/%s.png\",\n", file.c_str());
+  fprintf(f, "  \"slots\", {\n");
 
-	fprintf(f,"   \"solid\", { \"light-grass\", \"land\", {\n");
-	for (i = 0; i < mapl / 52 * 16; ++i) {
-		if (i & 15) {
-			fprintf(f, " ");
-		} else if (i) {
-			fprintf(f, "\t-- %03X\n",i - 16);
-		}
-		fprintf(f, "%4d,", map2tile[i]);
-	}
+  fprintf(f, "   \"solid\", { \"light-grass\", \"land\", {\n");
+  for (i = 0; i < mapl / 52 * 16; ++i)
+  {
+    if (i & 15)
+    {
+      fprintf(f, " ");
+    }
+    else if (i)
+    {
+      fprintf(f, "\t-- %03X\n", i - 16);
+    }
+    fprintf(f, "%4d,", map2tile[i]);
+  }
 
-	fprintf(f, "\n}}})\n");
+  fprintf(f, "\n}}})\n");
 
-	fclose(f);
+  fclose(f);
 }
 
 /**
 **  Count used mega tiles for map.
 */
-int CountUsedTiles(const unsigned char* map, const unsigned char* mega,
-	int* map2tile, int mapl)
+int CountUsedTiles(const unsigned char *map, const unsigned char *mega,
+                   int *map2tile, int mapl)
 {
-	int i;
-	int j;
-	int used;
-	const unsigned char* tp;
-	int *img2tile;
+  int i;
+  int j;
+  int used;
+  const unsigned char *tp;
+  int *img2tile;
 
-	img2tile = (int *)malloc(mapl / 52 * 16 * sizeof(int));
+  img2tile = (int *)malloc(mapl / 52 * 16 * sizeof(int));
 
-	memset(map2tile, 0, sizeof(map2tile));
+  memset(map2tile, 0, sizeof(map2tile));
 
-	//
-	//  Build conversion table.
-	//
-	for (i = 0; i < mapl / 52; ++i) {
-		tp = map + i * 52 + 20;
-		for (j = 0; j< 0x10; ++j ) {
-			if (((i << 4) | j) > mapl) {
-				break;
-			}
-			map2tile[(i << 4) | j] = AccessLE16(tp + j * 2);
-		}
+  //
+  //  Build conversion table.
+  //
+  for (i = 0; i < mapl / 52; ++i)
+  {
+    tp = map + i * 52 + 20;
+    for (j = 0; j < 0x10; ++j)
+    {
+      if (((i << 4) | j) > mapl)
+      {
+        break;
+      }
+      map2tile[(i << 4) | j] = AccessLE16(tp + j * 2);
+    }
 //		printf("\n");
-	}
+  }
 
-	//
-	//  Mark all used mega tiles.
-	//
-	used = 0;
-	for (i = 0; i < mapl / 52 * 16; ++i) {
-		if (!map2tile[i]) {
-			continue;
-		}
-		for (j = 0; j < used; ++j) {
-			if (img2tile[j] == map2tile[i]) {
-				break;
-			}
-		}
-		if (j == used) {
-			//
-			//  Check unique mega tiles.
-			//
-			for (j = 0; j < used; ++j) {
-				if (!memcmp(mega + img2tile[j] * 32, mega + map2tile[i] * 32, 32)) {
-					break;
-				}
-			}
-			if (j == used) {
-				img2tile[used++] = map2tile[i];
-			}
-		}
-	}
+  //
+  //  Mark all used mega tiles.
+  //
+  used = 0;
+  for (i = 0; i < mapl / 52 * 16; ++i)
+  {
+    if (!map2tile[i])
+    {
+      continue;
+    }
+    for (j = 0; j < used; ++j)
+    {
+      if (img2tile[j] == map2tile[i])
+      {
+        break;
+      }
+    }
+    if (j == used)
+    {
+      //
+      //  Check unique mega tiles.
+      //
+      for (j = 0; j < used; ++j)
+      {
+        if (!memcmp(mega + img2tile[j] * 32, mega + map2tile[i] * 32, 32))
+        {
+          break;
+        }
+      }
+      if (j == used)
+      {
+        img2tile[used++] = map2tile[i];
+      }
+    }
+  }
 //	printf("Used mega tiles %d\n", used);
 #if 0
-	for (i = 0; i < used; ++i) {
-		if (!(i % 16)) {
-			printf("\n");
-		}
-		printf("%3d ",img2tile[i]);
-	}
-	printf("\n");
+  for (i = 0; i < used; ++i)
+  {
+    if (!(i % 16))
+    {
+      printf("\n");
+    }
+    printf("%3d ", img2tile[i]);
+  }
+  printf("\n");
 #endif
 
-	return used;
+  return used;
 }
 #endif
 

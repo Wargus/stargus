@@ -28,7 +28,7 @@
 using namespace std;
 
 Font::Font(std::shared_ptr<Hurricane> hurricane) :
-    mLogger("startool.Font"), mHurricane(hurricane)
+  mLogger("startool.Font"), mHurricane(hurricane)
 {
 
 }
@@ -64,7 +64,7 @@ bool Font::convert(const std::string &arcfile, const std::string &file)
     image = Font::convertImage(data->getDataPointer(), &w, &h);
     Preferences &preferences = Preferences::getInstance();
     sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), FONT_PATH,
-        file.c_str());
+            file.c_str());
     CheckPath(buf);
     Png::save(buf, image, w, h, palp, 255);
 
@@ -93,7 +93,7 @@ typedef struct _FontLetterHeader
   uint8_t yOffset;	//	Y Offset for the topleft corner of the letter.
 } FontLetterHeader;
 
-unsigned char* Font::convertImage(unsigned char *start, int *wp, int *hp)
+unsigned char *Font::convertImage(unsigned char *start, int *wp, int *hp)
 {
   char buf[1024];
   FontHeader header;
@@ -108,31 +108,23 @@ unsigned char* Font::convertImage(unsigned char *start, int *wp, int *hp)
 
   bp = start;
 
-  header.name[0] = FetchByte(bp)
-  ;
-  header.name[1] = FetchByte(bp)
-  ;
-  header.name[2] = FetchByte(bp)
-  ;
-  header.name[3] = FetchByte(bp)
-  ;
+  header.name[0] = FetchByte(bp);
+  header.name[1] = FetchByte(bp);
+  header.name[2] = FetchByte(bp);
+  header.name[3] = FetchByte(bp);
   header.name[4] = '\0';
 
-  header.lowIndex = FetchByte(bp)
-  ;
-  header.highIndex = FetchByte(bp)
-  ;
-  header.maxWidth = FetchByte(bp)
-  ;
-  header.maxHeight = FetchByte(bp)
-  ;
+  header.lowIndex = FetchByte(bp);
+  header.highIndex = FetchByte(bp);
+  header.maxWidth = FetchByte(bp);
+  header.maxHeight = FetchByte(bp);
 
   unsigned int letterCount = header.highIndex - header.lowIndex;
 
   if (!strncmp(header.name, "FONT", 4))
   {
     sprintf(buf, "li:%i / hi:%i / mw:%i / mh:%i", header.lowIndex,
-        header.highIndex, header.maxWidth, header.maxHeight);
+            header.highIndex, header.maxWidth, header.maxHeight);
     LOG4CXX_DEBUG(mLogger, string("FONT header found: ") + buf);
 
     //bp += 2; // DWORD unused
@@ -143,14 +135,14 @@ unsigned char* Font::convertImage(unsigned char *start, int *wp, int *hp)
     LOG4CXX_DEBUG(mLogger, string("Image size: ") + buf);
 
     // calculate the offsets for each font letter header
-    offsets = (unsigned int*) malloc(letterCount * sizeof(FontLetterHeader));
+    offsets = (unsigned int *) malloc(letterCount * sizeof(FontLetterHeader));
     for (unsigned int i = 0; i < letterCount; ++i)
     {
       offsets[i] = FetchLE32(bp);
     }
 
     // allocate the memory to fill with raw image data
-    image = (unsigned char*) malloc(image_width * image_height);
+    image = (unsigned char *) malloc(image_width * image_height);
     if (!image)
     {
       LOG4CXX_FATAL(mLogger, "Can't allocate image memory");
@@ -172,20 +164,16 @@ unsigned char* Font::convertImage(unsigned char *start, int *wp, int *hp)
       // set pointer to each letter header start...
       bp = start + offsets[i];
 
-      letter.width = FetchByte(bp)
-      ;
-      letter.height = FetchByte(bp)
-      ;
-      letter.xOffset = FetchByte(bp)
-      ;
-      letter.yOffset = FetchByte(bp)
-      ;
+      letter.width = FetchByte(bp);
+      letter.height = FetchByte(bp);
+      letter.xOffset = FetchByte(bp);
+      letter.yOffset = FetchByte(bp);
       sprintf(buf, "%i# w:%i / h:%i / x:%i / y:%i", i, letter.width,
-          letter.height, letter.xOffset, letter.yOffset);
+              letter.height, letter.xOffset, letter.yOffset);
       LOG4CXX_DEBUG(mLogger, string("FontLetterRaw: ") + buf);
 
       dp = image + letter.xOffset + letter.yOffset * header.maxWidth
-          + i * (header.maxWidth * header.maxHeight);
+           + i * (header.maxWidth * header.maxHeight);
       int w = 0;
       int h = 0;
 
@@ -195,7 +183,7 @@ unsigned char* Font::convertImage(unsigned char *start, int *wp, int *hp)
       {
         int ctrl;
         ctrl = FetchByte(bp)
-        ;
+               ;
         w += (ctrl >> 3) & 0x1F;
         if (w >= letter.width)
         {

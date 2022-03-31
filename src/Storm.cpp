@@ -59,13 +59,13 @@
 using namespace std;
 
 Storm::Storm() :
-    mMpqHandle(nullptr)
+  mMpqHandle(nullptr)
 {
 
 }
 
 Storm::Storm(const std::string &archiveName) :
-    mMpqHandle(nullptr)
+  mMpqHandle(nullptr)
 {
   openArchive(archiveName);
 }
@@ -84,7 +84,7 @@ bool Storm::openArchive(const std::string &archiveName)
 
   // Open an archive, e.g. "d2music.mpq"
   if (!SFileOpenArchive(archiveName.c_str(), 0, STREAM_FLAG_READ_ONLY,
-      &mMpqHandle))
+                        &mMpqHandle))
   {
     result = false;
   }
@@ -105,7 +105,7 @@ void Storm::closeArchive()
 }
 
 bool Storm::extractMemory(const std::string &archivedFile,
-    unsigned char **szEntryBufferPrt, size_t *bufferLen)
+                          unsigned char **szEntryBufferPrt, size_t *bufferLen)
 {
   int nError = ERROR_SUCCESS;
   unsigned char *szEntryBuffer = nullptr;
@@ -126,7 +126,7 @@ bool Storm::extractMemory(const std::string &archivedFile,
   {
     char szBuffer[0x10000];
 
-    szEntryBuffer = (unsigned char*) malloc(sizeof(szBuffer)); // TODO: this might me useless and then free() could be avoid below
+    szEntryBuffer = (unsigned char *) malloc(sizeof(szBuffer)); // TODO: this might me useless and then free() could be avoid below
     DWORD dwBytes = 1;
 
     while (dwBytes > 0)
@@ -135,7 +135,7 @@ bool Storm::extractMemory(const std::string &archivedFile,
       if (dwBytes > 0)
       {
         len = len + dwBytes;
-        szEntryBuffer = (unsigned char*) realloc(szEntryBuffer, len);
+        szEntryBuffer = (unsigned char *) realloc(szEntryBuffer, len);
         memcpy(szEntryBuffer + (i * sizeof(szBuffer)), szBuffer, dwBytes);
 
       }
@@ -164,7 +164,7 @@ bool Storm::extractMemory(const std::string &archivedFile,
 }
 
 bool Storm::extractFile(const std::string &archivedFile,
-    const std::string &extractedName, bool compress)
+                        const std::string &extractedName, bool compress)
 {
   HANDLE hFile = nullptr;          // Archived file handle
   FILE *file = nullptr;          // Disk file handle

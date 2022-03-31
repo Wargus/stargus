@@ -16,12 +16,12 @@
 using namespace std;
 
 Casc::Casc() :
-    mStorage(nullptr)
+  mStorage(nullptr)
 {
 }
 
 Casc::Casc(const std::string &archiveName) :
-    mStorage(nullptr)
+  mStorage(nullptr)
 {
   openArchive(archiveName);
 }
@@ -68,7 +68,7 @@ PCASC_FILE_SPAN_INFO GetFileSpanInfo(HANDLE hFile)
   CascGetFileInfo(hFile, CascFileSpanInfo, pSpans, cbLength, &cbLength);
   if (cbLength != 0)
   {
-    if ((pSpans = (PCASC_FILE_SPAN_INFO) (new BYTE[cbLength])) != NULL)
+    if ((pSpans = (PCASC_FILE_SPAN_INFO)(new BYTE[cbLength])) != NULL)
     {
       if (CascGetFileInfo(hFile, CascFileSpanInfo, pSpans, cbLength, NULL))
         return pSpans;
@@ -83,7 +83,7 @@ PCASC_FILE_SPAN_INFO GetFileSpanInfo(HANDLE hFile)
 }
 
 bool Casc::extractMemory(const std::string &archivedFile,
-    unsigned char **szEntryBufferPrt, size_t *bufferLen)
+                         unsigned char **szEntryBufferPrt, size_t *bufferLen)
 {
   HANDLE hFile = nullptr;
   bool result = true;
@@ -105,14 +105,14 @@ bool Casc::extractMemory(const std::string &archivedFile,
       int i = 0;
       size_t len = 0;
 
-      szEntryBuffer = (unsigned char*) malloc(sizeof(szBuffer)); // TODO: this might me useless and then free() could be avoid below
+      szEntryBuffer = (unsigned char *) malloc(sizeof(szBuffer)); // TODO: this might me useless and then free() could be avoid below
       while (dwBytes > 0)
       {
         CascReadFile(hFile, szBuffer, sizeof(szBuffer), &dwBytes);
         if (dwBytes > 0)
         {
           len = len + dwBytes;
-          szEntryBuffer = (unsigned char*) realloc(szEntryBuffer, len);
+          szEntryBuffer = (unsigned char *) realloc(szEntryBuffer, len);
           memcpy(szEntryBuffer + (i * sizeof(szBuffer)), szBuffer, dwBytes);
 
         }
@@ -150,7 +150,7 @@ bool Casc::extractMemory(const std::string &archivedFile,
 
 // TODO 'compress' doesn't work!!
 bool Casc::extractFile(const std::string &archivedFile,
-    const std::string &extractedName, bool compress)
+                       const std::string &extractedName, bool compress)
 {
   HANDLE hFile = NULL;
   FILE *fileHandle = NULL;
@@ -194,7 +194,7 @@ bool Casc::extractFile(const std::string &archivedFile,
     else
     {
       cout << "*NOT* Extracting file (invalid info!): " << extractedName
-          << endl;
+           << endl;
     }
   }
   else

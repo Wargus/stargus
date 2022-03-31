@@ -26,12 +26,12 @@ Panel::~Panel()
 /**
  * TODO: get an understanding why the former developer decided to generate images that high sophisticated
  */
-unsigned char* Panel::CreatePanel(int width, int height)
+unsigned char *Panel::CreatePanel(int width, int height)
 {
   unsigned char *buf;
   int i, j;
 
-  buf = (unsigned char*) malloc(width * height * 4);
+  buf = (unsigned char *) malloc(width * height * 4);
   memset(buf, 0, width * height * 4);
 
 #define pixel2(i, j, r, g, b, a) \
@@ -95,7 +95,7 @@ int Panel::save(int width, int height)
 
   Preferences &preferences = Preferences::getInstance();
   sprintf(name, "%s/graphics/ui/panels/%dx%d.png",
-      preferences.getDestDir().c_str(), width, height);
+          preferences.getDestDir().c_str(), width, height);
   CheckPath(name);
 
   if (!(fp = fopen(name, "wb")))
@@ -133,7 +133,7 @@ int Panel::save(int width, int height)
 
   // prepare the file information
   png_set_IHDR(png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGB_ALPHA, 0,
-      PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+               PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
 
   buf = CreatePanel(width, height);
 
@@ -143,7 +143,7 @@ int Panel::save(int width, int height)
   // set transformation
 
   // prepare image
-  lines = (unsigned char**) malloc(height * sizeof(*lines));
+  lines = (unsigned char **) malloc(height * sizeof(*lines));
   if (!lines)
   {
     png_destroy_write_struct(&png_ptr, &info_ptr);

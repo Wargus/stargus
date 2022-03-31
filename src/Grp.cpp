@@ -21,25 +21,25 @@
 using namespace std;
 
 Grp::Grp(std::shared_ptr<Hurricane> hurricane) :
-    Converter(hurricane),
-    mLogger("startool.Grp"),
-    mRGBA(false)
+  Converter(hurricane),
+  mLogger("startool.Grp"),
+  mRGBA(false)
 {
 }
 
 Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
-    Converter(hurricane),
-    mLogger("startool.Grp"),
-    mRGBA(false)
+  Converter(hurricane),
+  mLogger("startool.Grp"),
+  mRGBA(false)
 {
   load(arcfile);
 }
 
 Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<Palette> pal) :
-    Converter(hurricane),
-    mLogger("startool.Grp"),
-    mPal(pal),
-    mRGBA(false)
+  Converter(hurricane),
+  mLogger("startool.Grp"),
+  mPal(pal),
+  mRGBA(false)
 {
   load(arcfile);
 }
@@ -58,7 +58,6 @@ bool Grp::getRGBA()
 {
   return mRGBA;
 }
-
 
 bool Grp::load(const std::string &arcfile)
 {
@@ -129,13 +128,13 @@ void Grp::DecodeGfuEntry(int index, unsigned char *start, unsigned char *image, 
 
   bp = start + index * 8;
   xoff = FetchByte(bp)
-  ;
+         ;
   yoff = FetchByte(bp)
-  ;
+         ;
   width = FetchByte(bp)
-  ;
+          ;
   height = FetchByte(bp)
-  ;
+           ;
   offset = FetchLE32(bp);
   // High bit of width
   if (offset < 0)
@@ -174,13 +173,13 @@ void Grp::DecodeGfxEntry(int index, unsigned char *start, unsigned char *image, 
 
   bp = start + index * 8;
   xoff = FetchByte(bp)
-  ;
+         ;
   yoff = FetchByte(bp)
-  ;
+         ;
   width = FetchByte(bp)
-  ;
+          ;
   height = FetchByte(bp)
-  ;
+           ;
   offset = FetchLE32(bp);
 
 //	printf("%2d: +x %2d +y %2d width %2d height %2d offset %d\n",
@@ -198,21 +197,24 @@ void Grp::DecodeGfxEntry(int index, unsigned char *start, unsigned char *image, 
       ctrl = *sp++;
 //			printf("%02X", ctrl);
       if (ctrl & 0x80)
-      {  // transparent
+      {
+        // transparent
         ctrl &= 0x7F;
 //				printf("-%d,", ctrl);
         memset(dp + h * iadd + w, 255, ctrl);
         w += ctrl;
       }
       else if (ctrl & 0x40)
-      {  // repeat
+      {
+        // repeat
         ctrl &= 0x3F;
 //				printf("*%d,", ctrl);
         memset(dp + h * iadd + w, *sp++, ctrl);
         w += ctrl;
       }
       else
-      {						// set pixels
+      {
+        // set pixels
         ctrl &= 0x3F;
 //				printf("=%d,", ctrl);
         memcpy(dp + h * iadd + w, sp, ctrl);
@@ -225,21 +227,7 @@ void Grp::DecodeGfxEntry(int index, unsigned char *start, unsigned char *image, 
   }
 }
 
-void Grp::ConvertPal3(unsigned char *image, int w, int h)
-{
-  int i;
-
-  // FIXME: this isn't correct, there should be partial transparency
-  for (i = 0; i < w * h; ++i)
-  {
-    if (image[i] < 16 || image[i] > 62)
-    {
-      image[i] = 255;
-    }
-  }
-}
-
-unsigned char* Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp, unsigned char *bp2, int start2)
+unsigned char *Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp, unsigned char *bp2, int start2)
 {
   int i;
   int count;
@@ -283,47 +271,55 @@ unsigned char* Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp,
     int height;
 
     p = bp + i * 8;
-    xoff = FetchByte(p)
-    ;
-    yoff = FetchByte(p)
-    ;
-    width = FetchByte(p)
-    ;
-    height = FetchByte(p)
-    ;
+
+    xoff = FetchByte(p);
+    yoff = FetchByte(p);
+    width = FetchByte(p);
+    height = FetchByte(p);
     endereco = FetchLE32(p);
+
     if (endereco & 0x80000000)
-    {		// high bit of width
+    {
+      // high bit of width
       width += 256;
     }
     if (xoff < minx)
       minx = xoff;
+
     if (yoff < miny)
       miny = yoff;
+
     if (xoff + width > best_width)
       best_width = xoff + width;
+
     if (yoff + height > best_height)
       best_height = yoff + height;
   }
   // FIXME: the image isn't centered!!
 
 #if 0
-	// Taken out, must be rewritten.
-	if (max_width - best_width < minx) {
-		minx = max_width - best_width;
-		best_width -= minx;
-	} else {
-		best_width = max_width - minx;
-	}
-	if (max_height - best_height < miny) {
-		miny = max_height - best_height;
-		best_height -= miny;
-	} else {
-		best_height = max_width - miny;
-	}
+  // Taken out, must be rewritten.
+  if (max_width - best_width < minx)
+  {
+    minx = max_width - best_width;
+    best_width -= minx;
+  }
+  else
+  {
+    best_width = max_width - minx;
+  }
+  if (max_height - best_height < miny)
+  {
+    miny = max_height - best_height;
+    best_height -= miny;
+  }
+  else
+  {
+    best_height = max_width - miny;
+  }
 
-	//best_width -= minx;
-	//best_height -= miny;
+  //best_width -= minx;
+  //best_height -= miny;
 #endif
 
 //	printf("Best image size %3d, %3d\n", best_width, best_height);
@@ -337,7 +333,8 @@ unsigned char* Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp,
     best_height = max_height;
     IPR = 17;  // st*rcr*ft 17!
     if (count < IPR)
-    {  // images per row !!
+    {
+      // images per row !!
       IPR = 1;
       length = count;
     }
@@ -354,7 +351,7 @@ unsigned char* Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp,
     length = count;
   }
 
-  image = (unsigned char*) malloc(best_width * best_height * length);
+  image = (unsigned char *) malloc(best_width * best_height * length);
 
   //  Image: 0, 1, 2, 3, 4,
   //         5, 6, 7, 8, 9, ...
@@ -375,12 +372,12 @@ unsigned char* Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp,
       if (i >= start2 && bp2)
       {
         DecodeGfxEntry(i, bp2, image + best_width * (i % IPR) + best_height * best_width * IPR * (i / IPR), minx, miny,
-            best_width * IPR);
+                       best_width * IPR);
       }
       else
       {
         DecodeGfxEntry(i, bp, image + best_width * (i % IPR) + best_height * best_width * IPR * (i / IPR), minx, miny,
-            best_width * IPR);
+                       best_width * IPR);
       }
     }
   }
@@ -389,7 +386,7 @@ unsigned char* Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp,
     for (i = 0; i < count; ++i)
     {
       DecodeGfuEntry(i, bp, image + best_width * (i % IPR) + best_height * best_width * IPR * (i / IPR), minx, miny,
-          best_width * IPR);
+                     best_width * IPR);
     }
   }
 

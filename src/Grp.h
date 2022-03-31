@@ -70,8 +70,6 @@ protected:
   void DecodeGfuEntry(int index, unsigned char *start, unsigned char *image,
       int ix, int iy, int iadd);
 
-  void ConvertPal3(unsigned char *image, int w, int h);
-
 private:
   Logger mLogger;
   std::shared_ptr<Palette> mPal;

@@ -27,7 +27,7 @@ int no_printf(const char *format, ...)
 #define dbg_printf no_printf
 
 Tbl::Tbl() :
-    mLogger("startool.Tbl")
+  mLogger("startool.Tbl")
 {
 
 }
@@ -47,14 +47,14 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
 {
   file_tbl_t file_tbl = file_tbl_t(ks.get());
 
-  std::vector<file_tbl_t::tbl_entry_t*> *file_tbl_entry_vec =
-      file_tbl.tbl_entries();
+  std::vector<file_tbl_t::tbl_entry_t *> *file_tbl_entry_vec =
+    file_tbl.tbl_entries();
 
   unsigned int i = 0;
   vector<TblEntry> tbl_entry_vec;
-  for (vector<file_tbl_t::tbl_entry_t*>::iterator file_tbl_entry_it =
-      file_tbl_entry_vec->begin();
-      file_tbl_entry_it != file_tbl_entry_vec->end(); file_tbl_entry_it++)
+  for (vector<file_tbl_t::tbl_entry_t *>::iterator file_tbl_entry_it =
+         file_tbl_entry_vec->begin();
+       file_tbl_entry_it != file_tbl_entry_vec->end(); file_tbl_entry_it++)
   {
     file_tbl_t::tbl_entry_t *file_entry = *file_tbl_entry_it;
 
@@ -79,92 +79,92 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
       {
         switch (entry_char)
         {
-          case 0x0: // ' '
-            dbg_printf("<NULL>");
-            if (n == 1) // first char is shortcut special case
+        case 0x0: // ' '
+          dbg_printf("<NULL>");
+          if (n == 1) // first char is shortcut special case
+          {
+            uint8_t last = entry_char_vec->at(n - 1);
+            // TODO: special handling of ESC key if I ever come to this point...
+            if (last != 0x1B) // !Escape
             {
-              uint8_t last = entry_char_vec->at(n - 1);
-              // TODO: special handling of ESC key if I ever come to this point...
-              if (last != 0x1B) // !Escape
-              {
-                tbl_entry.shortcut = last;
-                entry_str_tmp.clear();
-              }
-            }
-            else
-            {
-              if (null_counter == 0)
-              {
-                tbl_entry.name1 = entry_str_tmp;
-                entry_str_tmp.clear();
-              }
-              else if (null_counter == 1)
-              {
-                tbl_entry.name2 = entry_str_tmp;
-                entry_str_tmp.clear();
-              }
-              else if (null_counter == 2)
-              {
-                tbl_entry.name3 = entry_str_tmp;
-                entry_str_tmp.clear();
-              }
-              null_counter++;
-            }
-            break;
-          case 0x0a: // Line Feed
-            dbg_printf("<LF>");
-            entry_str_tmp += " ";
-            break;
-          case 0x01: // Start of Heading
-            dbg_printf("<SOH>");
-            if (!etx) // <ETX><SOH> is a special case
-            {
-              tbl_entry.shortcut = entry_char_vec->at(n - 1);
+              tbl_entry.shortcut = last;
               entry_str_tmp.clear();
             }
-            break;
-          case 0x02: // Start of Text
-            dbg_printf("<STX>");
+          }
+          else
+          {
+            if (null_counter == 0)
+            {
+              tbl_entry.name1 = entry_str_tmp;
+              entry_str_tmp.clear();
+            }
+            else if (null_counter == 1)
+            {
+              tbl_entry.name2 = entry_str_tmp;
+              entry_str_tmp.clear();
+            }
+            else if (null_counter == 2)
+            {
+              tbl_entry.name3 = entry_str_tmp;
+              entry_str_tmp.clear();
+            }
+            null_counter++;
+          }
+          break;
+        case 0x0a: // Line Feed
+          dbg_printf("<LF>");
+          entry_str_tmp += " ";
+          break;
+        case 0x01: // Start of Heading
+          dbg_printf("<SOH>");
+          if (!etx) // <ETX><SOH> is a special case
+          {
             tbl_entry.shortcut = entry_char_vec->at(n - 1);
             entry_str_tmp.clear();
-            break;
-          case 0x03: // End of Text
-            dbg_printf("<ETX>");
-            if (n == 1) // first char is shortcut special case
-            {
-              tbl_entry.shortcut = entry_char_vec->at(n - 1);
-              entry_str_tmp.clear();
-            }
-            else
-            {
-              tbl_entry.shortcut_pos = entry_str_tmp.length();
-              etx = true;
-            }
-            break;
-          case 0x4: // End of Transmission, diamonds card suit
-            dbg_printf("<EOT>");
-            if (n > 0)
-            {
-              tbl_entry.shortcut = entry_char_vec->at(n - 1);
-              entry_str_tmp.clear();
-            }
-            break;
-          case 0x6: // Acknowledgement, spade card suit
-            dbg_printf("<ACK>");
-            break;
-          case 0x7: // Bell
-            dbg_printf("<BEL>");
-            break;
-          case 0x1B: // Escape
-            dbg_printf("<ESC>");
-            break;
-          case 0x2a: // '*'
-            dbg_printf("<ASTERISK>");
-            entry_str_tmp += entry_char;
-            break;
-          default:
-            dbg_printf("<unhandled>: %x", entry_char);
-            break;
+          }
+          break;
+        case 0x02: // Start of Text
+          dbg_printf("<STX>");
+          tbl_entry.shortcut = entry_char_vec->at(n - 1);
+          entry_str_tmp.clear();
+          break;
+        case 0x03: // End of Text
+          dbg_printf("<ETX>");
+          if (n == 1) // first char is shortcut special case
+          {
+            tbl_entry.shortcut = entry_char_vec->at(n - 1);
+            entry_str_tmp.clear();
+          }
+          else
+          {
+            tbl_entry.shortcut_pos = entry_str_tmp.length();
+            etx = true;
+          }
+          break;
+        case 0x4: // End of Transmission, diamonds card suit
+          dbg_printf("<EOT>");
+          if (n > 0)
+          {
+            tbl_entry.shortcut = entry_char_vec->at(n - 1);
+            entry_str_tmp.clear();
+          }
+          break;
+        case 0x6: // Acknowledgement, spade card suit
+          dbg_printf("<ACK>");
+          break;
+        case 0x7: // Bell
+          dbg_printf("<BEL>");
+          break;
+        case 0x1B: // Escape
+          dbg_printf("<ESC>");
+          break;
+        case 0x2a: // '*'
+          dbg_printf("<ASTERISK>");
+          entry_str_tmp += entry_char;
+          break;
+        default:
+          dbg_printf("<unhandled>: %x", entry_char);
+          break;
         }
 
         //last_control = entry_char;
@@ -224,7 +224,7 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
 }
 
 // TODO: check if this helps to detect encoding https://github.com/freedesktop/uchardet
-char* Tbl::iconvISO2UTF8(char *iso)
+char *Tbl::iconvISO2UTF8(char *iso)
 {
   char buf[1024] =
   { '\0' };
@@ -236,7 +236,7 @@ char* Tbl::iconvISO2UTF8(char *iso)
     if (errno == EINVAL)
     {
       snprintf(buf, sizeof(buf), "conversion from '%s' to '%s' not available",
-          "ISO−8859−1", "UTF-8");
+               "ISO−8859−1", "UTF-8");
       LOG4CXX_ERROR(mLogger, buf);
     }
     else
@@ -263,7 +263,7 @@ char* Tbl::iconvISO2UTF8(char *iso)
 
   /* Assign enough space to put the UTF-8. */
   utf8len = 2 * len;
-  utf8 = (char*) calloc(utf8len, sizeof(char));
+  utf8 = (char *) calloc(utf8len, sizeof(char));
   if (!utf8)
   {
     snprintf(buf, sizeof(buf), "iconvISO2UTF8: Calloc failed.");
@@ -279,34 +279,34 @@ char* Tbl::iconvISO2UTF8(char *iso)
   {
     switch (errno)
     {
-      /* See "man 3 iconv" for an explanation. */
-      case EILSEQ:
-        snprintf(buf, sizeof(buf),
-            "iconv failed: Invalid multibyte sequence, in string '%s', length %d, out string '%s', length %d\n",
-            iso, (int) len, utf8start, (int) utf8len);
-        LOG4CXX_ERROR(mLogger, buf)
-        ;
-        break;
-      case EINVAL:
-        snprintf(buf, sizeof(buf),
-            "iconv failed: Incomplete multibyte sequence, in string '%s', length %d, out string '%s', length %d\n",
-            iso, (int) len, utf8start, (int) utf8len);
-        LOG4CXX_ERROR(mLogger, buf)
-        ;
-        break;
-      case E2BIG:
-        snprintf(buf, sizeof(buf),
-            "iconv failed: No more room, in string '%s', length %d, out string '%s', length %d\n",
-            iso, (int) len, utf8start, (int) utf8len);
-        LOG4CXX_ERROR(mLogger, buf)
-        ;
-        break;
-      default:
-        snprintf(buf, sizeof(buf),
-            "iconv failed, in string '%s', length %d, out string '%s', length %d\n",
-            iso, (int) len, utf8start, (int) utf8len);
-        LOG4CXX_ERROR(mLogger, buf)
-        ;
+    /* See "man 3 iconv" for an explanation. */
+    case EILSEQ:
+      snprintf(buf, sizeof(buf),
+               "iconv failed: Invalid multibyte sequence, in string '%s', length %d, out string '%s', length %d\n",
+               iso, (int) len, utf8start, (int) utf8len);
+      LOG4CXX_ERROR(mLogger, buf)
+      ;
+      break;
+    case EINVAL:
+      snprintf(buf, sizeof(buf),
+               "iconv failed: Incomplete multibyte sequence, in string '%s', length %d, out string '%s', length %d\n",
+               iso, (int) len, utf8start, (int) utf8len);
+      LOG4CXX_ERROR(mLogger, buf)
+      ;
+      break;
+    case E2BIG:
+      snprintf(buf, sizeof(buf),
+               "iconv failed: No more room, in string '%s', length %d, out string '%s', length %d\n",
+               iso, (int) len, utf8start, (int) utf8len);
+      LOG4CXX_ERROR(mLogger, buf)
+      ;
+      break;
+    default:
+      snprintf(buf, sizeof(buf),
+               "iconv failed, in string '%s', length %d, out string '%s', length %d\n",
+               iso, (int) len, utf8start, (int) utf8len);
+      LOG4CXX_ERROR(mLogger, buf)
+      ;
     }
     return NULL;
   }

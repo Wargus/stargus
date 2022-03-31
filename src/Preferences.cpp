@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-  #include <config.h>
+#include <config.h>
 #endif
 
 /* STD */
@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Preferences& Preferences::getInstance()
+Preferences &Preferences::getInstance()
 {
   static Preferences instance;
   return instance;

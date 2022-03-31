@@ -32,7 +32,7 @@ void CheckPath(const char *path)
   char *s = NULL;
 
 #ifdef WIN32
-	cp = _strdup(path);
+  cp = _strdup(path);
 #else
   cp = strdup(path);
 #endif
@@ -42,14 +42,15 @@ void CheckPath(const char *path)
     *s = '\0';  // remove file
     s = cp;
     for (;;)
-    {  // make each path element
+    {
+      // make each path element
       s = strchr(s, '/');
       if (s)
       {
         *s = '\0';
       }
 #if defined(_MSC_VER) || defined(WIN32)
-			_mkdir(cp);
+      _mkdir(cp);
 #else
       mkdir(cp, 0777);
 #endif

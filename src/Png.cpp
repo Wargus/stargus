@@ -87,7 +87,7 @@ int Png::save(const char *name, unsigned char *image, int w, int h, unsigned cha
   // set transformation
 
   // prepare image
-  lines = (unsigned char**) malloc(h * sizeof(*lines));
+  lines = (unsigned char **) malloc(h * sizeof(*lines));
   if (!lines)
   {
     png_destroy_write_struct(&png_ptr, &info_ptr);
@@ -164,16 +164,16 @@ int Png::saveRGBA(const char *name, unsigned char *image, int w, int h, unsigned
   // write the file header information
   png_write_info(png_ptr, info_ptr);
 
-  row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * h);
+  row_pointers = (png_bytep *) malloc(sizeof(png_bytep) * h);
 
 
   for (int h_pos = 0; h_pos < h; ++h_pos)
   {
-    row_pointers[h_pos] = (unsigned char*) malloc(w * RGBA_BYTE_SIZE);
+    row_pointers[h_pos] = (unsigned char *) malloc(w * RGBA_BYTE_SIZE);
 
-    unsigned char* img_line_pal = image + h_pos * w;
+    unsigned char *img_line_pal = image + h_pos * w;
 
-    for(int w_pos = 0; w_pos < w; w_pos++)
+    for (int w_pos = 0; w_pos < w; w_pos++)
     {
       unsigned char pal_pos = img_line_pal[w_pos];
       //printf("pal_pos (w:%d/h:%d) pal:%d\n", w_pos, h_pos,(int) pal_pos);
@@ -183,18 +183,18 @@ int Png::saveRGBA(const char *name, unsigned char *image, int w, int h, unsigned
       char color_b = 0;
       char color_a = 0;
 
-      if(pal_pos != transparent)
+      if (pal_pos != transparent)
       {
-        color_r = pal[pal_pos*RGB_BYTE_SIZE + 0];
-        color_g = pal[pal_pos*RGB_BYTE_SIZE + 1];
-        color_b = pal[pal_pos*RGB_BYTE_SIZE + 2];
+        color_r = pal[pal_pos * RGB_BYTE_SIZE + 0];
+        color_g = pal[pal_pos * RGB_BYTE_SIZE + 1];
+        color_b = pal[pal_pos * RGB_BYTE_SIZE + 2];
         color_a = 255;
       }
 
-      row_pointers[h_pos][w_pos*RGBA_BYTE_SIZE + 0] = color_r;
-      row_pointers[h_pos][w_pos*RGBA_BYTE_SIZE + 1] = color_g;
-      row_pointers[h_pos][w_pos*RGBA_BYTE_SIZE + 2] = color_b;
-      row_pointers[h_pos][w_pos*RGBA_BYTE_SIZE + 3] = color_a;
+      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 0] = color_r;
+      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 1] = color_g;
+      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 2] = color_b;
+      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 3] = color_a;
     }
 
   }

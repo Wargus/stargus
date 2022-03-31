@@ -21,12 +21,12 @@
 using namespace std;
 
 Pcx::Pcx(std::shared_ptr<Hurricane> hurricane) :
-    Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(nullptr), mWidth(0), mHeight(0)
+  Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(nullptr), mWidth(0), mHeight(0)
 {
 }
 
 Pcx::Pcx(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
-    Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(nullptr), mWidth(0), mHeight(0)
+  Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(nullptr), mWidth(0), mHeight(0)
 {
   load(arcfile);
 }
@@ -153,7 +153,7 @@ void Pcx::extractImage()
   unsigned char *dest = NULL;
   unsigned char ch = 0;
 
-  rawImage = (unsigned char*) malloc(mWidth * mHeight);
+  rawImage = (unsigned char *) malloc(mWidth * mHeight);
   mImageParserPos = mRawData->getDataPointer() + sizeof(struct PCXheader);
 
   for (y = 0; y < mHeight; ++y)
@@ -191,12 +191,13 @@ void Pcx::extractPalette()
   if (mRawData)
   {
     // allocate enough space for RGB information
-    pal = (unsigned char*) malloc(RGB_SIZE); // memory management later given to DataChunk...
+    pal = (unsigned char *) malloc(RGB_SIZE); // memory management later given to DataChunk...
     dest = pal;
     do
     {
       ch = *mImageParserPos++;
-    } while (ch != 0x0c); // search the 'magic ID' that shows the start of RGB information next
+    }
+    while (ch != 0x0c);   // search the 'magic ID' that shows the start of RGB information next
 
     // copy RGB information to destination
     for (int i = 0; i < RGB_SIZE; ++i)

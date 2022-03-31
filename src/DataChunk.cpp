@@ -16,13 +16,13 @@
 using namespace std;
 
 DataChunk::DataChunk() :
-    mLogger("startool.DataChunk"), mData(nullptr), mSize(0)
+  mLogger("startool.DataChunk"), mData(nullptr), mSize(0)
 {
 
 }
 
 DataChunk::DataChunk(unsigned char **data, const size_t size) :
-    mLogger("startool.DataChunk")
+  mLogger("startool.DataChunk")
 {
   mData = *data;
   mSize = size;
@@ -35,12 +35,12 @@ DataChunk::~DataChunk()
 
 void DataChunk::addData(unsigned char *data, const size_t size)
 {
-  mData = (unsigned char*) realloc(mData,
-      mSize * sizeof(unsigned char) + size * sizeof(unsigned char));
+  mData = (unsigned char *) realloc(mData,
+                                    mSize * sizeof(unsigned char) + size * sizeof(unsigned char));
   memcpy(mData + mSize * sizeof(unsigned char), data, size);
 }
 
-unsigned char* DataChunk::getDataPointer() const
+unsigned char *DataChunk::getDataPointer() const
 {
   return mData;
 }
@@ -70,7 +70,7 @@ bool DataChunk::write(const std::string filename)
   {
     for (size_t i = 0; i < mSize; i++)
     {
-      wf.write((char*) &mData[i], sizeof(unsigned char));
+      wf.write((char *) &mData[i], sizeof(unsigned char));
     }
     wf.close();
   }
@@ -83,7 +83,7 @@ bool DataChunk::write(const std::string filename)
   return result;
 }
 
-DataChunk* DataChunk::copy()
+DataChunk *DataChunk::copy()
 {
   return new DataChunk(&mData, mSize);
 }

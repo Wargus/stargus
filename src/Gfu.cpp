@@ -16,7 +16,7 @@
 #include <cstring>
 
 Gfu::Gfu(std::shared_ptr<Hurricane> hurricane) :
-    Grp(hurricane)
+  Grp(hurricane)
 {
 
 }
@@ -27,7 +27,7 @@ Gfu::~Gfu()
 }
 
 bool Gfu::convert(const char *mpqfile, const char *arcfile, const char *file,
-    int pale)
+                  int pale)
 {
   unsigned char *palp = NULL;
   unsigned char *gfup = NULL;
@@ -64,7 +64,7 @@ bool Gfu::convert(const char *mpqfile, const char *arcfile, const char *file,
 
     Preferences &preferences = Preferences::getInstance();
     sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(),
-        GRAPHICS_PATH, file);
+            GRAPHICS_PATH, file);
 
     Png::save(buf, image, w, h, palp, 255);
 

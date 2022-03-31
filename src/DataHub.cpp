@@ -19,7 +19,7 @@
 using namespace std;
 
 DataHub::DataHub(std::shared_ptr<Hurricane> hurricane) :
-    Converter(hurricane), mLogger("startool.DataHub")
+  Converter(hurricane), mLogger("startool.DataHub")
 {
   bool has_broodwar_flag = false;
   bool has_max_air_hits = false;
@@ -63,7 +63,7 @@ DataHub::~DataHub()
 }
 
 std::shared_ptr<kaitai::kstream> DataHub::getKaitaiStream(
-    const std::string &file)
+  const std::string &file)
 {
   std::shared_ptr<DataChunk> data = mHurricane->extractDataChunk(file);
   if (data)
@@ -73,8 +73,8 @@ std::shared_ptr<kaitai::kstream> DataHub::getKaitaiStream(
 
     // TODO: for now just create from complete string instead of istream. Maybe change the complete
     // reader to stream based concept...
-    std::string str(reinterpret_cast<char const*>(data->getDataPointer()),
-        data->getSize());
+    std::string str(reinterpret_cast<char const *>(data->getDataPointer()),
+                    data->getSize());
     std::shared_ptr<kaitai::kstream> ks = make_shared<kaitai::kstream>(str);
     return ks;
   }
@@ -84,14 +84,14 @@ std::shared_ptr<kaitai::kstream> DataHub::getKaitaiStream(
 }
 
 void DataHub::init_units_dat(bool has_broodwar_flag, bool has_max_air_hits,
-    bool has_max_ground_hits)
+                             bool has_max_ground_hits)
 {
   string sc_arr_units_dat = "arr\\units.dat";
   mUnits_ks = getKaitaiStream(sc_arr_units_dat);
 
   std::shared_ptr<units_dat_t> units_loc(
-      new units_dat_t(has_broodwar_flag, has_max_air_hits, has_max_ground_hits,
-          mUnits_ks.get()));
+    new units_dat_t(has_broodwar_flag, has_max_air_hits, has_max_ground_hits,
+                    mUnits_ks.get()));
   units = units_loc;
 }
 
@@ -101,7 +101,7 @@ void DataHub::init_orders_dat(int num_lines)
   orders_ks = getKaitaiStream(sc_arr_orders_dat);
 
   std::shared_ptr<orders_dat_t> orders_loc(
-      new orders_dat_t(num_lines, orders_ks.get()));
+    new orders_dat_t(num_lines, orders_ks.get()));
   orders = orders_loc;
   printf("units_ai_max=%d\n", get_dat_ai_max() + 1);
 }
@@ -112,7 +112,7 @@ void DataHub::init_weapons_dat(int num_lines)
   weapons_ks = getKaitaiStream(sc_arr_weapons_dat);
 
   std::shared_ptr<weapons_dat_t> weapons_loc(
-      new weapons_dat_t(num_lines, weapons_ks.get()));
+    new weapons_dat_t(num_lines, weapons_ks.get()));
   weapons = weapons_loc;
 }
 
@@ -122,7 +122,7 @@ void DataHub::init_flingy_dat(int num_lines)
   flingy_ks = getKaitaiStream(sc_arr_flingy_dat);
 
   std::shared_ptr<flingy_dat_t> flingy_loc(
-      new flingy_dat_t(num_lines, flingy_ks.get()));
+    new flingy_dat_t(num_lines, flingy_ks.get()));
   flingy = flingy_loc;
 }
 
@@ -132,7 +132,7 @@ void DataHub::init_sprites_dat(int num_lines, int num_decorations)
   sprites_ks = getKaitaiStream(sc_arr_sprites_dat);
 
   std::shared_ptr<sprites_dat_t> sprites_loc(
-      new sprites_dat_t(num_lines, num_decorations, sprites_ks.get()));
+    new sprites_dat_t(num_lines, num_decorations, sprites_ks.get()));
   sprites = sprites_loc;
 }
 
@@ -142,7 +142,7 @@ void DataHub::init_images_dat(int num_lines)
   images_ks = getKaitaiStream(sc_arr_images_dat);
 
   std::shared_ptr<images_dat_t> images_loc(
-      new images_dat_t(num_lines, images_ks.get()));
+    new images_dat_t(num_lines, images_ks.get()));
   images = images_loc;
 }
 
@@ -154,7 +154,7 @@ void DataHub::init_sfxdata_dat(int num_lines)
   // 0 means "no sound"
   // TODO: find out if unit_sound_max+1 is needed or not! In some case data seams ok, in others it crash
   std::shared_ptr<sfxdata_dat_t> sfxdata_loc(
-      new sfxdata_dat_t(num_lines, sfxdata_ks.get()));
+    new sfxdata_dat_t(num_lines, sfxdata_ks.get()));
   sfxdata = sfxdata_loc;
 }
 
@@ -169,7 +169,7 @@ void DataHub::init_portdata_dat(int num_lines)
   // 4. 4x flags => talking portraits
   // 5. +2 because index starting at zero
   std::shared_ptr<portdata_dat_t> portrait_loc(
-      new portdata_dat_t(num_lines, portrait_ks.get()));
+    new portdata_dat_t(num_lines, portrait_ks.get()));
   portrait = portrait_loc;
 }
 
@@ -179,7 +179,7 @@ void DataHub::init_upgrades_dat(int num_lines, bool has_broodwar_flag)
   upgrades_ks = getKaitaiStream(sc_arr_upgrades_dat);
 
   std::shared_ptr<upgrades_dat_t> upgrades_loc(
-      new upgrades_dat_t(has_broodwar_flag, num_lines, upgrades_ks.get()));
+    new upgrades_dat_t(has_broodwar_flag, num_lines, upgrades_ks.get()));
   upgrades = upgrades_loc;
 }
 
@@ -189,7 +189,7 @@ void DataHub::init_techdata_dat(int num_lines, bool has_broodwar_flag)
   techdata_ks = getKaitaiStream(sc_arr_techdata_dat);
 
   std::shared_ptr<techdata_dat_t> techdata_loc(
-      new techdata_dat_t(has_broodwar_flag, num_lines, techdata_ks.get()));
+    new techdata_dat_t(has_broodwar_flag, num_lines, techdata_ks.get()));
   techdata = techdata_loc;
 }
 
@@ -199,7 +199,7 @@ void DataHub::init_mapdata_dat()
   mapdata_ks = getKaitaiStream(sc_arr_mapdata_dat);
 
   std::shared_ptr<mapdata_dat_t> mapdata_loc(
-      new mapdata_dat_t(mapdata_ks.get()));
+    new mapdata_dat_t(mapdata_ks.get()));
   mapdata = mapdata_loc;
 }
 
@@ -255,26 +255,26 @@ int DataHub::get_dat_ai_max() const
   std::vector<uint8_t> *units_ai_computer_idle_vec = units->ai_computer_idle();
   std::vector<uint8_t> *units_ai_human_idle_vec = units->ai_human_idle();
   std::vector<uint8_t> *units_ai_return_to_idle_vec =
-      units->ai_return_to_idle();
+    units->ai_return_to_idle();
 
   vector<uint8_t> units_ai_max_vec;
   units_ai_max_vec.push_back(
-      *max_element(units_ai_attack_move_vec->begin(),
-          units_ai_attack_move_vec->end()));
+    *max_element(units_ai_attack_move_vec->begin(),
+                 units_ai_attack_move_vec->end()));
   units_ai_max_vec.push_back(
-      *max_element(units_ai_attack_unit_vec->begin(),
-          units_ai_attack_unit_vec->end()));
+    *max_element(units_ai_attack_unit_vec->begin(),
+                 units_ai_attack_unit_vec->end()));
   units_ai_max_vec.push_back(
-      *max_element(units_ai_computer_idle_vec->begin(),
-          units_ai_computer_idle_vec->end()));
+    *max_element(units_ai_computer_idle_vec->begin(),
+                 units_ai_computer_idle_vec->end()));
   units_ai_max_vec.push_back(
-      *max_element(units_ai_human_idle_vec->begin(),
-          units_ai_human_idle_vec->end()));
+    *max_element(units_ai_human_idle_vec->begin(),
+                 units_ai_human_idle_vec->end()));
   units_ai_max_vec.push_back(
-      *max_element(units_ai_return_to_idle_vec->begin(),
-          units_ai_return_to_idle_vec->end()));
+    *max_element(units_ai_return_to_idle_vec->begin(),
+                 units_ai_return_to_idle_vec->end()));
   uint8_t units_ai_max = *max_element(units_ai_max_vec.begin(),
-      units_ai_max_vec.end());
+                                      units_ai_max_vec.end());
 
   return units_ai_max + 1;
 }
@@ -287,14 +287,14 @@ int DataHub::get_dat_weapons_max() const
 
   vector<uint8_t> weapons_max_vec;
   weapons_max_vec.push_back(
-      *max_element(units_ground_weapon_vec->begin(),
-          units_ground_weapon_vec->end()));
+    *max_element(units_ground_weapon_vec->begin(),
+                 units_ground_weapon_vec->end()));
   weapons_max_vec.push_back(
-      *max_element(units_air_weapon_vec->begin(), units_air_weapon_vec->end()));
+    *max_element(units_air_weapon_vec->begin(), units_air_weapon_vec->end()));
   weapons_max_vec.push_back(
-      *max_element(orders_targeting_vec->begin(), orders_targeting_vec->end()));
+    *max_element(orders_targeting_vec->begin(), orders_targeting_vec->end()));
   uint8_t weapon_max = *max_element(weapons_max_vec.begin(),
-      weapons_max_vec.end());
+                                    weapons_max_vec.end());
   printf("weapon_max=%d\n", weapon_max);
 
   return weapon_max;
@@ -306,10 +306,10 @@ int DataHub::get_dat_graphics_max() const
   std::vector<uint32_t> *weapon_graphics_vec = weapons->graphics();
 
   int unit_graphics_max = *max_element(units_graphics_vec->begin(),
-      units_graphics_vec->end());
+                                       units_graphics_vec->end());
   printf("unit_graphics_max=%d\n", unit_graphics_max);
   int weapon_graphics_max = *max_element(weapon_graphics_vec->begin(),
-      weapon_graphics_vec->end());
+                                         weapon_graphics_vec->end());
   printf("weapon_graphics_max=%d\n", weapon_graphics_max);
   int graphics_max = unit_graphics_max;
   if (weapon_graphics_max > unit_graphics_max)
@@ -323,7 +323,7 @@ int DataHub::get_dat_sprites_max() const
   std::vector<uint16_t> *flingy_sprites_vec = flingy->sprite();
 
   int flingy_sprites_max = *max_element(flingy_sprites_vec->begin(),
-      flingy_sprites_vec->end());
+                                        flingy_sprites_vec->end());
   printf("flingy_sprites_max=%d\n", flingy_sprites_max);
 
   return flingy_sprites_max + 1;
@@ -334,7 +334,7 @@ int DataHub::get_dat_images_max() const
   std::vector<uint16_t> *sprites_images_vec = sprites->image_file();
 
   int sprites_image_file_max = *max_element(sprites_images_vec->begin(),
-      sprites_images_vec->end());
+                               sprites_images_vec->end());
   printf("sprites_image_file_max=%d\n", sprites_image_file_max);
 
   return sprites_image_file_max + 1;
@@ -352,28 +352,28 @@ int DataHub::get_dat_sounds_max() const
 
   vector<uint16_t> units_sound_max_vec;
   units_sound_max_vec.push_back(
-      *max_element(units_ready_sound_vec->begin(),
-          units_ready_sound_vec->end()));
+    *max_element(units_ready_sound_vec->begin(),
+                 units_ready_sound_vec->end()));
   units_sound_max_vec.push_back(
-      *max_element(units_what_sound_start_vec->begin(),
-          units_what_sound_start_vec->end()));
+    *max_element(units_what_sound_start_vec->begin(),
+                 units_what_sound_start_vec->end()));
   units_sound_max_vec.push_back(
-      *max_element(units_what_sound_end_vec->begin(),
-          units_what_sound_end_vec->end()));
+    *max_element(units_what_sound_end_vec->begin(),
+                 units_what_sound_end_vec->end()));
   units_sound_max_vec.push_back(
-      *max_element(units_piss_sound_start_vec->begin(),
-          units_piss_sound_start_vec->end()));
+    *max_element(units_piss_sound_start_vec->begin(),
+                 units_piss_sound_start_vec->end()));
   units_sound_max_vec.push_back(
-      *max_element(units_piss_sound_end_vec->begin(),
-          units_piss_sound_end_vec->end()));
+    *max_element(units_piss_sound_end_vec->begin(),
+                 units_piss_sound_end_vec->end()));
   units_sound_max_vec.push_back(
-      *max_element(units_yes_sound_start_vec->begin(),
-          units_yes_sound_start_vec->end()));
+    *max_element(units_yes_sound_start_vec->begin(),
+                 units_yes_sound_start_vec->end()));
   units_sound_max_vec.push_back(
-      *max_element(units_yes_sound_end_vec->begin(),
-          units_yes_sound_end_vec->end()));
+    *max_element(units_yes_sound_end_vec->begin(),
+                 units_yes_sound_end_vec->end()));
   uint16_t unit_sound_max = *max_element(units_sound_max_vec.begin(),
-      units_sound_max_vec.end());
+                                         units_sound_max_vec.end());
   printf("unit_sound_max=%d\n", unit_sound_max);
 
   return unit_sound_max;
@@ -384,7 +384,7 @@ int DataHub::get_dat_portraits_max() const
   std::vector<uint16_t> *units_portrait_vec = units->portrait();
 
   int units_portrait_max = *max_element(units_portrait_vec->begin(),
-      units_portrait_vec->end(), portdataCompare);
+                                        units_portrait_vec->end(), portdataCompare);
   printf("units_portrait_max=%d\n", units_portrait_max);
 
   return units_portrait_max + 2 * 4;
@@ -397,13 +397,13 @@ int DataHub::get_dat_upgrades_max() const
 
   vector<uint8_t> units_upgrade_vec;
   units_upgrade_vec.push_back(
-      *max_element(units_armor_upgrade_vec->begin(),
-          units_armor_upgrade_vec->end()));
+    *max_element(units_armor_upgrade_vec->begin(),
+                 units_armor_upgrade_vec->end()));
   units_upgrade_vec.push_back(
-      *max_element(weapon_damage_upgrade_vec->begin(),
-          weapon_damage_upgrade_vec->end()));
+    *max_element(weapon_damage_upgrade_vec->begin(),
+                 weapon_damage_upgrade_vec->end()));
   uint16_t units_upgrade_max = *max_element(units_upgrade_vec.begin(),
-      units_upgrade_vec.end());
+                               units_upgrade_vec.end());
 
   printf("units_upgrade_max=%d\n", units_upgrade_max);
 
@@ -414,7 +414,7 @@ int DataHub::get_dat_energy_max() const
 {
   std::vector<uint8_t> *orders_energy_vec = orders->energy();
   uint8_t orders_energy_max = *max_element(orders_energy_vec->begin(),
-      orders_energy_vec->end());
+                              orders_energy_vec->end());
 
   return orders_energy_max;
 }
@@ -464,8 +464,8 @@ void DataHub::printCSV()
   // units.dat
   std::vector<uint8_t> *units_graphics_vec = units->graphics();
   std::vector<uint8_t> *units_ground_weapon_vec = units->ground_weapon();
-  std::vector<units_dat_t::staredit_group_flags_type_t*> *se_group_flags_vec =
-      units->staredit_group_flags();
+  std::vector<units_dat_t::staredit_group_flags_type_t *> *se_group_flags_vec =
+    units->staredit_group_flags();
   std::vector<uint16_t> *units_ready_sound_vec = units->ready_sound();
   std::vector<uint16_t> *units_portrait_vec = units->portrait();
   std::vector<uint8_t> *units_armor_upgrade_vec = units->armor_upgrade();
@@ -494,7 +494,7 @@ void DataHub::printCSV()
 
   // techdata.dat
   uint8_t orders_energy_max = *max_element(orders_energy_vec->begin(),
-      orders_energy_vec->end());
+                              orders_energy_vec->end());
 
   printf("orders_energy_max=%d\n", orders_energy_max);
   std::vector<uint16_t> *techdata_label_vec = techdata->label();
@@ -520,7 +520,7 @@ void DataHub::printCSV()
     csv_dat += CSV_SEPARATOR;
 
     units_dat_t::staredit_group_flags_type_t *se_group_flags =
-        se_group_flags_vec->at(i);
+      se_group_flags_vec->at(i);
     bool zerg = se_group_flags->zerg();
     bool terran = se_group_flags->terran();
     bool protoss = se_group_flags->protoss();
@@ -574,7 +574,7 @@ void DataHub::printCSV()
     if (units_portrait_file != units_portrait_none)
     {
       uint32_t portrait_file = portdata_portrait_file_vec->at(
-          units_portrait_file);
+                                 units_portrait_file);
       sprintf(buf, "ref:portrait_idle_file=%d", portrait_file - 1);
       csv_dat += buf;
 
@@ -589,7 +589,7 @@ void DataHub::printCSV()
     if (units_portrait_file != units_portrait_none)
     {
       uint32_t portrait_file = portdata_portrait_file_vec->at(
-          units_portrait_file);
+                                 units_portrait_file);
       sprintf(buf, "ref:portrait_talking_file=%d", portrait_file);
       csv_dat += buf;
 

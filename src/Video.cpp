@@ -20,7 +20,7 @@
 using namespace std;
 
 Video::Video(std::shared_ptr<Hurricane> hurricane) :
-    mHurricane(hurricane)
+  mHurricane(hurricane)
 {
 
 }
@@ -38,14 +38,14 @@ bool Video::ConvertVideo(const std::string &arcfile, const std::string &file)
 
   Preferences &preferences = Preferences::getInstance();
   snprintf(buf, sizeof(buf), "%s/%s/%s.smk", preferences.getDestDir().c_str(),
-      VIDEO_PATH, file.c_str());
+           VIDEO_PATH, file.c_str());
 
   result = mHurricane->extractFile(arcfile, buf, false);
 
   string ffmpeg_str =
-      string("ffmpeg -y -i ") + buf
-          + " -codec:v libtheora -qscale:v 31 -codec:a libvorbis -qscale:a 15 -pix_fmt yuv420p "
-          + preferences.getDestDir() + "/" + VIDEO_PATH + "/" + file;
+    string("ffmpeg -y -i ") + buf
+    + " -codec:v libtheora -qscale:v 31 -codec:a libvorbis -qscale:a 15 -pix_fmt yuv420p "
+    + preferences.getDestDir() + "/" + VIDEO_PATH + "/" + file;
 
   //cout << "video: " << ffmpeg_str << endl;
 
