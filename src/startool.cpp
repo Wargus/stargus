@@ -58,8 +58,6 @@
 // System
 #include <memory>
 
-// TODO: move to sub-class logic?
-#include <libgrp/libgrp.hpp>
 
 // activate local debug messages
 #define DEBUG 1
