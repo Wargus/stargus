@@ -18,8 +18,8 @@ before_script:
   - cd build
   - curl -L https://github.com/Wargus/stratagus/archive/master.zip -O master.zip || true
   - unzip master.zip
-  - meson build -DSTRATAGUS_BIN='"stratagus"' -DSTRATAGUS_INCLUDE_DIR="$PWD/stratagus-master/gameheaders" ..
-script: make
+  - meson build -DSTRATAGUS_BIN='"stratagus"' -DSTRATAGUS_INCLUDE_DIR="$PWD/stratagus-master/gameheaders"
+script: ninja -C build
 after_success:
   - "if [ $TRAVIS_OS_NAME == osx ]; then \
         if [ $TRAVIS_REPO_SLUG == Wargus/stargus -a \
