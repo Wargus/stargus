@@ -43,6 +43,9 @@ public:
 
   void setPalette(std::shared_ptr<Palette> pal);
 
+  void setGFX(bool gfx);
+  bool getGFX();
+
   /**
    *  Convert a Grp graphic to PNG format
    *
@@ -55,8 +58,8 @@ protected:
   /**
    **  Convert graphics into image.
    */
-  unsigned char* ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp,
-      unsigned char *bp2, int start2);
+  unsigned char* ConvertGraphic(bool gfx, unsigned char *bp, int *wp, int *hp,
+      unsigned char *bp2/*, int start2*/);
 
   /**
    **  Decode a entry(frame) into image.
@@ -75,6 +78,7 @@ private:
   std::shared_ptr<Palette> mPal;
   std::string mArcfile;
   bool mRGBA;
+  bool mGFX;
 
 };
 

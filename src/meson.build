@@ -16,7 +16,6 @@ startool_sources = files(
 	'startool.cpp',
 	'Widgets.cpp',
 	'DataChunk.cpp',
-	'Gfu.cpp',
 	'Hurricane.cpp',
 	'Pcx.cpp',
 	'Scm.cpp',

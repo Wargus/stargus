@@ -31,7 +31,7 @@ Control Todo[] = {
 	{N,0,"font8","font\\font8.fnt" __4},
 
 	// UI
-	{U,0,"ui/icons","game\\icons.grp",0 __3},
+	{G,0,"ui/icons","game\\icons.grp",5 __3},
 	{I,0,"ui/protoss","dlgs\\protoss.grp",0 __3},
 	{I,0,"ui/terran","dlgs\\terran.grp",0 __3},
 	{I,0,"ui/zerg","dlgs\\zerg.grp",0 __3},

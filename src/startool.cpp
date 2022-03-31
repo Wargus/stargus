@@ -45,7 +45,6 @@
 #include "Png.h"
 #include "Panel.h"
 #include "Widgets.h"
-#include "Gfu.h"
 #include "Tileset.h"
 #include "DataChunk.h"
 #include "Casc.h"
@@ -68,6 +67,7 @@ Logger logger("startool.main");
 
 // test only
 void testHook();
+bool dev_hack = false;
 
 //----------------------------------------------------------------------------
 
@@ -205,7 +205,7 @@ struct Arg: public option::Arg
 
 enum optionIndex
 {
-  UNKNOWN, HELP, VIDEO, VERSIONPARAM, DEV
+  UNKNOWN, HELP, VIDEO, VERSIONPARAM, DEV, DEV2
 };
 const option::Descriptor usage[] =
 {
@@ -218,6 +218,10 @@ const option::Descriptor usage[] =
   {
     DEV, 0, "d", "dev", Arg::None,
     "  --dev, -d  \t\tSome test hooks while development. Don't use it if you don't know what it does!"
+  },
+  {
+    DEV2, 0, "d2", "dev2", Arg::None,
+    "  --dev2, -d2  \t\tSome test hooks while development. Don't use it if you don't know what it does!"
   },
   { VERSIONPARAM, 0, "V", "version", Arg::None, "  --version, -V  \t\tShow version" },
   {
@@ -254,6 +258,12 @@ int parseOptions(int argc, const char **argv)
 
   // parse options
   if (options[DEV].count() > 0)
+  {
+    dev_hack = true;
+  }
+
+  // parse options
+  if (options[DEV2].count() > 0)
   {
     testHook();
   }
@@ -340,10 +350,10 @@ void testHook()
   Tileset::ConvertPaletteRGBXtoRGB(terrainWPE->getDataPointer());
   shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
 
-  string grp_file = "unit\\neutral\\Cbattle.grp";
-  Grp grp(storm, grp_file, terrainPalette);
+  string grp_file = "game\\icons.grp";
+  Grp grp(storm, grp_file, pal2);
 
-  grp.save("/tmp/Cbattle-install.png");
+  grp.save("/tmp/icons.png");
 
   cout << "end testHook()" << endl;
   exit(0);
@@ -431,10 +441,6 @@ int main(int argc, const char **argv)
       bool case_func = false;
       for (u = 0; u < len; ++u)
       {
-        // This is only for debugging single steps while development!!!
-        //if(c[u].Type != F && c[u].Type != Q && c[u].Type != M)
-        //continue;
-
         shared_ptr<Storm> storm = make_shared<Storm>(mpqfile);
 
         Pcx pcx_tunit(storm, "game\\tunit.pcx");
@@ -511,7 +517,12 @@ int main(int argc, const char **argv)
           printf("ConvertGfx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
           Grp grp(storm, c[u].ArcFile);
 
-          if (c[u].Arg1 == 4)
+          if (c[u].Arg1 == 5)
+          {
+            grp.setPalette(pal_ticon);
+            grp.setGFX(false);
+          }
+          else if (c[u].Arg1 == 4)
           {
             grp.setPalette(pal_ticon);
             grp.setRGBA(true);
@@ -547,14 +558,6 @@ int main(int argc, const char **argv)
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
-        case U: // WORKS!
-        {
-          printf("ConvertGfu: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-          Gfu gfu(storm);
-          case_func = gfu.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
-          printf("...%s\n", case_func ? "ok" : "nok");
-        }
-        break;
         case I: // WORKS!
         {
           printf("ConvertWidgets: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
@@ -572,10 +575,13 @@ int main(int argc, const char **argv)
         }
         break;
         case W: // WORKS!
-         printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-         case_func = ConvertWav(mpqfile.c_str(), c[u].ArcFile, c[u].File);
-         printf("...%s\n", case_func ? "ok" : "nok");
-         break;
+          if(!dev_hack)
+          {
+            printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+            case_func = ConvertWav(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+            printf("...%s\n", case_func ? "ok" : "nok");
+          }
+          break;
         case V: // WORKS!
           if (preferences.getVideoExtraction())
           {

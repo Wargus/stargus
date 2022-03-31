@@ -16,9 +16,11 @@ Palette::Palette(std::shared_ptr<DataChunk> palData) :
   mLogger("startool.Palette"),
   mPalData(palData)
 {
-  if ((int)mPalData->getSize() != RGB_SIZE)
+  // just a sanity check that palette is a multiple of 256.
+  // FIXME: better make a good class design for normal palettes (256*3) and terrain palettes (256*4)
+  if (!(int)mPalData->getSize() % 256)
   {
-    LOG4CXX_FATAL(mLogger, "Palette size != " + RGB_SIZE);
+    LOG4CXX_FATAL(mLogger, "Palette size == " + mPalData->getSize());
   }
 }
 

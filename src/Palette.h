@@ -43,7 +43,6 @@ public:
 private:
   Logger mLogger;
   std::shared_ptr<DataChunk> mPalData;
-  const int RGB_SIZE = 256 * 3;
 };
 
 #endif /* PALETTE_H_ */

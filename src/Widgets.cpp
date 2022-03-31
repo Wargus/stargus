@@ -44,7 +44,7 @@ bool Widgets::convert(const char *mpqfile, const char *arcfile,
     result = mpq.extractMemory(arcfile, &gfup, NULL);
     if (result)
     {
-      image = ConvertGraphic(0, gfup, &w, &h, gfup2, 0);
+      image = ConvertGraphic(false, gfup, &w, &h, gfup2);
 
       // 0 and 255 are transparent
       p = image;

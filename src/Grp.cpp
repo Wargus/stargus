@@ -23,14 +23,16 @@ using namespace std;
 Grp::Grp(std::shared_ptr<Hurricane> hurricane) :
   Converter(hurricane),
   mLogger("startool.Grp"),
-  mRGBA(false)
+  mRGBA(false),
+  mGFX(true)
 {
 }
 
 Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
   Converter(hurricane),
   mLogger("startool.Grp"),
-  mRGBA(false)
+  mRGBA(false),
+  mGFX(true)
 {
   load(arcfile);
 }
@@ -39,9 +41,19 @@ Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::
   Converter(hurricane),
   mLogger("startool.Grp"),
   mPal(pal),
-  mRGBA(false)
+  mRGBA(false),
+  mGFX(true)
 {
   load(arcfile);
+}
+
+void Grp::setGFX(bool gfx)
+{
+  mGFX = gfx;
+}
+bool Grp::getGFX()
+{
+  return mGFX;
 }
 
 void Grp::setPalette(std::shared_ptr<Palette> pal)
@@ -81,7 +93,24 @@ bool Grp::save(const std::string &file)
   if (result)
   {
 
-    image = ConvertGraphic(1, gfxp, &w, &h, gfxp2, 0);
+    image = ConvertGraphic(getGFX(), gfxp, &w, &h, gfxp2);
+
+    if(!getGFX())
+    {
+      unsigned char *p;
+      unsigned char *end;
+      // 0 and 255 are transparent
+      p = image;
+      end = image + w * h;
+      while (p < end)
+      {
+        if (!*p)
+        {
+          *p = 0xFF;
+        }
+        ++p;
+      }
+    }
 
     palp = mPal->getDataChunk()->getDataPointer();
 
@@ -219,7 +248,7 @@ void Grp::DecodeGfxEntry(int index, unsigned char *start, unsigned char *image, 
   }
 }
 
-unsigned char *Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp, unsigned char *bp2, int start2)
+unsigned char *Grp::ConvertGraphic(bool gfx, unsigned char *bp, int *wp, int *hp, unsigned char *bp2/*, int start2*/)
 {
   int i;
   int count;
@@ -289,31 +318,6 @@ unsigned char *Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp,
   }
   // FIXME: the image isn't centered!!
 
-#if 0
-  // Taken out, must be rewritten.
-  if (max_width - best_width < minx)
-  {
-    minx = max_width - best_width;
-    best_width -= minx;
-  }
-  else
-  {
-    best_width = max_width - minx;
-  }
-  if (max_height - best_height < miny)
-  {
-    miny = max_height - best_height;
-    best_height -= miny;
-  }
-  else
-  {
-    best_height = max_width - miny;
-  }
-
-  //best_width -= minx;
-  //best_height -= miny;
-#endif
-
 //	printf("Best image size %3d, %3d\n", best_width, best_height);
 
   minx = 0;
@@ -350,8 +354,6 @@ unsigned char *Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp,
   if (!image)
   {
     printf("Can't allocate image\n");
-    // TODO: more flexible error handling than calling GUI dialog from conversation routine needed
-    //error("Memory error", "Could not allocate enough memory to read archive.");
   }
   // Set all to transparent.
   memset(image, 255, best_width * best_height * length);
@@ -360,17 +362,8 @@ unsigned char *Grp::ConvertGraphic(int gfx, unsigned char *bp, int *wp, int *hp,
   {
     for (i = 0; i < count; ++i)
     {
-      // Hardcoded support for worker with resource repairing
-      if (i >= start2 && bp2)
-      {
-        DecodeGfxEntry(i, bp2, image + best_width * (i % IPR) + best_height * best_width * IPR * (i / IPR), minx, miny,
-                       best_width * IPR);
-      }
-      else
-      {
         DecodeGfxEntry(i, bp, image + best_width * (i % IPR) + best_height * best_width * IPR * (i / IPR), minx, miny,
                        best_width * IPR);
-      }
     }
   }
   else
