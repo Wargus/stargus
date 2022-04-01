@@ -51,6 +51,9 @@ public:
 
   /**
    * Extract file from MPQ archive and create all directories if not existing
+   *
+   * @param archivedFile File/name identifier in MPQ archive to extract (e.g. game//icons.grp)
+   * @param extractedName File including path where it is extracted to (all folders will be created)
    */
   bool extractFile(const std::string &archivedFile,
       const std::string &extractedName, bool compress);
