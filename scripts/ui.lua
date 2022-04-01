@@ -295,48 +295,29 @@ DefineCursor({
 DefineCursor({
   Name = "cursor-scroll",
   Race = "any",
-  File = "ui/cursors/targn.png",
-  HotSpot = {15, 15},
-  Size = {32, 32}})
-
-DefineCursor({
-  Name = "cursor-scroll",
-  Race = "any",
-  File = "ui/cursors/targn.png",
-  HotSpot = {15, 15},
-  Size = {32, 32}})
-DefineCursor({
-  Name = "cursor-scroll",
-  Race = "any",
-  File = "ui/cursors/targn.png",
-  HotSpot = {15, 15},
-  Size = {32, 32}})
-DefineCursor({
-  Name = "cursor-scroll",
-  Race = "any",
-  File = "ui/cursors/targn.png",
-  HotSpot = {15, 15},
-  Size = {32, 32}})
-
-
+  File = "ui/cursors/drag.png",
+  HotSpot = {63, 63},
+  Size = {128, 128}})
+  
+  
 DefineCursor({
   Name = "cursor-green-hair",
   Race = "any",
-  File = "ui/cursors/targn.png",
-  HotSpot = {15, 15},
-  Size = {32, 32}})
+  File = "ui/cursors/targg.png",
+  HotSpot = {63, 63},
+  Size = {128, 128}})
 DefineCursor({
   Name = "cursor-yellow-hair",
   Race = "any",
   File = "ui/cursors/targn.png",
-  HotSpot = {15, 15},
-  Size = {32, 32}})
+  HotSpot = {63, 63},
+  Size = {128, 128}})
 DefineCursor({
   Name = "cursor-red-hair",
   Race = "any",
-  File = "ui/cursors/targn.png",
-  HotSpot = {15, 15},
-  Size = {32, 32}})
+  File = "ui/cursors/targr.png",
+  HotSpot = {63, 63},
+  Size = {128, 128}})
 
 
 
