@@ -97,13 +97,19 @@ local offy = Video.Height - 480
 --  Define Panels
 --
 local info_panel_x = offx + 0
-local info_panel_y = offy + 160
+local info_panel_y = offy + 200
 
 local min_damage = Div(ActiveUnitVar("PiercingDamage"), 2)
 local max_damage = Add(ActiveUnitVar("PiercingDamage"), ActiveUnitVar("BasicDamage"))
 local damage_bonus = Sub(ActiveUnitVar("PiercingDamage", "Value", "Type"),
               ActiveUnitVar("PiercingDamage", "Value", "Initial"));
 
+MainPanelGraphics = CGraphic:New("pcmdbtns.png", 36, 36)
+MainPanelGraphics:Load()
+ProgressBarEmpty = CGraphic:New("ui/tpbrempt.png", 108, 9)
+ProgressBarEmpty:Load()
+ProgressBarFull = CGraphic:New("ui/tpbrfull.png", 9, 9)
+ProgressBarFull:Load()
 
 DefinePanelContents(
 -- Default presentation. ------------------------
@@ -111,36 +117,32 @@ DefinePanelContents(
   Ident = "panel-general-contents",
   Pos = {offx, offy}, DefaultFont = "game",
   Contents = {
---[[
-  { Pos = {10, 48}, Condition = {ShowOpponent = false, HideNeutral = true},
-    More = {"LifeBar", {Variable = "HitPoints", Height = 7, Width = 45}}
-  },
-]]
+  -- { Pos = {offx + 332, 472}, Condition = {ShowOpponent = false, HideNeutral = true},
+  --   More = {"LifeBar", {Variable = "HitPoints", Height = 5, Width = 65, Border = false, Colors = {{75, "green"}, {50, "yellow"}, {25, "orange"}, {0, "red"}}}}
+  -- },
   { Pos = {offx + 198, offy + 454}, Condition = {ShowOpponent = false, HideNeutral = true},
     More = {"FormattedText2", {
       Font = "small", Variable = "HitPoints", Format = "%d/%d",
       Component1 = "Value", Component2 = "Max", Centered = true}}
   },
-
-  { Pos = {offx + 315, offy + 391}, More = {"Text", {Text = Line(1, UnitName("Active"), 110, "game"), Centered = true}} },
-  { Pos = {offx + 315, offy + 405}, More = {"Text", {Text = Line(2, UnitName("Active"), 110, "game"), Centered = true}} },
+  { Pos = {offx + 205, offy + 271}, More = {"Text", {Text = Line(1, UnitName("Active"), 110, "game"), Centered = false}} },
+  { Pos = {offx + 205, offy + 286}, More = {"Text", {Text = Line(2, UnitName("Active"), 110, "game"), Centered = false}} },
 
 -- Resource Left
-  { Pos = {offx + 88, offy + 86}, Condition = {ShowOpponent = false, GiveResource = "only"},
+  { Pos = {offx + 205, offy + 301}, Condition = {ShowOpponent = false, GiveResource = "only"},
     More = {"FormattedText2", {Format = "%s Left:%d", Variable = "GiveResource",
           Component1 = "Name", Component2 = "Value", Centered = true}}
   },
 
 -- Construction
-  { Pos = {offx + 12, offy + 153}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
-    More = {"CompleteBar", {Variable = "Build", Width = 152, Height = 12}}
+  { Pos = {offx + 205, info_panel_y + 100}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
+    More = {"CompleteBar", {Variable = "Build", Width = 100, Height = 6, Color = "green", Border = true}}
   },
-  { Pos = {offx + 50, offy + 154}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
-    More = {"Text", "% Complete"}},
-  { Pos = {offx + 107, offy + 78}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
+  { Pos = {offx + 205, info_panel_y + 84}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
+    More = {"Text", "Under Construction", "Centered", false}},
+
+  { Pos = {offx + 165, info_panel_y + 78}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
     More = {"Icon", {Unit = "Worker"}}}
-
-
   } },
 -- Supply Building constructed.----------------
   {
@@ -150,13 +152,28 @@ DefinePanelContents(
 -- FIXME more condition. not town hall.
   Contents = {
 -- Food building
-  { Pos = {offx + 16, offy + 71}, More = {"Text", "Usage"} },
-  { Pos = {offx + 58, offy + 86}, More = {"Text", {Text = "Supply : ", Variable = "Supply", Component = "Max"}} },
-  { Pos = {offx + 51, offy + 102}, More = { "Text", {Text = Concat("Demand : ",
-                  If(GreaterThan(ActiveUnitVar("Demand", "Max"), ActiveUnitVar("Supply", "Max")),
-                    InverseVideo(String(ActiveUnitVar("Demand", "Max"))),
-                    String(ActiveUnitVar("Demand", "Max")) ))}}
-    }
+  { Pos = {offx + 200, offy + 86},
+          More = {
+            "Text",
+            {
+                Text = Concat(_("Supply~|: "),
+                              String(PlayerData(ActiveUnitVar("Player", "Value"), "Supply", "")))
+            }
+          }
+        },
+  { Pos = {offx + 200, offy + 102},
+          More = {
+            "Text",
+            {
+                Text = Concat(_("Demand~|: "),
+                              If(GreaterThan(
+                                    PlayerData(ActiveUnitVar("Player", "Value"), "Demand", ""),
+                                    PlayerData(ActiveUnitVar("Player", "Value"), "Supply", "")),
+                                InverseVideo(String(PlayerData(ActiveUnitVar("Player", "Value"), "Demand", ""))),
+                                String(PlayerData(ActiveUnitVar("Player", "Value"), "Demand", ""))))
+            }
+          }
+        },
 
   } },
 -- All own unit -----------------
@@ -186,10 +203,24 @@ DefinePanelContents(
   { Pos = {offx + 16, offy + 86}, Condition = {Research = "only"}, More = {"Text", "Researching:"}},
   { Pos = {offx + 50, offy + 154}, Condition = {Research = "only"}, More = {"Text", "% Complete"}},
 -- Training
-  { Pos = {offx + 12, offy + 153}, Condition = {Training = "only"},
-    More = {"CompleteBar", {Variable = "Training", Width = 152, Height = 12}}
-  },
-  { Pos = {offx + 50, offy + 154}, Condition = {Training = "only"}, More = {"Text", "% Complete"}},
+  -- { Pos = {offx + 205, offy + 100}, Condition = {Training = "only"},
+  --   More = {"CompleteBar", {Variable = "Training", Width = 100, Height = 6, Color = "green", Border = true}}
+  -- },
+  { Pos = {offx + 205, offy + 100}, Condition = {Training = "only"}, More = {"Graphic", "ui/tpbrempt.png"}},
+  { Pos = {offx + 205 + 0*9, offy + 100}, Condition = {Training = ">6"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 0}}},
+  { Pos = {offx + 205 + 1*9, offy + 100}, Condition = {Training = ">14"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 1}}},
+  { Pos = {offx + 205 + 2*9, offy + 100}, Condition = {Training = ">23"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 2}}},
+  { Pos = {offx + 205 + 3*9, offy + 100}, Condition = {Training = ">31"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 3}}},
+  { Pos = {offx + 205 + 4*9, offy + 100}, Condition = {Training = ">39"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 4}}},
+  { Pos = {offx + 205 + 5*9, offy + 100}, Condition = {Training = ">48"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 5}}},
+  { Pos = {offx + 205 + 6*9, offy + 100}, Condition = {Training = ">56"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 6}}},
+  { Pos = {offx + 205 + 7*9, offy + 100}, Condition = {Training = ">64"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 7}}},
+  { Pos = {offx + 205 + 8*9, offy + 100}, Condition = {Training = ">73"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 8}}},
+  { Pos = {offx + 205 + 9*9, offy + 100}, Condition = {Training = ">81"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 9}}},
+  { Pos = {offx + 205 + 10*9, offy + 100}, Condition = {Training = ">89"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 10}}},
+  { Pos = {offx + 205 + 11*9, offy + 100}, Condition = {Training = ">98"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 11}}},
+  { Pos = {offx + 205, offy + 84}, Condition = {Training = "only"}, More = {"Text", "Training", "Centered", false}},
+
 -- Upgrading To
   { Pos = {offx + 12, offy + 153}, Condition = {UpgradeTo = "only"},
     More = {"CompleteBar", {Variable = "UpgradeTo", Width = 152, Height = 12}}
@@ -365,4 +396,3 @@ DefineCursor({
   Rate = 67,
   HotSpot = {63, 63},
   Size = {128, 128}})
-
