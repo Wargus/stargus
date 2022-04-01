@@ -1,4 +1,4 @@
-cpp = meson.get_compiler('cpp')
+#cpp = meson.get_compiler('cpp')
 
 subdir('kaitai')
 
@@ -45,28 +45,6 @@ add_project_arguments('-DKS_STR_ENCODING_NONE', language: 'cpp')
 message('Using stratagus: ' + stratagus_bin)
 
 stargus_sources = files('stargus.cpp')
-
-casc_dep = cpp.find_library('casc', required : false)
-storm_dep = cpp.find_library('storm', required : false)
-png_dep = cpp.find_library('png', required : true)
-zlib_dep = dependency('zlib', required : false)
-imagemagickpp_dep = dependency('ImageMagick++', required : false)
-#libgrp_dep = cpp.find_library('grp', required : true)
-#libgrp_dep = dependency('libgrp', required : true)
-# https://github.com/andreas-volz/libgrp
-
-log4cxx_dep = dependency('liblog4cxx', required : false)
-if log4cxx_dep.found()
-  add_project_arguments('-DHAVE_LOG4CXX', language: 'cpp')
-endif
-
-if casc_dep.found()
-	add_project_arguments('-DHAVE_CASC', language: 'cpp')
-endif
-
-if imagemagickpp_dep.found()
-	add_project_arguments('-DHAVE_IMAGEMAGICKPP', language: 'cpp')
-endif
 
 executable('startool', 
 	startool_sources,
