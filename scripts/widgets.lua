@@ -107,3 +107,45 @@ DefineButtonStyle("icon", {
   },]]
 })
 
+
+DefineButtonStyle("training", {
+  Size = {36, 34},
+  Font = "game",
+  TextNormalColor = "white",
+  TextReverseColor = "white",
+  TextAlign = "Right",
+  TextPos = {36, 24},
+  Default = {
+    -- File = "ui/pcmdbtns.png", -- TODO: per race buttons
+    -- Frame = 5,
+    Size = {36, 34},
+    Border = {
+      SolidColor = {66, 66, 255},
+      Size = 2,
+    }
+  },
+  Hover = {
+    -- File = "ui/pcmdbtns.png", -- TODO: per race buttons
+    -- Frame = 5,
+    Size = {36, 34},
+    Border = {
+      SolidColor = {99, 99, 255},
+      Size = 2,
+    }
+  },
+--[[
+  Selected = {
+    Border = {
+      Color = {0, 252, 0}, Size = 1,
+    },
+  },]]
+  Clicked = {
+    TextNormalColor = "white",
+    --[[Border = {
+      Color = {128, 128, 128}, Size = 1,
+    },]]
+  },
+--[[
+  Disabled = {
+  },]]
+})

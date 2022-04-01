@@ -44,7 +44,7 @@ Licence = "GPL v2"
 Copyright = "Copyright (c) 1998-2015 by The Stratagus Project and Pali Rohar"
 
 -- activate debugging
-require("scripts/mobdebug").start()
+pcall(function() require("scripts/mobdebug").start() end)
 
 -------------------------------------------------------------------------------
 --  Config-Part
@@ -76,7 +76,7 @@ SetTitleScreens(
 SetGameName("sc")
 SetFullGameName(Name)
 
-SetSelectionStyle("ellipse", 0.5)
+SetSelectionStyle("ellipse", 0.6)
 Preference.ShowSightRange = false
 Preference.ShowAttackRange = false
 Preference.ShowReactionRange = false
@@ -165,7 +165,11 @@ SetFogOfWar(true)
 
 SetFogOfWarType("fast")
 
-SetFogOfWarGraphics("tilesets/fog.png")
+if CanAccessFile("tilesets/fog.png") then
+  SetFogOfWarGraphics("tilesets/fog.png")
+else
+  SetFogOfWarGraphics("contrib/fog.png")
+end
 
 --  Choose your default for minimap with/without terrain.
 SetMinimapTerrain(true)

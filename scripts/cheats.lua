@@ -106,7 +106,50 @@ function HandleCheats(str)
       SetGodMode(true)
       AddMessage("Cheat Enabled")
     end
+  elseif (IsDebugEnabled) then
+    if (str == "fast debug") then
+      for i = 0,PlayerMax - 1 do
+        for j = 1,table.getn(resources) do
+        SetSpeedResourcesHarvest(i, resources[j], 1000)
+        SetSpeedResourcesReturn(i, resources[j], 1000)
+        end
+        SetSpeedBuild(i, 1000)
+        SetSpeedTrain(i, 1000)
+        SetSpeedUpgrade(i, 1000)
+        SetSpeedResearch(i, 1000)
+      end
+      AddMessage("FAST DEBUG SPEED")
 
+    elseif (str == "normal debug") then
+      for i = 0,PlayerMax - 1 do
+        for j = 1,table.getn(resources) do
+        SetSpeedResourcesHarvest(i, resources[j], 100)
+        SetSpeedResourcesReturn(i, resources[j], 100)
+        end
+        SetSpeedBuild(i, 100)
+        SetSpeedTrain(i, 100)
+        SetSpeedUpgrade(i, 100)
+        SetSpeedResearch(i, 100)
+      end
+      AddMessage("NORMAL DEBUG SPEED")
+
+    elseif (string.find(str, ".lua")) then
+      AddMessage("Reloading " .. str)
+      print("Force reloading by in-game console cmd " .. str)
+      Load("scripts/" .. str)
+      LoadDecorations();
+      InitUserInterface();
+      LoadUI(GetPlayerData(GetThisPlayer(), "RaceName"))
+
+    elseif (string.find(str, "eval") == 1) then
+      local code = str:gsub("^eval%s", "")
+      AddMessage("Running: " .. code)
+      print("Running by \'eval\' cmd: " .. code)
+      local result = loadstring("return " .. code)
+      result = result()
+      AddMessage(" => " .. tostring(result))
+      print(" => " .. tostring(result))
+    end
   else
     return false
   end

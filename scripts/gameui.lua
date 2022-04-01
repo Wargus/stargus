@@ -101,18 +101,15 @@ function AddTrainingButton(x, y)
     b = CUIButton:new_local()
     b.X = x
     b.Y = y
-    b.Style = FindButtonStyle("icon")
+    b.Style = FindButtonStyle("training")
     UI.TrainingButtons:push_back(b)
 end
 
 AddTrainingButton(offx + 240, offy + 396)
-AddTrainingButton(offx + 240, offy + 433)
-AddTrainingButton(offx + 276, offy + 396)
-AddTrainingButton(offx + 276, offy + 433)
-AddTrainingButton(offx + 312, offy + 396)
-AddTrainingButton(offx + 312, offy + 433)
-AddTrainingButton(offx + 348, offy + 396)
-AddTrainingButton(offx + 348, offy + 433)
+AddTrainingButton(offx + 240, offy + 434)
+AddTrainingButton(offx + 280, offy + 434)
+AddTrainingButton(offx + 320, offy + 434)
+AddTrainingButton(offx + 360, offy + 434)
 
 b = CUIButton:new()
 b.X = offx + 240
@@ -158,15 +155,15 @@ function AddButtonPanelButton(x, y)
     UI.ButtonPanel.Buttons:push_back(b)
 end
 
-AddButtonPanelButton(offx + 505, offy + 358)
-AddButtonPanelButton(offx + 551, offy + 358)
-AddButtonPanelButton(offx + 597, offy + 358)
-AddButtonPanelButton(offx + 505, offy + 398)
-AddButtonPanelButton(offx + 551, offy + 398)
-AddButtonPanelButton(offx + 597, offy + 398)
-AddButtonPanelButton(offx + 505, offy + 438)
-AddButtonPanelButton(offx + 551, offy + 438)
-AddButtonPanelButton(offx + 597, offy + 438)
+AddButtonPanelButton(offx + 507, offy + 358)
+AddButtonPanelButton(offx + 553, offy + 358)
+AddButtonPanelButton(offx + 599, offy + 358)
+AddButtonPanelButton(offx + 507, offy + 398)
+AddButtonPanelButton(offx + 553, offy + 398)
+AddButtonPanelButton(offx + 599, offy + 398)
+AddButtonPanelButton(offx + 507, offy + 438)
+AddButtonPanelButton(offx + 553, offy + 438)
+AddButtonPanelButton(offx + 599, offy + 438)
 
 UI.ButtonPanel.X = offx + 0
 UI.ButtonPanel.Y = offy + 336
@@ -238,6 +235,15 @@ UI.NetworkDiplomacyButton.Y = offy + 320
 --UI.NetworkDiplomacyButton.Text = "Diplomacy"
 UI.NetworkDiplomacyButton.Style = FindButtonStyle(race .. " diplomacy button")
 UI.NetworkDiplomacyButton:SetCallback(function() RunDiplomacyMenu() end)
+
+UI.LifeBarColorNames:clear()
+UI.LifeBarColorNames:push_back("green")
+UI.LifeBarColorNames:push_back("yellow")
+UI.LifeBarColorNames:push_back("orange")
+UI.LifeBarColorNames:push_back("red")
+UI.LifeBarYOffset = -8
+UI.LifeBarBorder = false
+UI.LifeBarPadding = 4
 
 -- minimap terrain at 3,320
 
