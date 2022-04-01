@@ -7,7 +7,7 @@ StartoolUnitTest_sources = files(
   '../../src/Storm.cpp',
   '../../src/Hurricane.cpp',
   '../../src/DataChunk.cpp',
-  '../../src/FileUtil.cpp'
+  '../../src/FileUtil.cpp'  
   )
 
 cppunit_dep = [dependency('cppunit', required : false)]
