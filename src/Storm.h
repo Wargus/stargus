@@ -1,32 +1,3 @@
-//       _________ __                 __
-//      /   _____//  |_____________ _/  |______     ____  __ __  ______
-//      \_____  \\   __\_  __ \__  \\   __\__  \   / ___\|  |  \/  ___/
-//      /        \|  |  |  | \// __ \|  |  / __ \_/ /_/  >  |  /\___ |
-//     /_______  /|__|  |__|  (____  /__| (____  /\___  /|____//____  >
-//             \/                  \/          \//_____/            \/
-//  ______________________                           ______________________
-//                        T H E   W A R   B E G I N S
-//         Stratagus - A free fantasy real time strategy game engine
-//
-/**@name Storm.h - The mpq headerfile. */
-//
-//      (c) Copyright 2002-2012 by Jimmy Salmon, Lutz Sammer and Pali Rohár
-//
-//      This program is free software; you can redistribute it and/or modify
-//      it under the terms of the GNU General Public License as published by
-//      the Free Software Foundation; version 2 dated June, 1991.
-//
-//      This program is distributed in the hope that it will be useful,
-//      but WITHOUT ANY WARRANTY; without even the implied warranty of
-//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//      GNU General Public License for more details.
-//
-//      You should have received a copy of the GNU General Public License
-//      along with this program; if not, write to the Free Software
-//      Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-//      02111-1307, USA.
-//
-//      $Id$
 #ifndef STORM_H_
 #define STORM_H_
 
@@ -55,15 +26,13 @@ public:
    * @param archivedFile File/name identifier in MPQ archive to extract (e.g. game//icons.grp)
    * @param extractedName File including path where it is extracted to (all folders will be created)
    */
-  bool extractFile(const std::string &archivedFile,
-      const std::string &extractedName, bool compress);
+  bool extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress);
 
   /**
    * Attention: This function malloc() bufferLen memory which you've to free yourself!
    * Better use extractDataChunk()
    */
-  bool extractMemory(const std::string &archivedFile,
-      unsigned char **szEntryBufferPrt, size_t *bufferLen);
+  bool extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen);
 
 private:
   void *mMpqHandle; // Open archive handle

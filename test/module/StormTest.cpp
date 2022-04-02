@@ -2,6 +2,10 @@
 #include <config.h>
 #endif
 
+// System
+#include <zlib.h>
+
+// Project
 #include "StormTest.h"
 
 using namespace std;
@@ -18,7 +22,7 @@ void StormTest::tearDown()
 
 }
 
-void StormTest::StormTest_test1_mpq_txt_extractMemory()
+void StormTest::test1_mpq_txt_extractMemory()
 {
   unsigned char *text_str = NULL;
   size_t bufLen = 0;
@@ -35,7 +39,7 @@ void StormTest::StormTest_test1_mpq_txt_extractMemory()
   CPPUNIT_ASSERT(string((char *) text_str) != string(content_result));
 }
 
-void StormTest::StormTest_test2_mpq_txt_extractFile()
+void StormTest::test2_mpq_txt_extractFile()
 {
   string test_data_dir = "test/module/data/";
   string content_result = "stormtest";
@@ -60,6 +64,46 @@ void StormTest::StormTest_test2_mpq_txt_extractFile()
 
   CPPUNIT_ASSERT(result == true);
   CPPUNIT_ASSERT(content_result == filecontent);
+
+  std::remove(savename.c_str());
+}
+
+void StormTest::test3_mpq_txt_extractFileCompressed()
+{
+  string test_data_dir = "test/module/data/";
+  string content_result = "stormtest";
+  string mpq_arc_file = "test.txt";
+  string savename = "test.txt.gz";
+  gzFile gzfile = nullptr;
+
+  shared_ptr<Storm> storm = make_shared<Storm>(test_data_dir + "StormTest_test1_mpq_txt.mpq");
+
+  bool result = storm->extractFile(mpq_arc_file, savename, true);
+
+  // read back & compare ->
+
+  gzfile = gzopen(savename.c_str(), "r");
+
+  int err;
+  int bytes_read;
+  int max_length = 1024;
+  unsigned char buffer[max_length];
+  bytes_read = gzread(gzfile, buffer, max_length - 1);
+  buffer[bytes_read] = '\0';
+
+  if (bytes_read < max_length - 1)
+  {
+    if (!gzeof(gzfile))
+    {
+      gzerror(gzfile, & err);
+      CPPUNIT_ASSERT(err);
+    }
+  }
+
+  std::string dest(buffer,buffer + bytes_read-1);
+
+  CPPUNIT_ASSERT(result == true);
+  CPPUNIT_ASSERT(content_result == dest);
 
   std::remove(savename.c_str());
 }

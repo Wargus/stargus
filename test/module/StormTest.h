@@ -17,8 +17,9 @@ class StormTest : public CPPUNIT_NS::TestFixture
 {
   CPPUNIT_TEST_SUITE(StormTest);
 
-  CPPUNIT_TEST(StormTest_test1_mpq_txt_extractMemory);
-  CPPUNIT_TEST(StormTest_test2_mpq_txt_extractFile);
+  CPPUNIT_TEST(test1_mpq_txt_extractMemory);
+  CPPUNIT_TEST(test2_mpq_txt_extractFile);
+  CPPUNIT_TEST(test3_mpq_txt_extractFileCompressed);
 
   CPPUNIT_TEST_SUITE_END();
 
@@ -30,12 +31,17 @@ protected:
   /**
    * Test the extractMemory() function by reading a string from a example .mpq file and compare the content
    */
-  void StormTest_test1_mpq_txt_extractMemory();
+  void test1_mpq_txt_extractMemory();
 
   /**
-   *
+   * Test extractFile() function by expanding the file on drive and then read in again and compare the content
    */
-  void StormTest_test2_mpq_txt_extractFile();
+  void test2_mpq_txt_extractFile();
+
+  /**
+   * Test extractFile() function by expanding the file (gzip compressed) on drive and then read in again and compare the content
+   */
+  void test3_mpq_txt_extractFileCompressed();
 
 private:
 
