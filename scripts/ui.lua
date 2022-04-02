@@ -36,12 +36,12 @@ Load("scripts/gameui.lua")
 
 --ManaSprite("ui/mana.png", -7, -7, 7, 7)
 --ManaSprite("ui/ppbrfull.png", 0, -1, 108, 9)
-DefineSprites({Name="sprite-mana", File="ui/ppbrfull.png",
-  Offset={0, -1}, Size={108, 9}})
+-- DefineSprites({Name="sprite-mana", File="ui/ppbrfull.png",
+--   Offset={0, -1}, Size={108, 9}})
 --HealthSprite("ui/health.png", 1, -7, 7, 7)
 --HealthSprite("ui/ppbrfull.png", 0, -1, 108, 9)
-DefineSprites({Name="sprite-health", File="ui/ppbrfull.png",
-  Offset={0, -1}, Size={108, 9}})
+-- DefineSprites({Name="sprite-health", File="ui/ppbrfull.png",
+--   Offset={0, -1}, Size={108, 9}})
 
 --DefineSprites({Name = "sprite-spell", File = "ui/bloodlust,haste,slow,invisible,shield.png",
 --        Offset = {1, 1}, Size = {16, 16}})
@@ -61,27 +61,27 @@ DefineSprites({Name="sprite-health", File="ui/ppbrfull.png",
 --ShowHealthVertical()
 --ShowHealthHorizontal()
 --ShowHealthDot()
-DefineDecorations({Index="HitPoints", HideNeutral=true, CenterX=true,
-  OffsetPercent={50, 100}, Method={"sprite", {"sprite-health"}}})
+-- DefineDecorations({Index="HitPoints", HideNeutral=true, CenterX=true,
+--   OffsetPercent={50, 100}, Method={"sprite", {"sprite-health"}}})
 
 --ShowManaBar()
 --ShowManaVertical()
 --ShowManaHorizontal()
 --ShowManaDot()
-DefineDecorations({Index="Mana", HideNeutral=true, CenterX=true,
-  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
-DefineDecorations({Index="Transport", HideNeutral=true, CenterX=true,
-  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
-DefineDecorations({Index="Research", HideNeutral=true, CenterX=true,
-  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
-DefineDecorations({Index="Training", HideNeutral=true, CenterX=true,
-  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
-DefineDecorations({Index="UpgradeTo", HideNeutral=true, CenterX=true,
-  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
-DefineDecorations({Index="GiveResource", HideNeutral=true, CenterX=true,
-  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
-DefineDecorations({Index="CarryResource", HideNeutral=true, CenterX=true,
-  OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
+-- DefineDecorations({Index="Mana", HideNeutral=true, CenterX=true,
+--   OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
+-- DefineDecorations({Index="Transport", HideNeutral=true, CenterX=true,
+--   OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
+-- DefineDecorations({Index="Research", HideNeutral=true, CenterX=true,
+--   OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
+-- DefineDecorations({Index="Training", HideNeutral=true, CenterX=true,
+--   OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
+-- DefineDecorations({Index="UpgradeTo", HideNeutral=true, CenterX=true,
+--   OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
+-- DefineDecorations({Index="GiveResource", HideNeutral=true, CenterX=true,
+--   OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
+-- DefineDecorations({Index="CarryResource", HideNeutral=true, CenterX=true,
+--   OffsetPercent={50, 100}, Method={"sprite", {"sprite-mana"}}})
 
 --ShowNoFull()
 --ShowFull()
@@ -108,131 +108,272 @@ MainPanelGraphics = CGraphic:New("pcmdbtns.png", 36, 36)
 MainPanelGraphics:Load()
 ProgressBarEmpty = CGraphic:New("ui/tpbrempt.png", 108, 9)
 ProgressBarEmpty:Load()
-ProgressBarFull = CGraphic:New("ui/tpbrfull.png", 9, 9)
+ProgressBarFull = CGraphic:New("ui/tpbrfull.png", 3, 9)
 ProgressBarFull:Load()
 
 DefinePanelContents(
 -- Default presentation. ------------------------
   {
-  Ident = "panel-general-contents",
-  Pos = {offx, offy}, DefaultFont = "game",
-  Contents = {
-  -- { Pos = {offx + 332, 472}, Condition = {ShowOpponent = false, HideNeutral = true},
-  --   More = {"LifeBar", {Variable = "HitPoints", Height = 5, Width = 65, Border = false, Colors = {{75, "green"}, {50, "yellow"}, {25, "orange"}, {0, "red"}}}}
-  -- },
-  { Pos = {offx + 198, offy + 454}, Condition = {ShowOpponent = false, HideNeutral = true},
-    More = {"FormattedText2", {
-      Font = "small", Variable = "HitPoints", Format = "%d/%d",
-      Component1 = "Value", Component2 = "Max", Centered = true}}
-  },
-  { Pos = {offx + 205, offy + 271}, More = {"Text", {Text = Line(1, UnitName("Active"), 110, "game"), Centered = false}} },
-  { Pos = {offx + 205, offy + 286}, More = {"Text", {Text = Line(2, UnitName("Active"), 110, "game"), Centered = false}} },
+    Ident = "panel-general-contents",
+    Pos = {info_panel_x, info_panel_x},
+    DefaultFont = "game",
+    Contents = {
+      -- { Pos = {offx + 332, 472}, Condition = {ShowOpponent = false, HideNeutral = true},
+      --   More = {"LifeBar", {Variable = "HitPoints", Height = 5, Width = 65, Border = false, Colors = {{75, "green"}, {50, "yellow"}, {25, "orange"}, {0, "red"}}}}
+      -- },
+      {
+        Pos = {200, 500}, Condition = {ShowOpponent = false, HideNeutral = true},
+        More = {"FormattedText2", {
+          Font = "small", Variable = "HitPoints", Format = "%d/%d",
+          Component1 = "Value", Component2 = "Max", Centered = true}}
+      },
+      { Pos = {280, 428}, More = {"Text", {Text = Line(1, UnitName("Active"), 110, "game"), Centered = false}} },
+      { Pos = {280, 436}, More = {"Text", {Text = Line(2, UnitName("Active"), 110, "game"), Centered = false}} },
 
--- Resource Left
-  { Pos = {offx + 205, offy + 301}, Condition = {ShowOpponent = false, GiveResource = "only"},
-    More = {"FormattedText2", {Format = "%s Left:%d", Variable = "GiveResource",
+      -- Resource Left
+      { Pos = {205, 301}, Condition = {ShowOpponent = false, GiveResource = "only"},
+        More = {"FormattedText2", {
+          Format = "%s Left:%d", Variable = "GiveResource",
           Component1 = "Name", Component2 = "Value", Centered = true}}
+      },
+    }
   },
-
--- Construction
-  { Pos = {offx + 205, info_panel_y + 100}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
-    More = {"CompleteBar", {Variable = "Build", Width = 100, Height = 6, Color = "green", Border = true}}
-  },
-  { Pos = {offx + 205, info_panel_y + 84}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
-    More = {"Text", "Under Construction", "Centered", false}},
-
-  { Pos = {offx + 165, info_panel_y + 78}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
-    More = {"Icon", {Unit = "Worker"}}}
-  } },
--- Supply Building constructed.----------------
   {
-  Ident = "panel-building-contents",
-  Pos = {info_panel_x, info_panel_y}, DefaultFont = "game",
-  Condition = {ShowOpponent = false, HideNeutral = true, Build = "false", Supply = "only", Training = "false", UpgradeTo = "false"},
--- FIXME more condition. not town hall.
-  Contents = {
--- Food building
-  { Pos = {offx + 200, offy + 86},
-          More = {
-            "Text",
-            {
-                Text = Concat(_("Supply~|: "),
-                              String(PlayerData(ActiveUnitVar("Player", "Value"), "Supply", "")))
-            }
-          }
+    Ident = "panel-supply-building-contents",
+    Pos = {info_panel_x, info_panel_y}, DefaultFont = "game",
+    Condition = {ShowOpponent = false, HideNeutral = true, Build = "false", Supply = "only", Training = "false", UpgradeTo = "false"},
+    Contents = {
+      {
+        Pos = {offx + 200, offy + 86},
+        More = { "Text", { Text = Concat(_("Supply~|: "), String(PlayerData(ActiveUnitVar("Player", "Value"), "Supply", ""))) } }
+      },
+      {
+        Pos = {offx + 200, offy + 102},
+        More = {
+          "Text",
+          {
+            Text = Concat(_("Demand~|: "),
+            If(GreaterThan(
+            PlayerData(ActiveUnitVar("Player", "Value"), "Demand", ""),
+            PlayerData(ActiveUnitVar("Player", "Value"), "Supply", "")),
+            InverseVideo(String(PlayerData(ActiveUnitVar("Player", "Value"), "Demand", ""))),
+            String(PlayerData(ActiveUnitVar("Player", "Value"), "Demand", ""))))
+          },
         },
-  { Pos = {offx + 200, offy + 102},
-          More = {
-            "Text",
-            {
-                Text = Concat(_("Demand~|: "),
-                              If(GreaterThan(
-                                    PlayerData(ActiveUnitVar("Player", "Value"), "Demand", ""),
-                                    PlayerData(ActiveUnitVar("Player", "Value"), "Supply", "")),
-                                InverseVideo(String(PlayerData(ActiveUnitVar("Player", "Value"), "Demand", ""))),
-                                String(PlayerData(ActiveUnitVar("Player", "Value"), "Demand", ""))))
-            }
-          }
-        },
-
-  } },
--- All own unit -----------------
+      },
+    },
+  },
   {
-  Ident = "panel-all-unit-contents",
-  Pos = {info_panel_x, info_panel_y},
-  DefaultFont = "game",
-  Condition = {ShowOpponent = false, HideNeutral = true, Build = "false"},
-  Contents = {
---[[
-  { Pos = {37, 86}, Condition = {PiercingDamage = "only"},
-    More = {"Text", {Text = Concat("Damage: ", String(min_damage), "-", String(max_damage),
-                If(Equal(0, damage_bonus), "",
-                  InverseVideo(Concat("+", String(damage_bonus)))) )}}
+    Ident = "panel-unit-under-construction",
+    Pos = {info_panel_x, info_panel_y},
+    DefaultFont = "game",
+    Condition = {ShowOpponent = false, Build = "only"},
+    Contents = {
+      -- { Pos = {offx + 205, info_panel_y + 100}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
+      --   More = {"CompleteBar", {Variable = "Build", Width = 100, Height = 6, Color = "green", Border = true}}
+      -- },
+      { Pos = {offx + 199, offy + 100}, Condition = {Build = "only"}, More = {"Graphic", "ui/tpbrempt.png"}},
+      { Pos = {offx + 199 +  1*3, offy + 100}, Condition = {Build =  ">3"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  1}}},
+      { Pos = {offx + 199 +  2*3, offy + 100}, Condition = {Build =  ">6"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  2}}},
+      { Pos = {offx + 199 +  3*3, offy + 100}, Condition = {Build =  ">9"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  3}}},
+      { Pos = {offx + 199 +  4*3, offy + 100}, Condition = {Build = ">12"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  4}}},
+      { Pos = {offx + 199 +  5*3, offy + 100}, Condition = {Build = ">15"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  5}}},
+      { Pos = {offx + 199 +  6*3, offy + 100}, Condition = {Build = ">18"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  6}}},
+      { Pos = {offx + 199 +  7*3, offy + 100}, Condition = {Build = ">21"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  7}}},
+      { Pos = {offx + 199 +  8*3, offy + 100}, Condition = {Build = ">24"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  8}}},
+      { Pos = {offx + 199 +  9*3, offy + 100}, Condition = {Build = ">27"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  9}}},
+      { Pos = {offx + 199 + 10*3, offy + 100}, Condition = {Build = ">30"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 10}}},
+      { Pos = {offx + 199 + 11*3, offy + 100}, Condition = {Build = ">33"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 11}}},
+      { Pos = {offx + 199 + 12*3, offy + 100}, Condition = {Build = ">36"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 12}}},
+      { Pos = {offx + 199 + 13*3, offy + 100}, Condition = {Build = ">39"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 13}}},
+      { Pos = {offx + 199 + 14*3, offy + 100}, Condition = {Build = ">42"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 14}}},
+      { Pos = {offx + 199 + 15*3, offy + 100}, Condition = {Build = ">45"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 15}}},
+      { Pos = {offx + 199 + 16*3, offy + 100}, Condition = {Build = ">48"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 16}}},
+      { Pos = {offx + 199 + 17*3, offy + 100}, Condition = {Build = ">51"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 17}}},
+      { Pos = {offx + 199 + 18*3, offy + 100}, Condition = {Build = ">54"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 18}}},
+      { Pos = {offx + 199 + 19*3, offy + 100}, Condition = {Build = ">57"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 19}}},
+      { Pos = {offx + 199 + 20*3, offy + 100}, Condition = {Build = ">60"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 20}}},
+      { Pos = {offx + 199 + 21*3, offy + 100}, Condition = {Build = ">63"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 21}}},
+      { Pos = {offx + 199 + 22*3, offy + 100}, Condition = {Build = ">66"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 22}}},
+      { Pos = {offx + 199 + 23*3, offy + 100}, Condition = {Build = ">69"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 23}}},
+      { Pos = {offx + 199 + 24*3, offy + 100}, Condition = {Build = ">72"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 24}}},
+      { Pos = {offx + 199 + 25*3, offy + 100}, Condition = {Build = ">75"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 25}}},
+      { Pos = {offx + 199 + 26*3, offy + 100}, Condition = {Build = ">78"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 26}}},
+      { Pos = {offx + 199 + 27*3, offy + 100}, Condition = {Build = ">81"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 27}}},
+      { Pos = {offx + 199 + 28*3, offy + 100}, Condition = {Build = ">84"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 28}}},
+      { Pos = {offx + 199 + 29*3, offy + 100}, Condition = {Build = ">87"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 29}}},
+      { Pos = {offx + 199 + 30*3, offy + 100}, Condition = {Build = ">90"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 30}}},
+      { Pos = {offx + 199 + 31*3, offy + 100}, Condition = {Build = ">93"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 31}}},
+      { Pos = {offx + 199 + 32*3, offy + 100}, Condition = {Build = ">96"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 32}}},
+      { Pos = {offx + 199 + 33*3, offy + 100}, Condition = {Build = ">99"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 33}}},
+      
+      { Pos = {offx + 205, info_panel_y + 84}, More = {"Text", "Under Construction", "Centered", false} },
 
+      -- { Pos = {offx + 165, info_panel_y + 78}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
+      --   More = {"Icon", {Unit = "Worker"}}}
+    }
   },
+  {
+    Ident = "panel-training-contents",
+    Pos = {info_panel_x, info_panel_y},
+    DefaultFont = "game",
+    Condition = {ShowOpponent = false, HideNeutral = true, Training = "only"},
+    Contents = {
+      -- boxes
+      { Pos = {238, 194}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {238, 232}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {276, 232}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {314, 232}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {352, 232}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      -- numbers
+      { Pos = {238 + 7, 194 + 10}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 12}}},
+      { Pos = {238 + 7, 232 + 10}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 14}}},
+      { Pos = {276 + 7, 232 + 10}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 16}}},
+      { Pos = {314 + 7, 232 + 10}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 18}}},
+      { Pos = {352 + 7, 232 + 10}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 20}}},
+      -- progressbar
+      { Pos = {offx + 199, offy + 100}, Condition = {Training = "only"}, More = {"Graphic", "ui/tpbrempt.png"}},
+      { Pos = {offx + 199 +  1*3, offy + 100}, Condition = {Training =  ">3"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  1}}},
+      { Pos = {offx + 199 +  2*3, offy + 100}, Condition = {Training =  ">6"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  2}}},
+      { Pos = {offx + 199 +  3*3, offy + 100}, Condition = {Training =  ">9"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  3}}},
+      { Pos = {offx + 199 +  4*3, offy + 100}, Condition = {Training = ">12"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  4}}},
+      { Pos = {offx + 199 +  5*3, offy + 100}, Condition = {Training = ">15"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  5}}},
+      { Pos = {offx + 199 +  6*3, offy + 100}, Condition = {Training = ">18"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  6}}},
+      { Pos = {offx + 199 +  7*3, offy + 100}, Condition = {Training = ">21"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  7}}},
+      { Pos = {offx + 199 +  8*3, offy + 100}, Condition = {Training = ">24"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  8}}},
+      { Pos = {offx + 199 +  9*3, offy + 100}, Condition = {Training = ">27"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  9}}},
+      { Pos = {offx + 199 + 10*3, offy + 100}, Condition = {Training = ">30"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 10}}},
+      { Pos = {offx + 199 + 11*3, offy + 100}, Condition = {Training = ">33"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 11}}},
+      { Pos = {offx + 199 + 12*3, offy + 100}, Condition = {Training = ">36"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 12}}},
+      { Pos = {offx + 199 + 13*3, offy + 100}, Condition = {Training = ">39"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 13}}},
+      { Pos = {offx + 199 + 14*3, offy + 100}, Condition = {Training = ">42"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 14}}},
+      { Pos = {offx + 199 + 15*3, offy + 100}, Condition = {Training = ">45"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 15}}},
+      { Pos = {offx + 199 + 16*3, offy + 100}, Condition = {Training = ">48"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 16}}},
+      { Pos = {offx + 199 + 17*3, offy + 100}, Condition = {Training = ">51"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 17}}},
+      { Pos = {offx + 199 + 18*3, offy + 100}, Condition = {Training = ">54"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 18}}},
+      { Pos = {offx + 199 + 19*3, offy + 100}, Condition = {Training = ">57"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 19}}},
+      { Pos = {offx + 199 + 20*3, offy + 100}, Condition = {Training = ">60"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 20}}},
+      { Pos = {offx + 199 + 21*3, offy + 100}, Condition = {Training = ">63"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 21}}},
+      { Pos = {offx + 199 + 22*3, offy + 100}, Condition = {Training = ">66"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 22}}},
+      { Pos = {offx + 199 + 23*3, offy + 100}, Condition = {Training = ">69"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 23}}},
+      { Pos = {offx + 199 + 24*3, offy + 100}, Condition = {Training = ">72"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 24}}},
+      { Pos = {offx + 199 + 25*3, offy + 100}, Condition = {Training = ">75"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 25}}},
+      { Pos = {offx + 199 + 26*3, offy + 100}, Condition = {Training = ">78"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 26}}},
+      { Pos = {offx + 199 + 27*3, offy + 100}, Condition = {Training = ">81"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 27}}},
+      { Pos = {offx + 199 + 28*3, offy + 100}, Condition = {Training = ">84"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 28}}},
+      { Pos = {offx + 199 + 29*3, offy + 100}, Condition = {Training = ">87"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 29}}},
+      { Pos = {offx + 199 + 30*3, offy + 100}, Condition = {Training = ">90"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 30}}},
+      { Pos = {offx + 199 + 31*3, offy + 100}, Condition = {Training = ">93"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 31}}},
+      { Pos = {offx + 199 + 32*3, offy + 100}, Condition = {Training = ">96"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 32}}},
+      { Pos = {offx + 199 + 33*3, offy + 100}, Condition = {Training = ">99"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 33}}},
+    }, 
+  },
+  {
+    Ident = "panel-upgrading-contents",
+    Pos = {info_panel_x, info_panel_y},
+    DefaultFont = "game",
+    Condition = {ShowOpponent = false, HideNeutral = true, UpgradeTo = "only"},
+    Contents = {
+      -- boxes
+      { Pos = {238, 194}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {238, 232}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {276, 232}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {314, 232}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {352, 232}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      -- numbers
+      { Pos = {238 + 7, 194 + 10}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 12}}},
+      { Pos = {238 + 7, 232 + 10}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 14}}},
+      { Pos = {276 + 7, 232 + 10}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 16}}},
+      { Pos = {314 + 7, 232 + 10}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 18}}},
+      { Pos = {352 + 7, 232 + 10}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 20}}},
+      -- progressbar
+      { Pos = {offx + 199, offy + 100}, Condition = {UpgradeTo = "only"}, More = {"Graphic", "ui/tpbrempt.png"}},
+      { Pos = {offx + 199 +  1*3, offy + 100}, Condition = {UpgradeTo =  ">3"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  1}}},
+      { Pos = {offx + 199 +  2*3, offy + 100}, Condition = {UpgradeTo =  ">6"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  2}}},
+      { Pos = {offx + 199 +  3*3, offy + 100}, Condition = {UpgradeTo =  ">9"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  3}}},
+      { Pos = {offx + 199 +  4*3, offy + 100}, Condition = {UpgradeTo = ">12"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  4}}},
+      { Pos = {offx + 199 +  5*3, offy + 100}, Condition = {UpgradeTo = ">15"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  5}}},
+      { Pos = {offx + 199 +  6*3, offy + 100}, Condition = {UpgradeTo = ">18"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  6}}},
+      { Pos = {offx + 199 +  7*3, offy + 100}, Condition = {UpgradeTo = ">21"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  7}}},
+      { Pos = {offx + 199 +  8*3, offy + 100}, Condition = {UpgradeTo = ">24"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  8}}},
+      { Pos = {offx + 199 +  9*3, offy + 100}, Condition = {UpgradeTo = ">27"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  9}}},
+      { Pos = {offx + 199 + 10*3, offy + 100}, Condition = {UpgradeTo = ">30"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 10}}},
+      { Pos = {offx + 199 + 11*3, offy + 100}, Condition = {UpgradeTo = ">33"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 11}}},
+      { Pos = {offx + 199 + 12*3, offy + 100}, Condition = {UpgradeTo = ">36"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 12}}},
+      { Pos = {offx + 199 + 13*3, offy + 100}, Condition = {UpgradeTo = ">39"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 13}}},
+      { Pos = {offx + 199 + 14*3, offy + 100}, Condition = {UpgradeTo = ">42"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 14}}},
+      { Pos = {offx + 199 + 15*3, offy + 100}, Condition = {UpgradeTo = ">45"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 15}}},
+      { Pos = {offx + 199 + 16*3, offy + 100}, Condition = {UpgradeTo = ">48"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 16}}},
+      { Pos = {offx + 199 + 17*3, offy + 100}, Condition = {UpgradeTo = ">51"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 17}}},
+      { Pos = {offx + 199 + 18*3, offy + 100}, Condition = {UpgradeTo = ">54"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 18}}},
+      { Pos = {offx + 199 + 19*3, offy + 100}, Condition = {UpgradeTo = ">57"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 19}}},
+      { Pos = {offx + 199 + 20*3, offy + 100}, Condition = {UpgradeTo = ">60"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 20}}},
+      { Pos = {offx + 199 + 21*3, offy + 100}, Condition = {UpgradeTo = ">63"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 21}}},
+      { Pos = {offx + 199 + 22*3, offy + 100}, Condition = {UpgradeTo = ">66"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 22}}},
+      { Pos = {offx + 199 + 23*3, offy + 100}, Condition = {UpgradeTo = ">69"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 23}}},
+      { Pos = {offx + 199 + 24*3, offy + 100}, Condition = {UpgradeTo = ">72"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 24}}},
+      { Pos = {offx + 199 + 25*3, offy + 100}, Condition = {UpgradeTo = ">75"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 25}}},
+      { Pos = {offx + 199 + 26*3, offy + 100}, Condition = {UpgradeTo = ">78"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 26}}},
+      { Pos = {offx + 199 + 27*3, offy + 100}, Condition = {UpgradeTo = ">81"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 27}}},
+      { Pos = {offx + 199 + 28*3, offy + 100}, Condition = {UpgradeTo = ">84"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 28}}},
+      { Pos = {offx + 199 + 29*3, offy + 100}, Condition = {UpgradeTo = ">87"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 29}}},
+      { Pos = {offx + 199 + 30*3, offy + 100}, Condition = {UpgradeTo = ">90"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 30}}},
+      { Pos = {offx + 199 + 31*3, offy + 100}, Condition = {UpgradeTo = ">93"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 31}}},
+      { Pos = {offx + 199 + 32*3, offy + 100}, Condition = {UpgradeTo = ">96"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 32}}},
+      { Pos = {offx + 199 + 33*3, offy + 100}, Condition = {UpgradeTo = ">99"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 33}}},
+    }, 
+  },
+  {
+    Ident = "panel-armored-unit-contents",
+    Pos = {info_panel_x, info_panel_y},
+    DefaultFont = "small",
+    Condition = {ShowOpponent = false, HideNeutral = false, Build = "false", Training = "false"},
+    Contents = {
+      { Pos = {238 + 9, 232 + 12}, Condition = {Armor = "only"}, More = {"Graphic", {Graphic = "cmdicons.png", Frame = 292}}},
+      { Pos = {238 + 7, 232 + 10}, Condition = {Armor = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 24}}},
+      { Pos = {238 + 7 + 24, 232 + 34}, Condition = {Armor = "only"},  More = {"Text", { Text = "", Variable = "Armor", Stat = true, Centered = true}}},
 
-  { Pos = {47, 102}, Condition = {AttackRange = "only"},
-    More = {"Text", {
-          Text = "Range: ", Variable = "AttackRange" , Stat = true}}
-  },
-]]
--- Research
-  { Pos = {offx + 12, offy + 153}, Condition = {Research = "only"},
-    More = {"CompleteBar", {Variable = "Research", Width = 152, Height = 12}}
-  },
-  { Pos = {offx + 16, offy + 86}, Condition = {Research = "only"}, More = {"Text", "Researching:"}},
-  { Pos = {offx + 50, offy + 154}, Condition = {Research = "only"}, More = {"Text", "% Complete"}},
--- Training
-  -- { Pos = {offx + 205, offy + 100}, Condition = {Training = "only"},
-  --   More = {"CompleteBar", {Variable = "Training", Width = 100, Height = 6, Color = "green", Border = true}}
-  -- },
-  { Pos = {offx + 205, offy + 100}, Condition = {Training = "only"}, More = {"Graphic", "ui/tpbrempt.png"}},
-  { Pos = {offx + 205 + 0*9, offy + 100}, Condition = {Training = ">6"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 0}}},
-  { Pos = {offx + 205 + 1*9, offy + 100}, Condition = {Training = ">14"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 1}}},
-  { Pos = {offx + 205 + 2*9, offy + 100}, Condition = {Training = ">23"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 2}}},
-  { Pos = {offx + 205 + 3*9, offy + 100}, Condition = {Training = ">31"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 3}}},
-  { Pos = {offx + 205 + 4*9, offy + 100}, Condition = {Training = ">39"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 4}}},
-  { Pos = {offx + 205 + 5*9, offy + 100}, Condition = {Training = ">48"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 5}}},
-  { Pos = {offx + 205 + 6*9, offy + 100}, Condition = {Training = ">56"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 6}}},
-  { Pos = {offx + 205 + 7*9, offy + 100}, Condition = {Training = ">64"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 7}}},
-  { Pos = {offx + 205 + 8*9, offy + 100}, Condition = {Training = ">73"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 8}}},
-  { Pos = {offx + 205 + 9*9, offy + 100}, Condition = {Training = ">81"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 9}}},
-  { Pos = {offx + 205 + 10*9, offy + 100}, Condition = {Training = ">89"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 10}}},
-  { Pos = {offx + 205 + 11*9, offy + 100}, Condition = {Training = ">98"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 11}}},
-  { Pos = {offx + 205, offy + 84}, Condition = {Training = "only"}, More = {"Text", "Training", "Centered", false}},
+      { Pos = {276 + 9, 232 + 12}, Condition = {PiercingDamage = "only"}, More = {"Graphic", {Graphic = "cmdicons.png", Frame = 290}}},
+      { Pos = {276 + 7, 232 + 10}, Condition = {PiercingDamage = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 24}}},
+      { Pos = {276 + 7 + 24, 232 + 34}, Condition = {PiercingDamage = "only"},  More = {"Text", { Text = "", Variable = "PiercingDamage", Stat = true, Centered = true}}},
 
--- Upgrading To
-  { Pos = {offx + 12, offy + 153}, Condition = {UpgradeTo = "only"},
-    More = {"CompleteBar", {Variable = "UpgradeTo", Width = 152, Height = 12}}
+      { Pos = {314 + 9, 232 + 12}, Condition = {AttackRange = "only"}, More = {"Graphic", {Graphic = "cmdicons.png", Frame = 288}}},
+      { Pos = {314 + 7, 232 + 10}, Condition = {AttackRange = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 24}}},
+      { Pos = {314 + 7 + 24, 232 + 34}, Condition = {AttackRange = "only"},  More = {"Text", { Text = "", Variable = "AttackRange", Stat = true, Centered = true}}},
+    }
   },
-  { Pos = {offx + 37, offy + 86}, More = {"Text", "Upgrading:"}, Condition = {UpgradeTo = "only"} },
-  { Pos = {offx + 50, offy + 154}, More = {"Text", "% Complete"}, Condition = {UpgradeTo = "only"} },
--- Mana
+  {
+    Ident = "panel-own-unit-contents",
+    Pos = {info_panel_x, info_panel_y},
+    DefaultFont = "game",
+    Condition = {ShowOpponent = false, HideNeutral = true, Build = "false"},
+    Contents = {
+    --[[
+      { Pos = {37, 86}, Condition = {PiercingDamage = "only"},
+        More = {"Text", {Text = Concat("Damage: ", String(min_damage), "-", String(max_damage),
+                    If(Equal(0, damage_bonus), "",
+                      InverseVideo(Concat("+", String(damage_bonus)))) )}}
+
+      },
+
+      { Pos = {47, 102}, Condition = {AttackRange = "only"},
+        More = {"Text", {
+              Text = "Range: ", Variable = "AttackRange" , Stat = true}}
+      },
+    ]]
+    -- Research
+    { Pos = {offx + 12, offy + 153}, Condition = {Research = "only"},
+      More = {"CompleteBar", {Variable = "Research", Width = 152, Height = 12}}
+    },
+    { Pos = {offx + 16, offy + 86}, Condition = {Research = "only"}, More = {"Text", "Researching:"}},
+    { Pos = {offx + 50, offy + 154}, Condition = {Research = "only"}, More = {"Text", "% Complete"}},
+  -- Mana
   { Pos = {offx + 16, offy + 148}, Condition = {Mana = "only"},
     More = {"CompleteBar", {Variable = "Mana", Height = 16, Width = 140, Border = true}}
   },
   { Pos = {offx + 86, offy + 150}, More = {"Text", {Variable = "Mana"}}, Condition = {Mana = "only"} },
--- Ressource Carry
+
+  -- Ressource Carry
   { Pos = {offx + 61, offy + 149}, Condition = {CarryResource = "only"},
     More = {"FormattedText2", {Format = "Carry: %d %s", Variable = "CarryResource",
         Component1 = "Value", Component2 = "Name"}}

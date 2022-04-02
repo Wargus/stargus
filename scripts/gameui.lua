@@ -107,9 +107,9 @@ end
 
 AddTrainingButton(offx + 240, offy + 396)
 AddTrainingButton(offx + 240, offy + 434)
-AddTrainingButton(offx + 280, offy + 434)
-AddTrainingButton(offx + 320, offy + 434)
-AddTrainingButton(offx + 360, offy + 434)
+AddTrainingButton(offx + 278, offy + 434)
+AddTrainingButton(offx + 316, offy + 434)
+AddTrainingButton(offx + 354, offy + 434)
 
 b = CUIButton:new()
 b.X = offx + 240

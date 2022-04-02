@@ -116,13 +116,6 @@ DefineButtonStyle("training", {
   TextAlign = "Right",
   TextPos = {36, 24},
   Default = {
-    -- File = "ui/pcmdbtns.png", -- TODO: per race buttons
-    -- Frame = 5,
-    Size = {36, 34},
-    Border = {
-      SolidColor = {66, 66, 255},
-      Size = 2,
-    }
   },
   Hover = {
     -- File = "ui/pcmdbtns.png", -- TODO: per race buttons
