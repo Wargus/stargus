@@ -15,8 +15,6 @@ StartoolUnitTest_sources = files(
   '../../src/FileUtil.cpp'  
   )
 
-cppunit_dep = [dependency('cppunit', required : false)]
-
 executable('StartoolUnitTest', 
 			StartoolUnitTest_sources,
 			include_directories : StartoolUnitTest_incdir,
