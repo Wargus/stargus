@@ -31,13 +31,14 @@ DataChunk::DataChunk(unsigned char **data, const size_t size) :
 DataChunk::~DataChunk()
 {
   free(mData);
+  mData = nullptr;
 }
 
 void DataChunk::addData(unsigned char *data, const size_t size)
 {
-  mData = (unsigned char *) realloc(mData,
-                                    mSize * sizeof(unsigned char) + size * sizeof(unsigned char));
+  mData = (unsigned char *) realloc(mData, mSize * sizeof(unsigned char) + size * sizeof(unsigned char));
   memcpy(mData + mSize * sizeof(unsigned char), data, size);
+  mSize += size;
 }
 
 unsigned char *DataChunk::getDataPointer() const
