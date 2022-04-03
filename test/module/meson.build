@@ -4,6 +4,8 @@ StartoolUnitTest_incdir = include_directories('../../src')
 StartoolUnitTest_sources = files(
   'TestMain.cpp',
   'StormTest.cpp',
+  'DataChunkTest.cpp',
+  
   '../../src/Storm.cpp',
   '../../src/Hurricane.cpp',
   '../../src/DataChunk.cpp',
