@@ -30,7 +30,8 @@ public:
 
 	/**
 	 * Extract file from archive and create all directories if not existing
-	 * TODO: implement 'compress' in a generic way. currently works only for Storm!
+	 *
+	 * @param compress if set true save file with gzip on drive. No special file extension is added automatic. (default: false)
 	 */
   virtual bool extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress = false) = 0;
 
@@ -48,6 +49,7 @@ public:
 
 
 protected:
+
 	std::string mArchiveName;
 };
 
