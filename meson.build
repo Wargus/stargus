@@ -22,7 +22,12 @@ if imagemagickpp_dep.found()
 	add_project_arguments('-DHAVE_IMAGEMAGICKPP', language: 'cpp')
 endif
 
+cppunit_dep = dependency('cppunit', required : false)
+
 subdir('src')
 subdir('tools')
-subdir('test/module')
+
+if cppunit_dep.found()
+	subdir('test/module')
+endif
 
