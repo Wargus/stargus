@@ -7,7 +7,6 @@
 // Local
 #include "endian.h"
 #include "Pcx.h"
-#include "Preferences.h"
 #include "Storm.h"
 #include "Png.h"
 #include "Hurricane.h"
@@ -56,17 +55,13 @@ bool Pcx::load(const std::string &arcfile)
   return result;
 }
 
-bool Pcx::savePNG(const std::string &filename)
+bool Pcx::savePNG(Storage storage)
 {
   bool result = true;
-  char buf[8192] =
-  { '\0' };
 
   if (mRawData)
   {
-    Preferences &preferences = Preferences::getInstance();
-    sprintf(buf, "%s/%s/%s", preferences.getDestDir().c_str(), GRAPHICS_PATH, filename.c_str());
-    Png::save(buf, rawImage, mWidth, mHeight, mPalette->getDataChunk()->getDataPointer(), 0);
+    Png::save(storage.getFullPath().c_str(), rawImage, mWidth, mHeight, mPalette->getDataChunk()->getDataPointer(), 0);
   }
   else
   {

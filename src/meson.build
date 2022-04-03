@@ -26,7 +26,8 @@ startool_sources = files(
 	'Video.cpp',
 	'Converter.cpp',
 	'Tbl.cpp',
-	'DataHub.cpp'
+	'DataHub.cpp',
+	'Storage.cpp'
 	)
 	
 stratagus_prefix = get_option('prefix')
