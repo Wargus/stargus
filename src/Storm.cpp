@@ -49,8 +49,7 @@ bool Storm::openArchive(const std::string &archiveName)
   closeArchive();
 
   // Open an archive, e.g. "d2music.mpq"
-  if (!SFileOpenArchive(archiveName.c_str(), 0, STREAM_FLAG_READ_ONLY,
-                        &mMpqHandle))
+  if (!SFileOpenArchive(archiveName.c_str(), 0, STREAM_FLAG_READ_ONLY, &mMpqHandle))
   {
     result = false;
   }
@@ -70,8 +69,7 @@ void Storm::closeArchive()
   }
 }
 
-bool Storm::extractMemory(const std::string &archivedFile,
-                          unsigned char **szEntryBufferPrt, size_t *bufferLen)
+bool Storm::extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen)
 {
   int nError = ERROR_SUCCESS;
   unsigned char *szEntryBuffer = nullptr;
@@ -129,12 +127,11 @@ bool Storm::extractMemory(const std::string &archivedFile,
   return result;
 }
 
-bool Storm::extractFile(const std::string &archivedFile,
-                        const std::string &extractedName, bool compress)
+bool Storm::extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress)
 {
   HANDLE hFile = nullptr;          // Archived file handle
-  FILE *file = nullptr;          // Disk file handle
-  gzFile gzfile = nullptr;          // Compressed file handle
+  FILE *file = nullptr;            // Disk file handle
+  gzFile gzfile = nullptr;         // Compressed file handle
   int nError = ERROR_SUCCESS;
   bool result = true;
 
@@ -172,11 +169,17 @@ bool Storm::extractFile(const std::string &archivedFile,
       {
         if (compress)
         {
-          gzwrite(gzfile, szBuffer, dwBytes);
+          if(gzfile)
+          {
+            gzwrite(gzfile, szBuffer, dwBytes);
+          }
         }
         else
         {
-          fwrite(szBuffer, 1, dwBytes, file);
+          if(file)
+          {
+            fwrite(szBuffer, 1, dwBytes, file);
+          }
         }
       }
     }

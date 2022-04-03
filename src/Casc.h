@@ -22,16 +22,16 @@ public:
 
   /**
    * Extract file from CASC archive and create all directories if not existing
+   *
+   * @param TODO compress gzip compression -> NOT IMPLEMENTED
    */
-  bool extractFile(const std::string &archivedFile,
-      const std::string &extractedName, bool compress);
+  bool extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress);
 
   /**
    * Attention: This function malloc() bufferLen memory which you've to free yourself!
    * Better use extractDataChunk()
    */
-  bool extractMemory(const std::string &archivedFile,
-      unsigned char **szEntryBufferPrt, size_t *bufferLen);
+  bool extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen);
 
 private:
   void *mStorage;

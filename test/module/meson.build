@@ -5,8 +5,11 @@ StartoolUnitTest_sources = files(
   'TestMain.cpp',
   'StormTest.cpp',
   'DataChunkTest.cpp',
+  'BreezeTest.cpp',
   
+  # needed internal dependencies to build the tests
   '../../src/Storm.cpp',
+  '../../src/Breeze.cpp',
   '../../src/Hurricane.cpp',
   '../../src/DataChunk.cpp',
   '../../src/FileUtil.cpp'  

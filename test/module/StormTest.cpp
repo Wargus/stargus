@@ -37,6 +37,8 @@ void StormTest::test1_mpq_txt_extractMemory()
   CPPUNIT_ASSERT(result == true);
   CPPUNIT_ASSERT((int)bufLen == ((int)content_result.length() + 1)); // calculate +1 because the '\0' counts extra in the raw char* data
   CPPUNIT_ASSERT(string((char *) text_str) != string(content_result));
+
+  free(text_str);
 }
 
 void StormTest::test2_mpq_txt_extractFile()
@@ -100,7 +102,7 @@ void StormTest::test3_mpq_txt_extractFileCompressed()
     }
   }
 
-  std::string dest(buffer,buffer + bytes_read-1);
+  std::string dest(buffer, buffer + bytes_read-1);
 
   CPPUNIT_ASSERT(result == true);
   CPPUNIT_ASSERT(content_result == dest);

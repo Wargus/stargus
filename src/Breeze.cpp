@@ -6,15 +6,18 @@
 
 // Local
 #include "Breeze.h"
+#include "FileUtil.h"
 
 // System
 #include <stdio.h>
 #include <string.h>
 #include <fstream>
+#include <zlib.h>
 
 using namespace std;
 
-Breeze::Breeze()
+Breeze::Breeze() :
+  mLogger("startool.Breeze")
 {
 
 }
@@ -24,7 +27,8 @@ Breeze::~Breeze()
   closeArchive();
 }
 
-Breeze::Breeze(const std::string &archiveName)
+Breeze::Breeze(const std::string &archiveName) :
+  mLogger("startool.Breeze")
 {
   openArchive(archiveName);
 }
@@ -40,33 +44,54 @@ void Breeze::closeArchive()
   mArchiveName.clear();
 }
 
-// TODO 'compress' doesn't work!!
-bool Breeze::extractFile(const std::string &archivedFile,
-                         const std::string &extractedName, bool compress)
+bool Breeze::extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress)
 {
   unsigned char *szEntryBuffer = nullptr;
   size_t bufferLen = 0;
   bool result = false;
+  FILE *file = nullptr;            // Disk file handle
+  gzFile gzfile = nullptr;         // Compressed file handle
 
   if (extractMemory(archivedFile, &szEntryBuffer, &bufferLen))
   {
-    string extractedNamePath = mArchiveName + "/" + extractedName;
-    FILE *f = fopen(extractedNamePath.c_str(), "w");
-    if (f)
-    {
-      /*size_t dwBytes = */fwrite(szEntryBuffer, sizeof(char), bufferLen, f);
-      // TODO error handling in case open/write fails
+    CheckPath(extractedName);
 
-      free(szEntryBuffer);
-      result = true;
+    if (compress)
+    {
+      gzfile = gzopen(extractedName.c_str(), "wb9");
+      if (gzfile)
+      {
+        int bytes_written = gzwrite(gzfile, szEntryBuffer, bufferLen);
+        gzclose(gzfile);
+        if (bytes_written != (int) bufferLen)
+        {
+          LOG4CXX_FATAL(mLogger, "Wrong buffer len:" + to_string(bytes_written) + "!=" + to_string(bufferLen));
+        }
+
+      }
     }
+    else
+    {
+      file = fopen(extractedName.c_str(), "wb");
+      if (file)
+      {
+        size_t dwBytes = fwrite(szEntryBuffer, sizeof(char), bufferLen, file);
+        fclose(file);
+        if (dwBytes != bufferLen)
+        {
+          LOG4CXX_FATAL(mLogger, "Wrong buffer len:" + to_string(dwBytes) + "!=" + to_string(bufferLen));
+        }
+      }
+    }
+
+    free(szEntryBuffer);
+    result = true;
   }
 
   return result;
 }
 
-bool Breeze::extractMemory(const std::string &archivedFile,
-                           unsigned char **szEntryBufferPrt, size_t *bufferLen)
+bool Breeze::extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen)
 {
   FILE *f;
   bool result = true;
