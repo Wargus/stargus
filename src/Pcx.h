@@ -11,6 +11,7 @@
 #include "Converter.h"
 #include "Logger.h"
 #include "Palette.h"
+#include "Storage.h"
 
 class Pcx: public Converter
 {
@@ -25,9 +26,9 @@ public:
    *  Convert a pcx graphic to PNG format
    *
    *  @param arcfile File identifier in the MPQ file
-   *  @param file Place to save the file on the drive (relative to game dir)
+   *  @param file Place to save the file on the drive
    */
-  bool savePNG(const std::string &filename);
+  bool savePNG(Storage storage);
 
   std::shared_ptr<Palette> getPalette();
 

@@ -53,6 +53,7 @@
 #include "Breeze.h"
 #include "Video.h"
 #include "DataHub.h"
+#include "Storage.h"
 
 // System
 #include <memory>
@@ -414,13 +415,15 @@ int main(int argc, const char **argv)
   // set this to false for activating the SC remastered Casc code while development
   bool mpq = true;
 
+  Storage graphics(preferences.getDestDir(), "graphics");
+
   if (mpq)
   {
     for (i = 0; i <= 1; ++i)
     {
       Control *c;
       unsigned int len;
-      bool extracted = false;
+      //bool extracted = false;
 
       switch (i)
       {
@@ -428,13 +431,13 @@ int main(int argc, const char **argv)
         // CD install.exe renamed to StarCraft.mpq or other main mpq file
         c = CDTodo;
         len = sizeof(CDTodo) / sizeof(*CDTodo);
-        extracted = false;
+        //extracted = false;
         break;
       case 1:
         // StarDat.mpq or stardat.mpq from CD or hard drive
         c = Todo;
         len = sizeof(Todo) / sizeof(*Todo);
-        extracted = true;
+        //extracted = true;
         break;
       }
 
@@ -595,7 +598,7 @@ int main(int argc, const char **argv)
         {
           printf("ConvertPcx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
           Pcx pcx(storm, c[u].ArcFile);
-          case_func = pcx.savePNG(string(c[u].File) + ".png");
+          case_func = pcx.savePNG(graphics(string(c[u].File) + ".png"));
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
