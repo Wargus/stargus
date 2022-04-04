@@ -1,7 +1,7 @@
 /*
- * Terrain.cpp
+ * Tileset.cpp
  *
- *      Author: Aandreas
+ *      Author: Andreas Volz
  */
 
 // Local

@@ -10,6 +10,7 @@
 // Local
 #include "Converter.h"
 #include "Palette.h"
+#include "Storage.h"
 
 // System
 #include <string.h>
@@ -25,8 +26,7 @@ class Grp: public Converter
 public:
   Grp(std::shared_ptr<Hurricane> hurricane);
   Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile);
-  Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile,
-      std::shared_ptr<Palette> pal);
+  Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<Palette> pal);
   virtual ~Grp();
 
   /**
@@ -39,7 +39,7 @@ public:
 
   bool load(const std::string &arcfile);
 
-  bool save(const std::string &filename);
+  bool save(Storage filename);
 
   void setPalette(std::shared_ptr<Palette> pal);
 
@@ -58,20 +58,17 @@ protected:
   /**
    **  Convert graphics into image.
    */
-  unsigned char* ConvertGraphic(bool gfx, unsigned char *bp, int *wp, int *hp,
-      unsigned char *bp2/*, int start2*/);
+  unsigned char* ConvertGraphic(bool gfx, unsigned char *bp, int *wp, int *hp, unsigned char *bp2);
 
   /**
    **  Decode a entry(frame) into image.
    */
-  void DecodeGfxEntry(int index, unsigned char *start, unsigned char *image,
-      int ix, int iy, int iadd);
+  void DecodeGfxEntry(int index, unsigned char *start, unsigned char *image, int ix, int iy, int iadd);
 
   /**
    **  Decode a entry(frame) into image.
    */
-  void DecodeGfuEntry(int index, unsigned char *start, unsigned char *image,
-      int ix, int iy, int iadd);
+  void DecodeGfuEntry(int index, unsigned char *start, unsigned char *image, int ix, int iy, int iadd);
 
 private:
   Logger mLogger;

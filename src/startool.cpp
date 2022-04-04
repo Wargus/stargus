@@ -415,7 +415,9 @@ int main(int argc, const char **argv)
   // set this to false for activating the SC remastered Casc code while development
   bool mpq = true;
 
-  Storage graphics(preferences.getDestDir(), "graphics");
+  Storage graphics;
+  graphics.setDataPath(preferences.getDestDir());
+  graphics.setDataType("graphics");
 
   if (mpq)
   {
@@ -557,7 +559,7 @@ int main(int argc, const char **argv)
             grp.setPalette(terrainPalette);
           }
 
-          case_func = grp.save(string(c[u].File) + ".png");
+          case_func = grp.save(graphics(string(c[u].File) + ".png"));
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
