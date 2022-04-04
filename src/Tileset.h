@@ -1,5 +1,5 @@
 /*
- * Terrain.h
+ * Tileset.h
  *
  *      Author: Andreas Volz
  */

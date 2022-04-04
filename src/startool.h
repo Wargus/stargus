@@ -84,24 +84,9 @@ using namespace std;
 //----------------------------------------------------------------------------
 
 /**
- **		Path the cursor files. (default=$DIR/graphic/ui/)
- */
-#define CURSOR_PATH		"graphics/ui"
-
-/**
- **		Path the graphic files. (default=$DIR/graphic)
- */
-#define GRAPHIC_PATH		"graphics"
-
-/**
  **		Path the sound files. (default=$DIR/sounds)
  */
 #define SOUND_PATH		"sounds"
-
-/**
- **		Path the text files. (default=$DIR/texts)
- */
-#define TEXT_PATH		"campaigns"
 
 /**
  **  Conversion control sturcture.

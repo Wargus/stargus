@@ -13,26 +13,14 @@ Storage::Storage()
 
 }
 
-Storage::Storage(const char *datapath) :
-  mDataPath(datapath)
+Storage::Storage(const char *filename) :
+  mFilename(filename)
 {
 
 }
 
-Storage::Storage(const std::string &datapath) :
-  mDataPath(datapath)
-{
-
-}
-
-Storage::Storage(const std::string &datapath, const std::string &datatype) :
-  mDataPath(datapath), mDataType(datatype)
-{
-
-}
-
-Storage::Storage(const std::string &datapath, const std::string &datatype, const std::string &filename) :
-  mDataPath(datapath), mDataType(datatype), mFilename(filename)
+Storage::Storage(const std::string &filename) :
+  mFilename(filename)
 {
 
 }

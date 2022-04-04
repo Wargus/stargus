@@ -27,7 +27,8 @@ startool_sources = files(
 	'Converter.cpp',
 	'Tbl.cpp',
 	'DataHub.cpp',
-	'Storage.cpp'
+	'Storage.cpp',
+	'PaletteImage.cpp'
 	)
 	
 stratagus_prefix = get_option('prefix')

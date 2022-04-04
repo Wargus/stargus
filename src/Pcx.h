@@ -4,14 +4,15 @@
  *      Author: Andreas Volz
  */
 
-#ifndef PCX_H_
-#define PCX_H_
+#ifndef PCX_H
+#define PCX_H
 
-// Local
+// Project
 #include "Converter.h"
 #include "Logger.h"
 #include "Palette.h"
 #include "Storage.h"
+#include "PaletteImage.h"
 
 class Pcx: public Converter
 {
@@ -72,13 +73,11 @@ private:
   Logger mLogger;
   std::shared_ptr<Palette> mPalette;
   std::shared_ptr<DataChunk> mRawData;
-  struct PCXheader pcxh;
+  std::shared_ptr<PaletteImage> mPaletteImage;
   unsigned char *rawImage;
-  unsigned char *mImageParserPos;
-  int mWidth;
-  int mHeight;
+  unsigned char *mImageParserPos;;
   const int RGB_BYTE_SIZE = 3;
   const int RGB_SIZE = 256 * RGB_BYTE_SIZE;
 };
 
-#endif /* PCX_H_ */
+#endif /* PCX_H */

@@ -20,12 +20,12 @@
 using namespace std;
 
 Pcx::Pcx(std::shared_ptr<Hurricane> hurricane) :
-  Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(nullptr), mWidth(0), mHeight(0)
+  Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(nullptr)
 {
 }
 
 Pcx::Pcx(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
-  Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(nullptr), mWidth(0), mHeight(0)
+  Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(nullptr)
 {
   load(arcfile);
 }
@@ -61,7 +61,7 @@ bool Pcx::savePNG(Storage storage)
 
   if (mRawData)
   {
-    Png::save(storage.getFullPath().c_str(), rawImage, mWidth, mHeight, mPalette->getDataChunk()->getDataPointer(), 0);
+    Png::save(storage.getFullPath().c_str(), mPaletteImage->getPixelData(), mPaletteImage->getWidth(), mPaletteImage->getHeight(), mPalette->getDataChunk()->getDataPointer(), 0);
   }
   else
   {
@@ -78,7 +78,7 @@ std::shared_ptr<Palette> Pcx::getPalette()
 
 void Pcx::copyIndexPalette(int start, int length, int index)
 {
-  int max_index = ((mWidth * mHeight) / length) - 1;
+  int max_index = ((mPaletteImage->getWidth() * mPaletteImage->getHeight()) / length) - 1;
   //int remain_pixel = (mWidth * mHeight) % length;
   bool dynamic_index = false;
 
@@ -129,6 +129,8 @@ void Pcx::extractHeader()
 {
   if (mRawData)
   {
+    struct PCXheader pcxh;
+
     memcpy(&pcxh, mRawData->getDataPointer(), sizeof(struct PCXheader));
     pcxh.Xmin = ConvertLE16(pcxh.Xmin);
     pcxh.Ymin = ConvertLE16(pcxh.Ymin);
@@ -136,8 +138,10 @@ void Pcx::extractHeader()
     pcxh.Ymax = ConvertLE16(pcxh.Ymax);
     pcxh.BytesPerLine = ConvertLE16(pcxh.BytesPerLine);
 
-    mWidth = pcxh.Xmax - pcxh.Xmin + 1;
-    mHeight = pcxh.Ymax - pcxh.Ymin + 1;
+    int width = pcxh.Xmax - pcxh.Xmin + 1;
+    int height = pcxh.Ymax - pcxh.Ymin + 1;
+
+    mPaletteImage = make_shared<PaletteImage>(width, height);
   }
 }
 
@@ -148,14 +152,14 @@ void Pcx::extractImage()
   unsigned char *dest = NULL;
   unsigned char ch = 0;
 
-  rawImage = (unsigned char *) malloc(mWidth * mHeight);
+  rawImage = (unsigned char *) malloc(mPaletteImage->getWidth() * mPaletteImage->getHeight());
   mImageParserPos = mRawData->getDataPointer() + sizeof(struct PCXheader);
 
-  for (y = 0; y < mHeight; ++y)
+  for (y = 0; y < mPaletteImage->getHeight(); ++y)
   {
     count = 0;
-    dest = rawImage + y * mWidth;
-    for (int i = 0; i < mWidth; ++i)
+    dest = rawImage + y * mPaletteImage->getWidth();
+    for (int i = 0; i < mPaletteImage->getWidth(); ++i)
     {
       if (!count)
       {
@@ -171,6 +175,7 @@ void Pcx::extractImage()
         }
       }
       dest[i] = ch;
+      mPaletteImage->addPixel(ch);
       --count;
     }
   }

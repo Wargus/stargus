@@ -10,7 +10,6 @@
 #include "Png.h"
 #include "FileUtil.h"
 #include "Storm.h"
-#include "Preferences.h"
 
 // System
 #include <cstdio>
@@ -78,7 +77,7 @@ bool Grp::load(const std::string &arcfile)
   return true;
 }
 
-bool Grp::save(const std::string &file)
+bool Grp::save(Storage filename)
 {
   unsigned char *palp = NULL;
   unsigned char *gfxp = NULL;
@@ -86,7 +85,6 @@ bool Grp::save(const std::string &file)
   unsigned char *image = NULL;
   int w;
   int h;
-  char buf[1024];
   bool result = true;
 
   result = mHurricane->extractMemory(mArcfile, &gfxp, NULL);
@@ -116,16 +114,14 @@ bool Grp::save(const std::string &file)
 
     free(gfxp);
 
-    Preferences &preferences = Preferences::getInstance();
-    sprintf(buf, "%s/%s/%s", preferences.getDestDir().c_str(), GRAPHICS_PATH, file.c_str());
 
     if (!getRGBA())
     {
-      Png::save(buf, image, w, h, palp, 255);
+      Png::save(filename.getFullPath().c_str(), image, w, h, palp, 255);
     }
     else
     {
-      Png::saveRGBA(buf, image, w, h, palp, 255);
+      Png::saveRGBA(filename.getFullPath().c_str(), image, w, h, palp, 255);
     }
 
     free(image);
@@ -161,6 +157,7 @@ void Grp::DecodeGfuEntry(int index, unsigned char *start, unsigned char *image, 
   width = FetchByte(bp);
   height = FetchByte(bp);
   offset = FetchLE32(bp);
+
   // High bit of width
   if (offset < 0)
   {
@@ -248,7 +245,7 @@ void Grp::DecodeGfxEntry(int index, unsigned char *start, unsigned char *image, 
   }
 }
 
-unsigned char *Grp::ConvertGraphic(bool gfx, unsigned char *bp, int *wp, int *hp, unsigned char *bp2/*, int start2*/)
+unsigned char *Grp::ConvertGraphic(bool gfx, unsigned char *bp, int *wp, int *hp, unsigned char *bp2)
 {
   int i;
   int count;

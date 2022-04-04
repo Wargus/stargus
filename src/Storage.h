@@ -14,13 +14,9 @@ class Storage
 public:
   Storage();
 
-  Storage(const char *datapath);
+  Storage(const char *filename);
 
-  Storage(const std::string &datapath);
-
-  Storage(const std::string &datapath, const std::string &datatype);
-
-  Storage(const std::string &datapath, const std::string &datatype, const std::string &filename);
+  Storage(const std::string &filename);
 
   virtual ~Storage();
 
