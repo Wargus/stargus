@@ -115,6 +115,11 @@ Control Todo[] = {
 	{G,0,"tcmdbtns","unit\\cmdbtns\\tcmdbtns.grp",4 __3},
 	{G,0,"zcmdbtns","unit\\cmdbtns\\zcmdbtns.grp",4 __3},
 
+	//wireframes
+	{G,0,"wirefram","unit\\wirefram\\wirefram.grp",6 __3},
+	{G,0,"tranwire","unit\\wirefram\\tranwire.grp",6 __3},
+	{G,0,"grpwire","unit\\wirefram\\grpwire.grp",6 __3},
+
 	// Cursors
 	{G,0,"ui/cursors/arrow","cursor\\arrow.grp",0 __3},
 	{G,0,"ui/cursors/drag","cursor\\Drag.grp",0 __3},

@@ -99,7 +99,7 @@ unsigned char DataChunk::at(size_t pos)
   }
   else
   {
-    LOG4CXX_WARN(mLogger, "'pos' bigger then data: " + pos);
+    LOG4CXX_WARN(mLogger, "'pos' bigger then data: " + to_string(pos) + " < " + to_string(mSize));
   }
 
   return ret;

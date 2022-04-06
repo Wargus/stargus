@@ -34,13 +34,17 @@ public:
   std::shared_ptr<Palette> getPalette();
 
   /**
-   * Take 8*3 palette bytes (rgb) from one place in the palette and copy them into another place
+   * Take 8*3 palette bytes (rgb) from one place in the image and copy them into another place
+   * The place is defined by the color position in the image itself.
+   * TODO: I need to write a more extensive documentation for this
    *
    * @param start where to place the copy in the palette position
    * @param length the length of one color index
    * @param index the color index
    */
   void copyIndexPalette(int start, int length, int index);
+
+  void copyIndexPaletteIconColor();
 
 private:
   struct PCXheader
@@ -68,14 +72,11 @@ private:
    */
   void extractImage();
 
-  void extractPalette();
-
   Logger mLogger;
   std::shared_ptr<Palette> mPalette;
   std::shared_ptr<DataChunk> mRawData;
   std::shared_ptr<PaletteImage> mPaletteImage;
   unsigned char *rawImage;
-  unsigned char *mImageParserPos;;
   const int RGB_BYTE_SIZE = 3;
   const int RGB_SIZE = 256 * RGB_BYTE_SIZE;
 };

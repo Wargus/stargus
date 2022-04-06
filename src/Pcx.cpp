@@ -20,12 +20,12 @@
 using namespace std;
 
 Pcx::Pcx(std::shared_ptr<Hurricane> hurricane) :
-  Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(nullptr)
+  Converter(hurricane), mLogger("startool.Pcx"), rawImage(0)
 {
 }
 
 Pcx::Pcx(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
-  Converter(hurricane), mLogger("startool.Pcx"), rawImage(0), mImageParserPos(nullptr)
+  Converter(hurricane), mLogger("startool.Pcx"), rawImage(0)
 {
   load(arcfile);
 }
@@ -45,7 +45,7 @@ bool Pcx::load(const std::string &arcfile)
     free(rawImage);
     extractHeader();
     extractImage();
-    extractPalette();
+    //extractPalette();
   }
   else
   {
@@ -78,51 +78,61 @@ std::shared_ptr<Palette> Pcx::getPalette()
 
 void Pcx::copyIndexPalette(int start, int length, int index)
 {
-  int max_index = ((mPaletteImage->getWidth() * mPaletteImage->getHeight()) / length) - 1;
-  //int remain_pixel = (mWidth * mHeight) % length;
-  bool dynamic_index = false;
-
-  //printf("max index: %d\n", max_index);
-  //printf("remain_pixel: %d\n", remain_pixel);
-
-  if (index > max_index)
+  if(mPaletteImage)
   {
-    //printf("max index reached!\n");
-  }
+    int max_index = ((mPaletteImage->getWidth() * mPaletteImage->getHeight()) / length) - 1;
+    //int remain_pixel = (mWidth * mHeight) % length;
+    bool dynamic_index = false;
 
-  if (index == -1)
-  {
-    dynamic_index = true;
-  }
+    //printf("max index: %d\n", max_index);
+    //printf("remain_pixel: %d\n", remain_pixel);
 
-  if (mPalette)
-  {
-    unsigned char *pal = mPalette->getDataChunk()->getDataPointer();
-    int pos_r = 0;
-    int pos_g = 1;
-    int pos_b = 2;
-
-    //printf("w: %d / h:%d\n", mWidth, mHeight);
-
-    for (int i = 0; i < length; i++)
+    if (index > max_index)
     {
-      if (dynamic_index)
+      //printf("max index reached!\n");
+    }
+
+    if (index == -1)
+    {
+      dynamic_index = true;
+    }
+
+    if (mPalette)
+    {
+      unsigned char *pal = mPalette->getDataChunk()->getDataPointer();
+      int pos_r = 0;
+      int pos_g = 1;
+      int pos_b = 2;
+
+      //printf("w: %d / h:%d\n", mPaletteImage->getWidth(), mPaletteImage->getHeight());
+
+      for (int i = 0; i < length; i++)
       {
-        index++;
+        if (dynamic_index)
+        {
+          index++;
+        }
+
+        int rel_index = i + (index * length);
+        //printf("rel_index:%d, i:%d, index:%d, length:%d\n", rel_index, i, index, length);
+
+        //printf("pal_pos: %d\n", rawImage[rel_index]);
+        //printf("-> r:%x / g:%x / b:%x\n", pal[rawImage[rel_index]*3], pal[rawImage[rel_index]*3+1], pal[rawImage[rel_index]*3+2]);
+
+        int start_pal_dest = start * RGB_BYTE_SIZE + i * RGB_BYTE_SIZE;
+
+        // TODO: here is a index over bounds bug that I need to find
+        pal[start_pal_dest + pos_r] = pal[rawImage[rel_index] * RGB_BYTE_SIZE + pos_r];
+        pal[start_pal_dest + pos_g] = pal[rawImage[rel_index] * RGB_BYTE_SIZE + pos_g];
+        pal[start_pal_dest + pos_b] = pal[rawImage[rel_index] * RGB_BYTE_SIZE + pos_b];
       }
-
-      int rel_index = i + (index * length);
-
-      //printf("pal_pos: %d\n", rawImage[rel_index]);
-      //printf("-> r:%x / g:%x / b:%x\n", pal[rawImage[rel_index]*3], pal[rawImage[rel_index]*3+1], pal[rawImage[rel_index]*3+2]);
-
-      int start_pal_dest = start * RGB_BYTE_SIZE + i * RGB_BYTE_SIZE;
-
-      pal[start_pal_dest + pos_r] = pal[rawImage[rel_index] * RGB_BYTE_SIZE + pos_r];
-      pal[start_pal_dest + pos_g] = pal[rawImage[rel_index] * RGB_BYTE_SIZE + pos_g];
-      pal[start_pal_dest + pos_b] = pal[rawImage[rel_index] * RGB_BYTE_SIZE + pos_b];
     }
   }
+}
+
+void Pcx::copyIndexPaletteIconColor()
+{
+  copyIndexPalette(0, 16, 0);
 }
 
 void Pcx::extractHeader()
@@ -151,58 +161,55 @@ void Pcx::extractImage()
   int count;
   unsigned char *dest = NULL;
   unsigned char ch = 0;
-
-  rawImage = (unsigned char *) malloc(mPaletteImage->getWidth() * mPaletteImage->getHeight());
-  mImageParserPos = mRawData->getDataPointer() + sizeof(struct PCXheader);
-
-  for (y = 0; y < mPaletteImage->getHeight(); ++y)
-  {
-    count = 0;
-    dest = rawImage + y * mPaletteImage->getWidth();
-    for (int i = 0; i < mPaletteImage->getWidth(); ++i)
-    {
-      if (!count)
-      {
-        ch = *mImageParserPos++;
-        if ((ch & 0xc0) == 0xc0)
-        {
-          count = ch & 0x3f;
-          ch = *mImageParserPos++;
-        }
-        else
-        {
-          count = 1;
-        }
-      }
-      dest[i] = ch;
-      mPaletteImage->addPixel(ch);
-      --count;
-    }
-  }
-}
-
-void Pcx::extractPalette()
-{
-  unsigned char *dest = NULL;
-  unsigned char ch = 0;
-
-  unsigned char *pal = NULL;
+  unsigned char *imageParserPos = nullptr;
 
   if (mRawData)
   {
+    rawImage = (unsigned char *) malloc(mPaletteImage->getWidth() * mPaletteImage->getHeight());
+    imageParserPos = mRawData->getDataPointer() + sizeof(struct PCXheader);
+
+    for (y = 0; y < mPaletteImage->getHeight(); ++y)
+    {
+      count = 0;
+      dest = rawImage + y * mPaletteImage->getWidth();
+      for (int i = 0; i < mPaletteImage->getWidth(); ++i)
+      {
+        if (!count)
+        {
+          ch = *imageParserPos++;
+          if ((ch & 0xc0) == 0xc0)
+          {
+            count = ch & 0x3f;
+            ch = *imageParserPos++;
+          }
+          else
+          {
+            count = 1;
+          }
+        }
+        dest[i] = ch;
+        mPaletteImage->addPixel(ch);
+        --count;
+      }
+    }
+
+    // extract palette =>
+
+    unsigned char *pal = NULL;
+
     // allocate enough space for RGB information
     pal = (unsigned char *) malloc(RGB_SIZE); // memory management later given to DataChunk...
     dest = pal;
     do
     {
-      ch = *mImageParserPos++;
+      ch = *imageParserPos++;
     }
     while (ch != 0x0c);   // search the 'magic ID' that shows the start of RGB information next
 
     // copy RGB information to destination
     for (int i = 0; i < RGB_SIZE; ++i)
     {
-      *dest++ = *mImageParserPos++;
+      *dest++ = *imageParserPos++;
     }
 
     std::shared_ptr<DataChunk> data = make_shared<DataChunk>(&pal, RGB_SIZE);

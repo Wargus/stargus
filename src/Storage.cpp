@@ -64,20 +64,21 @@ std::string Storage::getFullPath() const
 {
   string path;
 
-  if (!getDataPath().empty())
+  path += getDataPath();
+
+  if(!path.empty())
   {
-    path += getDataPath();
+    path += "/";
   }
 
-  if (!getDataType().empty())
+  path += getDataType();
+
+  if(!path.empty())
   {
-    path += "/" + getDataType();
+    path += "/";
   }
 
-  if (!getFilename().empty())
-  {
-    path += "/" + getFilename();
-  }
+  path += getFilename();
 
   return path;
 }
