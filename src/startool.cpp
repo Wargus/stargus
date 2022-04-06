@@ -351,10 +351,10 @@ void testHook()
   Tileset::ConvertPaletteRGBXtoRGB(terrainWPE->getDataPointer());
   shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
 
-  string grp_file = "game\\icons.grp";
+  string grp_file = "unit\\cmdbtns\\cmdicons.grp";
   Grp grp(storm, grp_file, pal2);
 
-  grp.save("/tmp/icons.png");
+  grp.save("/tmp/cmdicons.png");
 
   cout << "end testHook()" << endl;
   exit(0);
@@ -464,6 +464,9 @@ int main(int argc, const char **argv)
         pcx_ticon.copyIndexPalette(0, 16, 0);
         std::shared_ptr<Palette> pal_ticon = pcx_ticon.getPalette();
 
+        Pcx pcx_twire(storm, "unit\\cmdbtns\\ticon.pcx");
+        std::shared_ptr<Palette> pal_twire = pcx_twire.getPalette();
+
         switch (c[u].Type)
         {
         case F:
@@ -522,7 +525,11 @@ int main(int argc, const char **argv)
           printf("ConvertGfx: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
           Grp grp(storm, c[u].ArcFile);
 
-          if (c[u].Arg1 == 5)
+          if (c[u].Arg1 == 6)
+          {
+            grp.setPalette(pal_twire);
+          }
+          else if (c[u].Arg1 == 5)
           {
             grp.setPalette(pal_ticon);
             grp.setGFX(false);

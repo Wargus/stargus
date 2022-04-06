@@ -7,10 +7,10 @@
 #ifndef PALETTEIMAGE_H
 #define PALETTEIMAGE_H
 
-// System
-
 // Project
 #include "DataChunk.h"
+
+// System
 
 class PaletteImage
 {
@@ -25,6 +25,8 @@ public:
   int getHeight() const;
 
   int getWidth() const;
+
+  unsigned char at(size_t pos);
 
 private:
   DataChunk mImageData;

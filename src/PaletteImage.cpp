@@ -39,3 +39,7 @@ int PaletteImage::getWidth() const
   return mWidth;
 }
 
+unsigned char PaletteImage::at(size_t pos)
+{
+  return mImageData.at(pos);
+}
