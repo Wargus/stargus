@@ -124,7 +124,7 @@ DefinePanelContents(
       {
         Pos = {200, 500}, Condition = {ShowOpponent = false, HideNeutral = true},
         More = {"FormattedText2", {
-          Font = "small", Variable = "HitPoints", Format = "%d/%d",
+          Font = "small", Variable = "HitPoints", Format = "~light-green~%d/%d",
           Component1 = "Value", Component2 = "Max", Centered = true}}
       },
       { Pos = {280, 428}, More = {"Text", {Text = Line(1, UnitName("Active"), 110, "game"), Centered = false}} },

@@ -76,7 +76,7 @@ SetTitleScreens(
 SetGameName("sc")
 SetFullGameName(Name)
 
-SetSelectionStyle("ellipse", 0.6)
+SetSelectionStyle("ellipse", 0.589)
 Preference.ShowSightRange = false
 Preference.ShowAttackRange = false
 Preference.ShowReactionRange = false
@@ -109,6 +109,7 @@ SetBuildingCapture(false)
 --  Edit this to enable/disable the reveal of the attacker.
 --SetRevealAttacker(true)
 SetRevealAttacker(true)
+SetRevelationType("all-units")
 
 -------------------------------------------------------------------------------
 
@@ -162,8 +163,14 @@ SetHoldClickDelay(1000)
 --    disabled is a C&C like fog of war.
 SetFogOfWar(true)
 --SetFogOfWar(false)
+SetFogOfWarBlur(2.0, 1.5, 3) -- radiuses for simple and bilinear FOW postprocessing, number of blur iterations
+-- Set opacity levels of fog for explored, "known"(when map revealed) and hidden tiles
+SetFogOfWarOpacityLevels(0x7F, 0xBE, 0xFE)
+-- Set opacity levels of fog for explored, "known"(when map revealed) and hidden tiles in the minimap
+SetMMFogOfWarOpacityLevels(0x55, 0xAA, 0xFF) -- default values
 
-SetFogOfWarType("fast")
+SetFogOfWarType("enhanced") -- set to "fast", "tiled", or "enhanced"
+SetFogOfWarBilinear(true)
 
 if CanAccessFile("tilesets/fog.png") then
   SetFogOfWarGraphics("tilesets/fog.png")
@@ -171,9 +178,13 @@ else
   SetFogOfWarGraphics("contrib/fog.png")
 end
 
+SetTileSize(32, 32)
+
 --  Choose your default for minimap with/without terrain.
 SetMinimapTerrain(true)
 --SetMinimapTerrain(false)
+
+Preference.GrayscaleIcons = true
 
 -------------------------------------------------------------------------------
 
@@ -286,11 +297,11 @@ AStar("fixed-unit-cost", 1000, "moving-unit-cost", 20, "know-unseen-terrain", "u
 SetMaxSelectable(18)
 
 --  All player food unit limit
-SetAllPlayersUnitLimit(200)
+SetAllPlayersUnitLimit(400)
 --  All player building limit
-SetAllPlayersBuildingLimit(200)
+SetAllPlayersBuildingLimit(400)
 --  All player total unit limit
-SetAllPlayersTotalUnitLimit(400)
+SetAllPlayersTotalUnitLimit(1000)
 
 -------------------------------------------------------------------------------
 --  Default triggers for single player
@@ -339,13 +350,9 @@ if (preferences == nil) then
     TipNumber = 0,
     ShowTips = true,
     GrabMouse = false,
-    UseOpenGL = false,
-    MaxOpenGLTexture = 0,
   }
 end
 
---SetUseOpenGL(preferences.UseOpenGL)
---SetMaxOpenGLTexture(preferences.MaxOpenGLTexture)
 SetVideoResolution(preferences.VideoWidth, preferences.VideoHeight)
 SetVideoFullScreen(preferences.VideoFullScreen)
 SetLocalPlayerName(preferences.PlayerName)

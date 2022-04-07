@@ -51,11 +51,60 @@ Load("scripts/terran/icons.lua")
 Load("scripts/zerg/icons.lua")
 Load("scripts/protoss/icons.lua")
 
+local wireframe_red = {164, 0, 0}
+local wireframe_yellow = {244, 224,  32}
+local wireframe_green = {44, 250, 58}
+
+local function loadWireframes(tbl, file, w, h)
+  for r=4,0,-1 do
+    local health = CPlayerColorGraphic:ForceNew(file, w, h)
+    health:Load()
+    local idx = 208
+    for j=1,r,1 do
+      health:SetPaletteColor(idx, unpack(wireframe_red))
+      idx = idx + 1
+    end
+    for j=idx,211,1 do
+      health:SetPaletteColor(j, unpack(wireframe_yellow))
+    end
+    tbl[#tbl + 1] = health
+  end
+  for y=3,0,-1 do
+    local health = CPlayerColorGraphic:ForceNew(file, w, h)
+    health:Load()
+    local idx = 208
+    for j=1,y,1 do
+      health:SetPaletteColor(idx, unpack(wireframe_yellow))
+      idx = idx + 1
+    end
+    for j=idx,211,1 do
+      health:SetPaletteColor(j, unpack(wireframe_green))
+    end
+    tbl[#tbl + 1] = health
+  end
+end
+
+local wireframes_single = {}
+local wireframes_group = {}
+local wireframes_transported = {}
+loadWireframes(wireframes_single, "wirefram.png", 64, 64)
+loadWireframes(wireframes_group, "grpwire.png", 32, 32)
+loadWireframes(wireframes_transported, "tranwire.png", 64, 64)
 
 for i = 1,table.getn(icons) do
   icon = CIcon:New(icons[i][1])
   icon.G = CPlayerColorGraphic:New("cmdicons.png", 36, 34)
   icon.Frame = icons[i][2]
+
+  icon:ClearExtraGraphics()
+  for i,g in ipairs(wireframes_single) do
+    icon:AddSingleSelectionGraphic(g)
+  end
+  for i,g in ipairs(wireframes_group) do
+    icon:AddGroupSelectionGraphic(g)
+  end
+  for i,g in ipairs(wireframes_transported) do
+    icon:AddContainedGraphic(g)
+  end
+  -- todo zerg colors
 end
-
-
