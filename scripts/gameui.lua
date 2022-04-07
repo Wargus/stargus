@@ -55,7 +55,13 @@ function LoadUI(race)
   
   UI.InfoPanel.X = offx + 168
   UI.InfoPanel.Y = offy + 396
-  
+
+  b = CUIButton:new()
+  b.X = offx + 415
+  b.Y = offy + 415
+  b.Style = FindButtonStyle("icon")
+  UI.SingleSelectedButton = b
+
   UI.SelectedButtons:clear()
   
   function AddSelectedButton(x, y)
