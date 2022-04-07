@@ -118,11 +118,14 @@ DefinePanelContents(
     Pos = {info_panel_x, info_panel_x},
     DefaultFont = "game",
     Contents = {
+      {
+        Pos = {160, 430}, More = {"Icon", {Unit = "ItSelf", SingleSelection = true}},
+      },
       -- { Pos = {offx + 332, 472}, Condition = {ShowOpponent = false, HideNeutral = true},
       --   More = {"LifeBar", {Variable = "HitPoints", Height = 5, Width = 65, Border = false, Colors = {{75, "green"}, {50, "yellow"}, {25, "orange"}, {0, "red"}}}}
       -- },
       {
-        Pos = {200, 500}, Condition = {ShowOpponent = false, HideNeutral = true},
+        Pos = {192, 496}, Condition = {ShowOpponent = false, HideNeutral = true},
         More = {"FormattedText2", {
           Font = "small", Variable = "HitPoints", Format = "~light-green~%d/%d",
           Component1 = "Value", Component2 = "Max", Centered = true}}
