@@ -743,6 +743,9 @@ Load("scripts/menus/diplomacy.lua")
 Load("scripts/menus/results.lua")
 Load("scripts/menus/network.lua")
 
+if SetShader then
+  SetShader("CRT")
+end
 
 RunProgramStartMenu()
 
