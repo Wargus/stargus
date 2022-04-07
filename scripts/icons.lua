@@ -86,8 +86,10 @@ end
 
 local wireframes_single = {}
 local wireframes_group = {}
+local wireframes_transported = {}
 loadWireframes(wireframes_single, "ui/wireframes.png", 64, 64)
 loadWireframes(wireframes_group, "ui/grpwire_pal.png", 32, 32)
+loadWireframes(wireframes_transported, "ui/tranwire_pal.png", 64, 64)
 
 for i = 1,table.getn(icons) do
   icon = CIcon:New(icons[i][1])
@@ -100,6 +102,9 @@ for i = 1,table.getn(icons) do
   end
   for i,g in ipairs(wireframes_group) do
     icon:AddGroupSelectionGraphic(g)
+  end
+  for i,g in ipairs(wireframes_transported) do
+    icon:AddContainedGraphic(g)
   end
   -- todo zerg colors
 end
