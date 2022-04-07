@@ -87,7 +87,7 @@ end
 local wireframes_single = {}
 local wireframes_group = {}
 local wireframes_transported = {}
-loadWireframes(wireframes_single, "wireframe.png", 64, 64)
+loadWireframes(wireframes_single, "wirefram.png", 64, 64)
 loadWireframes(wireframes_group, "grpwire.png", 32, 32)
 loadWireframes(wireframes_transported, "tranwire.png", 64, 64)
 
