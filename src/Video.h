@@ -10,6 +10,9 @@
 // System
 #include <memory>
 
+// project
+#include "Storage.h"
+
 // Forward declarations
 class Hurricane;
 
@@ -22,7 +25,9 @@ public:
   /**
    *  Convert SMK video to OGV
    */
-  bool ConvertVideo(const std::string &arcfile, const std::string &file);
+  bool ConvertVideo(const std::string &arcfile, Storage storage);
+
+  bool ConvertPortrait(const std::string &arcfile,  Storage storage);
 
 private:
   std::shared_ptr<Hurricane> mHurricane;
