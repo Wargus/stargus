@@ -419,6 +419,10 @@ int main(int argc, const char **argv)
   graphics.setDataPath(preferences.getDestDir());
   graphics.setDataType("graphics");
 
+  Storage videos;
+  videos.setDataPath(preferences.getDestDir());
+  videos.setDataType("videos");
+
   if (mpq)
   {
     for (i = 0; i <= 1; ++i)
@@ -599,7 +603,16 @@ int main(int argc, const char **argv)
           {
             printf("ConvertVideo: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
             Video video(storm);
-            case_func = video.ConvertVideo(c[u].ArcFile, c[u].File);
+            case_func = video.ConvertVideo(c[u].ArcFile, videos(c[u].File));
+            printf("...%s\n", case_func ? "ok" : "nok");
+          }
+          break;
+        case P: // WORKS!
+          if (preferences.getVideoExtraction())
+          {
+            printf("ConvertPortrait: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
+            Video video(storm);
+            case_func = video.ConvertPortrait(c[u].ArcFile, videos(c[u].File));
             printf("...%s\n", case_func ? "ok" : "nok");
           }
           break;

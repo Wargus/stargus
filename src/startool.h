@@ -120,10 +120,11 @@ enum _archive_type_
   W,    // Wav                           (name,wav)
   H,    // Pcx                           (name)
   E,    // Raw extract                   (name)
-  V,    // Video                         (name,video)
+  V,    // SMK Video                     (name,video)
   L,    // Campaign Levels
   Q,    // MPQ archive
-  D     // Graphics in DDS format
+  D,    // Graphics in DDS format
+  P     // SMK Portraits
 };
 
 #define __3 ,0,0,0
