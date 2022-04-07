@@ -76,7 +76,7 @@ SetTitleScreens(
 SetGameName("sc")
 SetFullGameName(Name)
 
-SetSelectionStyle("ellipse", 0.6)
+SetSelectionStyle("ellipse", 0.589)
 Preference.ShowSightRange = false
 Preference.ShowAttackRange = false
 Preference.ShowReactionRange = false
