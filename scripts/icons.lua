@@ -55,6 +55,8 @@ local wireframe_red = {164, 0, 0}
 local wireframe_yellow = {244, 224,  32}
 local wireframe_green = {44, 250, 58}
 
+local wireframe_infrared = {{255, 57, 12}, {250, 120, 0}, {210, 104, 0}, {200, 128, 64}}
+
 local function loadWireframes(tbl, file, w, h)
   for r=4,0,-1 do
     local health = CPlayerColorGraphic:ForceNew(file, w, h)
@@ -67,6 +69,14 @@ local function loadWireframes(tbl, file, w, h)
     for j=idx,211,1 do
       health:SetPaletteColor(j, unpack(wireframe_yellow))
     end
+
+    -- TODO: better zerg
+    for j=1,4,1 do
+      local this_infrared_level = {unpack(wireframe_infrared[j])}
+      local y = 4 - r
+      health:SetPaletteColor(j + 215, this_infrared_level[1] - r * 20 - y * 10, this_infrared_level[2] - r * 20 - y * 10, this_infrared_level[3] - r * 20 - y * 10)
+    end
+
     tbl[#tbl + 1] = health
   end
   for y=3,0,-1 do
@@ -80,6 +90,13 @@ local function loadWireframes(tbl, file, w, h)
     for j=idx,211,1 do
       health:SetPaletteColor(j, unpack(wireframe_green))
     end
+
+    -- TODO: better zerg
+    for j=1,4,1 do
+      local this_infrared_level = {unpack(wireframe_infrared[j])}      
+      health:SetPaletteColor(j + 215, this_infrared_level[1] - y * 10, this_infrared_level[2] - y * 10, this_infrared_level[3] - y * 10)
+    end
+
     tbl[#tbl + 1] = health
   end
 end
