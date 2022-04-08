@@ -7,11 +7,12 @@
 #ifndef PALETTE_H_
 #define PALETTE_H_
 
-// Local
+// project
 #include "DataChunk.h"
 #include "Logger.h"
+#include "RGBColor.h"
 
-// C++
+// system
 #include <memory>
 
 // TODO: unextern this !!
@@ -27,16 +28,29 @@ extern unsigned char *Palettes[];
 class Palette
 {
 public:
+  Palette();
+
   /**
    * Create Palette from DataChunk
    *
-   * @rapam palData Size has to be 256 bytes * 3 (rgb). If you don't respect this it will crash!
+   * @rapam palData Size has to be mutlible of 256 bytes (rgb or rgba). If you don't respect this it will crash!
+   * TODO: better data type check needed
    */
   Palette(std::shared_ptr<DataChunk> palData);
 
   virtual ~Palette();
 
   std::shared_ptr<DataChunk> getDataChunk();
+
+  void addRGBColor(const RGBColor &rgb);
+
+  void addColorComponent(unsigned char color);
+
+  RGBColor getRGBColor(int index);
+
+  void replaceRGBColor(int index, const RGBColor &rgb);
+
+  //int getSize();
 
   //std::shared_ptr<Palette> copy();
 

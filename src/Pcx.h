@@ -44,6 +44,8 @@ public:
    */
   void copyIndexPalette(int start, int length, int index);
 
+  std::shared_ptr<Palette> createIndexPalette(int start, int length, int index);
+
   void copyIndexPaletteIconColor();
 
 private:

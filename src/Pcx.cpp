@@ -130,6 +130,23 @@ void Pcx::copyIndexPalette(int start, int length, int index)
   }
 }
 
+std::shared_ptr<Palette> Pcx::createIndexPalette(int start, int length, int index)
+{
+  std::shared_ptr<Palette> new_palette = make_shared<Palette>();
+
+  /*if(mPaletteImage && mPalette)
+  {
+    for (int i = 0; i < length; i++)
+    {
+      int rel_index = i + (index * length);
+
+      int start_pal_dest = start + i;
+    }
+  }*/
+
+  return new_palette;
+}
+
 void Pcx::copyIndexPaletteIconColor()
 {
   copyIndexPalette(0, 16, 0);
@@ -196,6 +213,7 @@ void Pcx::extractImage()
     // extract palette =>
 
     unsigned char *pal = NULL;
+    mPalette = make_shared<Palette>();
 
     // allocate enough space for RGB information
     pal = (unsigned char *) malloc(RGB_SIZE); // memory management later given to DataChunk...
@@ -209,11 +227,12 @@ void Pcx::extractImage()
     // copy RGB information to destination
     for (int i = 0; i < RGB_SIZE; ++i)
     {
+      mPalette->addColorComponent(*imageParserPos);
       *dest++ = *imageParserPos++;
     }
 
-    std::shared_ptr<DataChunk> data = make_shared<DataChunk>(&pal, RGB_SIZE);
-    mPalette = make_shared<Palette>(data);
+    //std::shared_ptr<DataChunk> data = make_shared<DataChunk>(&pal, RGB_SIZE);
+    //mPalette = make_shared<Palette>(data);
   }
 }
 

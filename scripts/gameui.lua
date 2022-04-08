@@ -47,10 +47,13 @@ function LoadUI(race)
   
   if (race == "terran") then
     AddFiller("ui/tconsole.png", offx, offy)
+    UI.DefaultUnitPortrait = "unit-terran-command-center"
   elseif (race == "zerg") then
     AddFiller("ui/zconsole.png", offx, offy)
+    UI.DefaultUnitPortrait = "unit-zerg-hive"
   else
     AddFiller("ui/pconsole.png", offx, offy)
+    UI.DefaultUnitPortrait = "unit-protoss-nexus"
   end
   
   UI.InfoPanel.X = offx + 168
@@ -58,7 +61,7 @@ function LoadUI(race)
 
   b = CUIButton:new()
   b.X = offx + 415
-  b.Y = offy + 415
+  b.Y = offy + 411
   b.Style = FindButtonStyle("icon")
   UI.SingleSelectedButton = b
 

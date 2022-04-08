@@ -12,6 +12,13 @@
 
 using namespace std;
 
+Palette::Palette() :
+  mLogger("startool.Palette"),
+  mPalData(make_shared<DataChunk>())
+{
+
+}
+
 Palette::Palette(std::shared_ptr<DataChunk> palData) :
   mLogger("startool.Palette"),
   mPalData(palData)
@@ -33,6 +40,51 @@ std::shared_ptr<DataChunk> Palette::getDataChunk()
 {
   return mPalData;
 }
+
+void Palette::addRGBColor(const RGBColor &rgb)
+{
+  unsigned char pixel_color = 0;
+
+  pixel_color = rgb.red();
+  mPalData->addData(&pixel_color, 1);
+
+  pixel_color = rgb.green();
+  mPalData->addData(&pixel_color, 1);
+
+  pixel_color = rgb.blue();
+  mPalData->addData(&pixel_color, 1);
+}
+
+void Palette::addColorComponent(unsigned char color)
+{
+  mPalData->addData(&color, 1);
+}
+
+RGBColor Palette::getRGBColor(int index)
+{
+  RGBColor rgb;
+
+  // 3 because of RGB
+  rgb.red(mPalData->at(index * 3)   + 0);
+  rgb.green(mPalData->at(index * 3) + 1);
+  rgb.blue(mPalData->at(index * 3)  + 2);
+
+  return rgb;
+}
+
+void Palette::replaceRGBColor(int index, const RGBColor &rgb)
+{
+  unsigned char *data = mPalData->getDataPointer();
+
+  // 3 because of RGB
+  unsigned char *pos = &data[index * 3];
+
+  *pos++ = rgb.red();
+  *pos++ = rgb.green();
+  *pos = rgb.blue();
+
+}
+
 /*std::shared_ptr<Palette> Palette::copy()
 {
 	std::shared_ptr<DataChunk> data = make_shared<DataChunk>(mPalData->copy());

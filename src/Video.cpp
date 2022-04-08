@@ -69,7 +69,7 @@ bool Video::ConvertPortrait(const std::string &arcfile,  Storage storage)
   string ffmpeg_str =
     string("ffmpeg -y -i ") + smk_file + " -codec:v png -qscale:v 31 -pix_fmt yuv420p " + png_path + "image%05d.png";
 
-  cout << "ffmpeg: " << ffmpeg_str << endl;
+  //cout << "ffmpeg: " << ffmpeg_str << endl;
 
   // TODO: call it in a way we suppress the output to stdout
   int sys_call = system(ffmpeg_str.c_str());
@@ -80,7 +80,7 @@ bool Video::ConvertPortrait(const std::string &arcfile,  Storage storage)
 
   string gm_str = "gm convert " + png_path + "image*.png -delay 4 " + mng_file; // 60sec / 15fps = 4
 
-  cout << "gm: " << gm_str << endl;
+  //cout << "gm: " << gm_str << endl;
 
   sys_call = system(gm_str.c_str());
   if (sys_call != 0)
@@ -89,6 +89,7 @@ bool Video::ConvertPortrait(const std::string &arcfile,  Storage storage)
   }
 
   remove(smk_file.c_str());
+  remove(png_path.c_str());
 
   return result;
 }
