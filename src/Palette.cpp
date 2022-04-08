@@ -41,7 +41,7 @@ std::shared_ptr<DataChunk> Palette::getDataChunk()
   return mPalData;
 }
 
-void Palette::addRGBColor(const RGBColor &rgb)
+void Palette::addRGBColor(const Color &rgb)
 {
   unsigned char pixel_color = 0;
 
@@ -60,9 +60,9 @@ void Palette::addColorComponent(unsigned char color)
   mPalData->addData(&color, 1);
 }
 
-RGBColor Palette::getRGBColor(int index)
+Color Palette::getRGBColor(int index)
 {
-  RGBColor rgb;
+  Color rgb;
 
   // 3 because of RGB
   rgb.red(mPalData->at(index * 3)   + 0);
@@ -72,7 +72,7 @@ RGBColor Palette::getRGBColor(int index)
   return rgb;
 }
 
-void Palette::replaceRGBColor(int index, const RGBColor &rgb)
+void Palette::replaceRGBColor(int index, const Color &rgb)
 {
   unsigned char *data = mPalData->getDataPointer();
 

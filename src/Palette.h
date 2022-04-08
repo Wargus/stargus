@@ -10,10 +10,8 @@
 // project
 #include "DataChunk.h"
 #include "Logger.h"
-#include "RGBColor.h"
-
-// system
 #include <memory>
+#include "Color.h"
 
 // TODO: unextern this !!
 extern unsigned char SC_Unit_Palette[];
@@ -42,13 +40,13 @@ public:
 
   std::shared_ptr<DataChunk> getDataChunk();
 
-  void addRGBColor(const RGBColor &rgb);
+  void addRGBColor(const Color &rgb);
 
   void addColorComponent(unsigned char color);
 
-  RGBColor getRGBColor(int index);
+  Color getRGBColor(int index);
 
-  void replaceRGBColor(int index, const RGBColor &rgb);
+  void replaceRGBColor(int index, const Color &rgb);
 
   //int getSize();
 

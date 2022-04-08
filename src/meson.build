@@ -29,7 +29,7 @@ startool_sources = files(
 	'DataHub.cpp',
 	'Storage.cpp',
 	'PaletteImage.cpp',
-	'RGBColor.cpp'
+	'Color.cpp'
 	)
 	
 stratagus_prefix = get_option('prefix')
