@@ -51,14 +51,20 @@ Load("scripts/terran/icons.lua")
 Load("scripts/zerg/icons.lua")
 Load("scripts/protoss/icons.lua")
 
-local wireframe_red = {164, 0, 0}
-local wireframe_yellow = {244, 224,  32}
-local wireframe_green = {44, 250, 58}
+local inner_shields = {{16, 252, 24}, {0, 16, 52}, {4, 32, 100}, {4, 32, 100}, {8, 52, 152}, {8, 52, 152}, {12, 72, 204}, {12, 72, 204}}
+local outer_shields = {{16, 252, 24}, {16, 252, 24}, {0, 16, 52}, {4, 32, 100}, {4, 32, 100}, {8, 52, 152}, {8, 52, 152}, {12, 72, 204}}
 
-local wireframe_infrared = {{255, 57, 12}, {250, 120, 0}, {210, 104, 0}, {200, 128, 64}}
+local wireframe_red = {200, 24, 24}
+local wireframe_yellow = {252, 252, 56}
+local wireframe_green = {16, 252, 24}
+
+local infrared_1 = {{136, 64, 156}, {232, 80, 20}, {232, 80, 20}, {16, 252, 24}, {16, 252, 24}, {252, 252, 56}}
+local infrared_2 = {{8, 52, 152}, {168, 8, 8}, {168, 8, 8}, {248, 140, 20}, {248, 140, 20}, {16, 252, 24}}
+local infrared_3 = {{4, 32, 100}, {132, 4, 4}, {200, 24, 24}, {160, 84, 28}, {160, 84, 28}, {248, 140, 20}}
+local infrared_4 = {{4, 32, 100}, {8, 52, 152}, {104, 48, 120}, {104, 48, 120}, {168, 8, 8}, {200, 24, 24}}
 
 local function loadWireframes(tbl, file, w, h)
-  for r=4,0,-1 do
+  for r=4,0,-2 do
     local health = CPlayerColorGraphic:ForceNew(file, w, h)
     health:Load()
     local idx = 208
@@ -70,16 +76,14 @@ local function loadWireframes(tbl, file, w, h)
       health:SetPaletteColor(j, unpack(wireframe_yellow))
     end
 
-    -- TODO: better zerg
-    for j=1,4,1 do
-      local this_infrared_level = {unpack(wireframe_infrared[j])}
-      local y = 4 - r
-      health:SetPaletteColor(j + 215, this_infrared_level[1] - r * 20 - y * 10, this_infrared_level[2] - r * 20 - y * 10, this_infrared_level[3] - r * 20 - y * 10)
-    end
+    health:SetPaletteColor(216, unpack(infrared_1[#tbl + 1]))
+    health:SetPaletteColor(217, unpack(infrared_2[#tbl + 1]))
+    health:SetPaletteColor(218, unpack(infrared_3[#tbl + 1]))
+    health:SetPaletteColor(219, unpack(infrared_4[#tbl + 1]))
 
     tbl[#tbl + 1] = health
   end
-  for y=3,0,-1 do
+  for y=2,0,-1 do
     local health = CPlayerColorGraphic:ForceNew(file, w, h)
     health:Load()
     local idx = 208
@@ -91,11 +95,10 @@ local function loadWireframes(tbl, file, w, h)
       health:SetPaletteColor(j, unpack(wireframe_green))
     end
 
-    -- TODO: better zerg
-    for j=1,4,1 do
-      local this_infrared_level = {unpack(wireframe_infrared[j])}      
-      health:SetPaletteColor(j + 215, this_infrared_level[1] - y * 10, this_infrared_level[2] - y * 10, this_infrared_level[3] - y * 10)
-    end
+    health:SetPaletteColor(216, unpack(infrared_1[#tbl + 1]))
+    health:SetPaletteColor(217, unpack(infrared_2[#tbl + 1]))
+    health:SetPaletteColor(218, unpack(infrared_3[#tbl + 1]))
+    health:SetPaletteColor(219, unpack(infrared_4[#tbl + 1]))
 
     tbl[#tbl + 1] = health
   end
@@ -123,5 +126,4 @@ for i = 1,table.getn(icons) do
   for i,g in ipairs(wireframes_transported) do
     icon:AddContainedGraphic(g)
   end
-  -- todo zerg colors
 end
