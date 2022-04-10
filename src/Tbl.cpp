@@ -284,29 +284,25 @@ char *Tbl::iconvISO2UTF8(char *iso)
       snprintf(buf, sizeof(buf),
                "iconv failed: Invalid multibyte sequence, in string '%s', length %d, out string '%s', length %d\n",
                iso, (int) len, utf8start, (int) utf8len);
-      LOG4CXX_ERROR(mLogger, buf)
-      ;
+      LOG4CXX_ERROR(mLogger, buf);
       break;
     case EINVAL:
       snprintf(buf, sizeof(buf),
                "iconv failed: Incomplete multibyte sequence, in string '%s', length %d, out string '%s', length %d\n",
                iso, (int) len, utf8start, (int) utf8len);
-      LOG4CXX_ERROR(mLogger, buf)
-      ;
+      LOG4CXX_ERROR(mLogger, buf);
       break;
     case E2BIG:
       snprintf(buf, sizeof(buf),
                "iconv failed: No more room, in string '%s', length %d, out string '%s', length %d\n",
                iso, (int) len, utf8start, (int) utf8len);
-      LOG4CXX_ERROR(mLogger, buf)
-      ;
+      LOG4CXX_ERROR(mLogger, buf);
       break;
     default:
       snprintf(buf, sizeof(buf),
                "iconv failed, in string '%s', length %d, out string '%s', length %d\n",
                iso, (int) len, utf8start, (int) utf8len);
-      LOG4CXX_ERROR(mLogger, buf)
-      ;
+      LOG4CXX_ERROR(mLogger, buf);
     }
     return NULL;
   }
