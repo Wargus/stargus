@@ -744,7 +744,7 @@ Load("scripts/menus/results.lua")
 Load("scripts/menus/network.lua")
 
 if SetShader then
-  SetShader("CRT")
+  SetShader("none")
 end
 
 RunProgramStartMenu()

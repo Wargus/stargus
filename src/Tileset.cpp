@@ -56,25 +56,6 @@ Tileset::~Tileset()
 }
 
 /**
- **		Convert rgbx to rgb
- */
-/*unsigned char *Tileset::ConvertPaletteRGBXtoRGB(unsigned char *pal)
-{
-  int i;
-  int j;
-
-  for (i = 0; i < 256; ++i)
-  {
-    for (j = 0; j < 3; ++j)
-    {
-      pal[i * 3 + j] = pal[i * 4 + j];
-    }
-  }
-
-  return pal;
-}*/
-
-/**
  **  Convert rgb to my format.
  */
 bool Tileset::ConvertRgb(const std::string &arcfile, const std::string &file)
@@ -327,8 +308,9 @@ bool Tileset::ConvertTileset(const std::string &arcfile,
   fclose(fd);
 #endif
 
-  //ConvertPaletteRGBXtoRGB(palp->getDataPointer()); // write to memory pointer!
+  // this works because Palette contructor detects RGBx/WPE data format size
   shared_ptr<Palette> palette = make_shared<Palette>(palp);
+
   Preferences &preferences = Preferences::getInstance();
   sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), TILESET_PATH,
           file.c_str());
