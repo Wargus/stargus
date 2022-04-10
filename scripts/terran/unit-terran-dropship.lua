@@ -16,7 +16,8 @@ DefineAnimations("animations-terran-dropship", {
 
 DefineUnitType("unit-terran-dropship", { Name = "Wraith",
   Image = {"file", "terran/units/dropship.png", "size", {60, 60}},
-  Shadow = {"file", "terran/units/dropship.png", "size", {60, 60}, "offset", {0, 42}},
+  -- Shadow = {"file", "terran/units/dropship.png", "size", {60, 60}, "offset", {0, 42}},
+  Shadow = {"offset", {0, 42}, "scale", 1},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-terran-dropship", Icon = "icon-terran-dropship",
   Costs = {"time", 250, "minerals", 400, "gas", 300},
