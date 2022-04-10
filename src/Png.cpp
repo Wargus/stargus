@@ -183,12 +183,12 @@ int Png::saveRGBA(const char *name, unsigned char *image, int w, int h, unsigned
       unsigned char color_b = 0;
       unsigned char color_a = 0;
 
-      if (pal_pos != transparent)
+      if (pal_pos != 255)
       {
         color_r = pal[pal_pos * RGB_BYTE_SIZE + 0];
         color_g = pal[pal_pos * RGB_BYTE_SIZE + 1];
         color_b = pal[pal_pos * RGB_BYTE_SIZE + 2];
-        color_a = 255;
+        color_a = transparent;
       }
 
       row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 0] = color_r;

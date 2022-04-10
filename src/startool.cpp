@@ -353,6 +353,8 @@ void testHook()
 
   string grp_file = "unit\\thingy\\NukeHit.grp";
   Grp grp(storm, grp_file, pal3);
+  grp.setTransparent(200);
+  grp.setRGBA(true);
 
   grp.save("/tmp/NukeHit.png");
 
@@ -546,8 +548,8 @@ int main(int argc, const char **argv)
           else if (c[u].Arg1 == 3)
           {
             grp.setPalette(pal_ofire);
-            //grp.setTransparent(255);
-            //grp.setRGBA(true);
+            grp.setTransparent(127);
+            grp.setRGBA(true);
           }
           else if (c[u].Arg1 == 2)
           {

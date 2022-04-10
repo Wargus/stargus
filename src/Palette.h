@@ -4,8 +4,8 @@
  *      Author: Andreas Volz
  */
 
-#ifndef PALETTE_H_
-#define PALETTE_H_
+#ifndef PALETTE_H
+#define PALETTE_H
 
 // project
 #include "DataChunk.h"
@@ -50,4 +50,4 @@ private:
   std::vector<Color> mColorPalette;
 };
 
-#endif /* PALETTE_H_ */
+#endif /* PALETTE_H */

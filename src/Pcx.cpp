@@ -99,18 +99,24 @@ void Pcx::map2DPalette()
   {
     if ((mPaletteImage->getWidth() == 256) && (mPaletteImage->getHeight() == 63))
     {
-      int index = 0;
       for (int i = 0; i < mPaletteImage->getWidth(); i++)
       {
         int num = (rand() % (55 -20  + 1)) + 20;
 
         unsigned char color_index = mPaletteImage->getPaletteIndex(i, num);
 
-        Color image_color = mPalette->at(color_index);
+        if(color_index != 255)
+        {
+          Color image_color = mPalette->at(color_index);
 
-        mPalette->at(i) = image_color;
+          mPalette->at(i) = image_color;
+        }
+        else
+        {
+          Color trans_color(0, 0, 0);
+          mPalette->at(i) = trans_color;
+        }
 
-        index++;
       }
     }
   }
