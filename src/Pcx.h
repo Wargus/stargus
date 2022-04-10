@@ -34,19 +34,21 @@ public:
   std::shared_ptr<Palette> getPalette();
 
   /**
-   * Take 8*3 palette bytes (rgb) from one place in the image and copy them into another place
-   * The place is defined by the color position in the image itself.
+   * Map palette colors from one place in the image to a position in the color palette
+   *
    * TODO: I need to write a more extensive documentation for this
    *
-   * @param start where to place the copy in the palette position
    * @param length the length of one color index
    * @param index the color index
+   * @param start where to place the copy in the palette position
    */
-  void copyIndexPalette(int start, int length, int index);
+  void mapIndexPalette(int length, int index, int start);
 
-  std::shared_ptr<Palette> createIndexPalette(int start, int length, int index);
-
-  void copyIndexPaletteIconColor();
+  /**
+   * Fake some 2D palette handling for e.g. fire generation.
+   * FIXME: a better algorithm is needed based on generating alpha over tileset or so...
+   */
+  void map2DPalette();
 
 private:
   struct PCXheader

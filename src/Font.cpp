@@ -52,15 +52,15 @@ bool Font::convert(const std::string &arcfile, const std::string &file)
   char buf[8192] =
   { '\0' };
   bool result = true;
-  int pale = 2; // Cmdicons_Palette -> but no Idea why this palette is applied for fonts
 
   LOG4CXX_TRACE(mLogger, "convert:" + arcfile + "," + file);
 
-  palp = Palettes[pale];
-
   shared_ptr<DataChunk> data = mHurricane->extractDataChunk(arcfile);
-  if (data)
+  if (data && mPalette)
   {
+    std::shared_ptr<DataChunk> datachunk = mPalette->createDataChunk();
+    palp = datachunk->getDataPointer();
+
     image = Font::convertImage(data->getDataPointer(), &w, &h);
     Preferences &preferences = Preferences::getInstance();
     sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), FONT_PATH,
@@ -72,6 +72,11 @@ bool Font::convert(const std::string &arcfile, const std::string &file)
   }
 
   return result;
+}
+
+void Font::setPalette(std::shared_ptr<Palette> pal)
+{
+  mPalette = pal;
 }
 
 typedef struct _FontHeader

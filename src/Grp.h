@@ -46,6 +46,8 @@ public:
   void setGFX(bool gfx);
   bool getGFX();
 
+  void setTransparent(int transparent);
+
   /**
    *  Convert a Grp graphic to PNG format
    *
@@ -76,6 +78,7 @@ private:
   std::string mArcfile;
   bool mRGBA;
   bool mGFX;
+  int mTransparent;
 
 };
 

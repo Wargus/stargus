@@ -58,7 +58,7 @@ Tileset::~Tileset()
 /**
  **		Convert rgbx to rgb
  */
-unsigned char *Tileset::ConvertPaletteRGBXtoRGB(unsigned char *pal)
+/*unsigned char *Tileset::ConvertPaletteRGBXtoRGB(unsigned char *pal)
 {
   int i;
   int j;
@@ -72,7 +72,7 @@ unsigned char *Tileset::ConvertPaletteRGBXtoRGB(unsigned char *pal)
   }
 
   return pal;
-}
+}*/
 
 /**
  **  Convert rgb to my format.
@@ -95,7 +95,8 @@ bool Tileset::ConvertRgb(const std::string &arcfile, const std::string &file)
   {
 
     // Hint: ConvertPaletteRGBXtoRGB() changes the data content direct!
-    ConvertPaletteRGBXtoRGB(palp);
+    //ConvertPaletteRGBXtoRGB(palp);
+    shared_ptr<Palette> palette = make_shared<Palette>(data);
 
     //
     //  Generate RGB File.
@@ -103,7 +104,11 @@ bool Tileset::ConvertRgb(const std::string &arcfile, const std::string &file)
     sprintf(buf, "%s/%s/%s.rgb", preferences.getDestDir().c_str(), TILESET_PATH,
             file.c_str());
     CheckPath(buf);
-    f = fopen(buf, "wb");
+
+    // write .rgb
+    data->write(buf);
+
+    /*f = fopen(buf, "wb");
     if (!f)
     {
       perror("");
@@ -117,7 +122,8 @@ bool Tileset::ConvertRgb(const std::string &arcfile, const std::string &file)
       fflush(stdout);
     }
 
-    fclose(f);
+    fclose(f);*/
+
 
     //
     //  Generate GIMP palette
@@ -321,12 +327,15 @@ bool Tileset::ConvertTileset(const std::string &arcfile,
   fclose(fd);
 #endif
 
-  ConvertPaletteRGBXtoRGB(palp->getDataPointer()); // write to memory pointer!
+  //ConvertPaletteRGBXtoRGB(palp->getDataPointer()); // write to memory pointer!
+  shared_ptr<Palette> palette = make_shared<Palette>(palp);
   Preferences &preferences = Preferences::getInstance();
   sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), TILESET_PATH,
           file.c_str());
   printf("tileset png: %s\n", buf);
-  Png::save(buf, image, w, h, palp->getDataPointer(), 0);
+
+  std::shared_ptr<DataChunk> datachunk = palette->createDataChunk();
+  Png::save(buf, image, w, h, datachunk->getDataPointer(), 0);
 
   // freeing the image is still needed as this isn't wrapped in a smart pointer
   free(image);

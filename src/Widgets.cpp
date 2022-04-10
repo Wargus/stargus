@@ -23,7 +23,7 @@ Widgets::~Widgets()
 }
 
 bool Widgets::convert(const char *mpqfile, const char *arcfile,
-                      const char *file, int pale)
+                      const char *file)
 {
   unsigned char *palp = NULL;
   unsigned char *gfup = NULL;
@@ -58,7 +58,8 @@ bool Widgets::convert(const char *mpqfile, const char *arcfile,
         ++p;
       }
 
-      palp = Palettes[pale];
+      std::shared_ptr<DataChunk> datachunk = mPalette->createDataChunk();
+      palp = datachunk->getDataPointer();
 
       free(gfup);
 
@@ -166,6 +167,11 @@ bool Widgets::convert(const char *mpqfile, const char *arcfile,
   free(image);
 
   return result;
+}
+
+void Widgets::setPalette(std::shared_ptr<Palette> pal)
+{
+  mPalette = pal;
 }
 
 void Widgets::SaveImage(char *name, unsigned char *image, unsigned char *palp,

@@ -4,7 +4,11 @@
  *      Author: Andreas Volz
  */
 
+// project
 #include "Storage.h"
+
+// system
+#include <iostream>
 
 using namespace std;
 
@@ -30,7 +34,7 @@ Storage::~Storage()
 
 }
 
-const std::string &Storage::getDataPath() const
+const std::string& Storage::getDataPath()
 {
   return mDataPath;
 }
@@ -40,7 +44,7 @@ void Storage::setDataPath(const std::string &dataPath)
   this->mDataPath = dataPath;
 }
 
-const std::string &Storage::getDataType() const
+const std::string &Storage::getDataType()
 {
   return mDataType;
 }
@@ -50,7 +54,7 @@ void Storage::setDataType(const std::string &dataType)
   this->mDataType = dataType;
 }
 
-const std::string &Storage::getFilename() const
+const std::string &Storage::getFilename()
 {
   return mFilename;
 }
@@ -60,11 +64,9 @@ void Storage::setFilename(const std::string &filename)
   this->mFilename = filename;
 }
 
-std::string Storage::getFullPath() const
+std::string Storage::getFullPath()
 {
-  string path;
-
-  path += getDataPath();
+  string path = getDataPath();
 
   if(!path.empty())
   {

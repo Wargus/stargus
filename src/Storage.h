@@ -20,19 +20,19 @@ public:
 
   virtual ~Storage();
 
-  const std::string& getDataPath() const;
+  const std::string& getDataPath();
 
   void setDataPath(const std::string &dataPath);
 
-  const std::string& getDataType() const;
+  const std::string& getDataType();
 
   void setDataType(const std::string &dataType);
 
-  const std::string& getFilename() const;
+  const std::string& getFilename();
 
   void setFilename(const std::string &filename);
 
-  std::string getFullPath() const;
+  std::string getFullPath();
 
   Storage operator()(std::string filename);
 

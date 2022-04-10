@@ -19,14 +19,39 @@ PaletteImage::~PaletteImage()
 
 }
 
-void PaletteImage::addPixel(unsigned char paletteIndex)
+void PaletteImage::addPaletteIndex(unsigned char paletteIndex)
 {
   mImageData.addData(&paletteIndex, 1);
 }
 
-unsigned char* PaletteImage::getPixelData() const
+unsigned char* PaletteImage::getPaletteIndexData() const
 {
   return mImageData.getDataPointer();
+}
+
+unsigned char PaletteImage::getPaletteIndex(int x, int y)
+{
+  int pos = 0;
+  unsigned char palette = 0;
+
+  if((x < getWidth()) || (y < getHeight()) || (x > 0) || (y > 0))
+  {
+    if(y == 0)
+    {
+      pos = x;
+    }
+    else
+    {
+      pos = ((y - 1) * getWidth()) + x;
+      palette = mImageData.at(pos);
+    }
+  }
+  else
+  {
+    printf("getPaletteIndex(int x, int y) error");
+  }
+
+  return palette;
 }
 
 int PaletteImage::getHeight() const

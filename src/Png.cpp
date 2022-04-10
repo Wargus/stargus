@@ -178,10 +178,10 @@ int Png::saveRGBA(const char *name, unsigned char *image, int w, int h, unsigned
       unsigned char pal_pos = img_line_pal[w_pos];
       //printf("pal_pos (w:%d/h:%d) pal:%d\n", w_pos, h_pos,(int) pal_pos);
 
-      char color_r = 0;
-      char color_g = 0;
-      char color_b = 0;
-      char color_a = 0;
+      unsigned char color_r = 0;
+      unsigned char color_g = 0;
+      unsigned char color_b = 0;
+      unsigned char color_a = 0;
 
       if (pal_pos != transparent)
       {

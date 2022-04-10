@@ -31,7 +31,7 @@
  --  Includes
  ----------------------------------------------------------------------------*/
 
-#include <Palette.h>
+#include "Palette.h"
 #include <Tbl.h>
 #include "endian.h"
 #include "startool.h"
@@ -331,30 +331,30 @@ void testHook()
   Pcx pcx1(storm, "game\\tunit.pcx");
   pcx1.savePNG("/tmp/tunit.png");
   std::shared_ptr<Palette> pal = pcx1.getPalette();
-  pal->getDataChunk()->write("/tmp/tunit.pal");
+  pal->createDataChunk()->write("/tmp/tunit.pal");
 
   // Image 2
   Pcx pcx2(storm, "unit\\cmdbtns\\ticon.pcx");
   pcx2.savePNG("/tmp/ticon.png");
-  pcx2.copyIndexPalette(0, 16, 0);
+  pcx2.mapIndexPalette(16, 0, 0);
   std::shared_ptr<Palette> pal2 = pcx2.getPalette();
-  pal2->getDataChunk()->write("/tmp/ticon.pal");
+  pal2->createDataChunk()->write("/tmp/ticon.pal");
 
   // Image 3
   Pcx pcx3(storm, "tileset\\ashworld\\ofire.pcx");
   pcx3.savePNG("/tmp/ofire.png");
-  pcx3.copyIndexPalette(0, 256, -1);
+  pcx3.map2DPalette();
   std::shared_ptr<Palette> pal3 = pcx3.getPalette();
-  pal3->getDataChunk()->write("/tmp/ofire.pal");
+  pal3->createDataChunk()->write("/tmp/ofire.pal");
 
   shared_ptr<DataChunk> terrainWPE = storm->extractDataChunk("tileset\\install.wpe");
-  Tileset::ConvertPaletteRGBXtoRGB(terrainWPE->getDataPointer());
   shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
+  terrainPalette->createDataChunk()->write("/tmp/terrainPalette.pal");
 
-  string grp_file = "unit\\cmdbtns\\cmdicons.grp";
-  Grp grp(storm, grp_file, pal2);
+  string grp_file = "unit\\thingy\\NukeHit.grp";
+  Grp grp(storm, grp_file, pal3);
 
-  grp.save("/tmp/cmdicons.png");
+  grp.save("/tmp/NukeHit.png");
 
   cout << "end testHook()" << endl;
   exit(0);
@@ -456,16 +456,16 @@ int main(int argc, const char **argv)
         std::shared_ptr<Palette> pal_tunit = pcx_tunit.getPalette();
 
         Pcx pcx_tselect(storm, "game\\tselect.pcx");
-        pcx_tselect.copyIndexPalette(1, 8, 0);
+        pcx_tselect.mapIndexPalette(8, 0, 1);
         std::shared_ptr<Palette> pal_tselect = pcx_tselect.getPalette();
 
         // just select on orange fire palette as test
         Pcx pcx_ofire(storm, "tileset\\ashworld\\ofire.pcx");
-        pcx_ofire.copyIndexPalette(0, 256, -1);
+        pcx_ofire.map2DPalette();
         std::shared_ptr<Palette> pal_ofire = pcx_ofire.getPalette();
 
         Pcx pcx_ticon(storm, "unit\\cmdbtns\\ticon.pcx");
-        pcx_ticon.copyIndexPalette(0, 16, 0);
+        pcx_ticon.mapIndexPalette(16, 0, 0);
         std::shared_ptr<Palette> pal_ticon = pcx_ticon.getPalette();
 
         Pcx pcx_twire(storm, "unit\\cmdbtns\\ticon.pcx");
@@ -508,14 +508,14 @@ int main(int argc, const char **argv)
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
-        case R: // UNUSED?
+        /*case R: // FIXME: support Palette class or remove!
         {
           printf("ConvertRgb: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
           Tileset terrain(storm);
           case_func = terrain.ConvertRgb(c[u].ArcFile, c[u].File);
           printf("...%s\n", case_func ? "ok" : "nok");
         }
-        break;
+        break;*/
         case T:  // WORKS!
         {
           printf("ConvertTileset: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
@@ -546,6 +546,8 @@ int main(int argc, const char **argv)
           else if (c[u].Arg1 == 3)
           {
             grp.setPalette(pal_ofire);
+            //grp.setTransparent(255);
+            //grp.setRGBA(true);
           }
           else if (c[u].Arg1 == 2)
           {
@@ -555,7 +557,6 @@ int main(int argc, const char **argv)
           {
             shared_ptr<Storm> storm2 = make_shared<Storm>(mpqfile);
             shared_ptr<DataChunk> terrainWPE = storm2->extractDataChunk("tileset\\install.wpe");
-            Tileset::ConvertPaletteRGBXtoRGB(terrainWPE->getDataPointer());
             shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
 
             grp.setPalette(terrainPalette);
@@ -564,7 +565,6 @@ int main(int argc, const char **argv)
           {
             shared_ptr<Storm> storm2 = make_shared<Storm>(mpqfile);
             shared_ptr<DataChunk> terrainWPE = storm2->extractDataChunk("tileset\\install.wpe");
-            Tileset::ConvertPaletteRGBXtoRGB(terrainWPE->getDataPointer());
             shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
 
             grp.setPalette(terrainPalette);
@@ -578,7 +578,8 @@ int main(int argc, const char **argv)
         {
           printf("ConvertWidgets: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
           Widgets widgets(storm);
-          case_func = widgets.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File, c[u].Arg1);
+          widgets.setPalette(pal_tunit);
+          case_func = widgets.convert(mpqfile.c_str(), c[u].ArcFile, c[u].File);
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
@@ -586,6 +587,7 @@ int main(int argc, const char **argv)
         {
           printf("ConvertFont: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
           Font font(storm);
+          font.setPalette(pal_ticon);
           case_func = font.convert(c[u].ArcFile, c[u].File);
           printf("...%s\n", case_func ? "ok" : "nok");
         }

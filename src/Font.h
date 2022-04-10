@@ -24,6 +24,8 @@ public:
 
   bool convert(const std::string &arcfile, const std::string &file);
 
+  void setPalette(std::shared_ptr<Palette> pal);
+
 private:
   /**
    **  Convert font into raw image data
@@ -32,6 +34,7 @@ private:
 
   Logger mLogger;
   std::shared_ptr<Hurricane> mHurricane;
+  std::shared_ptr<Palette> mPalette;
 };
 
 #endif /* FONT_H_ */

@@ -14,24 +14,38 @@ Color::Color() :
 
 }
 
+Color::Color(const Color &color) :
+  mRed(color.mRed),
+  mGreen(color.mGreen),
+  mBlue(color.mBlue)
+{
+
+}
+
+Color::Color(unsigned char red, unsigned char green, unsigned char blue) :
+  mRed(red), mGreen(green), mBlue(blue)
+{
+
+}
+
 Color::~Color()
 {
 
 }
 
-void Color::red(unsigned char c)
+void Color::red(unsigned char color)
 {
-
+  mRed = color;
 }
 
-void Color::green(unsigned char c)
+void Color::green(unsigned char color)
 {
-
+  mGreen = color;
 }
 
-void Color::blue(unsigned char c)
+void Color::blue(unsigned char color)
 {
-
+  mBlue = color;
 }
 
 unsigned char Color::red() const
@@ -48,3 +62,16 @@ unsigned char Color::blue() const
 {
   return mBlue;
 }
+
+
+Color& Color::operator=(const Color& color)
+{
+  mRed = color.mRed;
+  mGreen = color.mGreen;
+  mBlue = color.mBlue;
+
+  return *this;
+}
+
+
+

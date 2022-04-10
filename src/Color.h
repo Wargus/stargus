@@ -11,6 +11,8 @@ class Color
 {
 public:
   Color();
+  Color(const Color &color);
+  Color(unsigned char red, unsigned char green, unsigned char blue);
   virtual ~Color();
 
   void red(unsigned char c);
@@ -20,6 +22,8 @@ public:
   unsigned char red() const;
   unsigned char green() const;
   unsigned char blue() const;
+
+  Color& operator=(const Color& color);
 
 private:
   unsigned char mRed;

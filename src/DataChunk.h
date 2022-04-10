@@ -24,6 +24,11 @@ public:
   DataChunk();
 
   /**
+   * Copy Constructor (full depth)
+   */
+  DataChunk(const DataChunk &datachunk);
+
+  /**
    * Create a new DataChunk from existing data on heap and give DataChunk responsibility about freeing that memory
    * (works like a smart pointer)
    */
@@ -35,6 +40,8 @@ public:
    * Add a *copy* of the provided data to internal data structure. This doesn't replace the data but concatenates it.
    */
   void addData(unsigned char *data, const size_t size);
+
+  void replaceData(unsigned char *data, const size_t size, size_t pos);
 
   /**
    * @return a pointer to the raw data inside the DataChunk. Modifying the content changes the data itself.
@@ -68,7 +75,7 @@ public:
    *
    * @return a new Object with a complete copy of the data
    */
-  DataChunk* copy();
+  //DataChunk* copy();
 
   /**
    * Access to a specific element

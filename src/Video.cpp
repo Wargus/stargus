@@ -80,7 +80,7 @@ bool Video::ConvertPortrait(const std::string &arcfile,  Storage storage)
 
   string gm_str = "gm convert " + png_path + "image*.png -delay 4 " + mng_file; // 60sec / 15fps = 4
 
-  //cout << "gm: " << gm_str << endl;
+  cout << "gm: " << gm_str << endl;
 
   sys_call = system(gm_str.c_str());
   if (sys_call != 0)

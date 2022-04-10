@@ -31,7 +31,8 @@ Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
   Converter(hurricane),
   mLogger("startool.Grp"),
   mRGBA(false),
-  mGFX(true)
+  mGFX(true),
+  mTransparent(255)
 {
   load(arcfile);
 }
@@ -41,7 +42,8 @@ Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::
   mLogger("startool.Grp"),
   mPal(pal),
   mRGBA(false),
-  mGFX(true)
+  mGFX(true),
+  mTransparent(255)
 {
   load(arcfile);
 }
@@ -110,10 +112,8 @@ bool Grp::save(Storage filename)
       }
     }
 
-    palp = mPal->getDataChunk()->getDataPointer();
-
-    free(gfxp);
-
+    std::shared_ptr<DataChunk> datachunk = mPal->createDataChunk();
+    palp = datachunk->getDataPointer();
 
     if (!getRGBA())
     {
@@ -121,9 +121,10 @@ bool Grp::save(Storage filename)
     }
     else
     {
-      Png::saveRGBA(filename.getFullPath().c_str(), image, w, h, palp, 255);
+      Png::saveRGBA(filename.getFullPath().c_str(), image, w, h, palp, mTransparent);
     }
 
+    free(gfxp);
     free(image);
   }
   else
@@ -131,12 +132,19 @@ bool Grp::save(Storage filename)
     result = false;
   }
 
+
+
   return result;
 }
 
 Grp::~Grp()
 {
 
+}
+
+void Grp::setTransparent(int transparent)
+{
+  mTransparent = transparent;
 }
 
 void Grp::DecodeGfuEntry(int index, unsigned char *start, unsigned char *image, int ix, int iy, int iadd)

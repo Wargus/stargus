@@ -34,7 +34,7 @@ void PcxTest::test1_SaveIndexedPalettePNG()
   Pcx pcx1(breeze, load_pcx_name);
   pcx1.savePNG(save_png_name);
   std::shared_ptr<Palette> pal = pcx1.getPalette();
-  pal->getDataChunk()->write(save_pal_name);
+  pal->createDataChunk()->write(save_pal_name);
 
   CPPUNIT_ASSERT(compareFiles(save_pal_name, test_data_dir + "/PcxTest_" + save_pal_name));
   CPPUNIT_ASSERT(compareFiles(save_png_name, test_data_dir + "/PcxTest_" + save_png_name));
@@ -55,7 +55,7 @@ void PcxTest::test2_copyIndexPaletteIconColor()
   Pcx pcx1(breeze, load_pcx_name);
   pcx1.savePNG(save_png_name);
   std::shared_ptr<Palette> pal = pcx1.getPalette();
-  pal->getDataChunk()->write(save_pal_name);
+  pal->createDataChunk()->write(save_pal_name);
 
   CPPUNIT_ASSERT(compareFiles(save_pal_name, test_data_dir + "/PcxTest_" + save_pal_name));
   CPPUNIT_ASSERT(compareFiles(save_png_name, test_data_dir + "/PcxTest_" + save_png_name));

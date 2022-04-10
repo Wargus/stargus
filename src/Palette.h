@@ -10,15 +10,10 @@
 // project
 #include "DataChunk.h"
 #include "Logger.h"
-#include <memory>
 #include "Color.h"
 
-// TODO: unextern this !!
-extern unsigned char SC_Unit_Palette[];
-extern unsigned char Terrain_Palette[];
-extern unsigned char Cmdicons_Palette[];
-extern unsigned char Orange_Palette[];
-extern unsigned char *Palettes[];
+// project
+#include <memory>
 
 /**
  *
@@ -29,32 +24,30 @@ public:
   Palette();
 
   /**
-   * Create Palette from DataChunk
-   *
-   * @rapam palData Size has to be mutlible of 256 bytes (rgb or rgba). If you don't respect this it will crash!
-   * TODO: better data type check needed
+   * Create from a WPE palette
    */
-  Palette(std::shared_ptr<DataChunk> palData);
+  Palette(std::shared_ptr<DataChunk> wpePalette);
 
   virtual ~Palette();
 
-  std::shared_ptr<DataChunk> getDataChunk();
+  void replaceIndexColor(int index, const Color &rgb);
 
-  void addRGBColor(const Color &rgb);
+  /**
+   * Create a new DataChunk copy for (old) functions that need the data aligned in a big unsigned char*
+   * Pay attention of the std::shared_ptr nature:
+   *    If you directly call createDataChunk()->getDataPointer() without saving it before to a std::shared_ptr<DataChunk> it won't work!
+   */
+  std::shared_ptr<DataChunk> createDataChunk();
 
-  void addColorComponent(unsigned char color);
+  void addColor(const Color &rgb);
 
-  Color getRGBColor(int index);
+  const Color &at(int index) const;
 
-  void replaceRGBColor(int index, const Color &rgb);
-
-  //int getSize();
-
-  //std::shared_ptr<Palette> copy();
+  Color &at(int index);
 
 private:
   Logger mLogger;
-  std::shared_ptr<DataChunk> mPalData;
+  std::vector<Color> mColorPalette;
 };
 
 #endif /* PALETTE_H_ */

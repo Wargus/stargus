@@ -18,15 +18,17 @@ public:
   PaletteImage(int width, int height);
   virtual ~PaletteImage();
 
-  void addPixel(unsigned char paletteIndex);
+  void addPaletteIndex(unsigned char paletteIndex);
 
-  unsigned char* getPixelData() const;
+  unsigned char* getPaletteIndexData() const;
 
   int getHeight() const;
 
   int getWidth() const;
 
   unsigned char at(size_t pos);
+
+  unsigned char getPaletteIndex(int width, int height);
 
 private:
   DataChunk mImageData;
