@@ -51,79 +51,128 @@ Load("scripts/terran/icons.lua")
 Load("scripts/zerg/icons.lua")
 Load("scripts/protoss/icons.lua")
 
-local inner_shields = {{16, 252, 24}, {0, 16, 52}, {4, 32, 100}, {4, 32, 100}, {8, 52, 152}, {8, 52, 152}, {12, 72, 204}, {12, 72, 204}}
-local outer_shields = {{16, 252, 24}, {16, 252, 24}, {0, 16, 52}, {4, 32, 100}, {4, 32, 100}, {8, 52, 152}, {8, 52, 152}, {12, 72, 204}}
-
 local wireframe_red = {200, 24, 24}
 local wireframe_yellow = {252, 252, 56}
 local wireframe_green = {16, 252, 24}
 
-local infrared_1 = {{136, 64, 156}, {232, 80, 20}, {232, 80, 20}, {16, 252, 24}, {16, 252, 24}, {252, 252, 56}}
-local infrared_2 = {{8, 52, 152}, {168, 8, 8}, {168, 8, 8}, {248, 140, 20}, {248, 140, 20}, {16, 252, 24}}
-local infrared_3 = {{4, 32, 100}, {132, 4, 4}, {200, 24, 24}, {160, 84, 28}, {160, 84, 28}, {248, 140, 20}}
-local infrared_4 = {{4, 32, 100}, {8, 52, 152}, {104, 48, 120}, {104, 48, 120}, {168, 8, 8}, {200, 24, 24}}
+local terranPaletteSwap = {
+  "HitPoints", {
+    208, -- health colors for terran/protoss starts at 208
+    { -- # health steps
+      { -- # of alternatives for step
+        {wireframe_red, wireframe_red, wireframe_red, wireframe_yellow}, -- 4 colors
+        {wireframe_red, wireframe_red, wireframe_yellow, wireframe_red},
+        {wireframe_red, wireframe_yellow, wireframe_red, wireframe_red},
+        {wireframe_yellow, wireframe_red, wireframe_red, wireframe_red},
+      },
+      {
+        {wireframe_yellow, wireframe_red, wireframe_red, wireframe_yellow},
+        {wireframe_red, wireframe_yellow, wireframe_yellow, wireframe_red},
+        {wireframe_red, wireframe_yellow, wireframe_red, wireframe_yellow},
+        {wireframe_yellow, wireframe_red, wireframe_yellow, wireframe_red},
+      },
+      {
+        {wireframe_yellow, wireframe_yellow, wireframe_yellow, wireframe_yellow},
+        {wireframe_yellow, wireframe_yellow, wireframe_yellow, wireframe_yellow},
+        {wireframe_yellow, wireframe_yellow, wireframe_yellow, wireframe_yellow},
+        {wireframe_yellow, wireframe_yellow, wireframe_yellow, wireframe_yellow},
+      },
+      {
+        {wireframe_yellow, wireframe_green, wireframe_yellow, wireframe_green},
+        {wireframe_green, wireframe_yellow, wireframe_green, wireframe_yellow},
+        {wireframe_green, wireframe_green, wireframe_yellow, wireframe_green},
+        {wireframe_yellow, wireframe_yellow, wireframe_green, wireframe_yellow},
+      },
+      {
+        {wireframe_yellow, wireframe_green, wireframe_green, wireframe_green},
+        {wireframe_green, wireframe_yellow, wireframe_green, wireframe_green},
+        {wireframe_green, wireframe_green, wireframe_yellow, wireframe_green},
+        {wireframe_green, wireframe_green, wireframe_green, wireframe_yellow},
+      },
+      {
+        {wireframe_green, wireframe_green, wireframe_green, wireframe_green},
+        {wireframe_green, wireframe_green, wireframe_green, wireframe_green},
+        {wireframe_green, wireframe_green, wireframe_green, wireframe_green},
+        {wireframe_green, wireframe_green, wireframe_green, wireframe_green},
+      },
+    },
+  },
+}
 
-local function loadWireframes(tbl, file, w, h)
-  for r=4,0,-2 do
-    local health = CPlayerColorGraphic:ForceNew(file, w, h)
-    health:Load()
-    local idx = 208
-    for j=1,r,1 do
-      health:SetPaletteColor(idx, unpack(wireframe_red))
-      idx = idx + 1
-    end
-    for j=idx,211,1 do
-      health:SetPaletteColor(j, unpack(wireframe_yellow))
-    end
+local zergPaletteSwap = {
+  "HitPoints", {
+    216, -- health colors for zerg starts at 216
+    { -- # health steps
+      { -- # of alternatives for step
+        {{136, 64, 156}, {8, 52, 152}, {4, 32, 100}, {4, 32, 100}},
+      },
+      {
+        {{232, 80, 20}, {168, 8, 8}, {132, 4, 4}, {8, 52, 152}},
+      },
+      {
+        {{232, 80, 20}, {168, 8, 8}, {200, 24, 24}, {104, 48, 120}},
+      },
+      {
+        {{16, 252, 24}, {248, 140, 20}, {160, 84, 28}, {104, 48, 120}},
+      },
+      {
+        {{16, 252, 24}, {248, 140, 20}, {160, 84, 28}, {168, 8, 8}},
+      },
+      {
+        {{252, 252, 56}, {16, 252, 24}, {248, 140, 20}, {200, 24, 24}},
+      },
+    },
+  },
+}
 
-    health:SetPaletteColor(216, unpack(infrared_1[#tbl + 1]))
-    health:SetPaletteColor(217, unpack(infrared_2[#tbl + 1]))
-    health:SetPaletteColor(218, unpack(infrared_3[#tbl + 1]))
-    health:SetPaletteColor(219, unpack(infrared_4[#tbl + 1]))
-
-    tbl[#tbl + 1] = health
-  end
-  for y=2,0,-1 do
-    local health = CPlayerColorGraphic:ForceNew(file, w, h)
-    health:Load()
-    local idx = 208
-    for j=1,y,1 do
-      health:SetPaletteColor(idx, unpack(wireframe_yellow))
-      idx = idx + 1
-    end
-    for j=idx,211,1 do
-      health:SetPaletteColor(j, unpack(wireframe_green))
-    end
-
-    health:SetPaletteColor(216, unpack(infrared_1[#tbl + 1]))
-    health:SetPaletteColor(217, unpack(infrared_2[#tbl + 1]))
-    health:SetPaletteColor(218, unpack(infrared_3[#tbl + 1]))
-    health:SetPaletteColor(219, unpack(infrared_4[#tbl + 1]))
-
-    tbl[#tbl + 1] = health
-  end
-end
-
-local wireframes_single = {}
-local wireframes_group = {}
-local wireframes_transported = {}
-loadWireframes(wireframes_single, "wirefram.png", 64, 64)
-loadWireframes(wireframes_group, "grpwire.png", 32, 32)
-loadWireframes(wireframes_transported, "tranwire.png", 64, 64)
+local protossPaletteSwap = {
+  "HitPoints", terranPaletteSwap[2],
+  "ShieldPoints", {
+    192, -- shields are at 192 + 193
+    { -- # shield steps
+      {
+        {{8, 8, 8}, {8, 8, 8}},
+      },
+      {
+        {{0, 16, 52}, {8, 8, 8}}
+      },
+      {
+        {{4, 32, 100}, {0, 16, 52}},
+      },
+      {
+        {{4, 32, 100}, {4, 32, 100}},
+      },
+      {
+        {{8, 52, 152}, {4, 32, 100}},
+      },
+      {
+        {{8, 52, 152}, {8, 52, 152}},
+      },
+      {
+        {{12, 72, 204}, {8, 52, 152}},
+      },
+      {
+        {{12, 72, 204}, {12, 72, 204}},
+      },
+    }
+  }
+}
 
 for i = 1,table.getn(icons) do
   icon = CIcon:New(icons[i][1])
   icon.G = CPlayerColorGraphic:New("cmdicons.png", 36, 34)
   icon.Frame = icons[i][2]
 
+  if string.find(icons[i][1], "icon-terran-", 1, true) then
+    DefinePaletteSwap(icons[i][1], terranPaletteSwap)
+  elseif string.find(icons[i][1], "icon-zerg-", 1, true) then
+    DefinePaletteSwap(icons[i][1], zergPaletteSwap)
+  elseif string.find(icons[i][1], "icon-protoss-", 1, true) then
+    DefinePaletteSwap(icons[i][1], protossPaletteSwap)
+  end
+
   icon:ClearExtraGraphics()
-  for i,g in ipairs(wireframes_single) do
-    icon:AddSingleSelectionGraphic(g)
-  end
-  for i,g in ipairs(wireframes_group) do
-    icon:AddGroupSelectionGraphic(g)
-  end
-  for i,g in ipairs(wireframes_transported) do
-    icon:AddContainedGraphic(g)
-  end
+  icon:AddSingleSelectionGraphic(CPlayerColorGraphic:New("wirefram.png", 64, 64))
+  icon:AddGroupSelectionGraphic(CPlayerColorGraphic:New("grpwire.png", 32, 32))
+  icon:AddContainedGraphic(CPlayerColorGraphic:New("tranwire.png", 64, 64))
 end

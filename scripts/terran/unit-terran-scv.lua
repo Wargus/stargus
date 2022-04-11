@@ -88,10 +88,10 @@ DefineAnimations("animations-terran-scv", {
     "frame 60", "unbreakable end", "wait 1",},
 })
 
-
 DefineUnitType("unit-terran-scv", { Name = "Terran SCV",
   Image = {"file", "terran/units/scv.png", "size", {72, 72}},
-  Shadow = {"file", "terran/units/scv.png", "size", {72, 72}, "offset", {0, -7}},
+  -- Shadow = {"file", "terran/units/scv.png", "size", {72, 72}, "offset", {0, -7}},
+  Shadow = {"offset", {0, -7}, "scale", 1},
   Portrait = {
     "videos/portrait/tscv/tscfid00.mng",
     "videos/portrait/tscv/tscfid01.mng",
