@@ -185,9 +185,10 @@ void Widgets::SaveImage(char *name, unsigned char *image, unsigned char *palp,
     memcpy(buf + w * i, image + id * 28 * 64 + 64 * i, w);
   }
 
-  Png::save(name, buf, w, h, palp, 255);
+  DataChunk dc_image(&buf, w * h);
+  PaletteImage palImage(dc_image, w, h);
 
-  free(buf);
+  Png::save(name, palImage, palp, 255);
 }
 
 void Widgets::SaveButton(char *name, unsigned char *image, unsigned char *palp,
@@ -218,8 +219,9 @@ void Widgets::SaveButton(char *name, unsigned char *image, unsigned char *palp,
     }
   }
 
-  Png::save(name, button, size, 28, palp, 255);
+  DataChunk dc_image(&button, size * 28);
+  PaletteImage palImage(dc_image, size, 28);
 
-  free(button);
+  Png::save(name, palImage, palp, 255);
 }
 

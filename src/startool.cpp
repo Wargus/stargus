@@ -425,6 +425,10 @@ int main(int argc, const char **argv)
   videos.setDataPath(preferences.getDestDir());
   videos.setDataType("videos");
 
+  Storage fonts;
+  fonts.setDataPath(preferences.getDestDir());
+  fonts.setDataType("graphics/ui/fonts");
+
   if (mpq)
   {
     for (i = 0; i <= 1; ++i)
@@ -590,7 +594,7 @@ int main(int argc, const char **argv)
           printf("ConvertFont: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
           Font font(storm);
           font.setPalette(pal_ticon);
-          case_func = font.convert(c[u].ArcFile, c[u].File);
+          case_func = font.convert(c[u].ArcFile, fonts(string(c[u].File) + ".png"));
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;

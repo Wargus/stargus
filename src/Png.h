@@ -7,7 +7,13 @@
 #ifndef PNG_H_
 #define PNG_H_
 
+// project
+#include "PaletteImage.h"
+
+
+// system
 #include <png.h>
+#include <string>
 
 class Png
 {
@@ -28,7 +34,7 @@ public:
    **  @param pal          Palette (256*3 colors/bytes)
    **  @param transparent  Image uses transparency
    */
-  static int save(const char *name, unsigned char *image, int w, int h,
+  static int save(const std::string &name, PaletteImage &palImage,
       unsigned char *pal, int transparent);
 
   /**
@@ -42,7 +48,7 @@ public:
    **  @param pal          Palette (256*3 colors/bytes)
    **  @param transparent  Image uses transparency from from specific palette index
    */
-  static int saveRGBA(const char *name, unsigned char *image, int w, int h,
+  static int saveRGBA(const std::string &name, PaletteImage &palImageh,
       unsigned char *pal, int transparent);
 };
 

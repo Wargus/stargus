@@ -71,13 +71,6 @@ public:
   bool write(const std::string filename);
 
   /**
-   * Make a full copy of the Object
-   *
-   * @return a new Object with a complete copy of the data
-   */
-  //DataChunk* copy();
-
-  /**
    * Access to a specific element
    *
    * @pos which element to access (if you give a size bigger then elements you get a log warning, buthing bad happens)

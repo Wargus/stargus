@@ -317,10 +317,11 @@ bool Tileset::ConvertTileset(const std::string &arcfile,
   printf("tileset png: %s\n", buf);
 
   std::shared_ptr<DataChunk> datachunk = palette->createDataChunk();
-  Png::save(buf, image, w, h, datachunk->getDataPointer(), 0);
 
-  // freeing the image is still needed as this isn't wrapped in a smart pointer
-  free(image);
+  DataChunk dc_image(&image, w * h);
+  PaletteImage palImage(dc_image, w, h);
+
+  Png::save(buf, palImage, datachunk->getDataPointer(), 0);
 
   return ret;
 }

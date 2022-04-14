@@ -98,11 +98,6 @@ bool DataChunk::write(const std::string filename)
   return result;
 }
 
-/*DataChunk *DataChunk::copy()
-{
-  return new DataChunk(&mData, mSize);
-}*/
-
 unsigned char DataChunk::at(size_t pos)
 {
   unsigned char ret = '\0';

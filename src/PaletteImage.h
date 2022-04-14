@@ -15,12 +15,20 @@
 class PaletteImage
 {
 public:
+  /**
+   * Construct with specific size but empty data to fill byte by byte
+   */
   PaletteImage(int width, int height);
+
+  /**
+   * Construct with specific size but fill in one chunk
+   */
+  PaletteImage(const DataChunk &datachunk, int width, int height);
   virtual ~PaletteImage();
 
   void addPaletteIndex(unsigned char paletteIndex);
 
-  unsigned char* getPaletteIndexData() const;
+  unsigned char* getRawData() const;
 
   int getHeight() const;
 

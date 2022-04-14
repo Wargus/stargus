@@ -61,7 +61,7 @@ bool Pcx::savePNG(Storage storage)
   if (mRawData)
   {
     std::shared_ptr<DataChunk> datachunk = mPalette->createDataChunk();
-    Png::save(storage.getFullPath().c_str(), mPaletteImage->getPaletteIndexData(), mPaletteImage->getWidth(), mPaletteImage->getHeight(), datachunk->getDataPointer(), 0);
+    Png::save(storage.getFullPath(), *mPaletteImage, datachunk->getDataPointer(), 0);
   }
   else
   {

@@ -20,11 +20,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-/**
- **		Path the font files. (default=$DIR/graphics/ui/fonts)
- */
-#define FONT_PATH		"graphics/ui/fonts"
-
 using namespace std;
 
 Font::Font(std::shared_ptr<Hurricane> hurricane) :
@@ -43,14 +38,12 @@ Font::~Font()
  **
  **  @return true if everything is ok
  */
-bool Font::convert(const std::string &arcfile, const std::string &file)
+bool Font::convert(const std::string &arcfile, Storage file)
 {
   unsigned char *palp;
   unsigned char *image;
   int w;
   int h;
-  char buf[8192] =
-  { '\0' };
   bool result = true;
 
   LOG4CXX_TRACE(mLogger, "convert:" + arcfile + "," + file);
@@ -62,13 +55,13 @@ bool Font::convert(const std::string &arcfile, const std::string &file)
     palp = datachunk->getDataPointer();
 
     image = Font::convertImage(data->getDataPointer(), &w, &h);
-    Preferences &preferences = Preferences::getInstance();
-    sprintf(buf, "%s/%s/%s.png", preferences.getDestDir().c_str(), FONT_PATH,
-            file.c_str());
-    CheckPath(buf);
-    Png::save(buf, image, w, h, palp, 255);
 
-    free(image);
+    CheckPath(file.getFullPath());
+
+    DataChunk dc_image(&image, w * h);
+    PaletteImage palImage(dc_image, w, h);
+
+    Png::save(file.getFullPath(), palImage, palp, 255);
   }
 
   return result;

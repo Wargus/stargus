@@ -8,6 +8,12 @@
 
 using namespace std;
 
+PaletteImage::PaletteImage(const DataChunk &datachunk, int width, int height) :
+    mImageData(datachunk), mWidth(width), mHeight(height)
+{
+
+}
+
 PaletteImage::PaletteImage(int width, int height) :
   mWidth(width), mHeight(height)
 {
@@ -24,7 +30,7 @@ void PaletteImage::addPaletteIndex(unsigned char paletteIndex)
   mImageData.addData(&paletteIndex, 1);
 }
 
-unsigned char* PaletteImage::getPaletteIndexData() const
+unsigned char* PaletteImage::getRawData() const
 {
   return mImageData.getDataPointer();
 }

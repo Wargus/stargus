@@ -20,21 +20,23 @@ public:
 
   virtual ~Storage();
 
-  const std::string& getDataPath();
+  const std::string& getDataPath() const;
 
   void setDataPath(const std::string &dataPath);
 
-  const std::string& getDataType();
+  const std::string& getDataType() const;
 
   void setDataType(const std::string &dataType);
 
-  const std::string& getFilename();
+  const std::string& getFilename() const;
 
   void setFilename(const std::string &filename);
 
-  std::string getFullPath();
+  std::string getFullPath() const;
 
   Storage operator()(std::string filename);
+
+  std::string operator+(const Storage& storage);
 
 private:
   std::string mDataPath;
@@ -42,5 +44,7 @@ private:
   std::string mFilename;
 
 };
+
+std::string operator+(const std::string &str, const Storage& storage);
 
 #endif /* STORAGE_H_ */

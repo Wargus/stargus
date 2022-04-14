@@ -115,17 +115,20 @@ bool Grp::save(Storage filename)
     std::shared_ptr<DataChunk> datachunk = mPal->createDataChunk();
     palp = datachunk->getDataPointer();
 
+    DataChunk dc_image(&image, w * h);
+    PaletteImage palImage(dc_image, w, h);
+
     if (!getRGBA())
     {
-      Png::save(filename.getFullPath().c_str(), image, w, h, palp, 255);
+      Png::save(filename.getFullPath(), palImage, palp, 255);
     }
     else
     {
-      Png::saveRGBA(filename.getFullPath().c_str(), image, w, h, palp, mTransparent);
+      Png::saveRGBA(filename.getFullPath(), palImage, palp, mTransparent);
     }
 
+    // TODO: wrap into DataChunk
     free(gfxp);
-    free(image);
   }
   else
   {

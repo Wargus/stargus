@@ -34,7 +34,7 @@ Storage::~Storage()
 
 }
 
-const std::string& Storage::getDataPath()
+const std::string& Storage::getDataPath() const
 {
   return mDataPath;
 }
@@ -44,7 +44,7 @@ void Storage::setDataPath(const std::string &dataPath)
   this->mDataPath = dataPath;
 }
 
-const std::string &Storage::getDataType()
+const std::string &Storage::getDataType() const
 {
   return mDataType;
 }
@@ -54,7 +54,7 @@ void Storage::setDataType(const std::string &dataType)
   this->mDataType = dataType;
 }
 
-const std::string &Storage::getFilename()
+const std::string &Storage::getFilename() const
 {
   return mFilename;
 }
@@ -64,7 +64,7 @@ void Storage::setFilename(const std::string &filename)
   this->mFilename = filename;
 }
 
-std::string Storage::getFullPath()
+std::string Storage::getFullPath() const
 {
   string path = getDataPath();
 
@@ -92,4 +92,14 @@ Storage Storage::operator()(std::string filename)
   storage.setFilename(filename);
 
   return storage;
+}
+
+std::string Storage::operator+(const Storage& storage)
+{
+  return getFullPath();
+}
+
+std::string operator+(const std::string &str, const Storage& storage)
+{
+  return str + storage.getFullPath();
 }

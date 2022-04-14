@@ -4,11 +4,12 @@
  *      Author: Andreas Volz
  */
 
-#ifndef FONT_H_
-#define FONT_H_
+#ifndef FONT_H
+#define FONT_H
 
 // Local
 #include "Logger.h"
+#include "Storage.h"
 
 // System
 #include <memory>
@@ -22,7 +23,7 @@ public:
   Font(std::shared_ptr<Hurricane> hurricane);
   virtual ~Font();
 
-  bool convert(const std::string &arcfile, const std::string &file);
+  bool convert(const std::string &arcfile, Storage file);
 
   void setPalette(std::shared_ptr<Palette> pal);
 
@@ -37,4 +38,4 @@ private:
   std::shared_ptr<Palette> mPalette;
 };
 
-#endif /* FONT_H_ */
+#endif /* FONT_H */
