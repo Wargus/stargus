@@ -93,6 +93,16 @@ void Pcx::mapIndexPalette(int length, int index, int start)
   }
 }
 
+void Pcx::mapIndexPaletteTypeIcon(int index)
+{
+  mapIndexPalette(16, index, 0);
+}
+
+void Pcx::mapIndexPaletteTypeSelect(int index)
+{
+  mapIndexPalette(8, index, 1);
+}
+
 void Pcx::map2DPalette()
 {
   if (mPaletteImage && mPalette)

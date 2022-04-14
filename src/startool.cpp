@@ -347,16 +347,16 @@ void testHook()
   std::shared_ptr<Palette> pal3 = pcx3.getPalette();
   pal3->createDataChunk()->write("/tmp/ofire.pal");
 
-  shared_ptr<DataChunk> terrainWPE = storm->extractDataChunk("tileset\\install.wpe");
+  shared_ptr<DataChunk> terrainWPE = storm->extractDataChunk("tileset\\jungle.wpe");
   shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
   terrainPalette->createDataChunk()->write("/tmp/terrainPalette.pal");
 
-  string grp_file = "unit\\thingy\\NukeHit.grp";
-  Grp grp(storm, grp_file, pal3);
-  grp.setTransparent(200);
-  grp.setRGBA(true);
+  string grp_file = "unit\\thingy\\tileset\\Jungle\\tree01.grp";
+  Grp grp(storm, grp_file, terrainPalette);
+  //grp.setTransparent(200);
+  //grp.setRGBA(true);
 
-  grp.save("/tmp/NukeHit.png");
+  grp.save("/tmp/tree01.png");
 
   cout << "end testHook()" << endl;
   exit(0);
@@ -458,7 +458,7 @@ int main(int argc, const char **argv)
         std::shared_ptr<Palette> pal_tunit = pcx_tunit.getPalette();
 
         Pcx pcx_tselect(storm, "game\\tselect.pcx");
-        pcx_tselect.mapIndexPalette(8, 0, 1);
+        pcx_tselect.mapIndexPaletteTypeSelect(0);
         std::shared_ptr<Palette> pal_tselect = pcx_tselect.getPalette();
 
         // just select on orange fire palette as test
@@ -467,7 +467,7 @@ int main(int argc, const char **argv)
         std::shared_ptr<Palette> pal_ofire = pcx_ofire.getPalette();
 
         Pcx pcx_ticon(storm, "unit\\cmdbtns\\ticon.pcx");
-        pcx_ticon.mapIndexPalette(16, 0, 0);
+        pcx_ticon.mapIndexPaletteTypeIcon(0);
         std::shared_ptr<Palette> pal_ticon = pcx_ticon.getPalette();
 
         Pcx pcx_twire(storm, "unit\\cmdbtns\\ticon.pcx");
@@ -558,7 +558,7 @@ int main(int argc, const char **argv)
           else if (c[u].Arg1 == 1)
           {
             shared_ptr<Storm> storm2 = make_shared<Storm>(mpqfile);
-            shared_ptr<DataChunk> terrainWPE = storm2->extractDataChunk("tileset\\install.wpe");
+            shared_ptr<DataChunk> terrainWPE = storm2->extractDataChunk("tileset\\badlands.wpe");
             shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
 
             grp.setPalette(terrainPalette);
@@ -566,7 +566,7 @@ int main(int argc, const char **argv)
           else // default palette
           {
             shared_ptr<Storm> storm2 = make_shared<Storm>(mpqfile);
-            shared_ptr<DataChunk> terrainWPE = storm2->extractDataChunk("tileset\\install.wpe");
+            shared_ptr<DataChunk> terrainWPE = storm2->extractDataChunk("tileset\\badlands.wpe");
             shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
 
             grp.setPalette(terrainPalette);

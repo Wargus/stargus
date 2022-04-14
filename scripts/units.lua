@@ -59,7 +59,7 @@ for idx,icon in ipairs(icons) do
         for _idx,foldername_to_try in ipairs({foldername, prefix .. "advisor"}) do
             -- should have either their own portrait or the advisor portrait
             for i=0,4,1 do
-                local filename = folderprefix .. foldername_to_try .. "/" .. foldername_to_try:sub(1, 3) .. "fid0" .. i .. ".ogv.mng"
+                local filename = folderprefix .. foldername_to_try .. "/" .. foldername_to_try:sub(1, 3) .. "fid0" .. i .. ".mng"
                 if CanAccessFile(filename) then
                     portrait_table[#portrait_table + 1] = filename
                 end
@@ -67,7 +67,7 @@ for idx,icon in ipairs(icons) do
             if #portrait_table > 1 then
                 portrait_table[#portrait_table + 1] = "talking"
                 for i=0,4,1 do
-                    local filename = folderprefix .. foldername_to_try .. "/" .. foldername_to_try:sub(1, 3) .. "tlk0" .. i .. ".ogv.mng"
+                    local filename = folderprefix .. foldername_to_try .. "/" .. foldername_to_try:sub(1, 3) .. "tlk0" .. i .. ".mng"
                     if CanAccessFile(filename) then
                         portrait_table[#portrait_table + 1] = filename
                     end

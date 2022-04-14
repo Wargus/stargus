@@ -30,7 +30,9 @@ public:
 
   virtual ~Palette();
 
-  void replaceIndexColor(int index, const Color &rgb);
+  void replaceIndexColor(unsigned int index, const Color &rgb);
+
+  void replaceIndexColorRange(const Palette &pal, unsigned int startIndex, unsigned int endIndex);
 
   /**
    * Create a new DataChunk copy for (old) functions that need the data aligned in a big unsigned char*

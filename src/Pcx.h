@@ -45,6 +45,20 @@ public:
   void mapIndexPalette(int length, int index, int start);
 
   /**
+   * Wrapper for mapIndexPalette() with configuration to use ticon.pcx palette
+   *
+   * @param index the color index selector to choose
+   */
+  void mapIndexPaletteTypeIcon(int index = 0);
+
+  /**
+    * Wrapper for mapIndexPalette() with configuration to use tselect.pcx palette
+    *
+    * @param index the color index selector to choose
+    */
+  void mapIndexPaletteTypeSelect(int index = 0);
+
+  /**
    * Fake some 2D palette handling for e.g. fire generation.
    * FIXME: a better algorithm is needed based on generating alpha over tileset or so...
    */

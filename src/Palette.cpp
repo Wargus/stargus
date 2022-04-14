@@ -90,7 +90,18 @@ Color &Palette::at(int index)
   return mColorPalette.at(index);
 }
 
-void Palette::replaceIndexColor(int index, const Color &rgb)
+void Palette::replaceIndexColor(unsigned int index, const Color &rgb)
 {
-  mColorPalette[index] = rgb;
+  if(index <= mColorPalette.size())
+  {
+    mColorPalette[index] = rgb;
+  }
+}
+
+void Palette::replaceIndexColorRange(const Palette &pal, unsigned int startIndex, unsigned int endIndex)
+{
+  for(unsigned int index = startIndex; index <= endIndex; index++)
+  {
+    replaceIndexColor(index, pal.at(index));
+  }
 }
