@@ -8,6 +8,7 @@
 #define WIDGETS_H_
 
 #include "Grp.h"
+#include "Palette.h"
 
 class Widgets: public Grp
 {
@@ -26,13 +27,13 @@ private:
   /**
    * Save Image part of a Widget as PNG file
    */
-  void SaveImage(char *name, unsigned char *image, unsigned char *palp, int id,
+  void SaveImage(char *name, unsigned char *image, Palette &pal, int id,
       int w, int h);
 
   /**
    * Save Button part of a Widget as PNG
    */
-  void SaveButton(char *name, unsigned char *image, unsigned char *palp,
+  void SaveButton(char *name, unsigned char *image, Palette &pal,
       int size, int id);
 
   std::shared_ptr<Palette> mPalette;

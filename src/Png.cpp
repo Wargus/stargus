@@ -22,13 +22,16 @@ Png::~Png()
 
 }
 
-int Png::save(const std::string &name, PaletteImage &palImage, unsigned char *pal, int transparent)
+int Png::save(const std::string &name, PaletteImage &palImage, Palette &palette, int transparent)
 {
   FILE *fp;
   png_structp png_ptr;
   png_infop info_ptr;
   unsigned char **lines;
   int i;
+
+  std::shared_ptr<DataChunk> palData = palette.createDataChunk();
+  unsigned char *pal = palData->getDataPointer();
 
   unsigned char *image = palImage.getRawData();
 
@@ -70,7 +73,8 @@ int Png::save(const std::string &name, PaletteImage &palImage, unsigned char *pa
   png_set_compression_level(png_ptr, Z_BEST_COMPRESSION);
 
   // prepare the file information
-  png_set_IHDR(png_ptr, info_ptr, palImage.getWidth(), palImage.getHeight(), 8, PNG_COLOR_TYPE_PALETTE, 0, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+  png_set_IHDR(png_ptr, info_ptr, palImage.getWidth(), palImage.getHeight(), 8, PNG_COLOR_TYPE_PALETTE,
+               0, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
   png_set_invalid(png_ptr, info_ptr, PNG_INFO_PLTE);
   png_set_PLTE(png_ptr, info_ptr, (png_colorp) pal, 256);
 

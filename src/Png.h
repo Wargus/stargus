@@ -9,7 +9,7 @@
 
 // project
 #include "PaletteImage.h"
-
+#include "Palette.h"
 
 // system
 #include <png.h>
@@ -35,7 +35,7 @@ public:
    **  @param transparent  Image uses transparency
    */
   static int save(const std::string &name, PaletteImage &palImage,
-      unsigned char *pal, int transparent);
+      Palette &pal, int transparent);
 
   /**
    **  Save a png file as 8-bit/color RGBA

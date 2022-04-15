@@ -52,7 +52,6 @@ bool Font::convert(const std::string &arcfile, Storage file)
   if (data && mPalette)
   {
     std::shared_ptr<DataChunk> datachunk = mPalette->createDataChunk();
-    palp = datachunk->getDataPointer();
 
     image = Font::convertImage(data->getDataPointer(), &w, &h);
 
@@ -61,7 +60,7 @@ bool Font::convert(const std::string &arcfile, Storage file)
     DataChunk dc_image(&image, w * h);
     PaletteImage palImage(dc_image, w, h);
 
-    Png::save(file.getFullPath(), palImage, palp, 255);
+    Png::save(file.getFullPath(), palImage, *mPalette, 255);
   }
 
   return result;

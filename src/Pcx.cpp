@@ -60,8 +60,7 @@ bool Pcx::savePNG(Storage storage)
 
   if (mRawData)
   {
-    std::shared_ptr<DataChunk> datachunk = mPalette->createDataChunk();
-    Png::save(storage.getFullPath(), *mPaletteImage, datachunk->getDataPointer(), 0);
+    Png::save(storage.getFullPath(), *mPaletteImage, *mPalette, 0);
   }
   else
   {
@@ -192,12 +191,8 @@ void Pcx::extractImage()
 
     // extract palette =>
 
-    //unsigned char *pal = NULL;
     mPalette = make_shared<Palette>();
 
-    // allocate enough space for RGB information
-    //pal = (unsigned char *) malloc(RGB_SIZE); // memory management later given to DataChunk...
-    //dest = pal;
     do
     {
       ch = *imageParserPos++;

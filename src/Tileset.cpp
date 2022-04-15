@@ -298,12 +298,10 @@ bool Tileset::ConvertTileset(const std::string &arcfile, const std::string &file
           file.c_str());
   printf("tileset png: %s\n", buf);
 
-  std::shared_ptr<DataChunk> datachunk = palette->createDataChunk();
-
   DataChunk dc_image(&image, w * h);
   PaletteImage palImage(dc_image, w, h);
 
-  Png::save(buf, palImage, datachunk->getDataPointer(), 0);
+  Png::save(buf, palImage, *palette, 0);
 
   return ret;
 }

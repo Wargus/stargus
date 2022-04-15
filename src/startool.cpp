@@ -456,6 +456,10 @@ int main(int argc, const char **argv)
         pcx_tselect.mapIndexPaletteTypeSelect(0);
         std::shared_ptr<Palette> pal_tselect = pcx_tselect.getPalette();
 
+        Pcx pcx_tfontgam(storm, "game\\tfontgam.pcx");
+        pcx_tfontgam.mapIndexPalette(8, 0, 1);
+        std::shared_ptr<Palette> pal_tfontgam = pcx_tfontgam.getPalette();
+
         // just select on orange fire palette as test
         Pcx pcx_ofire(storm, "tileset\\ashworld\\ofire.pcx");
         pcx_ofire.map2DPalette();
@@ -584,7 +588,7 @@ int main(int argc, const char **argv)
         {
           printf("ConvertFont: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
           Font font(storm);
-          font.setPalette(pal_ticon);
+          font.setPalette(pal_tfontgam);
           case_func = font.convert(c[u].ArcFile, fonts(string(c[u].File) + ".png"));
           printf("...%s\n", case_func ? "ok" : "nok");
         }
