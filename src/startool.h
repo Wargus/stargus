@@ -27,8 +27,8 @@
 //      Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 //      02111-1307, USA.
 //
-#ifndef _STARTOOL_H
-#define _STARTOOL_H
+#ifndef STARTOOL_H
+#define STARTOOL_H
 
 /*----------------------------------------------------------------------------
  --  General
@@ -134,4 +134,4 @@ enum _archive_type_
 #include "startool_cd.h"
 #include "startool_rm.h"
 
-#endif // _STARTOOL_H
+#endif // STARTOOL_H

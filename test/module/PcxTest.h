@@ -19,7 +19,7 @@ class PcxTest : public CPPUNIT_NS::TestFixture
   CPPUNIT_TEST_SUITE(PcxTest);
 
   CPPUNIT_TEST(test1_SaveIndexedPalettePNG);
-  CPPUNIT_TEST(test2_copyIndexPaletteIconColor);
+  CPPUNIT_TEST(test2_mapIndexPalette);
 
   CPPUNIT_TEST_SUITE_END();
 
@@ -32,7 +32,7 @@ protected:
   /**
    * Idea for test cases: (always compare with result test data for sure)
    * -
-   * - Load a PCX, use only the Palette information,  exchange palette position with image position -> copyIndexPalette()
+   *
    *   - use case: Player coloring
    *   - use case: Icon coloring
    *   - use case: terrain coloring
@@ -48,9 +48,11 @@ protected:
 
 
   /**
-   *
+   * - Load a PCX, use only the Palette information,  exchange palette position with image position -> mapIndexPalette()
    */
-  void test2_copyIndexPaletteIconColor();
+  void test2_mapIndexPalette();
+
+
 
 private:
 

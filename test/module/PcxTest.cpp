@@ -43,24 +43,34 @@ void PcxTest::test1_SaveIndexedPalettePNG()
   std::remove(save_png_name.c_str());
 }
 
-void PcxTest::test2_copyIndexPaletteIconColor()
+void PcxTest::test2_mapIndexPalette()
 {
   string test_data_dir = "test/module/data/";
-  string load_pcx_name = "PcxTest_red_zergb.pcx";
-  string save_pal_name = "red_zergb.pal";
-  string save_png_name = "red_zergb.png";
+  string load_pcx_name = "PcxTest_ticon.pcx";
+
 
   shared_ptr<Breeze> breeze = make_shared<Breeze>(test_data_dir);
 
-  Pcx pcx1(breeze, load_pcx_name);
-  pcx1.savePNG(save_png_name);
-  std::shared_ptr<Palette> pal = pcx1.getPalette();
-  pal->createDataChunk()->write(save_pal_name);
+  Pcx pcx1(breeze);
 
-  CPPUNIT_ASSERT(compareFiles(save_pal_name, test_data_dir + "/PcxTest_" + save_pal_name));
-  CPPUNIT_ASSERT(compareFiles(save_png_name, test_data_dir + "/PcxTest_" + save_png_name));
+  for(unsigned int index = 0; index < 6; index++)
+  {
+    string save_pal_name = string("ticon_") + to_string(index) + ".pal";
+    string save_png_name = string("ticon_") + to_string(index) + ".png";
 
-  std::remove(save_pal_name.c_str());
-  std::remove(save_png_name.c_str());
+    pcx1.load(load_pcx_name);
+    pcx1.mapIndexPalette(8, index, 1);
+    pcx1.savePNG(save_png_name);
+    std::shared_ptr<Palette> pal = pcx1.getPalette();
+    pal->createDataChunk()->write(save_pal_name);
+
+    CPPUNIT_ASSERT(compareFiles(save_pal_name, test_data_dir + "/PcxTest_" + save_pal_name));
+    CPPUNIT_ASSERT(compareFiles(save_png_name, test_data_dir + "/PcxTest_" + save_png_name));
+
+    std::remove(save_pal_name.c_str());
+    std::remove(save_png_name.c_str());
+  }
+
+
 }
 

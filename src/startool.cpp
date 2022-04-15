@@ -123,17 +123,6 @@ bool RawExtract(const char *mpqfile, const char *arcfile, const char *file)
   return result;
 }
 
-/**
- **  MPQ Sub-extraction
- **
- **  @param arcfile File identifier in the MPQ file
- **  @param file Place to save the file on the drive (relative)
- */
-bool MPQSubExtract(const char *mpqfile, const char *arcfile, const char *file)
-{
-  return RawExtract(mpqfile, arcfile, file);
-}
-
 void CreatePanels()
 {
   Panel panel;
@@ -500,7 +489,7 @@ int main(int argc, const char **argv)
           break;
         case Q:
           printf("MPQSubExtract: %s, %s", c[u].File, c[u].ArcFile);
-          case_func = MPQSubExtract(mpqfile.c_str(), c[u].ArcFile, c[u].File);
+          case_func = RawExtract(mpqfile.c_str(), c[u].ArcFile, c[u].File);
           if (case_func)
           {
             sprintf(buf, "%s/%s", preferences.getDestDir().c_str(), c[u].File);
@@ -601,7 +590,7 @@ int main(int argc, const char **argv)
         }
         break;
         case W: // WORKS!
-          if(!dev_hack)
+          if (!dev_hack)
           {
             printf("ConvertWav: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
             case_func = ConvertWav(mpqfile.c_str(), c[u].ArcFile, c[u].File);
