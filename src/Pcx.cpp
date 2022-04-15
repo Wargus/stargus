@@ -125,7 +125,6 @@ void Pcx::map2DPalette()
           Color trans_color(0, 0, 0);
           mPalette->at(i) = trans_color;
         }
-
       }
     }
   }

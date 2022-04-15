@@ -118,7 +118,7 @@ int Png::save(const std::string &name, PaletteImage &palImage, Palette &palette,
 }
 
 
-int Png::saveRGBA(const std::string &name, PaletteImage &palImage, unsigned char *pal, int transparent)
+int Png::saveRGBA(const std::string &name, PaletteImage &palImage, Palette &palette, int transparent)
 {
   FILE *fp;
   png_structp png_ptr;
@@ -128,6 +128,9 @@ int Png::saveRGBA(const std::string &name, PaletteImage &palImage, unsigned char
   const int RGB_BYTE_SIZE = 3;
 
   unsigned char *image = palImage.getRawData();
+
+  std::shared_ptr<DataChunk> palData = palette.createDataChunk();
+  unsigned char *pal = palData->getDataPointer();
 
   CheckPath(name);
 

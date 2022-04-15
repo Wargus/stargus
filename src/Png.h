@@ -35,7 +35,7 @@ public:
    **  @param transparent  Image uses transparency
    */
   static int save(const std::string &name, PaletteImage &palImage,
-      Palette &pal, int transparent);
+      Palette &palette, int transparent);
 
   /**
    **  Save a png file as 8-bit/color RGBA
@@ -49,7 +49,7 @@ public:
    **  @param transparent  Image uses transparency from from specific palette index
    */
   static int saveRGBA(const std::string &name, PaletteImage &palImageh,
-      unsigned char *pal, int transparent);
+      Palette &palette, int transparent);
 };
 
 #endif /* PNG_H_ */

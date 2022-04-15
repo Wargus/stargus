@@ -25,7 +25,6 @@ Widgets::~Widgets()
 bool Widgets::convert(const char *mpqfile, const char *arcfile,
                       const char *file)
 {
-  unsigned char *palp = NULL;
   unsigned char *gfup = NULL;
   unsigned char *gfup2 = NULL;
   unsigned char *image = NULL;

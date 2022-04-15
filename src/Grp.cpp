@@ -81,7 +81,6 @@ bool Grp::load(const std::string &arcfile)
 
 bool Grp::save(Storage filename)
 {
-  unsigned char *palp = NULL;
   unsigned char *gfxp = NULL;
   unsigned char *gfxp2 = NULL;
   unsigned char *image = NULL;
@@ -112,8 +111,6 @@ bool Grp::save(Storage filename)
       }
     }
 
-    std::shared_ptr<DataChunk> datachunk = mPal->createDataChunk();
-
     DataChunk dc_image(&image, w * h);
     PaletteImage palImage(dc_image, w, h);
 
@@ -123,8 +120,7 @@ bool Grp::save(Storage filename)
     }
     else
     {
-      palp = datachunk->getDataPointer(); // TODO: wrap into palette for saveRGBA()
-      Png::saveRGBA(filename.getFullPath(), palImage, palp, mTransparent);
+      Png::saveRGBA(filename.getFullPath(), palImage, *mPal, mTransparent);
     }
 
     // TODO: wrap into DataChunk
