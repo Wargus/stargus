@@ -36,11 +36,18 @@ using namespace std;
 			      "contrib", "tilesets", \
 			      "scripts", "scripts", NULL }
 
-//const char* SRC_PATH() { return __FILE__; }
 const char *SRC_PATH()
 {
   std::cout << "sourcedir:" << SOURCE_DIR << std::endl;
   return SOURCE_DIR;
 }
 
+// I still have hope some far day someone will fix this annoying warnings... ->
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmisleading-indentation"
+#pragma GCC diagnostic ignored "-Wparentheses"
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#pragma GCC diagnostic ignored "-Wformat-overflow="
 #include "stratagus-game-launcher.h"
+#pragma GCC diagnostic pop
+// <-

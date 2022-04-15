@@ -4,8 +4,8 @@
  *      Author: Andreas Volz
  */
 
-#ifndef VIDEO_H_
-#define VIDEO_H_
+#ifndef VIDEO_H
+#define VIDEO_H
 
 // System
 #include <memory>
@@ -33,4 +33,4 @@ private:
   std::shared_ptr<Hurricane> mHurricane;
 };
 
-#endif /* VIDEO_H_ */
+#endif /* VIDEO_H */

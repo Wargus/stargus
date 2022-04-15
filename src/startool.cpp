@@ -35,7 +35,6 @@
 #include <Tbl.h>
 #include "endian.h"
 #include "startool.h"
-#include "optionparser.h"
 #include "Preferences.h"
 #include "Scm.h"
 #include "FileUtil.h"
@@ -55,6 +54,13 @@
 #include "DataHub.h"
 #include "Storage.h"
 
+// as this is 3rd party code I don't fix it ->
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
+#include "optionparser.h"
+#pragma GCC diagnostic pop
+// <-
+
 // System
 #include <memory>
 
@@ -72,10 +78,6 @@ bool dev_hack = false;
 
 //----------------------------------------------------------------------------
 
-/**
- **  Palette N27, for credits cursor
- */
-//static unsigned char* Pal27;
 //#define MAKE_CCL 1
 //----------------------------------------------------------------------------
 //		Wav

@@ -102,7 +102,7 @@ unsigned char *Font::convertImage(unsigned char *start, int *wp, int *hp)
   int image_width = 0;
   int image_height = 0;
 
-  LOG4CXX_DEBUG(mLogger, "convertImage2");
+  LOG4CXX_DEBUG(mLogger, "convertImage");
 
   bp = start;
 

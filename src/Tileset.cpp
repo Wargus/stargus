@@ -89,23 +89,6 @@ bool Tileset::ConvertRgb(const std::string &arcfile, const std::string &file)
     // write .rgb
     data->write(buf);
 
-    /*f = fopen(buf, "wb");
-    if (!f)
-    {
-      perror("");
-      printf("Can't open %s\n", buf);
-      // TODO: more flexible error handling than calling GUI dialog from conversation routine needed
-      //error("Memory error", "Could not allocate enough memory to read archive.");
-    }
-    if (fwrite(palp, 1, 256 * 3, f) != 256 * 3)
-    {
-      printf("Can't write %d bytes\n", 256 * 3);
-      fflush(stdout);
-    }
-
-    fclose(f);*/
-
-
     //
     //  Generate GIMP palette
     //
@@ -215,8 +198,7 @@ unsigned char *Tileset::ConvertTile(const std::string &arcfile,
 /**
  **  Convert a tileset to my format.
  */
-bool Tileset::ConvertTileset(const std::string &arcfile,
-                             const std::string &file)
+bool Tileset::ConvertTileset(const std::string &arcfile, const std::string &file)
 {
   shared_ptr<DataChunk> palp;
   shared_ptr<DataChunk> megp;
