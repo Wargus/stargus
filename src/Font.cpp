@@ -40,7 +40,6 @@ Font::~Font()
  */
 bool Font::convert(const std::string &arcfile, Storage file)
 {
-  unsigned char *palp;
   unsigned char *image;
   int w;
   int h;

@@ -94,12 +94,33 @@ Storage Storage::operator()(std::string filename)
   return storage;
 }
 
-std::string Storage::operator+(const Storage& storage)
+/*std::string Storage::operator+(const Storage& storage)
+{
+  return getFullPath();
+}*/
+
+std::string Storage::operator=(const Storage& storage)
 {
   return getFullPath();
 }
 
+
 std::string operator+(const std::string &str, const Storage& storage)
 {
   return str + storage.getFullPath();
+}
+
+std::string operator+(const Storage& storage, const std::string &str)
+{
+  return storage.getFullPath() + str;
+}
+
+std::string operator+(const char *str, const Storage& storage)
+{
+  return str + storage.getFullPath();
+}
+
+std::string operator+(const Storage& storage, const char *str)
+{
+  return storage.getFullPath() + str;
 }

@@ -19,7 +19,7 @@ public:
   /**
    * Convert a widget from data container as several PNG files
    */
-  bool convert(const char *mpqfile, const char *arcfile, const char *file);
+  bool convert(const char *arcfile, const char *file);
 
   void setPalette(std::shared_ptr<Palette> pal);
 

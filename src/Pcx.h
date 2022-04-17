@@ -14,7 +14,7 @@
 #include "Storage.h"
 #include "PaletteImage.h"
 
-class Pcx: public Converter
+class Pcx : public Converter
 {
 public:
   Pcx(std::shared_ptr<Hurricane> hurricane);

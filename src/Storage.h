@@ -36,7 +36,9 @@ public:
 
   Storage operator()(std::string filename);
 
-  std::string operator+(const Storage& storage);
+  //std::string operator+(const Storage& storage);
+
+  std::string operator=(const Storage& storage);
 
 private:
   std::string mDataPath;
@@ -46,5 +48,11 @@ private:
 };
 
 std::string operator+(const std::string &str, const Storage& storage);
+
+std::string operator+(const char *str, const Storage& storage);
+
+std::string operator+(const Storage& storage, const std::string &str);
+
+std::string operator+(const Storage& storage, const char *str);
 
 #endif /* STORAGE_H_ */

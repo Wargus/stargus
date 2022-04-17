@@ -45,6 +45,8 @@ bool Pcx::load(const std::string &arcfile)
     free(rawImage);
     extractHeader();
     extractImage();
+
+    LOG4CXX_TRACE(mLogger, "load(): " + arcfile);
   }
   else
   {

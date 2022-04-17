@@ -11,6 +11,7 @@
 #include "DataChunk.h"
 #include "Logger.h"
 #include "Color.h"
+#include "Converter.h"
 
 // project
 #include <memory>
@@ -24,11 +25,13 @@ public:
   Palette();
 
   /**
-   * Create from a WPE palette
+   * Create from a RGB or RGBx/WPE palette
    */
-  Palette(std::shared_ptr<DataChunk> wpePalette);
+  Palette(std::shared_ptr<DataChunk> rawPalette);
 
   virtual ~Palette();
+
+  void load(std::shared_ptr<DataChunk> rawPalette);
 
   void replaceIndexColor(unsigned int index, const Color &rgb);
 
@@ -46,6 +49,8 @@ public:
   const Color &at(int index) const;
 
   Color &at(int index);
+
+  bool write(const std::string filename);
 
 private:
   Logger mLogger;

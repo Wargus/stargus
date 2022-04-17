@@ -9,18 +9,21 @@
 
 #include "startool.h"
 
-Control CDTodo[] = {
-	{F,0,"","install.exe" __4},
-	{F,0,"","Install.exe" __4},
-	{F,0,"","starcraft.mpq" __4 },
-	{F,0,"","Starcraft.mpq" __4 },
-	{F,0,"","StarCraft.mpq" __4 },
-	{F,0,"","installer tome.mpq" __4 },
-	{F,0,"","Installer Tome.mpq" __4 },
-	{F,0,"","starcraft archive" __4 },
-	{F,0,"","StarCraft Archive" __4 },
-	{F,0,0 ,0 __4},
+Control CDTodo_bootstrap[] = {
+  {F,0,"","install.exe" __4},
+  {F,0,"","Install.exe" __4},
+  {F,0,"","starcraft.mpq" __4 },
+  {F,0,"","Starcraft.mpq" __4 },
+  {F,0,"","StarCraft.mpq" __4 },
+  {F,0,"","installer tome.mpq" __4 },
+  {F,0,"","Installer Tome.mpq" __4 },
+  {F,0,"","starcraft archive" __4 },
+  {F,0,"","StarCraft Archive" __4 },
 
+  {Q,0,"remove-stardat.mpq","files\\stardat.mpq" __4}
+};
+
+Control CDTodo[] = {
 	// Fonts
 	{N,0,"font8","files\\font\\font8.fnt" __4},
 	{N,0,"font10","files\\font\\font10.fnt" __4},
@@ -730,8 +733,7 @@ Control CDTodo[] = {
 	{V,0,"zerg4","smk\\zerg4.smk" __4},
 	{V,0,"zerg1","smk\\zerg1.smk" __4},
 
-	// Sub MPQ Files (must be at very bottom of this list)
-	{Q,0,"remove-stardat.mpq","files\\stardat.mpq" __4},
+
 };
 
 #endif /* STARTOOL_CD_H_ */

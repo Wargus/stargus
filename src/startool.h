@@ -124,7 +124,9 @@ enum _archive_type_
   L,    // Campaign Levels
   Q,    // MPQ archive
   D,    // Graphics in DDS format
-  P     // SMK Portraits
+  P,    // SMK Portraits
+  PAL,  // Palette from pcx file
+  WPE   // Palette from wpe file
 };
 
 #define __3 ,0,0,0

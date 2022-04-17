@@ -9,11 +9,36 @@
 
 #include "startool.h"
 
+Control Todo_bootstrap[] = {
+
+  {F,0,"","stardat.mpq" __4},
+  {F,0,"","StarDat.mpq" __4},
+  {F,0,"","remove-stardat.mpq" __4},
+};
+
 Control Todo[] = {
-	{F,0,"","stardat.mpq" __4},
-	{F,0,"","StarDat.mpq" __4},
-	{F,0,"","remove-stardat.mpq" __4},
-	{F,0,0 ,0 __4},
+
+  // Palettes have to be first because everything depends on it!
+  // Pcx palette type
+  // 0 = default
+  // 1 = icon
+  // 2 = select
+  // 3 = 2D palette (e.g. fire)
+  {PAL,0,"tblink","game\\tblink.pcx",0 __3},
+  {PAL,0,"tfontgam","game\\tfontgam.pcx",0 __3},
+  {PAL,0,"thpbar","game\\thpbar.pcx",0 __3},
+  {PAL,0,"tminimap","game\\tminimap.pcx",0 __3},
+  {PAL,0,"tselect","game\\tselect.pcx",2 __3},
+  {PAL,0,"tunit","game\\tunit.pcx",0 __3},
+  {PAL,0,"twire","game\\twire.pcx",0 __3},
+  {PAL,0,"ticon","unit\\cmdbtns\\ticon.pcx",1 __3},
+  {PAL,0,"ofire","tileset\\ashworld\\ofire.pcx",3 __3},
+
+  {WPE,0,"install","tileset\\install.wpe",0 __3},
+  {WPE,0,"jungle","tileset\\jungle.wpe",0 __3},
+  {WPE,0,"badlands","tileset\\badlands.wpe",0 __3},
+  {WPE,0,"platform","tileset\\platform.wpe",0 __3},
+  {WPE,0,"ashworld","tileset\\ashworld.wpe",0 __3},
 
 //	{G,0,"ui/blink","game\\blink.grp",0 __3},
 
@@ -21,45 +46,40 @@ Control Todo[] = {
 	{V,0,"blizzard","smk\\blizzard.smk" __4},
 
 	// Fonts
-	{N,0,"font10","font\\font10.fnt" __4},
+	/*{N,0,"font10","font\\font10.fnt" __4},
 	{N,0,"font12","font\\font12.fnt" __4},
 	{N,0,"font14","font\\font14.fnt" __4},
 	{N,0,"font16","font\\font16.fnt" __4},
 	{N,0,"font16x","font\\font16x.fnt" __4},
 	{N,0,"font32","font\\font32.fnt" __4},
 	{N,0,"font50","font\\font50.fnt" __4},
-	{N,0,"font8","font\\font8.fnt" __4},
+	{N,0,"font8","font\\font8.fnt" __4},*/
 
 	// UI
 	{G,0,"ui/icons","game\\icons.grp",5 __3},
 	{I,0,"ui/protoss","dlgs\\protoss.grp",0 __3},
 	{I,0,"ui/terran","dlgs\\terran.grp",0 __3},
 	{I,0,"ui/zerg","dlgs\\zerg.grp",0 __3},
+
+
+
 	{H,0,"ui/aggicons","game\\aggicons.pcx",0 __3},
 	{H,0,"ui/pconover","game\\pconover.pcx",0 __3},
 	{H,0,"ui/pconsole","game\\pconsole.pcx",0 __3},
 	{H,0,"ui/ppbrempt","game\\ppbrempt.pcx",0 __3},
 	{H,0,"ui/ppbrfull","game\\ppbrfull.pcx",0 __3},
-	{H,0,"ui/tblink","game\\tblink.pcx",0 __3},
 	{H,0,"ui/tconover","game\\tconover.pcx",0 __3},
 	{H,0,"ui/tconsole","game\\tconsole.pcx",0 __3},
-	{H,0,"ui/tfontgam","game\\tfontgam.pcx",0 __3},
-	{H,0,"ui/thpbar","game\\thpbar.pcx",0 __3},
-	{H,0,"ui/tminimap","game\\tminimap.pcx",0 __3},
 	{H,0,"ui/tpbrempt","game\\tpbrempt.pcx",0 __3},
 	{H,0,"ui/tpbrfull","game\\tpbrfull.pcx",0 __3},
-	{H,0,"ui/tselect","game\\tselect.pcx",0 __3},
-	{H,0,"ui/tunit","game\\tunit.pcx",0 __3},
-	{H,0,"ui/twire","game\\twire.pcx",0 __3},
 	{H,0,"ui/zconover","game\\zconover.pcx",0 __3},
 	{H,0,"ui/zconsole","game\\zconsole.pcx",0 __3},
 	{H,0,"ui/zpbrempt","game\\zpbrempt.pcx",0 __3},
 	{H,0,"ui/zpbrfull","game\\zpbrfull.pcx",0 __3},
 	{H,0,"ui/tfont","glue\\title\\tFont.pcx",0 __3},
-//	{H,0,"ui/tfont-beta","glue\\title\\tFont-beta.pcx",0 __3},
 	{H,0,"ui/title","glue\\title\\title.pcx",0 __3},
-//	{H,0,"ui/title-beta","glue\\title\\title-beta.pcx",0 __3},
 	{H,0,"ui/Menu background without title","glue\\PalMm\\Backgnd.pcx",0 __3},
+
 	{G,0,"ui/o022","unit\\thingy\\o022.grp",2 __3},
 	{G,0,"ui/o032","unit\\thingy\\o032.grp",2 __3},
 	{G,0,"ui/o048","unit\\thingy\\o048.grp",2 __3},
@@ -110,6 +130,7 @@ Control Todo[] = {
 	{H,0,"ui/readyt/tframeh3","glue\\ReadyT\\TFrameH3.pcx",0 __3},
 	{H,0,"ui/readyt/tframeh4","glue\\ReadyT\\TFrameH4.pcx",0 __3},
 	{H,0,"ui/readyt/tutbtn","Glue\\ReadyT\\TutBtn.pcx",0 __3},
+
 	{G,0,"cmdicons","unit\\cmdbtns\\cmdicons.grp",4 __3},
 	{G,0,"pcmdbtns","unit\\cmdbtns\\pcmdbtns.grp",4 __3},
 	{G,0,"tcmdbtns","unit\\cmdbtns\\tcmdbtns.grp",4 __3},
@@ -1579,7 +1600,6 @@ Control Todo[] = {
 	{W,0,"misc/explolrg","sound\\misc\\explolrg.wav" __4},
 	{W,0,"misc/explomed","sound\\misc\\explomed.wav" __4},
 	{W,0,"misc/explosm","sound\\misc\\explosm.wav" __4},
-
 
 	//Portrait Videos
 	{P,0,"portrait/uflag8/uf8fid00","portrait\\uflag8\\uf8fid00.smk" __4},
