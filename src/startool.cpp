@@ -689,11 +689,9 @@ int main(int argc, const char **argv)
         }
       }
     }
+
     // remove temporary sub files
-    /*if (!submpqfile.empty())
-    {
-      unlink(submpqfile.c_str());
-    }*/
+    unlink(sub_storm->getArchiveName().c_str());
 
     CreatePanels();
   }

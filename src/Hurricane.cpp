@@ -37,3 +37,8 @@ std::shared_ptr<DataChunk> Hurricane::extractDataChunk(
 
   return nullptr;
 }
+
+const std::string &Hurricane::getArchiveName() const
+{
+  return mArchiveName;
+}
