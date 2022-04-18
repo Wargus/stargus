@@ -53,6 +53,7 @@
 #include "Breeze.h"
 #include "DataHub.h"
 #include "Storage.h"
+#include "Wav.h"
 
 // as this is 3rd party code I don't fix it ->
 #pragma GCC diagnostic push
@@ -77,25 +78,6 @@ void testHook();
 bool dev_hack = false;
 
 //----------------------------------------------------------------------------
-
-//#define MAKE_CCL 1
-//----------------------------------------------------------------------------
-//		Wav
-//----------------------------------------------------------------------------
-/**
- **  Convert wav to gzipped format
- **
- **  @param arcfile File identifier in the MPQ file
- **  @param file Place to save the file on the drive (relative)
- */
-bool ConvertWav(std::shared_ptr<Hurricane> hurricane, const char *arcfile, Storage storage)
-{
-  bool result = true;
-
-  result = hurricane->extractFile(arcfile, storage.getFullPath(), true);
-
-  return result;
-}
 
 /**
  **  Raw extraction
@@ -640,7 +622,8 @@ int main(int argc, const char **argv)
           if (!dev_hack)
           {
             printf("ConvertWav: %s, %s", c[u].File, c[u].ArcFile);
-            case_func = ConvertWav(storm, c[u].ArcFile, sounds(c[u].File) + ".wav.gz");
+            Wav wav(storm);
+            case_func = wav.convert(c[u].ArcFile, sounds(c[u].File));
             printf("...%s\n", case_func ? "ok" : "nok");
           }
           break;
@@ -673,7 +656,7 @@ int main(int argc, const char **argv)
         case E: // WORKS
           printf("RawExtract: %s, %s", c[u].File, c[u].ArcFile);
           // TBD: I think campaigns this must be somehow converted to stratagus
-          case_func = ConvertWav(storm, c[u].ArcFile, sounds(c[u].File));
+          case_func = RawExtract(storm, c[u].ArcFile, data(c[u].File));
           printf("...%s\n", case_func ? "ok" : "nok");
           break;
         case L:

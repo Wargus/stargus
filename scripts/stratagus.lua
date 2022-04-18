@@ -68,7 +68,7 @@ end
 --  Enter your default title screen.
 SetTitleScreens(
   {Image = "videos/blizzard.ogv"},
-  {Image = "ui/title.png", Music = "music/title.wav",  Timeout = 5}
+  {Image = "ui/title.png", Music = "music/title.ogg",  Timeout = 5}
 )
 
 --  Set the game name. It's used so we can mantain different savegames
