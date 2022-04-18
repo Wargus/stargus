@@ -31,6 +31,7 @@
  --  Includes
  ----------------------------------------------------------------------------*/
 
+#include "Smacker.h"
 #include "Palette.h"
 #include <Tbl.h>
 #include "endian.h"
@@ -50,7 +51,6 @@
 #include "Dds.h"
 #include "Logger.h"
 #include "Breeze.h"
-#include "Video.h"
 #include "DataHub.h"
 #include "Storage.h"
 
@@ -647,8 +647,8 @@ int main(int argc, const char **argv)
         case V: // WORKS!
           if (preferences.getVideoExtraction())
           {
-            printf("ConvertVideo: %s, %s", c[u].File, c[u].ArcFile);
-            Video video(storm);
+            printf("ConvertSmacker: %s, %s", c[u].File, c[u].ArcFile);
+            Smacker video(storm);
             case_func = video.ConvertVideo(c[u].ArcFile, videos(c[u].File));
             printf("...%s\n", case_func ? "ok" : "nok");
           }
@@ -657,7 +657,7 @@ int main(int argc, const char **argv)
           if (preferences.getVideoExtraction())
           {
             printf("ConvertPortrait: %s, %s", c[u].File, c[u].ArcFile);
-            Video video(storm);
+            Smacker video(storm);
             case_func = video.ConvertPortrait(c[u].ArcFile, videos(c[u].File));
             printf("...%s\n", case_func ? "ok" : "nok");
           }

@@ -16,11 +16,11 @@
 // Forward declarations
 class Hurricane;
 
-class Video
+class Smacker
 {
 public:
-  Video(std::shared_ptr<Hurricane> hurricane);
-  virtual ~Video();
+  Smacker(std::shared_ptr<Hurricane> hurricane);
+  virtual ~Smacker();
 
   /**
    *  Convert SMK video to OGV

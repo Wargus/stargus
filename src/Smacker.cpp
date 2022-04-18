@@ -5,28 +5,29 @@
  */
 
 // Local
-#include "Video.h"
+#include <Smacker.h>
 #include "Hurricane.h"
 #include "FileUtil.h"
 
 // System
 #include <string>
 #include <iostream>
+#include <filesystem>
 
 using namespace std;
 
-Video::Video(std::shared_ptr<Hurricane> hurricane) :
+Smacker::Smacker(std::shared_ptr<Hurricane> hurricane) :
   mHurricane(hurricane)
 {
 
 }
 
-Video::~Video()
+Smacker::~Smacker()
 {
 
 }
 
-bool Video::ConvertVideo(const std::string &arcfile,  Storage storage)
+bool Smacker::ConvertVideo(const std::string &arcfile,  Storage storage)
 {
   bool result = true;
 
@@ -49,12 +50,12 @@ bool Video::ConvertVideo(const std::string &arcfile,  Storage storage)
     result = false;
   }
 
-  remove(smk_file.c_str());
+  std::filesystem::remove(smk_file);
 
   return result;
 }
 
-bool Video::ConvertPortrait(const std::string &arcfile,  Storage storage)
+bool Smacker::ConvertPortrait(const std::string &arcfile,  Storage storage)
 {
   bool result = true;
 
@@ -88,8 +89,8 @@ bool Video::ConvertPortrait(const std::string &arcfile,  Storage storage)
     result = false;
   }
 
-  remove(smk_file.c_str());
-  remove(png_path.c_str());
+  std::filesystem::remove(smk_file);
+  std::filesystem::remove_all(png_path);
 
   return result;
 }

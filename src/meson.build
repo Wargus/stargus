@@ -23,7 +23,7 @@ startool_sources = files(
 	'WorldMap.cpp',
 	'Dds.cpp',
 	'Breeze.cpp',
-	'Video.cpp',
+	'Smacker.cpp',
 	'Converter.cpp',
 	'Tbl.cpp',
 	'DataHub.cpp',
