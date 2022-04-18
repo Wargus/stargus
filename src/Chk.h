@@ -10,6 +10,7 @@
 // Local
 #include "WorldMap.h"
 #include "Logger.h"
+#include "Storage.h"
 
 // System
 #include <memory>
@@ -29,7 +30,7 @@ public:
   Chk(std::shared_ptr<Hurricane> hurricane);
   virtual ~Chk();
 
-  virtual bool convert(const std::string &arcfile, const std::string &file);
+  virtual bool convert(const std::string &arcfile, Storage storage);
 
 private:
   /**
@@ -40,13 +41,13 @@ private:
    **	@param map	The map
    */
   void loadFromBuffer(unsigned char *chkdata, int len);
-  void ConvertChk(const char *savedir, unsigned char *chkdata, int chklen);
+  void ConvertChk(Storage storage, unsigned char *chkdata, int chklen);
 
-  void SaveMap(const char *savedir);
+  void SaveMap(Storage storage);
 
-  void SaveSMS(const char *name);
+  void SaveSMS(Storage storage);
   void SaveTrigger(FILE *fd, Trigger *trigger);
-  void SaveSMP(const char *name);
+  void SaveSMP(Storage storage);
   void FreeMap();
 
   Logger mLogger;

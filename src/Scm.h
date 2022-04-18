@@ -8,7 +8,9 @@
 
 // Local
 #include "Chk.h"
-#include <Converter.h>
+#include "Converter.h"
+#include "Storage.h"
+
 
 // System
 #include <cstring>
@@ -31,7 +33,7 @@ public:
   Scm(std::shared_ptr<Hurricane> hurricane);
   virtual ~Scm();
 
-  bool convert(const std::string &arcfile, const std::string &file);
+  bool convert(const std::string &arcfile, Storage storage);
 
 private:
 

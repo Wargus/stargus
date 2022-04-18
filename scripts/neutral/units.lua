@@ -1,5 +1,8 @@
 Load("scripts/neutral/unit-vespene-geyser.lua")
 Load("scripts/neutral/unit-minerals.lua")
+Load("scripts/neutral/unit-bengalaas-jungle-critter.lua")
+Load("scripts/neutral/unit-ragnasaur-ashworld-critter.lua")
+Load("scripts/neutral/unit-rhynadon-badlands-critter.lua")
 
 --
 -- Allow

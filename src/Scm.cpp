@@ -34,7 +34,6 @@
 #include "Hurricane.h"
 #include "endian.h"
 #include "FileUtil.h"
-#include "Preferences.h"
 #include "Storm.h"
 
 // System
@@ -72,24 +71,22 @@ Scm::~Scm()
 
 }
 
-bool Scm::convert(const std::string &arcfile, const std::string &file)
+bool Scm::convert(const std::string &arcfile, Storage storage)
 {
-  char buf[1024];
   bool result = true;
 
-  Preferences &preferences = Preferences::getInstance();
-  sprintf(buf, "%s/%sscm", preferences.getDestDir().c_str(), file.c_str());
+  string scm_path = storage.getFullPath() + "scm";
 
-  result = mHurricane->extractFile(arcfile, buf);
+  result = mHurricane->extractFile(arcfile, scm_path);
   if (result)
   {
     // call the Chk converter with temp file...
-    shared_ptr<Storm> storm = make_shared<Storm>(buf);
+    shared_ptr<Storm> storm = make_shared<Storm>(scm_path);
     Chk chk(storm);
-    result = chk.convert("staredit\\scenario.chk", file.c_str());
+    result = chk.convert("staredit\\scenario.chk", storage.getFullPath());
 
     // delete the temporary .chk file -> below don't access 'breeze' any more!
-    unlink(buf);
+    unlink(scm_path.c_str());
   }
 
   return result;

@@ -546,7 +546,7 @@ int main(int argc, const char **argv)
         {
           printf("ConvertMap: %s, %s", c[u].File, c[u].ArcFile);
           Scm scm(storm);
-          case_func = scm.convert(c[u].ArcFile, c[u].File);
+          case_func = scm.convert(c[u].ArcFile, data(c[u].File));
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;

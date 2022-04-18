@@ -10,7 +10,6 @@
 #include "endian.h"
 #include "Hurricane.h"
 #include "FileUtil.h"
-#include "Preferences.h"
 
 // System
 #include <cstring>
@@ -900,13 +899,15 @@ static const char *UnitNames[] =
  --  Functions
  ----------------------------------------------------------------------------*/
 
-void Chk::SaveSMP(const char *name)
+void Chk::SaveSMP(Storage storage)
 {
   FILE *fd;
 
-  CheckPath(name);
+  storage.setFilename(storage.getFilename() + "sms");
 
-  fd = fopen(name, "wb");
+  CheckPath(storage.getFullPath());
+
+  fd = fopen(storage.getFullPath().c_str(), "wb");
 
   fprintf(fd, "-- Stratagus Map Presentation\n");
   fprintf(fd, "-- File generated automatically from scmconvert V" VERSION "\n");
@@ -1113,14 +1114,16 @@ void Chk::SaveTrigger(FILE *fd, Trigger *trigger)
   }
 }
 
-void Chk::SaveSMS(const char *name)
+void Chk::SaveSMS(Storage storage)
 {
   FILE *fd;
   int i;
 
-  CheckPath(name);
+  storage.setFilename(storage.getFilename() + "sms");
 
-  fd = fopen(name, "wb");
+  CheckPath(storage.getFullPath());
+
+  fd = fopen(storage.getFullPath().c_str(), "wb");
 
   fprintf(fd, "-- Stratagus Map Setup\n");
   fprintf(fd, "-- File generated automatically from scmconvert V" VERSION "\n");
@@ -1163,9 +1166,13 @@ void Chk::SaveSMS(const char *name)
   // units
   for (i = 0; i < (int) map->Units.size(); ++i)
   {
+    // TODO: this is just a workaround to exclude a unit that isn't yet available in LUA to not crash
+    string unitName = UnitNames[map->Units[i].Type];
     fprintf(fd, "unit= CreateUnit(\"%s\", %d, {%d, %d})\n",
             UnitNames[map->Units[i].Type], (map->Units[i]).Player, map->Units[i].X,
             map->Units[i].Y);
+
+
     if (map->Units[i].ResourceAmount)
     {
       fprintf(fd, "SetResourcesHeld(unit, %d)\n", map->Units[i].ResourceAmount);
@@ -1184,27 +1191,18 @@ void Chk::SaveSMS(const char *name)
   fclose(fd);
 }
 
-void Chk::SaveMap(const char *savedir)
+void Chk::SaveMap(Storage storage)
 {
-  string sms(savedir);
-  string smp(savedir);
-
   // if a map ends with a dot (.) then it adds .sms and .scp otherwise a dir with scenario.sms/scenario.smp
   // TODO: if you give something unexpected to savedir - bye bye => rework later
-  if (savedir[strlen(savedir) - 1] == '.')
+  if (storage.getFullPath().back() == '/')
   {
-    sms += "sms";
-    smp += "smp";
-  }
-  else if (savedir[strlen(savedir) - 1] == '/')
-  {
-    sms += "scenario.sms";
-    smp += "scenario.smp";
+    storage.setFilename(storage.getFilename() + "scenario.");
   }
 
-  SaveSMP(smp.c_str());
+  SaveSMP(storage);
 
-  SaveSMS(sms.c_str());
+  SaveSMS(storage);
 }
 
 void Chk::FreeMap()
@@ -1215,24 +1213,24 @@ void Chk::FreeMap()
   delete map;
 }
 
-void Chk::ConvertChk(const char *savedir, unsigned char *chkdata, int chklen)
+void Chk::ConvertChk(Storage storage, unsigned char *chkdata, int chklen)
 {
   loadFromBuffer(chkdata, chklen);
-  SaveMap(savedir);
+  SaveMap(storage);
 }
 
-bool Chk::convert(const std::string &arcfile, const std::string &file)
+bool Chk::convert(const std::string &arcfile, Storage storage)
 {
-  char buf[1024];
+  //char buf[1024];
   bool result = false;
 
-  Preferences &preferences = Preferences::getInstance();
-  sprintf(buf, "%s/%s", preferences.getDestDir().c_str(), file.c_str());
+  //Preferences &preferences = Preferences::getInstance();
+  //sprintf(buf, "%s/%s", preferences.getDestDir().c_str(), file.c_str());
 
   shared_ptr<DataChunk> data = mHurricane->extractDataChunk(arcfile);
   if (data)
   {
-    ConvertChk(buf, data->getDataPointer(), data->getSize());
+    ConvertChk(storage, data->getDataPointer(), data->getSize());
 
     result = true;
   }

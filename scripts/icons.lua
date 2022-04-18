@@ -32,6 +32,10 @@ icons = {
   {"icon-minerals2", 177},
   {"icon-minerals3", 178},
   {"icon-vespene-geyser", 188},
+  {"icon-bengalaas-jungle-critter", 90},
+  {"icon-rhynadon-badlands-critter", 89},
+  {"icon-ragnasaur-ashworld-critter", 95},
+  
   {"icon-move", 228},
   {"icon-stop", 229},
   {"icon-attack", 230},
