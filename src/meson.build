@@ -39,7 +39,7 @@ stratagus_incdir = include_directories(stratagus_includedir)
 
 add_project_arguments('-DDATA_PATH="' + stratagus_prefix + '/share/games/stratagus/stargus"', language: 'cpp')
 add_project_arguments('-DSCRIPTS_PATH="' + stratagus_prefix + '/share/games/stratagus/stargus"', language: 'cpp')
-add_project_arguments('-DSTRATAGUS_BIN=' + stratagus_bin, language: 'cpp')
+add_project_arguments('-DSTRATAGUS_BIN="' + stratagus_bin + '"', language: 'cpp')
 add_project_arguments('-DSOURCE_DIR="' + meson.current_source_dir() + '/../"', language: 'cpp')
 add_project_arguments('-DKS_STR_ENCODING_NONE', language: 'cpp')
 
@@ -51,7 +51,7 @@ stargus_sources = files('stargus.cpp')
 executable('startool', 
 	startool_sources,
 	startool_kaitai_sources,
-	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep],
+	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep],
 	install : true)
 
 executable('stargus', 

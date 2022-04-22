@@ -6,6 +6,7 @@ cpp = meson.get_compiler('cpp')
 casc_dep = cpp.find_library('casc', required : false)
 storm_dep = cpp.find_library('storm', required : false)
 png_dep = cpp.find_library('png', required : true)
+bzip2_dep = cpp.find_library('bz2', required : true)
 zlib_dep = dependency('zlib', required : false)
 imagemagickpp_dep = dependency('ImageMagick++', required : false)
 
