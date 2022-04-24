@@ -72,6 +72,7 @@ DefineAnimations("animations-terran-marine", {
 DefineUnitType("unit-terran-marine", { Name = "Marine",
   Image = {"file", "terran/units/marine.png", "size", {64, 64}},
   Shadow = {"file", "terran/units/marine shadow.png", "size", {44, 44}},
+  --Shadow = {"offset", {-3, -3}, "scale", 1},
   Animations = "animations-terran-marine", Icon = "icon-terran-marine",
   Costs = {"time", 60, "minerals", 50},
   Speed = 10, NumDirections = 32,

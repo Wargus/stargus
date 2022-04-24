@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -23,7 +24,8 @@ Grp::Grp(std::shared_ptr<Hurricane> hurricane) :
   Converter(hurricane),
   mLogger("startool.Grp"),
   mRGBA(false),
-  mGFX(true)
+  mGFX(true),
+  mTransparent(255)
 {
 }
 
@@ -46,6 +48,11 @@ Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::
   mTransparent(255)
 {
   load(arcfile);
+}
+
+Grp::~Grp()
+{
+
 }
 
 void Grp::setGFX(bool gfx)
@@ -112,7 +119,7 @@ bool Grp::save(Storage filename)
     }
 
     DataChunk dc_image(&image, w * h);
-    PaletteImage palImage(dc_image, w, h);
+    PaletteImage palImage(dc_image, Size(w, h));
 
     if (!getRGBA())
     {
@@ -136,9 +143,20 @@ bool Grp::save(Storage filename)
   return result;
 }
 
-Grp::~Grp()
+bool Grp::saveLUAConfig(Storage filename)
 {
+  bool result = true;
 
+  ofstream lua_file;
+  lua_file.open (filename.getFullPath());
+
+  string tile_size = filename.getFilename() + "_size = {" + to_string(mTilesize.getWidth())
+      + ", " + to_string(mTilesize.getHeight()) + "}";
+
+  lua_file << tile_size;
+  lua_file.close();
+
+  return result;
 }
 
 void Grp::setTransparent(int transparent)
@@ -352,6 +370,9 @@ unsigned char *Grp::ConvertGraphic(bool gfx, unsigned char *bp, int *wp, int *hp
   }
 
   image = (unsigned char *) malloc(best_width * best_height * length);
+
+  Size tilesize(best_width, best_height);
+  mTilesize = tilesize;
 
   //  Image: 0, 1, 2, 3, 4,
   //         5, 6, 7, 8, 9, ...

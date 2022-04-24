@@ -177,7 +177,7 @@ void Widgets::SaveImage(char *name, unsigned char *image, Palette &pal,
   }
 
   DataChunk dc_image(&buf, w * h);
-  PaletteImage palImage(dc_image, w, h);
+  PaletteImage palImage(dc_image, Size(w, h));
 
   Png::save(name, palImage, pal, 255);
 }
@@ -211,7 +211,7 @@ void Widgets::SaveButton(char *name, unsigned char *image, Palette &pal,
   }
 
   DataChunk dc_image(&button, size * 28);
-  PaletteImage palImage(dc_image, size, 28);
+  PaletteImage palImage(dc_image, Size(size, 28));
 
   Png::save(name, palImage, pal, 255);
 }

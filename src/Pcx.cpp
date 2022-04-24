@@ -108,9 +108,9 @@ void Pcx::map2DPalette()
 {
   if (mPaletteImage && mPalette)
   {
-    if ((mPaletteImage->getWidth() == 256) && (mPaletteImage->getHeight() == 63))
+    if ((mPaletteImage->getSize().getWidth() == 256) && (mPaletteImage->getSize().getHeight() == 63))
     {
-      for (int i = 0; i < mPaletteImage->getWidth(); i++)
+      for (int i = 0; i < mPaletteImage->getSize().getWidth(); i++)
       {
         int num = (rand() % (55 -20  + 1)) + 20;
 
@@ -148,7 +148,7 @@ void Pcx::extractHeader()
     int width = pcxh.Xmax - pcxh.Xmin + 1;
     int height = pcxh.Ymax - pcxh.Ymin + 1;
 
-    mPaletteImage = make_shared<PaletteImage>(width, height);
+    mPaletteImage = make_shared<PaletteImage>(Size(width, height));
   }
 }
 
@@ -162,14 +162,14 @@ void Pcx::extractImage()
 
   if (mRawData)
   {
-    rawImage = (unsigned char *) malloc(mPaletteImage->getWidth() * mPaletteImage->getHeight());
+    rawImage = (unsigned char *) malloc(mPaletteImage->getSize().getWidth() * mPaletteImage->getSize().getHeight());
     imageParserPos = mRawData->getDataPointer() + sizeof(struct PCXheader);
 
-    for (y = 0; y < mPaletteImage->getHeight(); ++y)
+    for (y = 0; y < mPaletteImage->getSize().getHeight(); ++y)
     {
       count = 0;
-      dest = rawImage + y * mPaletteImage->getWidth();
-      for (int i = 0; i < mPaletteImage->getWidth(); ++i)
+      dest = rawImage + y * mPaletteImage->getSize().getWidth();
+      for (int i = 0; i < mPaletteImage->getSize().getWidth(); ++i)
       {
         if (!count)
         {

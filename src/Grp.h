@@ -11,6 +11,7 @@
 #include "Converter.h"
 #include "Palette.h"
 #include "Storage.h"
+#include "Size.h"
 
 // System
 #include <string.h>
@@ -39,7 +40,14 @@ public:
 
   bool load(const std::string &arcfile);
 
+  /**
+   *  Convert a Grp graphic to PNG format
+   *
+   *  @param file Place to save the file on the drive (relative to game dir)
+   */
   bool save(Storage filename);
+
+  bool saveLUAConfig(Storage filename);
 
   void setPalette(std::shared_ptr<Palette> pal);
 
@@ -47,14 +55,6 @@ public:
   bool getGFX();
 
   void setTransparent(int transparent);
-
-  /**
-   *  Convert a Grp graphic to PNG format
-   *
-   *  @param arcfile File identifier in the MPQ file
-   *  @param file Place to save the file on the drive (relative to game dir)
-   */
-  bool savePNG(const std::string &filename);
 
 protected:
   /**
@@ -79,7 +79,7 @@ private:
   bool mRGBA;
   bool mGFX;
   int mTransparent;
-
+  Size mTilesize;
 };
 
 #endif /* GRP_H_ */

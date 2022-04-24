@@ -595,6 +595,7 @@ int main(int argc, const char **argv)
           }
 
           case_func = grp.save(graphics(string(c[u].File) + ".png"));
+          //grp.saveLUAConfig(graphics(string(c[u].File) + ".lua")); // FIXME: works only after save()
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;

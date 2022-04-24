@@ -73,7 +73,7 @@ int Png::save(const std::string &name, PaletteImage &palImage, Palette &palette,
   png_set_compression_level(png_ptr, Z_BEST_COMPRESSION);
 
   // prepare the file information
-  png_set_IHDR(png_ptr, info_ptr, palImage.getWidth(), palImage.getHeight(), 8, PNG_COLOR_TYPE_PALETTE,
+  png_set_IHDR(png_ptr, info_ptr, palImage.getSize().getWidth(), palImage.getSize().getHeight(), 8, PNG_COLOR_TYPE_PALETTE,
                0, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
   png_set_invalid(png_ptr, info_ptr, PNG_INFO_PLTE);
   png_set_PLTE(png_ptr, info_ptr, (png_colorp) pal, 256);
@@ -93,7 +93,7 @@ int Png::save(const std::string &name, PaletteImage &palImage, Palette &palette,
   // set transformation
 
   // prepare image
-  lines = (unsigned char **) malloc(palImage.getHeight() * sizeof(*lines));
+  lines = (unsigned char **) malloc(palImage.getSize().getHeight() * sizeof(*lines));
   if (!lines)
   {
     png_destroy_write_struct(&png_ptr, &info_ptr);
@@ -101,9 +101,9 @@ int Png::save(const std::string &name, PaletteImage &palImage, Palette &palette,
     return 1;
   }
 
-  for (i = 0; i < palImage.getHeight(); ++i)
+  for (i = 0; i < palImage.getSize().getHeight(); ++i)
   {
-    lines[i] = image + i * palImage.getWidth();
+    lines[i] = image + i * palImage.getSize().getWidth();
   }
 
   png_write_image(png_ptr, lines);
@@ -170,21 +170,21 @@ int Png::saveRGBA(const std::string &name, PaletteImage &palImage, Palette &pale
   png_set_compression_level(png_ptr, Z_BEST_COMPRESSION);
 
   // prepare the file information
-  png_set_IHDR(png_ptr, info_ptr, palImage.getWidth(), palImage.getHeight(), 8, PNG_COLOR_TYPE_RGBA, 0, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+  png_set_IHDR(png_ptr, info_ptr, palImage.getSize().getWidth(), palImage.getSize().getHeight(), 8, PNG_COLOR_TYPE_RGBA, 0, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
 
   // write the file header information
   png_write_info(png_ptr, info_ptr);
 
-  row_pointers = (png_bytep *) malloc(sizeof(png_bytep) * palImage.getHeight());
+  row_pointers = (png_bytep *) malloc(sizeof(png_bytep) * palImage.getSize().getHeight());
 
 
-  for (int h_pos = 0; h_pos < palImage.getHeight(); ++h_pos)
+  for (int h_pos = 0; h_pos < palImage.getSize().getHeight(); ++h_pos)
   {
-    row_pointers[h_pos] = (unsigned char *) malloc(palImage.getWidth() * RGBA_BYTE_SIZE);
+    row_pointers[h_pos] = (unsigned char *) malloc(palImage.getSize().getWidth() * RGBA_BYTE_SIZE);
 
-    unsigned char *img_line_pal = image + h_pos * palImage.getWidth();
+    unsigned char *img_line_pal = image + h_pos * palImage.getSize().getWidth();
 
-    for (int w_pos = 0; w_pos < palImage.getWidth(); w_pos++)
+    for (int w_pos = 0; w_pos < palImage.getSize().getWidth(); w_pos++)
     {
       unsigned char pal_pos = img_line_pal[w_pos];
       //printf("pal_pos (w:%d/h:%d) pal:%d\n", w_pos, h_pos,(int) pal_pos);
@@ -218,7 +218,7 @@ int Png::saveRGBA(const std::string &name, PaletteImage &palImage, Palette &pale
 
   if (NULL != row_pointers)
   {
-    for (int h_pos = 0; h_pos < palImage.getHeight(); ++h_pos)
+    for (int h_pos = 0; h_pos < palImage.getSize().getHeight(); ++h_pos)
     {
       free(row_pointers[h_pos]);
     }

@@ -8,14 +8,14 @@
 
 using namespace std;
 
-PaletteImage::PaletteImage(const DataChunk &datachunk, int width, int height) :
-    mImageData(datachunk), mWidth(width), mHeight(height)
+PaletteImage::PaletteImage(const DataChunk &datachunk, Size size) :
+    mImageData(datachunk), mSize(size)
 {
 
 }
 
-PaletteImage::PaletteImage(int width, int height) :
-  mWidth(width), mHeight(height)
+PaletteImage::PaletteImage(Size size) :
+  mSize(size)
 {
 
 }
@@ -40,7 +40,7 @@ unsigned char PaletteImage::getPaletteIndex(int x, int y)
   int pos = 0;
   unsigned char palette = 0;
 
-  if((x < getWidth()) || (y < getHeight()) || (x > 0) || (y > 0))
+  if((x < mSize.getWidth()) || (y < mSize.getHeight()) || (x > 0) || (y > 0))
   {
     if(y == 0)
     {
@@ -48,7 +48,7 @@ unsigned char PaletteImage::getPaletteIndex(int x, int y)
     }
     else
     {
-      pos = ((y - 1) * getWidth()) + x;
+      pos = ((y - 1) * mSize.getWidth()) + x;
       palette = mImageData.at(pos);
     }
   }
@@ -60,14 +60,9 @@ unsigned char PaletteImage::getPaletteIndex(int x, int y)
   return palette;
 }
 
-int PaletteImage::getHeight() const
+Size PaletteImage::getSize() const
 {
-  return mHeight;
-}
-
-int PaletteImage::getWidth() const
-{
-  return mWidth;
+  return mSize;
 }
 
 unsigned char PaletteImage::at(size_t pos)

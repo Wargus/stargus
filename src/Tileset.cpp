@@ -299,7 +299,7 @@ bool Tileset::ConvertTileset(const std::string &arcfile, const std::string &file
   printf("tileset png: %s\n", buf);
 
   DataChunk dc_image(&image, w * h);
-  PaletteImage palImage(dc_image, w, h);
+  PaletteImage palImage(dc_image, Size(w, h));
 
   Png::save(buf, palImage, *palette, 0);
 
