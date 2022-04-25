@@ -313,12 +313,12 @@ void testHook()
   shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
   terrainPalette->createDataChunk()->write("/tmp/terrainPalette.pal");
 
-  string grp_file = "unit\\thingy\\tileset\\Jungle\\tree01.grp";
-  Grp grp(storm, grp_file, pal);
+  string grp_file = "unit\\thingy\\flamer.grp";
+  Grp grp(storm, grp_file, pal3);
   //grp.setTransparent(200);
   //grp.setRGBA(true);
 
-  grp.save("/tmp/tree01.png");
+  grp.save("/tmp/flamer.png");
 
   cout << "end testHook()" << endl;
   exit(0);

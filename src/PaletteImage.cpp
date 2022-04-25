@@ -49,8 +49,8 @@ unsigned char PaletteImage::getPaletteIndex(int x, int y)
     else
     {
       pos = ((y - 1) * mSize.getWidth()) + x;
-      palette = mImageData.at(pos);
     }
+    palette = mImageData.at(pos);
   }
   else
   {
