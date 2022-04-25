@@ -517,7 +517,7 @@ Control Todo[] = {
 	{G,0,"terran/explosion large","unit\\thingy\\tbangx.grp",3 __3},
 	{G,0,"terran/dark swarm","unit\\thingy\\Dswarm.grp",3 __3},
 	{G,0,"terran/spider mine explosion","unit\\thingy\\tmnExplo.grp",3 __3},
-	{G,0,"terran/spider mine smoke","unit\\thingy\\GreSmoke.grp",3 __3},
+	{G,0,"terran/spider mine smoke","unit\\thingy\\GreSmoke.grp",0 __3},
 	{G,0,"terran/spider mine hit","unit\\thingy\\efgHit.grp",3 __3},
 	{G,0,"terran/gemini missile trail","unit\\thingy\\smoke.grp",3 __3},
 	{G,0,"terran/tank turret attack overlay","unit\\thingy\\esiFire.grp",3 __3},

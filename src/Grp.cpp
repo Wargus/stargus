@@ -69,6 +69,11 @@ void Grp::setPalette(std::shared_ptr<Palette> pal)
   mPal = pal;
 }
 
+void Grp::setPalette2D(std::shared_ptr<Palette2D> pal)
+{
+  mPal2D = pal;
+}
+
 void Grp::setRGBA(bool rgba)
 {
   mRGBA = rgba;
@@ -127,7 +132,14 @@ bool Grp::save(Storage filename)
     }
     else
     {
-      Png::saveRGBA(filename.getFullPath(), palImage, *mPal, mTransparent);
+      if(mPal && !mPal2D)
+      {
+        Png::saveRGBA(filename.getFullPath(), palImage, *mPal, mTransparent);
+      }
+      else if(mPal && mPal2D)
+      {
+        Png::saveRGBA(filename.getFullPath(), palImage, *mPal2D, mTransparent);
+      }
     }
 
     // TODO: wrap into DataChunk

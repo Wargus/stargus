@@ -229,3 +229,122 @@ int Png::saveRGBA(const std::string &name, PaletteImage &palImage, Palette &pale
 
   return 0;
 }
+
+int Png::saveRGBA(const std::string &name, PaletteImage &palImage, Palette2D &palette2d, int transparent)
+{
+  FILE *fp;
+  png_structp png_ptr;
+  png_infop info_ptr;
+  png_bytep *row_pointers = NULL;
+  const int RGBA_BYTE_SIZE = 4;
+  const int RGB_BYTE_SIZE = 3;
+
+  unsigned char *image = palImage.getRawDataPointer();
+
+  //std::shared_ptr<DataChunk> palData = palette.createDataChunk();
+  //unsigned char *pal = palData->getDataPointer();
+
+  CheckPath(name);
+
+  if (!(fp = fopen(name.c_str(), "wb")))
+  {
+    printf("%s:", name.c_str());
+    perror("Can't open file");
+    fflush(stdout);
+    fflush(stderr);
+    return 1;
+  }
+
+  png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+  if (!png_ptr)
+  {
+    fclose(fp);
+    return 1;
+  }
+  info_ptr = png_create_info_struct(png_ptr);
+  if (!info_ptr)
+  {
+    png_destroy_write_struct(&png_ptr, NULL);
+    fclose(fp);
+    return 1;
+  }
+
+  if (setjmp(png_jmpbuf(png_ptr)))
+  {
+    // FIXME: must free buffers!!
+    png_destroy_write_struct(&png_ptr, &info_ptr);
+    fclose(fp);
+    return 1;
+  }
+  png_init_io(png_ptr, fp);
+
+  // zlib parameters
+  png_set_compression_level(png_ptr, Z_BEST_COMPRESSION);
+
+  // prepare the file information
+  png_set_IHDR(png_ptr, info_ptr, palImage.getSize().getWidth(), palImage.getSize().getHeight(), 8, PNG_COLOR_TYPE_RGBA, 0, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+
+  // write the file header information
+  png_write_info(png_ptr, info_ptr);
+
+  row_pointers = (png_bytep *) malloc(sizeof(png_bytep) * palImage.getSize().getHeight());
+
+  for (int h_pos = 0; h_pos < palImage.getSize().getHeight(); ++h_pos)
+  {
+    row_pointers[h_pos] = (unsigned char *) malloc(palImage.getSize().getWidth() * RGBA_BYTE_SIZE);
+
+    unsigned char *img_line_pal = image + h_pos * palImage.getSize().getWidth();
+
+    for (int w_pos = 0; w_pos < palImage.getSize().getWidth(); w_pos++)
+    {
+      unsigned char pal_pos = img_line_pal[w_pos];
+      unsigned char pal_beneath = 10;
+
+
+      if(pal_pos != 255)
+      {
+        //printf("pal_pos (w:%d/h:%d) pal:%d\n", w_pos, h_pos,(int) pal_pos);
+      }
+
+      unsigned char color_r = 0;
+      unsigned char color_g = 0;
+      unsigned char color_b = 0;
+      unsigned char color_a = 0;
+
+      if (pal_pos != 255)
+      {
+        const Color &color = palette2d.at(pal_beneath, pal_pos-1);
+        //Color color(255,0,0);
+        color_r = color.red();
+        color_g = color.green();
+        color_b = color.blue();
+        color_a = transparent;
+      }
+
+      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 0] = color_r;
+      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 1] = color_g;
+      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 2] = color_b;
+      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 3] = color_a;
+    }
+
+  }
+
+  png_set_rows(png_ptr, info_ptr, row_pointers);
+  png_write_png(png_ptr, info_ptr, PNG_TRANSFORM_IDENTITY, NULL);
+
+  png_destroy_write_struct(&png_ptr, &info_ptr);
+  fclose(fp);
+
+  if (NULL != row_pointers)
+  {
+    for (int h_pos = 0; h_pos < palImage.getSize().getHeight(); ++h_pos)
+    {
+      free(row_pointers[h_pos]);
+    }
+
+    free(row_pointers);
+    row_pointers = NULL;
+  }
+
+  return 0;
+}

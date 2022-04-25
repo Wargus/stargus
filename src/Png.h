@@ -10,6 +10,7 @@
 // project
 #include "PaletteImage.h"
 #include "Palette.h"
+#include "Palette2D.h"
 
 // system
 #include <png.h>
@@ -50,6 +51,9 @@ public:
    */
   static int saveRGBA(const std::string &name, PaletteImage &palImageh,
       Palette &palette, int transparent);
+
+  static int saveRGBA(const std::string &name, PaletteImage &palImageh,
+      Palette2D &palette2d, int transparent);
 };
 
 #endif /* PNG_H_ */

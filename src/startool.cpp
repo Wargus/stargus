@@ -305,7 +305,7 @@ void testHook()
   // Image 3
   Pcx pcx3(storm, "tileset\\ashworld\\ofire.pcx");
   pcx3.savePNG("/tmp/ofire.png");
-  pcx3.map2DPalette();
+  std::shared_ptr<Palette2D> pal2D = pcx3.map2DPalette();
   std::shared_ptr<Palette> pal3 = pcx3.getPalette();
   pal3->createDataChunk()->write("/tmp/ofire.pal");
 
@@ -314,9 +314,11 @@ void testHook()
   terrainPalette->createDataChunk()->write("/tmp/terrainPalette.pal");
 
   string grp_file = "unit\\thingy\\flamer.grp";
-  Grp grp(storm, grp_file, pal);
-  //grp.setTransparent(200);
-  //grp.setRGBA(true);
+  Grp grp(storm, grp_file);
+  grp.setPalette2D(pal2D);
+  grp.setPalette(terrainPalette);
+  grp.setTransparent(200);
+  grp.setRGBA(true);
 
   grp.save("/tmp/flamer.png");
 
@@ -396,6 +398,8 @@ int main(int argc, const char **argv)
   data.setDataPath(preferences.getDestDir());
 
   map<string, shared_ptr<Palette>> paletteMap;
+
+  std::shared_ptr<Palette2D> pal2D;
 
   if (mpq)
   {
@@ -500,7 +504,7 @@ int main(int argc, const char **argv)
               break;
 
             case 3:
-              pcx_palette.map2DPalette();
+               pal2D = pcx_palette.map2DPalette();
               break;
 
             case 0:
@@ -573,7 +577,8 @@ int main(int argc, const char **argv)
           }
           else if (c[u].Arg1 == 3)
           {
-            pal = paletteMap.at("ofire");
+            pal = paletteMap.at("install");
+            grp.setPalette2D(pal2D);
             grp.setPalette(pal);
             grp.setTransparent(127);
             grp.setRGBA(true);

@@ -49,7 +49,7 @@ public:
 
   Color &at(int index);
 
-  bool write(const std::string filename);
+  bool write(const std::string &filename);
 
 private:
   Logger mLogger;

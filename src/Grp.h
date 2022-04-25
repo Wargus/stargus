@@ -12,6 +12,7 @@
 #include "Palette.h"
 #include "Storage.h"
 #include "Size.h"
+#include "Palette2D.h"
 
 // System
 #include <string.h>
@@ -51,6 +52,8 @@ public:
 
   void setPalette(std::shared_ptr<Palette> pal);
 
+  void setPalette2D(std::shared_ptr<Palette2D> pal);
+
   void setGFX(bool gfx);
   bool getGFX();
 
@@ -75,6 +78,7 @@ protected:
 private:
   Logger mLogger;
   std::shared_ptr<Palette> mPal;
+  std::shared_ptr<Palette2D> mPal2D;
   std::string mArcfile;
   bool mRGBA;
   bool mGFX;

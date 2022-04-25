@@ -13,6 +13,7 @@
 #include "Palette.h"
 #include "Storage.h"
 #include "PaletteImage.h"
+#include "Palette2D.h"
 
 class Pcx : public Converter
 {
@@ -62,7 +63,9 @@ public:
    * Fake some 2D palette handling for e.g. fire generation.
    * FIXME: a better algorithm is needed based on generating alpha over tileset or so...
    */
-  void map2DPalette();
+  //void map2DPalette();
+
+  std::shared_ptr<Palette2D> map2DPalette();
 
 private:
   struct PCXheader

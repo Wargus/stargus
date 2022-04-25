@@ -104,7 +104,7 @@ void Pcx::mapIndexPaletteTypeSelect(int index)
   mapIndexPalette(8, index, 1);
 }
 
-void Pcx::map2DPalette()
+/*void Pcx::map2DPalette()
 {
   if (mPaletteImage && mPalette)
   {
@@ -130,6 +130,40 @@ void Pcx::map2DPalette()
       }
     }
   }
+}*/
+
+std::shared_ptr<Palette2D> Pcx::map2DPalette()
+{
+  std::shared_ptr<Palette2D> palette2D = make_shared<Palette2D>();
+
+  if (mPaletteImage && mPalette)
+  {
+    // check magic size of the special 2D palette format
+    if ((mPaletteImage->getSize().getWidth() == 256) && (mPaletteImage->getSize().getHeight() == 63))
+    {
+      for (int x = 0; x < mPaletteImage->getSize().getWidth()-1; x++)
+      {
+        for (int y = 0; y < mPaletteImage->getSize().getHeight()-1; y++)
+        {
+          unsigned char color_index = mPaletteImage->getPaletteIndex(x, y);
+
+          if(color_index != 255)
+          {
+            Color image_color = mPalette->at(color_index);
+
+            palette2D->at(x, y) = image_color;
+          }
+          else
+          {
+            Color trans_color(0, 0, 0);
+            palette2D->at(x, y) = trans_color;
+          }
+        }
+      }
+    }
+  }
+
+  return palette2D;
 }
 
 void Pcx::extractHeader()

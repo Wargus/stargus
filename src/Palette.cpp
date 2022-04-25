@@ -107,7 +107,7 @@ void Palette::replaceIndexColorRange(const Palette &pal, unsigned int startIndex
   }
 }
 
-bool Palette::write(const std::string filename)
+bool Palette::write(const std::string &filename)
 {
   bool result = true;
 

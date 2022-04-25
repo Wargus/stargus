@@ -19,6 +19,7 @@ StartoolUnitTest_sources = files(
   '../../src/PaletteImage.cpp',
   '../../src/Color.cpp',
   '../../src/Palette.cpp',
+  '../../src/Palette2D.cpp',
   '../../src/Png.cpp',
   '../../src/Converter.cpp',
   '../../src/Storage.cpp'
