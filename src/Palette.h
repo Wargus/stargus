@@ -15,6 +15,7 @@
 
 // project
 #include <memory>
+#include <array>
 
 /**
  *
@@ -44,8 +45,6 @@ public:
    */
   std::shared_ptr<DataChunk> createDataChunk();
 
-  void addColor(const Color &rgb);
-
   const Color &at(int index) const;
 
   Color &at(int index);
@@ -54,7 +53,7 @@ public:
 
 private:
   Logger mLogger;
-  std::vector<Color> mColorPalette;
+  std::array<Color, 256> mColorPalette;
 };
 
 #endif /* PALETTE_H */

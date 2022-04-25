@@ -33,7 +33,7 @@ int Png::save(const std::string &name, PaletteImage &palImage, Palette &palette,
   std::shared_ptr<DataChunk> palData = palette.createDataChunk();
   unsigned char *pal = palData->getDataPointer();
 
-  unsigned char *image = palImage.getRawData();
+  unsigned char *image = palImage.getRawDataPointer();
 
   CheckPath(name);
 
@@ -127,7 +127,7 @@ int Png::saveRGBA(const std::string &name, PaletteImage &palImage, Palette &pale
   const int RGBA_BYTE_SIZE = 4;
   const int RGB_BYTE_SIZE = 3;
 
-  unsigned char *image = palImage.getRawData();
+  unsigned char *image = palImage.getRawDataPointer();
 
   std::shared_ptr<DataChunk> palData = palette.createDataChunk();
   unsigned char *pal = palData->getDataPointer();

@@ -41,7 +41,7 @@ void Palette::load(std::shared_ptr<DataChunk> rawPalette)
         // ignore the 4th component, as it is not used as alpha
 
         Color rgb(red, green, blue);
-        addColor(rgb);
+        at(i/4) = rgb;
       }
     }
     else if(rawPalette->getSize() == 256 * 3) // RGB size type
@@ -53,7 +53,7 @@ void Palette::load(std::shared_ptr<DataChunk> rawPalette)
         unsigned char blue = rawPalette->at(i+2);
 
         Color rgb(red, green, blue);
-        addColor(rgb);
+        at(i/3) = rgb;
       }
     }
     else
@@ -66,7 +66,7 @@ std::shared_ptr<DataChunk> Palette::createDataChunk()
 {
   std::shared_ptr<DataChunk> datachunk = make_shared<DataChunk>();
 
-  for(vector<Color>::iterator color_it = mColorPalette.begin(); color_it < mColorPalette.end(); color_it++)
+  for(auto color_it = mColorPalette.begin(); color_it < mColorPalette.end(); color_it++)
   {
     Color &rgb = *color_it;
     unsigned char red = rgb.red();
@@ -79,11 +79,6 @@ std::shared_ptr<DataChunk> Palette::createDataChunk()
   }
 
   return datachunk;
-}
-
-void Palette::addColor(const Color &rgb)
-{
-  mColorPalette.push_back(rgb);
 }
 
 const Color &Palette::at(int index) const
@@ -100,7 +95,7 @@ void Palette::replaceIndexColor(unsigned int index, const Color &rgb)
 {
   if(index <= mColorPalette.size())
   {
-    mColorPalette[index] = rgb;
+    mColorPalette.at(index) = rgb;
   }
 }
 
@@ -120,7 +115,7 @@ bool Palette::write(const std::string filename)
 
   if (wf)
   {
-    for(vector<Color>::iterator col_vec_it = mColorPalette.begin(); col_vec_it != mColorPalette.end(); col_vec_it++)
+    for(auto col_vec_it = mColorPalette.begin(); col_vec_it != mColorPalette.end(); col_vec_it++)
     {
       Color &color = *col_vec_it;
       char red = color.red();

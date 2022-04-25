@@ -112,7 +112,7 @@ void Pcx::map2DPalette()
     {
       for (int i = 0; i < mPaletteImage->getSize().getWidth(); i++)
       {
-        int num = 0;//(rand() % (55 -20  + 1)) + 20;
+        int num = (rand() % (55 -20  + 1)) + 20;
 
         unsigned char color_index = mPaletteImage->getPaletteIndex(i, num);
 
@@ -209,7 +209,7 @@ void Pcx::extractImage()
 
       Color rgb(red, green, blue);
 
-      mPalette->addColor(rgb);
+      mPalette->at(i/3) = rgb;
     }
 
   }

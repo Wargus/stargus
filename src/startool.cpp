@@ -314,7 +314,7 @@ void testHook()
   terrainPalette->createDataChunk()->write("/tmp/terrainPalette.pal");
 
   string grp_file = "unit\\thingy\\flamer.grp";
-  Grp grp(storm, grp_file, pal3);
+  Grp grp(storm, grp_file, pal);
   //grp.setTransparent(200);
   //grp.setRGBA(true);
 

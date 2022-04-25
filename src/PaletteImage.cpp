@@ -30,9 +30,14 @@ void PaletteImage::addPaletteIndex(unsigned char paletteIndex)
   mImageData.addData(&paletteIndex, 1);
 }
 
-unsigned char* PaletteImage::getRawData() const
+unsigned char* PaletteImage::getRawDataPointer() const
 {
   return mImageData.getDataPointer();
+}
+
+DataChunk &PaletteImage::getRawData()
+{
+  return mImageData;
 }
 
 unsigned char PaletteImage::getPaletteIndex(int x, int y)

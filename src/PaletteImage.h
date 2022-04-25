@@ -29,7 +29,9 @@ public:
 
   void addPaletteIndex(unsigned char paletteIndex);
 
-  unsigned char* getRawData() const;
+  unsigned char* getRawDataPointer() const;
+
+  DataChunk &getRawData();
 
   Size getSize() const;
 
