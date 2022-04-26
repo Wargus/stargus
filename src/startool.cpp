@@ -303,7 +303,7 @@ void testHook()
   pal2->createDataChunk()->write("/tmp/ticon.pal");
 
   // Image 3
-  Pcx pcx3(storm, "tileset\\ashworld\\ofire.pcx");
+  Pcx pcx3(storm, "tileset\\ashworld\\bfire.pcx");
   pcx3.savePNG("/tmp/ofire.png");
   std::shared_ptr<Palette2D> pal2D = pcx3.map2DPalette();
   std::shared_ptr<Palette> pal3 = pcx3.getPalette();
@@ -313,7 +313,7 @@ void testHook()
   shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
   terrainPalette->createDataChunk()->write("/tmp/terrainPalette.pal");
 
-  string grp_file = "unit\\thingy\\flamer.grp";
+  string grp_file = "unit\\thingy\\pabGlow.grp";
   Grp grp(storm, grp_file);
   grp.setPalette2D(pal2D);
   grp.setPalette(terrainPalette);
