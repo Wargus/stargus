@@ -37,9 +37,9 @@ bool Smacker::ConvertVideo(const std::string &arcfile,  Storage storage)
   result = mHurricane->extractFile(arcfile, smk_file, false);
 
   string ffmpeg_str =
-    string("ffmpeg -y -i ") + smk_file
-    + " -codec:v libtheora -qscale:v 31 -codec:a libvorbis -qscale:a 15 -pix_fmt yuv420p "
-    + ogv_file;
+    string("ffmpeg -y -i \"") + smk_file
+    + "\" -codec:v libtheora -qscale:v 31 -codec:a libvorbis -qscale:a 15 -pix_fmt yuv420p \""
+    + ogv_file + "\"";
 
   //cout << "video: " << ffmpeg_str << endl;
 
@@ -68,7 +68,7 @@ bool Smacker::ConvertPortrait(const std::string &arcfile,  Storage storage)
   CheckPath(png_path);
 
   string ffmpeg_str =
-    string("ffmpeg -y -i ") + smk_file + " -codec:v png -qscale:v 31 -pix_fmt yuv420p " + png_path + "image%05d.png";
+    string("ffmpeg -y -i \"") + smk_file + "\" -codec:v png -qscale:v 31 -pix_fmt yuv420p \"" + png_path + "\"image%05d.png";
 
   //cout << "ffmpeg: " << ffmpeg_str << endl;
 
@@ -79,7 +79,7 @@ bool Smacker::ConvertPortrait(const std::string &arcfile,  Storage storage)
     result = false;
   }
 
-  string gm_str = "gm convert " + png_path + "image*.png -delay 4 " + mng_file; // 60sec / 15fps = 4
+  string gm_str = "gm convert \"" + png_path + "\"image*.png -delay 4 \"" + mng_file + "\""; // 60sec / 15fps = 4
 
   cout << "gm: " << gm_str << endl;
 

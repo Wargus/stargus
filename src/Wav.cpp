@@ -39,9 +39,9 @@ bool Wav::convert(const std::string &arcfile,  Storage storage)
   result = mHurricane->extractFile(arcfile, wav_file, false);
 
   string ffmpeg_str =
-    string("ffmpeg -y -i ") + wav_file
-    + " -acodec libvorbis  "
-    + ogg_file;
+    string("ffmpeg -y -i \"") + wav_file
+    + "\" -acodec libvorbis  \""
+    + ogg_file + "\"";
 
   //cout << "video: " << ffmpeg_str << endl;
 
