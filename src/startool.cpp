@@ -684,7 +684,11 @@ int main(int argc, const char **argv)
     }
 
     // remove temporary sub files
+#ifdef _MSC_VER
+    _unlink(sub_storm->getArchiveName().c_str());
+#else
     unlink(sub_storm->getArchiveName().c_str());
+#endif
 
     CreatePanels();
   }

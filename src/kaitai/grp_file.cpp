@@ -165,7 +165,7 @@ std::string grp_file_t::line_offset_type_t::rle_offsets() {
 int32_t grp_file_t::line_offset_type_t::file_size() {
     if (f_file_size)
         return m_file_size;
-    m_file_size = _io()->size();
+    m_file_size = static_cast<int32_t>(_io()->size());
     f_file_size = true;
     return m_file_size;
 }
