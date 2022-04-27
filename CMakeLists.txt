@@ -33,6 +33,11 @@ set(STARGUS_VERSION 2.4.1)
 
 set(CMAKE_CXX_STANDARD 17)
 
+if(EXISTS ${WIN32_CMAKE_PREFIX_PATH})
+	list(APPEND CMAKE_PREFIX_PATH "${WIN32_CMAKE_PREFIX_PATH}")
+	message("Using prefix path ${CMAKE_PREFIX_PATH}")
+endif()
+
 # Stargus sources
 
 set(scmconvert_SRCS
@@ -46,54 +51,43 @@ set(scmconvert_HDRS
 	FileUtil.h
 )
 
-set(startool_SRCS
-	startool.cpp
-	Storm.cpp
-	Scm.cpp
-	Preferences.cpp
-	FileUtil.cpp
-	Pcx.cpp
-	Font.cpp
-	Chk.cpp
-	WorldMap.cpp
-	Grp.cpp
-	Gfx.cpp
-	Gfu.cpp
-	Widgets.cpp
-	Png.cpp
-	Tileset.cpp
-	Panel.cpp
-	Palettes.cpp
-	Hurricane.cpp
-	Casc.cpp
-	DataChunk.cpp
+file(GLOB startool_SRCS
+	src/Casc.cpp
+	src/FileUtil.cpp
+	src/Palette.cpp
+	src/Png.cpp
+	src/Tileset.cpp
+	src/Chk.cpp
+	src/Font.cpp
+	src/Grp.cpp
+	src/Panel.cpp
+	src/Preferences.cpp
+	src/startool.cpp
+	src/Widgets.cpp
+	src/DataChunk.cpp
+	src/Hurricane.cpp
+	src/Pcx.cpp
+	src/Scm.cpp
+	src/Storm.cpp
+	src/WorldMap.cpp
+	src/Dds.cpp
+	src/Breeze.cpp
+	src/Smacker.cpp
+	src/Converter.cpp
+	src/Tbl.cpp
+	src/DataHub.cpp
+	src/Storage.cpp
+	src/PaletteImage.cpp
+	src/Color.cpp
+	src/Wav.cpp
+	src/Palette2D.cpp
+	src/kaitai/*.cpp
 )
 
-set(startool_HDRS
-	startool.h
-	Storm.h
-	Scm.h
-	Preferences.h
-	FileUtil.h
-	Pcx.h
-	Font.h
-	Chk.h
-	WorldMap.h
-	Grp.h
-	Gfx.h
-	Gfu.h
-	Widgets.h
-	Png.h
-	Tileset.h
-	Panel.h
-	Palettes.h
-	Hurricane.h
-	Casc.h
-	DataChunk.h
-)
+file(GLOB startool_HDRS src/*.h src/kaitai/*.h)
 
 set(stargus_SRCS
-	stargus.cpp
+	src/stargus.cpp
 )
 
 if(WIN32)
@@ -101,15 +95,6 @@ if(WIN32)
 		${stargus_SRCS}
 		stargus.rc
 	)
-endif()
-
-# set hardcoded gdb active (I don't know how to do it good with cmake)
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pg -g -ggdb")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg -g -ggdb")
-	
-# Additional platform checks
-if(UNIX)
-	find_package(PkgConfig QUIET REQUIRED)
 endif()
 
 # Find all libraries
@@ -130,14 +115,6 @@ find_package(StormLib)
 
 if(WIN32)
 	find_package(MakeNSIS)
-endif()
-
-if(NOT WIN32)
-	find_package(X11 REQUIRED)
-	find_package(GTK2 REQUIRED gtk)
-	if (NOT GTK2_FOUND)
-	  add_definitions("-DNOGTK")
-	endif()
 endif()
 
 find_package(SelfPackers)
@@ -169,14 +146,17 @@ option(WITH_CASCLIB "Compile startool with CascLib support" ON)
 # Stargus definitions
 
 add_definitions(${PNG_DEFINITIONS})
-include_directories(${PNG_INCLUDE_DIR} ${ZLIB_INCLUDE_DIRS} ${STRATAGUS_INCLUDE_DIR})
+include_directories(${PNG_INCLUDE_DIR} ${ZLIB_INCLUDE_DIRS} ${STRATAGUS_INCLUDE_DIR} src)
 set(scmconvert_LIBS ${scmconvert_LIBS} ${ZLIB_LIBRARIES})
 set(startool_LIBS ${scmconvert_LIBS} ${PNG_LIBRARIES} ${ZLIB_LIBRARIES})
 
 # Platform definitions
 
 if(WIN32 AND MSVC)
-	add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_DEPRECATE=1)
+	add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_DEPRECATE=1 -D_HAS_STD_BYTE=0)
+	find_library(ICONV_LIBRARY "libiconv.lib" REQUIRED)
+	find_library(CHARSET_LIBRARY "libcharset.lib" REQUIRED)
+	set(startool_LIBS ${startool_LIBS} ${ICONV_LIBRARY} ${CHARSET_LIBRARY})
 else()
 	include(CheckCXXSourceCompiles)
 	set(FS_SRC "
@@ -211,16 +191,14 @@ else()
 	endif()
 endif()
 
-if(NOT WIN32)
-	include_directories(${X11_INCLUDE_DIR} ${GTK2_INCLUDE_DIRS})
-	set(stargus_LIBS ${stargus_LIBS} ${X11_X11_LIB} ${GTK2_LIBRARIES})
-endif()
-
 if (NOT WIN32)
 	add_definitions(-DDATA_PATH="${CMAKE_INSTALL_PREFIX}/share/games/stratagus/stargus")
 	add_definitions(-DSCRIPTS_PATH="${CMAKE_INSTALL_PREFIX}/share/games/stratagus/stargus")
 	add_definitions(-DSTRATAGUS_BIN="${STRATAGUS}")
 endif()
+
+add_definitions(-DSOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/../")
+add_definitions(-DKS_STR_ENCODING_NONE)
 
 if(ENABLE_STRIP)
 	set(CMAKE_EXE_LINKER_FLAGS "-s")
