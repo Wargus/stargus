@@ -1,4 +1,4 @@
-﻿//       _________ __                 __
+//       _________ __                 __
 //      /   _____//  |_____________ _/  |______     ____  __ __  ______
 //      \_____  \\   __\_  __ \__  \\   __\__  \   / ___\|  |  \/  ___/
 //      /        \|  |  |  | \// __ \|  |  / __ \_/ /_/  >  |  /\___ |
@@ -56,8 +56,8 @@ const char NameLine[] =
 
 #ifdef _MSC_VER
 #define strdup _strdup
-#define DEBUG _DEBUG
 #define PATH_MAX _MAX_PATH
+#include <windows.h>
 #include <direct.h>
 #include <io.h>
 #else

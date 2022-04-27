@@ -35,7 +35,7 @@
 int CountUsedTiles(const unsigned char *map, const unsigned char *mega,
                    int *map2tile, int mapl);
 void SaveCCL(const std::string &file,
-             const unsigned char *map __attribute__((unused)), const int *map2tile,
+             const unsigned char *map UNUSED, const int *map2tile,
              int mapl);
 
 using namespace std;
@@ -145,8 +145,8 @@ void Tileset::DecodeMiniTile(unsigned char *image, int ix, int iy, int iadd,
  */
 unsigned char *Tileset::ConvertTile(const std::string &arcfile,
                                     unsigned char *mini, unsigned char *mega, int msize,
-                                    unsigned char *map __attribute__((unused)),
-                                    int mapl __attribute__((unused)), int *wp, int *hp)
+                                    unsigned char *map UNUSED,
+                                    int mapl UNUSED, int *wp, int *hp)
 
 {
   unsigned char *image;
@@ -309,7 +309,7 @@ bool Tileset::ConvertTileset(const std::string &arcfile, const std::string &file
 // TODO: is this needed or working??
 
 #ifdef MAKE_CCL
-void SaveCCL(const std::string &file, const unsigned char *map __attribute__((unused)),
+void SaveCCL(const std::string &file, const unsigned char *map UNUSED,
              const int *map2tile, int mapl)
 {
   int i;

@@ -7,6 +7,12 @@
 #ifndef TILESET_H_
 #define TILESET_H_
 
+#ifdef _MSC_VER
+#define UNUSED
+#else
+#define UNUSED __attribute__((unused))
+#endif
+
 // System
 #include <string>
 #include <memory>
@@ -35,8 +41,8 @@ private:
 
   unsigned char* ConvertTile(const std::string &arcfile, unsigned char *mini,
       unsigned char *mega, int msize,
-      unsigned char *map __attribute__((unused)),
-      int mapl __attribute__((unused)), int *wp, int *hp);
+      unsigned char *map UNUSED,
+      int mapl UNUSED, int *wp, int *hp);
 
   void DecodeMiniTile(unsigned char *image, int ix, int iy, int iadd,
       unsigned char *mini, int index, int flipx, int flipy);

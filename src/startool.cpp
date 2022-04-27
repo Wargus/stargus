@@ -56,10 +56,14 @@
 #include "Wav.h"
 
 // as this is 3rd party code I don't fix it ->
+#ifndef _MSC_VER
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
+#endif
 #include "optionparser.h"
+#ifndef _MSC_VER
 #pragma GCC diagnostic pop
+#endif
 // <-
 
 // System
@@ -201,8 +205,8 @@ int parseOptions(int argc, const char **argv)
   argc -= (argc > 0);
   argv += (argc > 0); // skip program name argv[0] if present
   option::Stats stats(usage, argc, argv);
-  option::Option options[stats.options_max], buffer[stats.buffer_max];
-  option::Parser parse(usage, argc, argv, options, buffer);
+  std::unique_ptr<option::Option[]> options(new option::Option[stats.options_max]), buffer(new option::Option[stats.buffer_max]);
+  option::Parser parse(usage, argc, argv, options.get(), buffer.get());
 
   if (parse.error())
     exit(0);
