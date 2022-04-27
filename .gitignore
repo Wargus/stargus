@@ -1,0 +1,5 @@
+#Ignore Visual Studio project files
+build/
+build_linux/
+.vscode/*
+**/.DS_Store
