@@ -33,7 +33,7 @@ Control Todo[] = {
   {PAL,0,"twire","game\\twire.pcx",0 __3},
   {PAL,0,"ticon","unit\\cmdbtns\\ticon.pcx",1 __3},
   {PAL,0,"ofire","tileset\\ashworld\\ofire.pcx",3 __3},
-  {PAL,0,"bfire","tileset\\ashworld\\bfire.pcx",3 __3},
+  //{PAL,0,"bfire","tileset\\ashworld\\bfire.pcx",3 __3},
 
   {WPE,0,"install","tileset\\install.wpe",0 __3},
   {WPE,0,"jungle","tileset\\jungle.wpe",0 __3},

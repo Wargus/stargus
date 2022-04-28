@@ -134,13 +134,15 @@ void Pcx::mapIndexPaletteTypeSelect(int index)
 
 std::shared_ptr<Palette2D> Pcx::map2DPalette()
 {
-  std::shared_ptr<Palette2D> palette2D = make_shared<Palette2D>();
+  std::shared_ptr<Palette2D> palette2D;
 
   if (mPaletteImage && mPalette)
   {
     // check magic size of the special 2D palette format
-    if ((mPaletteImage->getSize().getWidth() == 256) && (mPaletteImage->getSize().getHeight() == 63))
+    if (mPaletteImage->getSize().getWidth() == 256)
     {
+      palette2D = make_shared<Palette2D>(mPaletteImage->getSize().getHeight());
+
       for (int x = 0; x < mPaletteImage->getSize().getWidth()-1; x++)
       {
         for (int y = 0; y < mPaletteImage->getSize().getHeight()-1; y++)

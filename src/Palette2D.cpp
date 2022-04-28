@@ -8,7 +8,8 @@
 
 using namespace std;
 
-Palette2D::Palette2D()
+Palette2D::Palette2D(size_t size) :
+    mColorPalette2D(size)
 {
 
 }

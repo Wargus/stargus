@@ -11,12 +11,13 @@
 #include "Color.h"
 
 // system
+#include <vector>
 #include <array>
 
 class Palette2D
 {
 public:
-  Palette2D();
+  Palette2D(size_t size);
   virtual ~Palette2D();
 
   const Color &at(int x, int y) const;
@@ -24,7 +25,7 @@ public:
   Color &at(int x, int y);
 
 private:
-  std::array<std::array<Color, 256>, 63> mColorPalette2D;
+  std::vector<std::array<Color, 256>> mColorPalette2D;
 };
 
 #endif /* PALETTE2D_H */

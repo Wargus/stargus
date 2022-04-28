@@ -303,21 +303,30 @@ void testHook()
   pal2->createDataChunk()->write("/tmp/ticon.pal");
 
   // Image 3
-  Pcx pcx3(storm, "tileset\\ashworld\\bfire.pcx");
+  Pcx pcx3(storm, "tileset\\ashworld\\ofire.pcx");
   pcx3.savePNG("/tmp/ofire.png");
-  std::shared_ptr<Palette2D> pal2D = pcx3.map2DPalette();
+  std::shared_ptr<Palette2D> pal2D_3 = pcx3.map2DPalette();
   std::shared_ptr<Palette> pal3 = pcx3.getPalette();
   pal3->createDataChunk()->write("/tmp/ofire.pal");
+
+  // Image 4
+  Pcx pcx4(storm, "tileset\\ashworld\\bfire.pcx");
+  pcx4.savePNG("/tmp/bfire.png");
+  std::shared_ptr<Palette2D> pal2D_4 = pcx4.map2DPalette();
+  std::shared_ptr<Palette> pal4 = pcx4.getPalette();
+  pal4->createDataChunk()->write("/tmp/bfire.pal");
+
 
   shared_ptr<DataChunk> terrainWPE = storm->extractDataChunk("tileset\\jungle.wpe");
   shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
   terrainPalette->createDataChunk()->write("/tmp/terrainPalette.pal");
 
-  string grp_file = "unit\\thingy\\pabGlow.grp";
+  //string grp_file = "unit\\protoss\\pbaGlow.grp";
+  string grp_file = "unit\\thingy\\flamer.grp";
   Grp grp(storm, grp_file);
-  grp.setPalette2D(pal2D);
+  grp.setPalette2D(pal2D_3);
   grp.setPalette(terrainPalette);
-  grp.setTransparent(200);
+  //grp.setTransparent(200);
   grp.setRGBA(true);
 
   grp.save("/tmp/flamer.png");
@@ -580,7 +589,7 @@ int main(int argc, const char **argv)
             pal = paletteMap.at("install");
             grp.setPalette2D(pal2D);
             grp.setPalette(pal);
-            grp.setTransparent(127);
+            //grp.setTransparent(127);
             grp.setRGBA(true);
           }
           else if (c[u].Arg1 == 2)
