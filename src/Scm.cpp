@@ -45,7 +45,6 @@
 #include <string>
 #include <vector>
 #include <string>
-#include <libgen.h>
 
 #ifdef _MSC_VER
 #define strdup _strdup
@@ -53,7 +52,9 @@
 #define PATH_MAX _MAX_PATH
 #include <direct.h>
 #include <io.h>
+#define dirname(x) PathRemoveFileSpec(x); if (x[strlen(x) - 1] == '\\') x[strlen(x) - 1] = '\0'
 #else
+#include <libgen.h>
 #include <limits.h>
 #include <unistd.h>
 #endif
@@ -86,7 +87,11 @@ bool Scm::convert(const std::string &arcfile, Storage storage)
     result = chk.convert("staredit\\scenario.chk", storage.getFullPath());
 
     // delete the temporary .chk file -> below don't access 'breeze' any more!
+#ifdef _MSC_VER
+    _unlink(scm_path.c_str());
+#else
     unlink(scm_path.c_str());
+#endif
   }
 
   return result;

@@ -379,7 +379,7 @@ uint64_t kaitai::kstream::get_mask_ones(int n) {
 // ========================================================================
 
 std::string kaitai::kstream::read_bytes(std::streamsize len) {
-    std::vector<char> result(len);
+    std::vector<char> result(static_cast<uint32_t>(len));
 
     // NOTE: streamsize type is signed, negative values are only *supposed* to not be used.
     // http://en.cppreference.com/w/cpp/io/streamsize
@@ -398,7 +398,7 @@ std::string kaitai::kstream::read_bytes_full() {
     std::iostream::pos_type p1 = m_io->tellg();
     m_io->seekg(0, std::ios::end);
     std::iostream::pos_type p2 = m_io->tellg();
-    size_t len = p2 - p1;
+    size_t len = static_cast<size_t>(p2 - p1);
 
     // Note: this requires a std::string to be backed with a
     // contiguous buffer. Officially, it's a only requirement since

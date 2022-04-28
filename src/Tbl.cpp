@@ -273,7 +273,11 @@ char *Tbl::iconvISO2UTF8(char *iso)
   /* Keep track of the variables. */
   utf8start = utf8;
 
+#ifdef _MSC_VER
+  iconv_value = iconv(iconvDesc, const_cast<const char**>(&iso), &len, &utf8, &utf8len);
+#else
   iconv_value = iconv(iconvDesc, &iso, &len, &utf8, &utf8len);
+#endif
   /* Handle failures. */
   if (iconv_value == (size_t) -1)
   {

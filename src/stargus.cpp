@@ -43,11 +43,15 @@ const char *SRC_PATH()
 }
 
 // I still have hope some far day someone will fix this annoying warnings... ->
+#ifndef _MSC_VER
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmisleading-indentation"
 #pragma GCC diagnostic ignored "-Wparentheses"
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #pragma GCC diagnostic ignored "-Wformat-overflow="
+#endif
 #include "stratagus-game-launcher.h"
+#ifndef _MSC_VER
 #pragma GCC diagnostic pop
+#endif
 // <-
