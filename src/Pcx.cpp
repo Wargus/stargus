@@ -5,10 +5,10 @@
  */
 
 // Local
+#include <PngExporter.h>
 #include "endian.h"
 #include "Pcx.h"
 #include "Storm.h"
-#include "Png.h"
 #include "Hurricane.h"
 
 // System
@@ -62,7 +62,7 @@ bool Pcx::savePNG(Storage storage)
 
   if (mRawData)
   {
-    Png::save(storage.getFullPath(), *mPaletteImage, *mPalette, 0);
+    PngExporter::save(storage.getFullPath(), *mPaletteImage, *mPalette, 0);
   }
   else
   {

@@ -5,11 +5,11 @@
  */
 
 #include <Palette.h>
+#include <PngExporter.h>
 #include "Widgets.h"
 #include "Storm.h"
 #include "Preferences.h"
 #include "FileUtil.h"
-#include "Png.h"
 
 Widgets::Widgets(std::shared_ptr<Hurricane> hurricane) :
   Grp(hurricane)
@@ -179,7 +179,7 @@ void Widgets::SaveImage(char *name, unsigned char *image, Palette &pal,
   DataChunk dc_image(&buf, w * h);
   PaletteImage palImage(dc_image, Size(w, h));
 
-  Png::save(name, palImage, pal, 255);
+  PngExporter::save(name, palImage, pal, 255);
 }
 
 void Widgets::SaveButton(char *name, unsigned char *image, Palette &pal,
@@ -213,6 +213,6 @@ void Widgets::SaveButton(char *name, unsigned char *image, Palette &pal,
   DataChunk dc_image(&button, size * 28);
   PaletteImage palImage(dc_image, Size(size, 28));
 
-  Png::save(name, palImage, pal, 255);
+  PngExporter::save(name, palImage, pal, 255);
 }
 

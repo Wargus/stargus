@@ -9,11 +9,9 @@
 #include "endian.h"
 #include "Storm.h"
 #include "FileUtil.h"
-#include "Png.h"
 #include "Preferences.h"
 #include <Hurricane.h>
-
-// System
+#include <PngExporter.h>
 #include <stdlib.h>
 
 // activate local debug messages
@@ -301,7 +299,7 @@ bool Tileset::ConvertTileset(const std::string &arcfile, const std::string &file
   DataChunk dc_image(&image, w * h);
   PaletteImage palImage(dc_image, Size(w, h));
 
-  Png::save(buf, palImage, *palette, 0);
+  PngExporter::save(buf, palImage, *palette, 0);
 
   return ret;
 }

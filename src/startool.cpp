@@ -31,6 +31,7 @@
  --  Includes
  ----------------------------------------------------------------------------*/
 
+#include <PngExporter.h>
 #include "Smacker.h"
 #include "Palette.h"
 #include <Tbl.h>
@@ -42,7 +43,6 @@
 #include "Pcx.h"
 #include "Font.h"
 #include "Grp.h"
-#include "Png.h"
 #include "Panel.h"
 #include "Widgets.h"
 #include "Tileset.h"

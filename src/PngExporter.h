@@ -16,11 +16,11 @@
 #include <png.h>
 #include <string>
 
-class Png
+class PngExporter
 {
 public:
-  Png();
-  virtual ~Png();
+  PngExporter();
+  virtual ~PngExporter();
 
   //TODO: un-static this in the design!
 

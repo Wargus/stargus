@@ -5,9 +5,9 @@
  */
 
 // Local
+#include <PngExporter.h>
 #include "Grp.h"
 #include "endian.h"
-#include "Png.h"
 #include "FileUtil.h"
 #include "Storm.h"
 
@@ -128,17 +128,17 @@ bool Grp::save(Storage filename)
 
     if (!getRGBA())
     {
-      Png::save(filename.getFullPath(), palImage, *mPal, 255);
+      PngExporter::save(filename.getFullPath(), palImage, *mPal, 255);
     }
     else
     {
       if(mPal && !mPal2D)
       {
-        Png::saveRGBA(filename.getFullPath(), palImage, *mPal, mTransparent);
+        PngExporter::saveRGBA(filename.getFullPath(), palImage, *mPal, mTransparent);
       }
       else if(mPal && mPal2D)
       {
-        Png::saveRGBA(filename.getFullPath(), palImage, *mPal2D, mTransparent);
+        PngExporter::saveRGBA(filename.getFullPath(), palImage, *mPal2D, mTransparent);
       }
     }
 

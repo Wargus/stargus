@@ -6,7 +6,7 @@ startool_sources = files(
 	'Casc.cpp', 
 	'FileUtil.cpp',
 	'Palette.cpp',
-	'Png.cpp', 
+	'PngExporter.cpp', 
 	'Tileset.cpp',
 	'Chk.cpp',
 	'Font.cpp',

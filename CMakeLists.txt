@@ -55,7 +55,7 @@ file(GLOB startool_SRCS
 	src/Casc.cpp
 	src/FileUtil.cpp
 	src/Palette.cpp
-	src/Png.cpp
+	src/PngExporter.cpp
 	src/Tileset.cpp
 	src/Chk.cpp
 	src/Font.cpp

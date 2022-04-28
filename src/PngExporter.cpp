@@ -5,24 +5,24 @@
  */
 
 // Local
-#include "Png.h"
 #include "FileUtil.h"
 
 // System
 #include <cstring>
 #include <stdlib.h>
 #include <zlib.h>
+#include "PngExporter.h"
 
-Png::Png()
+PngExporter::PngExporter()
 {
 }
 
-Png::~Png()
+PngExporter::~PngExporter()
 {
 
 }
 
-int Png::save(const std::string &name, PaletteImage &palImage, Palette &palette, int transparent)
+int PngExporter::save(const std::string &name, PaletteImage &palImage, Palette &palette, int transparent)
 {
   FILE *fp;
   png_structp png_ptr;
@@ -118,7 +118,7 @@ int Png::save(const std::string &name, PaletteImage &palImage, Palette &palette,
 }
 
 
-int Png::saveRGBA(const std::string &name, PaletteImage &palImage, Palette &palette, int transparent)
+int PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Palette &palette, int transparent)
 {
   FILE *fp;
   png_structp png_ptr;
@@ -230,14 +230,13 @@ int Png::saveRGBA(const std::string &name, PaletteImage &palImage, Palette &pale
   return 0;
 }
 
-int Png::saveRGBA(const std::string &name, PaletteImage &palImage, Palette2D &palette2d, int transparent)
+int PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Palette2D &palette2d, int transparent)
 {
   FILE *fp;
   png_structp png_ptr;
   png_infop info_ptr;
   png_bytep *row_pointers = NULL;
   const int RGBA_BYTE_SIZE = 4;
-  const int RGB_BYTE_SIZE = 3;
 
   unsigned char *image = palImage.getRawDataPointer();
 
@@ -316,16 +315,6 @@ int Png::saveRGBA(const std::string &name, PaletteImage &palImage, Palette2D &pa
       {
         const Color &color_orig = palette2d.at(pal_beneath, pal_pos-1);
         Color color_bright = color_orig.getBrighened();
-
-        double alpha_red = (double)(color_orig.getRed() - reference_beneath_color.getRed()) /
-            (double) (color_bright.getRed() - reference_beneath_color.getRed());
-
-        double alpha_green = (double) (color_orig.getGreen() - reference_beneath_color.getGreen()) /
-            (double) (color_bright.getGreen() - reference_beneath_color.getGreen());
-
-        double alpha_blue = (double) (color_orig.getBlue() - reference_beneath_color.getBlue()) /
-            (double)(color_bright.getBlue() - reference_beneath_color.getBlue());
-
 
         double alpha = 0;
 
