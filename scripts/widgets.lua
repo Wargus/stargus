@@ -55,13 +55,32 @@ function DefineButtonStyles(race)
     TextAlign = "Center",
     TextPos = {33, 6},
     Default = {
-      File = "ui/"..race.."/menu.png",
+      File = "ui/"..race.."/diplomacy.png",
     },
     Hover = {
       TextNormalColor = "white",
     },
     Clicked = {
-      File = "ui/"..race.."/menu pressed.png",
+      File = "ui/"..race.."/diplomacy pressed.png",
+      TextPos = {31, 4},
+    },
+  })
+  
+  DefineButtonStyle(race.." minimap terrain button", {
+    Size = {64, 20},
+    Font = "font8",
+    TextNormalColor = "white",
+    TextReverseColor = "white",
+    TextAlign = "Center",
+    TextPos = {33, 6},
+    Default = {
+      File = "ui/"..race.."/minimap terrain.png",
+    },
+    Hover = {
+      TextNormalColor = "white",
+    },
+    Clicked = {
+      File = "ui/"..race.."/minimap terrain pressed.png",
       TextPos = {31, 4},
     },
   })
