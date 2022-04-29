@@ -13,28 +13,32 @@ public:
   Color();
   Color(const Color &color);
   Color(unsigned char red, unsigned char green, unsigned char blue);
+  Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
   virtual ~Color();
 
-  void setRed(unsigned char c);
-  void setGreen(unsigned char c);
-  void setBlue(unsigned char c);
+  void setRed(unsigned char color);
+  void setGreen(unsigned char color);
+  void setBlue(unsigned char color);
+  void setAlpha(unsigned char color);
 
   unsigned char getRed() const;
   unsigned char getGreen() const;
   unsigned char getBlue() const;
+  unsigned char getAlpha() const;
 
   Color getBrighened() const;
 
+  Color blendAgainstReference(const Color &reference) const;
+
   Color& operator=(const Color& color);
 
-  unsigned char getBiggestColor() const;
-
 private:
-
+  unsigned char getBiggestColor() const;
 
   unsigned char mRed;
   unsigned char mGreen;
   unsigned char mBlue;
+  unsigned char mAlpha;
 };
 
 #endif /* COLOR_H */

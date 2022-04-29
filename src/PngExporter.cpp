@@ -240,9 +240,6 @@ int PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Palet
 
   unsigned char *image = palImage.getRawDataPointer();
 
-  //std::shared_ptr<DataChunk> palData = palette.createDataChunk();
-  //unsigned char *pal = palData->getDataPointer();
-
   CheckPath(name);
 
   if (!(fp = fopen(name.c_str(), "wb")))
@@ -297,75 +294,23 @@ int PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Palet
     for (int w_pos = 0; w_pos < palImage.getSize().getWidth(); w_pos++)
     {
       unsigned char pal_pos = img_line_pal[w_pos];
-      unsigned char pal_beneath = 0;
 
-      Color reference_beneath_color (0, 0, 0); // back palette id #0
+      unsigned char pal_beneath = 0;// back palette id #0 (known in the palette format)
+      Color reference_beneath_color (0, 0, 0); // back palette id #0 (known in the palette format)
 
-      if(pal_pos != 255)
-      {
-        //printf("pal_pos (w:%d/h:%d) pal:%d\n", w_pos, h_pos,(int) pal_pos);
-      }
-
-      unsigned char color_r = 0;
-      unsigned char color_g = 0;
-      unsigned char color_b = 0;
-      unsigned char color_a = 0;
+      Color color_result;
 
       if (pal_pos != 255)
       {
         const Color &color_orig = palette2d.at(pal_beneath, pal_pos-1);
-        Color color_bright = color_orig.getBrighened();
 
-        double alpha = 0;
-
-        // red biggest
-        if((color_orig.getRed() > color_orig.getGreen()) &
-           (color_orig.getRed() > color_orig.getBlue()))
-        {
-          alpha = (double) (color_orig.getRed() - reference_beneath_color.getRed()) /
-                  (double) (color_bright.getRed() - reference_beneath_color.getRed());
-
-        }
-        // green is biggest
-        else if((color_orig.getGreen() > color_orig.getRed()) &
-                (color_orig.getGreen() > color_orig.getBlue()))
-        {
-          alpha = (double) (color_orig.getGreen() - reference_beneath_color.getGreen()) /
-                  (double) (color_bright.getGreen() - reference_beneath_color.getGreen());
-        }
-        // blue is biggest
-        {
-          alpha = (double) (color_orig.getBlue() - reference_beneath_color.getBlue()) /
-                  (double) (color_bright.getBlue() - reference_beneath_color.getBlue());
-        }
-
-
-        /*printf("alpha_red:%f\n", alpha_red);
-        printf("alpha_green:%f\n", alpha_green);
-        printf("alpha_blue:%f\n", alpha_blue);
-        printf("alpha:%f\n", alpha);*/
-
-        unsigned char red = alpha * color_orig.getRed() + (1 - alpha) * reference_beneath_color.getRed();
-        unsigned char green = alpha * color_orig.getGreen() + (1 - alpha) * reference_beneath_color.getGreen();
-        unsigned char blue = alpha * color_orig.getBlue() + (1 - alpha) * reference_beneath_color.getBlue();
-
-        Color color_result (red, green, blue);
-
-        color_r = color_result.getRed();
-        color_g = color_result.getGreen();
-        color_b = color_result.getBlue();
-        color_a = alpha * 255;
-
-        if((color_r == 16) && (color_g == 0) && (color_b == 0))
-        {
-          printf("c");
-        }
+        color_result = color_orig.blendAgainstReference(reference_beneath_color);
       }
 
-      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 0] = color_r;
-      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 1] = color_g;
-      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 2] = color_b;
-      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 3] = color_a;
+      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 0] = color_result.getRed();
+      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 1] = color_result.getGreen();
+      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 2] = color_result.getBlue();
+      row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 3] = color_result.getAlpha();
     }
 
   }
