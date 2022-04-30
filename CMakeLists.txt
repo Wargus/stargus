@@ -26,16 +26,27 @@
 #
 #
 
+# Project setup
+
 project(stargus)
 cmake_minimum_required(VERSION 3.10)
 cmake_policy(VERSION 3.10..3.20.2)
 set(STARGUS_VERSION 2.4.1)
-
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 17)
 
-if(EXISTS ${WIN32_CMAKE_PREFIX_PATH})
-	list(APPEND CMAKE_PREFIX_PATH "${WIN32_CMAKE_PREFIX_PATH}")
-	message("Using prefix path ${CMAKE_PREFIX_PATH}")
+# CMake setup
+
+if(WIN32 AND MSVC)
+  if(EXISTS ${WIN32_CMAKE_PREFIX_PATH})
+    list(APPEND CMAKE_PREFIX_PATH "${WIN32_CMAKE_PREFIX_PATH}")
+    message("Using prefix path ${CMAKE_PREFIX_PATH}")
+  endif()
+  if (NOT CMAKE_PREFIX_PATH)
+    # use a default
+    set(CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../dependencies)
+  endif()
 endif()
 
 # Stargus sources
@@ -99,25 +110,15 @@ endif()
 
 # Find all libraries
 
-option(ENABLE_STATIC "Compile Stargus binaries as static executable" OFF)
-
-if(ENABLE_STATIC)
-	set(CMAKE_FIND_LIBRARY_SUFFIXES ".lib;.a")
-endif()
-
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
-
 find_package(Stratagus REQUIRED)
 find_package(PNG REQUIRED)
 find_package(ZLIB REQUIRED)
+find_package(StormLib REQUIRED)
 find_package(CascLib)
-find_package(StormLib)
 
 if(WIN32)
 	find_package(MakeNSIS)
 endif()
-
-find_package(SelfPackers)
 
 # Windows RC compiler definitions
 
@@ -137,26 +138,27 @@ if(WIN32)
 	option(ENABLE_NSIS "Create Stratagus Window NSIS Installer" OFF)
 endif()
 
-option(ENABLE_UPX "Compress Stratagus executable binary with UPX packer" OFF)
-option(ENABLE_STRIP "Strip all symbols from executables" OFF)
-
-option(WITH_STORMLIB "Compile startool with StormLib support" ON)
 option(WITH_CASCLIB "Compile startool with CascLib support" ON)
 
-# Stargus definitions
+# General definitions and compilation settings
 
 add_definitions(${PNG_DEFINITIONS})
-include_directories(${PNG_INCLUDE_DIR} ${ZLIB_INCLUDE_DIRS} ${STRATAGUS_INCLUDE_DIR} src)
-set(scmconvert_LIBS ${scmconvert_LIBS} ${ZLIB_LIBRARIES})
-set(startool_LIBS ${scmconvert_LIBS} ${PNG_LIBRARIES} ${ZLIB_LIBRARIES})
+add_definitions(-DSOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/../")
+add_definitions(-DKS_STR_ENCODING_NONE)
+add_definitions(-DUSE_STORMLIB -D__STORMLIB_SELF__)
 
-# Platform definitions
+include_directories(${PNG_INCLUDE_DIR} ${ZLIB_INCLUDE_DIRS} ${STORMLIB_INCLUDE_DIR} src)
+
+set(scmconvert_LIBS ${scmconvert_LIBS} ${ZLIB_LIBRARIES} ${STORMLIB_LIBRARY} ${BZIP2_LIBRARIES})
+set(startool_LIBS ${scmconvert_LIBS} ${PNG_LIBRARIES} ${ZLIB_LIBRARIES} ${STORMLIB_LIBRARY} ${BZIP2_LIBRARIES})
+
+# Platform specific definitions and compilation settings
 
 if(WIN32 AND MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_DEPRECATE=1 -D_HAS_STD_BYTE=0)
-	find_library(ICONV_LIBRARY "libiconv.lib" REQUIRED)
-	find_library(CHARSET_LIBRARY "libcharset.lib" REQUIRED)
-	set(startool_LIBS ${startool_LIBS} ${ICONV_LIBRARY} ${CHARSET_LIBRARY})
+	add_subdirectory("win-iconv")
+	include_directories("win-iconv")
+	set(startool_LIBS ${startool_LIBS} iconv-static)
 else()
 	include(CheckCXXSourceCompiles)
 	set(FS_SRC "
@@ -191,110 +193,94 @@ else()
 	endif()
 endif()
 
-if (NOT WIN32)
-	add_definitions(-DDATA_PATH="${CMAKE_INSTALL_PREFIX}/share/games/stratagus/stargus")
-	add_definitions(-DSCRIPTS_PATH="${CMAKE_INSTALL_PREFIX}/share/games/stratagus/stargus")
-	add_definitions(-DSTRATAGUS_BIN="${STRATAGUS}")
-endif()
+########### startool ###############
 
-add_definitions(-DSOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/../")
-add_definitions(-DKS_STR_ENCODING_NONE)
-
-if(ENABLE_STRIP)
-	set(CMAKE_EXE_LINKER_FLAGS "-s")
-else()
-	set(CMAKE_EXE_LINKER_FLAGS "")
-endif()
-
-# For now, doesn't compile on OS X with StormLib
-if (WITH_STORMLIB)
-	if (NOT STORMLIB_FOUND AND UNIX)
-	  find_program(MAKE make)
-	  if (MAKE)
-		if (${CMAKE_SYSTEM_NAME} STREQUAL Linux)
-		  message(STATUS "Attempting to build StormLib submodule")
-		  execute_process(COMMAND ${MAKE} -f Makefile.linux WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/StormLib TIMEOUT 240 RESULT_VARIABLE STORM_LIB_MAKE_RESULT OUTPUT_QUIET)
-		elseif (${CMAKE_SYSTEM_NAME} STREQUAL Darwin)
-		  message(STATUS "Attempting to build StormLib submodule")
-		  execute_process(COMMAND ${MAKE} -f Makefile.mac WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/StormLib TIMEOUT 240 RESULT_VARIABLE STORM_LIB_MAKE_RESULT OUTPUT_QUIET)
-		endif()
-		if (${STORM_LIB_MAKE_RESULT} EQUAL 0)
-		  set(STORMLIB_FOUND true)
-		  set(STORMLIB_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/StormLib/src)
-		  set(STORMLIB_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/StormLib/libStorm.a)
-		  message(STATUS "StormLib locally built and included")
-		else()
-		  message(STATUS "StormLib NOT built successfully")
-		endif()
-	  endif()
-	endif()
-
-	if (STORMLIB_FOUND)
-		add_definitions(-DUSE_STORMLIB -D__STORMLIB_SELF__)
-		include_directories(${STORMLIB_INCLUDE_DIR})
-		set(startool_LIBS ${startool_LIBS} ${STORMLIB_LIBRARY} ${BZIP2_LIBRARIES})
-		set(scmconvert_LIBS ${scmconvert_LIBS} ${STORMLIB_LIBRARY} ${BZIP2_LIBRARIES})
-	endif()
-endif()
-
-# Compile Stargus
+set(BINDIR "bin" CACHE PATH "Where to install user binaries")
 
 #add_executable(scmconvert ${scmconvert_SRCS} ${scmconvert_HDRS})
 #target_link_libraries(scmconvert ${scmconvert_LIBS})
 #set_target_properties(scmconvert PROPERTIES COMPILE_DEFINITIONS "STAND_ALONE")
-
-add_executable(stargus WIN32 ${stargus_SRCS} ${stargus_HDRS})
-target_link_libraries(stargus ${stargus_LIBS})
+#install(TARGETS scmconvert DESTINATION ${BINDIR})
 
 add_executable(startool ${startool_SRCS} ${startool_HDRS})
 target_link_libraries(startool ${startool_LIBS})
+install(TARGETS startool DESTINATION ${BINDIR})
 
-if(WIN32 AND MINGW AND ENABLE_STATIC)
-	set_target_properties(scmconvert PROPERTIES LINK_FLAGS "${LINK_FLAGS} -static-libgcc -static-libstdc++")
-	set_target_properties(stargus PROPERTIES LINK_FLAGS "${LINK_FLAGS} -static-libgcc -static-libstdc++")
-	set_target_properties(startool PROPERTIES LINK_FLAGS "${LINK_FLAGS} -static-libgcc -static-libstdc++")
-endif()
+########### stargus launcher and installer ###############
 
-########### next target ###############
+if(STRATAGUS_FOUND)
+  include_directories(${STRATAGUS_INCLUDE_DIR})
 
-macro(self_packer PACKER_TARGET)
-	get_target_property(PACKER_NAME ${PACKER_TARGET} OUTPUT_NAME)
-	if(NOT PACKER_NAME)
-		set(PACKER_NAME ${PACKER_TARGET})
-	endif()
-	add_custom_command(TARGET ${PACKER_TARGET} POST_BUILD
-		COMMAND ${SELF_PACKER_FOR_EXECUTABLE}
-		ARGS ${SELF_PACKER_FOR_EXECUTABLE_FLAGS} ${PACKER_NAME}${CMAKE_EXECUTABLE_SUFFIX}
-	)
-endmacro()
+  set(GAMEDIR "games" CACHE PATH "Where to install games binaries")
+  set(SHAREDIR "share/games/stratagus/stargus" CACHE PATH "Where to install data files")
+  set(DATAROOTDIR "${CMAKE_INSTALL_PREFIX}/share" CACHE PATH "Sets the root of data directories to a non-default location")
+  set(ICONDIR "${DATAROOTDIR}/pixmaps" CACHE PATH "Sets the icon directory for desktop entry to a non-default location.")
+  set(DESKTOPDIR "${DATAROOTDIR}/applications" CACHE PATH "Sets the desktop file directory for desktop entry to a non-default location.")
+  if(NOT IS_ABSOLUTE "${GAMEDIR}")
+    set(GAMEDIRABS "${CMAKE_INSTALL_PREFIX}/${GAMEDIR}")
+  else()
+    set(GAMEDIRABS "${GAMEDIR}")
+  endif()
+  if(NOT IS_ABSOLUTE "${SHAREDIR}")
+    set(DATA_PATH "${CMAKE_INSTALL_PREFIX}/${SHAREDIR}")
+  else()
+    set(DATA_PATH "${SHAREDIR}")
+  endif()
 
-if(ENABLE_UPX AND SELF_PACKER_FOR_EXECUTABLE)
-	self_packer(scmconvert)
-	self_packer(stargus)
-	self_packer(startool)
-endif()
-
-########### next target ###############
-
-if(WIN32 AND ENABLE_NSIS AND MAKENSIS_FOUND)
+  if (NOT WIN32)
+    add_definitions(-DDATA_PATH="${DATA_PATH}")
+    add_definitions(-DSCRIPTS_PATH="${DATA_PATH}")
+    add_definitions(-DSTRATAGUS_BIN="${STRATAGUS}")
+    configure_file (
+      "${PROJECT_SOURCE_DIR}/stargus.desktop.in"
+      "${PROJECT_BINARY_DIR}/stargus.desktop"
+    )
+    add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/stargus.png"
+      COMMAND convert
+      ARGS "${PROJECT_SOURCE_DIR}/stargus.ico" "${PROJECT_BINARY_DIR}/stargus.png"
+      DEPENDS stargus.ico
+      COMMENT "Generating stargus.png" VERBATIM
+    )
+    add_custom_target(icon ALL DEPENDS stargus.png)
+    install(FILES "${PROJECT_BINARY_DIR}/stargus.png" DESTINATION ${ICONDIR})
+    add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/stargus.xpm"
+      COMMAND convert
+      ARGS "${PROJECT_SOURCE_DIR}/stargus.ico" -resize 32x32 "${PROJECT_BINARY_DIR}/stargus.xpm"
+      DEPENDS stargus.ico
+      COMMENT "Generating stargus.xmp" VERBATIM
+    )
+    add_custom_target(xpmicon ALL DEPENDS stargus.xpm)
+    install(FILES "${PROJECT_BINARY_DIR}/stargus.xpm" DESTINATION ${ICONDIR})
+    install(FILES "${PROJECT_BINARY_DIR}/stargus.desktop" DESTINATION ${DESKTOPDIR})
+    install(DIRECTORY campaigns contrib maps scripts shaders DESTINATION ${SHAREDIR})
+	install(FILES mpqlist.txt DESTINATION ${SHAREDIR})
+  elseif (WIN32)
+    if(ENABLE_NSIS AND MAKENSIS_FOUND)
 	file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/COPYING DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 	file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/stargus.ico DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-	add_custom_command(OUTPUT Stargus-${STARGUS_VERSION}${MAKENSIS_SUFFIX}
-		COMMAND ${MAKENSIS}
-		ARGS ${MAKENSIS_FLAGS} -DCMAKE_CURRENT_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}" -DCMAKE_CURRENT_BINARY_DIR="${CMAKE_CURRENT_BINARY_DIR}" ${CMAKE_CURRENT_SOURCE_DIR}/stargus.nsi
-		DEPENDS stargus.nsi scmconvert stargus startool COPYING stargus.ico
-		COMMENT "Generating Stargus Windows NSIS Installer" VERBATIM
-	)
-	add_custom_target(nsis ALL DEPENDS Stargus-${STARGUS_VERSION}${MAKENSIS_SUFFIX})
+	file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/mpqlist.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+      add_custom_target(nsis ALL
+        COMMAND ${MAKENSIS} ${MAKENSIS_FLAGS} -DPORTABLE=1 -DCMAKE_CURRENT_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}" -DCMAKE_CURRENT_BINARY_DIR="${CMAKE_CURRENT_BINARY_DIR}" ${CMAKE_CURRENT_SOURCE_DIR}/stargus.nsi
+        COMMAND ${MAKENSIS} ${MAKENSIS_FLAGS} -DCMAKE_CURRENT_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}" -DCMAKE_CURRENT_BINARY_DIR="${CMAKE_CURRENT_BINARY_DIR}" ${CMAKE_CURRENT_SOURCE_DIR}/stargus.nsi
+        DEPENDS stargus.nsi stargus startool COPYING mpqlist.txt stargus.ico
+        COMMENT "Generating stargus Windows NSIS Installers" VERBATIM
+        SOURCES stargus.nsi)
+    endif()
+  endif()
+
+  add_executable(stargus WIN32 ${stargus_SRCS})
+  target_link_libraries(stargus ${stargus_LIBS})
+  set(GAMEDIR "games" CACHE PATH "Where to install games binaries")
+  install(TARGETS stargus DESTINATION ${GAMEDIR})
 endif()
 
-########### install files ###############
+# uninstall target
+if(NOT TARGET uninstall)
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+        IMMEDIATE @ONLY)
 
-install(TARGETS stargus DESTINATION games)
-#install(TARGETS scmconvert startool DESTINATION bin)
-install(FILES stargus.png DESTINATION share/pixmaps)
-install(FILES stargus.desktop DESTINATION share/applications)
-
-install(DIRECTORY scripts DESTINATION share/games/stratagus/stargus)
-install(FILES mpqlist.txt DESTINATION share/games/stratagus/stargus)
-install(FILES contrib/fog.png DESTINATION share/games/stratagus/stargus/graphics/tilesets)
+    add_custom_target(uninstall
+        COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+endif()

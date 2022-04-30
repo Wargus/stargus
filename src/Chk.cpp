@@ -636,7 +636,7 @@ void Chk::loadFromBuffer(unsigned char *chkdata, int len)
           }
           for (i = 0; i < 64; ++i)
           {
-            trigger.TriggerActions[i].Source = ChkReadDWord();
+            trigger.TriggerActions[i].Source = ChkReadDWord() - 1;
             trigger.TriggerActions[i].TriggerNumber = ChkReadDWord();
             trigger.TriggerActions[i].WavNumber = ChkReadDWord();
             trigger.TriggerActions[i].Time = ChkReadDWord();

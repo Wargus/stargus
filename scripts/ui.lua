@@ -332,17 +332,17 @@ DefinePanelContents(
     DefaultFont = "small",
     Condition = {ShowOpponent = false, HideNeutral = false, Build = "false", Training = "false"},
     Contents = {
-      { Pos = {238 + 9, 232 + 12}, Condition = {Armor = "only"}, More = {"Graphic", {Graphic = "cmdicons.png", Frame = 292}}},
-      { Pos = {238 + 7, 232 + 10}, Condition = {Armor = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 24}}},
-      { Pos = {238 + 7 + 24, 232 + 34}, Condition = {Armor = "only"},  More = {"Text", { Text = "", Variable = "Armor", Stat = true, Centered = true}}},
+      { Pos = {238 + 9, 232 + 12}, Condition = {Armor = "only", Transport = "<1"}, More = {"Graphic", {Graphic = "cmdicons.png", Frame = 292}}},
+      { Pos = {238 + 7, 232 + 10}, Condition = {Armor = "only", Transport = "<1"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 24}}},
+      { Pos = {238 + 7 + 24, 232 + 34}, Condition = {Armor = "only", Transport = "<1"},  More = {"Text", { Text = "", Variable = "Armor", Stat = true, Centered = true}}},
 
-      { Pos = {276 + 9, 232 + 12}, Condition = {PiercingDamage = "only"}, More = {"Graphic", {Graphic = "cmdicons.png", Frame = 290}}},
-      { Pos = {276 + 7, 232 + 10}, Condition = {PiercingDamage = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 24}}},
-      { Pos = {276 + 7 + 24, 232 + 34}, Condition = {PiercingDamage = "only"},  More = {"Text", { Text = "", Variable = "PiercingDamage", Stat = true, Centered = true}}},
+      { Pos = {276 + 9, 232 + 12}, Condition = {PiercingDamage = "only", Transport = "<1"}, More = {"Graphic", {Graphic = "cmdicons.png", Frame = 290}}},
+      { Pos = {276 + 7, 232 + 10}, Condition = {PiercingDamage = "only", Transport = "<1"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 24}}},
+      { Pos = {276 + 7 + 24, 232 + 34}, Condition = {PiercingDamage = "only", Transport = "<1"},  More = {"Text", { Text = "", Variable = "PiercingDamage", Stat = true, Centered = true}}},
 
-      { Pos = {314 + 9, 232 + 12}, Condition = {AttackRange = "only"}, More = {"Graphic", {Graphic = "cmdicons.png", Frame = 288}}},
-      { Pos = {314 + 7, 232 + 10}, Condition = {AttackRange = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 24}}},
-      { Pos = {314 + 7 + 24, 232 + 34}, Condition = {AttackRange = "only"},  More = {"Text", { Text = "", Variable = "AttackRange", Stat = true, Centered = true}}},
+      { Pos = {314 + 9, 232 + 12}, Condition = {AttackRange = "only", Transport = "<1"}, More = {"Graphic", {Graphic = "cmdicons.png", Frame = 288}}},
+      { Pos = {314 + 7, 232 + 10}, Condition = {AttackRange = "only", Transport = "<1"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 24}}},
+      { Pos = {314 + 7 + 24, 232 + 34}, Condition = {AttackRange = "only", Transport = "<1"},  More = {"Text", { Text = "", Variable = "AttackRange", Stat = true, Centered = true}}},
     }
   },
   {
