@@ -245,8 +245,7 @@ Section "-${NAME}"
 
         ; -- XXX TODO: include Stratagus and dependencies some better way
 	File "stratagus.exe"
-	File stratagus-midiplayer.exe
-	File "*.dll"
+	File "*.dll"	
 
 	ClearErrors
 
@@ -265,14 +264,14 @@ Section "-${NAME}"
 	!cd ${CMAKE_CURRENT_SOURCE_DIR}
 	SetOutPath "$INSTDIR\contrib"
 	File /r "contrib\"
-	SetOutPath "$INSTDIR\maps"
-	File /r "maps\"
-	SetOutPath "$INSTDIR\shaders"
-	File /r "shaders\"
+	; SetOutPath "$INSTDIR\maps"
+	; File /r "maps\"
+	; SetOutPath "$INSTDIR\shaders"
+	; File /r "shaders\"
 	SetOutPath "$INSTDIR\scripts"
 	File /r "scripts\"
-	SetOutPath "$INSTDIR\campaigns"
-	File /r "campaigns\"
+	; SetOutPath "$INSTDIR\campaigns"
+	; File /r "campaigns\"
 
 	!cd ${CMAKE_CURRENT_BINARY_DIR}
 
