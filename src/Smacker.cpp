@@ -79,14 +79,28 @@ bool Smacker::ConvertPortrait(const std::string &arcfile,  Storage storage)
     result = false;
   }
 
-  string gm_str = "gm convert \"" + png_path + "\"image*.png -delay 4 \"" + mng_file + "\""; // 60sec / 15fps = 4
+  string gm_str = "convert \"" + png_path + "\"image*.png -delay 4 \"" + mng_file + "\""; // 60sec / 15fps = 4
+  string cmd = "gm " + gm_str;
 
-  cout << "gm: " << gm_str << endl;
+  cout << "gm: " << cmd << endl;
 
-  sys_call = system(gm_str.c_str());
+  // try convert with GraphicsMagick
+  sys_call = system(cmd.c_str());
   if (sys_call != 0)
   {
-    result = false;
+    // try convert with ImageMagick 7+
+    cmd = "magick " + gm_str;
+    sys_call = system(cmd.c_str());
+    if (sys_call != 0)
+    {
+      // try convert with ImageMagick <= 6
+      cmd = gm_str;
+      sys_call = system(cmd.c_str());
+      if (sys_call != 0)
+      {
+        result = false;
+      }
+    }
   }
 
   std::filesystem::remove(smk_file);

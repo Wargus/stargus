@@ -238,7 +238,15 @@ function LoadUI(race)
   --UI.NetworkDiplomacyButton.Text = "Diplomacy"
   UI.NetworkDiplomacyButton.Style = FindButtonStyle(race .. " diplomacy button")
   UI.NetworkDiplomacyButton:SetCallback(function() RunDiplomacyMenu() end)
-  
+ 
+  local minimapButton = CUIUserButton:new_local()
+  minimapButton.Button = CUIButton:new_local()
+  minimapButton.Button.X = offx + 6
+  minimapButton.Button.Y = offy + 320
+  minimapButton.Button:SetCallback(function() UiToggleTerrain() end)
+  minimapButton.Button.Style = FindButtonStyle(race .. " minimap terrain button")
+  UI.UserButtons:push_back(minimapButton)
+
   UI.LifeBarColorNames:clear()
   UI.LifeBarColorNames:push_back("green")
   UI.LifeBarColorNames:push_back("yellow")
