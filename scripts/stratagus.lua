@@ -308,21 +308,15 @@ SetAllPlayersTotalUnitLimit(1000)
 --    (FIXME: must be combined with game types)
 
 function SinglePlayerTriggers()
-  AddTrigger(
-    function() return GetPlayerData(GetThisPlayer(), "NumBuildings") == 0 end,
-    function() return ActionDefeat() end)
-
-  AddTrigger(
-    function()
-      for i=0,PlayerMax-1 do
-        if (Players[i]:IsEnemy(ThisPlayer) and
-            GetPlayerData(Players[i].Index, "NumBuildings") ~= 0) then
-          return false
-        end
-      end
-      return true
-    end,
-    function() return ActionVictory() end)
+  function SinglePlayerTriggers()
+    AddTrigger(
+      function() return GetPlayerData(GetThisPlayer(), "TotalNumUnits") == 0 end,
+      function() return ActionDefeat() end)
+  
+    AddTrigger(
+      function() return GetNumOpponents(GetThisPlayer()) == 0 end,
+      function() return ActionVictory() end)
+  end
 end
 
 -------------------------------------------------------------------------------

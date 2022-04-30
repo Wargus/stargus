@@ -699,7 +699,7 @@ function BuildProgramStartMenu()
   menu:addFullButton("~!Multi Player Game", "m", offx + 208, offy + 104 + 36*1,
     function() RunMultiPlayerGameMenu(); menu:stop(1) end)
   menu:addFullButton("~!Campaign Game", "c", offx + 208, offy + 104 + 36*2,
-    function() RunCampaignGameMenu(); menu:stop(1) end):setEnabled(false)
+    function() RunCampaignGameMenu(); menu:stop(1) end)
   menu:addFullButton("~!Load Game", "l", offx + 208, offy + 104 + 36*3,
     function() RunLoadGameMenu(); menu:stop(1) end)
   menu:addFullButton("~!Replay Game", "r", offx + 208, offy + 104 + 36*4,
