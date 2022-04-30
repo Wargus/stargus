@@ -903,7 +903,7 @@ void Chk::SaveSMP(Storage storage)
 {
   FILE *fd;
 
-  storage.setFilename(storage.getFilename() + "sms");
+  storage.setFilename(storage.getFilename() + "smp");
 
   CheckPath(storage.getFullPath());
 
