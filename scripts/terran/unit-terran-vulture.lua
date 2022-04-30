@@ -54,3 +54,6 @@ DefineUnitType("unit-terran-vulture", { Name = "Vulture",
     "ready", "terran-vulture-ready",
     "help", "terran-units-attacked",} } )
 
+-- TODO: temporarily Jim is the same as any other vulture
+CopyUnitType("unit-terran-vulture", "Jim-Raynor-(Vulture)")
+DefineUnitType("Jim-Raynor-(Vulture)", { Name = "Jim Raynor" })

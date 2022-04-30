@@ -111,14 +111,12 @@ function RunCampaignGameMenu()
   local offx = (Video.Width - 640) / 2
   local offy = (Video.Height - 480) / 2
 
---[[
   menu:addFullButton("~!Terran Campaign", "t", offx + 208, offy + 212 + (36 * 0),
     function() RunCampaign("scripts/terran/campaign1.lua"); menu:stop() end)
   menu:addFullButton("~!Zerg Campaign", "z", offx + 208, offy + 212 + (36 * 1),
-    function() RunCampaign("scripts/zerg/campaign1.lua"); menu:stop() end)
+    function() RunCampaign("scripts/zerg/campaign1.lua"); menu:stop() end):setEnabled(false)
   menu:addFullButton("~!Protoss Campaign", "p", offx + 208, offy + 212 + (36 * 2),
-    function() RunCampaign("scripts/protoss/campaign1.lua"); menu:stop() end)
-]]
+    function() RunCampaign("scripts/protoss/campaign1.lua"); menu:stop() end):setEnabled(false)
 
   menu:addFullButton("~!Cancel", "c", offx + 208, offy + 212 + (36 * 5),
     function() menu:stop() end)
