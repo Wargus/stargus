@@ -57,3 +57,39 @@ jobs:
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Stargus
+        path: build/Stargus-*.exe
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        body: 'Automatic builds from the master branch'
+        draft: false
+        prerelease: true
+        files: build/Stargus-*.exe
+
+# deploy:
+#   - provider: GitHub
+#     release: master-builds
+#     description: 'Automatic builds from the master branch'
+#     auth_token:
+#       secure: NMy2KE3EpZTjverxNzEAoBnlV+7VLGvwy3e1WEIrliFy3R1oxuT+AgGUDcRwv9y/
+#     artifact: /.*exe/
+#     draft: false
+#     prerelease: true
+#     on:
+#       branch: master
+#   - provider: GitHub
+#     release: $(APPVEYOR_REPO_TAG_NAME)
+#     description: 'Release'
+#     auth_token:
+#       secure: NMy2KE3EpZTjverxNzEAoBnlV+7VLGvwy3e1WEIrliFy3R1oxuT+AgGUDcRwv9y/
+#     artifact: /.*exe/
+#     draft: false
+#     prerelease: false
+#     on:
+#       appveyor_repo_tag: true
