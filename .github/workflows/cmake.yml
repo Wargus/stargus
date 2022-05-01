@@ -52,7 +52,7 @@ jobs:
         if ($null -ne $env:GIT_TAG_NAME) { move stratagus-$env:SRCTAG stratagus-master }
 
     - name: Configure CMake
-      run: cmake -B ${{github.workspace}}/build -G "Visual Studio 16 2019" -T v141_xp -A win32 -DCMAKE_PREFIX_PATH="${{github.workspace}}\\dependencies" -DSTRATAGUS=stratagus -DSTRATAGUS_INCLUDE_DIR="${{github.workspace}}\\stratagus-master\\gameheaders" -DENABLE_NSIS=ON ..
+      run: cmake -B ${{github.workspace}}/build -G "Visual Studio 16 2019" -T v141_xp -A win32 -DCMAKE_PREFIX_PATH="${{github.workspace}}\\dependencies" -DSTRATAGUS=stratagus -DSTRATAGUS_INCLUDE_DIR="${{github.workspace}}\\stratagus-master\\gameheaders" -DENABLE_NSIS=ON
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
