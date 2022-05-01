@@ -28,3 +28,32 @@ jobs:
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+  windows_build:
+    name: Windows build
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    steps:
+    - uses: olegtarasov/get-tag@v2.1
+      id: tagName
+    
+    - name: Install dependencies
+      run:  |
+        if ($null -eq $env:GIT_TAG_NAME) { $env:RELEASE = 'master-builds' } else { $env:RELEASE = $env:GIT_TAG_NAME }
+        if ($null -eq $env:GIT_TAG_NAME) { $env:SRCTAG = 'master' } else { $env:SRCTAG = $env:GIT_TAG_NAME }
+        Invoke-WebRequest https://github.com/Wargus/win32-stratagus-dependencies/releases/download/$env:RELEASE/dependencies.zip -OutFile ${{github.workspace}}/dependencies.zip
+        Expand-Archive ${{github.workspace}}/dependencies.zip -DestinationPath ${{github.workspace}}/
+        Invoke-WebRequest https://github.com/Wargus/stratagus/releases/download/$env:RELEASE/compiled-binaries.zip -OutFile ${{github.workspace}}/compiled-binaries.zip
+        Expand-Archive compiled-binaries.zip -DestinationPath ${{github.workspace}}/
+        Invoke-WebRequest https://github.com/Wargus/stratagus/archive/$env:SRCTAG.zip -OutFile ${{github.workspace}}/stratagus-source.zip
+        Expand-Archive stratagus-source.zip -DestinationPath ${{github.workspace}}/
+        move stratagus-$env:SRCTAG stratagus-master
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -G "Visual Studio 16 2019" -T v141_xp -A win32 -DCMAKE_PREFIX_PATH="${{github.workspace}}\\dependencies" -DSTRATAGUS=stratagus -DSTRATAGUS_INCLUDE_DIR="${{github.workspace}}\\stratagus-master\\gameheaders" -DENABLE_NSIS=ON ..
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
