@@ -22,8 +22,8 @@ jobs:
 
     - name: Install dependencies
       run:  |
-        sudo apt install libpng-dev libgtk2.0-dev zlib1g-dev libstorm-dev libmagick++-6.q16-dev libcppunit-dev nlohmann-json3-dev
-        curl -L https://github.com/Wargus/stratagus/archive/master.zip -O ${{github.workspace}}/master.zip
+        sudo apt install libpng-dev libgtk2.0-dev zlib1g-dev libstorm-dev libmagick++-6.q16-dev libcppunit-dev nlohmann-json3-dev wget
+        wget https://github.com/Wargus/stratagus/archive/master.zip
         unzip master.zip
 
     - name: Configure CMake
