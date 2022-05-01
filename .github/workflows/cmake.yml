@@ -35,8 +35,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
-    steps:
+
     - uses: olegtarasov/get-tag@v2.1
       id: tagName
     
