@@ -76,7 +76,7 @@ for idx,icon in ipairs(icons) do
 
             if #portrait_table > 1 then
                 print("Using " .. portrait_table[1] .. " and following for " .. unitname)
-                DefineUnitType(unitname, { Portrait = portrait_table })
+                --DefineUnitType(unitname, { Portrait = portrait_table })
                 break
             end
         end

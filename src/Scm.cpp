@@ -72,7 +72,7 @@ Scm::~Scm()
 
 }
 
-bool Scm::convert(const std::string &arcfile, Storage storage)
+bool Scm::convert(const std::string &arcfile, const std::vector<std::string> &unitNames, Storage storage)
 {
   bool result = true;
 
@@ -84,6 +84,7 @@ bool Scm::convert(const std::string &arcfile, Storage storage)
     // call the Chk converter with temp file...
     shared_ptr<Storm> storm = make_shared<Storm>(scm_path);
     Chk chk(storm);
+    chk.setUnitNames(unitNames);
     result = chk.convert("staredit\\scenario.chk", storage.getFullPath());
 
     // delete the temporary .chk file -> below don't access 'breeze' any more!
@@ -96,123 +97,3 @@ bool Scm::convert(const std::string &arcfile, Storage storage)
 
   return result;
 }
-
-#ifdef STAND_ALONE
-void usage()
-{
-  fprintf(stderr, "%s\n%s\n",
-          "scmconvert V" VERSION,
-          "usage: scmconvert inputfile [ outputdir ]\n");
-  exit(-1);
-}
-
-int main(int argc, char **argv)
-{
-  char *infile;
-  char *outdir;
-
-  if (argc < 2 || argc > 3)
-  {
-    usage();
-  }
-
-  infile = argv[1];
-  if (argc == 3)
-  {
-    outdir = argv[2];
-  }
-  else
-  {
-    outdir = strdup(".");
-  }
-
-  if (strstr(infile, ".scm\0"))
-  {
-    char *tmp;
-    char newname[1024];
-
-    sprintf(newname, "%s/", outdir);
-    if ((tmp = strrchr(infile, '/')))
-    {
-      strcat(newname, tmp + 1);
-    }
-    else if ((tmp = strrchr(infile, '\\')))
-    {
-      strcat(newname, tmp + 1);
-    }
-    else
-    {
-      strcat(newname, infile);
-    }
-
-    // TODO: fix this standalone version
-    convert(infile);
-
-  }
-  else if (strstr(infile, ".chk\0"))
-  {
-    FILE *f;
-    struct stat sb;
-    unsigned int len;
-    unsigned char *buf;
-
-    if (stat(infile, &sb) == -1)
-    {
-      fprintf(stderr, "error finding file: %s\n", infile);
-      return -1;
-    }
-    len = sb.st_size;
-
-    f = fopen(infile, "rb");
-    if (f == NULL)
-    {
-      fprintf(stderr, "error opening file: %s\n", infile);
-      return -1;
-    }
-
-    buf = (unsigned char *)malloc(len);
-    if (fread(buf, 1, len, f) != len)
-    {
-      fprintf(stderr, "error reading from file: %s\n", infile);
-      free(buf);
-      return -1;
-    }
-
-    if (fclose(f))
-    {
-      fprintf(stderr, "error closing file: %s\n", infile);
-      free(buf);
-      return -1;
-    }
-
-    char *tmp;
-    char newname[1024];
-
-    sprintf(newname, "%s/", outdir);
-    if ((tmp = strrchr(infile, '/')))
-    {
-      strcat(newname, tmp + 1);
-    }
-    else if ((tmp = strrchr(infile, '\\')))
-    {
-      strcat(newname, tmp + 1);
-    }
-    else
-    {
-      strcat(newname, infile);
-    }
-
-    ConvertChk(newname, buf, len);
-
-    free(buf);
-  }
-  else
-  {
-    fprintf(stderr, "Invalid input file: %s\n", infile);
-    return -1;
-  }
-
-  return 0;
-}
-#endif
-

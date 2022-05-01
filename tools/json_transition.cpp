@@ -11,6 +11,9 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
+#include <sstream>
+#include <string>
+#include <fstream>
 
 #include "../src/startool_mpq.h"
 
@@ -20,17 +23,11 @@ using json = nlohmann::json;
 
 extern const char *UnitNames[];
 
-/*typedef struct _control_
+struct Unit
 {
-  int Type;          /// Entry type
-  int Version;       /// Only in this version
-  const char *File;    /// Save file
-  const char *ArcFile;    /// File name in list file
-  int Arg1;          /// Extra argument 1
-  int Arg2;          /// Extra argument 2
-  int Arg3;          /// Extra argument 3
-  int Arg4;          /// Extra argument 4
-} Control;*/
+  string name;
+  int id;
+};
 
 string getTypeName(int type)
 {
@@ -107,16 +104,23 @@ void to_json(json &j, const Control &c)
   j = json{ {"type", getTypeName(c.Type)}, {"file", c.File}, {"arcfile", c.ArcFile} };
 }
 
+void to_json(json &j, const Unit &u)
+{
+  j = json{ {"name", u.name}, {"id", u.id} };
+}
 
-int main(int argc, char **argv)
+void Unit_Array_Creator()
+{
+  for(unsigned int un = 0; un < 228; un++)
+  {
+    printf("unit %d: %s\n", un, UnitNames[un]);
+  }
+}
+
+void Todo_creator()
 {
   Control *c = nullptr;
   unsigned int len = 0;
-
-  for(unsigned int un = 0; un < 228; un++)
-  {
-    printf("unit: %s\n", UnitNames[un]);
-  }
 
   c = Todo_bootstrap;
   len = sizeof(Todo_bootstrap) / sizeof(*Todo_bootstrap);
@@ -194,18 +198,44 @@ int main(int argc, char **argv)
     }
   }
 
-
-  /*
-    j["pi"] = 3.141; //Then initialize by name / value pair. At this time, the value corresponding to the name "pi" is 3.141
-    j["happy"] = true;//Assign the name "happy" to true
-    j["name"] = "Niels";//Store the string "Niels" to "name"
-    j["nothing"] = nullptr;//"nothing" corresponds to a null pointer
-    j["answer"]["everything"] = 42;//Initializes the objects in the object
-    j["list"] = { 1, 0, 2 };//Use the list initialization method to initialize the "list" array*/
-
-
   //cout << std::setw(4) << j << endl;
+}
 
+void Unit_File_Creator(string filename)
+{
+  json j;
+
+  ifstream input_file(filename);
+
+  std::string line;
+  int i = 0;
+  while (std::getline(input_file, line))
+  {
+    //cout << line << endl;
+
+    std::for_each(line.begin(), line.end(), [](char & c)
+    {
+        c = ::tolower(c);
+    });
+
+    Unit u;
+    u.name = "unit-" + line;
+    u.id = i;
+
+    j[i] = u;
+
+    i++;
+  }
+
+  cout << std::setw(4) << j << endl;
+}
+
+int main(int argc, char **argv)
+{
+  Unit_File_Creator("../data/units.txt");
+  //Unit_Array_Creator();
+
+  return 0;
 }
 
 const char *UnitNames[] =

@@ -30,6 +30,8 @@ public:
   Chk(std::shared_ptr<Hurricane> hurricane);
   virtual ~Chk();
 
+  void setUnitNames(const std::vector<std::string> &unitNames);
+
   virtual bool convert(const std::string &arcfile, Storage storage);
 
 private:
@@ -53,6 +55,7 @@ private:
   Logger mLogger;
   WorldMap *map;
   std::shared_ptr<Hurricane> mHurricane;
+  std::vector<std::string> mUnitNames;
 };
 
 #endif /* CHK_H_ */

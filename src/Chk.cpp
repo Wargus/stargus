@@ -101,6 +101,11 @@ static inline int ChkReadByte(void)
   return c;
 }
 
+void Chk::setUnitNames(const std::vector<std::string> &unitNames)
+{
+  mUnitNames = unitNames;
+}
+
 void Chk::loadFromBuffer(unsigned char *chkdata, int len)
 {
   char header[5];
@@ -805,7 +810,7 @@ void Chk::loadFromBuffer(unsigned char *chkdata, int len)
 
 #define VERSION "1.0"
 
-static const char *UnitNames[] =
+/*static const char *UnitNames[] =
 {
   "unit-terran-marine", "unit-terran-ghost", "unit-terran-vulture",
   "unit-terran-goliath", "Goliath-Turret",
@@ -893,7 +898,7 @@ static const char *UnitNames[] =
   "unit-protoss-vespene-gas-orb-type-2", "unit-zerg-vespene-gas-sac-type-1",
   "unit-zerg-vespene-gas-sac-type-2", "unit-terran-vespene-gas-tank-type-1",
   "unit-terran-vespene-gas-tank-type-2",
-};
+};*/
 
 /*----------------------------------------------------------------------------
  --  Functions
@@ -1166,10 +1171,9 @@ void Chk::SaveSMS(Storage storage)
   // units
   for (i = 0; i < (int) map->Units.size(); ++i)
   {
-    // TODO: this is just a workaround to exclude a unit that isn't yet available in LUA to not crash
-    string unitName = UnitNames[map->Units[i].Type];
+    string unitName = mUnitNames[map->Units[i].Type];
     fprintf(fd, "unit= CreateUnit(\"%s\", %d, {%d, %d})\n",
-            UnitNames[map->Units[i].Type], (map->Units[i]).Player, map->Units[i].X,
+            unitName.c_str(), (map->Units[i]).Player, map->Units[i].X,
             map->Units[i].Y);
 
 

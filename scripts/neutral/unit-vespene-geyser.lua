@@ -10,7 +10,7 @@ DefineAnimations("animations-vespene-geyser", {
 
 
 
-DefineUnitType("unit-vespene-geyser", { Name = "Vespene Geyser",
+DefineUnitType("unit-resource-vespene-geyser", { Name = "Vespene Geyser",
   Image = {"file", "neutral/units/geyser.png", "size", {128, 64}},
   Shadow = {"file", "neutral/units/geyser shadow.png", "size", {160, 64}},
   Animations = "animations-vespene-geyser", Icon = "icon-vespene-geyser",

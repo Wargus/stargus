@@ -29,12 +29,14 @@
 //@{
 /*----------------------------------------------------------------------------
  --  Includes
+
  ----------------------------------------------------------------------------*/
 
-#include <PngExporter.h>
+// project
+#include "PngExporter.h"
 #include "Smacker.h"
 #include "Palette.h"
-#include <Tbl.h>
+#include "Tbl.h"
 #include "endian.h"
 #include "startool.h"
 #include "Preferences.h"
@@ -54,6 +56,12 @@
 #include "DataHub.h"
 #include "Storage.h"
 #include "Wav.h"
+
+// system
+#include <nlohmann/json.hpp>
+#include <fstream>
+
+using json = nlohmann::json;
 
 // as this is 3rd party code I don't fix it ->
 #ifndef _MSC_VER
@@ -388,6 +396,27 @@ int main(int argc, const char **argv)
   printf("Please be patient, the data may take a couple of minutes to extract...\n\n");
   fflush(stdout);
 
+  // read in the json file
+  std::ifstream json_file("dataset/units.json");
+
+  json units_json; //create unitiialized json object
+
+  json_file >> units_json; // initialize json object with what was read from file
+
+  //std::cout << units_json << std::endl; // prints json object to screen
+
+  vector<string> unitNames;
+  for(auto &array : units_json)
+  {
+    string unit_name = array.at("name");
+    unitNames.push_back(unit_name);
+    //cout << unit_name << endl;
+  }
+
+
+  //std::cout << units_json.at(1) << std::endl;
+//exit(1);
+
   // set this to false for activating the SC remastered Casc code while development
   bool mpq = true;
 
@@ -545,7 +574,7 @@ int main(int argc, const char **argv)
         {
           printf("ConvertMap: %s, %s", c[u].File, c[u].ArcFile);
           Scm scm(storm);
-          case_func = scm.convert(c[u].ArcFile, data(c[u].File));
+          case_func = scm.convert(c[u].ArcFile, unitNames, data(c[u].File));
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
@@ -682,6 +711,7 @@ int main(int argc, const char **argv)
         {
           printf("ConvertCampaign (.chk): %s, %s", c[u].File, c[u].ArcFile);
           Chk chk(storm);
+          chk.setUnitNames(unitNames);
           case_func = chk.convert(c[u].ArcFile, c[u].File);
           printf("...%s\n", case_func ? "ok" : "nok");
         }

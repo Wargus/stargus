@@ -4,7 +4,7 @@ DefineAnimations("animations-bengalaas-jungle-critter", {
   },
 })
 
-DefineUnitType("Bengalaas-(Jungle-Critter)", { Name = "Bengalaas (Jungle Critter)",
+DefineUnitType("unit-critter-bengalaas", { Name = "Bengalaas (Jungle Critter)",
   Image = {"file", "neutral/units/bengalaas jungle critter.png", "size", {128, 128}},
   Shadow = {"file", "neutral/units/bengalaas jungle critter shadow.png", "size", {128, 128}},
   Animations = "animations-bengalaas-jungle-critter", Icon = "icon-bengalaas-jungle-critter",
