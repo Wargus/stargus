@@ -7,22 +7,19 @@ on:
     branches: [ master ]
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: RelWithDebugInfo
 
 jobs:
-  build:
-    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
-    # You can convert this to a matrix build if you need cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: ubuntu-latest
+  ubuntu_build:
+    name: Ubuntu build
+    runs-on: ubuntu-18.04
 
     steps:
     - uses: actions/checkout@v3
 
     - name: Install dependencies
       run:  |
-        sudo apt install libpng-dev libgtk2.0-dev zlib1g-dev libstorm-dev libmagick++-6.q16-dev libcppunit-dev nlohmann-json3-dev wget
+        sudo apt-get install -yy libpng-dev libgtk2.0-dev zlib1g-dev libstorm-dev libmagick++-6.q16-dev libcppunit-dev nlohmann-json3-dev wget
         wget https://github.com/Wargus/stratagus/archive/master.zip
         unzip master.zip
 
