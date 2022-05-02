@@ -274,6 +274,9 @@ Section "-${NAME}"
 	; File /r "campaigns\"
 
 	!cd ${CMAKE_CURRENT_BINARY_DIR}
+	
+	; outpath used for shortcuts "start in" directory
+	SetOutPath "$INSTDIR"
 
 !ifndef PORTABLE
 	!insertmacro MUI_STARTMENU_WRITE_BEGIN Application

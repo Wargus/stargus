@@ -70,7 +70,7 @@ jobs:
         draft: false
         prerelease: true
         tag_name: master-builds
-        files: ${{github.workspace}}/build/stargus*.exe
+        files: ${{github.workspace}}/build/stargus-*.exe
 
     - uses: softprops/action-gh-release@v1
       name: Publish release
@@ -80,4 +80,4 @@ jobs:
         body: 'Release'
         draft: false
         prerelease: false
-        files: ${{github.workspace}}/build/stargus*.exe
+        files: ${{github.workspace}}/build/stargus-*.exe
