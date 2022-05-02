@@ -69,6 +69,7 @@ jobs:
         body: 'Automatic builds from the master branch'
         draft: false
         prerelease: true
+        tag_name: master-builds
         files: build/Stargus-*.exe
 
     - uses: softprops/action-gh-release@v1
