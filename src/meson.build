@@ -31,7 +31,8 @@ startool_sources = files(
 	'PaletteImage.cpp',
 	'Color.cpp',
 	'Wav.cpp',
-	'Palette2D.cpp'
+	'Palette2D.cpp',
+	'StringUtil.cpp'
 	)
 	
 stratagus_prefix = get_option('prefix')

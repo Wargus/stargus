@@ -198,7 +198,7 @@ void Todo_creator()
     }
   }
 
-  //cout << std::setw(4) << j << endl;
+  cout << std::setw(4) << j << endl;
 }
 
 void Unit_File_Creator(string filename)
@@ -232,8 +232,9 @@ void Unit_File_Creator(string filename)
 
 int main(int argc, char **argv)
 {
-  Unit_File_Creator("../data/units.txt");
+  //Unit_File_Creator("..b/data/units.txt");
   //Unit_Array_Creator();
+  Todo_creator();
 
   return 0;
 }

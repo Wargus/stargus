@@ -909,6 +909,7 @@
     },
     {
         "id": 227,
-        "name": "unit-powerup-terran-gas-tank-type-2"
+        "name": "unit-powerup-terran-gas-tank-type-2",
+        "extractor": false
     }
 ]

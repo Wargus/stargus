@@ -24,7 +24,7 @@ Control Todo[] = {
   // 1 = icon
   // 2 = select
   // 3 = 2D palette (e.g. fire)
-  {PAL,0,"tblink","game\\tblink.pcx",0 __3},
+  /*{PAL,0,"tblink","game\\tblink.pcx",0 __3},
   {PAL,0,"tfontgam","game\\tfontgam.pcx",2 __3},
   {PAL,0,"thpbar","game\\thpbar.pcx",0 __3},
   {PAL,0,"tminimap","game\\tminimap.pcx",0 __3},
@@ -39,7 +39,7 @@ Control Todo[] = {
   {WPE,0,"jungle","tileset\\jungle.wpe",0 __3},
   {WPE,0,"badlands","tileset\\badlands.wpe",0 __3},
   {WPE,0,"platform","tileset\\platform.wpe",0 __3},
-  {WPE,0,"ashworld","tileset\\ashworld.wpe",0 __3},
+  {WPE,0,"ashworld","tileset\\ashworld.wpe",0 __3},*/
 
 //	{G,0,"ui/blink","game\\blink.grp",0 __3},
 

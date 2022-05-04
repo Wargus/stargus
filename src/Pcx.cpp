@@ -77,7 +77,7 @@ std::shared_ptr<Palette> Pcx::getPalette()
   return mPalette;
 }
 
-void Pcx::mapIndexPalette(int length, int index, int start)
+void Pcx::mapIndexPalette(int length, int start, int index)
 {
   if (mPaletteImage && mPalette)
   {
@@ -96,41 +96,13 @@ void Pcx::mapIndexPalette(int length, int index, int start)
 
 void Pcx::mapIndexPaletteTypeIcon(int index)
 {
-  mapIndexPalette(16, index, 0);
+  mapIndexPalette(16, 0, index);
 }
 
 void Pcx::mapIndexPaletteTypeSelect(int index)
 {
-  mapIndexPalette(8, index, 1);
+  mapIndexPalette(8, 1, index);
 }
-
-/*void Pcx::map2DPalette()
-{
-  if (mPaletteImage && mPalette)
-  {
-    if ((mPaletteImage->getSize().getWidth() == 256) && (mPaletteImage->getSize().getHeight() == 63))
-    {
-      for (int i = 0; i < mPaletteImage->getSize().getWidth(); i++)
-      {
-        int num = (rand() % (55 -20  + 1)) + 20;
-
-        unsigned char color_index = mPaletteImage->getPaletteIndex(i, num);
-
-        if(color_index != 255)
-        {
-          Color image_color = mPalette->at(color_index);
-
-          mPalette->at(i) = image_color;
-        }
-        else
-        {
-          Color trans_color(0, 0, 0);
-          mPalette->at(i) = trans_color;
-        }
-      }
-    }
-  }
-}*/
 
 std::shared_ptr<Palette2D> Pcx::map2DPalette()
 {

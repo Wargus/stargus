@@ -419,39 +419,66 @@ int DataHub::get_dat_energy_max() const
   return orders_energy_max;
 }
 
-bool DataHub::convert(const std::string &arcfile, const std::string &file)
+bool DataHub::convert()
 {
   //printCSV();
 
-  convertImages();
+  //convertImages();
 
   return true;
 }
 
-void DataHub::convertImages()
+bool DataHub::convertUnitImages(json &unitsJson)
 {
   std::vector<uint8_t> *units_graphics_vec = units->graphics();
   std::vector<uint16_t> *flingy_sprites_vec = flingy->sprite();
   std::vector<uint16_t> *sprites_images_vec = sprites->image_file();
   std::vector<uint32_t> *images_grp_vec = images->grp_file();
+  std::vector<uint8_t> *images_draw_function = images->draw_function();
+
+  bool result = true;
 
   // units.dat
-  for (unsigned int i = 0; i < units_graphics_vec->size(); i++)
+  for(auto &array : unitsJson)
   {
-    uint8_t graphic_id = units_graphics_vec->at(i);
+    string unit_name = array.at("name");
+    int unit_id = array.at("id");
+    bool extractor = true;
 
-    uint16_t sprite_id = flingy_sprites_vec->at(graphic_id);
+    try
+    {
+      extractor = array.at("extractor");
+    }
+    catch (const nlohmann::detail::out_of_range &json_range)
+    {
+      extractor = true; // default behaviour TODO: maybe better write into JSON file and skip default
+    }
 
-    uint16_t image_id = sprites_images_vec->at(sprite_id);
+    if(extractor)
+    {
+      uint8_t graphic_id = units_graphics_vec->at(unit_id);
 
-    uint16_t grp_id = images_grp_vec->at(image_id);
+      uint16_t sprite_id = flingy_sprites_vec->at(graphic_id);
 
-    TblEntry tblEntry = images_tbl_vec.at(grp_id - 1); // spec says first index is -1
-    string grp_str = "unit\\" + tblEntry.name1;
+      uint16_t image_id = sprites_images_vec->at(sprite_id);
 
-    //Gfx gfx;
-    //bool conv_ret = gfx.convert(mpqfile, c[u].ArcFile, c[u].File, c[u].Arg1);
+      uint16_t grp_id = images_grp_vec->at(image_id);
+
+      uint8_t draw_function = images_draw_function->at(grp_id);
+
+      TblEntry tblEntry = images_tbl_vec.at(grp_id - 1); // spec says first index is -1
+      string grp_str = "unit\\" + tblEntry.name1;
+
+      // somehow this function needs a temporary character to exchange
+      replaceString("\\", "#", grp_str);
+      replaceString("#", "\\\\", grp_str);
+
+      cout << unit_name << " : " << grp_str << endl;
+      cout << "-> " << to_string(draw_function) << endl;
+    }
   }
+
+  return result;
 }
 
 void DataHub::printCSV()

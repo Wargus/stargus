@@ -59,7 +59,7 @@ void PcxTest::test2_mapIndexPalette()
     string save_png_name = string("ticon_") + to_string(index) + ".png";
 
     pcx1.load(load_pcx_name);
-    pcx1.mapIndexPalette(8, index, 1);
+    pcx1.mapIndexPalette(8, 1, index);
     pcx1.savePNG(save_png_name);
     std::shared_ptr<Palette> pal = pcx1.getPalette();
     pal->createDataChunk()->write(save_pal_name);

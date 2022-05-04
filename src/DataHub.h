@@ -25,6 +25,9 @@
 
 // System
 #include <memory>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 class DataHub: public Converter
 {
@@ -32,7 +35,9 @@ public:
   DataHub(std::shared_ptr<Hurricane> hurricane);
   virtual ~DataHub();
 
-  virtual bool convert(const std::string &arcfile, const std::string &file);
+  bool convert();
+
+  bool convertUnitImages(json &unitsJson);
 
 private:
   Logger mLogger;
@@ -79,8 +84,6 @@ private:
   std::vector<TblEntry> portdata_tbl_vec;
   std::vector<uint32_t> *mapdata_mission_dir_vec;
   std::vector<TblEntry> mapdata_tbl_vec;
-
-  void convertImages();
 
   std::shared_ptr<kaitai::kstream> getKaitaiStream(const std::string &file);
 
