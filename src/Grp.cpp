@@ -160,7 +160,7 @@ bool Grp::saveLUAConfig(Storage filename)
   bool result = true;
 
   ofstream lua_file;
-  lua_file.open (filename.getFullPath());
+  lua_file.open (filename.getFullPath() + ".lua");
 
   string tile_size = filename.getFilename() + "_size = {" + to_string(mTilesize.getWidth())
       + ", " + to_string(mTilesize.getHeight()) + "}";

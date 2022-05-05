@@ -599,7 +599,7 @@ int main(int argc, const char **argv)
     datahub.convertUnitImages(units_json, paletteMap, palette2DMap);
     //datahub.printCSV();
 
-    //exit(0);
+    exit(0);
 
     for (i = 0; i <= 1; ++i)
     {

@@ -481,14 +481,7 @@ bool DataHub::convertUnitImages(json &unitsJson,
       std::shared_ptr<Palette> pal;
       std::shared_ptr<Palette2D> pal2D;
 
-      if(draw_function == 0)
-      {
-        pal = paletteMap.at("install");
-        grp.setPalette(pal);
-
-        save_result = grp.save(data_prefix + "/" + grp_storage_file_base + ".png");
-      }
-      else if(draw_function == 9)
+      if(draw_function == 9) // remapping
       {
         if(remapping_function == 1) // ofire
         {
@@ -510,12 +503,23 @@ bool DataHub::convertUnitImages(json &unitsJson,
           pal2D = palette2DMap.at("bexpl");
           grp.setPalette2D(pal2D);
         }
+        else // TODO: as default use ofire until I've a better idea....
+        {
+          pal2D = palette2DMap.at("ofire");
+          grp.setPalette2D(pal2D);
+        }
 
         grp.setRGBA(true);
-        save_result = grp.save(data_prefix + "/" + grp_storage_file_base + ".png");
+      }
+      else // default
+      {
+        pal = paletteMap.at("install");
+        grp.setPalette(pal);
       }
 
-      //grp.saveLUAConfig(graphics(string(c[u].File) + ".lua")); // FIXME: works only after save()
+      save_result = grp.save(data_prefix + "/" + grp_storage_file_base + ".png");
+
+      //grp.saveLUAConfig(data_prefix + "/" + grp_storage_file_base); // FIXME: works only after save()
     }
 
     printf("...%s\n", save_result ? "ok" : "nok");
