@@ -435,13 +435,6 @@ bool DataHub::convertUnitImages(json &unitsJson,
                                 std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
                                 std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap)
 {
-  std::vector<uint8_t> *units_graphics_vec = units->flingy();
-  std::vector<uint16_t> *flingy_sprites_vec = flingy->sprite();
-  std::vector<uint16_t> *sprites_images_vec = sprites->image();
-  std::vector<uint32_t> *images_grp_vec = images->grp();
-  std::vector<uint8_t> *images_draw_function = images->draw_function();
-  std::vector<uint8_t> *images_remapping_function = images->remapping();
-
   bool result = true;
   string data_prefix = "data.test";
 
@@ -452,6 +445,9 @@ bool DataHub::convertUnitImages(json &unitsJson,
     int unit_id = array.at("id");
     bool extractor = true;
     bool save_result = true;
+
+    LOG4CXX_TRACE(mLogger, string("Unit(") + to_string(unit_id) + ")");
+    dat::Unit unit(*this, unit_id);
 
     try
     {
@@ -464,26 +460,12 @@ bool DataHub::convertUnitImages(json &unitsJson,
 
     if(extractor)
     {
-      uint8_t graphic_id = units_graphics_vec->at(unit_id);
-
-      uint16_t sprite_id = flingy_sprites_vec->at(graphic_id);
-
-      uint16_t image_id = sprites_images_vec->at(sprite_id);
-
-      uint16_t grp_id = images_grp_vec->at(image_id);
-
-      uint8_t draw_function = images_draw_function->at(image_id);
-      uint8_t remapping_function = images_remapping_function->at(image_id);
-
-      TblEntry tblEntry = images_tbl_vec.at(grp_id - 1); // spec says first index is -1
-      //string arcfile = "unit\\" + tblEntry.name1;
+      uint8_t draw_function = unit.flingy().sprite().image().draw_function();
+      uint8_t remapping_function = unit.flingy().sprite().image().remapping();
 
       // somehow this function needs a temporary character to exchange
       //replaceString("\\", "#", grp_str);
       //replaceString("#", "\\\\", grp_str);
-
-      LOG4CXX_TRACE(mLogger, string("Unit(") + to_string(unit_id) + ")");
-      dat::Unit unit(*this, unit_id);
 
       string arcfile =  "unit\\" + unit.flingy().sprite().image().grp().name1;
 
@@ -494,8 +476,6 @@ bool DataHub::convertUnitImages(json &unitsJson,
       string grp_storage_file_base = to_lower(cutFileEnding(grp_storage_file, ".grp"));
 
       cout << unit_name << " : " << arcfile << " => " << grp_storage_file_base << endl;
-      cout << "draw_function:" << to_string(draw_function) << endl;
-      cout << "remapping_function:" << to_string(remapping_function) << endl;
 
       Grp grp(mHurricane, arcfile);
       std::shared_ptr<Palette> pal;

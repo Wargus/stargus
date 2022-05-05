@@ -34,4 +34,20 @@ TblEntry Image::grp()
   return tbl_entry;
 }
 
+uint8_t Image::draw_function()
+{
+  uint8_t draw_function_id = mDatahub.images->draw_function()->at(mId);
+  LOG4CXX_TRACE(mLogger, string("draw_function(") + to_string(draw_function_id) + ")");
+
+  return draw_function_id;
+}
+
+uint8_t Image::remapping()
+{
+  uint8_t remapping_id = mDatahub.images->draw_function()->at(mId);
+  LOG4CXX_TRACE(mLogger, string("remapping(") + to_string(remapping_id) + ")");
+
+  return remapping_id;
+}
+
 } /* namespace dat */

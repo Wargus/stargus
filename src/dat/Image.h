@@ -22,6 +22,10 @@ public:
 
   TblEntry grp();
 
+  uint8_t draw_function();
+
+  uint8_t remapping();
+
 private:
   Logger mLogger;
   DataHub &mDatahub;
