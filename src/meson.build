@@ -1,6 +1,6 @@
-#cpp = meson.get_compiler('cpp')
 
 subdir('kaitai')
+subdir('DataHub')
 
 startool_sources = files(
 	'Casc.cpp', 
@@ -25,7 +25,6 @@ startool_sources = files(
 	'Breeze.cpp',
 	'Smacker.cpp',
 	'Converter.cpp',
-	'DataHub.cpp',
 	'Storage.cpp',
 	'PaletteImage.cpp',
 	'Color.cpp',
@@ -54,6 +53,7 @@ stargus_sources = files('stargus.cpp')
 executable('startool', 
 	startool_sources,
 	startool_kaitai_sources,
+	startool_datahub_sources,
 	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep],
 	install : true)
 

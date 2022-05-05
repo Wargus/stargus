@@ -4,8 +4,8 @@
  *      Author: Andreas Volz
  */
 
-#ifndef DATAHUB_H_
-#define DATAHUB_H_
+#ifndef DATAHUB_H
+#define DATAHUB_H
 
 // project
 #include "Logger.h"
@@ -168,4 +168,4 @@ private:
   static bool portdataCompare(int val1, int val2);
 };
 
-#endif /* DATAHUB_H_ */
+#endif /* DATAHUB_H */
