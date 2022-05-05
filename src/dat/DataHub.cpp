@@ -463,10 +463,6 @@ bool DataHub::convertUnitImages(json &unitsJson,
       uint8_t draw_function = unit.flingy().sprite().image().draw_function();
       uint8_t remapping_function = unit.flingy().sprite().image().remapping();
 
-      // somehow this function needs a temporary character to exchange
-      //replaceString("\\", "#", grp_str);
-      //replaceString("#", "\\\\", grp_str);
-
       string arcfile =  "unit\\" + unit.flingy().sprite().image().grp().name1;
 
       string grp_storage_file(arcfile);
