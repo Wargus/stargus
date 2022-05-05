@@ -45,12 +45,25 @@
 	        "arcfile": "tileset\\ashworld\\ofire.pcx"
 	    },
 	    {
+	        "name": "gfire",
+	        "arcfile": "tileset\\ashworld\\gfire.pcx"
+	    },
+	    {
 	        "name": "bfire",
 	        "arcfile": "tileset\\ashworld\\bfire.pcx"
+	    },
+	    {
+	        "name": "bexpl",
+	        "arcfile": "tileset\\ashworld\\bexpl.pcx"
 	    }
+
 	],
     "WPE":
 	[
+	    {
+	        "name": "ashworld",
+	        "arcfile": "tileset\\ashworld.wpe"
+	    },
 	    {
 	        "name": "install",
 	        "arcfile": "tileset\\install.wpe"

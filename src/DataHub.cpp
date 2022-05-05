@@ -5,10 +5,10 @@
  */
 
 // Local
-#include <Tbl.h>
 #include "DataHub.h"
 #include "Hurricane.h"
 #include "StringUtil.h"
+#include "Grp.h"
 
 // System
 #include <iostream>
@@ -428,15 +428,19 @@ bool DataHub::convert()
   return true;
 }
 
-bool DataHub::convertUnitImages(json &unitsJson)
+bool DataHub::convertUnitImages(json &unitsJson,
+                                std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
+                                std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap)
 {
   std::vector<uint8_t> *units_graphics_vec = units->graphics();
   std::vector<uint16_t> *flingy_sprites_vec = flingy->sprite();
   std::vector<uint16_t> *sprites_images_vec = sprites->image_file();
   std::vector<uint32_t> *images_grp_vec = images->grp_file();
   std::vector<uint8_t> *images_draw_function = images->draw_function();
+  std::vector<uint8_t> *images_remapping_function = images->remapping();
 
   bool result = true;
+  string data_prefix = "data.test";
 
   // units.dat
   for(auto &array : unitsJson)
@@ -444,6 +448,7 @@ bool DataHub::convertUnitImages(json &unitsJson)
     string unit_name = array.at("name");
     int unit_id = array.at("id");
     bool extractor = true;
+    bool save_result = true;
 
     try
     {
@@ -464,18 +469,68 @@ bool DataHub::convertUnitImages(json &unitsJson)
 
       uint16_t grp_id = images_grp_vec->at(image_id);
 
-      uint8_t draw_function = images_draw_function->at(grp_id);
+      uint8_t draw_function = images_draw_function->at(image_id);
+      uint8_t remapping_function = images_remapping_function->at(image_id);
 
       TblEntry tblEntry = images_tbl_vec.at(grp_id - 1); // spec says first index is -1
-      string grp_str = "unit\\" + tblEntry.name1;
+      string arcfile = "unit\\" + tblEntry.name1;
 
       // somehow this function needs a temporary character to exchange
-      replaceString("\\", "#", grp_str);
-      replaceString("#", "\\\\", grp_str);
+      //replaceString("\\", "#", grp_str);
+      //replaceString("#", "\\\\", grp_str);
 
-      cout << unit_name << " : " << grp_str << endl;
-      cout << "-> " << to_string(draw_function) << endl;
+      string grp_storage_file(arcfile);
+      replaceString("\\", "/", grp_storage_file);
+
+      // cut the file ending and lower case it
+      string grp_storage_file_base = to_lower(cutFileEnding(grp_storage_file, ".grp"));
+
+      cout << unit_name << " : " << arcfile << " => " << grp_storage_file_base << endl;
+      cout << "draw_function:" << to_string(draw_function) << endl;
+      cout << "remapping_function:" << to_string(remapping_function) << endl;
+
+      Grp grp(mHurricane, arcfile);
+      std::shared_ptr<Palette> pal;
+      std::shared_ptr<Palette2D> pal2D;
+
+      if(draw_function == 0)
+      {
+        pal = paletteMap.at("install");
+        grp.setPalette(pal);
+
+        save_result = grp.save(data_prefix + "/" + grp_storage_file_base + ".png");
+      }
+      else if(draw_function == 9)
+      {
+        if(remapping_function == 1) // ofire
+        {
+          pal2D = palette2DMap.at("ofire");
+          grp.setPalette2D(pal2D);
+        }
+        else if(remapping_function == 2) // gfire
+        {
+          pal2D = palette2DMap.at("gfire");
+          grp.setPalette2D(pal2D);
+        }
+        else if(remapping_function == 3) // bfire
+        {
+          pal2D = palette2DMap.at("bfire");
+          grp.setPalette2D(pal2D);
+        }
+        else if(remapping_function == 4) // bexpl
+        {
+          pal2D = palette2DMap.at("bexpl");
+          grp.setPalette2D(pal2D);
+        }
+
+        grp.setRGBA(true);
+        save_result = grp.save(data_prefix + "/" + grp_storage_file_base + ".png");
+      }
+
+      //grp.saveLUAConfig(graphics(string(c[u].File) + ".lua")); // FIXME: works only after save()
     }
+
+    printf("...%s\n", save_result ? "ok" : "nok");
   }
 
   return result;
@@ -528,6 +583,10 @@ void DataHub::printCSV()
 
   // mapdata.dat
   mapdata_mission_dir_vec = mapdata->mission_dir();
+
+  // images.dat
+  std::vector<uint8_t> *images_draw_function = images->draw_function();
+  std::vector<uint8_t> *images_remapping_function = images->remapping();
 
   // units.dat
   for (unsigned int i = 0; i < units_graphics_vec->size(); i++)
@@ -742,6 +801,12 @@ void DataHub::printCSV()
     csv_dat += "ref:name=" + tblEntry.name1;
 
     csv_dat += CSV_SEPARATOR;
+
+    csv_dat += "ref:draw_function=" + to_string(images_draw_function->at(i));
+
+    csv_dat += CSV_SEPARATOR;
+
+    csv_dat += "ref:remapping_function=" + to_string(images_remapping_function->at(i));
 
     csv_dat += CSV_ENDLINE;
   }

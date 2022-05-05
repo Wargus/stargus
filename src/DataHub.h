@@ -7,10 +7,13 @@
 #ifndef DATAHUB_H_
 #define DATAHUB_H_
 
-// Local
-#include "kaitai/kaitaistream.h"
+// project
 #include "Logger.h"
 #include "Converter.h"
+#include "Palette.h"
+#include "Palette2D.h"
+
+#include "kaitai/kaitaistream.h"
 #include "kaitai/units_dat.h"
 #include "kaitai/weapons_dat.h"
 #include "kaitai/flingy_dat.h"
@@ -22,10 +25,12 @@
 #include "kaitai/orders_dat.h"
 #include "kaitai/techdata_dat.h"
 #include "kaitai/mapdata_dat.h"
+#include "kaitai/Tbl.h"
 
 // System
 #include <memory>
 #include <nlohmann/json.hpp>
+#include <map>
 
 using json = nlohmann::json;
 
@@ -37,7 +42,11 @@ public:
 
   bool convert();
 
-  bool convertUnitImages(json &unitsJson);
+  void printCSV();
+
+  bool convertUnitImages(json &unitsJson,
+                         std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
+                         std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap);
 
 private:
   Logger mLogger;
@@ -157,8 +166,6 @@ private:
   int get_dat_energy_max() const;
 
   static bool portdataCompare(int val1, int val2);
-
-  void printCSV();
 };
 
 #endif /* DATAHUB_H_ */

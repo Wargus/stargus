@@ -36,7 +36,6 @@
 #include "PngExporter.h"
 #include "Smacker.h"
 #include "Palette.h"
-#include "Tbl.h"
 #include "endian.h"
 #include "startool.h"
 #include "Preferences.h"
@@ -280,10 +279,9 @@ int parseOptions(int argc, const char **argv)
 }
 
 
-map<string, shared_ptr<Palette>> paletteMap;
-map<string, shared_ptr<Palette2D>> palette2DMap;
-
-void loadPalettes(std::shared_ptr<Hurricane> hurricane)
+void loadPalettes(std::shared_ptr<Hurricane> hurricane,
+                  std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
+                  std::map<std::string, std::shared_ptr<Palette2D>> &palette2DMap)
 {
   // read in the json file
   std::ifstream json_file("dataset/palettes.json");
@@ -384,10 +382,6 @@ void testHook()
                               "/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
   //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
   //DataHub datahub(storm);
-
-  loadPalettes(storm);
-  exit(0);
-
 
   /// Image 1
   Pcx pcx1(storm, "game\\tfontgam.pcx");
@@ -508,6 +502,9 @@ int main(int argc, const char **argv)
   Storage data;
   data.setDataPath(preferences.getDestDir());
 
+  map<string, shared_ptr<Palette>> paletteMap;
+  map<string, shared_ptr<Palette2D>> palette2DMap;
+
   if (mpq)
   {
     Control *c = nullptr;
@@ -586,7 +583,7 @@ int main(int argc, const char **argv)
     for(auto &array : units_json)
     {
       string unit_name = array.at("name");
-      int unit_id = array.at("id");
+      //int unit_id = array.at("id");
       unitNames.push_back(unit_name);
       //cout << unit_name << endl;
 
@@ -594,11 +591,12 @@ int main(int argc, const char **argv)
       //std::shared_ptr<Palette> pal;
     }
 
-    datahub.convertUnitImages(units_json);
+    loadPalettes(sub_storm, paletteMap, palette2DMap);
 
-    //exit(1);
+    //datahub.convertUnitImages(units_json, paletteMap, palette2DMap);
+    //datahub.printCSV();
 
-    loadPalettes(sub_storm);
+    //exit(0);
 
     for (i = 0; i <= 1; ++i)
     {

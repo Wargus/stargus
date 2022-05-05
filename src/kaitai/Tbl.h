@@ -1,5 +1,5 @@
 /*
- * StatTxtTbl.h
+ * Tbl.h
  *
  *      Author: Andreas Volz
  */

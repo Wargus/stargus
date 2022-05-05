@@ -7,6 +7,7 @@
 // Local
 #include "Hurricane.h"
 #include "StringUtil.h"
+#include "Tbl.h"
 
 // System
 #include <iostream>
@@ -15,7 +16,7 @@
 #include <iconv.h>
 #include <string.h>
 #include <stdlib.h>
-#include <Tbl.h>
+
 using namespace std;
 
 // this is a very local debug print concept. But for this use case of sequence character debugging perfect...
