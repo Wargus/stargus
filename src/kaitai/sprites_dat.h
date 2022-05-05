@@ -25,7 +25,7 @@ public:
     ~sprites_dat_t();
 
 private:
-    std::vector<uint16_t>* m_image_file;
+    std::vector<uint16_t>* m_image;
     std::vector<uint8_t>* m_heath_bar;
     std::vector<uint8_t>* m_unknown2;
     std::vector<uint8_t>* m_is_visible;
@@ -41,7 +41,7 @@ public:
     /**
      * The images.dat entry corresponding to the sprites.dat entry [pointer to images.dat]
      */
-    std::vector<uint16_t>* image_file() const { return m_image_file; }
+    std::vector<uint16_t>* image() const { return m_image; }
 
     /**
      * The length of the Hit Points/Shields/Energy bar below the sprite, in pixels. The way the actual number of "boxes" is calculated is the following: substract 1 from the value, divide the result by 3 and round it down. Even though a sprite may actually USE less than 6 boxes, 6 boxes is the minimal amount that will be SHOWN in-game (just that some will not be functional). Values below 6 will all result in 1 box being USED.

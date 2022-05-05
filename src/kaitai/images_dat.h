@@ -25,7 +25,7 @@ public:
     ~images_dat_t();
 
 private:
-    std::vector<uint32_t>* m_grp_file;
+    std::vector<uint32_t>* m_grp;
     std::vector<uint8_t>* m_gfx_turns;
     std::vector<uint8_t>* m_clickable;
     std::vector<uint8_t>* m_use_full_iscript;
@@ -48,7 +48,7 @@ public:
     /**
      * Indicates the GRP graphics used by the current images.dat entry. If the value exceeds the number of lines in images.tbl, SC won't load. [pointer to images.tbl, -1 based]
      */
-    std::vector<uint32_t>* grp_file() const { return m_grp_file; }
+    std::vector<uint32_t>* grp() const { return m_grp; }
 
     /**
      * Determines if the game engine dynamically adds up to 16 frames and/or mirror them during animations, depending on what direction the sprite is facing. Unchecked, makes the sprite follow its Iscript animation with exactly the frame numbers contained in it.

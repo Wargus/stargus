@@ -1,6 +1,6 @@
 
 subdir('kaitai')
-subdir('DataHub')
+subdir('dat')
 
 startool_sources = files(
 	'Casc.cpp', 
@@ -53,7 +53,7 @@ stargus_sources = files('stargus.cpp')
 executable('startool', 
 	startool_sources,
 	startool_kaitai_sources,
-	startool_datahub_sources,
+	startool_dat_sources,
 	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep],
 	install : true)
 

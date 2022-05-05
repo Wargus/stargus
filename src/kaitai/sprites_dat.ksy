@@ -10,7 +10,7 @@ params:
     type: u2
 
 seq:
-  - id: image_file
+  - id: image
     type: u2
     repeat: expr
     repeat-expr: num_lines

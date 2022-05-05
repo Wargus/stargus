@@ -6,7 +6,7 @@ images_dat_t::images_dat_t(uint16_t p_num_lines, kaitai::kstream* p__io, kaitai:
     m__parent = p__parent;
     m__root = this;
     m_num_lines = p_num_lines;
-    m_grp_file = 0;
+    m_grp = 0;
     m_gfx_turns = 0;
     m_clickable = 0;
     m_use_full_iscript = 0;
@@ -30,11 +30,11 @@ images_dat_t::images_dat_t(uint16_t p_num_lines, kaitai::kstream* p__io, kaitai:
 }
 
 void images_dat_t::_read() {
-    int l_grp_file = num_lines();
-    m_grp_file = new std::vector<uint32_t>();
-    m_grp_file->reserve(l_grp_file);
-    for (int i = 0; i < l_grp_file; i++) {
-        m_grp_file->push_back(m__io->read_u4le());
+    int l_grp = num_lines();
+    m_grp = new std::vector<uint32_t>();
+    m_grp->reserve(l_grp);
+    for (int i = 0; i < l_grp; i++) {
+        m_grp->push_back(m__io->read_u4le());
     }
     int l_gfx_turns = num_lines();
     m_gfx_turns = new std::vector<uint8_t>();
@@ -121,8 +121,8 @@ images_dat_t::~images_dat_t() {
 }
 
 void images_dat_t::_clean_up() {
-    if (m_grp_file) {
-        delete m_grp_file; m_grp_file = 0;
+    if (m_grp) {
+        delete m_grp; m_grp = 0;
     }
     if (m_gfx_turns) {
         delete m_gfx_turns; m_gfx_turns = 0;

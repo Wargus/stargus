@@ -386,7 +386,7 @@ public:
     };
 
 private:
-    std::vector<uint8_t>* m_graphics;
+    std::vector<uint8_t>* m_flingy;
     std::vector<uint16_t>* m_subunit1;
     std::vector<uint16_t>* m_subunit2;
     std::vector<uint16_t>* m_infestation;
@@ -475,7 +475,7 @@ public:
     /**
      * Unit's main graphics object. [pointer to flingy.dat]
      */
-    std::vector<uint8_t>* graphics() const { return m_graphics; }
+    std::vector<uint8_t>* flingy() const { return m_flingy; }
 
     /**
      * Main subunit to the unit. Various turrets mostly. [pointer to units.dat]

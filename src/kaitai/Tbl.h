@@ -4,8 +4,8 @@
  *      Author: Andreas Volz
  */
 
-#ifndef STAT_TXT_TBL_H_
-#define STAT_TXT_TBL_H_
+#ifndef STAT_TXT_TBL_H
+#define STAT_TXT_TBL_H
 
 // Local
 #include "Logger.h"
@@ -65,4 +65,4 @@ private:
   Logger mLogger;
 };
 
-#endif /* STAT_TXT_TBL_H_ */
+#endif /* STAT_TXT_TBL_H */

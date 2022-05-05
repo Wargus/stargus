@@ -26,7 +26,7 @@ params:
     type: b1
 
 seq:
-  - id: graphics
+  - id: flingy
     type: u1
     repeat: expr
     repeat-expr: 228

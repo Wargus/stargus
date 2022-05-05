@@ -9,6 +9,7 @@
 #include "Hurricane.h"
 #include "StringUtil.h"
 #include "Grp.h"
+#include "Unit.h"
 
 // System
 #include <iostream>
@@ -302,7 +303,7 @@ int DataHub::get_dat_weapons_max() const
 
 int DataHub::get_dat_graphics_max() const
 {
-  std::vector<uint8_t> *units_graphics_vec = units->graphics();
+  std::vector<uint8_t> *units_graphics_vec = units->flingy();
   std::vector<uint32_t> *weapon_graphics_vec = weapons->graphics();
 
   int unit_graphics_max = *max_element(units_graphics_vec->begin(),
@@ -331,7 +332,7 @@ int DataHub::get_dat_sprites_max() const
 
 int DataHub::get_dat_images_max() const
 {
-  std::vector<uint16_t> *sprites_images_vec = sprites->image_file();
+  std::vector<uint16_t> *sprites_images_vec = sprites->image();
 
   int sprites_image_file_max = *max_element(sprites_images_vec->begin(),
                                sprites_images_vec->end());
@@ -421,6 +422,8 @@ int DataHub::get_dat_energy_max() const
 
 bool DataHub::convert()
 {
+
+
   //printCSV();
 
   //convertImages();
@@ -432,10 +435,10 @@ bool DataHub::convertUnitImages(json &unitsJson,
                                 std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
                                 std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap)
 {
-  std::vector<uint8_t> *units_graphics_vec = units->graphics();
+  std::vector<uint8_t> *units_graphics_vec = units->flingy();
   std::vector<uint16_t> *flingy_sprites_vec = flingy->sprite();
-  std::vector<uint16_t> *sprites_images_vec = sprites->image_file();
-  std::vector<uint32_t> *images_grp_vec = images->grp_file();
+  std::vector<uint16_t> *sprites_images_vec = sprites->image();
+  std::vector<uint32_t> *images_grp_vec = images->grp();
   std::vector<uint8_t> *images_draw_function = images->draw_function();
   std::vector<uint8_t> *images_remapping_function = images->remapping();
 
@@ -473,11 +476,16 @@ bool DataHub::convertUnitImages(json &unitsJson,
       uint8_t remapping_function = images_remapping_function->at(image_id);
 
       TblEntry tblEntry = images_tbl_vec.at(grp_id - 1); // spec says first index is -1
-      string arcfile = "unit\\" + tblEntry.name1;
+      //string arcfile = "unit\\" + tblEntry.name1;
 
       // somehow this function needs a temporary character to exchange
       //replaceString("\\", "#", grp_str);
       //replaceString("#", "\\\\", grp_str);
+
+      LOG4CXX_TRACE(mLogger, string("Unit(") + to_string(unit_id) + ")");
+      dat::Unit unit(*this, unit_id);
+
+      string arcfile =  "unit\\" + unit.flingy().sprite().image().grp().name1;
 
       string grp_storage_file(arcfile);
       replaceString("\\", "/", grp_storage_file);
@@ -543,8 +551,11 @@ void DataHub::printCSV()
   const string CSV_ENDLINE = "\n";
   const string CSV_SEPARATOR = ";";
 
+  std::vector<uint32_t> *sfxdata_sound_file_vec;
+  std::vector<uint32_t> *mapdata_mission_dir_vec;
+
   // units.dat
-  std::vector<uint8_t> *units_graphics_vec = units->graphics();
+  std::vector<uint8_t> *units_graphics_vec = units->flingy();
   std::vector<uint8_t> *units_ground_weapon_vec = units->ground_weapon();
   std::vector<units_dat_t::staredit_group_flags_type_t *> *se_group_flags_vec =
     units->staredit_group_flags();
@@ -563,9 +574,9 @@ void DataHub::printCSV()
   std::vector<uint16_t> *flingy_sprites_vec = flingy->sprite();
 
   // sprites.dat
-  std::vector<uint16_t> *sprites_images_vec = sprites->image_file();
+  std::vector<uint16_t> *sprites_images_vec = sprites->image();
 
-  std::vector<uint32_t> *images_grp_vec = images->grp_file();
+  std::vector<uint32_t> *images_grp_vec = images->grp();
 
   sfxdata_sound_file_vec = sfxdata->sound_file();
 

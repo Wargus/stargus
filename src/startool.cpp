@@ -33,6 +33,7 @@
  ----------------------------------------------------------------------------*/
 
 // project
+#include <dat/DataHub.h>
 #include "PngExporter.h"
 #include "Smacker.h"
 #include "Palette.h"
@@ -52,7 +53,6 @@
 #include "Dds.h"
 #include "Logger.h"
 #include "Breeze.h"
-#include "DataHub/DataHub.h"
 #include "Storage.h"
 #include "Wav.h"
 
@@ -381,7 +381,10 @@ void testHook()
   shared_ptr<Storm> storm = make_shared<Storm>(
                               "/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
   //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
-  //DataHub datahub(storm);
+  DataHub datahub(storm);
+
+  datahub.convert();
+  exit(0);
 
   /// Image 1
   Pcx pcx1(storm, "game\\tfontgam.pcx");
@@ -593,10 +596,10 @@ int main(int argc, const char **argv)
 
     loadPalettes(sub_storm, paletteMap, palette2DMap);
 
-    //datahub.convertUnitImages(units_json, paletteMap, palette2DMap);
+    datahub.convertUnitImages(units_json, paletteMap, palette2DMap);
     //datahub.printCSV();
 
-    exit(0);
+    //exit(0);
 
     for (i = 0; i <= 1; ++i)
     {

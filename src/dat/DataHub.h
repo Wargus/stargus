@@ -48,6 +48,26 @@ public:
                          std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
                          std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap);
 
+  // Kaitai parser objects
+  std::shared_ptr<units_dat_t> units;
+  std::shared_ptr<orders_dat_t> orders;
+  std::shared_ptr<weapons_dat_t> weapons;
+  std::shared_ptr<flingy_dat_t> flingy;
+  std::shared_ptr<sprites_dat_t> sprites;
+  std::shared_ptr<images_dat_t> images;
+  std::shared_ptr<sfxdata_dat_t> sfxdata;
+  std::shared_ptr<portdata_dat_t> portrait;
+  std::shared_ptr<upgrades_dat_t> upgrades;
+  std::shared_ptr<techdata_dat_t> techdata;
+  std::shared_ptr<mapdata_dat_t> mapdata;
+
+  // Tbl vectors
+  std::vector<TblEntry> stat_txt_vec;
+  std::vector<TblEntry> images_tbl_vec;
+  std::vector<TblEntry> sfxdata_tbl_vec;
+  std::vector<TblEntry> portdata_tbl_vec;
+  std::vector<TblEntry> mapdata_tbl_vec;
+
 private:
   Logger mLogger;
 
@@ -71,28 +91,6 @@ private:
   std::shared_ptr<kaitai::kstream> techdata_ks;
   std::shared_ptr<kaitai::kstream> mapdata_ks;
   std::shared_ptr<kaitai::kstream> mapdata_tbl_ks;
-
-  // Kaitai parser objects
-  std::shared_ptr<units_dat_t> units;
-  std::shared_ptr<orders_dat_t> orders;
-  std::shared_ptr<weapons_dat_t> weapons;
-  std::shared_ptr<flingy_dat_t> flingy;
-  std::shared_ptr<sprites_dat_t> sprites;
-  std::shared_ptr<images_dat_t> images;
-  std::shared_ptr<sfxdata_dat_t> sfxdata;
-  std::shared_ptr<portdata_dat_t> portrait;
-  std::shared_ptr<upgrades_dat_t> upgrades;
-  std::shared_ptr<techdata_dat_t> techdata;
-  std::shared_ptr<mapdata_dat_t> mapdata;
-
-  // Tbl vectors
-  std::vector<TblEntry> stat_txt_vec;
-  std::vector<TblEntry> images_tbl_vec;
-  std::vector<uint32_t> *sfxdata_sound_file_vec;
-  std::vector<TblEntry> sfxdata_tbl_vec;
-  std::vector<TblEntry> portdata_tbl_vec;
-  std::vector<uint32_t> *mapdata_mission_dir_vec;
-  std::vector<TblEntry> mapdata_tbl_vec;
 
   std::shared_ptr<kaitai::kstream> getKaitaiStream(const std::string &file);
 

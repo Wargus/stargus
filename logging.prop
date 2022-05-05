@@ -11,3 +11,5 @@ log4j.logger.startool.main=TRACE
 #log4j.logger.startool.Chk=TRACE
 #log4j.logger.startool.Font=TRACE
 #log4j.logger.startool.Pcx=TRACE
+log4j.logger.startool.dat=TRACE
+log4j.logger.startool.DataHub=TRACE

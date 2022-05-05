@@ -3,7 +3,7 @@ meta:
   endian: le
   bit-endian: le
   
-# There're some different images.dat.dat versions out there available.
+# There're some different images.dat versions out there available.
 # 'num_lines' == number of highest sprite.dat image_file value
 #
 params:
@@ -11,7 +11,7 @@ params:
     type: u2
     
 seq:
-  - id: grp_file
+  - id: grp
     type: u4
     repeat: expr
     repeat-expr: num_lines
