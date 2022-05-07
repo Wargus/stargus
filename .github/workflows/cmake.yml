@@ -1,0 +1,83 @@
+name: CMake
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-18.04, windows-2019]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: olegtarasov/get-tag@v2.1
+      id: tagName
+
+    - name: Install ubuntu dependencies
+      if: startsWith(matrix.os, 'ubuntu')
+      run:  |
+        sudo apt-get install -yy libpng-dev libgtk2.0-dev zlib1g-dev libstorm-dev libmagick++-6.q16-dev libcppunit-dev wget
+        wget https://github.com/Wargus/stratagus/archive/master.zip
+        unzip master.zip
+
+    - name: Install windows dependencies
+      if: startsWith(matrix.os, 'windows')
+      run:  |
+        if ($null -eq $env:GIT_TAG_NAME) { $env:RELEASE = 'master-builds' } else { $env:RELEASE = $env:GIT_TAG_NAME }
+        if ($null -eq $env:GIT_TAG_NAME) { $env:SRCTAG = 'master' } else { $env:SRCTAG = $env:GIT_TAG_NAME }
+        Invoke-WebRequest https://github.com/Wargus/win32-stratagus-dependencies/releases/download/$env:RELEASE/dependencies.zip -OutFile ${{github.workspace}}/dependencies.zip
+        Expand-Archive ${{github.workspace}}/dependencies.zip -DestinationPath ${{github.workspace}}/
+        mkdir build
+        Invoke-WebRequest https://github.com/Wargus/stratagus/releases/download/$env:RELEASE/compiled-binaries.zip -OutFile ${{github.workspace}}/compiled-binaries.zip
+        Expand-Archive compiled-binaries.zip -DestinationPath ${{github.workspace}}/build/
+        Invoke-WebRequest https://github.com/Wargus/stratagus/archive/$env:SRCTAG.zip -OutFile ${{github.workspace}}/stratagus-source.zip
+        Expand-Archive stratagus-source.zip -DestinationPath ${{github.workspace}}/
+        if ($null -ne $env:GIT_TAG_NAME) { move stratagus-$env:SRCTAG stratagus-master }
+
+    - name: Configure CMake on unix
+      if: startsWith(matrix.os, 'ubuntu')
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DSTRATAGUS=stratagus -DSTRATAGUS_INCLUDE_DIR=${{github.workspace}}/stratagus-master/gameheaders
+
+    - name: Configure CMake on Windows
+      if: startsWith(matrix.os, 'windows')
+      run: cmake -B ${{github.workspace}}/build -G "Visual Studio 16 2019" -T v141_xp -A win32 -DCMAKE_PREFIX_PATH="${{github.workspace}}\\dependencies" -DSTRATAGUS=stratagus -DSTRATAGUS_INCLUDE_DIR="${{github.workspace}}\\stratagus-master\\gameheaders" -DENABLE_NSIS=ON
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Store windows artifacts
+      uses: actions/upload-artifact@v3
+      if: startsWith(matrix.os, 'windows')
+      with:
+        name: Stargus
+        path: ${{github.workspace}}/build/Stargus-*.exe
+
+    - uses: softprops/action-gh-release@v1
+      name: Publish nightly
+      if: github.ref == 'refs/heads/master' && startsWith(matrix.os, 'windows')
+      with:
+        name: master-builds
+        body: 'Automatic builds from the master branch'
+        draft: false
+        prerelease: true
+        tag_name: master-builds
+        files: ${{github.workspace}}/build/stargus-*.exe
+
+    - uses: softprops/action-gh-release@v1
+      name: Publish release
+      if: startsWith(github.ref, 'refs/tags/') && startsWith(matrix.os, 'windows')
+      with:
+        name: ${{ steps.tagName.outputs.tag }}
+        body: 'Release'
+        draft: false
+        prerelease: false
+        files: ${{github.workspace}}/build/stargus-*.exe

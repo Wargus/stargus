@@ -9,7 +9,15 @@
 #include "Hurricane.h"
 
 // system
+#if __has_include(<filesystem>)
 #include <filesystem>
+namespace fs = std::filesystem;
+#elif __has_include(<experimental/filesystem>)
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#else
+error "Missing the <filesystem> header."
+#endif
 
 using namespace std;
 
@@ -52,7 +60,7 @@ bool Wav::convert(const std::string &arcfile,  Storage storage)
     result = false;
   }
 
-  std::filesystem::remove(wav_file);
+  fs::remove(wav_file);
 
   return result;
 }
