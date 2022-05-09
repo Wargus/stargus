@@ -23,6 +23,8 @@ public:
 
   Flingy flingy();
 
+  TblEntry name();
+
 private:
   Logger mLogger;
   DataHub &mDatahub;

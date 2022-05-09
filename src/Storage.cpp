@@ -85,6 +85,20 @@ std::string Storage::getFullPath() const
   return path;
 }
 
+std::string Storage::getRelativePath() const
+{
+  string path = getDataType();
+
+  if(!path.empty())
+  {
+    path += "/";
+  }
+
+  path += getFilename();
+
+  return path;
+}
+
 Storage Storage::operator()(std::string filename)
 {
   Storage storage(*this);

@@ -34,6 +34,8 @@ public:
 
   std::string getFullPath() const;
 
+  std::string getRelativePath() const;
+
   Storage operator()(std::string filename);
 
   //std::string operator+(const Storage& storage);

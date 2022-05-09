@@ -155,20 +155,9 @@ bool Grp::save(Storage filename)
   return result;
 }
 
-bool Grp::saveLUAConfig(Storage filename)
+Size Grp::getTileSize()
 {
-  bool result = true;
-
-  ofstream lua_file;
-  lua_file.open (filename.getFullPath() + ".lua");
-
-  string tile_size = filename.getFilename() + "_size = {" + to_string(mTilesize.getWidth())
-      + ", " + to_string(mTilesize.getHeight()) + "}";
-
-  lua_file << tile_size;
-  lua_file.close();
-
-  return result;
+  return mTilesize;
 }
 
 void Grp::setTransparent(int transparent)

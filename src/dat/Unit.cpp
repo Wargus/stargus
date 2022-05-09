@@ -34,4 +34,13 @@ Flingy Unit::flingy()
   return flingy;
 }
 
+TblEntry Unit::name()
+{
+  LOG4CXX_TRACE(mLogger, string("name(") + to_string(mId) + ")");
+
+  TblEntry tbl_entry = mDatahub.stat_txt_vec.at(mId);
+
+  return tbl_entry;
+}
+
 } /* namespace dat */

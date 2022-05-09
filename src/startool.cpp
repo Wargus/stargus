@@ -384,6 +384,7 @@ void testHook()
   DataHub datahub(storm);
 
   datahub.convert();
+
   exit(0);
 
   /// Image 1

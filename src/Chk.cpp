@@ -16,6 +16,7 @@
 #include <cstdint>
 #include <stdlib.h>
 #include <algorithm>
+#include <iostream>
 
 #ifdef DEBUG
 #define DebugLevel1(x) printf(x)
@@ -499,6 +500,11 @@ void Chk::loadFromBuffer(unsigned char *chkdata, int len)
           length -= 10;
 
           sprintf(buf, "%d", n);
+
+          string thingyName = mUnitNames[n];
+
+          cout << "Thingy: "  << thingyName << endl;
+
 //				    unit = (char **)hash_find(TheMap.Tileset->ItemsHash, buf);
 #ifdef DEBUG
 //				    if (!unit) {
@@ -809,96 +815,6 @@ void Chk::loadFromBuffer(unsigned char *chkdata, int len)
  ----------------------------------------------------------------------------*/
 
 #define VERSION "1.0"
-
-/*static const char *UnitNames[] =
-{
-  "unit-terran-marine", "unit-terran-ghost", "unit-terran-vulture",
-  "unit-terran-goliath", "Goliath-Turret",
-  "unit-terran-siege-tank-(Tank-Mode)", "Tank-Turret(Tank-Mode)",
-  "unit-terran-scv", "unit-terran-wraith", "unit-terran-science-vessel",
-  "Gui-Montang-(Firebat)", "unit-terran-dropship",
-  "unit-terran-battlecruiser", "Vulture-Spider-Mine", "Nuclear-Missile",
-  "unit-terran-civilian", "Sarah-Kerrigan-(Ghost)", "Alan-Schezar-(Goliath)",
-  "Alan-Schezar-Turret", "Jim-Raynor-(Vulture)", "Jim-Raynor-(Marine)",
-  "Tom-Kazansky-(Wraith)", "Magellan-(Science-Vessel)",
-  "Edmund-Duke-(Siege-Tank)", "Edmund-Duke-Turret",
-  "Edmund-Duke-(Siege-Mode)", "Edmund-Duke-Turret",
-  "Arcturus-Mengsk-(Battlecruiser)", "Hyperion-(Battlecruiser)",
-  "Norad-II-(Battlecruiser)", "unit-terran-siege-tank-(Siege-Mode)",
-  "Tank-Turret-(Siege-Mode)", "Firebat", "Scanner-Sweep", "unit-terran-medic",
-  "unit-zerg-larva", "unit-zerg-egg", "unit-zerg-zergling",
-  "unit-zerg-hydralisk", "unit-zerg-ultralisk", "unit-zerg-broodling",
-  "unit-zerg-drone", "unit-zerg-overlord", "unit-zerg-mutalisk",
-  "unit-zerg-guardian", "unit-zerg-queen", "unit-zerg-defiler",
-  "unit-zerg-scourge", "Torrarsque-(Ultralisk)", "Matriarch-(Queen)",
-  "Infested-Terran", "Infested-Kerrigan", "Unclean-One-(Defiler)",
-  "Hunter-Killer-(Hydralisk)", "Devouring-One-(Zergling)",
-  "Kukulza-(Mutalisk)", "Kukulza-(Guardian)", "Yggdrasill-(Overlord)",
-  "unit-terran-valkyrie-frigate", "Mutalisk/Guardian-Cocoon",
-  "unit-protoss-corsair", "unit-protoss-dark-templar(Unit)",
-  "unit-zerg-devourer", "unit-protoss-dark-archon", "unit-protoss-probe",
-  "unit-protoss-zealot", "unit-protoss-dragoon", "unit-protoss-high-templar",
-  "unit-protoss-archon", "unit-protoss-shuttle", "unit-protoss-scout",
-  "unit-protoss-arbiter", "unit-protoss-carrier", "unit-protoss-interceptor",
-  "Dark-Templar(Hero)", "Zeratul-(Dark-Templar)", "Tassadar/Zeratul-(Archon)",
-  "Fenix-(Zealot)", "Fenix-(Dragoon)", "Tassadar-(Templar)", "Mojo-(Scout)",
-  "Warbringer-(Reaver)", "Gantrithor-(Carrier)", "unit-protoss-reaver",
-  "unit-protoss-observer", "unit-protoss-scarab", "Danimoth-(Arbiter)",
-  "Aldaris-(Templar)", "Artanis-(Scout)", "Rhynadon-(Badlands-Critter)",
-  "Bengalaas-(Jungle-Critter)", "Unused---Was-Cargo-Ship",
-  "Unused---Was-Mercenary-Gunship", "Scantid-(Desert-Critter)",
-  "Kakaru-(Twilight-Critter)", "Ragnasaur-(Ashworld-Critter)",
-  "Ursadon-(Ice-World-Critter)", "Lurker-Egg", "Raszagal",
-  "Samir-Duran-(Ghost)", "Alexei-Stukov-(Ghost)", "Map-Revealer",
-  "Gerard-DuGalle", "unit-zerg-Lurker", "Infested-Duran", "Disruption-Web",
-  "unit-terran-command-center", "unit-terran-comsat-station",
-  "unit-terran-nuclear-silo", "unit-terran-supply-depot",
-  "unit-terran-refinery", "unit-terran-barracks", "unit-terran-academy",
-  "unit-terran-factory", "unit-terran-starport", "unit-terran-control-tower",
-  "unit-terran-science-facility", "unit-terran-covert-ops",
-  "unit-terran-physics-lab", "Unused---Was-Starbase?",
-  "unit-terran-machine-shop", "Unused---Was-Repair-Bay?",
-  "unit-terran-engineering-bay", "unit-terran-armory",
-  "unit-terran-missile-turret", "unit-terran-bunker", "Norad-II",
-  "Ion-Cannon", "Uraj-Crystal", "Khalis-Crystal", "Infested-Command-Center",
-  "unit-zerg-hatchery", "unit-zerg-lair", "unit-zerg-hive",
-  "unit-zerg-nydus-canal", "unit-zerg-hydralisk-den",
-  "unit-zerg-defiler-mound", "unit-zerg-greater-spire",
-  "unit-zerg-queens-nest", "unit-zerg-evolution-chamber",
-  "unit-zerg-ultralisk-cavern", "unit-zerg-spire", "unit-zerg-spawning-pool",
-  "unit-zerg-creep-colony", "unit-zerg-spore-colony", "Unused-Zerg-Building",
-  "unit-zerg-sunken-colony", "unit-zerg-overmind-(With-Shell)",
-  "unit-zerg-overmind", "unit-zerg-extractor", "Mature-Chrysalis",
-  "unit-zerg-cerebrate", "unit-zerg-cerebrate-daggoth",
-  "Unused-Zerg-Building-5", "unit-protoss-nexus",
-  "unit-protoss-robotics-facility", "unit-protoss-pylon",
-  "unit-protoss-assimilator", "Unused-Protoss-Building",
-  "unit-protoss-observatory", "unit-protoss-gateway",
-  "Unused-Protoss-Building", "unit-protoss-photon-cannon",
-  "unit-protoss-citadel-of-adun", "unit-protoss-cybernetics-core",
-  "unit-protoss-templar-archives", "unit-protoss-forge",
-  "unit-protoss-stargate", "Stasis-Cell/Prison", "unit-protoss-fleet-beacon",
-  "unit-protoss-arbiter-tribunal", "unit-protoss-robotics-support-bay",
-  "unit-protoss-shield-battery", "Khaydarin-Crystal-Formation",
-  "unit-protoss-temple", "Xel'Naga-Temple", "unit-minerals1",
-  "unit-minerals2", "unit-minerals3", "Cave", "Cave-in", "Cantina",
-  "Mining-Platform", "Independant-Command-Center", "Independant-Starport",
-  "Independant-Jump-Gate", "Ruins", "Kyadarin-Crystal-Formation",
-  "unit-vespene-geyser", "Warp-Gate", "PSI-Disruptor", "unit-zerg-marker",
-  "unit-terran-marker", "unit-protoss-marker", "unit-zerg-beacon",
-  "unit-terran-beacon", "unit-protoss-beacon", "unit-zerg-flag-beacon",
-  "unit-terran-flag-beacon", "unit-protoss-flag-beacon", "Power-Generator",
-  "Overmind-Cocoon", "Dark-Swarm", "Floor-Missile-Trap", "Floor-Hatch",
-  "Left-Upper-Level-Door", "Right-Upper-Level-Door", "Left-Pit-Door",
-  "Right-Pit-Door", "Floor-Gun-Trap", "Left-Wall-Missile-Trap",
-  "Left-Wall-Flame-Trap", "Right-Wall-Missile-Trap", "Right-Wall-Flame-Trap",
-  "Start-Location", "Flag", "Young-Chrysalis", "Psi-Emitter", "Data-Disc",
-  "Khaydarin-Crystal", "Mineral-Cluster-Type-1", "Mineral-Cluster-Type-2",
-  "unit-protoss-vespene-gas-orb-type-1",
-  "unit-protoss-vespene-gas-orb-type-2", "unit-zerg-vespene-gas-sac-type-1",
-  "unit-zerg-vespene-gas-sac-type-2", "unit-terran-vespene-gas-tank-type-1",
-  "unit-terran-vespene-gas-tank-type-2",
-};*/
 
 /*----------------------------------------------------------------------------
  --  Functions

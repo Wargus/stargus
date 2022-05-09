@@ -10,6 +10,9 @@
 #include "StringUtil.h"
 #include "Grp.h"
 #include "Unit.h"
+#include "LuaGen.h"
+#include "Preferences.h"
+#include "FileUtil.h"
 
 // System
 #include <iostream>
@@ -422,8 +425,6 @@ int DataHub::get_dat_energy_max() const
 
 bool DataHub::convert()
 {
-
-
   //printCSV();
 
   //convertImages();
@@ -436,7 +437,22 @@ bool DataHub::convertUnitImages(json &unitsJson,
                                 std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap)
 {
   bool result = true;
-  string data_prefix = "data.test";
+
+  Preferences &preferences = Preferences::getInstance();
+
+  Storage graphics;
+  graphics.setDataPath(preferences.getDestDir());
+  graphics.setDataType("graphics");
+
+  Storage luagen;
+  luagen.setDataPath(preferences.getDestDir());
+  luagen.setDataType("luagen");
+  CheckPath(luagen.getFullPath());
+
+  ofstream lua_include;
+  lua_include.open (luagen("luagen-units.lua").getFullPath());
+  string lua_include_str;
+
 
   // units.dat
   for(auto &array : unitsJson)
@@ -513,13 +529,39 @@ bool DataHub::convertUnitImages(json &unitsJson,
         grp.setPalette(pal);
       }
 
-      save_result = grp.save(data_prefix + "/" + grp_storage_file_base + ".png");
+      Storage png_file = graphics(grp_storage_file_base + ".png");
+      save_result = grp.save(png_file);
 
-      //grp.saveLUAConfig(data_prefix + "/" + grp_storage_file_base); // FIXME: works only after save()
+      Storage lua_file_store(luagen(unit_name + ".lua"));
+      cout << "lua: " << lua_file_store.getFullPath() << endl;
+
+      ofstream lua_file;
+      lua_file.open (lua_file_store.getFullPath());
+
+      Size tilesize = grp.getTileSize();
+
+      string unit_image(lg::assign(
+          "Image",
+          lg::table({lg::quote("file"), lg::quote(png_file.getRelativePath()), lg::quote("size") , lg::sizeTable(tilesize)}))
+          );
+
+      string unit_defintion = lg::DefineUnitType(unit_name,
+                                                {lg::assign("Name", lg::quote(unit.name().name1)), unit_image});
+
+
+      lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));
+
+      cout << unit_defintion << endl;
+
+      lua_file << unit_defintion;
+      lua_file.close();
     }
 
     printf("...%s\n", save_result ? "ok" : "nok");
   }
+
+  lua_include << lua_include_str;
+  lua_include.close();
 
   return result;
 }
