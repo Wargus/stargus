@@ -15,7 +15,6 @@ DefineAnimations("animations-zerg-lair", {
 
 
 DefineUnitType("unit-zerg-lair", { Name = "Zerg Lair",
-  Image = {"file", "zerg/units/lair.png", "size", {192, 160}},
   Shadow = {"file", "zerg/units/lair shadow.png", "size", {192, 160}},
   Animations = "animations-zerg-lair", Icon = "icon-zerg-lair",
   Costs = {"time", 255, "minerals", 300},

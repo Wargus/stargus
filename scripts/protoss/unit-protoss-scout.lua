@@ -17,7 +17,6 @@ DefineAnimations("animations-protoss-scout", {
 })
 
 DefineUnitType("unit-protoss-scout", { Name = "Scout",
-  Image = {"file", "protoss/units/scout.png", "size", {64, 64}},
   --Shadow = {"file", "terran/units/wraith.png", "size", {64, 64}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-protoss-scout", Icon = "icon-protoss-scout",

@@ -33,7 +33,6 @@ DefineConstruction("construction-protoss-stargate", {
 })
 
 DefineUnitType("unit-protoss-stargate", { Name = "Stargate",
-  Image = {"file", "protoss/units/stargate.png", "size", {128, 160}},
   Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-stargate", Icon = "icon-protoss-stargate",
   Costs = {"time", 30, "minerals", 100},

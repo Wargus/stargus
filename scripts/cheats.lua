@@ -58,6 +58,10 @@ function HandleCheats(str)
   elseif (str == "war aint what it used to be") then
     AddMessage("Cheat Enabled")
     SetFogOfWar(false)
+    
+  elseif (str == "on screen") then
+    SetFogOfWar(false)
+    RevealMap("explored")
 
   elseif (str == "operation cwal") then
     if (speedcheat) then

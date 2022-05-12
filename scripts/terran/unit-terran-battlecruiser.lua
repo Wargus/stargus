@@ -17,7 +17,6 @@ DefineAnimations("animations-terran-battlecruiser", {
 })
 
 DefineUnitType("unit-terran-battlecruiser", { Name = "Battlecruiser",
-  Image = {"file", "terran/units/battlecruiser.png", "size", {120, 120}},
   Shadow = {"offset", {0, 42}, "scale", 1},
   --Shadow = {"file", "terran/units/battlecruiser.png", "size", {120, 120}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,

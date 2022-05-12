@@ -14,7 +14,6 @@ DefineAnimations("animations-zerg-hatchery", {
 })
 
 DefineUnitType("unit-zerg-hatchery", { Name = "Zerg Hatchery",
-  Image = {"file", "zerg/units/hatchery.png", "size", {192, 160}},
   Shadow = {"file", "zerg/units/hatchery shadow.png", "size", {192, 160}},
   Animations = "animations-zerg-hatchery", Icon = "icon-zerg-hatchery",
   OnEachSecond = (function (self)

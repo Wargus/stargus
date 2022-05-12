@@ -51,7 +51,6 @@ DefineAnimations("animations-protoss-dragoon", {
 })
 
 DefineUnitType("unit-protoss-dragoon", { Name = "Dragoon",
-  Image = {"file", "protoss/units/dragoon.png", "size", {96,96}},
   Shadow = {"file", "protoss/units/pdrshad.png", "size", {96,96}, "offset", {0, 7}},
   Animations = "animations-protoss-dragoon", Icon = "icon-protoss-dragoon",
   Costs = {"time", 60, "minerals", 125, "gas", 25},

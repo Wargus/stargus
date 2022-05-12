@@ -34,7 +34,6 @@ DefineConstruction("construction-protoss-cybernetics-core", {
 })
 
 DefineUnitType("unit-protoss-cybernetics-core", { Name = "Cybernetics Core",
-  Image = {"file", "protoss/units/cybernetics core.png", "size", {96, 128}},
   Shadow = {"file", "protoss/units/pgcshad.png", "size", {96, 128}},
   Animations = "animations-protoss-cybernetics-core", Icon = "icon-protoss-cybernetics-core",
   Costs = {"time", 200, "minerals", 200},

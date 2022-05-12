@@ -17,7 +17,6 @@ DefineAnimations("animations-terran-wraith", {
 })
 
 DefineUnitType("unit-terran-wraith", { Name = "Wraith",
-  Image = {"file", "terran/units/wraith.png", "size", {64, 64}},
   Shadow = {"file", "terran/units/wraith.png", "size", {64, 64}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-terran-wraith", Icon = "icon-terran-wraith",

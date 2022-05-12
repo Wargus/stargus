@@ -13,7 +13,6 @@ DefineAnimations("animations-zerg-guardian-death", {
 
 
 DefineUnitType("unit-zerg-guardian-death", { Name = "Dead Guardian",
-  Image = {"file", "zerg/units/guardian death.png", "size", {96, 96}},
   Animations = "animations-zerg-guardian-death", Icon = "icon-zerg-guardian",
   NumDirections = 1,
   HitPoints = 255,

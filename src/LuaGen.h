@@ -9,6 +9,7 @@
 
 // project
 #include "Size.h"
+#include "Pos.h"
 
 // system
 #include <iostream>
@@ -41,7 +42,11 @@ namespace lg
   std::string DefineUnitType(const std::string &id, const std::string &unitTable);
   std::string DefineUnitType(const std::string &id, const std::initializer_list<std::string> &tableElements);
 
+  std::string CreateUnit(const std::string &id, int playerID, const Pos &pos);
+
   std::string sizeTable(const Size &s);
+
+  std::string posTable(const Pos &p);
 
 } /* namespace luagen */
 

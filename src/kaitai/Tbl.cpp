@@ -183,7 +183,7 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
         inBuf[0] = (char) entry_char;
         inBuf[1] = '\0';
         // TODO: valgrind detects this as problem:
-        char *utf8 = iconvISO2UTF8(inBuf);
+        char *utf8 = strdup(inBuf);//iconvISO2UTF8(inBuf); //strdup(inBuf);
         if (utf8)
         {
           dbg_printf("%s", utf8);

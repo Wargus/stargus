@@ -35,7 +35,6 @@ DefineAnimations("animations-protoss-reaver", {
 
 
 DefineUnitType("unit-protoss-reaver", { Name = "Reaver",
-  Image = {"file", "protoss/units/reaver.png", "size", {1428, 756}},
   Shadow = {"file", "protoss/units/pzeshad.png", "size", {128, 128}},
   Animations = "animations-protoss-reaver", Icon = "icon-protoss-reaver",
   Costs = {"time", 100, "minerals", 100},

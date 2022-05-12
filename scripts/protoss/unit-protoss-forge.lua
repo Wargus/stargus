@@ -34,7 +34,6 @@ DefineConstruction("construction-protoss-forge", {
 })
 
 DefineUnitType("unit-protoss-forge", { Name = "Forge",
-  Image = {"file", "protoss/units/forge.png", "size", {160, 128}},
   Shadow = {"file", "protoss/units/pgashad.png", "size", {128, 160}},
   Animations = "animations-protoss-forge", Icon = "icon-protoss-forge",
   Costs = {"time", 200, "minerals", 150},

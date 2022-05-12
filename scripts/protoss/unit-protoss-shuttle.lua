@@ -44,7 +44,6 @@ DefineAnimations("animations-protoss-shuttle", {
 
 
 DefineUnitType("unit-protoss-shuttle", { Name = "Shuttle",
-  Image = {"file", "protoss/units/shuttle.png", "size", {60, 60}},
   --Shadow = {"file", "zerg/units/overlord.png", "size", {84, 84}, "offset", {0, 42}},
   Animations = "animations-protoss-shuttle", Icon = "icon-protoss-shuttle",
   Costs = {"time", 45, "minerals", 100},

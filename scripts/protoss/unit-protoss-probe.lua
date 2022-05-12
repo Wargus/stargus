@@ -27,7 +27,6 @@ Still = {"frame 0", "wait 125",},
 
 
 DefineUnitType("unit-protoss-probe", { Name = "Probe",
-  Image = {"file", "protoss/units/probe.png", "size", {32, 32}},
   Shadow = {"file", "protoss/units/pteshad.png", "size", {32, 32}, "offset", {0, -7}},
   NumDirections = 32,
   DrawLevel = 19,

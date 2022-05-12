@@ -36,7 +36,6 @@ DefineConstruction("construction-terran-barracks", {
 })
 
 DefineUnitType("unit-terran-barracks", { Name = "Barracks",
-  Image = {"file", "terran/units/barracks.png", "size", {192, 160}},
   Shadow = {"file", "terran/units/barracks shadow.png", "size", {192, 160}},
   Animations = "animations-terran-barracks", Icon = "icon-terran-barracks",
   Costs = {"time", 200, "minerals", 150},

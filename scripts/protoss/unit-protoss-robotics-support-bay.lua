@@ -33,7 +33,6 @@ DefineConstruction("construction-protoss-robotics-support-bay", {
 })
 
 DefineUnitType("unit-protoss-robotics-support-bay", { Name = "Robotics Support Bay",
-  Image = {"file", "protoss/units/robotics support bay.png", "size", {160, 128}},
   Shadow = {"file", "protoss/units/pgcshad.png", "size", {96, 64}},
   Animations = "animations-protoss-robotics-support-bay", Icon = "icon-protoss-robotics-support-bay",
   Costs = {"time", 30, "minerals", 100},

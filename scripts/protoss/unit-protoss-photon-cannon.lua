@@ -631,7 +631,6 @@ DefineConstruction("construction-protoss-photon-cannon", {
 })
 
 DefineUnitType("unit-protoss-photon-cannon", { Name = "Photon Canon",
-  Image = {"file", "protoss/units/photon cannon.png", "size",  {64, 128}},
   Shadow = {"file", "protoss/units/ppbshad.png", "size",  {64, 128}},
   Animations = "animations-protoss-photon-cannon", Icon = "icon-terran-bunker",
   Costs = {"time", 200, "minerals", 150},

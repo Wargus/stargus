@@ -12,7 +12,6 @@ DefineAnimations("animations-zerg-nydus-canal", {
 
 
 DefineUnitType("unit-zerg-nydus-canal", { Name = "Nydus Canal",
-  Image = {"file", "zerg/units/nydus canal.png", "size",  {128, 128}},
   Shadow = {"file", "zerg/units/nydus canal shadow.png", "size",  {128, 128}},
   Animations = "animations-zerg-nydus-canal", Icon = "icon-zerg-nydus-canal",
   Costs = {"time", 200, "minerals", 100, "gas", 100},

@@ -34,7 +34,6 @@ DefineConstruction("construction-terran-academy", {
 })
 
 DefineUnitType("unit-terran-academy", { Name = "Academy",
-  Image = {"file", "terran/units/academy.png", "size",  {96, 128}},
   Shadow = {"file", "terran/units/academy shadow.png", "size",  {96, 128}},
   Animations = "animations-terran-academy", Icon = "icon-terran-academy",
   Costs = {"time", 200, "minerals", 150},

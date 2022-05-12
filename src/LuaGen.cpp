@@ -90,9 +90,19 @@ std::string DefineUnitType(const std::string &id, const std::initializer_list<st
   return DefineUnitType(id, table(tableElements));
 }
 
+std::string CreateUnit(const std::string &id, int playerID, const Pos &pos)
+{
+  return function("CreateUnit", {quote(id), to_string(playerID), posTable(pos)});
+}
+
 std::string sizeTable(const Size &s)
 {
   return table({to_string(s.getWidth()), to_string(s.getHeight())});
+}
+
+std::string posTable(const Pos &p)
+{
+  return table({to_string(p.getX()), to_string(p.getY())});
 }
 
 } /* namespace lg */

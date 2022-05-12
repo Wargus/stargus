@@ -16,7 +16,6 @@ DefineAnimations("animations-zerg-egg-death", {
 
 
 DefineUnitType("unit-zerg-egg-death", { Name = "Dead Egg",
-  Image = {"file", "zerg/units/egg death.png", "size", {96, 96}},
   Animations = "animations-zerg-egg-death", Icon = "icon-zerg-egg",
   NumDirections = 1,
   HitPoints = 255,

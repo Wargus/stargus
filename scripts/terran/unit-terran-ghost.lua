@@ -47,7 +47,6 @@ DefineAnimations("animations-terran-ghost", {
 })
 
 DefineUnitType("unit-terran-ghost", { Name = "Ghost",
-  Image = {"file", "terran/units/ghost.png", "size", {64, 64}},
   Shadow = {"file", "terran/units/ghost shadow.png", "size", {64, 64}},
   Animations = "animations-terran-ghost", Icon = "icon-terran-ghost",
   Costs = {"time", 60, "minerals", 25, "gas", 75},

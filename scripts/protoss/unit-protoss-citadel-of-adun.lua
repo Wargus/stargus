@@ -33,7 +33,6 @@ DefineConstruction("construction-protoss-citadel-of-adun", {
 })
 
 DefineUnitType("unit-protoss-citadel-of-adun", { Name = "Citadel of Adun",
-  Image = {"file", "protoss/units/citadel of adun.png", "size", {160, 128}},
   Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-citadel-of-adun", Icon = "icon-protoss-citadel-of-adun",
   Costs = {"time", 30, "minerals", 100},

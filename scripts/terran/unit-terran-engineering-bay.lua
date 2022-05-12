@@ -34,7 +34,6 @@ DefineConstruction("construction-terran-engineering-bay", {
 })
 
 DefineUnitType("unit-terran-engineering-bay", { Name = "Engineering Bay",
-  Image = {"file", "terran/units/engineering bay.png", "size",  {192, 160}},
   Shadow = {"file", "terran/units/engineering bay shadow.png", "size",  {192, 160}},
   Animations = "animations-terran-engineering-bay", Icon = "icon-terran-engineering-bay",
   Costs = {"time", 200, "minerals", 125},

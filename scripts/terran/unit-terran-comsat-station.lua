@@ -12,7 +12,6 @@ DefineAnimations("animations-terran-comsat-station", {
 })
 
 DefineUnitType("unit-terran-comsat-station", { Name = "Comsat Station",
-  Image = {"file", "terran/units/comsat station.png", "size", {128, 64}},
   Shadow = {"file", "terran/units/comsat station shadow.png", "size", {128, 64}},
   Animations = "animations-terran-comsat-station", Icon = "icon-terran-comsat-station",
   Costs = {"time", 75, "minerals", 50},

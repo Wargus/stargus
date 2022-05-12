@@ -31,7 +31,6 @@ DefineAnimations("animations-zerg-queen", {
 
 
 DefineUnitType("unit-zerg-queen", { Name = "Queen",
-  Image = {"file", "zerg/units/queen.png", "size", {128, 128}},
   Shadow = {"file", "zerg/units/queen.png", "size", {128, 128}, "offset", {0, 42}},
   Animations = "animations-zerg-queen", Icon = "icon-zerg-queen",
   Costs = {"time", 100, "minerals", 100, "gas", 100,},

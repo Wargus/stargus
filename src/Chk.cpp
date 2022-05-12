@@ -10,6 +10,7 @@
 #include "endian.h"
 #include "Hurricane.h"
 #include "FileUtil.h"
+#include "LuaGen.h"
 
 // System
 #include <cstring>
@@ -31,8 +32,10 @@
 using namespace std;
 
 static const char *TypeNames[] =
-    { "nobody", NULL, NULL, "rescue-passive", NULL, "computer", "person",
-        "neutral" };
+{
+  "nobody", NULL, NULL, "rescue-passive", NULL, "computer", "person",
+  "neutral"
+};
 static const char *RaceNames[] =
 { "zerg", "terran", "protoss", NULL, "neutral" };
 
@@ -487,9 +490,6 @@ void Chk::loadFromBuffer(unsigned char *chkdata, int len)
         while (length > 0)
         {
           int n;
-          char buf[30];
-//				    char **unit;
-//				    UnitType *type;
 
           n = ChkReadWord();    // unit number of the thingy
           ChkReadWord();    // x coordinate
@@ -499,11 +499,9 @@ void Chk::loadFromBuffer(unsigned char *chkdata, int len)
           ChkReadWord();   // flags
           length -= 10;
 
-          sprintf(buf, "%d", n);
-
           string thingyName = mUnitNames[n];
 
-          cout << "Thingy: "  << thingyName << endl;
+          //cout << "Thingy: "  << thingyName << endl;
 
 //				    unit = (char **)hash_find(TheMap.Tileset->ItemsHash, buf);
 #ifdef DEBUG
@@ -1088,10 +1086,14 @@ void Chk::SaveSMS(Storage storage)
   for (i = 0; i < (int) map->Units.size(); ++i)
   {
     string unitName = mUnitNames[map->Units[i].Type];
-    fprintf(fd, "unit= CreateUnit(\"%s\", %d, {%d, %d})\n",
-            unitName.c_str(), (map->Units[i]).Player, map->Units[i].X,
-            map->Units[i].Y);
 
+    string lua_str = lg::line(
+                       lg::assign(
+                         "unit",
+                         lg::CreateUnit(unitName, (map->Units[i]).Player, Pos(map->Units[i].X, map->Units[i].Y)))
+                     );
+
+    fprintf(fd, "%s", lua_str.c_str()); // TODO: c++ this
 
     if (map->Units[i].ResourceAmount)
     {

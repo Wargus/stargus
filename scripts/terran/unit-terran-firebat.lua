@@ -39,7 +39,6 @@ DefineAnimations("animations-terran-firebat", {
 })
 
 DefineUnitType("unit-terran-firebat", { Name = "Firebat",
-  Image = {"file", "terran/units/firebat.png", "size", {32, 32}},
   Shadow = {"file", "terran/units/firebat shadow.png", "size", {32, 32}},
   Animations = "animations-terran-firebat", Icon = "icon-terran-firebat",
   Costs = {"time", 60, "minerals", 50, "gas", 25},

@@ -653,7 +653,6 @@ DefineConstruction("construction-zerg-hatchery", {
 }) --]]
 
 DefineUnitType("unit-protoss-nexus", { Name = "Protoss Nexus",
-  Image = {"file", "protoss/units/nexus.png", "size", {192, 224}},
   Shadow = {"file", "protoss/units/pneshad.png", "size", {192, 224}},
   Animations = "animations-protoss-nexus", Icon = "icon-protoss-nexus",
   Costs = {"time", 255, "minerals", 400},

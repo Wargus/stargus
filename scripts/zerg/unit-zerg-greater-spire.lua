@@ -15,7 +15,6 @@ DefineAnimations("animations-zerg-greater-spire", {
 
 
 DefineUnitType("unit-zerg-greater-spire", { Name = "Spire",
-  Image = {"file", "zerg/units/greater spire.png", "size", {128, 192}},
   Shadow = {"file", "zerg/units/greater spire shadow.png", "size", {128, 192}},
   Animations = "animations-zerg-greater-spire", Icon = "icon-zerg-greater-spire",
   Costs = {"time", 200, "minerals", 75},

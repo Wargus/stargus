@@ -30,8 +30,32 @@
 #define SettingsNumUnitsMapDefault  SettingsPresetMapDefault
 #define SettingsNumUnits1    0
 
-typedef struct Unit
+class Unit
 {
+public:
+  Unit() :
+    X(0),
+    Y(0),
+    Type(0),
+    Properties(0),
+    ValidElements(0),
+    Player(0),
+    HitPointsPercent(0),
+    ShieldPointsPercent(0),
+    EnergyPointsPercent(0),
+    ResourceAmount(0),
+    NumUnitsIn(0),
+    StateFlags(0)
+  {
+
+  }
+
+  ~Unit()
+  {
+
+  }
+
+
   unsigned short X;
   unsigned short Y;
   unsigned short Type;
@@ -44,7 +68,7 @@ typedef struct Unit
   unsigned int ResourceAmount;
   unsigned short NumUnitsIn;
   unsigned char StateFlags;
-} Unit;
+};
 
 typedef struct Location
 {

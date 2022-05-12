@@ -34,7 +34,6 @@ DefineConstruction("construction-protoss-templar-archives", {
 })
 
 DefineUnitType("unit-protoss-templar-archives", { Name = "Templar Archives",
-  Image = {"file", "protoss/units/templar archives.png", "size", {160, 192}},
   Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-stargate", Icon = "icon-protoss-templar-archives",
   Costs = {"time", 30, "minerals", 100},

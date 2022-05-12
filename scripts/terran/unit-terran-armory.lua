@@ -34,7 +34,6 @@ DefineConstruction("construction-terran-armory", {
 })
 
 DefineUnitType("unit-terran-armory", { Name = "Armory",
-  Image = {"file", "terran/units/armory.png", "size", {160, 128}},
   --Shadow = {"offset", {-7, -7}, "scale", 1},
   Shadow = {"file", "terran/units/armory shadow.png", "size", {160, 128}},
   Animations = "animations-terran-armory", Icon = "icon-terran-armory",

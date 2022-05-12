@@ -13,7 +13,6 @@ DefineAnimations("animations-zerg-creep-colony", {
 
 
 DefineUnitType("unit-zerg-creep-colony", { Name = "Creep Colony",
-  Image = {"file", "zerg/units/creep colony.png", "size",  {128, 64}},
   Shadow = {"file", "zerg/units/creep colony shadow.png", "size",  {128, 96}},
   Animations = "animations-zerg-creep-colony", Icon = "icon-zerg-creep-colony",
   Costs = {"time", 200, "minerals", 75},

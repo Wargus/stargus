@@ -75,7 +75,6 @@ DefineAnimations("animations-zerg-ultralisk", {
 })
 
 DefineUnitType("unit-zerg-ultralisk", { Name = "Ultralisk",
-  Image = {"file", "zerg/units/ultralisk.png", "size", {128, 128}},
   Shadow = {"file", "zerg/units/ultralisk shadow.png", "size", {128, 128}, "offset", {0, 7}},
   Animations = "animations-zerg-ultralisk", Icon = "icon-zerg-ultralisk",
   Costs = {"time", 200, "minerals", 200, "gas", 200},

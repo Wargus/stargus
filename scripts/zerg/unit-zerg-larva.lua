@@ -35,7 +35,6 @@ DefineAnimations("animations-zerg-larva", {
 })
 
 DefineUnitType("unit-zerg-larva", { Name = "Larva",
-  Image = {"file", "zerg/units/larva.png", "size", {36, 36}},
   NumDirections = 17,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {31, 31},

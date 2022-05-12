@@ -33,7 +33,6 @@ DefineConstruction("construction-protoss-observatory", {
 })
 
 DefineUnitType("unit-protoss-observatory", { Name = "Observatory",
-  Image = {"file", "protoss/units/observatory.png", "size", {96, 128}},
   Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-observatory", Icon = "icon-protoss-observatory",
   Costs = {"time", 30, "minerals", 100},
