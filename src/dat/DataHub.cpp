@@ -432,7 +432,7 @@ bool DataHub::convert()
   return true;
 }
 
-bool DataHub::convertUnitImages(json &unitsJson,
+bool DataHub::convertUnits(json &unitsJson,
                                 std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
                                 std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap)
 {
@@ -545,9 +545,11 @@ bool DataHub::convertUnitImages(json &unitsJson,
           lg::table({lg::quote("file"), lg::quote(png_file.getRelativePath()), lg::quote("size") , lg::sizeTable(tilesize)}))
           );
 
-      string unit_defintion = lg::DefineUnitType(unit_name,
-                                                {lg::assign("Name", lg::quote(unit.name().name1)), unit_image});
+      string unit_hitpoints = lg::assign("HitPoints", to_string(unit.hitpoints()));
+      string unit_name_translated = lg::assign("Name", lg::quote(unit.name().name1));
 
+      string unit_defintion = lg::DefineUnitType(unit_name,
+                                                {unit_name_translated, unit_image, unit_hitpoints});
 
       lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));
 

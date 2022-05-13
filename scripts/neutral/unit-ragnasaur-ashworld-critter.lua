@@ -9,7 +9,6 @@ DefineUnitType("unit-critter-ragnasaur", { Name = "Ragnasaur (Ashworld Critter)"
   Animations = "animations-ragnasaur-ashworld-critter", Icon = "icon-ragnasaur-ashworld-critter",
   NeutralMinimapColor = {0, 228, 252},
   Speed = 0,
-  HitPoints = 20,
   DrawLevel = 5,
   TileSize = {2, 1}, BoxSize = {63, 31},
   SightRange = 0,

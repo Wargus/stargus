@@ -25,6 +25,8 @@ public:
 
   TblEntry name();
 
+  uint32_t hitpoints();
+
 private:
   Logger mLogger;
   DataHub &mDatahub;

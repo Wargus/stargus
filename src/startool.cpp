@@ -597,7 +597,7 @@ int main(int argc, const char **argv)
 
     loadPalettes(sub_storm, paletteMap, palette2DMap);
 
-    datahub.convertUnitImages(units_json, paletteMap, palette2DMap);
+    datahub.convertUnits(units_json, paletteMap, palette2DMap);
     //datahub.printCSV();
 
     //exit(0);

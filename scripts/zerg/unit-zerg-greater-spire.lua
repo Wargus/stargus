@@ -22,7 +22,6 @@ DefineUnitType("unit-zerg-greater-spire", { Name = "Spire",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",
   Speed = 0,
-  HitPoints = 400,
   DrawLevel = 30,
   TileSize = {2, 2}, BoxSize = {63, 63},--FIXME:wrong box size
   SightRange = 4,

@@ -22,7 +22,6 @@ DefineUnitType("unit-zerg-lair", { Name = "Zerg Lair",
   RepairCosts = {"minerals", 1, "gas", 0},
   Construction = "construction-zerg",
   Speed = 0,
-  HitPoints = 1500,
   DrawLevel = 30,
   TileSize = {4, 3}, BoxSize = {126, 95},--FIXME: wrong size
   SightRange = 1,

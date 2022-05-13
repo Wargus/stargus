@@ -40,7 +40,6 @@ DefineUnitType("unit-protoss-robotics-support-bay", { Name = "Robotics Support B
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-robotics-support-bay",
   Speed = 0,
-  HitPoints = 1000,
   DrawLevel = 50,
   TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 1,

@@ -693,6 +693,7 @@ void units_dat_t::staredit_group_flags_type_t::_clean_up() {
 units_dat_t::hit_points_type_t::hit_points_type_t(kaitai::kstream* p__io, units_dat_t* p__parent, units_dat_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
+    f_hitpoints = false;
 
     try {
         _read();
@@ -703,8 +704,8 @@ units_dat_t::hit_points_type_t::hit_points_type_t(kaitai::kstream* p__io, units_
 }
 
 void units_dat_t::hit_points_type_t::_read() {
-    m_hitpoints = m__io->read_u2be();
-    m_unused = m__io->read_u2be();
+    m_hitpoints0 = m__io->read_u2be();
+    m_hitpoints1 = m__io->read_u2be();
 }
 
 units_dat_t::hit_points_type_t::~hit_points_type_t() {
@@ -712,6 +713,14 @@ units_dat_t::hit_points_type_t::~hit_points_type_t() {
 }
 
 void units_dat_t::hit_points_type_t::_clean_up() {
+}
+
+int32_t units_dat_t::hit_points_type_t::hitpoints() {
+    if (f_hitpoints)
+        return m_hitpoints;
+    m_hitpoints = (hitpoints0() + hitpoints1());
+    f_hitpoints = true;
+    return m_hitpoints;
 }
 
 units_dat_t::addon_position_type_t::addon_position_type_t(kaitai::kstream* p__io, units_dat_t* p__parent, units_dat_t* p__root) : kaitai::kstruct(p__io) {

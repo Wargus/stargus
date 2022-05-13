@@ -36,7 +36,6 @@ DefineUnitType("unit-zerg-queen", { Name = "Queen",
   Costs = {"time", 100, "minerals", 100, "gas", 100,},
   RepairHp = 1,
   Speed = 4, NumDirections = 32,
-  HitPoints = 120,
   DrawLevel = 45,
   TileSize = {1, 1}, BoxSize = {50, 50},--FIXME: wrong box size
   SightRange = 7,

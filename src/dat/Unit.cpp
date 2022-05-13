@@ -16,12 +16,10 @@ Unit::Unit(DataHub &datahub, uint8_t id) :
   mDatahub(datahub),
   mId(id)
 {
-
 }
 
 Unit::~Unit()
 {
-
 }
 
 Flingy Unit::flingy()
@@ -41,6 +39,15 @@ TblEntry Unit::name()
   TblEntry tbl_entry = mDatahub.stat_txt_vec.at(mId);
 
   return tbl_entry;
+}
+
+uint32_t Unit::hitpoints()
+{
+  uint32_t hitpoints = mDatahub.units->hit_points()->at(mId)->hitpoints();
+
+  LOG4CXX_TRACE(mLogger, string("hitpoints(") + to_string(hitpoints) + ")");
+
+  return hitpoints;
 }
 
 } /* namespace dat */

@@ -44,7 +44,7 @@ public:
 
   void printCSV();
 
-  bool convertUnitImages(json &unitsJson,
+  bool convertUnits(json &unitsJson,
                          std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
                          std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap);
 
