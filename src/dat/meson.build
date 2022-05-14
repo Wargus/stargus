@@ -3,5 +3,6 @@ startool_dat_sources = files(
 	'Unit.cpp',
 	'Flingy.cpp',
 	'Sprite.cpp',
-	'Image.cpp'
+	'Image.cpp',
+	'Tbl.cpp'
 )

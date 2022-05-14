@@ -12,6 +12,7 @@
 #include "Converter.h"
 #include "Palette.h"
 #include "Palette2D.h"
+#include "Tbl.h"
 
 #include "kaitai/kaitaistream.h"
 #include "kaitai/units_dat.h"
@@ -25,7 +26,6 @@
 #include "kaitai/orders_dat.h"
 #include "kaitai/techdata_dat.h"
 #include "kaitai/mapdata_dat.h"
-#include "kaitai/Tbl.h"
 
 // System
 #include <memory>

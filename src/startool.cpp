@@ -383,13 +383,14 @@ void testHook()
   //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
   DataHub datahub(storm);
 
-  datahub.convert();
+  //datahub.convert();
 
-  exit(0);
+  //exit(0);
 
   /// Image 1
-  Pcx pcx1(storm, "game\\tfontgam.pcx");
+  Pcx pcx1(storm, "game\\tunit.pcx");
   pcx1.savePNG("/tmp/tunit.png");
+  pcx1.mapIndexPalette(8, 8, 2);
   std::shared_ptr<Palette> pal = pcx1.getPalette();
   pal->createDataChunk()->write("/tmp/tunit.pal");
 
@@ -420,14 +421,14 @@ void testHook()
   terrainPalette->createDataChunk()->write("/tmp/terrainPalette.pal");
 
   //string grp_file = "unit\\protoss\\pbaGlow.grp";
-  string grp_file = "unit\\thingy\\flamer.grp";
+  string grp_file = "unit\\terran\\marine.grp";
   Grp grp(storm, grp_file);
-  grp.setPalette2D(pal2D_3);
+  grp.setPalette(pal);
   //grp.setPalette(terrainPalette);
   //grp.setTransparent(200);
-  grp.setRGBA(true);
+  //grp.setRGBA(true);
 
-  grp.save("/tmp/flamer.png");
+  grp.save("/tmp/marine.png");
 
   cout << "end testHook()" << endl;
   exit(0);

@@ -529,6 +529,8 @@ bool DataHub::convertUnits(json &unitsJson,
         grp.setPalette(pal);
       }
 
+      // TODO: possible optimization possible as some units point toward the same grp
+      // could be checked before if the png is yet extracted in the same run
       Storage png_file = graphics(grp_storage_file_base + ".png");
       save_result = grp.save(png_file);
 

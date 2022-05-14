@@ -94,7 +94,7 @@ void Pcx::mapIndexPalette(int length, int start, int index)
   }
 }
 
-void Pcx::mapIndexPaletteTypeIcon(int index)
+/*void Pcx::mapIndexPaletteTypeIcon(int index)
 {
   mapIndexPalette(16, 0, index);
 }
@@ -102,7 +102,7 @@ void Pcx::mapIndexPaletteTypeIcon(int index)
 void Pcx::mapIndexPaletteTypeSelect(int index)
 {
   mapIndexPalette(8, 1, index);
-}
+}*/
 
 std::shared_ptr<Palette2D> Pcx::map2DPalette()
 {
