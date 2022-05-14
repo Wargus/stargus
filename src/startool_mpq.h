@@ -195,23 +195,18 @@ Control Todo[] = {
 
 	// Tilesets
 	{T,0,"ashworld/ashworld","tileset\\AshWorld" __4},
-	{R,0,"ashworld/ashworld","tileset\\AshWorld" __4},
 	{G,0,"tilesets/ashworld/creep","tileset\\AshWorld.grp",1 __3},
 
 	{T,0,"badlands/badlands","tileset\\badlands" __4},
-	{R,0,"badlands/badlands","tileset\\badlands" __4},
 	{G,0,"tilesets/badlands/creep","tileset\\badlands.grp",1 __3},
 
 	{T,0,"installation/installation","tileset\\Install" __4},
-	{R,0,"installation/installation","tileset\\install" __4},
 	{G,0,"tilesets/installation/creep","tileset\\Install.grp",1 __3},
 
 	{T,0,"jungle/jungle","tileset\\Jungle" __4},
-	{R,0,"jungle/jungle","tileset\\Jungle" __4},
 	{G,0,"tilesets/jungle/creep","tileset\\Jungle.grp",1 __3},
 
 	{T,0,"platform/platform","tileset\\platform" __4},
-	{R,0,"platform/platform","tileset\\platform" __4},
 	{G,0,"tilesets/platform/creep","tileset\\platform.grp",1 __3},
 
 	// Neutral

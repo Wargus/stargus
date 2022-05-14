@@ -6,7 +6,6 @@
 
 // Local
 #include "DataHub.h"
-#include "Hurricane.h"
 #include "StringUtil.h"
 #include "Grp.h"
 #include "Unit.h"
@@ -23,7 +22,7 @@
 using namespace std;
 
 DataHub::DataHub(std::shared_ptr<Hurricane> hurricane) :
-  Converter(hurricane), mLogger("startool.DataHub")
+  KaitaiConverter(hurricane), mLogger("startool.DataHub")
 {
   bool has_broodwar_flag = false;
   bool has_max_air_hits = false;
@@ -64,27 +63,6 @@ DataHub::DataHub(std::shared_ptr<Hurricane> hurricane) :
 
 DataHub::~DataHub()
 {
-}
-
-std::shared_ptr<kaitai::kstream> DataHub::getKaitaiStream(
-  const std::string &file)
-{
-  std::shared_ptr<DataChunk> data = mHurricane->extractDataChunk(file);
-  if (data)
-  {
-    //std::ifstream ifs(arcfile, std::ifstream::binary);
-    //kaitai::kstream ks(&ifs);
-
-    // TODO: for now just create from complete string instead of istream. Maybe change the complete
-    // reader to stream based concept...
-    std::string str(reinterpret_cast<char const *>(data->getDataPointer()),
-                    data->getSize());
-    std::shared_ptr<kaitai::kstream> ks = make_shared<kaitai::kstream>(str);
-    return ks;
-  }
-
-  // TODO: hm, better create an exception
-  return nullptr;
 }
 
 void DataHub::init_units_dat(bool has_broodwar_flag, bool has_max_air_hits,

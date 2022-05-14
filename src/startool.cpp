@@ -634,15 +634,7 @@ int main(int argc, const char **argv)
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
-        /*case R: // FIXME: support Palette class or remove!
-        {
-          printf("ConvertRgb: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-          Tileset terrain(storm);
-          case_func = terrain.ConvertRgb(c[u].ArcFile, c[u].File);
-          printf("...%s\n", case_func ? "ok" : "nok");
-        }
-        break;*/
-        case T:  // WORKS!
+        case T: // WORKS!
         {
           printf("ConvertTileset: %s, %s", c[u].File, c[u].ArcFile);
           Tileset terrain(storm);

@@ -40,7 +40,9 @@ static const char *RaceNames[] =
 { "zerg", "terran", "protoss", NULL, "neutral" };
 
 Chk::Chk(std::shared_ptr<Hurricane> hurricane) :
-  mLogger("startool.Chk"), map(new WorldMap()), mHurricane(hurricane)
+  Converter(hurricane),
+  mLogger("startool.Chk"),
+  map(new WorldMap())
 {
 
 }

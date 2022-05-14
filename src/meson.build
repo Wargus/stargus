@@ -25,6 +25,7 @@ startool_sources = files(
 	'Breeze.cpp',
 	'Smacker.cpp',
 	'Converter.cpp',
+	'KaitaiConverter.cpp',
 	'Storage.cpp',
 	'PaletteImage.cpp',
 	'Color.cpp',

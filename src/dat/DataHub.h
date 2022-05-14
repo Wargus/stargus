@@ -9,12 +9,11 @@
 
 // project
 #include "Logger.h"
-#include "Converter.h"
+#include "KaitaiConverter.h"
 #include "Palette.h"
 #include "Palette2D.h"
 #include "Tbl.h"
 
-#include "kaitai/kaitaistream.h"
 #include "kaitai/units_dat.h"
 #include "kaitai/weapons_dat.h"
 #include "kaitai/flingy_dat.h"
@@ -28,13 +27,12 @@
 #include "kaitai/mapdata_dat.h"
 
 // System
-#include <memory>
 #include <nlohmann/json.hpp>
 #include <map>
 
 using json = nlohmann::json;
 
-class DataHub: public Converter
+class DataHub : public KaitaiConverter
 {
 public:
   DataHub(std::shared_ptr<Hurricane> hurricane);
@@ -91,8 +89,6 @@ private:
   std::shared_ptr<kaitai::kstream> techdata_ks;
   std::shared_ptr<kaitai::kstream> mapdata_ks;
   std::shared_ptr<kaitai::kstream> mapdata_tbl_ks;
-
-  std::shared_ptr<kaitai::kstream> getKaitaiStream(const std::string &file);
 
   void initKaitaiStreams();
 

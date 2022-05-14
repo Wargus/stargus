@@ -43,7 +43,7 @@ using namespace std;
  */
 
 Tileset::Tileset(std::shared_ptr<Hurricane> hurricane) :
-  mHurricane(hurricane)
+  KaitaiConverter(hurricane)
 {
 
 }
@@ -51,75 +51,6 @@ Tileset::Tileset(std::shared_ptr<Hurricane> hurricane) :
 Tileset::~Tileset()
 {
 
-}
-
-/**
- **  Convert rgb to my format.
- */
-bool Tileset::ConvertRgb(const std::string &arcfile, const std::string &file)
-{
-  char buf[8192] =
-  { '\0' };
-  FILE *f;
-  int i;
-
-  bool result = true;
-  Preferences &preferences = Preferences::getInstance();
-
-  sprintf(buf, "%s.wpe", arcfile.c_str());
-
-  shared_ptr<DataChunk> data = mHurricane->extractDataChunk(buf);
-  unsigned char *palp = data->getDataPointer();
-  if (data)
-  {
-
-    // Hint: ConvertPaletteRGBXtoRGB() changes the data content direct!
-    //ConvertPaletteRGBXtoRGB(palp);
-    shared_ptr<Palette> palette = make_shared<Palette>(data);
-
-    //
-    //  Generate RGB File.
-    //
-    sprintf(buf, "%s/%s/%s.rgb", preferences.getDestDir().c_str(), TILESET_PATH,
-            file.c_str());
-    CheckPath(buf);
-
-    // write .rgb
-    data->write(buf);
-
-    //
-    //  Generate GIMP palette
-    //
-    sprintf(buf, "%s/%s/%s.gimp", preferences.getDestDir().c_str(),
-            TILESET_PATH, file.c_str());
-    CheckPath(buf);
-    f = fopen(buf, "wb");
-    if (!f)
-    {
-      perror("");
-      printf("Can't open %s\n", buf);
-      // TODO: more flexible error handling than calling GUI dialog from conversation routine needed
-      //error("Memory error", "Could not allocate enough memory to read archive.");
-    }
-    // TODO: check that correct string is printed with C++
-    //fprintf(f, "GIMP Palette\n# Stratagus %c%s -- GIMP Palette file\n",
-    //toupper(*file), file + 1);
-
-    for (i = 0; i < 256; ++i)
-    {
-      // FIXME: insert nice names!
-      fprintf(f, "%d %d %d\t#%d\n", palp[i * 3], palp[i * 3 + 1],
-              palp[i * 3 + 2], i);
-    }
-
-    fclose(f);
-  }
-  else
-  {
-    result = false;
-  }
-
-  return result;
 }
 
 /**

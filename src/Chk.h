@@ -11,6 +11,7 @@
 #include "WorldMap.h"
 #include "Logger.h"
 #include "Storage.h"
+#include "Converter.h"
 
 // System
 #include <memory>
@@ -24,7 +25,7 @@ class Hurricane;
  * The generated files describe the map, units, tiles, triggers - simply the map behavior
  *
  */
-class Chk
+class Chk : public Converter
 {
 public:
   Chk(std::shared_ptr<Hurricane> hurricane);
@@ -54,7 +55,6 @@ private:
 
   Logger mLogger;
   WorldMap *map;
-  std::shared_ptr<Hurricane> mHurricane;
   std::vector<std::string> mUnitNames;
 };
 

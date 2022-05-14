@@ -4,8 +4,8 @@
  *      Author: Andreas Volz
  */
 
-#ifndef TILESET_H_
-#define TILESET_H_
+#ifndef TILESET_H
+#define TILESET_H
 
 #ifdef _MSC_VER
 #define UNUSED
@@ -18,22 +18,17 @@
 #include <memory>
 
 // Local
-#include <Palette.h>
+#include "Palette.h"
+#include "KaitaiConverter.h"
 
 // Forward declarations
 class Hurricane;
 
-class Tileset
+class Tileset : public KaitaiConverter
 {
 public:
   Tileset(std::shared_ptr<Hurricane> hurricane);
   virtual ~Tileset();
-
-  /**
-   * Not sure, but it seems this function generates some Gimp palette.
-   * Maybe there is an external Gimp workflow...
-   */
-  bool ConvertRgb(const std::string &arcfile, const std::string &file);
 
   bool ConvertTileset(const std::string &arcfile, const std::string &file);
 
@@ -46,8 +41,6 @@ private:
 
   void DecodeMiniTile(unsigned char *image, int ix, int iy, int iadd,
       unsigned char *mini, int index, int flipx, int flipy);
-
-  std::shared_ptr<Hurricane> mHurricane;
 };
 
-#endif /* TILESET_H_ */
+#endif /* TILESET_H */
