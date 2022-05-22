@@ -4,14 +4,26 @@ meta:
   bit-endian: le
   
 seq:
-  - id: id
-    type: tile
+  - id: elements
+    type: megatile_type
     repeat: eos
 
 types:
-  tile:
+  megatile_type:
     seq:
-      - id: flags
-        type: u2
+      - id: graphic_ref
+        type: graphic_ref_type
         repeat: expr
         repeat-expr: 16
+        
+  graphic_ref_type:
+    seq:
+      - id: vr4_ref_raw
+        type: b15
+      - id: horizontal_flip
+        type: b1
+        
+    instances:
+      vr4_ref:
+        value: vr4_ref_raw >> 1
+    

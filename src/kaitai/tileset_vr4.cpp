@@ -5,7 +5,7 @@
 tileset_vr4_t::tileset_vr4_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, tileset_vr4_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = this;
-    m_pixel_data = 0;
+    m_elements = 0;
 
     try {
         _read();
@@ -16,11 +16,11 @@ tileset_vr4_t::tileset_vr4_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent,
 }
 
 void tileset_vr4_t::_read() {
-    m_pixel_data = new std::vector<pixel_type_t*>();
+    m_elements = new std::vector<pixel_type_t*>();
     {
         int i = 0;
         while (!m__io->is_eof()) {
-            m_pixel_data->push_back(new pixel_type_t(m__io, this, m__root));
+            m_elements->push_back(new pixel_type_t(m__io, this, m__root));
             i++;
         }
     }
@@ -31,11 +31,11 @@ tileset_vr4_t::~tileset_vr4_t() {
 }
 
 void tileset_vr4_t::_clean_up() {
-    if (m_pixel_data) {
-        for (std::vector<pixel_type_t*>::iterator it = m_pixel_data->begin(); it != m_pixel_data->end(); ++it) {
+    if (m_elements) {
+        for (std::vector<pixel_type_t*>::iterator it = m_elements->begin(); it != m_elements->end(); ++it) {
             delete *it;
         }
-        delete m_pixel_data; m_pixel_data = 0;
+        delete m_elements; m_elements = 0;
     }
 }
 
@@ -52,7 +52,7 @@ tileset_vr4_t::pixel_type_t::pixel_type_t(kaitai::kstream* p__io, tileset_vr4_t*
 }
 
 void tileset_vr4_t::pixel_type_t::_read() {
-    m_color_palette = m__io->read_bytes(64);
+    m_minitile = m__io->read_bytes(64);
 }
 
 tileset_vr4_t::pixel_type_t::~pixel_type_t() {

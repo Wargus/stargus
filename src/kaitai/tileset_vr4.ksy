@@ -4,7 +4,7 @@ meta:
   bit-endian: le
   
 seq:
-  - id: pixel_data
+  - id: elements
     type: pixel_type
     repeat: eos
 
@@ -12,5 +12,5 @@ seq:
 types:
   pixel_type:
     seq:
-      - id: color_palette
+      - id: minitile
         size: 64

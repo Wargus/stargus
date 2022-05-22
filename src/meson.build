@@ -1,6 +1,7 @@
 
 subdir('kaitai')
 subdir('dat')
+subdir('tileset')
 
 startool_sources = files(
 	'Casc.cpp', 
@@ -56,6 +57,7 @@ executable('startool',
 	startool_sources,
 	startool_kaitai_sources,
 	startool_dat_sources,
+	startool_tileset_sources,
 	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep],
 	install : true)
 

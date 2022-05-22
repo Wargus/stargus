@@ -16,14 +16,18 @@ public:
 
   ~Size () {}
 
+  bool isEmpty() const { return ((mWidth == 0) && (mHeight == 0));}
+
+  int getWidth()  const {return mWidth;}
+
+  int getHeight() const {return mHeight;}
+
   Size& operator= (const Size& inRHS);
+
+  Size& operator *= (const Size& inSize);
 
   bool operator== (const Size& inSize) const;
 
-  bool isEmpty() const { return ((mWidth == 0) && (mHeight == 0));}
-
-  int getWidth ()  const {return mWidth;}
-  int getHeight() const {return mHeight;}
 
 private:
   int mWidth, mHeight;
@@ -60,6 +64,21 @@ inline bool Size::operator== (const Size& inSize) const
 
   return (mWidth  == inSize.mWidth &&
           mHeight == inSize.mHeight);
+}
+
+inline Size& Size::operator *= (const Size& inSize)
+{
+  mWidth *= inSize.mWidth;
+  mHeight *= inSize.mHeight;
+
+  return *this;
+}
+
+inline Size& operator * (const Size& s1, const Size& s2)
+{
+  Size s3 (s1);
+
+  return s3 *= s2;
 }
 
 #endif // SIZE_H

@@ -33,7 +33,7 @@ int PngExporter::save(const std::string &name, PaletteImage &palImage, Palette &
   std::shared_ptr<DataChunk> palData = palette.createDataChunk();
   unsigned char *pal = palData->getDataPointer();
 
-  unsigned char *image = palImage.getRawDataPointer();
+  const unsigned char *image = palImage.getRawDataPointer();
 
   CheckPath(name);
 
@@ -103,7 +103,8 @@ int PngExporter::save(const std::string &name, PaletteImage &palImage, Palette &
 
   for (i = 0; i < palImage.getSize().getHeight(); ++i)
   {
-    lines[i] = image + i * palImage.getSize().getWidth();
+    const unsigned char *line = image + i * palImage.getSize().getWidth();
+    lines[i] = (unsigned char*) line;
   }
 
   png_write_image(png_ptr, lines);
@@ -127,7 +128,7 @@ int PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Palet
   const int RGBA_BYTE_SIZE = 4;
   const int RGB_BYTE_SIZE = 3;
 
-  unsigned char *image = palImage.getRawDataPointer();
+  const unsigned char *image = palImage.getRawDataPointer();
 
   std::shared_ptr<DataChunk> palData = palette.createDataChunk();
   unsigned char *pal = palData->getDataPointer();
@@ -182,7 +183,7 @@ int PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Palet
   {
     row_pointers[h_pos] = (unsigned char *) malloc(palImage.getSize().getWidth() * RGBA_BYTE_SIZE);
 
-    unsigned char *img_line_pal = image + h_pos * palImage.getSize().getWidth();
+    const unsigned char *img_line_pal = image + h_pos * palImage.getSize().getWidth();
 
     for (int w_pos = 0; w_pos < palImage.getSize().getWidth(); w_pos++)
     {
@@ -238,7 +239,7 @@ int PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Palet
   png_bytep *row_pointers = NULL;
   const int RGBA_BYTE_SIZE = 4;
 
-  unsigned char *image = palImage.getRawDataPointer();
+  const unsigned char *image = palImage.getRawDataPointer();
 
   CheckPath(name);
 
@@ -289,7 +290,7 @@ int PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Palet
   {
     row_pointers[h_pos] = (unsigned char *) malloc(palImage.getSize().getWidth() * RGBA_BYTE_SIZE);
 
-    unsigned char *img_line_pal = image + h_pos * palImage.getSize().getWidth();
+    const unsigned char *img_line_pal = image + h_pos * palImage.getSize().getWidth();
 
     for (int w_pos = 0; w_pos < palImage.getSize().getWidth(); w_pos++)
     {

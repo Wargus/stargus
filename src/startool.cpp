@@ -33,7 +33,8 @@
  ----------------------------------------------------------------------------*/
 
 // project
-#include <dat/DataHub.h>
+#include "dat/DataHub.h"
+#include "tileset/TilesetHub.h"
 #include "PngExporter.h"
 #include "Smacker.h"
 #include "Palette.h"
@@ -381,11 +382,8 @@ void testHook()
   shared_ptr<Storm> storm = make_shared<Storm>(
                               "/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
   //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
-  DataHub datahub(storm);
-
+  //dat::DataHub datahub(storm);
   //datahub.convert();
-
-  //exit(0);
 
   /// Image 1
   Pcx pcx1(storm, "game\\tunit.pcx");
@@ -427,6 +425,15 @@ void testHook()
   //grp.setPalette(terrainPalette);
   //grp.setTransparent(200);
   //grp.setRGBA(true);
+
+
+  //Tileset tileset(storm);
+  //tileset.convert("jungle", terrainPalette);
+
+  tileset::TilesetHub tilesethub(storm);
+  tilesethub.convert("jungle", terrainPalette);
+
+
 
   grp.save("/tmp/marine.png");
 
@@ -573,7 +580,7 @@ int main(int argc, const char **argv)
       }
     }
 
-    DataHub datahub(sub_storm);
+    dat::DataHub datahub(sub_storm);
 
     // read in the json file
     std::ifstream json_file("dataset/units.json");

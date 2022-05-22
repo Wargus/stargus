@@ -39,23 +39,23 @@ public:
         ~pixel_type_t();
 
     private:
-        std::string m_color_palette;
+        std::string m_minitile;
         tileset_vr4_t* m__root;
         tileset_vr4_t* m__parent;
 
     public:
-        std::string color_palette() const { return m_color_palette; }
+        std::string minitile() const { return m_minitile; }
         tileset_vr4_t* _root() const { return m__root; }
         tileset_vr4_t* _parent() const { return m__parent; }
     };
 
 private:
-    std::vector<pixel_type_t*>* m_pixel_data;
+    std::vector<pixel_type_t*>* m_elements;
     tileset_vr4_t* m__root;
     kaitai::kstruct* m__parent;
 
 public:
-    std::vector<pixel_type_t*>* pixel_data() const { return m_pixel_data; }
+    std::vector<pixel_type_t*>* elements() const { return m_elements; }
     tileset_vr4_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };

@@ -5,7 +5,7 @@
 tileset_cv5_t::tileset_cv5_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, tileset_cv5_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = this;
-    m_element = 0;
+    m_elements = 0;
 
     try {
         _read();
@@ -16,11 +16,11 @@ tileset_cv5_t::tileset_cv5_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent,
 }
 
 void tileset_cv5_t::_read() {
-    m_element = new std::vector<group_t*>();
+    m_elements = new std::vector<group_t*>();
     {
         int i = 0;
         while (!m__io->is_eof()) {
-            m_element->push_back(new group_t(m__io, this, m__root));
+            m_elements->push_back(new group_t(m__io, this, m__root));
             i++;
         }
     }
@@ -31,11 +31,11 @@ tileset_cv5_t::~tileset_cv5_t() {
 }
 
 void tileset_cv5_t::_clean_up() {
-    if (m_element) {
-        for (std::vector<group_t*>::iterator it = m_element->begin(); it != m_element->end(); ++it) {
+    if (m_elements) {
+        for (std::vector<group_t*>::iterator it = m_elements->begin(); it != m_elements->end(); ++it) {
             delete *it;
         }
-        delete m_element; m_element = 0;
+        delete m_elements; m_elements = 0;
     }
 }
 
@@ -98,10 +98,10 @@ tileset_cv5_t::ground_nibbles_t::ground_nibbles_t(kaitai::kstream* p__io, tilese
 }
 
 void tileset_cv5_t::ground_nibbles_t::_read() {
-    m_one = m__io->read_bits_int_le(4);
-    m_two = m__io->read_bits_int_le(4);
-    m_tree = m__io->read_bits_int_le(4);
-    m_four = m__io->read_bits_int_le(4);
+    m_buildable = m__io->read_bits_int_le(4);
+    m_ground_type = m__io->read_bits_int_le(4);
+    m_unknown1 = m__io->read_bits_int_le(4);
+    m_ground_height = m__io->read_bits_int_le(4);
 }
 
 tileset_cv5_t::ground_nibbles_t::~ground_nibbles_t() {

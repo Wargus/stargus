@@ -30,9 +30,13 @@ public:
   Tileset(std::shared_ptr<Hurricane> hurricane);
   virtual ~Tileset();
 
+  bool convert(const std::string &terrain, std::shared_ptr<Palette> palette);
+
   bool ConvertTileset(const std::string &arcfile, const std::string &file);
 
 private:
+
+  //void init_kaitai_parser(const std::string &terrain);
 
   unsigned char* ConvertTile(const std::string &arcfile, unsigned char *mini,
       unsigned char *mega, int msize,

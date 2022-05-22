@@ -5,7 +5,7 @@
 tileset_vx4_t::tileset_vx4_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, tileset_vx4_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = this;
-    m_id = 0;
+    m_elements = 0;
 
     try {
         _read();
@@ -16,11 +16,11 @@ tileset_vx4_t::tileset_vx4_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent,
 }
 
 void tileset_vx4_t::_read() {
-    m_id = new std::vector<tile_t*>();
+    m_elements = new std::vector<megatile_type_t*>();
     {
         int i = 0;
         while (!m__io->is_eof()) {
-            m_id->push_back(new tile_t(m__io, this, m__root));
+            m_elements->push_back(new megatile_type_t(m__io, this, m__root));
             i++;
         }
     }
@@ -31,18 +31,18 @@ tileset_vx4_t::~tileset_vx4_t() {
 }
 
 void tileset_vx4_t::_clean_up() {
-    if (m_id) {
-        for (std::vector<tile_t*>::iterator it = m_id->begin(); it != m_id->end(); ++it) {
+    if (m_elements) {
+        for (std::vector<megatile_type_t*>::iterator it = m_elements->begin(); it != m_elements->end(); ++it) {
             delete *it;
         }
-        delete m_id; m_id = 0;
+        delete m_elements; m_elements = 0;
     }
 }
 
-tileset_vx4_t::tile_t::tile_t(kaitai::kstream* p__io, tileset_vx4_t* p__parent, tileset_vx4_t* p__root) : kaitai::kstruct(p__io) {
+tileset_vx4_t::megatile_type_t::megatile_type_t(kaitai::kstream* p__io, tileset_vx4_t* p__parent, tileset_vx4_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
-    m_flags = 0;
+    m_graphic_ref = 0;
 
     try {
         _read();
@@ -52,21 +52,57 @@ tileset_vx4_t::tile_t::tile_t(kaitai::kstream* p__io, tileset_vx4_t* p__parent, 
     }
 }
 
-void tileset_vx4_t::tile_t::_read() {
-    int l_flags = 16;
-    m_flags = new std::vector<uint16_t>();
-    m_flags->reserve(l_flags);
-    for (int i = 0; i < l_flags; i++) {
-        m_flags->push_back(m__io->read_u2le());
+void tileset_vx4_t::megatile_type_t::_read() {
+    int l_graphic_ref = 16;
+    m_graphic_ref = new std::vector<graphic_ref_type_t*>();
+    m_graphic_ref->reserve(l_graphic_ref);
+    for (int i = 0; i < l_graphic_ref; i++) {
+        m_graphic_ref->push_back(new graphic_ref_type_t(m__io, this, m__root));
     }
 }
 
-tileset_vx4_t::tile_t::~tile_t() {
+tileset_vx4_t::megatile_type_t::~megatile_type_t() {
     _clean_up();
 }
 
-void tileset_vx4_t::tile_t::_clean_up() {
-    if (m_flags) {
-        delete m_flags; m_flags = 0;
+void tileset_vx4_t::megatile_type_t::_clean_up() {
+    if (m_graphic_ref) {
+        for (std::vector<graphic_ref_type_t*>::iterator it = m_graphic_ref->begin(); it != m_graphic_ref->end(); ++it) {
+            delete *it;
+        }
+        delete m_graphic_ref; m_graphic_ref = 0;
     }
+}
+
+tileset_vx4_t::graphic_ref_type_t::graphic_ref_type_t(kaitai::kstream* p__io, tileset_vx4_t::megatile_type_t* p__parent, tileset_vx4_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+    f_vr4_ref = false;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void tileset_vx4_t::graphic_ref_type_t::_read() {
+    m_vr4_ref_raw = m__io->read_bits_int_le(15);
+    m_horizontal_flip = m__io->read_bits_int_le(1);
+}
+
+tileset_vx4_t::graphic_ref_type_t::~graphic_ref_type_t() {
+    _clean_up();
+}
+
+void tileset_vx4_t::graphic_ref_type_t::_clean_up() {
+}
+
+int32_t tileset_vx4_t::graphic_ref_type_t::vr4_ref() {
+    if (f_vr4_ref)
+        return m_vr4_ref;
+    m_vr4_ref = (vr4_ref_raw() >> 1);
+    f_vr4_ref = true;
+    return m_vr4_ref;
 }

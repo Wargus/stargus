@@ -84,29 +84,29 @@ public:
         ~ground_nibbles_t();
 
     private:
-        uint64_t m_one;
-        uint64_t m_two;
-        uint64_t m_tree;
-        uint64_t m_four;
+        uint64_t m_buildable;
+        uint64_t m_ground_type;
+        uint64_t m_unknown1;
+        uint64_t m_ground_height;
         tileset_cv5_t* m__root;
         tileset_cv5_t::group_t* m__parent;
 
     public:
-        uint64_t one() const { return m_one; }
-        uint64_t two() const { return m_two; }
-        uint64_t tree() const { return m_tree; }
-        uint64_t four() const { return m_four; }
+        uint64_t buildable() const { return m_buildable; }
+        uint64_t ground_type() const { return m_ground_type; }
+        uint64_t unknown1() const { return m_unknown1; }
+        uint64_t ground_height() const { return m_ground_height; }
         tileset_cv5_t* _root() const { return m__root; }
         tileset_cv5_t::group_t* _parent() const { return m__parent; }
     };
 
 private:
-    std::vector<group_t*>* m_element;
+    std::vector<group_t*>* m_elements;
     tileset_cv5_t* m__root;
     kaitai::kstruct* m__parent;
 
 public:
-    std::vector<group_t*>* element() const { return m_element; }
+    std::vector<group_t*>* elements() const { return m_elements; }
     tileset_cv5_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };

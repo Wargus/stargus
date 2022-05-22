@@ -25,6 +25,9 @@ public:
   int getX ()  const {return mX;}
   int getY() const {return mY;}
 
+  void setX(int x) {mX = x;}
+  void setY(int y) {mY = y;}
+
 private:
   int mX, mY;
 };

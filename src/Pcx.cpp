@@ -94,16 +94,6 @@ void Pcx::mapIndexPalette(int length, int start, int index)
   }
 }
 
-/*void Pcx::mapIndexPaletteTypeIcon(int index)
-{
-  mapIndexPalette(16, 0, index);
-}
-
-void Pcx::mapIndexPaletteTypeSelect(int index)
-{
-  mapIndexPalette(8, 1, index);
-}*/
-
 std::shared_ptr<Palette2D> Pcx::map2DPalette()
 {
   std::shared_ptr<Palette2D> palette2D;
@@ -119,7 +109,11 @@ std::shared_ptr<Palette2D> Pcx::map2DPalette()
       {
         for (int y = 0; y < mPaletteImage->getSize().getHeight()-1; y++)
         {
-          unsigned char color_index = mPaletteImage->getPaletteIndex(x, y);
+          // FIXME: there was a bug in getPalettePixel() that y was decremented 1. After fixing it the output was ugly
+          // now I substract here y-1 before and now alpha graphics (e.g. fire) look fine. I've to check the algorithm later again
+          int y_mod = (y > 0) ? (y-1) : 0;
+
+          unsigned char color_index = mPaletteImage->at(Pos(x, y_mod));
 
           if(color_index != 255)
           {
@@ -167,6 +161,7 @@ void Pcx::extractImage()
   unsigned char *dest = NULL;
   unsigned char ch = 0;
   unsigned char *imageParserPos = nullptr;
+  size_t pos = 0;
 
   if (mRawData)
   {
@@ -193,7 +188,8 @@ void Pcx::extractImage()
           }
         }
         dest[i] = ch;
-        mPaletteImage->addPaletteIndex(ch);
+        mPaletteImage->at(pos) = ch;
+        pos++;
         --count;
       }
     }

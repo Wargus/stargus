@@ -1,7 +1,7 @@
 /*
  * Sprite.cpp
  *
- *      Author: Andreas
+ *      Author: Andreas Volz
  */
 
 #include "Sprite.h"

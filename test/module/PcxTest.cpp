@@ -70,7 +70,5 @@ void PcxTest::test2_mapIndexPalette()
     std::remove(save_pal_name.c_str());
     std::remove(save_png_name.c_str());
   }
-
-
 }
 

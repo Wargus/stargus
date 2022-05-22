@@ -14,7 +14,8 @@
 class tileset_vx4_t : public kaitai::kstruct {
 
 public:
-    class tile_t;
+    class megatile_type_t;
+    class graphic_ref_type_t;
 
     tileset_vx4_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, tileset_vx4_t* p__root = 0);
 
@@ -25,37 +26,70 @@ private:
 public:
     ~tileset_vx4_t();
 
-    class tile_t : public kaitai::kstruct {
+    class megatile_type_t : public kaitai::kstruct {
 
     public:
 
-        tile_t(kaitai::kstream* p__io, tileset_vx4_t* p__parent = 0, tileset_vx4_t* p__root = 0);
+        megatile_type_t(kaitai::kstream* p__io, tileset_vx4_t* p__parent = 0, tileset_vx4_t* p__root = 0);
 
     private:
         void _read();
         void _clean_up();
 
     public:
-        ~tile_t();
+        ~megatile_type_t();
 
     private:
-        std::vector<uint16_t>* m_flags;
+        std::vector<graphic_ref_type_t*>* m_graphic_ref;
         tileset_vx4_t* m__root;
         tileset_vx4_t* m__parent;
 
     public:
-        std::vector<uint16_t>* flags() const { return m_flags; }
+        std::vector<graphic_ref_type_t*>* graphic_ref() const { return m_graphic_ref; }
         tileset_vx4_t* _root() const { return m__root; }
         tileset_vx4_t* _parent() const { return m__parent; }
     };
 
+    class graphic_ref_type_t : public kaitai::kstruct {
+
+    public:
+
+        graphic_ref_type_t(kaitai::kstream* p__io, tileset_vx4_t::megatile_type_t* p__parent = 0, tileset_vx4_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~graphic_ref_type_t();
+
+    private:
+        bool f_vr4_ref;
+        int32_t m_vr4_ref;
+
+    public:
+        int32_t vr4_ref();
+
+    private:
+        uint64_t m_vr4_ref_raw;
+        bool m_horizontal_flip;
+        tileset_vx4_t* m__root;
+        tileset_vx4_t::megatile_type_t* m__parent;
+
+    public:
+        uint64_t vr4_ref_raw() const { return m_vr4_ref_raw; }
+        bool horizontal_flip() const { return m_horizontal_flip; }
+        tileset_vx4_t* _root() const { return m__root; }
+        tileset_vx4_t::megatile_type_t* _parent() const { return m__parent; }
+    };
+
 private:
-    std::vector<tile_t*>* m_id;
+    std::vector<megatile_type_t*>* m_elements;
     tileset_vx4_t* m__root;
     kaitai::kstruct* m__parent;
 
 public:
-    std::vector<tile_t*>* id() const { return m_id; }
+    std::vector<megatile_type_t*>* elements() const { return m_elements; }
     tileset_vx4_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };

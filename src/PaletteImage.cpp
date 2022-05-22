@@ -4,17 +4,24 @@
  *      Author: Andreas Volz
  */
 
+// project
 #include "PaletteImage.h"
+
+// system
+#include <iostream>
+#include <math.h>
 
 using namespace std;
 
-PaletteImage::PaletteImage(const DataChunk &datachunk, Size size) :
-    mImageData(datachunk), mSize(size)
+PaletteImage::PaletteImage(const DataChunk &datachunk, const Size &size) :
+  mData(datachunk.getDataPointer(), datachunk.getDataPointer()+datachunk.getSize()),
+  mSize(size)
 {
 
 }
 
-PaletteImage::PaletteImage(Size size) :
+PaletteImage::PaletteImage(const Size &size) :
+  mData(size.getWidth() * size.getHeight(), 0),
   mSize(size)
 {
 
@@ -25,52 +32,60 @@ PaletteImage::~PaletteImage()
 
 }
 
-void PaletteImage::addPaletteIndex(unsigned char paletteIndex)
+const unsigned char* PaletteImage::getRawDataPointer() const
 {
-  mImageData.addData(&paletteIndex, 1);
+  return mData.data();
 }
 
-unsigned char* PaletteImage::getRawDataPointer() const
+size_t PaletteImage::positionToIndex(const Pos &pos) const
 {
-  return mImageData.getDataPointer();
-}
+  size_t data_pos = 0;
 
-DataChunk &PaletteImage::getRawData()
-{
-  return mImageData;
-}
-
-unsigned char PaletteImage::getPaletteIndex(int x, int y)
-{
-  int pos = 0;
-  unsigned char palette = 0;
-
-  if((x < mSize.getWidth()) || (y < mSize.getHeight()) || (x > 0) || (y > 0))
+  // if pos is outside image return just 0 as fail safe
+  if((pos.getX() < mSize.getWidth()) || (pos.getY() < mSize.getHeight()) || (pos.getX() > 0) || (pos.getY() > 0))
   {
-    if(y == 0)
-    {
-      pos = x;
-    }
-    else
-    {
-      pos = ((y - 1) * mSize.getWidth()) + x;
-    }
-    palette = mImageData.at(pos);
-  }
-  else
-  {
-    printf("getPaletteIndex(int x, int y) error");
+    data_pos = (pos.getY() * mSize.getWidth()) + pos.getX();
   }
 
-  return palette;
+  return data_pos;
 }
 
-Size PaletteImage::getSize() const
+const Pos PaletteImage::indexToPosition(size_t index) const
+{
+  int y = 0;
+  int x = 0;
+
+  // if index is out of data size that return Pos(0, 0) as fail safe
+  if(index < mData.size())
+  {
+    y = index / mSize.getWidth();
+    x = index % mSize.getWidth();
+  }
+
+  return Pos(x, y);
+}
+
+const Size PaletteImage::getSize() const
 {
   return mSize;
 }
 
-unsigned char PaletteImage::at(size_t pos)
+unsigned char &PaletteImage::at(const Pos &pos)
 {
-  return mImageData.at(pos);
+  return at(positionToIndex(pos));
+}
+
+const unsigned char &PaletteImage::at(const Pos &pos) const
+{
+  return at(positionToIndex(pos));
+}
+
+unsigned char &PaletteImage::at(size_t pos)
+{
+  return mData.at(pos);
+}
+
+const unsigned char &PaletteImage::at(size_t pos) const
+{
+  return mData.at(pos);
 }

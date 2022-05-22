@@ -48,20 +48,6 @@ public:
    */
   void mapIndexPalette(int length, int start, int index);
 
-  /**
-   * Wrapper for mapIndexPalette() with configuration to use ticon.pcx palette
-   *
-   * @param index the color index selector to choose
-   */
-  //void mapIndexPaletteTypeIcon(int index = 0);
-
-  /**
-    * Wrapper for mapIndexPalette() with configuration to use tselect.pcx palette
-    *
-    * @param index the color index selector to choose
-    */
-  //void mapIndexPaletteTypeSelect(int index = 0);
-
   std::shared_ptr<Palette2D> map2DPalette();
 
 private:

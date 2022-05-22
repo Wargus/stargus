@@ -21,6 +21,9 @@
 
 using namespace std;
 
+namespace dat
+{
+
 DataHub::DataHub(std::shared_ptr<Hurricane> hurricane) :
   KaitaiConverter(hurricane), mLogger("startool.DataHub")
 {
@@ -1000,3 +1003,5 @@ bool DataHub::portdataCompare(int val1, int val2)
 
   return result;
 }
+
+} /* namespace dat */

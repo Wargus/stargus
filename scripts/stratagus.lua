@@ -186,7 +186,7 @@ SetMinimapTerrain(true)
 
 Preference.GrayscaleIcons = true
 
-SetFontCodePage(437)
+SetFontCodePage(1252)
 
 -------------------------------------------------------------------------------
 

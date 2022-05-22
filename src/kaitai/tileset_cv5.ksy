@@ -4,7 +4,7 @@ meta:
   bit-endian: le
   
 seq:
-  - id: element
+  - id: elements
     type: group
     repeat: eos
 
@@ -48,14 +48,15 @@ types:
         
   ground_nibbles:
     seq:
-      - id: one
+      - id: buildable
         type: b4
         
-      - id: two
+      - id: ground_type
         type: b4
         
-      - id: tree
+      - id: unknown1
         type: b4
         
-      - id: four
+      - id: ground_height
         type: b4
+        

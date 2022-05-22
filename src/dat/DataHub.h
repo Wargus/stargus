@@ -32,6 +32,9 @@
 
 using json = nlohmann::json;
 
+namespace dat
+{
+
 class DataHub : public KaitaiConverter
 {
 public:
@@ -45,6 +48,14 @@ public:
   bool convertUnits(json &unitsJson,
                          std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
                          std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap);
+
+
+
+private:
+  Logger mLogger;
+
+  static const int units_portrait_none = 65535;
+  static const int units_units_ready_sound_end = 106;
 
   // Kaitai parser objects
   std::shared_ptr<units_dat_t> units;
@@ -65,12 +76,6 @@ public:
   std::vector<TblEntry> sfxdata_tbl_vec;
   std::vector<TblEntry> portdata_tbl_vec;
   std::vector<TblEntry> mapdata_tbl_vec;
-
-private:
-  Logger mLogger;
-
-  static const int units_portrait_none = 65535;
-  static const int units_units_ready_sound_end = 106;
 
   // Kaitai streams
   std::shared_ptr<kaitai::kstream> stat_txt_ks;
@@ -160,6 +165,14 @@ private:
   int get_dat_energy_max() const;
 
   static bool portdataCompare(int val1, int val2);
+
+  // we trust the other classes in the namespace to access our private members as this is easier
+  friend class Unit;
+  friend class Sprite;
+  friend class Image;
+  friend class Flingy;
 };
+
+} /* namespace dat */
 
 #endif /* DATAHUB_H */
