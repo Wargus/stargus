@@ -7,6 +7,7 @@
 
 // Project
 #include "PcxTest.h"
+#include "platform.h"
 
 using namespace std;
 
@@ -39,8 +40,8 @@ void PcxTest::test1_SaveIndexedPalettePNG()
   CPPUNIT_ASSERT(compareFiles(save_pal_name, test_data_dir + "/PcxTest_" + save_pal_name));
   CPPUNIT_ASSERT(compareFiles(save_png_name, test_data_dir + "/PcxTest_" + save_png_name));
 
-  std::remove(save_pal_name.c_str());
-  std::remove(save_png_name.c_str());
+  platform::remove(save_pal_name.c_str());
+  platform::remove(save_png_name.c_str());
 }
 
 void PcxTest::test2_mapIndexPalette()
@@ -67,8 +68,8 @@ void PcxTest::test2_mapIndexPalette()
     CPPUNIT_ASSERT(compareFiles(save_pal_name, test_data_dir + "/PcxTest_" + save_pal_name));
     CPPUNIT_ASSERT(compareFiles(save_png_name, test_data_dir + "/PcxTest_" + save_png_name));
 
-    std::remove(save_pal_name.c_str());
-    std::remove(save_png_name.c_str());
+    platform::remove(save_pal_name.c_str());
+    platform::remove(save_png_name.c_str());
   }
 }
 

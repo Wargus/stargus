@@ -7,6 +7,7 @@
 
 // Project
 #include "DataChunkTest.h"
+#include "platform.h"
 
 using namespace std;
 
@@ -123,5 +124,5 @@ void DataChunkTest::test4_write_compare()
   CPPUNIT_ASSERT(filecontent.at(3) == 0x4);
   CPPUNIT_ASSERT(filecontent.at(4) == 0x5);
 
-  std::remove(savename.c_str());
+  platform::remove(savename);
 }

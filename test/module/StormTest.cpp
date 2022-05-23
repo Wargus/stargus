@@ -7,6 +7,7 @@
 
 // Project
 #include "StormTest.h"
+#include "platform.h"
 
 using namespace std;
 
@@ -67,7 +68,7 @@ void StormTest::test2_mpq_txt_extractFile()
   CPPUNIT_ASSERT(result == true);
   CPPUNIT_ASSERT(content_result == filecontent);
 
-  std::remove(savename.c_str());
+  platform::remove(savename);
 }
 
 void StormTest::test3_mpq_txt_extractFileCompressed()
@@ -107,5 +108,5 @@ void StormTest::test3_mpq_txt_extractFileCompressed()
   CPPUNIT_ASSERT(result == true);
   CPPUNIT_ASSERT(content_result == dest);
 
-  std::remove(savename.c_str());
+  platform::remove(savename);
 }

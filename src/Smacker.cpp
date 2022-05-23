@@ -8,19 +8,10 @@
 #include <Smacker.h>
 #include "Hurricane.h"
 #include "FileUtil.h"
+#include "platform.h"
 
 // System
-#include <string>
 #include <iostream>
-#if __has_include(<filesystem>)
-#include <filesystem>
-namespace fs = std::filesystem;
-#elif __has_include(<experimental/filesystem>)
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem;
-#else
-error "Missing the <filesystem> header."
-#endif
 
 using namespace std;
 
@@ -58,7 +49,7 @@ bool Smacker::ConvertVideo(const std::string &arcfile,  Storage storage)
     result = false;
   }
 
-  fs::remove(smk_file);
+  platform::remove(smk_file);
 
   return result;
 }
@@ -111,8 +102,8 @@ bool Smacker::ConvertPortrait(const std::string &arcfile,  Storage storage)
     }
   }
 
-  fs::remove(smk_file);
-  fs::remove_all(png_path);
+  platform::remove(smk_file);
+  platform::remove_all(png_path);
 
   return result;
 }
