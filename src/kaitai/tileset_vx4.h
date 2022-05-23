@@ -68,17 +68,34 @@ public:
         int32_t m_vr4_ref;
 
     public:
+
+        /**
+         * The index reference in the vx4 data file
+         */
         int32_t vr4_ref();
 
     private:
-        uint64_t m_vr4_ref_raw;
-        bool m_horizontal_flip;
+        bool f_horizontal_flip;
+        int32_t m_horizontal_flip;
+
+    public:
+
+        /**
+         * Flag if the minitile is flipped horizontal
+         */
+        int32_t horizontal_flip();
+
+    private:
+        uint16_t m_vr4_ref_flip_raw;
         tileset_vx4_t* m__root;
         tileset_vx4_t::megatile_type_t* m__parent;
 
     public:
-        uint64_t vr4_ref_raw() const { return m_vr4_ref_raw; }
-        bool horizontal_flip() const { return m_horizontal_flip; }
+
+        /**
+         * This is the raw parsed value. Use vr4_ref and horizontal_flip.
+         */
+        uint16_t vr4_ref_flip_raw() const { return m_vr4_ref_flip_raw; }
         tileset_vx4_t* _root() const { return m__root; }
         tileset_vx4_t::megatile_type_t* _parent() const { return m__parent; }
     };

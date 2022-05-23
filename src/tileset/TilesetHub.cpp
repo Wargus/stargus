@@ -71,6 +71,7 @@ void TilesetHub::convert(const std::string &terrain, std::shared_ptr<Palette> pa
   TiledPaletteImage ultraTile(Size(tiles_width, tiles_height), Size(32,32));
 
   for(unsigned int i = 0; i < num_tiles; i++)
+  //for(unsigned int i = 2416; i < 2417; i++)
   {
     MegaTile mega(*this, i);
 
@@ -79,7 +80,6 @@ void TilesetHub::convert(const std::string &terrain, std::shared_ptr<Palette> pa
 
   string name = ("/tmp/test.png");
   PngExporter::save(name, ultraTile, *palette, 0);
-
 }
 
 } /* namespace tileset */

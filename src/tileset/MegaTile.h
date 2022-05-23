@@ -27,8 +27,6 @@ public:
   MegaTile(TilesetHub &tilesethub, size_t element);
   virtual ~MegaTile();
 
-  //std::string minitile();
-
   std::shared_ptr<PaletteImage> getImage();
 
 private:

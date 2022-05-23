@@ -78,6 +78,7 @@ tileset_vx4_t::graphic_ref_type_t::graphic_ref_type_t(kaitai::kstream* p__io, ti
     m__parent = p__parent;
     m__root = p__root;
     f_vr4_ref = false;
+    f_horizontal_flip = false;
 
     try {
         _read();
@@ -88,8 +89,7 @@ tileset_vx4_t::graphic_ref_type_t::graphic_ref_type_t(kaitai::kstream* p__io, ti
 }
 
 void tileset_vx4_t::graphic_ref_type_t::_read() {
-    m_vr4_ref_raw = m__io->read_bits_int_le(15);
-    m_horizontal_flip = m__io->read_bits_int_le(1);
+    m_vr4_ref_flip_raw = m__io->read_u2le();
 }
 
 tileset_vx4_t::graphic_ref_type_t::~graphic_ref_type_t() {
@@ -102,7 +102,15 @@ void tileset_vx4_t::graphic_ref_type_t::_clean_up() {
 int32_t tileset_vx4_t::graphic_ref_type_t::vr4_ref() {
     if (f_vr4_ref)
         return m_vr4_ref;
-    m_vr4_ref = (vr4_ref_raw() >> 1);
+    m_vr4_ref = (vr4_ref_flip_raw() >> 1);
     f_vr4_ref = true;
     return m_vr4_ref;
+}
+
+int32_t tileset_vx4_t::graphic_ref_type_t::horizontal_flip() {
+    if (f_horizontal_flip)
+        return m_horizontal_flip;
+    m_horizontal_flip = (vr4_ref_flip_raw() & 1);
+    f_horizontal_flip = true;
+    return m_horizontal_flip;
 }
