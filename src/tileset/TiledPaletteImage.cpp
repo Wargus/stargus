@@ -23,7 +23,7 @@ TiledPaletteImage::~TiledPaletteImage()
 
 }
 
-void TiledPaletteImage::copyTile(const PaletteImage &palette_image, size_t index)
+void TiledPaletteImage::copyTile(const PaletteImage &palette_image, size_t index, bool horizontal_flip)
 {
   int y = 0;
   int x = 0;
@@ -37,10 +37,10 @@ void TiledPaletteImage::copyTile(const PaletteImage &palette_image, size_t index
   }
 
   Pos rel_pos(x,y);
-  copyTile(palette_image, rel_pos);
+  copyTile(palette_image, rel_pos, horizontal_flip);
 }
 
-void TiledPaletteImage::copyTile(const PaletteImage &palette_image, const Pos &pos)
+void TiledPaletteImage::copyTile(const PaletteImage &palette_image, const Pos &pos, bool horizontal_flip)
 {
   if(pos.getX() < mTileSize.getWidth() || pos.getY() < mTileSize.getWidth())
   {
@@ -51,7 +51,13 @@ void TiledPaletteImage::copyTile(const PaletteImage &palette_image, const Pos &p
       {
         unsigned char pixel = palette_image.at(Pos(x, y));
 
-        at(calcAbsolutePos(pos, Pos(x, y))) = pixel;
+        int x_flip = x;
+        if(horizontal_flip)
+        {
+          x_flip = palette_image.getSize().getWidth() - 1 - x;
+        }
+
+        at(calcAbsolutePos(pos, Pos(x_flip, y))) = pixel;
       }
     }
   }

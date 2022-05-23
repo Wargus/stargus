@@ -4,9 +4,10 @@
 
 // Project
 #include "TiledPaletteImageTest.h"
-#include "../src/tileset/TiledPaletteImage.h"
-#include "../src/PngExporter.h"
-#include "Palette.h"
+#include "tileset/TiledPaletteImage.h"
+#include "PngExporter.h"
+#include "TestHelpers.h"
+
 
 // System
 
@@ -27,36 +28,24 @@ void TiledPaletteImageTest::tearDown()
 void TiledPaletteImageTest::test1_tileStrategyCompare()
 {
   string test_data_dir = "test/module/data/";
-  string save_num_name_png = "TiledPaletteImageTest1_num.png";
-  string save_pos_name_png = "TiledPaletteImageTest_pos.png";
+  string reference_small_name_png = "TiledPaletteImage_small.png";
 
-  Palette pal;
+  string save_num_name_png = "test1_tileStrategyCompare_num.png";
+  string save_pos_name_png = "test1_tileStrategyCompare_pos.png";
 
-  // define the colors
-  Color black(0, 0, 0);
-  Color red(255, 0, 0);
-  Color green(0, 255, 0);
-  Color blue(0, 0, 255);
-  Color yellow(255, 255, 0);
-
-  // add the colors in the palette
-  pal.at(0) = black;
-  pal.at(1) = red;
-  pal.at(2) = green;
-  pal.at(3) = blue;
-  pal.at(4) = yellow;
+  Palette pal(generateTestPalette());
 
   PaletteImage red_image(Size(8, 8));
-  red_image.fill(1);
+  red_image.fill(ColorRed);
 
   PaletteImage green_image(Size(8, 8));
-  green_image.fill(2);
+  green_image.fill(ColorGreen);
 
   PaletteImage blue_image(Size(8, 8));
-  blue_image.fill(3);
+  blue_image.fill(ColorBlue);
 
   PaletteImage yellow_image(Size(8, 8));
-  yellow_image.fill(4);
+  yellow_image.fill(ColorYellow);
 
   tileset::TiledPaletteImage tiled_image_num(Size(2, 2), Size(8, 8));
   tileset::TiledPaletteImage tiled_image_pos(Size(2, 2), Size(8, 8));
@@ -74,13 +63,81 @@ void TiledPaletteImageTest::test1_tileStrategyCompare()
   tiled_image_pos.copyTile(yellow_image, Pos(1, 1));
 
   // export the PNGs for visual test feedback
-  //PngExporter::save(save_num_name_png, tiled_image_num, pal, 255);
-  //PngExporter::save(save_pos_name_png, tiled_image_pos, pal, 255);
+  PngExporter::save(save_num_name_png, tiled_image_num, pal, 255);
+  PngExporter::save(save_pos_name_png, tiled_image_pos, pal, 255);
 
   // this test just checks if adding the tiles by #num or Pos gives us the same result
   CPPUNIT_ASSERT(tiled_image_num == tiled_image_pos);
+  CPPUNIT_ASSERT(compareFiles(save_num_name_png, test_data_dir + "/" + reference_small_name_png));
+  CPPUNIT_ASSERT(compareFiles(save_pos_name_png, test_data_dir + "/" + reference_small_name_png));
 
-  //std::remove(save_num_name_png.c_str());
-  //std::remove(save_pos_name_png.c_str());
+  // TODO: save both vectors into file and compare them with a working result!
+  // maybe as other additional test??
+
+  std::remove(save_num_name_png.c_str());
+  std::remove(save_pos_name_png.c_str());
 }
 
+void TiledPaletteImageTest::test2_tileHorizontalFlipping()
+{
+  string test_data_dir = "test/module/data/";
+  string reference_big_flipped_name_png = "TiledPaletteImageTest2_big_flipped.png";
+
+  string save_name_flipped_png = "test2_tileHorizontalFlipping.png";
+
+  Palette pal(generateTestPalette());
+
+  PaletteImage red_image(Size(8, 8));
+  red_image.fill(ColorRed);
+
+  PaletteImage green_image(Size(8, 8));
+  green_image.fill(ColorGreen);
+
+  PaletteImage blue_image(Size(8, 8));
+  blue_image.fill(ColorBlue);
+
+  PaletteImage yellow_image(Size(8, 8));
+  yellow_image.fill(ColorYellow);
+
+  tileset::TiledPaletteImage tiled_image_num(Size(2, 2), Size(8, 8));
+
+  // fill the tiled image with the little tiles by incrementing number
+  tiled_image_num.copyTile(red_image, 0);
+  tiled_image_num.copyTile(green_image, 1);
+  tiled_image_num.copyTile(blue_image, 2);
+  tiled_image_num.copyTile(yellow_image, 3);
+
+  tileset::TiledPaletteImage tiled_image_big(Size(2, 2), Size(16, 16));
+
+  tiled_image_big.copyTile(tiled_image_num, 0, true); // flip horizontal
+  tiled_image_big.copyTile(tiled_image_num, 1);
+  tiled_image_big.copyTile(tiled_image_num, 2, true); // flip horizontal
+  tiled_image_big.copyTile(tiled_image_num, 3);
+
+  PngExporter::save(save_name_flipped_png, tiled_image_big, pal, 255);
+
+  CPPUNIT_ASSERT(compareFiles(save_name_flipped_png, test_data_dir + "/" + reference_big_flipped_name_png));
+
+  std::remove(save_name_flipped_png.c_str());
+}
+
+Palette TiledPaletteImageTest::generateTestPalette()
+{
+  Palette pal;
+
+  // define the colors
+  Color black(0, 0, 0);
+  Color red(255, 0, 0);
+  Color green(0, 255, 0);
+  Color blue(0, 0, 255);
+  Color yellow(255, 255, 0);
+
+  // add the colors in the palette
+  pal.at(0) = black;
+  pal.at(1) = red;
+  pal.at(2) = green;
+  pal.at(3) = blue;
+  pal.at(4) = yellow;
+
+  return pal;
+}

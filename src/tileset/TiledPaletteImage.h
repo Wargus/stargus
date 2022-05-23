@@ -27,9 +27,9 @@ public:
 
   virtual ~TiledPaletteImage();
 
-  void copyTile(const PaletteImage &palette_image, size_t index);
+  void copyTile(const PaletteImage &palette_image, size_t index, bool horizontal_flip = false);
 
-  void copyTile(const PaletteImage &palette_image, const Pos &pos);
+  void copyTile(const PaletteImage &palette_image, const Pos &pos, bool horizontal_flip = false);
 
 private:
   const Pos calcAbsolutePos(const Pos &tile_pos, const Pos &relative_pos);

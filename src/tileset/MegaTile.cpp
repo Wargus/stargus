@@ -57,18 +57,12 @@ void MegaTile::generateTiles()
     {
       Pos pos = palImage.indexToPosition(i);
 
-      // just need to flip the X...
-      if (horizontal_flip)
-      {
-        pos.setX(palImage.getSize().getWidth() - 1 - pos.getX());
-      }
-
       palImage.at(pos) = c;
 
       i++;
     }
 
-    mPaletteImage->copyTile(palImage, n);
+    mPaletteImage->copyTile(palImage, n, horizontal_flip);
 
     n++;
   }
