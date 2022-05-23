@@ -28,6 +28,7 @@ public:
 
   bool operator== (const Size& inSize) const;
 
+  bool operator!= (const Size& inSize) const;
 
 private:
   int mWidth, mHeight;
@@ -59,14 +60,22 @@ inline Size& Size::operator= (const Size& inRHS)
 
 inline bool Size::operator== (const Size& inSize) const
 {
-  if (this == &inSize)  // The same object?
+  // if the same object
+  if (this == &inSize)
+  {
     return true;
+  }
 
   return (mWidth  == inSize.mWidth &&
           mHeight == inSize.mHeight);
 }
 
-inline Size& Size::operator *= (const Size& inSize)
+inline bool Size::operator!= (const Size& inSize) const
+{
+  return !(inSize == *this);
+}
+
+inline Size& Size::operator*= (const Size& inSize)
 {
   mWidth *= inSize.mWidth;
   mHeight *= inSize.mHeight;
@@ -74,7 +83,7 @@ inline Size& Size::operator *= (const Size& inSize)
   return *this;
 }
 
-inline Size& operator * (const Size& s1, const Size& s2)
+inline Size& operator* (const Size& s1, const Size& s2)
 {
   Size s3 (s1);
 

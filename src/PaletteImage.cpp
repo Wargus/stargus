@@ -89,3 +89,36 @@ const unsigned char &PaletteImage::at(size_t pos) const
 {
   return mData.at(pos);
 }
+
+void PaletteImage::fill(unsigned char color_index)
+{
+  for(unsigned int i = 0; i < mData.size(); i++)
+  {
+    mData.at(i) = color_index;
+  }
+}
+
+bool PaletteImage::operator== (const PaletteImage& image_cmp)
+{
+  // if the same object
+  if (this == &image_cmp)
+  {
+    return true;
+  }
+
+  // if the size isn't the same no content needs to be checked
+  if(image_cmp.getSize() != this->getSize())
+  {
+    return false;
+  }
+
+  // compare the content of the pixel data
+  if(image_cmp.mData == this->mData)
+  {
+    return true;
+  }
+
+  return false;
+}
+
+

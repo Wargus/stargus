@@ -58,9 +58,19 @@ public:
 
   virtual size_t positionToIndex(const Pos &pos) const;
 
+  /**
+   * Fills the complete image with a specific index color from the Palette.
+   * This has no real use case in the Exporter just for easier testing the class.
+   */
+  virtual void fill(unsigned char color_index);
+
+  bool operator== (const PaletteImage& image_cmp);
+
 private:
   std::vector<unsigned char> mData;
   Size mSize;
 };
+
+//bool operator == (const PaletteImage& image1, const PaletteImage& image2);
 
 #endif /* PALETTEIMAGE_H */
