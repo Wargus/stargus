@@ -29,7 +29,8 @@ public:
   TilesetHub(std::shared_ptr<Hurricane> hurricane);
   virtual ~TilesetHub();
 
-  bool convert(const std::string &terrain, std::shared_ptr<Palette> palette, Storage storage);
+  bool convert(const std::string &arcfile,
+      std::shared_ptr<Palette> palette, Storage storage);
 
 
 private:

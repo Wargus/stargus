@@ -31,25 +31,25 @@ TilesetHub::~TilesetHub()
 
 }
 
-bool TilesetHub::convert(const std::string &terrain, std::shared_ptr<Palette> palette, Storage storage)
+bool TilesetHub::convert(const std::string &arcfile, std::shared_ptr<Palette> palette, Storage storage)
 {
   std::shared_ptr<kaitai::kstream> cv5_ks;
-  cv5_ks = getKaitaiStream(terrain + ".cv5");
+  cv5_ks = getKaitaiStream(arcfile + ".cv5");
   std::shared_ptr<tileset_cv5_t> cv5_loc(new tileset_cv5_t(cv5_ks.get()));
   cv5_raw = cv5_loc;
 
   std::shared_ptr<kaitai::kstream> vx4_ks;
-  vx4_ks = getKaitaiStream(terrain + ".vx4");
+  vx4_ks = getKaitaiStream(arcfile + ".vx4");
   std::shared_ptr<tileset_vx4_t> vx4_loc(new tileset_vx4_t(vx4_ks.get()));
   vx4_raw = vx4_loc;
 
   std::shared_ptr<kaitai::kstream> vf4_ks;
-  vf4_ks = getKaitaiStream(terrain + ".vf4");
+  vf4_ks = getKaitaiStream(arcfile + ".vf4");
   std::shared_ptr<tileset_vf4_t> vf4_loc(new tileset_vf4_t(vf4_ks.get()));
   vf4_raw = vf4_loc;
 
   std::shared_ptr<kaitai::kstream> vr4_ks;
-  vr4_ks = getKaitaiStream(terrain + ".vr4");
+  vr4_ks = getKaitaiStream(arcfile + ".vr4");
   std::shared_ptr<tileset_vr4_t> vr4_loc(new tileset_vr4_t(vr4_ks.get()));
   vr4_raw = vr4_loc;
 
@@ -74,7 +74,7 @@ bool TilesetHub::convert(const std::string &terrain, std::shared_ptr<Palette> pa
   }
 
   // FIXME: I don't like the path handling in this case. Needs to be changed!
-  string save_png(storage.getFullPath() + "/test.png");
+  string save_png(storage.getFullPath() + "/" + storage.getFilename() + ".png");
   CheckPath(save_png);
   return !PngExporter::save(save_png, ultraTile, *palette, 0);
 }
