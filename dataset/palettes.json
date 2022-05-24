@@ -65,12 +65,20 @@
 	        "arcfile": "tileset\\ashworld.wpe"
 	    },
 	    {
+	        "name": "badlands",
+	        "arcfile": "tileset\\badlands.wpe"
+	    },
+	    {
 	        "name": "install",
 	        "arcfile": "tileset\\install.wpe"
 	    },
 	    {
 	        "name": "jungle",
 	        "arcfile": "tileset\\jungle.wpe"
+	    },
+	    {
+	        "name": "platform",
+	        "arcfile": "tileset\\platform.wpe"
 	    }
 	]
 }

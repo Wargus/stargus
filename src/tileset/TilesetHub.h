@@ -14,6 +14,7 @@
 #include "kaitai/tileset_vx4.h"
 #include "kaitai/tileset_vf4.h"
 #include "kaitai/tileset_vr4.h"
+#include "Storage.h"
 
 // system
 #include <memory>
@@ -28,13 +29,10 @@ public:
   TilesetHub(std::shared_ptr<Hurricane> hurricane);
   virtual ~TilesetHub();
 
-  void convert(const std::string &terrain, std::shared_ptr<Palette> palette);
+  bool convert(const std::string &terrain, std::shared_ptr<Palette> palette, Storage storage);
 
 
 private:
-  std::string mTerrain;
-  std::shared_ptr<Palette> mPalette;
-
   std::shared_ptr<tileset_cv5_t> cv5_raw;
   std::shared_ptr<tileset_vx4_t> vx4_raw;
   std::shared_ptr<tileset_vf4_t> vf4_raw;

@@ -56,6 +56,7 @@
 #include "Breeze.h"
 #include "Storage.h"
 #include "Wav.h"
+#include "tileset/TilesetHub.h"
 
 // system
 #include <nlohmann/json.hpp>
@@ -431,17 +432,13 @@ void testHook()
   //tileset.convert("jungle", terrainPalette);
 
   tileset::TilesetHub tilesethub(storm);
-  tilesethub.convert("jungle", terrainPalette);
-
-
+  tilesethub.convert("tileset\\jungle", terrainPalette, "/tmp/test");
 
   grp.save("/tmp/marine.png");
 
   cout << "end testHook()" << endl;
   exit(0);
 }
-
-
 
 /**
  **		Main
@@ -510,6 +507,10 @@ int main(int argc, const char **argv)
   Storage sounds;
   sounds.setDataPath(preferences.getDestDir());
   sounds.setDataType("sounds");
+
+  Storage tilesets;
+  tilesets.setDataPath(preferences.getDestDir());
+  tilesets.setDataType("graphics/tilesets");
 
   Storage data;
   data.setDataPath(preferences.getDestDir());
@@ -644,8 +645,11 @@ int main(int argc, const char **argv)
         case T: // WORKS!
         {
           printf("ConvertTileset: %s, %s", c[u].File, c[u].ArcFile);
-          Tileset terrain(storm);
-          case_func = terrain.ConvertTileset(c[u].ArcFile, c[u].File);
+          //Tileset terrain(storm);
+          //case_func = terrain.ConvertTileset(c[u].ArcFile, c[u].File);
+          tileset::TilesetHub terrain(storm);
+          case_func = terrain.convert(c[u].ArcFile, paletteMap.at(c[u].File), tilesets(c[u].File));
+
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;

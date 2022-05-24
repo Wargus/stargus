@@ -1,6 +1,6 @@
 DefineTileset(
-  "name", "Installation",
-  "image", "tilesets/installation/installation.png",
+  "name", "Install",
+  "image", "tilesets/install/install.png",
   "slots", {
 "solid", { "light-grass", "land", 
 {    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,	-- 000
