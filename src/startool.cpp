@@ -48,7 +48,6 @@
 #include "Grp.h"
 #include "Panel.h"
 #include "Widgets.h"
-#include "Tileset.h"
 #include "DataChunk.h"
 #include "Casc.h"
 #include "Dds.h"
