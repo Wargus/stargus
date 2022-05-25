@@ -5,11 +5,11 @@
  */
 
 // Local
+#include <luagen.h>
 #include "DataHub.h"
 #include "StringUtil.h"
 #include "Grp.h"
 #include "Unit.h"
-#include "LuaGen.h"
 #include "Preferences.h"
 #include "FileUtil.h"
 
@@ -427,7 +427,7 @@ bool DataHub::convertUnits(json &unitsJson,
 
   Storage luagen;
   luagen.setDataPath(preferences.getDestDir());
-  luagen.setDataType("luagen");
+  luagen.setDataType("luagen/units");
   CheckPath(luagen.getFullPath());
 
   ofstream lua_include;
@@ -468,7 +468,7 @@ bool DataHub::convertUnits(json &unitsJson,
       // cut the file ending and lower case it
       string grp_storage_file_base = to_lower(cutFileEnding(grp_storage_file, ".grp"));
 
-      cout << unit_name << " : " << arcfile << " => " << grp_storage_file_base << endl;
+      cout << unit_name << " : " << arcfile << " => " << grp_storage_file_base;
 
       Grp grp(mHurricane, arcfile);
       std::shared_ptr<Palette> pal;
@@ -516,7 +516,7 @@ bool DataHub::convertUnits(json &unitsJson,
       save_result = grp.save(png_file);
 
       Storage lua_file_store(luagen(unit_name + ".lua"));
-      cout << "lua: " << lua_file_store.getFullPath() << endl;
+      //cout << "lua: " << lua_file_store.getFullPath() << endl;
 
       ofstream lua_file;
       lua_file.open (lua_file_store.getFullPath());
@@ -536,7 +536,7 @@ bool DataHub::convertUnits(json &unitsJson,
 
       lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));
 
-      cout << unit_defintion << endl;
+      //cout << unit_defintion << endl;
 
       lua_file << unit_defintion;
       lua_file.close();

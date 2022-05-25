@@ -34,7 +34,7 @@ Load("scripts/zerg/units.lua")
 Load("scripts/protoss/units.lua")
 Load("scripts/neutral/units.lua")
 
-Load("luagen/luagen-units.lua")
+Load("luagen/units/luagen-units.lua")
 
 
 for idx,icon in ipairs(icons) do

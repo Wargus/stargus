@@ -10,20 +10,23 @@
 #include "PngExporter.h"
 #include "MegaTile.h"
 #include "FileUtil.h"
+#include "luagen.h"
+#include "Preferences.h"
 
 // system
 #include <iostream>
 #include <math.h>
+#include <fstream>
 
 using namespace std;
 
 namespace tileset
 {
 
-TilesetHub::TilesetHub(std::shared_ptr<Hurricane> hurricane) :
+TilesetHub::TilesetHub(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
   KaitaiConverter(hurricane)
 {
-
+  init(arcfile);
 }
 
 TilesetHub::~TilesetHub()
@@ -31,7 +34,7 @@ TilesetHub::~TilesetHub()
 
 }
 
-bool TilesetHub::convert(const std::string &arcfile, std::shared_ptr<Palette> palette, Storage storage)
+void TilesetHub::init(const std::string &arcfile)
 {
   std::shared_ptr<kaitai::kstream> cv5_ks;
   cv5_ks = getKaitaiStream(arcfile + ".cv5");
@@ -58,8 +61,10 @@ bool TilesetHub::convert(const std::string &arcfile, std::shared_ptr<Palette> pa
   //cout << "vf4_raw->elements()->size(): " << vf4_raw->elements()->size() << endl;
   //cout << "vr4_raw->elements()->size(): " << vr4_raw->elements()->size() << endl;
 
-  //FIXME: there is still one bug - some MiniTiles aren't correctly flipped?
+}
 
+bool TilesetHub::convert(std::shared_ptr<Palette> palette, Storage storage)
+{
   unsigned int num_tiles = vx4_raw->elements()->size();
   int tiles_width = 16;
   int tiles_height = ceil(static_cast<float>(num_tiles) / static_cast<float>(tiles_width));
@@ -77,6 +82,90 @@ bool TilesetHub::convert(const std::string &arcfile, std::shared_ptr<Palette> pa
   string save_png(storage.getFullPath() + "/" + storage.getFilename() + ".png");
   CheckPath(save_png);
   return !PngExporter::save(save_png, ultraTile, *palette, 0);
+}
+
+void TilesetHub::generateLua(const std::string &name, const std::string &image, Storage luafile)
+{
+  unsigned int num_cv5 = cv5_raw->elements()->size();
+
+  int num_doodad = 0;
+  int num_normal = 0;
+
+  ofstream lua_tileset_stream;
+  CheckPath(luafile.getFullPath());
+  lua_tileset_stream.open (luafile.getFullPath());
+
+  vector<string> tile_slots_vector;
+
+  for(unsigned int i = 0; i < num_cv5; i++)
+  {
+    tileset_cv5_t::group_t* group = cv5_raw->elements()->at(i);
+
+    if(group->doodad() != 0)
+    {
+      num_doodad++;
+      //cout << "doodad(" << i << "): ";
+    }
+    else
+    {
+      num_normal++;
+      //cout << "normal(" << i << "): ";
+    }
+
+    std::vector<uint16_t>* vx4_vf4_ref = group->megatile_references();
+
+    vector<string> tile_solids_vector;
+
+    for(auto elem : *vx4_vf4_ref)
+    {
+      //cout << to_string(elem);
+
+
+      tileset_vf4_t::minitile_t* minitile = vf4_raw->elements()->at(elem);
+
+      unsigned int walkable_median = 0;
+      for(auto flags : *minitile->flags())
+      {
+          walkable_median += flags->walkable();
+      }
+
+      walkable_median /= 16; // 8 is the 50% unpassable Minitles per Megatile rule
+
+      //if(elem) // only for valid references check walkability
+      //{
+        //cout << (walkable_median ? "->(w)" : "->(nw) ");
+
+        tile_solids_vector.push_back(to_string(elem));
+
+        if(!walkable_median)
+        {
+          tile_solids_vector.push_back(lg::table(lg::quote("unpassable")));
+        }
+        else
+        {
+
+        }
+      //}
+      //cout << ", ";
+    }
+    //cout << endl;
+
+    string tile_solids_str = lg::params(tile_solids_vector);
+    string solid_str = lg::line(lg::tilesetSlotEntry("solid", {"light-grass", "land"}, {tile_solids_str}));
+
+    tile_slots_vector.push_back(solid_str);
+  }
+
+  string tile_slots_str = lg::params(tile_slots_vector);
+  string lua_tileset_str = lg::DefineTileset(name, image, {tile_slots_str});
+
+  //cout << lua_tileset_str << endl;
+
+  lua_tileset_stream << lua_tileset_str;
+  lua_tileset_stream.close();
+
+  //cout << "num_doodad: " << num_doodad << endl;
+  //cout << "num_normal: " << num_normal << endl;
 }
 
 } /* namespace tileset */

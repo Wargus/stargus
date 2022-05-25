@@ -430,8 +430,10 @@ void testHook()
   //Tileset tileset(storm);
   //tileset.convert("jungle", terrainPalette);
 
-  tileset::TilesetHub tilesethub(storm);
-  tilesethub.convert("tileset\\jungle", terrainPalette, "/tmp/test");
+  tileset::TilesetHub tilesethub(storm, "tileset\\jungle");
+  //tilesethub.convert(terrainPalette, "/tmp/test");
+
+  tilesethub.generateLua("Jungle", "tilesets/jungle/jungle.png", "/tmp/jungle.lua");
 
   grp.save("/tmp/marine.png");
 
@@ -510,6 +512,10 @@ int main(int argc, const char **argv)
   Storage tilesets;
   tilesets.setDataPath(preferences.getDestDir());
   tilesets.setDataType("graphics/tilesets");
+
+  Storage luagen;
+  luagen.setDataPath(preferences.getDestDir());
+  luagen.setDataType("luagen");
 
   Storage data;
   data.setDataPath(preferences.getDestDir());
@@ -644,10 +650,12 @@ int main(int argc, const char **argv)
         case T: // WORKS!
         {
           printf("ConvertTileset: %s, %s", c[u].File, c[u].ArcFile);
-          //Tileset terrain(storm);
-          //case_func = terrain.ConvertTileset(c[u].ArcFile, c[u].File);
-          tileset::TilesetHub terrain(storm);
-          case_func = terrain.convert(c[u].ArcFile, paletteMap.at(c[u].File), tilesets(c[u].File));
+          tileset::TilesetHub terrain(storm, c[u].ArcFile);
+          case_func = terrain.convert(paletteMap.at(c[u].File), tilesets(c[u].File));
+
+          string luafile(string("tilesets/") + c[u].File + ".lua");
+          string pngfile(string("tilesets/") + c[u].File + "/" + c[u].File + ".png");
+          terrain.generateLua(c[u].File, pngfile, luagen(luafile));
 
           printf("...%s\n", case_func ? "ok" : "nok");
         }

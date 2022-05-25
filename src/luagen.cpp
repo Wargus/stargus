@@ -4,7 +4,7 @@
  *      Author: Andreas Volz
  */
 
-#include "LuaGen.h"
+#include <luagen.h>
 
 using namespace std;
 
@@ -54,6 +54,28 @@ std::string quote(const std::string &text)
   return quote_str;
 }
 
+
+std::string params(const std::vector<std::string> &params)
+{
+  string param_str;
+
+  unsigned int i = 1;
+  for(auto func_it = params.begin(); func_it != params.end(); func_it++)
+  {
+    const std::string &param = *func_it;
+    param_str += param;
+
+    if(i < params.size())
+    {
+      param_str += ", ";
+    }
+
+    i++;
+  }
+
+  return param_str;
+}
+
 std::string params(const std::initializer_list<std::string> &params)
 {
   string param_str;
@@ -75,9 +97,40 @@ std::string params(const std::initializer_list<std::string> &params)
   return param_str;
 }
 
+std::string paramsQuote(const std::initializer_list<std::string> &params)
+{
+  string param_str;
+
+  unsigned int i = 1;
+  for(auto func_it = params.begin(); func_it != params.end(); func_it++)
+  {
+    const std::string &param = *func_it;
+    param_str += "\"" + param + "\"";
+
+    if(i < params.size())
+    {
+      param_str += ", ";
+    }
+
+    i++;
+  }
+
+  return param_str;
+}
+
 std::string line(const std::string &str)
 {
   return string(str + '\n');
+}
+
+std::string sizeTable(const Size &s)
+{
+  return table({to_string(s.getWidth()), to_string(s.getHeight())});
+}
+
+std::string posTable(const Pos &p)
+{
+  return table({to_string(p.getX()), to_string(p.getY())});
 }
 
 std::string DefineUnitType(const std::string &id, const std::string &unitTable)
@@ -95,14 +148,19 @@ std::string CreateUnit(const std::string &id, int playerID, const Pos &pos)
   return function("CreateUnit", {quote(id), to_string(playerID), posTable(pos)});
 }
 
-std::string sizeTable(const Size &s)
+std::string DefineTileset(const std::string &name, const std::string &image, const std::initializer_list<std::string> &slotsTable)
 {
-  return table({to_string(s.getWidth()), to_string(s.getHeight())});
+  return function("DefineTileset", {quote("name"), quote(name), quote("image"), quote(image), quote("slots"), table(slotsTable)});
 }
 
-std::string posTable(const Pos &p)
+std::string tilesetSlotEntry(const std::string &type, const std::initializer_list<std::string> &propertiesQuotedParams, const std::initializer_list<std::string> &tilesTable)
 {
-  return table({to_string(p.getX()), to_string(p.getY())});
+  return params({quote(type), table({paramsQuote(propertiesQuotedParams), table(tilesTable)})});
+}
+
+std::string tilesetSlotEntryNonMix(const std::string &type, const std::initializer_list<std::string> &propertiesQuotedParams, const std::initializer_list<std::string> &tilesTable)
+{
+  return params({quote(type), table({paramsQuote(propertiesQuotedParams), table(tilesTable)})});
 }
 
 } /* namespace lg */

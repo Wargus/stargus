@@ -32,7 +32,7 @@ startool_sources = files(
 	'Wav.cpp',
 	'Palette2D.cpp',
 	'StringUtil.cpp',
-	'LuaGen.cpp',
+	'luagen.cpp',
 	'platform.cpp'
 	)
 	

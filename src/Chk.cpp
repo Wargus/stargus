@@ -5,14 +5,12 @@
  */
 
 // Local
+#include <luagen.h>
 #include "Chk.h"
 #include "WorldMap.h"
 #include "endian.h"
 #include "Hurricane.h"
 #include "FileUtil.h"
-#include "LuaGen.h"
-
-// System
 #include <cstring>
 #include <cstdint>
 #include <stdlib.h>
@@ -1067,7 +1065,7 @@ void Chk::SaveSMS(Storage storage)
 
   fprintf(fd, "\n\n");
 
-  fprintf(fd, "LoadTileModels(\"scripts/tilesets/%s.lua\")\n",
+  fprintf(fd, "LoadTileModels(\"luagen/tilesets/%s.lua\")\n",
           map->MapTerrainName);
 
   fprintf(fd, "\n\n");

@@ -26,14 +26,16 @@ namespace tileset
 class TilesetHub : public KaitaiConverter
 {
 public:
-  TilesetHub(std::shared_ptr<Hurricane> hurricane);
+  TilesetHub(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile);
   virtual ~TilesetHub();
 
-  bool convert(const std::string &arcfile,
-      std::shared_ptr<Palette> palette, Storage storage);
+  bool convert(std::shared_ptr<Palette> palette, Storage storage);
 
+  void generateLua(const std::string &name, const std::string &image, Storage luafile);
 
 private:
+  void init(const std::string &arcfile);
+
   std::shared_ptr<tileset_cv5_t> cv5_raw;
   std::shared_ptr<tileset_vx4_t> vx4_raw;
   std::shared_ptr<tileset_vf4_t> vf4_raw;
