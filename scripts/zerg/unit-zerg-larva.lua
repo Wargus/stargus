@@ -14,7 +14,7 @@ DefineAnimations("animations-zerg-larva-death", {
 })
 
 
-DefineUnitType("unit-zerg-larve-death", { Name = "Dead Larva",
+DefineUnitType("unit-zerg-larve-death", {
   Image = {"file", "zerg/units/larva death.png", "size", {64, 64}},
   Animations = "animations-zerg-larve-death", Icon = "icon-zerg-larva",
   NumDirections = 1,

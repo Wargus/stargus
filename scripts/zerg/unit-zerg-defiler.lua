@@ -11,7 +11,7 @@ DefineAnimations("animations-zerg-defiler-death", {
   },
 })
 
-DefineUnitType("unit-zerg-defiler-death", { Name = "Dead Defiler",
+DefineUnitType("unit-zerg-defiler-death", {
   Animations = "animations-zerg-defiler-death", Icon = "icon-zerg-defiler",
   NumDirections = 1,
   HitPoints = 255,

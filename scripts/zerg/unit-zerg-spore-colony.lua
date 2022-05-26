@@ -16,7 +16,7 @@ DefineAnimations("animations-zerg-spore-colony", {
 })
 
 
-DefineUnitType("unit-zerg-spore-colony", { Name = "Spore Colony",
+DefineUnitType("unit-zerg-spore-colony", {
   Shadow = {"file", "zerg/units/spore colony shadow.png", "size",  {128, 128}},
   Animations = "animations-zerg-spore-colony", Icon = "icon-zerg-spore-colony",
   Costs = {"time", 200, "minerals", 75},

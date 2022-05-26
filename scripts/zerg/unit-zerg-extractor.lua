@@ -14,7 +14,7 @@ DefineAnimations("animations-zerg-extractor", {
 })
 
 
-DefineUnitType("unit-zerg-extractor", { Name = "Extractor",
+DefineUnitType("unit-zerg-extractor", {
   Shadow = {"file", "zerg/units/extractor shadow.png", "size", {128, 192}},
   Animations = "animations-zerg-extractor", Icon = "icon-zerg-extractor",
   Costs = {"time", 200, "minerals", 50},

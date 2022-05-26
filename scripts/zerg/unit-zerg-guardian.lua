@@ -12,7 +12,7 @@ DefineAnimations("animations-zerg-guardian-death", {
 })
 
 
-DefineUnitType("unit-zerg-guardian-death", { Name = "Dead Guardian",
+DefineUnitType("unit-zerg-guardian-death", {
   Animations = "animations-zerg-guardian-death", Icon = "icon-zerg-guardian",
   NumDirections = 1,
   HitPoints = 255,

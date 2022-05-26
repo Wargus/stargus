@@ -13,7 +13,7 @@ DefineAnimations("animations-zerg-hatchery", {
   },
 })
 
-DefineUnitType("unit-zerg-hatchery", { Name = "Zerg Hatchery",
+DefineUnitType("unit-zerg-hatchery", {
   Shadow = {"file", "zerg/units/hatchery shadow.png", "size", {192, 160}},
   Animations = "animations-zerg-hatchery", Icon = "icon-zerg-hatchery",
   OnEachSecond = (function (self)

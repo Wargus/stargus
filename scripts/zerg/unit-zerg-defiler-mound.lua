@@ -11,7 +11,7 @@ DefineAnimations("animations-zerg-defiler-mound", {
 })
 
 
-DefineUnitType("unit-zerg-defiler-mound", { Name = "Defiler Mound",
+DefineUnitType("unit-zerg-defiler-mound", {
   Shadow = {"file", "zerg/units/defiler mound shadow.png", "size",  {128, 128}},
   Animations = "animations-zerg-defiler-mound", Icon = "icon-zerg-defiler-mound",
   Costs = {"time", 200, "minerals", 100, "gas", 100},

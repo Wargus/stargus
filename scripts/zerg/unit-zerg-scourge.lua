@@ -55,7 +55,7 @@ DefineAnimations("animations-zerg-scourge", {
 })
 
 
-DefineUnitType("unit-zerg-scourge", { Name = "Scourge",
+DefineUnitType("unit-zerg-scourge", {
   Shadow = {"file", "zerg/units/scourge.png", "size", {48, 48}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-zerg-scourge", Icon = "icon-zerg-scourge",

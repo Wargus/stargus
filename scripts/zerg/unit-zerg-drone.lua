@@ -28,7 +28,7 @@ DefineAnimations("animations-zerg-drone", {
 })
 
 
-DefineUnitType("unit-zerg-drone", { Name = "Zerg Drone",
+DefineUnitType("unit-zerg-drone", {
   Shadow = {"file", "zerg/units/drone.png", "size", {128, 128}},
   NumDirections = 32,
   Animations = "animations-zerg-drone", Icon = "icon-zerg-drone",
@@ -50,13 +50,13 @@ DefineUnitType("unit-zerg-drone", { Name = "Zerg Drone",
   LandUnit = true,
   Coward = true,
   CanGatherResources = {
-   {"file-when-loaded", "zerg/units/drone.png",
+   {"file-when-loaded", "graphics/unit/zerg/drone.png",
     "resource-id", "minerals",
     "harvest-from-outside",
     "resource-capacity", 8,
     "wait-at-resource", 150,
     "wait-at-depot", 50},
-   {"file-when-loaded", "zerg/units/drone.png",
+   {"file-when-loaded", "graphics/unit/zerg/drone.png",
     "resource-id", "gas",
     "resource-capacity", 8,
     "wait-at-resource", 50,

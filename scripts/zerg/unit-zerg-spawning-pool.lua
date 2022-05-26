@@ -13,7 +13,7 @@ DefineAnimations("animations-zerg-spawning-pool", {
 })
 
 
-DefineUnitType("unit-zerg-spawning-pool", { Name = "Spawning Pool",
+DefineUnitType("unit-zerg-spawning-pool", {
   Shadow = {"file", "zerg/units/spawning pool shadow.png", "size", {96, 128}},
   Animations = "animations-zerg-spawning-pool", Icon = "icon-zerg-spawning-pool",
   Costs = {"time", 200, "minerals", 150},

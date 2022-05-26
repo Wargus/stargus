@@ -12,7 +12,7 @@ DefineAnimations("animations-zerg-overlord-death", {
 })
 
 
-DefineUnitType("unit-zerg-overlord-death", { Name = "Dead Overlord",
+DefineUnitType("unit-zerg-overlord-death", {
   Image = {"file", "zerg/units/overlord death.png", "size", {72, 72}},
   Animations = "animations-zerg-overlord-death", Icon = "icon-zerg-overlord",
   NumDirections = 1,
