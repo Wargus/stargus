@@ -602,20 +602,12 @@ int main(int argc, const char **argv)
     for(auto &array : units_json)
     {
       string unit_name = array.at("name");
-      //int unit_id = array.at("id");
       unitNames.push_back(unit_name);
-      //cout << unit_name << endl;
-
-      //Grp grp(sub_storm, c[u].ArcFile);
-      //std::shared_ptr<Palette> pal;
     }
 
     loadPalettes(sub_storm, paletteMap, palette2DMap);
 
     datahub.convertUnits(units_json, paletteMap, palette2DMap);
-    //datahub.printCSV();
-
-    //exit(0);
 
     for (i = 0; i <= 1; ++i)
     {
@@ -710,7 +702,6 @@ int main(int argc, const char **argv)
           }
 
           case_func = grp.save(graphics(string(c[u].File) + ".png"));
-          //grp.saveLUAConfig(graphics(string(c[u].File) + ".lua")); // FIXME: works only after save()
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;

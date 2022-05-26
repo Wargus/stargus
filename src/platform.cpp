@@ -24,7 +24,7 @@ int unlink(const std::string &pathname)
 #ifdef _MSC_VER
   return _unlink(pathname.c_str());
 #else
-  return unlink(pathname.c_str());
+  return ::unlink(pathname.c_str());
 #endif
 }
 
