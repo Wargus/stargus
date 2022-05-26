@@ -9,7 +9,7 @@ StartoolUnitTest_sources = files(
   'BreezeTest.cpp',
   'PcxTest.cpp',
   'TiledPaletteImageTest.cpp',
-  
+  'luagenTest.cpp',
   
   # needed internal dependencies to build the tests
   '../../src/Storm.cpp',
@@ -26,7 +26,8 @@ StartoolUnitTest_sources = files(
   '../../src/Converter.cpp',
   '../../src/Storage.cpp',
   '../../src/platform.cpp',
-  '../../src/tileset/TiledPaletteImage.cpp'
+  '../../src/tileset/TiledPaletteImage.cpp',
+  '../../src/luagen.cpp'
   )
 
 executable('StartoolUnitTest', 

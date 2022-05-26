@@ -1,5 +1,5 @@
 /*
- * LuaGen.cpp
+ * luagen.cpp
  *
  *      Author: Andreas Volz
  */
@@ -54,47 +54,14 @@ std::string quote(const std::string &text)
   return quote_str;
 }
 
-
-std::string params(const std::vector<std::string> &params)
+std::string params(const std::initializer_list<std::string> &params_init_list)
 {
-  string param_str;
-
-  unsigned int i = 1;
-  for(auto func_it = params.begin(); func_it != params.end(); func_it++)
-  {
-    const std::string &param = *func_it;
-    param_str += param;
-
-    if(i < params.size())
-    {
-      param_str += ", ";
-    }
-
-    i++;
-  }
-
-  return param_str;
+  return params(params_init_list.begin(), params_init_list.end());
 }
 
-std::string params(const std::initializer_list<std::string> &params)
+std::string params(const std::vector<std::string> &param_vector)
 {
-  string param_str;
-
-  unsigned int i = 1;
-  for(auto func_it = params.begin(); func_it != params.end(); func_it++)
-  {
-    const std::string &param = *func_it;
-    param_str += param;
-
-    if(i < params.size())
-    {
-      param_str += ", ";
-    }
-
-    i++;
-  }
-
-  return param_str;
+  return params(param_vector.begin(), param_vector.end());
 }
 
 std::string paramsQuote(const std::initializer_list<std::string> &params)
