@@ -32,7 +32,7 @@ DefineConstruction("construction-protoss-arbiter-tribunal", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-arbiter-tribunal", { Name = "Arbiter Tribunal",
+DefineUnitType("unit-protoss-arbiter-tribunal", {
   Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-arbiter-tribunal", Icon = "icon-protoss-arbiter-tribunal",
   Costs = {"time", 30, "minerals", 100},

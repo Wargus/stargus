@@ -629,7 +629,7 @@ DefineConstruction("construction-protoss-assimulator", {
 }
 })
 
-DefineUnitType("unit-protoss-assimulator", { Name = "Assimulator",
+DefineUnitType("unit-protoss-assimulator", {
   Shadow = {"file", "protoss/units/passhad.png", "size", {192, 192}},
   Animations = "animations-protoss-assimulator", Icon = "icon-zerg-extractor",
   Costs = {"time", 200, "minerals", 100},

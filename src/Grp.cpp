@@ -110,6 +110,7 @@ bool Grp::save(Storage filename)
     {
       unsigned char *p;
       unsigned char *end;
+
       // 0 and 255 are transparent
       p = image;
       end = image + w * h;

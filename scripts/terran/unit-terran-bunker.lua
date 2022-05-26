@@ -30,7 +30,7 @@ DefineConstruction("construction-terran-bunker", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-terran-bunker", { Name = "Bunker",
+DefineUnitType("unit-terran-bunker", {
   Shadow = {"file", "terran/units/bunker shadow.png", "size",  {96, 128}},
   Animations = "animations-terran-bunker", Icon = "icon-terran-bunker",
   Costs = {"time", 200, "minerals", 100},

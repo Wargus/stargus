@@ -129,23 +129,16 @@ void TilesetHub::generateLua(const std::string &name, const std::string &image, 
           walkable_median += flags->walkable();
       }
 
+
       walkable_median /= 16; // 8 is the 50% unpassable Minitles per Megatile rule
 
-      //if(elem) // only for valid references check walkability
-      //{
-        //cout << (walkable_median ? "->(w)" : "->(nw) ");
+      tile_solids_vector.push_back(to_string(elem));
 
-        tile_solids_vector.push_back(to_string(elem));
+      if(!walkable_median)
+      {
+        tile_solids_vector.push_back(lg::table(lg::quote("unpassable")));
+      }
 
-        if(!walkable_median)
-        {
-          tile_solids_vector.push_back(lg::table(lg::quote("unpassable")));
-        }
-        else
-        {
-
-        }
-      //}
       //cout << ", ";
     }
     //cout << endl;

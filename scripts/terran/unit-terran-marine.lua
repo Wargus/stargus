@@ -69,7 +69,7 @@ DefineAnimations("animations-terran-marine", {
   },
 })
 
-DefineUnitType("unit-terran-marine", { Name = "Marine",
+DefineUnitType("unit-terran-marine", {
   Shadow = {"file", "terran/units/marine shadow.png", "size", {44, 44}},
   --Shadow = {"offset", {-3, -3}, "scale", 1},
   Animations = "animations-terran-marine", Icon = "icon-terran-marine",

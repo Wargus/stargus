@@ -29,7 +29,7 @@ DefineAnimations("animations-terran-goliath", {
   },
 })
 
-DefineUnitType("unit-terran-goliath", { Name = "Goliath",
+DefineUnitType("unit-terran-goliath", {
   Shadow = {"file", "terran/units/goliath shadow.png", "size", {76, 76}},
   Animations = "animations-terran-goliath", Icon = "icon-terran-goliath",
   Costs = {"time", 60, "minerals", 100, "gas", 50},

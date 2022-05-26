@@ -44,7 +44,7 @@ DefineUnitType("unit-terran-refinery", { Name = "Refinery",
   ExplodeWhenKilled = "missile-explosion",
   Type = "land",
   Building = true, VisibleUnderFog = true,
-  BuildingRules = { { "ontop", { Type = "unit-vespene-geyser", ReplaceOnDie = true, ReplaceOnBuild = true} } },
+  BuildingRules = { { "ontop", { Type = "unit-resource-vespene-geyser", ReplaceOnDie = true, ReplaceOnBuild = true} } },
   GivesResource = "gas", CanHarvest = true,
   Sounds = {
     "selected", "terran-refinery-selected",

@@ -16,7 +16,7 @@ DefineAnimations("animations-terran-wraith", {
     --[[active overlay 332,0]] "wait 3", "unbreakable end", "wait 1",},
 })
 
-DefineUnitType("unit-terran-wraith", { Name = "Wraith",
+DefineUnitType("unit-terran-wraith", {
   Shadow = {"file", "terran/units/wraith.png", "size", {64, 64}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-terran-wraith", Icon = "icon-terran-wraith",

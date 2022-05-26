@@ -34,7 +34,7 @@ DefineAnimations("animations-protoss-zealot", {
 })
 
 
-DefineUnitType("unit-protoss-zealot", { Name = "Zealot",
+DefineUnitType("unit-protoss-zealot", {
   Shadow = {"file", "protoss/units/pzeshad.png", "size", {128, 128}},
   Animations = "animations-protoss-zealot", Icon = "icon-protoss-zealot",
   Costs = {"time", 100, "minerals", 100},

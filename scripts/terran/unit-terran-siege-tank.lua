@@ -26,7 +26,7 @@ DefineAnimations("animations-terran-siege-tank", {
   },
 })
 
-DefineUnitType("unit-terran-siege-tank", { Name = "Siege Tank",
+DefineUnitType("unit-terran-siege-tank", {
   --Shadow = {"offset", {0, 4}, "scale", 1},
   Shadow = {"file", "terran/units/siege tank tank shadow.png", "size", {128, 128}},
   Animations = "animations-terran-siege-tank", Icon = "icon-terran-siege-tank",

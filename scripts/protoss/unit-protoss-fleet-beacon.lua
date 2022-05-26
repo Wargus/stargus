@@ -33,7 +33,7 @@ DefineConstruction("construction-protoss-fleet-beacon", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-fleet-beacon", { Name = "Fleet Beacon",
+DefineUnitType("unit-protoss-fleet-beacon", {
   Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-stargate", Icon = "icon-protoss-fleet-beacon",
   Costs = {"time", 30, "minerals", 100},

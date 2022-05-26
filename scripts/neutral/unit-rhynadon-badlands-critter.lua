@@ -4,7 +4,7 @@ DefineAnimations("animations-rhynadon-badlands-critter", {
   },
 })
 
-DefineUnitType("unit-critter-rhynadon", { Name = "Rhynadon (Badlands Critter)",
+DefineUnitType("unit-critter-rhynadon", {
   Shadow = {"file", "neutral/units/rhynadon badlands critter shadow.png", "size", {104, 104}},
   Animations = "animations-rhynadon-badlands-critter", Icon = "icon-rhynadon-badlands-critter",
   NeutralMinimapColor = {0, 228, 252},

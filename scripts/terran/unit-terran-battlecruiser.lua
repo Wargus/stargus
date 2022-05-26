@@ -16,7 +16,7 @@ DefineAnimations("animations-terran-battlecruiser", {
     --[[active overlay 333,0]] "wait 3", "unbreakable end", "wait 1",},
 })
 
-DefineUnitType("unit-terran-battlecruiser", { Name = "Battlecruiser",
+DefineUnitType("unit-terran-battlecruiser", {
   Shadow = {"offset", {0, 42}, "scale", 1},
   --Shadow = {"file", "terran/units/battlecruiser.png", "size", {120, 120}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,

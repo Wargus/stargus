@@ -34,7 +34,7 @@ DefineAnimations("animations-protoss-dark-templar", {
 })
 
 
-DefineUnitType("unit-protoss-dark-templar", { Name = "Dark Templar",
+DefineUnitType("unit-protoss-dark-templar", {
   Shadow = {"file", "protoss/units/pzeshad.png", "size", {128, 128}},
   Animations = "animations-protoss-dark-templar", Icon = "icon-protoss-dark-templar",
   Costs = {"time", 100, "minerals", 100},

@@ -33,7 +33,7 @@ DefineConstruction("construction-terran-command-center", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-terran-command-center", { Name = "Command Center",
+DefineUnitType("unit-terran-command-center", {
   Shadow = {"file", "terran/units/command center shadow.png", "size", {128, 160}},
   Animations = "animations-terran-command-center", Icon = "icon-terran-command-center",
   Costs = {"time", 255, "minerals", 400},

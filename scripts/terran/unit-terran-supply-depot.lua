@@ -30,7 +30,7 @@ DefineConstruction("construction-terran-supply-depot", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-terran-supply-depot", { Name = "Supply Depot",
+DefineUnitType("unit-terran-supply-depot", {
   Shadow = {"file", "graphics/terran/units/supply depot shadow.png", "size", {96, 128}},
   Animations = "animations-terran-supply-depot", Icon = "icon-terran-supply-depot",
   Costs = {"time", 100, "minerals", 100},

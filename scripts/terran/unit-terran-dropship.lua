@@ -14,7 +14,7 @@ DefineAnimations("animations-terran-dropship", {
     --[[active overlay 332,0]] "wait 3", "unbreakable end", "wait 1",},
 })
 
-DefineUnitType("unit-terran-dropship", { Name = "Wraith",
+DefineUnitType("unit-terran-dropship", {
   -- Shadow = {"file", "terran/units/dropship.png", "size", {60, 60}, "offset", {0, 42}},
   Shadow = {"offset", {0, 42}, "scale", 1},
   DrawLevel = 45, NumDirections = 32,
