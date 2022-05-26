@@ -35,6 +35,7 @@
 #include "endian.h"
 #include "FileUtil.h"
 #include "Storm.h"
+#include "platform.h"
 
 // System
 #include <stdio.h>
@@ -45,19 +46,6 @@
 #include <string>
 #include <vector>
 #include <string>
-
-#ifdef _MSC_VER
-#define strdup _strdup
-#define DEBUG _DEBUG
-#define PATH_MAX _MAX_PATH
-#include <direct.h>
-#include <io.h>
-#define dirname(x) PathRemoveFileSpec(x); if (x[strlen(x) - 1] == '\\') x[strlen(x) - 1] = '\0'
-#else
-#include <libgen.h>
-#include <limits.h>
-#include <unistd.h>
-#endif
 
 using namespace std;
 
@@ -88,11 +76,7 @@ bool Scm::convert(const std::string &arcfile, const std::vector<std::string> &un
     result = chk.convert("staredit\\scenario.chk", storage.getFullPath());
 
     // delete the temporary .chk file -> below don't access 'breeze' any more!
-#ifdef _MSC_VER
-    _unlink(scm_path.c_str());
-#else
-    unlink(scm_path.c_str());
-#endif
+    platform::unlink(scm_path);
   }
 
   return result;
