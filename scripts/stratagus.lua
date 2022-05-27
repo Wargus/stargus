@@ -186,6 +186,7 @@ SetMinimapTerrain(true)
 
 Preference.GrayscaleIcons = true
 
+-- Western European Codepage
 SetFontCodePage(1252)
 
 -------------------------------------------------------------------------------

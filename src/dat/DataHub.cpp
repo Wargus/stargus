@@ -541,6 +541,8 @@ bool DataHub::convertUnits(json &unitsJson,
 
       // TODO: possible optimization possible as some units point toward the same grp
       // could be checked before if the png is yet extracted in the same run
+      // idea: some list in memory to check which things (graphics, weapons, orders,...)
+      // referenced by units are yet exported. Then also the LUA files have not to be overwritten several times
       Storage png_file = graphics(grp_storage_file_base + ".png");
       save_result = grp.save(png_file);
 
