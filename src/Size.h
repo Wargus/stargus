@@ -24,7 +24,9 @@ public:
 
   Size& operator= (const Size& inRHS);
 
-  Size& operator *= (const Size& inSize);
+  Size& operator*= (const Size& inSize);
+
+  Size& operator* (const Size& inSize);
 
   bool operator== (const Size& inSize) const;
 
@@ -83,11 +85,9 @@ inline Size& Size::operator*= (const Size& inSize)
   return *this;
 }
 
-inline Size& operator* (const Size& s1, const Size& s2)
+inline Size operator* (const Size& s1, const Size& s2)
 {
-  Size s3 (s1);
-
-  return s3 *= s2;
+  return Size(s1.getWidth() * s2.getWidth(), s1.getHeight() * s2.getHeight());
 }
 
 #endif // SIZE_H
