@@ -1,11 +1,15 @@
 /*
  * FileUtil.cpp
  *
- *  Created on: 02.11.2021
  *      Author: Andreas Volz
  */
 
+// project
 #include "FileUtil.h"
+
+// system
+#include <sys/types.h>
+#include <sys/stat.h>
 
 using namespace std;
 
@@ -34,11 +38,8 @@ void CheckPath(const char *path)
   char *cp = NULL;
   char *s = NULL;
 
-#ifdef WIN32
-  cp = _strdup(path);
-#else
-  cp = strdup(path);
-#endif
+  cp = platform::strdup(path);
+
   s = strrchr(cp, '/');
   if (s)
   {
@@ -52,11 +53,9 @@ void CheckPath(const char *path)
       {
         *s = '\0';
       }
-#if defined(_MSC_VER) || defined(WIN32)
-      _mkdir(cp);
-#else
-      mkdir(cp, 0777);
-#endif
+
+      platform::mkdir(cp, 0777);
+
       if (s)
       {
         *s++ = '/';
