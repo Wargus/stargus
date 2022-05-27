@@ -9,7 +9,6 @@
 
 // project
 #include "Converter.h"
-#include "Logger.h"
 #include "Storage.h"
 
 // system
@@ -25,7 +24,7 @@ public:
   bool convert(const std::string &arcfile, Storage storage);
 
 private:
-  Logger mLogger;
+
 };
 
 #endif /* WAV_H*/

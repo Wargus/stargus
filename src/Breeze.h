@@ -8,7 +8,6 @@
 #define BREEZE_H_
 
 #include "Hurricane.h"
-#include "Logger.h"
 
 /**
  * This has the same interface as Hurricane but is
@@ -44,7 +43,7 @@ public:
   //virtual std::istream getStream(const std::string &archivedFile);
 
 private:
-  Logger mLogger;
+
 };
 
 #endif /* BREEZE_H_ */

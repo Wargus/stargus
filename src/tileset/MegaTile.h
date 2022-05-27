@@ -30,7 +30,6 @@ public:
   std::shared_ptr<PaletteImage> getImage();
 
 private:
-  Logger mLogger;
   TilesetHub &mTilesetHub;
   size_t mElement;
   std::shared_ptr<TiledPaletteImage> mPaletteImage;

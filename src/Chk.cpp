@@ -11,11 +11,15 @@
 #include "endian.h"
 #include "Hurricane.h"
 #include "FileUtil.h"
+#include "Logger.h"
+
+// system
 #include <cstring>
 #include <cstdint>
 #include <stdlib.h>
 #include <algorithm>
 #include <iostream>
+
 
 #ifdef DEBUG
 #define DebugLevel1(x) printf(x)
@@ -29,6 +33,8 @@
 
 using namespace std;
 
+static Logger logger = Logger("startool.Chk");
+
 static const char *TypeNames[] =
 {
   "nobody", NULL, NULL, "rescue-passive", NULL, "computer", "person",
@@ -39,7 +45,6 @@ static const char *RaceNames[] =
 
 Chk::Chk(std::shared_ptr<Hurricane> hurricane) :
   Converter(hurricane),
-  mLogger("startool.Chk"),
   map(new WorldMap())
 {
 

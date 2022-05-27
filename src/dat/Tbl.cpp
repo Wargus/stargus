@@ -8,6 +8,7 @@
 #include "Hurricane.h"
 #include "StringUtil.h"
 #include "Tbl.h"
+#include "Logger.h"
 
 // System
 #include <iostream>
@@ -19,6 +20,8 @@
 
 using namespace std;
 
+static Logger logger = Logger("startool.DataHub.Tbl");
+
 // this is a very local debug print concept. But for this use case of sequence character debugging perfect...
 int no_printf(const char *format, ...)
 {
@@ -27,8 +30,7 @@ int no_printf(const char *format, ...)
 //#define dbg_printf printf
 #define dbg_printf no_printf
 
-Tbl::Tbl() :
-  mLogger("startool.Tbl")
+Tbl::Tbl()
 {
 
 }
@@ -193,12 +195,12 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
         }
         else
         {
-          LOG4CXX_ERROR(mLogger, "No UTF-8 conversation possible!");
+          LOG4CXX_ERROR(logger, "No UTF-8 conversation possible!");
         }
       }
       else
       {
-        LOG4CXX_ERROR(mLogger, "ASCII characters > 255 should not be possible!");
+        LOG4CXX_ERROR(logger, "ASCII characters > 255 should not be possible!");
       }
     }
     dbg_printf("\n");
@@ -238,7 +240,7 @@ char *Tbl::iconvISO2UTF8(char *iso)
     {
       snprintf(buf, sizeof(buf), "conversion from '%s' to '%s' not available",
                "ISO−8859−1", "UTF-8");
-      LOG4CXX_ERROR(mLogger, buf);
+      LOG4CXX_ERROR(logger, buf);
     }
     else
     {
@@ -258,7 +260,7 @@ char *Tbl::iconvISO2UTF8(char *iso)
   if (!len)
   {
     snprintf(buf, sizeof(buf), "iconvISO2UTF8: input String is empty.");
-    LOG4CXX_ERROR(mLogger, buf);
+    LOG4CXX_ERROR(logger, buf);
     return NULL;
   }
 
@@ -268,7 +270,7 @@ char *Tbl::iconvISO2UTF8(char *iso)
   if (!utf8)
   {
     snprintf(buf, sizeof(buf), "iconvISO2UTF8: Calloc failed.");
-    LOG4CXX_ERROR(mLogger, buf);
+    LOG4CXX_ERROR(logger, buf);
     return NULL;
   }
   /* Keep track of the variables. */
@@ -289,25 +291,25 @@ char *Tbl::iconvISO2UTF8(char *iso)
       snprintf(buf, sizeof(buf),
                "iconv failed: Invalid multibyte sequence, in string '%s', length %d, out string '%s', length %d\n",
                iso, (int) len, utf8start, (int) utf8len);
-      LOG4CXX_ERROR(mLogger, buf);
+      LOG4CXX_ERROR(logger, buf);
       break;
     case EINVAL:
       snprintf(buf, sizeof(buf),
                "iconv failed: Incomplete multibyte sequence, in string '%s', length %d, out string '%s', length %d\n",
                iso, (int) len, utf8start, (int) utf8len);
-      LOG4CXX_ERROR(mLogger, buf);
+      LOG4CXX_ERROR(logger, buf);
       break;
     case E2BIG:
       snprintf(buf, sizeof(buf),
                "iconv failed: No more room, in string '%s', length %d, out string '%s', length %d\n",
                iso, (int) len, utf8start, (int) utf8len);
-      LOG4CXX_ERROR(mLogger, buf);
+      LOG4CXX_ERROR(logger, buf);
       break;
     default:
       snprintf(buf, sizeof(buf),
                "iconv failed, in string '%s', length %d, out string '%s', length %d\n",
                iso, (int) len, utf8start, (int) utf8len);
-      LOG4CXX_ERROR(mLogger, buf);
+      LOG4CXX_ERROR(logger, buf);
     }
     return NULL;
   }
@@ -315,7 +317,7 @@ char *Tbl::iconvISO2UTF8(char *iso)
   if (iconv_close(iconvDesc) != 0)
   {
     snprintf(buf, sizeof(buf), "libicon close failed: %s", strerror(errno));
-    LOG4CXX_ERROR(mLogger, buf);
+    LOG4CXX_ERROR(logger, buf);
   }
 
   return utf8start;

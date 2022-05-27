@@ -10,7 +10,6 @@
 // project
 #include "DataHub.h"
 #include "Image.h"
-#include "Logger.h"
 
 namespace dat
 {
@@ -24,7 +23,6 @@ public:
   Image image();
 
 private:
-  Logger mLogger;
   DataHub &mDatahub;
   uint16_t mId;
 };

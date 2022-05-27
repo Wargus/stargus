@@ -10,6 +10,7 @@
 #include "endian.h"
 #include "FileUtil.h"
 #include "Storm.h"
+#include "Logger.h"
 
 // System
 #include <cstdio>
@@ -20,9 +21,10 @@
 
 using namespace std;
 
+static Logger logger = Logger("startool.Grp");
+
 Grp::Grp(std::shared_ptr<Hurricane> hurricane) :
   Converter(hurricane),
-  mLogger("startool.Grp"),
   mRGBA(false),
   mGFX(true),
   mTransparent(255)
@@ -31,7 +33,6 @@ Grp::Grp(std::shared_ptr<Hurricane> hurricane) :
 
 Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
   Converter(hurricane),
-  mLogger("startool.Grp"),
   mRGBA(false),
   mGFX(true),
   mTransparent(255)
@@ -41,7 +42,6 @@ Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
 
 Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<Palette> pal) :
   Converter(hurricane),
-  mLogger("startool.Grp"),
   mPal(pal),
   mRGBA(false),
   mGFX(true),

@@ -10,6 +10,7 @@
 #include "Pcx.h"
 #include "Storm.h"
 #include "Hurricane.h"
+#include "Logger.h"
 
 // System
 #include <stdlib.h>
@@ -19,13 +20,15 @@
 
 using namespace std;
 
+static Logger logger = Logger("startool.Pcx");
+
 Pcx::Pcx(std::shared_ptr<Hurricane> hurricane) :
-  Converter(hurricane), mLogger("startool.Pcx"), rawImage(0)
+  Converter(hurricane), rawImage(0)
 {
 }
 
 Pcx::Pcx(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
-  Converter(hurricane), mLogger("startool.Pcx"), rawImage(0)
+  Converter(hurricane), rawImage(0)
 {
   load(arcfile);
 }
@@ -46,7 +49,7 @@ bool Pcx::load(const std::string &arcfile)
     extractHeader();
     extractImage();
 
-    LOG4CXX_TRACE(mLogger, "load(): " + arcfile);
+    LOG4CXX_TRACE(logger, "load(): " + arcfile);
   }
   else
   {

@@ -8,7 +8,6 @@
 #define STAT_TXT_TBL_H
 
 // Local
-#include "Logger.h"
 #include "kaitai/file_tbl.h"
 
 // System
@@ -61,8 +60,6 @@ private:
    *  @return a UTF-8 string that has to be free()d after usage
    */
   char* iconvISO2UTF8(char *iso);
-
-  Logger mLogger;
 };
 
 #endif /* STAT_TXT_TBL_H */

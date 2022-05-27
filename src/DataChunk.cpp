@@ -6,6 +6,7 @@
 
 // Local
 #include "DataChunk.h"
+#include "Logger.h"
 
 // System
 #include <stdlib.h>
@@ -15,20 +16,21 @@
 
 using namespace std;
 
+static Logger logger = Logger("startool.DataChunk");
+
 DataChunk::DataChunk() :
-  mLogger("startool.DataChunk"), mData(nullptr), mSize(0)
+  mData(nullptr), mSize(0)
 {
 
 }
 
 DataChunk::DataChunk(const DataChunk &datachunk) :
-  mLogger("startool.DataChunk"), mData(nullptr), mSize(0)
+  mData(nullptr), mSize(0)
 {
   addData(datachunk.mData, datachunk.mSize);
 }
 
-DataChunk::DataChunk(unsigned char **data, const size_t size) :
-  mLogger("startool.DataChunk")
+DataChunk::DataChunk(unsigned char **data, const size_t size)
 {
   mData = *data;
   mSize = size;
@@ -91,7 +93,7 @@ bool DataChunk::write(const std::string filename)
   }
   else
   {
-    LOG4CXX_DEBUG(mLogger, string("Couldn't write in: ") + filename);
+    LOG4CXX_DEBUG(logger, string("Couldn't write in: ") + filename);
     result = false;
   }
 
@@ -108,7 +110,7 @@ unsigned char DataChunk::at(size_t pos)
   }
   else
   {
-    LOG4CXX_WARN(mLogger, "'pos' bigger then data: " + to_string(pos) + " < " + to_string(mSize));
+    LOG4CXX_WARN(logger, "'pos' bigger then data: " + to_string(pos) + " < " + to_string(mSize));
   }
 
   return ret;

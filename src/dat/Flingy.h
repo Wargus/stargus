@@ -10,7 +10,6 @@
 // project
 #include "DataHub.h"
 #include "Sprite.h"
-#include "Logger.h"
 
 namespace dat
 {
@@ -24,7 +23,6 @@ public:
   Sprite sprite();
 
 private:
-  Logger mLogger;
   DataHub &mDatahub;
   uint8_t mId;
 };
