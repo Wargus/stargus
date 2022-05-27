@@ -77,26 +77,6 @@ private:
   std::vector<TblEntry> portdata_tbl_vec;
   std::vector<TblEntry> mapdata_tbl_vec;
 
-  // Kaitai streams
-  std::shared_ptr<kaitai::kstream> stat_txt_ks;
-  std::shared_ptr<kaitai::kstream> mUnits_ks;
-  std::shared_ptr<kaitai::kstream> orders_ks;
-  std::shared_ptr<kaitai::kstream> weapons_ks;
-  std::shared_ptr<kaitai::kstream> flingy_ks;
-  std::shared_ptr<kaitai::kstream> sprites_ks;
-  std::shared_ptr<kaitai::kstream> images_ks;
-  std::shared_ptr<kaitai::kstream> images_tbl_ks;
-  std::shared_ptr<kaitai::kstream> sfxdata_ks;
-  std::shared_ptr<kaitai::kstream> sfxdata_tbl_ks;
-  std::shared_ptr<kaitai::kstream> portrait_ks;
-  std::shared_ptr<kaitai::kstream> portdata_tbl_ks;
-  std::shared_ptr<kaitai::kstream> upgrades_ks;
-  std::shared_ptr<kaitai::kstream> techdata_ks;
-  std::shared_ptr<kaitai::kstream> mapdata_ks;
-  std::shared_ptr<kaitai::kstream> mapdata_tbl_ks;
-
-  void initKaitaiStreams();
-
   // units.dat
   void init_units_dat(bool has_broodwar_flag, bool has_max_air_hits,
       bool has_max_ground_hits);

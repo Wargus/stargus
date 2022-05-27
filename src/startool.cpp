@@ -383,8 +383,8 @@ void testHook()
   shared_ptr<Storm> storm = make_shared<Storm>(
                               "/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
   //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
-  //dat::DataHub datahub(storm);
-  //datahub.convert();
+  dat::DataHub datahub(storm);
+  datahub.printCSV();
 
   /// Image 1
   Pcx pcx1(storm, "game\\tunit.pcx");
