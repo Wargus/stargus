@@ -4,5 +4,6 @@ startool_dat_sources = files(
 	'Flingy.cpp',
 	'Sprite.cpp',
 	'Image.cpp',
-	'Tbl.cpp'
+	'Tbl.cpp',
+	'CSVExporter.cpp'
 )

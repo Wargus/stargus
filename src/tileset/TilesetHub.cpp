@@ -39,22 +39,22 @@ void TilesetHub::init(const std::string &arcfile)
   std::shared_ptr<kaitai::kstream> cv5_ks;
   cv5_ks = getKaitaiStream(arcfile + ".cv5");
   std::shared_ptr<tileset_cv5_t> cv5_loc(new tileset_cv5_t(cv5_ks.get()));
-  cv5_raw = cv5_loc;
+  cv5 = cv5_loc;
 
   std::shared_ptr<kaitai::kstream> vx4_ks;
   vx4_ks = getKaitaiStream(arcfile + ".vx4");
   std::shared_ptr<tileset_vx4_t> vx4_loc(new tileset_vx4_t(vx4_ks.get()));
-  vx4_raw = vx4_loc;
+  vx4 = vx4_loc;
 
   std::shared_ptr<kaitai::kstream> vf4_ks;
   vf4_ks = getKaitaiStream(arcfile + ".vf4");
   std::shared_ptr<tileset_vf4_t> vf4_loc(new tileset_vf4_t(vf4_ks.get()));
-  vf4_raw = vf4_loc;
+  vf4 = vf4_loc;
 
   std::shared_ptr<kaitai::kstream> vr4_ks;
   vr4_ks = getKaitaiStream(arcfile + ".vr4");
   std::shared_ptr<tileset_vr4_t> vr4_loc(new tileset_vr4_t(vr4_ks.get()));
-  vr4_raw = vr4_loc;
+  vr4 = vr4_loc;
 
   //cout << "cv5_raw->elements()->size(): " << cv5_raw->elements()->size() << endl;
   //cout << "vx4_raw->elements()->size(): " << vx4_raw->elements()->size() << endl;
@@ -65,7 +65,7 @@ void TilesetHub::init(const std::string &arcfile)
 
 bool TilesetHub::convert(std::shared_ptr<Palette> palette, Storage storage)
 {
-  unsigned int num_tiles = vx4_raw->elements()->size();
+  unsigned int num_tiles = vx4->elements()->size();
   int tiles_width = 16;
   int tiles_height = ceil(static_cast<float>(num_tiles) / static_cast<float>(tiles_width));
 
@@ -86,7 +86,7 @@ bool TilesetHub::convert(std::shared_ptr<Palette> palette, Storage storage)
 
 void TilesetHub::generateLua(const std::string &name, const std::string &image, Storage luafile)
 {
-  unsigned int num_cv5 = cv5_raw->elements()->size();
+  unsigned int num_cv5 = cv5->elements()->size();
 
   int num_doodad = 0;
   int num_normal = 0;
@@ -99,7 +99,7 @@ void TilesetHub::generateLua(const std::string &name, const std::string &image, 
 
   for(unsigned int i = 0; i < num_cv5; i++)
   {
-    tileset_cv5_t::group_t* group = cv5_raw->elements()->at(i);
+    tileset_cv5_t::group_t* group = cv5->elements()->at(i);
 
     if(group->doodad() != 0)
     {
@@ -121,7 +121,7 @@ void TilesetHub::generateLua(const std::string &name, const std::string &image, 
       //cout << to_string(elem);
 
 
-      tileset_vf4_t::minitile_t* minitile = vf4_raw->elements()->at(elem);
+      tileset_vf4_t::minitile_t* minitile = vf4->elements()->at(elem);
 
       unsigned int walkable_median = 0;
       for(auto flags : *minitile->flags())
