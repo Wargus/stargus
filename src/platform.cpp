@@ -78,7 +78,7 @@ char *strdup(const char *s)
 int mkdir(const std::string &pathname, mode_t mode)
 {
 #if defined(_MSC_VER) || defined(WIN32)
-  return ::_mkdir(pathname);
+  return ::_mkdir(pathname.c_str());
 #else
   return ::mkdir(pathname.c_str(), mode);
 #endif
