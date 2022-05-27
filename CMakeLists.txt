@@ -156,8 +156,8 @@ set(startool_LIBS ${scmconvert_LIBS} ${PNG_LIBRARIES} ${ZLIB_LIBRARIES} ${STORML
 
 if(WIN32 AND MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_DEPRECATE=1 -D_HAS_STD_BYTE=0)
-	add_subdirectory("win-iconv")
-	include_directories("win-iconv")
+	add_subdirectory("third-party/win-iconv")
+	include_directories("third-party/win-iconv")
 	set(startool_LIBS ${startool_LIBS} iconv-static)
 else()
 	include(CheckCXXSourceCompiles)
