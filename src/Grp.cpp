@@ -5,9 +5,9 @@
  */
 
 // Local
+#include <PngExporter.h>
 #include "Grp.h"
 #include "endian.h"
-#include "Png.h"
 #include "FileUtil.h"
 #include "Storm.h"
 
@@ -110,6 +110,7 @@ bool Grp::save(Storage filename)
     {
       unsigned char *p;
       unsigned char *end;
+
       // 0 and 255 are transparent
       p = image;
       end = image + w * h;
@@ -128,17 +129,17 @@ bool Grp::save(Storage filename)
 
     if (!getRGBA())
     {
-      Png::save(filename.getFullPath(), palImage, *mPal, 255);
+      PngExporter::save(filename.getFullPath(), palImage, *mPal, 255);
     }
     else
     {
       if(mPal && !mPal2D)
       {
-        Png::saveRGBA(filename.getFullPath(), palImage, *mPal, mTransparent);
+        PngExporter::saveRGBA(filename.getFullPath(), palImage, *mPal, mTransparent);
       }
-      else if(mPal && mPal2D)
+      else if(mPal2D)
       {
-        Png::saveRGBA(filename.getFullPath(), palImage, *mPal2D, mTransparent);
+        PngExporter::saveRGBA(filename.getFullPath(), palImage, *mPal2D, mTransparent);
       }
     }
 
@@ -155,20 +156,9 @@ bool Grp::save(Storage filename)
   return result;
 }
 
-bool Grp::saveLUAConfig(Storage filename)
+Size Grp::getTileSize()
 {
-  bool result = true;
-
-  ofstream lua_file;
-  lua_file.open (filename.getFullPath());
-
-  string tile_size = filename.getFilename() + "_size = {" + to_string(mTilesize.getWidth())
-      + ", " + to_string(mTilesize.getHeight()) + "}";
-
-  lua_file << tile_size;
-  lua_file.close();
-
-  return result;
+  return mTilesize;
 }
 
 void Grp::setTransparent(int transparent)

@@ -34,6 +34,7 @@ public:
 
   void load(std::shared_ptr<DataChunk> rawPalette);
 
+  // TODO: this might be just complete replaced by at()
   void replaceIndexColor(unsigned int index, const Color &rgb);
 
   void replaceIndexColorRange(const Palette &pal, unsigned int startIndex, unsigned int endIndex);
@@ -47,6 +48,9 @@ public:
 
   const Color &at(int index) const;
 
+  /**
+   * Property change of a color with r-value
+   */
   Color &at(int index);
 
   bool write(const std::string &filename);

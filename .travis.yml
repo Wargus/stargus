@@ -1,0 +1,43 @@
+language: cpp
+compiler:
+  - gcc
+os:
+  - linux
+dist: focal
+addons:
+  apt:
+    packages:
+      - libpng-dev
+      - libgtk2.0-dev
+      - zlib1g-dev
+      - libstorm-dev
+      - meson
+      - ninja-build
+      - libmagick++-6.q16-dev
+      - libcppunit-dev
+      - nlohmann-json3-dev
+before_script:
+  - curl -L https://github.com/Wargus/stratagus/archive/master.zip -O master.zip || true
+  - unzip master.zip
+  - meson build -DSTRATAGUS_BIN='stratagus' -DSTRATAGUS_INCLUDE_DIR=../stratagus-master/gameheaders
+script: ninja -C build
+after_success:
+  - "if [ $TRAVIS_OS_NAME == osx ]; then \
+        if [ $TRAVIS_REPO_SLUG == Wargus/stargus -a \
+             $TRAVIS_BRANCH == master -a \
+             $TRAVIS_PULL_REQUEST == 'false' ]; then \
+           cd $TRAVIS_BUILD_DIR;
+           git clone https://${GH_TOKEN}@github.com/Wargus/stratagus.wiki.git;
+           export STRATAGUS=$(pwd)/stratagus.wiki/$TRAVIS_OS_NAME/stratagus;
+           mac/bundle.sh;
+           tar czvf Stargus.app.tar.gz mac/Stargus.app;
+           cp Stargus.app.tar.gz stratagus.wiki/$TRAVIS_OS_NAME/;
+           cd stratagus.wiki/;
+           git config --global user.email \"travis-ci@travis.org\";
+           git config --global user.name \"Travis CI\";
+           git add $TRAVIS_OS_NAME/Stargus.app.tar.gz;
+           git commit --amend -C HEAD;
+           git push -fq origin master;
+           cd ..;
+        fi;
+    fi"

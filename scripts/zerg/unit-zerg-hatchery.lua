@@ -13,8 +13,7 @@ DefineAnimations("animations-zerg-hatchery", {
   },
 })
 
-DefineUnitType("unit-zerg-hatchery", { Name = "Zerg Hatchery",
-  Image = {"file", "zerg/units/hatchery.png", "size", {192, 160}},
+DefineUnitType("unit-zerg-hatchery", {
   Shadow = {"file", "zerg/units/hatchery shadow.png", "size", {192, 160}},
   Animations = "animations-zerg-hatchery", Icon = "icon-zerg-hatchery",
   OnEachSecond = (function (self)
@@ -43,7 +42,6 @@ DefineUnitType("unit-zerg-hatchery", { Name = "Zerg Hatchery",
   RepairCosts = {"minerals", 1, "gas", 0},
   Construction = "construction-zerg",
   Speed = 0,
-  HitPoints = 1500,
   DrawLevel = 30,
   TileSize = {4, 3}, BoxSize = {126, 95},
   SightRange = 1,

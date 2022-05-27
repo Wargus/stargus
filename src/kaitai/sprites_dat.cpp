@@ -7,7 +7,7 @@ sprites_dat_t::sprites_dat_t(uint16_t p_num_lines, uint16_t p_num_decorations, k
     m__root = this;
     m_num_lines = p_num_lines;
     m_num_decorations = p_num_decorations;
-    m_image_file = 0;
+    m_image = 0;
     m_heath_bar = 0;
     m_unknown2 = 0;
     m_is_visible = 0;
@@ -23,11 +23,11 @@ sprites_dat_t::sprites_dat_t(uint16_t p_num_lines, uint16_t p_num_decorations, k
 }
 
 void sprites_dat_t::_read() {
-    int l_image_file = num_lines();
-    m_image_file = new std::vector<uint16_t>();
-    m_image_file->reserve(l_image_file);
-    for (int i = 0; i < l_image_file; i++) {
-        m_image_file->push_back(m__io->read_u2le());
+    int l_image = num_lines();
+    m_image = new std::vector<uint16_t>();
+    m_image->reserve(l_image);
+    for (int i = 0; i < l_image; i++) {
+        m_image->push_back(m__io->read_u2le());
     }
     int l_heath_bar = (num_lines() - num_decorations());
     m_heath_bar = new std::vector<uint8_t>();
@@ -66,8 +66,8 @@ sprites_dat_t::~sprites_dat_t() {
 }
 
 void sprites_dat_t::_clean_up() {
-    if (m_image_file) {
-        delete m_image_file; m_image_file = 0;
+    if (m_image) {
+        delete m_image; m_image = 0;
     }
     if (m_heath_bar) {
         delete m_heath_bar; m_heath_bar = 0;

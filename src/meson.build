@@ -1,13 +1,13 @@
-#cpp = meson.get_compiler('cpp')
 
 subdir('kaitai')
+subdir('dat')
+subdir('tileset')
 
 startool_sources = files(
 	'Casc.cpp', 
 	'FileUtil.cpp',
 	'Palette.cpp',
-	'Png.cpp', 
-	'Tileset.cpp',
+	'PngExporter.cpp', 
 	'Chk.cpp',
 	'Font.cpp',
 	'Grp.cpp',
@@ -25,13 +25,15 @@ startool_sources = files(
 	'Breeze.cpp',
 	'Smacker.cpp',
 	'Converter.cpp',
-	'Tbl.cpp',
-	'DataHub.cpp',
+	'KaitaiConverter.cpp',
 	'Storage.cpp',
 	'PaletteImage.cpp',
 	'Color.cpp',
 	'Wav.cpp',
-	'Palette2D.cpp'
+	'Palette2D.cpp',
+	'StringUtil.cpp',
+	'luagen.cpp',
+	'platform.cpp'
 	)
 	
 stratagus_prefix = get_option('prefix')
@@ -54,6 +56,8 @@ stargus_sources = files('stargus.cpp')
 executable('startool', 
 	startool_sources,
 	startool_kaitai_sources,
+	startool_dat_sources,
+	startool_tileset_sources,
 	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep],
 	install : true)
 

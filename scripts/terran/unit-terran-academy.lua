@@ -33,8 +33,7 @@ DefineConstruction("construction-terran-academy", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-terran-academy", { Name = "Academy",
-  Image = {"file", "terran/units/academy.png", "size",  {96, 128}},
+DefineUnitType("unit-terran-academy", {
   Shadow = {"file", "terran/units/academy shadow.png", "size",  {96, 128}},
   Animations = "animations-terran-academy", Icon = "icon-terran-academy",
   Costs = {"time", 200, "minerals", 150},
@@ -44,7 +43,6 @@ DefineUnitType("unit-terran-academy", { Name = "Academy",
   Speed = 0,
   BurnPercent = 30,
   BurnDamageRate = 1,
-  HitPoints = 600,
   DrawLevel = 50,
   BuilderOutside = true,
   TileSize = {3, 2}, BoxSize = {95, 63},

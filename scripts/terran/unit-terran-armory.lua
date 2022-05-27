@@ -33,8 +33,7 @@ DefineConstruction("construction-terran-armory", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-terran-armory", { Name = "Armory",
-  Image = {"file", "terran/units/armory.png", "size", {160, 128}},
+DefineUnitType("unit-terran-armory", {
   --Shadow = {"offset", {-7, -7}, "scale", 1},
   Shadow = {"file", "terran/units/armory shadow.png", "size", {160, 128}},
   Animations = "animations-terran-armory", Icon = "icon-terran-armory",
@@ -45,7 +44,6 @@ DefineUnitType("unit-terran-armory", { Name = "Armory",
   Speed = 0,
   BurnPercent = 30,
   BurnDamageRate = 1,
-  HitPoints = 750,
   DrawLevel = 50,
   BuilderOutside = true,
   TileSize = {3, 2}, BoxSize = {95, 63},

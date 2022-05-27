@@ -32,8 +32,7 @@ DefineConstruction("construction-protoss-shield-battery", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-shield-battery", { Name = "Shield Battery",
-  Image = {"file", "protoss/units/shield battery.png", "size", {96, 64}},
+DefineUnitType("unit-protoss-shield-battery", {
   Shadow = {"file", "protoss/units/pgcshad.png", "size", {96, 64}},
   Animations = "animations-protoss-shield-battery", Icon = "icon-protoss-shield-battery",
   Costs = {"time", 30, "minerals", 100},
@@ -41,7 +40,6 @@ DefineUnitType("unit-protoss-shield-battery", { Name = "Shield Battery",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-shield-battery",
   Speed = 0,
-  HitPoints = 1000,
   DrawLevel = 50,
   TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 1,

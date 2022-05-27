@@ -29,13 +29,11 @@ DefineAnimations("animations-terran-goliath", {
   },
 })
 
-DefineUnitType("unit-terran-goliath", { Name = "Goliath",
-  Image = {"file", "terran/units/goliath.png", "size", {76, 76}},
+DefineUnitType("unit-terran-goliath", {
   Shadow = {"file", "terran/units/goliath shadow.png", "size", {76, 76}},
   Animations = "animations-terran-goliath", Icon = "icon-terran-goliath",
   Costs = {"time", 60, "minerals", 100, "gas", 50},
   Speed = 10, NumDirections = 32,
-  HitPoints = 125,
   DrawLevel = 40,
   TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,

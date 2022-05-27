@@ -14,8 +14,7 @@ DefineAnimations("animations-zerg-lair", {
 })
 
 
-DefineUnitType("unit-zerg-lair", { Name = "Zerg Lair",
-  Image = {"file", "zerg/units/lair.png", "size", {192, 160}},
+DefineUnitType("unit-zerg-lair", {
   Shadow = {"file", "zerg/units/lair shadow.png", "size", {192, 160}},
   Animations = "animations-zerg-lair", Icon = "icon-zerg-lair",
   Costs = {"time", 255, "minerals", 300},
@@ -23,7 +22,6 @@ DefineUnitType("unit-zerg-lair", { Name = "Zerg Lair",
   RepairCosts = {"minerals", 1, "gas", 0},
   Construction = "construction-zerg",
   Speed = 0,
-  HitPoints = 1500,
   DrawLevel = 30,
   TileSize = {4, 3}, BoxSize = {126, 95},--FIXME: wrong size
   SightRange = 1,

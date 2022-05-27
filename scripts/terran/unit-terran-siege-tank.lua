@@ -26,14 +26,12 @@ DefineAnimations("animations-terran-siege-tank", {
   },
 })
 
-DefineUnitType("unit-terran-siege-tank", { Name = "Siege Tank",
-  Image = {"file", "terran/units/siege tank tank.png", "size", {128, 128}},
+DefineUnitType("unit-terran-siege-tank", {
   --Shadow = {"offset", {0, 4}, "scale", 1},
   Shadow = {"file", "terran/units/siege tank tank shadow.png", "size", {128, 128}},
   Animations = "animations-terran-siege-tank", Icon = "icon-terran-siege-tank",
   Costs = {"time", 60, "minerals", 150, "gas", 100},
   Speed = 10, NumDirections = 32,
-  HitPoints = 150,
   DrawLevel = 40,
   TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,

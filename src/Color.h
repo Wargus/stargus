@@ -1,11 +1,11 @@
 /*
- * RGBColor.h
+ * Color.h
  *
  *      Author: Andreas Volz
  */
 
-#ifndef RGBCOLOR_H
-#define RGBCOLOR_H
+#ifndef COLOR_H
+#define COLOR_H
 
 class Color
 {
@@ -13,22 +13,32 @@ public:
   Color();
   Color(const Color &color);
   Color(unsigned char red, unsigned char green, unsigned char blue);
+  Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
   virtual ~Color();
 
-  void red(unsigned char c);
-  void green(unsigned char c);
-  void blue(unsigned char c);
+  void setRed(unsigned char color);
+  void setGreen(unsigned char color);
+  void setBlue(unsigned char color);
+  void setAlpha(unsigned char color);
 
-  unsigned char red() const;
-  unsigned char green() const;
-  unsigned char blue() const;
+  unsigned char getRed() const;
+  unsigned char getGreen() const;
+  unsigned char getBlue() const;
+  unsigned char getAlpha() const;
+
+  Color getBrighened() const;
+
+  Color blendAgainstReference(const Color &reference) const;
 
   Color& operator=(const Color& color);
 
 private:
+  unsigned char getBiggestColor() const;
+
   unsigned char mRed;
   unsigned char mGreen;
   unsigned char mBlue;
+  unsigned char mAlpha;
 };
 
-#endif /* RGBCOLOR_H */
+#endif /* COLOR_H */

@@ -6,9 +6,9 @@
 
 // Local
 #include <Palette.h>
+#include <PngExporter.h>
 #include "Font.h"
 #include "endian.h"
-#include "Png.h"
 #include "FileUtil.h"
 #include "Storm.h"
 #include "Preferences.h"
@@ -59,7 +59,7 @@ bool Font::convert(const std::string &arcfile, Storage file)
     DataChunk dc_image(&image, w * h);
     PaletteImage palImage(dc_image, Size(w, h));
 
-    Png::save(file.getFullPath(), palImage, *mPalette, 255);
+    PngExporter::save(file.getFullPath(), palImage, *mPalette, 255);
   }
 
   return result;
@@ -208,6 +208,8 @@ unsigned char *Font::convertImage(unsigned char *start, int *wp, int *hp)
   {
     LOG4CXX_WARN(mLogger, "No Font Header found!");
   }
+
+  LOG4CXX_TRACE(mLogger, "Exported font letter number: " + to_string(letterCount));
 
   *wp = header.maxWidth;
   *hp = header.maxHeight * letterCount;

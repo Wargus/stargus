@@ -33,8 +33,7 @@ DefineConstruction("construction-protoss-forge", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-forge", { Name = "Forge",
-  Image = {"file", "protoss/units/forge.png", "size", {160, 128}},
+DefineUnitType("unit-protoss-forge", {
   Shadow = {"file", "protoss/units/pgashad.png", "size", {128, 160}},
   Animations = "animations-protoss-forge", Icon = "icon-protoss-forge",
   Costs = {"time", 200, "minerals", 150},
@@ -42,7 +41,6 @@ DefineUnitType("unit-protoss-forge", { Name = "Forge",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-forge",
   Speed = 0,
-  HitPoints = 1100,
   DrawLevel = 50,
   TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 1,

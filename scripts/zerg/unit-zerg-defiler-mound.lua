@@ -11,8 +11,7 @@ DefineAnimations("animations-zerg-defiler-mound", {
 })
 
 
-DefineUnitType("unit-zerg-defiler-mound", { Name = "Defiler Mound",
-  Image = {"file", "zerg/units/defiler mound.png", "size",  {128, 128}},
+DefineUnitType("unit-zerg-defiler-mound", {
   Shadow = {"file", "zerg/units/defiler mound shadow.png", "size",  {128, 128}},
   Animations = "animations-zerg-defiler-mound", Icon = "icon-zerg-defiler-mound",
   Costs = {"time", 200, "minerals", 100, "gas", 100},
@@ -20,7 +19,6 @@ DefineUnitType("unit-zerg-defiler-mound", { Name = "Defiler Mound",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",
   Speed = 0,
-  HitPoints = 400,
   DrawLevel = 30,
   TileSize = {4, 2}, BoxSize = {127, 63},
   SightRange = 4,

@@ -33,8 +33,7 @@ DefineConstruction("construction-terran-starport", {
     Frame = 5}}
 })
 
-DefineUnitType("unit-terran-starport", { Name = "Starport",
-  Image = {"file", "terran/units/starport.png", "size", {128, 160}},
+DefineUnitType("unit-terran-starport", {
   Shadow = {"file", "terran/units/starport shadow.png", "size", {128, 160}},
   Animations = "animations-terran-starport", Icon = "icon-terran-starport",
   Costs = {"time", 200, "minerals", 150, "gas", 100},
@@ -44,7 +43,6 @@ DefineUnitType("unit-terran-starport", { Name = "Starport",
   Speed = 0,
   BurnPercent = 30,
   BurnDamageRate = 1,
-  HitPoints = 1300,
   DrawLevel = 50,
   BuilderOutside = true,
   TileSize = {4, 3}, BoxSize = {127, 95},

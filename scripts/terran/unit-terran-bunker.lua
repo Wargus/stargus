@@ -30,8 +30,7 @@ DefineConstruction("construction-terran-bunker", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-terran-bunker", { Name = "Bunker",
-  Image = {"file", "terran/units/bunker.png", "size",  {96, 128}},
+DefineUnitType("unit-terran-bunker", {
   Shadow = {"file", "terran/units/bunker shadow.png", "size",  {96, 128}},
   Animations = "animations-terran-bunker", Icon = "icon-terran-bunker",
   Costs = {"time", 200, "minerals", 100},
@@ -41,7 +40,6 @@ DefineUnitType("unit-terran-bunker", { Name = "Bunker",
   Speed = 0,
   BurnPercent = 30,
   BurnDamageRate = 1,
-  HitPoints = 350,
   DrawLevel = 50,
   BuilderOutside = true,
   TileSize = {3, 2}, BoxSize = {95, 63},

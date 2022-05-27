@@ -43,15 +43,13 @@ DefineAnimations("animations-protoss-shuttle", {
 })
 
 
-DefineUnitType("unit-protoss-shuttle", { Name = "Shuttle",
-  Image = {"file", "protoss/units/shuttle.png", "size", {60, 60}},
+DefineUnitType("unit-protoss-shuttle", {
   --Shadow = {"file", "zerg/units/overlord.png", "size", {84, 84}, "offset", {0, 42}},
   Animations = "animations-protoss-shuttle", Icon = "icon-protoss-shuttle",
   Costs = {"time", 45, "minerals", 100},
   RepairHp = 4,
   Speed = 0, 
   NumDirections = 16,
-  HitPoints = 500,
   DrawLevel = 45,
   TileSize = {1, 1}, BoxSize = {64, 60},
   SightRange = 10,

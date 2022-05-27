@@ -15,8 +15,7 @@ DefineAnimations("animations-zerg-egg-death", {
 })
 
 
-DefineUnitType("unit-zerg-egg-death", { Name = "Dead Egg",
-  Image = {"file", "zerg/units/egg death.png", "size", {96, 96}},
+DefineUnitType("unit-zerg-egg-death", {
   Animations = "animations-zerg-egg-death", Icon = "icon-zerg-egg",
   NumDirections = 1,
   HitPoints = 255,
@@ -49,7 +48,6 @@ DefineUnitType("unit-zerg-egg", { Name = "Egg",
   NumDirections = 1,
   DrawLevel = 30,
   Animations = "animations-zerg-egg", Icon = "icon-zerg-egg",
-  HitPoints = 200,
   Armor = 10, Missile = "missile-none",
   Corpse = "unit-zerg-egg-death",
   Type = "land",

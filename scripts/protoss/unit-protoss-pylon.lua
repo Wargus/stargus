@@ -30,8 +30,7 @@ DefineConstruction("construction-protoss-pylon", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-pylon", { Name = "Supply Depot",
-  Image = {"file", "graphics/protoss/units/pylon.png", "size", {64, 64}},
+DefineUnitType("unit-protoss-pylon", {
   Shadow = {"file", "graphics/protoss/units/ppyshad.png", "size", {64, 64}},
   Animations = "animations-protoss-pylon", Icon = "icon-protoss-pylon",
   Costs = {"time", 100, "minerals", 100},
@@ -39,7 +38,6 @@ DefineUnitType("unit-protoss-pylon", { Name = "Supply Depot",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-pylon",
   Speed = 0,
-  HitPoints = 600,
   DrawLevel = 50,
   TileSize = {2, 2}, BoxSize = {63, 63},
   SightRange = 1,

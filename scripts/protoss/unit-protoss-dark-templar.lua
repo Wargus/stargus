@@ -34,13 +34,11 @@ DefineAnimations("animations-protoss-dark-templar", {
 })
 
 
-DefineUnitType("unit-protoss-dark-templar", { Name = "Dark Templar",
-  Image = {"file", "protoss/units/dark templar.png", "size", {1088, 1152}},
+DefineUnitType("unit-protoss-dark-templar", {
   Shadow = {"file", "protoss/units/pzeshad.png", "size", {128, 128}},
   Animations = "animations-protoss-dark-templar", Icon = "icon-protoss-dark-templar",
   Costs = {"time", 100, "minerals", 100},
   Speed = 10, NumDirections = 32,
-  HitPoints = 100,
   DrawLevel = 40,
   TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,

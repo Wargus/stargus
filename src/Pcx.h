@@ -32,6 +32,9 @@ public:
    */
   bool savePNG(Storage storage);
 
+  /**
+   * @return get the pcx palette information (including all index mapping that has been applied before)
+   */
   std::shared_ptr<Palette> getPalette();
 
   /**
@@ -40,30 +43,10 @@ public:
    * TODO: I need to write a more extensive documentation for this
    *
    * @param length the length of one color index
-   * @param index the color index
    * @param start where to place the copy in the palette position
+   * @param index the color index
    */
-  void mapIndexPalette(int length, int index, int start);
-
-  /**
-   * Wrapper for mapIndexPalette() with configuration to use ticon.pcx palette
-   *
-   * @param index the color index selector to choose
-   */
-  void mapIndexPaletteTypeIcon(int index = 0);
-
-  /**
-    * Wrapper for mapIndexPalette() with configuration to use tselect.pcx palette
-    *
-    * @param index the color index selector to choose
-    */
-  void mapIndexPaletteTypeSelect(int index = 0);
-
-  /**
-   * Fake some 2D palette handling for e.g. fire generation.
-   * FIXME: a better algorithm is needed based on generating alpha over tileset or so...
-   */
-  //void map2DPalette();
+  void mapIndexPalette(int length, int start, int index);
 
   std::shared_ptr<Palette2D> map2DPalette();
 

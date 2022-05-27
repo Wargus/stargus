@@ -69,9 +69,9 @@ std::shared_ptr<DataChunk> Palette::createDataChunk()
   for(auto color_it = mColorPalette.begin(); color_it < mColorPalette.end(); color_it++)
   {
     Color &rgb = *color_it;
-    unsigned char red = rgb.red();
-    unsigned char green = rgb.green();
-    unsigned char blue = rgb.blue();
+    unsigned char red = rgb.getRed();
+    unsigned char green = rgb.getGreen();
+    unsigned char blue = rgb.getBlue();
 
     datachunk->addData(&red, 1);
     datachunk->addData(&green, 1);
@@ -118,9 +118,9 @@ bool Palette::write(const std::string &filename)
     for(auto col_vec_it = mColorPalette.begin(); col_vec_it != mColorPalette.end(); col_vec_it++)
     {
       Color &color = *col_vec_it;
-      char red = color.red();
-      char green = color.green();
-      char blue = color.blue();
+      char red = color.getRed();
+      char green = color.getGreen();
+      char blue = color.getBlue();
 
 
       wf.write((char *) &red, sizeof(unsigned char));

@@ -33,8 +33,7 @@ DefineConstruction("construction-terran-missile-turret", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-terran-missile-turret", { Name = "Missile Turret",
-  Image = {"file", "terran/units/missile turret.png", "size", {128, 128}},
+DefineUnitType("unit-terran-missile-turret", {
   Shadow = {"file", "terran/units/missile turret shadow.png", "size", {128, 128}},
   Animations = "animations-terran-missile-turret", Icon = "icon-terran-missile-turret",
   Costs = {"time", 190, "minerals", 200},
@@ -44,7 +43,6 @@ DefineUnitType("unit-terran-missile-turret", { Name = "Missile Turret",
   Speed = 0,
   BurnPercent = 30,
   BurnDamageRate = 1,
-  HitPoints = 200,
   DrawLevel = 50,
   BuilderOutside = true,
   TileSize = {2, 2}, BoxSize = {63, 63},

@@ -24,13 +24,11 @@ DefineAnimations("animations-terran-vulture", {
   },
 })
 
-DefineUnitType("unit-terran-vulture", { Name = "Vulture",
-  Image = {"file", "terran/units/vulture.png", "size", {100, 100}},
+DefineUnitType("unit-terran-vulture", {
   Shadow = {"file", "terran/units/vulture.png", "size", {100, 100}, "offset", {0, 7}},
   Animations = "animations-terran-vulture", Icon = "icon-terran-vulture",
   Costs = {"time", 60, "minerals", 75},
   Speed = 10, NumDirections = 32,
-  HitPoints = 80,
   DrawLevel = 40,
   TileSize = {1, 1}, BoxSize = {31, 31},
   BoardSize = 2,

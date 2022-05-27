@@ -16,14 +16,12 @@ DefineAnimations("animations-terran-wraith", {
     --[[active overlay 332,0]] "wait 3", "unbreakable end", "wait 1",},
 })
 
-DefineUnitType("unit-terran-wraith", { Name = "Wraith",
-  Image = {"file", "terran/units/wraith.png", "size", {64, 64}},
+DefineUnitType("unit-terran-wraith", {
   Shadow = {"file", "terran/units/wraith.png", "size", {64, 64}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-terran-wraith", Icon = "icon-terran-wraith",
   Costs = {"time", 250, "minerals", 150, "gas", 100},
   Speed = 14,
-  HitPoints = 120,
   DrawLevel = 60,
   TileSize = {1, 1}, BoxSize = {63, 63},
   SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,

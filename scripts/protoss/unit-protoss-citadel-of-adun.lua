@@ -32,8 +32,7 @@ DefineConstruction("construction-protoss-citadel-of-adun", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-citadel-of-adun", { Name = "Citadel of Adun",
-  Image = {"file", "protoss/units/citadel of adun.png", "size", {160, 128}},
+DefineUnitType("unit-protoss-citadel-of-adun", {
   Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-citadel-of-adun", Icon = "icon-protoss-citadel-of-adun",
   Costs = {"time", 30, "minerals", 100},
@@ -41,7 +40,6 @@ DefineUnitType("unit-protoss-citadel-of-adun", { Name = "Citadel of Adun",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-citadel-of-adun",
   Speed = 0,
-  HitPoints = 1000,
   DrawLevel = 50,
   TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 1,

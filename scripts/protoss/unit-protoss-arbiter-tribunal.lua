@@ -32,8 +32,7 @@ DefineConstruction("construction-protoss-arbiter-tribunal", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-arbiter-tribunal", { Name = "Arbiter Tribunal",
-  Image = {"file", "protoss/units/arbiter tribunal.png", "size", {96, 128}},
+DefineUnitType("unit-protoss-arbiter-tribunal", {
   Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-arbiter-tribunal", Icon = "icon-protoss-arbiter-tribunal",
   Costs = {"time", 30, "minerals", 100},
@@ -41,7 +40,6 @@ DefineUnitType("unit-protoss-arbiter-tribunal", { Name = "Arbiter Tribunal",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-arbiter-tribunal",
   Speed = 0,
-  HitPoints = 1000,
   DrawLevel = 50,
   TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 1,

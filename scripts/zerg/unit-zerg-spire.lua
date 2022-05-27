@@ -14,8 +14,7 @@ DefineAnimations("animations-zerg-spire", {
 })
 
 
-DefineUnitType("unit-zerg-spire", { Name = "Spire",
-  Image = {"file", "zerg/units/spire.png", "size",  {128, 128}},
+DefineUnitType("unit-zerg-spire", {
   Shadow = {"file", "zerg/units/spire shadow.png", "size",  {128, 128}},
   Animations = "animations-zerg-spire", Icon = "icon-zerg-spire",
   Costs = {"time", 200, "minerals", 200, "gas", 200},
@@ -23,7 +22,6 @@ DefineUnitType("unit-zerg-spire", { Name = "Spire",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",
   Speed = 0,
-  HitPoints = 600,
   DrawLevel = 30,
   TileSize = {2, 2}, BoxSize = {63, 63},--FIXME:wrong size
   SightRange = 4,

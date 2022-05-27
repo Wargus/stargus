@@ -7,8 +7,8 @@ Load("scripts/neutral/unit-rhynadon-badlands-critter.lua")
 --
 -- Allow
 --
-DefineAllow("unit-vespene-geyser", "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-minerals1",      "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-minerals2",      "AAAAAAAAAAAAAAAA")
-DefineAllow("unit-minerals3",      "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-resource-vespene-geyser", "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-resource-mineral-field",      "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-resource-mineral-field-type-2",      "AAAAAAAAAAAAAAAA")
+DefineAllow("unit-resource-mineral-field-type-3",      "AAAAAAAAAAAAAAAA")
 

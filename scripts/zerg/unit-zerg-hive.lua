@@ -14,8 +14,7 @@ DefineAnimations("animations-zerg-hive", {
 })
 
 
-DefineUnitType("unit-zerg-hive", { Name = "Zerg Hive",
-  Image = {"file", "zerg/units/hive.png", "size", {192, 224}},
+DefineUnitType("unit-zerg-hive", {
   Shadow = {"file", "zerg/units/hive shadow.png", "size", {192, 224}},
   Animations = "animations-zerg-hive", Icon = "icon-zerg-hive",
   Costs = {"time", 255, "minerals", 300},
@@ -23,7 +22,6 @@ DefineUnitType("unit-zerg-hive", { Name = "Zerg Hive",
   RepairCosts = {"minerals", 1, "gas", 0},
   Construction = "construction-zerg",
   Speed = 0,
-  HitPoints = 1500,
   DrawLevel = 30,
   TileSize = {4, 3}, BoxSize = {126, 95},--FIXME: wrong size
   SightRange = 1,

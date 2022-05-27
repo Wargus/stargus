@@ -12,8 +12,7 @@ DefineAnimations("animations-zerg-guardian-death", {
 })
 
 
-DefineUnitType("unit-zerg-guardian-death", { Name = "Dead Guardian",
-  Image = {"file", "zerg/units/guardian death.png", "size", {96, 96}},
+DefineUnitType("unit-zerg-guardian-death", {
   Animations = "animations-zerg-guardian-death", Icon = "icon-zerg-guardian",
   NumDirections = 1,
   HitPoints = 255,
@@ -56,7 +55,6 @@ DefineUnitType("unit-zerg-guardian", { Name = "Guardian",
   Animations = "animations-zerg-guardian", Icon = "icon-zerg-guardian",
   Costs = {"time", 250, "minerals", 150, "gas", 200},
   Speed = 14,
-  HitPoints = 150,
   DrawLevel = 60,
   TileSize = {1, 1}, BoxSize = {63, 63},
   SightRange = 11, ComputerReactionRange = 8, PersonReactionRange = 8,

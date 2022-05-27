@@ -5,10 +5,10 @@
  */
 
 // Local
+#include <PngExporter.h>
 #include "endian.h"
 #include "Pcx.h"
 #include "Storm.h"
-#include "Png.h"
 #include "Hurricane.h"
 
 // System
@@ -62,7 +62,7 @@ bool Pcx::savePNG(Storage storage)
 
   if (mRawData)
   {
-    Png::save(storage.getFullPath(), *mPaletteImage, *mPalette, 0);
+    PngExporter::save(storage.getFullPath(), *mPaletteImage, *mPalette, 0);
   }
   else
   {
@@ -77,7 +77,7 @@ std::shared_ptr<Palette> Pcx::getPalette()
   return mPalette;
 }
 
-void Pcx::mapIndexPalette(int length, int index, int start)
+void Pcx::mapIndexPalette(int length, int start, int index)
 {
   if (mPaletteImage && mPalette)
   {
@@ -94,58 +94,26 @@ void Pcx::mapIndexPalette(int length, int index, int start)
   }
 }
 
-void Pcx::mapIndexPaletteTypeIcon(int index)
-{
-  mapIndexPalette(16, index, 0);
-}
-
-void Pcx::mapIndexPaletteTypeSelect(int index)
-{
-  mapIndexPalette(8, index, 1);
-}
-
-/*void Pcx::map2DPalette()
-{
-  if (mPaletteImage && mPalette)
-  {
-    if ((mPaletteImage->getSize().getWidth() == 256) && (mPaletteImage->getSize().getHeight() == 63))
-    {
-      for (int i = 0; i < mPaletteImage->getSize().getWidth(); i++)
-      {
-        int num = (rand() % (55 -20  + 1)) + 20;
-
-        unsigned char color_index = mPaletteImage->getPaletteIndex(i, num);
-
-        if(color_index != 255)
-        {
-          Color image_color = mPalette->at(color_index);
-
-          mPalette->at(i) = image_color;
-        }
-        else
-        {
-          Color trans_color(0, 0, 0);
-          mPalette->at(i) = trans_color;
-        }
-      }
-    }
-  }
-}*/
-
 std::shared_ptr<Palette2D> Pcx::map2DPalette()
 {
-  std::shared_ptr<Palette2D> palette2D = make_shared<Palette2D>();
+  std::shared_ptr<Palette2D> palette2D;
 
   if (mPaletteImage && mPalette)
   {
     // check magic size of the special 2D palette format
-    if ((mPaletteImage->getSize().getWidth() == 256) && (mPaletteImage->getSize().getHeight() == 63))
+    if (mPaletteImage->getSize().getWidth() == 256)
     {
+      palette2D = make_shared<Palette2D>(mPaletteImage->getSize().getHeight());
+
       for (int x = 0; x < mPaletteImage->getSize().getWidth()-1; x++)
       {
         for (int y = 0; y < mPaletteImage->getSize().getHeight()-1; y++)
         {
-          unsigned char color_index = mPaletteImage->getPaletteIndex(x, y);
+          // FIXME: there was a bug in getPalettePixel() that y was decremented 1. After fixing it the output was ugly
+          // now I substract here y-1 before and now alpha graphics (e.g. fire) look fine. I've to check the algorithm later again
+          int y_mod = (y > 0) ? (y-1) : 0;
+
+          unsigned char color_index = mPaletteImage->at(Pos(x, y_mod));
 
           if(color_index != 255)
           {
@@ -193,6 +161,7 @@ void Pcx::extractImage()
   unsigned char *dest = NULL;
   unsigned char ch = 0;
   unsigned char *imageParserPos = nullptr;
+  size_t pos = 0;
 
   if (mRawData)
   {
@@ -219,7 +188,8 @@ void Pcx::extractImage()
           }
         }
         dest[i] = ch;
-        mPaletteImage->addPaletteIndex(ch);
+        mPaletteImage->at(pos) = ch;
+        pos++;
         --count;
       }
     }

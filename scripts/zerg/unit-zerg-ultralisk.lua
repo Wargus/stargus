@@ -74,13 +74,11 @@ DefineAnimations("animations-zerg-ultralisk", {
   },
 })
 
-DefineUnitType("unit-zerg-ultralisk", { Name = "Ultralisk",
-  Image = {"file", "zerg/units/ultralisk.png", "size", {128, 128}},
+DefineUnitType("unit-zerg-ultralisk", {
   Shadow = {"file", "zerg/units/ultralisk shadow.png", "size", {128, 128}, "offset", {0, 7}},
   Animations = "animations-zerg-ultralisk", Icon = "icon-zerg-ultralisk",
   Costs = {"time", 200, "minerals", 200, "gas", 200},
   Speed = 12, NumDirections = 32,
-  HitPoints = 400,
   DrawLevel = 40,
   TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 5, ComputerReactionRange = 6, PersonReactionRange = 4,

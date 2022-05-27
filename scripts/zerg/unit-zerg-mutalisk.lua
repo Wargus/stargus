@@ -24,14 +24,12 @@ DefineAnimations("animations-zerg-mutalisk", {
 })
 
 
-DefineUnitType("unit-zerg-mutalisk", { Name = "Mutalisk",
-  Image = {"file", "zerg/units/mutalisk.png", "size", {128, 128}},
+DefineUnitType("unit-zerg-mutalisk", {
   Shadow = {"file", "zerg/units/mutalisk.png", "size", {128, 128}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-zerg-mutalisk", Icon = "icon-zerg-mutalisk",
   Costs = {"time", 250, "minerals", 150, "gas", 100},
   Speed = 14,
-  HitPoints = 120,
   DrawLevel = 60,
   TileSize = {1, 1}, BoxSize = {63, 63},--FIXME:wrong boxsize
   SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,

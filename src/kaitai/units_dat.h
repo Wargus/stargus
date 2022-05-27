@@ -112,14 +112,21 @@ public:
         ~hit_points_type_t();
 
     private:
-        uint16_t m_hitpoints;
-        uint16_t m_unused;
+        bool f_hitpoints;
+        int32_t m_hitpoints;
+
+    public:
+        int32_t hitpoints();
+
+    private:
+        uint16_t m_hitpoints0;
+        uint16_t m_hitpoints1;
         units_dat_t* m__root;
         units_dat_t* m__parent;
 
     public:
-        uint16_t hitpoints() const { return m_hitpoints; }
-        uint16_t unused() const { return m_unused; }
+        uint16_t hitpoints0() const { return m_hitpoints0; }
+        uint16_t hitpoints1() const { return m_hitpoints1; }
         units_dat_t* _root() const { return m__root; }
         units_dat_t* _parent() const { return m__parent; }
     };
@@ -386,7 +393,7 @@ public:
     };
 
 private:
-    std::vector<uint8_t>* m_graphics;
+    std::vector<uint8_t>* m_flingy;
     std::vector<uint16_t>* m_subunit1;
     std::vector<uint16_t>* m_subunit2;
     std::vector<uint16_t>* m_infestation;
@@ -475,7 +482,7 @@ public:
     /**
      * Unit's main graphics object. [pointer to flingy.dat]
      */
-    std::vector<uint8_t>* graphics() const { return m_graphics; }
+    std::vector<uint8_t>* flingy() const { return m_flingy; }
 
     /**
      * Main subunit to the unit. Various turrets mostly. [pointer to units.dat]

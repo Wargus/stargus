@@ -12,6 +12,26 @@
 #include <iomanip>
 #include <iostream>
 #include <vector>
+#include <string>
+
+// some functions that are very usefull for writing files
+bool hasFileEnding(const std::string &filename, const std::string &ending);
+std::string cutFileEnding(std::string filename, const std::string &ending = "");
+
+/**
+ * @return the lower case string variant
+ */
+std::string to_lower(std::string line);
+
+/**
+ * An function to replace occurences of substrings in a bigger string. Very basic function without regex.
+ * @param match This is the string that is matched to replace.
+ * @param replace The string that replaces all found match strings.
+ * @param str The string that is matched and replaced.
+ *
+ * @return number of replaced strings
+ */
+int replaceString(const std::string &match, const std::string &replace, std::string &str);
 
 /**
  * print Vector on std::cout

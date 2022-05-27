@@ -30,8 +30,7 @@ DefineConstruction("construction-terran-supply-depot", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-terran-supply-depot", { Name = "Supply Depot",
-  Image = {"file", "graphics/terran/units/supply depot.png", "size", {96, 128}},
+DefineUnitType("unit-terran-supply-depot", {
   Shadow = {"file", "graphics/terran/units/supply depot shadow.png", "size", {96, 128}},
   Animations = "animations-terran-supply-depot", Icon = "icon-terran-supply-depot",
   Costs = {"time", 100, "minerals", 100},
@@ -41,7 +40,6 @@ DefineUnitType("unit-terran-supply-depot", { Name = "Supply Depot",
   BurnPercent = 30,
   BurnDamageRate = 1,
   Speed = 0,
-  HitPoints = 500,
   DrawLevel = 50,
   BuilderOutside = true,
   TileSize = {3, 2}, BoxSize = {95, 63},

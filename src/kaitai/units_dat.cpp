@@ -8,7 +8,7 @@ units_dat_t::units_dat_t(bool p_has_broodwar_flag, bool p_has_max_air_hits, bool
     m_has_broodwar_flag = p_has_broodwar_flag;
     m_has_max_air_hits = p_has_max_air_hits;
     m_has_max_ground_hits = p_has_max_ground_hits;
-    m_graphics = 0;
+    m_flingy = 0;
     m_subunit1 = 0;
     m_subunit2 = 0;
     m_infestation = 0;
@@ -78,11 +78,11 @@ units_dat_t::units_dat_t(bool p_has_broodwar_flag, bool p_has_max_air_hits, bool
 }
 
 void units_dat_t::_read() {
-    int l_graphics = 228;
-    m_graphics = new std::vector<uint8_t>();
-    m_graphics->reserve(l_graphics);
-    for (int i = 0; i < l_graphics; i++) {
-        m_graphics->push_back(m__io->read_u1());
+    int l_flingy = 228;
+    m_flingy = new std::vector<uint8_t>();
+    m_flingy->reserve(l_flingy);
+    for (int i = 0; i < l_flingy; i++) {
+        m_flingy->push_back(m__io->read_u1());
     }
     int l_subunit1 = 228;
     m_subunit1 = new std::vector<uint16_t>();
@@ -442,8 +442,8 @@ units_dat_t::~units_dat_t() {
 }
 
 void units_dat_t::_clean_up() {
-    if (m_graphics) {
-        delete m_graphics; m_graphics = 0;
+    if (m_flingy) {
+        delete m_flingy; m_flingy = 0;
     }
     if (m_subunit1) {
         delete m_subunit1; m_subunit1 = 0;
@@ -693,6 +693,7 @@ void units_dat_t::staredit_group_flags_type_t::_clean_up() {
 units_dat_t::hit_points_type_t::hit_points_type_t(kaitai::kstream* p__io, units_dat_t* p__parent, units_dat_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
+    f_hitpoints = false;
 
     try {
         _read();
@@ -703,8 +704,8 @@ units_dat_t::hit_points_type_t::hit_points_type_t(kaitai::kstream* p__io, units_
 }
 
 void units_dat_t::hit_points_type_t::_read() {
-    m_hitpoints = m__io->read_u2be();
-    m_unused = m__io->read_u2be();
+    m_hitpoints0 = m__io->read_u2be();
+    m_hitpoints1 = m__io->read_u2be();
 }
 
 units_dat_t::hit_points_type_t::~hit_points_type_t() {
@@ -712,6 +713,14 @@ units_dat_t::hit_points_type_t::~hit_points_type_t() {
 }
 
 void units_dat_t::hit_points_type_t::_clean_up() {
+}
+
+int32_t units_dat_t::hit_points_type_t::hitpoints() {
+    if (f_hitpoints)
+        return m_hitpoints;
+    m_hitpoints = (hitpoints0() + hitpoints1());
+    f_hitpoints = true;
+    return m_hitpoints;
 }
 
 units_dat_t::addon_position_type_t::addon_position_type_t(kaitai::kstream* p__io, units_dat_t* p__parent, units_dat_t* p__root) : kaitai::kstruct(p__io) {

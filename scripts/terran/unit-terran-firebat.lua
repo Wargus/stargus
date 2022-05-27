@@ -38,13 +38,11 @@ DefineAnimations("animations-terran-firebat", {
   },
 })
 
-DefineUnitType("unit-terran-firebat", { Name = "Firebat",
-  Image = {"file", "terran/units/firebat.png", "size", {32, 32}},
+DefineUnitType("unit-terran-firebat", {
   Shadow = {"file", "terran/units/firebat shadow.png", "size", {32, 32}},
   Animations = "animations-terran-firebat", Icon = "icon-terran-firebat",
   Costs = {"time", 60, "minerals", 50, "gas", 25},
   Speed = 10, NumDirections = 32,
-  HitPoints = 50,
   DrawLevel = 40,
   TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,

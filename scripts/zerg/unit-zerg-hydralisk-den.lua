@@ -11,8 +11,7 @@ DefineAnimations("animations-zerg-hydralisk-den", {
 })
 
 
-DefineUnitType("unit-zerg-hydralisk-den", { Name = "Hydralisk Den",
-  Image = {"file", "zerg/units/hydralisk den.png", "size",  {160, 128}},
+DefineUnitType("unit-zerg-hydralisk-den", {
   Shadow = {"file", "zerg/units/hydralisk den shadow.png", "size",  {160, 128}},
   Animations = "animations-zerg-hydralisk-den", Icon = "icon-zerg-hydralisk-den",
   Costs = {"time", 200, "minerals", 75, "gas", 25},
@@ -20,7 +19,6 @@ DefineUnitType("unit-zerg-hydralisk-den", { Name = "Hydralisk Den",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",
   Speed = 0,
-  HitPoints = 400,
   DrawLevel = 30,
   TileSize = {3, 2}, BoxSize = {100, 63},
   SightRange = 4,

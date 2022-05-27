@@ -48,8 +48,6 @@ public:
    */
   bool save(Storage filename);
 
-  bool saveLUAConfig(Storage filename);
-
   void setPalette(std::shared_ptr<Palette> pal);
 
   void setPalette2D(std::shared_ptr<Palette2D> pal);
@@ -58,6 +56,8 @@ public:
   bool getGFX();
 
   void setTransparent(int transparent);
+
+  Size getTileSize();
 
 protected:
   /**

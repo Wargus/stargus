@@ -4,13 +4,11 @@ DefineAnimations("animations-ragnasaur-ashworld-critter", {
   },
 })
 
-DefineUnitType("Ragnasaur-(Ashworld-Critter)", { Name = "Ragnasaur (Ashworld Critter)",
-  Image = {"file", "neutral/units/ragnasaur ashworld critter.png", "size", {104, 104}},
+DefineUnitType("unit-critter-ragnasaur", {
   Shadow = {"file", "neutral/units/ragnasaur ashworld critter shadow.png", "size", {104, 104}},
   Animations = "animations-ragnasaur-ashworld-critter", Icon = "icon-ragnasaur-ashworld-critter",
   NeutralMinimapColor = {0, 228, 252},
   Speed = 0,
-  HitPoints = 20,
   DrawLevel = 5,
   TileSize = {2, 1}, BoxSize = {63, 31},
   SightRange = 0,

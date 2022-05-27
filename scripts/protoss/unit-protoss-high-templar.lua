@@ -34,13 +34,11 @@ DefineAnimations("animations-protoss-high-templar", {
 })
 
 
-DefineUnitType("unit-protoss-high-templar", { Name = "High Templar",
-  Image = {"file", "protoss/units/high templar.png", "size", {128, 128}},
+DefineUnitType("unit-protoss-high-templar", {
   Shadow = {"file", "protoss/units/pzeshad.png", "size", {128, 128}},
   Animations = "animations-protoss-high-templar", Icon = "icon-protoss-high-templar",
   Costs = {"time", 100, "minerals", 100},
   Speed = 10, NumDirections = 32,
-  HitPoints = 100,
   DrawLevel = 40,
   TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,

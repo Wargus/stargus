@@ -11,8 +11,7 @@ DefineAnimations("animations-terran-comsat-station", {
   },
 })
 
-DefineUnitType("unit-terran-comsat-station", { Name = "Comsat Station",
-  Image = {"file", "terran/units/comsat station.png", "size", {128, 64}},
+DefineUnitType("unit-terran-comsat-station", {
   Shadow = {"file", "terran/units/comsat station shadow.png", "size", {128, 64}},
   Animations = "animations-terran-comsat-station", Icon = "icon-terran-comsat-station",
   Costs = {"time", 75, "minerals", 50},
@@ -22,7 +21,6 @@ DefineUnitType("unit-terran-comsat-station", { Name = "Comsat Station",
   Speed = 0,
   BurnPercent = 30,
   BurnDamageRate = 1,
-  HitPoints = 1500,
   DrawLevel = 50,
   BuilderOutside = true,
   TileSize = {2, 2}, BoxSize = {55, 55},

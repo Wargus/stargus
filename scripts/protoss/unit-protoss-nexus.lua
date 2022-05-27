@@ -652,8 +652,7 @@ DefineConstruction("construction-zerg-hatchery", {
 }
 }) --]]
 
-DefineUnitType("unit-protoss-nexus", { Name = "Protoss Nexus",
-  Image = {"file", "protoss/units/nexus.png", "size", {192, 224}},
+DefineUnitType("unit-protoss-nexus", {
   Shadow = {"file", "protoss/units/pneshad.png", "size", {192, 224}},
   Animations = "animations-protoss-nexus", Icon = "icon-protoss-nexus",
   Costs = {"time", 255, "minerals", 400},
@@ -661,7 +660,6 @@ DefineUnitType("unit-protoss-nexus", { Name = "Protoss Nexus",
   RepairCosts = {"minerals", 1, "gas", 0},
   Construction = "construction-protoss-nexus",
   Speed = 0,
-  HitPoints = 1500,
   DrawLevel = 50,
   TileSize = {4, 3}, BoxSize = {126, 95},
   SightRange = 1, 

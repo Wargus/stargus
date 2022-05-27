@@ -32,8 +32,7 @@ DefineConstruction("construction-protoss-stargate", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-stargate", { Name = "Stargate",
-  Image = {"file", "protoss/units/stargate.png", "size", {128, 160}},
+DefineUnitType("unit-protoss-stargate", {
   Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-stargate", Icon = "icon-protoss-stargate",
   Costs = {"time", 30, "minerals", 100},
@@ -41,7 +40,6 @@ DefineUnitType("unit-protoss-stargate", { Name = "Stargate",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-stargate",
   Speed = 0,
-  HitPoints = 1000,
   DrawLevel = 50,
   TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 1,

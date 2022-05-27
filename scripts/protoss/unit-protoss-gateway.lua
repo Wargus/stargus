@@ -33,8 +33,7 @@ DefineConstruction("construction-protoss-gateway", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-gateway", { Name = "Protoss Gateway",
-  Image = {"file", "protoss/units/gateway.png", "size", {128, 160}},
+DefineUnitType("unit-protoss-gateway", {
   Shadow = {"file", "protoss/units/pgashad.png", "size", {128, 160}},
   Animations = "animations-protoss-gateway", Icon = "icon-protoss-gateway",
   Costs = {"time", 200, "minerals", 150},
@@ -42,7 +41,6 @@ DefineUnitType("unit-protoss-gateway", { Name = "Protoss Gateway",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-gateway",
   Speed = 0,
-  HitPoints = 1000,
   DrawLevel = 50,
   TileSize = {4, 3}, BoxSize = {127, 95},
   SightRange = 1,

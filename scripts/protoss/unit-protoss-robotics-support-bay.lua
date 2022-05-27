@@ -32,8 +32,7 @@ DefineConstruction("construction-protoss-robotics-support-bay", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-robotics-support-bay", { Name = "Robotics Support Bay",
-  Image = {"file", "protoss/units/robotics support bay.png", "size", {160, 128}},
+DefineUnitType("unit-protoss-robotics-support-bay", {
   Shadow = {"file", "protoss/units/pgcshad.png", "size", {96, 64}},
   Animations = "animations-protoss-robotics-support-bay", Icon = "icon-protoss-robotics-support-bay",
   Costs = {"time", 30, "minerals", 100},
@@ -41,7 +40,6 @@ DefineUnitType("unit-protoss-robotics-support-bay", { Name = "Robotics Support B
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-robotics-support-bay",
   Speed = 0,
-  HitPoints = 1000,
   DrawLevel = 50,
   TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 1,

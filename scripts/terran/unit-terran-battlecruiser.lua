@@ -16,15 +16,13 @@ DefineAnimations("animations-terran-battlecruiser", {
     --[[active overlay 333,0]] "wait 3", "unbreakable end", "wait 1",},
 })
 
-DefineUnitType("unit-terran-battlecruiser", { Name = "Battlecruiser",
-  Image = {"file", "terran/units/battlecruiser.png", "size", {120, 120}},
+DefineUnitType("unit-terran-battlecruiser", {
   Shadow = {"offset", {0, 42}, "scale", 1},
   --Shadow = {"file", "terran/units/battlecruiser.png", "size", {120, 120}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-terran-battlecruiser", Icon = "icon-terran-battlecruiser",
   Costs = {"time", 250, "minerals", 400, "gas", 300},
   Speed = 14,
-  HitPoints = 500,
   DrawLevel = 60,
   TileSize = {1, 1}, BoxSize = {63, 63},
   SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,

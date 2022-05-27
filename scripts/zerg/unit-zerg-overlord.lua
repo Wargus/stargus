@@ -12,7 +12,7 @@ DefineAnimations("animations-zerg-overlord-death", {
 })
 
 
-DefineUnitType("unit-zerg-overlord-death", { Name = "Dead Overlord",
+DefineUnitType("unit-zerg-overlord-death", {
   Image = {"file", "zerg/units/overlord death.png", "size", {72, 72}},
   Animations = "animations-zerg-overlord-death", Icon = "icon-zerg-overlord",
   NumDirections = 1,
@@ -51,13 +51,11 @@ DefineAnimations("animations-zerg-overlord", {
 
 
 DefineUnitType("unit-zerg-overlord", { Name = "Overlord",
-  Image = {"file", "zerg/units/overlord.png", "size", {84, 84}},
   Shadow = {"file", "zerg/units/overlord.png", "size", {84, 84}, "offset", {0, 42}},
   Animations = "animations-zerg-overlord", Icon = "icon-zerg-overlord",
   Costs = {"time", 45, "minerals", 100},
   RepairHp = 4,
   Speed = 0, NumDirections = 32,
-  HitPoints = 500,
   DrawLevel = 45,
   TileSize = {1, 1}, BoxSize = {63, 63},
   SightRange = 10,

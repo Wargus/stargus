@@ -50,15 +50,13 @@ DefineAnimations("animations-protoss-observer", {
 })
 
 
-DefineUnitType("unit-protoss-observer", { Name = "Observer",
-  Image = {"file", "protoss/units/observer.png", "size", {40, 40}},
+DefineUnitType("unit-protoss-observer", {
   --Shadow = {"file", "proo/units/overlord.png", "size", {84, 84}, "offset", {0, 42}},
   Animations = "animations-protoss-observer", Icon = "icon-protoss-observer",
   Costs = {"time", 45, "minerals", 100},
   RepairHp = 4,
   Speed = 20, 
   NumDirections = 8,
-  HitPoints = 500,
   DrawLevel = 45,
   TileSize = {1, 1}, BoxSize = {63, 63},
   SightRange = 10,

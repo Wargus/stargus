@@ -33,8 +33,7 @@ DefineConstruction("construction-terran-engineering-bay", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-terran-engineering-bay", { Name = "Engineering Bay",
-  Image = {"file", "terran/units/engineering bay.png", "size",  {192, 160}},
+DefineUnitType("unit-terran-engineering-bay", {
   Shadow = {"file", "terran/units/engineering bay shadow.png", "size",  {192, 160}},
   Animations = "animations-terran-engineering-bay", Icon = "icon-terran-engineering-bay",
   Costs = {"time", 200, "minerals", 125},
@@ -44,7 +43,6 @@ DefineUnitType("unit-terran-engineering-bay", { Name = "Engineering Bay",
   Speed = 0,
   BurnPercent = 30,
   BurnDamageRate = 1,
-  HitPoints = 850,
   DrawLevel = 50,
   BuilderOutside = true,
   TileSize = {4, 3}, BoxSize = {127, 95},

@@ -1,0 +1,85 @@
+{
+    "PCX":
+	[
+	    {
+	        "name": "tunit",
+	        "arcfile": "game\\tunit.pcx"
+	    },
+	    {
+	        "name": "twire",
+	        "arcfile": "game\\twire.pcx"
+	    },
+	    
+	    {
+	        "name": "tfontgam",
+	        "arcfile": "game\\tfontgam.pcx",
+			"mapping": {
+		        "length": 8,
+		        "start": 1,
+		        "index": 0
+			    }
+	    },
+	    {
+	        "name": "ticon-0",
+	        "arcfile": "unit\\cmdbtns\\ticon.pcx",
+			"mapping": {
+		        "length": 16,
+		        "start": 0,
+		        "index": 0
+			    }
+	    },
+	    {
+	        "name": "tselect-0",
+	        "arcfile": "game\\tselect.pcx",
+			"mapping": {
+		        "length": 8,
+		        "start": 1,
+		        "index": 0
+			    }
+	    }
+	],
+    "PCX2D":
+	[
+	    {
+	        "name": "ofire",
+	        "arcfile": "tileset\\ashworld\\ofire.pcx"
+	    },
+	    {
+	        "name": "gfire",
+	        "arcfile": "tileset\\ashworld\\gfire.pcx"
+	    },
+	    {
+	        "name": "bfire",
+	        "arcfile": "tileset\\ashworld\\bfire.pcx"
+	    },
+	    {
+	        "name": "bexpl",
+	        "arcfile": "tileset\\ashworld\\bexpl.pcx"
+	    }
+
+	],
+    "WPE":
+	[
+	    {
+	        "name": "ashworld",
+	        "arcfile": "tileset\\ashworld.wpe"
+	    },
+	    {
+	        "name": "badlands",
+	        "arcfile": "tileset\\badlands.wpe"
+	    },
+	    {
+	        "name": "install",
+	        "arcfile": "tileset\\install.wpe"
+	    },
+	    {
+	        "name": "jungle",
+	        "arcfile": "tileset\\jungle.wpe"
+	    },
+	    {
+	        "name": "platform",
+	        "arcfile": "tileset\\platform.wpe"
+	    }
+	]
+}
+

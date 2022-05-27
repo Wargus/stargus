@@ -14,15 +14,13 @@ DefineAnimations("animations-terran-dropship", {
     --[[active overlay 332,0]] "wait 3", "unbreakable end", "wait 1",},
 })
 
-DefineUnitType("unit-terran-dropship", { Name = "Wraith",
-  Image = {"file", "terran/units/dropship.png", "size", {60, 60}},
+DefineUnitType("unit-terran-dropship", {
   -- Shadow = {"file", "terran/units/dropship.png", "size", {60, 60}, "offset", {0, 42}},
   Shadow = {"offset", {0, 42}, "scale", 1},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-terran-dropship", Icon = "icon-terran-dropship",
   Costs = {"time", 250, "minerals", 400, "gas", 300},
   Speed = 14,
-  HitPoints = 500,
   DrawLevel = 60,
   MaxOnBoard = 8,
   TileSize = {1, 1}, BoxSize = {63, 63},

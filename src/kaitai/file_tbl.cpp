@@ -88,7 +88,7 @@ int32_t file_tbl_t::tbl_entry_t::len() {
 int32_t file_tbl_t::tbl_entry_t::dyn_end() {
     if (f_dyn_end)
         return m_dyn_end;
-    m_dyn_end = static_cast<int32_t>(((i() + 1) < _parent()->num_offsets()) ? (len()) : ((_io()->size() - _parent()->ofs_files()->at(i()))));
+    m_dyn_end = (((i() + 1) < _parent()->num_offsets()) ? (len()) : ((_io()->size() - _parent()->ofs_files()->at(i()))));
     f_dyn_end = true;
     return m_dyn_end;
 }

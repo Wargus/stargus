@@ -33,8 +33,7 @@ DefineConstruction("construction-protoss-cybernetics-core", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-cybernetics-core", { Name = "Cybernetics Core",
-  Image = {"file", "protoss/units/cybernetics core.png", "size", {96, 128}},
+DefineUnitType("unit-protoss-cybernetics-core", {
   Shadow = {"file", "protoss/units/pgcshad.png", "size", {96, 128}},
   Animations = "animations-protoss-cybernetics-core", Icon = "icon-protoss-cybernetics-core",
   Costs = {"time", 200, "minerals", 200},
@@ -42,7 +41,6 @@ DefineUnitType("unit-protoss-cybernetics-core", { Name = "Cybernetics Core",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-cybernetics-core",
   Speed = 0,
-  HitPoints = 1000,
   DrawLevel = 50,
   TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 1,

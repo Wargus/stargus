@@ -32,8 +32,7 @@ DefineConstruction("construction-protoss-observatory", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-observatory", { Name = "Observatory",
-  Image = {"file", "protoss/units/observatory.png", "size", {96, 128}},
+DefineUnitType("unit-protoss-observatory", {
   Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-observatory", Icon = "icon-protoss-observatory",
   Costs = {"time", 30, "minerals", 100},
@@ -41,7 +40,6 @@ DefineUnitType("unit-protoss-observatory", { Name = "Observatory",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-observatory",
   Speed = 0,
-  HitPoints = 1000,
   DrawLevel = 50,
   TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 1,

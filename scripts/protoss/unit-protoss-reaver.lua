@@ -34,13 +34,11 @@ DefineAnimations("animations-protoss-reaver", {
 })
 
 
-DefineUnitType("unit-protoss-reaver", { Name = "Reaver",
-  Image = {"file", "protoss/units/reaver.png", "size", {1428, 756}},
+DefineUnitType("unit-protoss-reaver", {
   Shadow = {"file", "protoss/units/pzeshad.png", "size", {128, 128}},
   Animations = "animations-protoss-reaver", Icon = "icon-protoss-reaver",
   Costs = {"time", 100, "minerals", 100},
   Speed = 10, NumDirections = 32,
-  HitPoints = 100,
   DrawLevel = 40,
   TileSize = {1, 1}, BoxSize = {179, 48},
   SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,

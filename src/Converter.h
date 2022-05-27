@@ -20,8 +20,6 @@ public:
   Converter(std::shared_ptr<Hurricane> hurricane);
   virtual ~Converter();
 
-  //virtual bool convert(const std::string &arcfile, const std::string &file) = 0;
-
 protected:
   std::shared_ptr<Hurricane> mHurricane;
 };

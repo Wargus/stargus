@@ -10,13 +10,11 @@ DefineAnimations("animations-vespene-geyser", {
 
 
 
-DefineUnitType("unit-vespene-geyser", { Name = "Vespene Geyser",
-  Image = {"file", "neutral/units/geyser.png", "size", {128, 64}},
+DefineUnitType("unit-resource-vespene-geyser", {
   Shadow = {"file", "neutral/units/geyser shadow.png", "size", {160, 64}},
   Animations = "animations-vespene-geyser", Icon = "icon-vespene-geyser",
   NeutralMinimapColor = {0, 228, 252},
   Speed = 0,
-  HitPoints = 0,
   DrawLevel = 5,
   TileSize = {4, 2}, BoxSize = {127, 63},
   SightRange = 0,

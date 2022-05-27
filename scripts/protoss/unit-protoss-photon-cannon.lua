@@ -630,8 +630,7 @@ DefineConstruction("construction-protoss-photon-cannon", {
 }
 })
 
-DefineUnitType("unit-protoss-photon-cannon", { Name = "Photon Canon",
-  Image = {"file", "protoss/units/photon cannon.png", "size",  {64, 128}},
+DefineUnitType("unit-protoss-photon-cannon", {
   Shadow = {"file", "protoss/units/ppbshad.png", "size",  {64, 128}},
   Animations = "animations-protoss-photon-cannon", Icon = "icon-terran-bunker",
   Costs = {"time", 200, "minerals", 150},
@@ -639,7 +638,6 @@ DefineUnitType("unit-protoss-photon-cannon", { Name = "Photon Canon",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-photon-cannon",
   Speed = 0,
-  HitPoints = 200,
   DrawLevel = 30,
   TileSize = {2, 2}, BoxSize = {63, 63},
   SightRange = 7, ComputerReactionRange = 6, PersonReactionRange = 4,

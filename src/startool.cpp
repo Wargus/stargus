@@ -29,11 +29,15 @@
 //@{
 /*----------------------------------------------------------------------------
  --  Includes
+
  ----------------------------------------------------------------------------*/
 
+// project
+#include "dat/DataHub.h"
+#include "tileset/TilesetHub.h"
+#include "PngExporter.h"
 #include "Smacker.h"
 #include "Palette.h"
-#include <Tbl.h>
 #include "endian.h"
 #include "startool.h"
 #include "Preferences.h"
@@ -42,18 +46,23 @@
 #include "Pcx.h"
 #include "Font.h"
 #include "Grp.h"
-#include "Png.h"
 #include "Panel.h"
 #include "Widgets.h"
-#include "Tileset.h"
 #include "DataChunk.h"
 #include "Casc.h"
 #include "Dds.h"
 #include "Logger.h"
 #include "Breeze.h"
-#include "DataHub.h"
 #include "Storage.h"
 #include "Wav.h"
+#include "tileset/TilesetHub.h"
+#include "platform.h"
+
+// system
+#include <nlohmann/json.hpp>
+#include <fstream>
+
+using json = nlohmann::json;
 
 // as this is 3rd party code I don't fix it ->
 #ifndef _MSC_VER
@@ -271,6 +280,90 @@ int parseOptions(int argc, const char **argv)
   return 0;
 }
 
+
+void loadPalettes(std::shared_ptr<Hurricane> hurricane,
+                  std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
+                  std::map<std::string, std::shared_ptr<Palette2D>> &palette2DMap)
+{
+  // read in the json file
+  std::ifstream json_file("dataset/palettes.json");
+
+  json palettes_json; //create unitiialized json object
+
+  json_file >> palettes_json; // initialize json object with what was read from file
+
+  //std::cout << units_json << std::endl; // prints json object to screen
+
+
+
+  /** PCX **/
+  auto &pcx_section = palettes_json.at("PCX");
+
+  for(auto &pcx_array : pcx_section)
+  {
+    string pcx_name = pcx_array.at("name");
+    string pcx_arcfile = pcx_array.at("arcfile");
+
+    Pcx pcx(hurricane, pcx_arcfile);
+
+    try
+    {
+      auto &pcx_mapping = pcx_array.at("mapping");
+
+      int length = pcx_mapping.at("length");
+      int start = pcx_mapping.at("start");
+      int index = pcx_mapping.at("index");
+
+
+      pcx.mapIndexPalette(length, start, index);
+      //cout << pcx_mapping << endl;
+    }
+    catch (const nlohmann::detail::out_of_range &json_range)
+    {
+      // just ignore if the section is not availabe
+    }
+
+    std::shared_ptr<Palette> pal = pcx.getPalette();
+
+    paletteMap[pcx_name] = pal;
+
+    //cout << pcx_array << endl;
+  }
+
+  /** PCX2D **/
+  auto &pcx2d_section = palettes_json.at("PCX2D");
+
+  for(auto &pcx_array : pcx2d_section)
+  {
+    string pcx_name = pcx_array.at("name");
+    string pcx_arcfile = pcx_array.at("arcfile");
+
+    Pcx pcx(hurricane, pcx_arcfile);
+
+    std::shared_ptr<Palette2D> pal2D = pcx.map2DPalette();
+
+    palette2DMap[pcx_name] = pal2D;
+
+    //cout << pcx_array << endl;
+  }
+
+  /** WPE **/
+  auto &wpe_section = palettes_json.at("WPE");
+
+  for(auto &wpe_array : wpe_section)
+  {
+    string wpe_name = wpe_array.at("name");
+    string wpe_arcfile = wpe_array.at("arcfile");
+
+    shared_ptr<DataChunk> dataWPE = hurricane->extractDataChunk(wpe_arcfile);
+
+    shared_ptr<Palette> pal = make_shared<Palette>(dataWPE);
+    paletteMap[wpe_name] = pal;
+
+    //cout << wpe_array << endl;
+  }
+}
+
 /**
  * The only purpose of this function is to have a hook to develop/test single functions and then exit
  */
@@ -290,12 +383,13 @@ void testHook()
   shared_ptr<Storm> storm = make_shared<Storm>(
                               "/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
   //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
-  DataHub datahub(storm);
-  //datahub.convert("test", "test");
+  //dat::DataHub datahub(storm);
+  //datahub.convert();
 
   /// Image 1
-  Pcx pcx1(storm, "game\\tfontgam.pcx");
+  Pcx pcx1(storm, "game\\tunit.pcx");
   pcx1.savePNG("/tmp/tunit.png");
+  pcx1.mapIndexPalette(8, 8, 2);
   std::shared_ptr<Palette> pal = pcx1.getPalette();
   pal->createDataChunk()->write("/tmp/tunit.pal");
 
@@ -307,24 +401,42 @@ void testHook()
   pal2->createDataChunk()->write("/tmp/ticon.pal");
 
   // Image 3
-  Pcx pcx3(storm, "tileset\\ashworld\\bfire.pcx");
+  Pcx pcx3(storm, "tileset\\ashworld\\ofire.pcx");
   pcx3.savePNG("/tmp/ofire.png");
-  std::shared_ptr<Palette2D> pal2D = pcx3.map2DPalette();
+  std::shared_ptr<Palette2D> pal2D_3 = pcx3.map2DPalette();
   std::shared_ptr<Palette> pal3 = pcx3.getPalette();
   pal3->createDataChunk()->write("/tmp/ofire.pal");
+
+  // Image 4
+  Pcx pcx4(storm, "tileset\\ashworld\\bfire.pcx");
+  pcx4.savePNG("/tmp/bfire.png");
+  std::shared_ptr<Palette2D> pal2D_4 = pcx4.map2DPalette();
+  std::shared_ptr<Palette> pal4 = pcx4.getPalette();
+  pal4->createDataChunk()->write("/tmp/bfire.pal");
+
 
   shared_ptr<DataChunk> terrainWPE = storm->extractDataChunk("tileset\\jungle.wpe");
   shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
   terrainPalette->createDataChunk()->write("/tmp/terrainPalette.pal");
 
-  string grp_file = "unit\\thingy\\pabGlow.grp";
+  //string grp_file = "unit\\protoss\\pbaGlow.grp";
+  string grp_file = "unit\\terran\\marine.grp";
   Grp grp(storm, grp_file);
-  grp.setPalette2D(pal2D);
-  grp.setPalette(terrainPalette);
-  grp.setTransparent(200);
-  grp.setRGBA(true);
+  grp.setPalette(pal);
+  //grp.setPalette(terrainPalette);
+  //grp.setTransparent(200);
+  //grp.setRGBA(true);
 
-  grp.save("/tmp/flamer.png");
+
+  //Tileset tileset(storm);
+  //tileset.convert("jungle", terrainPalette);
+
+  tileset::TilesetHub tilesethub(storm, "tileset\\jungle");
+  //tilesethub.convert(terrainPalette, "/tmp/test");
+
+  tilesethub.generateLua("Jungle", "tilesets/jungle/jungle.png", "/tmp/jungle.lua");
+
+  grp.save("/tmp/marine.png");
 
   cout << "end testHook()" << endl;
   exit(0);
@@ -398,12 +510,19 @@ int main(int argc, const char **argv)
   sounds.setDataPath(preferences.getDestDir());
   sounds.setDataType("sounds");
 
+  Storage tilesets;
+  tilesets.setDataPath(preferences.getDestDir());
+  tilesets.setDataType("graphics/tilesets");
+
+  Storage luagen;
+  luagen.setDataPath(preferences.getDestDir());
+  luagen.setDataType("luagen");
+
   Storage data;
   data.setDataPath(preferences.getDestDir());
 
   map<string, shared_ptr<Palette>> paletteMap;
-
-  std::shared_ptr<Palette2D> pal2D;
+  map<string, shared_ptr<Palette2D>> palette2DMap;
 
   if (mpq)
   {
@@ -468,6 +587,28 @@ int main(int argc, const char **argv)
       }
     }
 
+    dat::DataHub datahub(sub_storm);
+
+    // read in the json file
+    std::ifstream json_file("dataset/units.json");
+
+    json units_json; //create unitiialized json object
+
+    json_file >> units_json; // initialize json object with what was read from file
+
+    //std::cout << units_json << std::endl; // prints json object to screen
+
+    vector<string> unitNames;
+    for(auto &array : units_json)
+    {
+      string unit_name = array.at("name");
+      unitNames.push_back(unit_name);
+    }
+
+    loadPalettes(sub_storm, paletteMap, palette2DMap);
+
+    datahub.convertUnits(units_json, paletteMap, palette2DMap);
+
     for (i = 0; i <= 1; ++i)
     {
       switch (i)
@@ -491,68 +632,24 @@ int main(int argc, const char **argv)
       {
         switch (c[u].Type)
         {
-        case PAL:
-        {
-          printf("ConvertPal: %s, %s", c[u].File, c[u].ArcFile);
-
-          Pcx pcx_palette(storm, c[u].ArcFile);
-
-          switch(c[u].Arg1)
-          {
-            case 1:
-              pcx_palette.mapIndexPaletteTypeIcon(0);
-              break;
-
-            case 2:
-              pcx_palette.mapIndexPaletteTypeSelect(0);
-              break;
-
-            case 3:
-               pal2D = pcx_palette.map2DPalette();
-              break;
-
-            case 0:
-            default:
-              break;
-          }
-
-          std::shared_ptr<Palette> pal = pcx_palette.getPalette();
-          //pal->write(graphics(c[u].File) + ".pal");
-          paletteMap[c[u].File] = pal;
-        }
-        break;
-        case WPE:
-        {
-          printf("ConvertWpe: %s, %s", c[u].File, c[u].ArcFile);
-          shared_ptr<DataChunk> dc_wpe = storm->extractDataChunk(c[u].ArcFile);
-          std::shared_ptr<Palette> pal = make_shared<Palette>(dc_wpe);
-
-          //pal->write(graphics(c[u].File) + ".pal");
-
-          paletteMap[c[u].File] = pal;
-        }
-        break;
         case M: // WORKS!
         {
           printf("ConvertMap: %s, %s", c[u].File, c[u].ArcFile);
           Scm scm(storm);
-          case_func = scm.convert(c[u].ArcFile, data(c[u].File));
+          case_func = scm.convert(c[u].ArcFile, unitNames, data(c[u].File));
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
-        /*case R: // FIXME: support Palette class or remove!
-        {
-          printf("ConvertRgb: %s, %s, %s", mpqfile.c_str(), c[u].File, c[u].ArcFile);
-          Tileset terrain(storm);
-          case_func = terrain.ConvertRgb(c[u].ArcFile, c[u].File);
-          printf("...%s\n", case_func ? "ok" : "nok");
-        }
-        break;*/
-        case T:  // WORKS!
+        case T: // WORKS!
         {
           printf("ConvertTileset: %s, %s", c[u].File, c[u].ArcFile);
-          Tileset terrain(storm);
-          case_func = terrain.ConvertTileset(c[u].ArcFile, c[u].File);
+          tileset::TilesetHub terrain(storm, c[u].ArcFile);
+          case_func = terrain.convert(paletteMap.at(c[u].File), tilesets(c[u].File));
+
+          string luafile(string("tilesets/") + c[u].File + ".lua");
+          string pngfile(string("tilesets/") + c[u].File + "/" + c[u].File + ".png");
+          terrain.generateLua(c[u].File, pngfile, luagen(luafile));
+
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
@@ -561,6 +658,7 @@ int main(int argc, const char **argv)
           printf("ConvertGfx: %s, %s", c[u].File, c[u].ArcFile);
           Grp grp(storm, c[u].ArcFile);
           std::shared_ptr<Palette> pal;
+          std::shared_ptr<Palette2D> pal2D;
 
           if (c[u].Arg1 == 6)
           {
@@ -569,27 +667,27 @@ int main(int argc, const char **argv)
           }
           else if (c[u].Arg1 == 5)
           {
-            pal = paletteMap.at("ticon");
+            pal = paletteMap.at("ticon-0");
             grp.setPalette(pal);
             grp.setGFX(false);
           }
           else if (c[u].Arg1 == 4)
           {
-            pal = paletteMap.at("ticon");
+            pal = paletteMap.at("ticon-0");
             grp.setPalette(pal);
             grp.setRGBA(true);
           }
           else if (c[u].Arg1 == 3)
           {
-            pal = paletteMap.at("install");
+            pal2D = palette2DMap.at("ofire");
             grp.setPalette2D(pal2D);
-            grp.setPalette(pal);
-            grp.setTransparent(127);
+            //grp.setPalette(pal);
+            //grp.setTransparent(127);
             grp.setRGBA(true);
           }
           else if (c[u].Arg1 == 2)
           {
-            pal = paletteMap.at("tselect");
+            pal = paletteMap.at("tselect-0");
             grp.setPalette(pal);
           }
           else if (c[u].Arg1 == 1)
@@ -604,7 +702,6 @@ int main(int argc, const char **argv)
           }
 
           case_func = grp.save(graphics(string(c[u].File) + ".png"));
-          //grp.saveLUAConfig(graphics(string(c[u].File) + ".lua")); // FIXME: works only after save()
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
@@ -673,6 +770,7 @@ int main(int argc, const char **argv)
         {
           printf("ConvertCampaign (.chk): %s, %s", c[u].File, c[u].ArcFile);
           Chk chk(storm);
+          chk.setUnitNames(unitNames);
           case_func = chk.convert(c[u].ArcFile, c[u].File);
           printf("...%s\n", case_func ? "ok" : "nok");
         }
@@ -684,11 +782,7 @@ int main(int argc, const char **argv)
     }
 
     // remove temporary sub files
-#ifdef _MSC_VER
-    _unlink(sub_storm->getArchiveName().c_str());
-#else
-    unlink(sub_storm->getArchiveName().c_str());
-#endif
+    platform::unlink(sub_storm->getArchiveName());
 
     CreatePanels();
   }

@@ -33,8 +33,7 @@ DefineConstruction("construction-terran-factory", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-terran-factory", { Name = "Factory",
-  Image = {"file", "terran/units/factory.png", "size",  {128, 160}},
+DefineUnitType("unit-terran-factory", {
   Shadow = {"file", "terran/units/factory shadow.png", "size",  {128, 160}},
   Animations = "animations-terran-factory", Icon = "icon-terran-factory",
   Costs = {"time", 200, "minerals", 200, "gas", 100},
@@ -44,7 +43,6 @@ DefineUnitType("unit-terran-factory", { Name = "Factory",
   Speed = 0,
   BurnPercent = 30,
   BurnDamageRate = 1,
-  HitPoints = 1250,
   DrawLevel = 50,
   BuilderOutside = true,
   TileSize = {4, 3}, BoxSize = {127, 95},

@@ -33,8 +33,7 @@ DefineConstruction("construction-terran-science-facility", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-terran-science-facility", { Name = "Science Facility",
-  Image = {"file", "terran/units/science facility.png", "size", {128, 96}},
+DefineUnitType("unit-terran-science-facility", {
   Shadow = {"file", "terran/units/science facility shadow.png", "size", {128, 96}},
   Animations = "animations-terran-science-facility", Icon = "icon-terran-science-facility",
   Costs = {"time", 200, "minerals", 100, "gas", 150},
@@ -44,7 +43,6 @@ DefineUnitType("unit-terran-science-facility", { Name = "Science Facility",
   Speed = 0,
   BurnPercent = 30,
   BurnDamageRate = 1,
-  HitPoints = 850,
   DrawLevel = 50,
   BuilderOutside = true,
   TileSize = {4, 3}, BoxSize = {127, 95},

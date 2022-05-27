@@ -26,7 +26,7 @@ params:
     type: b1
 
 seq:
-  - id: graphics
+  - id: flingy
     type: u1
     repeat: expr
     repeat-expr: 228
@@ -446,10 +446,14 @@ types:
 
   hit_points_type:
     seq:
-      - id: hitpoints
+      - id: hitpoints0
         type: u2be
-      - id: unused
+      - id: hitpoints1
         type: u2be
+        
+    instances:
+      hitpoints:
+        value: hitpoints0 + hitpoints1
 
   unit_dimension_type:
     seq:

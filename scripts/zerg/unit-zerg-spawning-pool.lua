@@ -13,8 +13,7 @@ DefineAnimations("animations-zerg-spawning-pool", {
 })
 
 
-DefineUnitType("unit-zerg-spawning-pool", { Name = "Spawning Pool",
-  Image = {"file", "zerg/units/spawning pool.png", "size", {96, 128}},
+DefineUnitType("unit-zerg-spawning-pool", {
   Shadow = {"file", "zerg/units/spawning pool shadow.png", "size", {96, 128}},
   Animations = "animations-zerg-spawning-pool", Icon = "icon-zerg-spawning-pool",
   Costs = {"time", 200, "minerals", 150},
@@ -22,7 +21,6 @@ DefineUnitType("unit-zerg-spawning-pool", { Name = "Spawning Pool",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",
   Speed = 0,
-  HitPoints = 1000,
   DrawLevel = 30,
   TileSize = {3, 2}, BoxSize = {100, 63},
   SightRange = 1,

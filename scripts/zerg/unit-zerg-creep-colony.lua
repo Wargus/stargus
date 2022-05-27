@@ -12,8 +12,7 @@ DefineAnimations("animations-zerg-creep-colony", {
 })
 
 
-DefineUnitType("unit-zerg-creep-colony", { Name = "Creep Colony",
-  Image = {"file", "zerg/units/creep colony.png", "size",  {128, 64}},
+DefineUnitType("unit-zerg-creep-colony", {
   Shadow = {"file", "zerg/units/creep colony shadow.png", "size",  {128, 96}},
   Animations = "animations-zerg-creep-colony", Icon = "icon-zerg-creep-colony",
   Costs = {"time", 200, "minerals", 75},
@@ -21,7 +20,6 @@ DefineUnitType("unit-zerg-creep-colony", { Name = "Creep Colony",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",
   Speed = 0,
-  HitPoints = 400,
   DrawLevel = 30,
   TileSize = {2, 2}, BoxSize = {63, 63},
   SightRange = 4,

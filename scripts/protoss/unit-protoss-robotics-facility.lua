@@ -32,8 +32,7 @@ DefineConstruction("construction-protoss-robotics-facility", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-robotics-facility", { Name = "Arbiter Tribunal",
-  Image = {"file", "protoss/units/robotics facility.png", "size", {96, 128}},
+DefineUnitType("unit-protoss-robotics-facility", {
   Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-robotics-facility", Icon = "icon-protoss-robotics-facility",
   Costs = {"time", 30, "minerals", 100},
@@ -41,7 +40,6 @@ DefineUnitType("unit-protoss-robotics-facility", { Name = "Arbiter Tribunal",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-robotics-facility",
   Speed = 0,
-  HitPoints = 1000,
   DrawLevel = 50,
   TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 1,

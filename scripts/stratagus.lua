@@ -186,6 +186,8 @@ SetMinimapTerrain(true)
 
 Preference.GrayscaleIcons = true
 
+SetFontCodePage(1252)
+
 -------------------------------------------------------------------------------
 
 --  Define default resources

@@ -50,13 +50,11 @@ DefineAnimations("animations-protoss-dragoon", {
   },
 })
 
-DefineUnitType("unit-protoss-dragoon", { Name = "Dragoon",
-  Image = {"file", "protoss/units/dragoon.png", "size", {96,96}},
+DefineUnitType("unit-protoss-dragoon", {
   Shadow = {"file", "protoss/units/pdrshad.png", "size", {96,96}, "offset", {0, 7}},
   Animations = "animations-protoss-dragoon", Icon = "icon-protoss-dragoon",
   Costs = {"time", 60, "minerals", 125, "gas", 25},
   Speed = 10, NumDirections = 32,
-  HitPoints = 180,
   ShieldPoints = 200,
   DrawLevel = 40,
   TileSize = {1, 1}, BoxSize = {31, 31},

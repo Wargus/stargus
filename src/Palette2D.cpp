@@ -8,7 +8,9 @@
 
 using namespace std;
 
-Palette2D::Palette2D()
+Palette2D::Palette2D(int size) :
+  mColorPalette2D(size),
+  mSize(size)
 {
 
 }
@@ -32,4 +34,9 @@ Color &Palette2D::at(int x, int y)
   Color &color = color_array.at(x);
 
   return color;
+}
+
+int Palette2D::getSize()
+{
+  return mSize;
 }

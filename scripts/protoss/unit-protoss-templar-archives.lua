@@ -33,8 +33,7 @@ DefineConstruction("construction-protoss-templar-archives", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-protoss-templar-archives", { Name = "Templar Archives",
-  Image = {"file", "protoss/units/templar archives.png", "size", {160, 192}},
+DefineUnitType("unit-protoss-templar-archives", {
   Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-stargate", Icon = "icon-protoss-templar-archives",
   Costs = {"time", 30, "minerals", 100},
@@ -42,7 +41,6 @@ DefineUnitType("unit-protoss-templar-archives", { Name = "Templar Archives",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-templar-archives",
   Speed = 0,
-  HitPoints = 1000,
   DrawLevel = 50,
   TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 1,

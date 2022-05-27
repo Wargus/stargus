@@ -8,6 +8,8 @@ StartoolUnitTest_sources = files(
   'DataChunkTest.cpp',
   'BreezeTest.cpp',
   'PcxTest.cpp',
+  'TiledPaletteImageTest.cpp',
+  'luagenTest.cpp',
   
   # needed internal dependencies to build the tests
   '../../src/Storm.cpp',
@@ -20,9 +22,12 @@ StartoolUnitTest_sources = files(
   '../../src/Color.cpp',
   '../../src/Palette.cpp',
   '../../src/Palette2D.cpp',
-  '../../src/Png.cpp',
+  '../../src/PngExporter.cpp',
   '../../src/Converter.cpp',
-  '../../src/Storage.cpp'
+  '../../src/Storage.cpp',
+  '../../src/platform.cpp',
+  '../../src/tileset/TiledPaletteImage.cpp',
+  '../../src/luagen.cpp'
   )
 
 executable('StartoolUnitTest', 

@@ -16,8 +16,7 @@ DefineAnimations("animations-zerg-spore-colony", {
 })
 
 
-DefineUnitType("unit-zerg-spore-colony", { Name = "Spore Colony",
-  Image = {"file", "zerg/units/spore colony.png", "size",  {128, 128}},
+DefineUnitType("unit-zerg-spore-colony", {
   Shadow = {"file", "zerg/units/spore colony shadow.png", "size",  {128, 128}},
   Animations = "animations-zerg-spore-colony", Icon = "icon-zerg-spore-colony",
   Costs = {"time", 200, "minerals", 75},
@@ -25,7 +24,6 @@ DefineUnitType("unit-zerg-spore-colony", { Name = "Spore Colony",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",
   Speed = 0,
-  HitPoints = 400,
   DrawLevel = 30,
   TileSize = {3, 2}, BoxSize = {95, 63},--FIXME: wrong box size
   SightRange = 7, ComputerReactionRange = 6, PersonReactionRange = 4,

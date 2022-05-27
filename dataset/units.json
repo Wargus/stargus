@@ -1,0 +1,914 @@
+[
+    {
+        "id": 0,
+        "name": "unit-terran-marine"
+    },
+    {
+        "id": 1,
+        "name": "unit-terran-ghost"
+    },
+    {
+        "id": 2,
+        "name": "unit-terran-vulture"
+    },
+    {
+        "id": 3,
+        "name": "unit-terran-goliath"
+    },
+    {
+        "id": 4,
+        "name": "unit-terran-goliath-turret"
+    },
+    {
+        "id": 5,
+        "name": "unit-terran-siege-tank-tank-mode"
+    },
+    {
+        "id": 6,
+        "name": "unit-terran-siege-tank-tank-mode-turret"
+    },
+    {
+        "id": 7,
+        "name": "unit-terran-scv"
+    },
+    {
+        "id": 8,
+        "name": "unit-terran-wraith"
+    },
+    {
+        "id": 9,
+        "name": "unit-terran-science-vessel"
+    },
+    {
+        "id": 10,
+        "name": "unit-hero-gui-montag"
+    },
+    {
+        "id": 11,
+        "name": "unit-terran-dropship"
+    },
+    {
+        "id": 12,
+        "name": "unit-terran-battlecruiser"
+    },
+    {
+        "id": 13,
+        "name": "unit-terran-vulture-spider-mine"
+    },
+    {
+        "id": 14,
+        "name": "unit-terran-nuclear-missile"
+    },
+    {
+        "id": 15,
+        "name": "unit-terran-civilian"
+    },
+    {
+        "id": 16,
+        "name": "unit-hero-sarah-kerrigan"
+    },
+    {
+        "id": 17,
+        "name": "unit-hero-alan-schezar"
+    },
+    {
+        "id": 18,
+        "name": "unit-hero-alan-schezar-turret"
+    },
+    {
+        "id": 19,
+        "name": "unit-hero-jim-raynor-vulture"
+    },
+    {
+        "id": 20,
+        "name": "unit-hero-jim-raynor-marine"
+    },
+    {
+        "id": 21,
+        "name": "unit-hero-tom-kazansky"
+    },
+    {
+        "id": 22,
+        "name": "unit-hero-magellan"
+    },
+    {
+        "id": 23,
+        "name": "unit-hero-edmund-duke-tank-mode"
+    },
+    {
+        "id": 24,
+        "name": "unit-hero-edmund-duke-tank-mode-turret"
+    },
+    {
+        "id": 25,
+        "name": "unit-hero-edmund-duke-siege-mode"
+    },
+    {
+        "id": 26,
+        "name": "unit-hero-edmund-duke-siege-mode-turret"
+    },
+    {
+        "id": 27,
+        "name": "unit-hero-arcturus-mengsk"
+    },
+    {
+        "id": 28,
+        "name": "unit-hero-hyperion"
+    },
+    {
+        "id": 29,
+        "name": "unit-hero-norad-ii"
+    },
+    {
+        "id": 30,
+        "name": "unit-terran-siege-tank-siege-mode"
+    },
+    {
+        "id": 31,
+        "name": "unit-terran-siege-tank-siege-mode-turret"
+    },
+    {
+        "id": 32,
+        "name": "unit-terran-firebat"
+    },
+    {
+        "id": 33,
+        "name": "unit-spell-scanner-sweep"
+    },
+    {
+        "id": 34,
+        "name": "unit-terran-medic"
+    },
+    {
+        "id": 35,
+        "name": "unit-zerg-larva"
+    },
+    {
+        "id": 36,
+        "name": "unit-zerg-egg"
+    },
+    {
+        "id": 37,
+        "name": "unit-zerg-zergling"
+    },
+    {
+        "id": 38,
+        "name": "unit-zerg-hydralisk"
+    },
+    {
+        "id": 39,
+        "name": "unit-zerg-ultralisk"
+    },
+    {
+        "id": 40,
+        "name": "unit-zerg-broodling"
+    },
+    {
+        "id": 41,
+        "name": "unit-zerg-drone"
+    },
+    {
+        "id": 42,
+        "name": "unit-zerg-overlord"
+    },
+    {
+        "id": 43,
+        "name": "unit-zerg-mutalisk"
+    },
+    {
+        "id": 44,
+        "name": "unit-zerg-guardian"
+    },
+    {
+        "id": 45,
+        "name": "unit-zerg-queen"
+    },
+    {
+        "id": 46,
+        "name": "unit-zerg-defiler"
+    },
+    {
+        "id": 47,
+        "name": "unit-zerg-scourge"
+    },
+    {
+        "id": 48,
+        "name": "unit-hero-torrasque"
+    },
+    {
+        "id": 49,
+        "name": "unit-hero-matriarch"
+    },
+    {
+        "id": 50,
+        "name": "unit-zerg-infested-terran"
+    },
+    {
+        "id": 51,
+        "name": "unit-hero-infested-kerrigan"
+    },
+    {
+        "id": 52,
+        "name": "unit-hero-unclean-one"
+    },
+    {
+        "id": 53,
+        "name": "unit-hero-hunter-killer"
+    },
+    {
+        "id": 54,
+        "name": "unit-hero-devouring-one"
+    },
+    {
+        "id": 55,
+        "name": "unit-hero-kukulza-mutalisk"
+    },
+    {
+        "id": 56,
+        "name": "unit-hero-kukulza-guardian"
+    },
+    {
+        "id": 57,
+        "name": "unit-hero-yggdrasill"
+    },
+    {
+        "id": 58,
+        "name": "unit-terran-valkyrie"
+    },
+    {
+        "id": 59,
+        "name": "unit-zerg-cocoon"
+    },
+    {
+        "id": 60,
+        "name": "unit-protoss-corsair"
+    },
+    {
+        "id": 61,
+        "name": "unit-protoss-dark-templar"
+    },
+    {
+        "id": 62,
+        "name": "unit-zerg-devourer"
+    },
+    {
+        "id": 63,
+        "name": "unit-protoss-dark-archon"
+    },
+    {
+        "id": 64,
+        "name": "unit-protoss-probe"
+    },
+    {
+        "id": 65,
+        "name": "unit-protoss-zealot"
+    },
+    {
+        "id": 66,
+        "name": "unit-protoss-dragoon"
+    },
+    {
+        "id": 67,
+        "name": "unit-protoss-high-templar"
+    },
+    {
+        "id": 68,
+        "name": "unit-protoss-archon"
+    },
+    {
+        "id": 69,
+        "name": "unit-protoss-shuttle"
+    },
+    {
+        "id": 70,
+        "name": "unit-protoss-scout"
+    },
+    {
+        "id": 71,
+        "name": "unit-protoss-arbiter"
+    },
+    {
+        "id": 72,
+        "name": "unit-protoss-carrier"
+    },
+    {
+        "id": 73,
+        "name": "unit-protoss-interceptor"
+    },
+    {
+        "id": 74,
+        "name": "unit-hero-dark-templar"
+    },
+    {
+        "id": 75,
+        "name": "unit-hero-zeratul"
+    },
+    {
+        "id": 76,
+        "name": "unit-hero-tassadar-zeratul-archon"
+    },
+    {
+        "id": 77,
+        "name": "unit-hero-fenix-zealot"
+    },
+    {
+        "id": 78,
+        "name": "unit-hero-fenix-dragoon"
+    },
+    {
+        "id": 79,
+        "name": "unit-hero-tassadar"
+    },
+    {
+        "id": 80,
+        "name": "unit-hero-mojo"
+    },
+    {
+        "id": 81,
+        "name": "unit-hero-warbringer"
+    },
+    {
+        "id": 82,
+        "name": "unit-hero-gantrithor"
+    },
+    {
+        "id": 83,
+        "name": "unit-protoss-reaver"
+    },
+    {
+        "id": 84,
+        "name": "unit-protoss-observer"
+    },
+    {
+        "id": 85,
+        "name": "unit-protoss-scarab"
+    },
+    {
+        "id": 86,
+        "name": "unit-hero-danimoth"
+    },
+    {
+        "id": 87,
+        "name": "unit-hero-aldaris"
+    },
+    {
+        "id": 88,
+        "name": "unit-hero-artanis"
+    },
+    {
+        "id": 89,
+        "name": "unit-critter-rhynadon"
+    },
+    {
+        "id": 90,
+        "name": "unit-critter-bengalaas"
+    },
+    {
+        "id": 91,
+        "name": "unit-special-cargo-ship"
+    },
+    {
+        "id": 92,
+        "name": "unit-special-mercenary-gunship"
+    },
+    {
+        "id": 93,
+        "name": "unit-critter-scantid"
+    },
+    {
+        "id": 94,
+        "name": "unit-critter-kakaru"
+    },
+    {
+        "id": 95,
+        "name": "unit-critter-ragnasaur"
+    },
+    {
+        "id": 96,
+        "name": "unit-critter-ursadon"
+    },
+    {
+        "id": 97,
+        "name": "unit-zerg-lurker-egg"
+    },
+    {
+        "id": 98,
+        "name": "unit-hero-raszagal"
+    },
+    {
+        "id": 99,
+        "name": "unit-hero-samir-duran"
+    },
+    {
+        "id": 100,
+        "name": "unit-hero-alexei-stukov"
+    },
+    {
+        "id": 101,
+        "name": "unit-special-map-revealer"
+    },
+    {
+        "id": 102,
+        "name": "unit-hero-gerard-dugalle"
+    },
+    {
+        "id": 103,
+        "name": "unit-zerg-lurker"
+    },
+    {
+        "id": 104,
+        "name": "unit-hero-infested-duran"
+    },
+    {
+        "id": 105,
+        "name": "unit-spell-disruption-web"
+    },
+    {
+        "id": 106,
+        "name": "unit-terran-command-center"
+    },
+    {
+        "id": 107,
+        "name": "unit-terran-comsat-station"
+    },
+    {
+        "id": 108,
+        "name": "unit-terran-nuclear-silo"
+    },
+    {
+        "id": 109,
+        "name": "unit-terran-supply-depot"
+    },
+    {
+        "id": 110,
+        "name": "unit-terran-refinery"
+    },
+    {
+        "id": 111,
+        "name": "unit-terran-barracks"
+    },
+    {
+        "id": 112,
+        "name": "unit-terran-academy"
+    },
+    {
+        "id": 113,
+        "name": "unit-terran-factory"
+    },
+    {
+        "id": 114,
+        "name": "unit-terran-starport"
+    },
+    {
+        "id": 115,
+        "name": "unit-terran-control-tower"
+    },
+    {
+        "id": 116,
+        "name": "unit-terran-science-facility"
+    },
+    {
+        "id": 117,
+        "name": "unit-terran-covert-ops"
+    },
+    {
+        "id": 118,
+        "name": "unit-terran-physics-lab"
+    },
+    {
+        "id": 119,
+        "name": "unit-unused-terran1"
+    },
+    {
+        "id": 120,
+        "name": "unit-terran-machine-shop"
+    },
+    {
+        "id": 121,
+        "name": "unit-unused-terran2"
+    },
+    {
+        "id": 122,
+        "name": "unit-terran-engineering-bay"
+    },
+    {
+        "id": 123,
+        "name": "unit-terran-armory"
+    },
+    {
+        "id": 124,
+        "name": "unit-terran-missile-turret"
+    },
+    {
+        "id": 125,
+        "name": "unit-terran-bunker"
+    },
+    {
+        "id": 126,
+        "name": "unit-special-crashed-norad-ii"
+    },
+    {
+        "id": 127,
+        "name": "unit-special-ion-cannon"
+    },
+    {
+        "id": 128,
+        "name": "unit-powerup-uraj-crystal"
+    },
+    {
+        "id": 129,
+        "name": "unit-powerup-khalis-crystal"
+    },
+    {
+        "id": 130,
+        "name": "unit-zerg-infested-command-center"
+    },
+    {
+        "id": 131,
+        "name": "unit-zerg-hatchery"
+    },
+    {
+        "id": 132,
+        "name": "unit-zerg-lair"
+    },
+    {
+        "id": 133,
+        "name": "unit-zerg-hive"
+    },
+    {
+        "id": 134,
+        "name": "unit-zerg-nydus-canal"
+    },
+    {
+        "id": 135,
+        "name": "unit-zerg-hydralisk-den"
+    },
+    {
+        "id": 136,
+        "name": "unit-zerg-defiler-mound"
+    },
+    {
+        "id": 137,
+        "name": "unit-zerg-greater-spire"
+    },
+    {
+        "id": 138,
+        "name": "unit-zerg-queens-nest"
+    },
+    {
+        "id": 139,
+        "name": "unit-zerg-evolution-chamber"
+    },
+    {
+        "id": 140,
+        "name": "unit-zerg-ultralisk-cavern"
+    },
+    {
+        "id": 141,
+        "name": "unit-zerg-spire"
+    },
+    {
+        "id": 142,
+        "name": "unit-zerg-spawning-pool"
+    },
+    {
+        "id": 143,
+        "name": "unit-zerg-creep-colony"
+    },
+    {
+        "id": 144,
+        "name": "unit-zerg-spore-colony"
+    },
+    {
+        "id": 145,
+        "name": "unit-unused-zerg1"
+    },
+    {
+        "id": 146,
+        "name": "unit-zerg-sunken-colony"
+    },
+    {
+        "id": 147,
+        "name": "unit-special-overmind-with-shell"
+    },
+    {
+        "id": 148,
+        "name": "unit-special-overmind"
+    },
+    {
+        "id": 149,
+        "name": "unit-zerg-extractor"
+    },
+    {
+        "id": 150,
+        "name": "unit-special-mature-chrysalis"
+    },
+    {
+        "id": 151,
+        "name": "unit-special-cerebrate"
+    },
+    {
+        "id": 152,
+        "name": "unit-special-cerebrate-daggoth"
+    },
+    {
+        "id": 153,
+        "name": "unit-unused-zerg2"
+    },
+    {
+        "id": 154,
+        "name": "unit-protoss-nexus"
+    },
+    {
+        "id": 155,
+        "name": "unit-protoss-robotics-facility"
+    },
+    {
+        "id": 156,
+        "name": "unit-protoss-pylon"
+    },
+    {
+        "id": 157,
+        "name": "unit-protoss-assimilator"
+    },
+    {
+        "id": 158,
+        "name": "unit-unused-protoss1"
+    },
+    {
+        "id": 159,
+        "name": "unit-protoss-observatory"
+    },
+    {
+        "id": 160,
+        "name": "unit-protoss-gateway"
+    },
+    {
+        "id": 161,
+        "name": "unit-unused-protoss2"
+    },
+    {
+        "id": 162,
+        "name": "unit-protoss-photon-cannon"
+    },
+    {
+        "id": 163,
+        "name": "unit-protoss-citadel-of-adun"
+    },
+    {
+        "id": 164,
+        "name": "unit-protoss-cybernetics-core"
+    },
+    {
+        "id": 165,
+        "name": "unit-protoss-templar-archives"
+    },
+    {
+        "id": 166,
+        "name": "unit-protoss-forge"
+    },
+    {
+        "id": 167,
+        "name": "unit-protoss-stargate"
+    },
+    {
+        "id": 168,
+        "name": "unit-special-stasis-cell-prison"
+    },
+    {
+        "id": 169,
+        "name": "unit-protoss-fleet-beacon"
+    },
+    {
+        "id": 170,
+        "name": "unit-protoss-arbiter-tribunal"
+    },
+    {
+        "id": 171,
+        "name": "unit-protoss-robotics-support-bay"
+    },
+    {
+        "id": 172,
+        "name": "unit-protoss-shield-battery"
+    },
+    {
+        "id": 173,
+        "name": "unit-special-khaydarin-crystal-form"
+    },
+    {
+        "id": 174,
+        "name": "unit-special-protoss-temple"
+    },
+    {
+        "id": 175,
+        "name": "unit-special-xelnaga-temple"
+    },
+    {
+        "id": 176,
+        "name": "unit-resource-mineral-field"
+    },
+    {
+        "id": 177,
+        "name": "unit-resource-mineral-field-type-2"
+    },
+    {
+        "id": 178,
+        "name": "unit-resource-mineral-field-type-3"
+    },
+    {
+        "id": 179,
+        "name": "unit-unused-cave"
+    },
+    {
+        "id": 180,
+        "name": "unit-unused-cave-in"
+    },
+    {
+        "id": 181,
+        "name": "unit-unused-cantina"
+    },
+    {
+        "id": 182,
+        "name": "unit-unused-mining-platform"
+    },
+    {
+        "id": 183,
+        "name": "unit-unused-independant-command-center"
+    },
+    {
+        "id": 184,
+        "name": "unit-special-independant-starport"
+    },
+    {
+        "id": 185,
+        "name": "unit-unused-independant-jump-gate"
+    },
+    {
+        "id": 186,
+        "name": "unit-unused-ruins"
+    },
+    {
+        "id": 187,
+        "name": "unit-unused-khaydarin-crystal-formation"
+    },
+    {
+        "id": 188,
+        "name": "unit-resource-vespene-geyser"
+    },
+    {
+        "id": 189,
+        "name": "unit-special-warp-gate"
+    },
+    {
+        "id": 190,
+        "name": "unit-special-psi-disrupter"
+    },
+    {
+        "id": 191,
+        "name": "unit-unused-zerg-marker"
+    },
+    {
+        "id": 192,
+        "name": "unit-unused-terran-marker"
+    },
+    {
+        "id": 193,
+        "name": "unit-unused-protoss-marker"
+    },
+    {
+        "id": 194,
+        "name": "unit-special-zerg-beacon"
+    },
+    {
+        "id": 195,
+        "name": "unit-special-terran-beacon"
+    },
+    {
+        "id": 196,
+        "name": "unit-special-protoss-beacon"
+    },
+    {
+        "id": 197,
+        "name": "unit-special-zerg-flag-beacon"
+    },
+    {
+        "id": 198,
+        "name": "unit-special-terran-flag-beacon"
+    },
+    {
+        "id": 199,
+        "name": "unit-special-protoss-flag-beacon"
+    },
+    {
+        "id": 200,
+        "name": "unit-special-power-generator"
+    },
+    {
+        "id": 201,
+        "name": "unit-special-overmind-cocoon"
+    },
+    {
+        "id": 202,
+        "name": "unit-spell-dark-swarm"
+    },
+    {
+        "id": 203,
+        "name": "unit-special-floor-missile-trap"
+    },
+    {
+        "id": 204,
+        "name": "unit-special-floor-hatch"
+    },
+    {
+        "id": 205,
+        "name": "unit-special-upper-level-door"
+    },
+    {
+        "id": 206,
+        "name": "unit-special-right-upper-level-door"
+    },
+    {
+        "id": 207,
+        "name": "unit-special-pit-door"
+    },
+    {
+        "id": 208,
+        "name": "unit-special-right-pit-door"
+    },
+    {
+        "id": 209,
+        "name": "unit-special-floor-gun-trap"
+    },
+    {
+        "id": 210,
+        "name": "unit-special-wall-missile-trap"
+    },
+    {
+        "id": 211,
+        "name": "unit-special-wall-flame-trap"
+    },
+    {
+        "id": 212,
+        "name": "unit-special-right-wall-missile-trap"
+    },
+    {
+        "id": 213,
+        "name": "unit-special-right-wall-flame-trap"
+    },
+    {
+        "id": 214,
+        "name": "unit-special-start-location"
+    },
+    {
+        "id": 215,
+        "name": "unit-powerup-flag"
+    },
+    {
+        "id": 216,
+        "name": "unit-powerup-young-chrysalis"
+    },
+    {
+        "id": 217,
+        "name": "unit-powerup-psi-emitter"
+    },
+    {
+        "id": 218,
+        "name": "unit-powerup-data-disk"
+    },
+    {
+        "id": 219,
+        "name": "unit-powerup-khaydarin-crystal"
+    },
+    {
+        "id": 220,
+        "name": "unit-powerup-mineral-cluster-type-1"
+    },
+    {
+        "id": 221,
+        "name": "unit-powerup-mineral-cluster-type-2"
+    },
+    {
+        "id": 222,
+        "name": "unit-powerup-protoss-gas-orb-type-1"
+    },
+    {
+        "id": 223,
+        "name": "unit-powerup-protoss-gas-orb-type-2"
+    },
+    {
+        "id": 224,
+        "name": "unit-powerup-zerg-gas-sac-type-1"
+    },
+    {
+        "id": 225,
+        "name": "unit-powerup-zerg-gas-sac-type-2"
+    },
+    {
+        "id": 226,
+        "name": "unit-powerup-terran-gas-tank-type-1"
+    },
+    {
+        "id": 227,
+        "name": "unit-powerup-terran-gas-tank-type-2"
+    }
+]

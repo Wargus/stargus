@@ -33,7 +33,7 @@ public:
   Scm(std::shared_ptr<Hurricane> hurricane);
   virtual ~Scm();
 
-  bool convert(const std::string &arcfile, Storage storage);
+  bool convert(const std::string &arcfile, const std::vector<std::string> &unitNames, Storage storage);
 
 private:
 

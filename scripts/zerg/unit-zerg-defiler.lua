@@ -11,8 +11,7 @@ DefineAnimations("animations-zerg-defiler-death", {
   },
 })
 
-DefineUnitType("unit-zerg-defiler-death", { Name = "Dead Defiler",
-  Image = {"file", "zerg/units/defiler death.png", "size", {80, 80}},
+DefineUnitType("unit-zerg-defiler-death", {
   Animations = "animations-zerg-defiler-death", Icon = "icon-zerg-defiler",
   NumDirections = 1,
   HitPoints = 255,
@@ -56,7 +55,6 @@ DefineUnitType("unit-zerg-defiler", { Name = "Hydralisk",
   Animations = "animations-zerg-defiler", Icon = "icon-zerg-defiler",
   Costs = {"time", 50, "minerals", 50, "gas", 150,},
   Speed = 10, NumDirections = 32,
-  HitPoints = 80,
   Mana = 200,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {31, 31},

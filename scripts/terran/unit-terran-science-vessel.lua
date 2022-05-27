@@ -16,14 +16,12 @@ DefineAnimations("animations-terran-science-vessel", {
     --[[active overlay 333,0]] "wait 3", "unbreakable end", "wait 1",},
 })
 
-DefineUnitType("unit-terran-science-vessel", { Name = "Science Vessel",
-  Image = {"file", "terran/units/science vessel.png", "size", {96, 128}},
+DefineUnitType("unit-terran-science-vessel", {
   Shadow = {"file", "terran/units/science vessel shadow.png", "size", {96, 128}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 1,
   Animations = "animations-terran-science-vessel", Icon = "icon-terran-science-vessel",
   Costs = {"time", 250, "minerals", 100, "gas", 225},
   Speed = 14,
-  HitPoints = 200,
   DrawLevel = 60,
   TileSize = {1, 1}, BoxSize = {63, 63},
   SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,

@@ -35,8 +35,7 @@ DefineConstruction("construction-terran-barracks", {
     Frame = 1}}
 })
 
-DefineUnitType("unit-terran-barracks", { Name = "Barracks",
-  Image = {"file", "terran/units/barracks.png", "size", {192, 160}},
+DefineUnitType("unit-terran-barracks", {
   Shadow = {"file", "terran/units/barracks shadow.png", "size", {192, 160}},
   Animations = "animations-terran-barracks", Icon = "icon-terran-barracks",
   Costs = {"time", 200, "minerals", 150},
@@ -46,7 +45,6 @@ DefineUnitType("unit-terran-barracks", { Name = "Barracks",
   Speed = 0,
   BurnPercent = 30,
   BurnDamageRate = 1,
-  HitPoints = 1000,
   DrawLevel = 50,
   BuilderOutside = true,
   TileSize = {4, 3}, BoxSize = {127, 95},

@@ -14,8 +14,7 @@ DefineAnimations("animations-zerg-evolution-chamber", {
 })
 
 
-DefineUnitType("unit-zerg-evolution-chamber", { Name = "Evolution Chamber",
-  Image = {"file", "zerg/units/evolution chamber.png", "size",  {96, 128}},
+DefineUnitType("unit-zerg-evolution-chamber", {
   Shadow = {"file", "zerg/units/evolution chamber shadow.png", "size",  {128, 160}},
   Animations = "animations-zerg-evolution-chamber", Icon = "icon-zerg-evolution-chamber",
   Costs = {"time", 200, "minerals", 75},
@@ -23,7 +22,6 @@ DefineUnitType("unit-zerg-evolution-chamber", { Name = "Evolution Chamber",
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",
   Speed = 0,
-  HitPoints = 400,
   DrawLevel = 30,
   TileSize = {3, 2}, BoxSize = {100, 63},
   SightRange = 4,
