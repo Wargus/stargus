@@ -18,29 +18,6 @@ Control Todo_bootstrap[] = {
 
 Control Todo[] = {
 
-  // Palettes have to be first because everything depends on it!
-  // Pcx palette type
-  // 0 = default
-  // 1 = icon
-  // 2 = select
-  // 3 = 2D palette (e.g. fire)
-  /*{PAL,0,"tblink","game\\tblink.pcx",0 __3},
-  {PAL,0,"tfontgam","game\\tfontgam.pcx",2 __3},
-  {PAL,0,"thpbar","game\\thpbar.pcx",0 __3},
-  {PAL,0,"tminimap","game\\tminimap.pcx",0 __3},
-  {PAL,0,"tselect","game\\tselect.pcx",2 __3},
-  {PAL,0,"tunit","game\\tunit.pcx",0 __3},
-  {PAL,0,"twire","game\\twire.pcx",0 __3},
-  {PAL,0,"ticon","unit\\cmdbtns\\ticon.pcx",1 __3},
-  {PAL,0,"ofire","tileset\\ashworld\\ofire.pcx",3 __3},
-  //{PAL,0,"bfire","tileset\\ashworld\\bfire.pcx",3 __3},
-
-  {WPE,0,"install","tileset\\install.wpe",0 __3},
-  {WPE,0,"jungle","tileset\\jungle.wpe",0 __3},
-  {WPE,0,"badlands","tileset\\badlands.wpe",0 __3},
-  {WPE,0,"platform","tileset\\platform.wpe",0 __3},
-  {WPE,0,"ashworld","tileset\\ashworld.wpe",0 __3},*/
-
 //	{G,0,"ui/blink","game\\blink.grp",0 __3},
 
 	//Video
