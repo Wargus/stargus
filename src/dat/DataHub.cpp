@@ -72,18 +72,21 @@ void DataHub::init_units_dat(bool has_broodwar_flag, bool has_max_air_hits,
                              bool has_max_ground_hits)
 {
   string sc_arr_units_dat = "arr\\units.dat";
-  mUnits_ks = getKaitaiStream(sc_arr_units_dat);
+
+  std::shared_ptr<kaitai::kstream> units_ks;
+  units_ks = getKaitaiStream(sc_arr_units_dat);
 
   std::shared_ptr<units_dat_t> units_loc(
     new units_dat_t(has_broodwar_flag, has_max_air_hits, has_max_ground_hits,
-                    mUnits_ks.get()));
+                    units_ks.get()));
   units = units_loc;
 }
 
 void DataHub::init_orders_dat(int num_lines)
 {
   string sc_arr_orders_dat = "arr\\orders.dat";
-  orders_ks = getKaitaiStream(sc_arr_orders_dat);
+
+  std::shared_ptr<kaitai::kstream> orders_ks = getKaitaiStream(sc_arr_orders_dat);
 
   std::shared_ptr<orders_dat_t> orders_loc(
     new orders_dat_t(num_lines, orders_ks.get()));
@@ -94,7 +97,8 @@ void DataHub::init_orders_dat(int num_lines)
 void DataHub::init_weapons_dat(int num_lines)
 {
   string sc_arr_weapons_dat = "arr\\weapons.dat";
-  weapons_ks = getKaitaiStream(sc_arr_weapons_dat);
+
+  std::shared_ptr<kaitai::kstream> weapons_ks = getKaitaiStream(sc_arr_weapons_dat);
 
   std::shared_ptr<weapons_dat_t> weapons_loc(
     new weapons_dat_t(num_lines, weapons_ks.get()));
@@ -104,7 +108,8 @@ void DataHub::init_weapons_dat(int num_lines)
 void DataHub::init_flingy_dat(int num_lines)
 {
   string sc_arr_flingy_dat = "arr\\flingy.dat";
-  flingy_ks = getKaitaiStream(sc_arr_flingy_dat);
+
+  std::shared_ptr<kaitai::kstream> flingy_ks = getKaitaiStream(sc_arr_flingy_dat);
 
   std::shared_ptr<flingy_dat_t> flingy_loc(
     new flingy_dat_t(num_lines, flingy_ks.get()));
@@ -114,7 +119,8 @@ void DataHub::init_flingy_dat(int num_lines)
 void DataHub::init_sprites_dat(int num_lines, int num_decorations)
 {
   string sc_arr_sprites_dat = "arr\\sprites.dat";
-  sprites_ks = getKaitaiStream(sc_arr_sprites_dat);
+
+  std::shared_ptr<kaitai::kstream> sprites_ks = getKaitaiStream(sc_arr_sprites_dat);
 
   std::shared_ptr<sprites_dat_t> sprites_loc(
     new sprites_dat_t(num_lines, num_decorations, sprites_ks.get()));
@@ -124,7 +130,8 @@ void DataHub::init_sprites_dat(int num_lines, int num_decorations)
 void DataHub::init_images_dat(int num_lines)
 {
   string sc_arr_images_dat = "arr\\images.dat";
-  images_ks = getKaitaiStream(sc_arr_images_dat);
+
+  std::shared_ptr<kaitai::kstream> images_ks = getKaitaiStream(sc_arr_images_dat);
 
   std::shared_ptr<images_dat_t> images_loc(
     new images_dat_t(num_lines, images_ks.get()));
@@ -134,7 +141,8 @@ void DataHub::init_images_dat(int num_lines)
 void DataHub::init_sfxdata_dat(int num_lines)
 {
   string sc_arr_sfxdata_dat = "arr\\sfxdata.dat";
-  sfxdata_ks = getKaitaiStream(sc_arr_sfxdata_dat);
+
+  std::shared_ptr<kaitai::kstream> sfxdata_ks = getKaitaiStream(sc_arr_sfxdata_dat);
 
   // 0 means "no sound"
   // TODO: find out if unit_sound_max+1 is needed or not! In some case data seams ok, in others it crash
@@ -146,7 +154,8 @@ void DataHub::init_sfxdata_dat(int num_lines)
 void DataHub::init_portdata_dat(int num_lines)
 {
   string sc_arr_portdata_dat = "arr\\portdata.dat";
-  portrait_ks = getKaitaiStream(sc_arr_portdata_dat);
+
+  std::shared_ptr<kaitai::kstream> portrait_ks = getKaitaiStream(sc_arr_portdata_dat);
 
   // 1. units_portrait_max => idle portraits
   // 2. 4x flags => idle portraits
@@ -161,7 +170,8 @@ void DataHub::init_portdata_dat(int num_lines)
 void DataHub::init_upgrades_dat(int num_lines, bool has_broodwar_flag)
 {
   string sc_arr_upgrades_dat = "arr\\upgrades.dat";
-  upgrades_ks = getKaitaiStream(sc_arr_upgrades_dat);
+
+  std::shared_ptr<kaitai::kstream> upgrades_ks = getKaitaiStream(sc_arr_upgrades_dat);
 
   std::shared_ptr<upgrades_dat_t> upgrades_loc(
     new upgrades_dat_t(has_broodwar_flag, num_lines, upgrades_ks.get()));
@@ -171,7 +181,8 @@ void DataHub::init_upgrades_dat(int num_lines, bool has_broodwar_flag)
 void DataHub::init_techdata_dat(int num_lines, bool has_broodwar_flag)
 {
   string sc_arr_techdata_dat = "arr\\techdata.dat";
-  techdata_ks = getKaitaiStream(sc_arr_techdata_dat);
+
+  std::shared_ptr<kaitai::kstream> techdata_ks = getKaitaiStream(sc_arr_techdata_dat);
 
   std::shared_ptr<techdata_dat_t> techdata_loc(
     new techdata_dat_t(has_broodwar_flag, num_lines, techdata_ks.get()));
@@ -181,7 +192,8 @@ void DataHub::init_techdata_dat(int num_lines, bool has_broodwar_flag)
 void DataHub::init_mapdata_dat()
 {
   string sc_arr_mapdata_dat = "arr\\mapdata.dat";
-  mapdata_ks = getKaitaiStream(sc_arr_mapdata_dat);
+
+  std::shared_ptr<kaitai::kstream> mapdata_ks = getKaitaiStream(sc_arr_mapdata_dat);
 
   std::shared_ptr<mapdata_dat_t> mapdata_loc(
     new mapdata_dat_t(mapdata_ks.get()));
@@ -191,7 +203,8 @@ void DataHub::init_mapdata_dat()
 void DataHub::init_stat_txt_tbl()
 {
   string sc_rez_stat_txt_tbl = "rez\\stat_txt.tbl";
-  stat_txt_ks = getKaitaiStream(sc_rez_stat_txt_tbl);
+
+  std::shared_ptr<kaitai::kstream> stat_txt_ks = getKaitaiStream(sc_rez_stat_txt_tbl);
 
   Tbl stat_txt;
   stat_txt_vec = stat_txt.convertFromStream(stat_txt_ks);
@@ -200,7 +213,8 @@ void DataHub::init_stat_txt_tbl()
 void DataHub::init_images_tbl()
 {
   string sc_arr_images_tbl = "arr\\images.tbl";
-  images_tbl_ks = getKaitaiStream(sc_arr_images_tbl);
+
+  std::shared_ptr<kaitai::kstream> images_tbl_ks = getKaitaiStream(sc_arr_images_tbl);
 
   Tbl images_tbl;
   images_tbl_vec = images_tbl.convertFromStream(images_tbl_ks);
@@ -209,7 +223,8 @@ void DataHub::init_images_tbl()
 void DataHub::init_sfxdata_tbl()
 {
   string sc_arr_sfxdata_tbl = "arr\\sfxdata.tbl";
-  sfxdata_tbl_ks = getKaitaiStream(sc_arr_sfxdata_tbl);
+
+  std::shared_ptr<kaitai::kstream> sfxdata_tbl_ks = getKaitaiStream(sc_arr_sfxdata_tbl);
 
   Tbl sfxdata_tbl;
   sfxdata_tbl_vec = sfxdata_tbl.convertFromStream(sfxdata_tbl_ks);
@@ -218,7 +233,8 @@ void DataHub::init_sfxdata_tbl()
 void DataHub::init_portdata_tbl()
 {
   string sc_arr_portdata_tbl = "arr\\portdata.tbl";
-  portdata_tbl_ks = getKaitaiStream(sc_arr_portdata_tbl);
+
+  std::shared_ptr<kaitai::kstream> portdata_tbl_ks = getKaitaiStream(sc_arr_portdata_tbl);
 
   Tbl portdata_tbl;
   portdata_tbl_vec = portdata_tbl.convertFromStream(portdata_tbl_ks);
@@ -227,7 +243,8 @@ void DataHub::init_portdata_tbl()
 void DataHub::init_mapdata_tbl()
 {
   string sc_arr_mapdata_tbl = "arr\\mapdata.tbl";
-  mapdata_tbl_ks = getKaitaiStream(sc_arr_mapdata_tbl);
+
+  std::shared_ptr<kaitai::kstream> mapdata_tbl_ks = getKaitaiStream(sc_arr_mapdata_tbl);
 
   Tbl mapdata_tbl;
   mapdata_tbl_vec = mapdata_tbl.convertFromStream(mapdata_tbl_ks);
