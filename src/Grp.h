@@ -76,7 +76,6 @@ protected:
   void DecodeGfuEntry(int index, unsigned char *start, unsigned char *image, int ix, int iy, int iadd);
 
 private:
-  Logger mLogger;
   std::shared_ptr<Palette> mPal;
   std::shared_ptr<Palette2D> mPal2D;
   std::string mArcfile;

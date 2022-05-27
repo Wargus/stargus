@@ -9,7 +9,6 @@
 
 // Local
 #include "WorldMap.h"
-#include "Logger.h"
 #include "Storage.h"
 #include "Converter.h"
 
@@ -53,7 +52,6 @@ private:
   void SaveSMP(Storage storage);
   void FreeMap();
 
-  Logger mLogger;
   WorldMap *map;
   std::vector<std::string> mUnitNames;
 };

@@ -8,6 +8,7 @@
 #include "MegaTile.h"
 #include "kaitai/tileset_vr4.h"
 #include "kaitai/tileset_vx4.h"
+#include "Logger.h"
 
 // system
 #include <string>
@@ -18,8 +19,9 @@ using namespace std;
 namespace tileset
 {
 
+static Logger logger = Logger("startool.tileset.MegaTile");
+
 MegaTile::MegaTile(TilesetHub &tilesethub, size_t element) :
-  mLogger("startool.tileset.MegaTile"),
   mTilesetHub(tilesethub),
   mElement(element)
 {

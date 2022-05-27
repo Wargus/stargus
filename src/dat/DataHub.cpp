@@ -5,7 +5,8 @@
  */
 
 // Local
-#include <luagen.h>
+#include "Logger.h"
+#include "luagen.h"
 #include "DataHub.h"
 #include "StringUtil.h"
 #include "Grp.h"
@@ -24,8 +25,10 @@ using namespace std;
 namespace dat
 {
 
+static Logger logger = Logger("startool.DataHub");
+
 DataHub::DataHub(std::shared_ptr<Hurricane> hurricane) :
-  KaitaiConverter(hurricane), mLogger("startool.DataHub")
+  KaitaiConverter(hurricane)
 {
   bool has_broodwar_flag = false;
   bool has_max_air_hits = false;
@@ -91,7 +94,8 @@ void DataHub::init_orders_dat(int num_lines)
   std::shared_ptr<orders_dat_t> orders_loc(
     new orders_dat_t(num_lines, orders_ks.get()));
   orders = orders_loc;
-  printf("units_ai_max=%d\n", get_dat_ai_max() + 1);
+
+  LOG4CXX_TRACE(logger, string("units_ai_max=") + to_string(get_dat_ai_max() + 1));
 }
 
 void DataHub::init_weapons_dat(int num_lines)
@@ -297,7 +301,7 @@ int DataHub::get_dat_weapons_max() const
     *max_element(orders_targeting_vec->begin(), orders_targeting_vec->end()));
   uint8_t weapon_max = *max_element(weapons_max_vec.begin(),
                                     weapons_max_vec.end());
-  printf("weapon_max=%d\n", weapon_max);
+
 
   return weapon_max;
 }
@@ -309,10 +313,14 @@ int DataHub::get_dat_graphics_max() const
 
   int unit_graphics_max = *max_element(units_graphics_vec->begin(),
                                        units_graphics_vec->end());
-  printf("unit_graphics_max=%d\n", unit_graphics_max);
+
+  LOG4CXX_TRACE(logger, string("unit_graphics_max=") + to_string(unit_graphics_max));
+
   int weapon_graphics_max = *max_element(weapon_graphics_vec->begin(),
                                          weapon_graphics_vec->end());
-  printf("weapon_graphics_max=%d\n", weapon_graphics_max);
+
+  LOG4CXX_TRACE(logger, string("weapon_graphics_max=") + to_string(weapon_graphics_max));
+
   int graphics_max = unit_graphics_max;
   if (weapon_graphics_max > unit_graphics_max)
     graphics_max = weapon_graphics_max;
@@ -326,7 +334,8 @@ int DataHub::get_dat_sprites_max() const
 
   int flingy_sprites_max = *max_element(flingy_sprites_vec->begin(),
                                         flingy_sprites_vec->end());
-  printf("flingy_sprites_max=%d\n", flingy_sprites_max);
+
+  LOG4CXX_TRACE(logger, string("flingy_sprites_max=") + to_string(flingy_sprites_max));
 
   return flingy_sprites_max + 1;
 }
@@ -337,7 +346,8 @@ int DataHub::get_dat_images_max() const
 
   int sprites_image_file_max = *max_element(sprites_images_vec->begin(),
                                sprites_images_vec->end());
-  printf("sprites_image_file_max=%d\n", sprites_image_file_max);
+
+  LOG4CXX_TRACE(logger, string("sprites_image_file_max=") + to_string(sprites_image_file_max));
 
   return sprites_image_file_max + 1;
 }
@@ -376,7 +386,8 @@ int DataHub::get_dat_sounds_max() const
                  units_yes_sound_end_vec->end()));
   uint16_t unit_sound_max = *max_element(units_sound_max_vec.begin(),
                                          units_sound_max_vec.end());
-  printf("unit_sound_max=%d\n", unit_sound_max);
+
+  LOG4CXX_TRACE(logger, string("unit_sound_max=") + to_string(unit_sound_max));
 
   return unit_sound_max;
 }
@@ -387,7 +398,8 @@ int DataHub::get_dat_portraits_max() const
 
   int units_portrait_max = *max_element(units_portrait_vec->begin(),
                                         units_portrait_vec->end(), portdataCompare);
-  printf("units_portrait_max=%d\n", units_portrait_max);
+
+  LOG4CXX_TRACE(logger, string("units_portrait_max=") + to_string(units_portrait_max));
 
   return units_portrait_max + 2 * 4;
 }
@@ -407,7 +419,7 @@ int DataHub::get_dat_upgrades_max() const
   uint16_t units_upgrade_max = *max_element(units_upgrade_vec.begin(),
                                units_upgrade_vec.end());
 
-  printf("units_upgrade_max=%d\n", units_upgrade_max);
+  LOG4CXX_TRACE(logger, string("units_upgrade_max=") + to_string(units_upgrade_max));
 
   return units_upgrade_max + 1;
 }
@@ -460,7 +472,7 @@ bool DataHub::convertUnits(json &unitsJson,
     bool extractor = true;
     bool save_result = true;
 
-    LOG4CXX_TRACE(mLogger, string("Unit(") + to_string(unit_id) + ")");
+    LOG4CXX_TRACE(logger, string("Unit(") + to_string(unit_id) + ")");
     dat::Unit unit(*this, unit_id);
 
     try

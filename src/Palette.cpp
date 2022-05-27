@@ -5,6 +5,7 @@
  */
 
 #include <Palette.h>
+#include "Logger.h"
 
 // C++
 #include <iostream>
@@ -12,15 +13,15 @@
 
 using namespace std;
 
-Palette::Palette() :
-  mLogger("startool.Palette")
+static Logger mLogger = Logger("startool.Palette");
+
+Palette::Palette()
 {
 
 }
 
 
-Palette::Palette(std::shared_ptr<DataChunk> rawPalette) :
-  mLogger("startool.Palette")
+Palette::Palette(std::shared_ptr<DataChunk> rawPalette)
 {
   load(rawPalette);
 }

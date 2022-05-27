@@ -9,7 +9,6 @@
 
 // project
 #include "DataChunk.h"
-#include "Logger.h"
 #include "Color.h"
 #include "Converter.h"
 
@@ -56,7 +55,6 @@ public:
   bool write(const std::string &filename);
 
 private:
-  Logger mLogger;
   std::array<Color, 256> mColorPalette;
 };
 

@@ -8,7 +8,6 @@
 #define DATAHUB_H
 
 // project
-#include "Logger.h"
 #include "KaitaiConverter.h"
 #include "Palette.h"
 #include "Palette2D.h"
@@ -52,8 +51,6 @@ public:
 
 
 private:
-  Logger mLogger;
-
   static const int units_portrait_none = 65535;
   static const int units_units_ready_sound_end = 106;
 

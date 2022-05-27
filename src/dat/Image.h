@@ -9,7 +9,6 @@
 
 // project
 #include "DataHub.h"
-#include "Logger.h"
 
 namespace dat
 {
@@ -27,7 +26,6 @@ public:
   uint8_t remapping();
 
 private:
-  Logger mLogger;
   DataHub &mDatahub;
   uint16_t mId;
 };

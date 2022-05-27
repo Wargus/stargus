@@ -5,13 +5,15 @@
  */
 
 #include "TiledPaletteImage.h"
+#include "Logger.h"
 
 namespace tileset
 {
 
+static Logger logger = Logger("startool.tileset.TiledPaletteImage");
+
 TiledPaletteImage::TiledPaletteImage(const Size &tileSize, const Size &subtileSize) :
     PaletteImage(tileSize * subtileSize),
-    mLogger("startool.tileset.TiledPaletteImage"),
     mTileSize(tileSize),
     mSubtileSize(subtileSize)
 {
@@ -63,7 +65,7 @@ void TiledPaletteImage::copyTile(const PaletteImage &palette_image, const Pos &p
   }
   else
   {
-    LOG4CXX_WARN(mLogger, "copyTile() out of range!");
+    LOG4CXX_WARN(logger, "copyTile() out of range!");
   }
 }
 

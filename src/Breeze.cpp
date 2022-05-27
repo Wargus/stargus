@@ -7,6 +7,7 @@
 // Local
 #include "Breeze.h"
 #include "FileUtil.h"
+#include "Logger.h"
 
 // System
 #include <stdio.h>
@@ -16,8 +17,9 @@
 
 using namespace std;
 
-Breeze::Breeze() :
-  mLogger("startool.Breeze")
+static Logger logger = Logger("startool.Breeze");
+
+Breeze::Breeze()
 {
 
 }
@@ -27,8 +29,7 @@ Breeze::~Breeze()
   closeArchive();
 }
 
-Breeze::Breeze(const std::string &archiveName) :
-  mLogger("startool.Breeze")
+Breeze::Breeze(const std::string &archiveName)
 {
   openArchive(archiveName);
 }
@@ -65,7 +66,7 @@ bool Breeze::extractFile(const std::string &archivedFile, const std::string &ext
         gzclose(gzfile);
         if (bytes_written != (int) bufferLen)
         {
-          LOG4CXX_FATAL(mLogger, "Wrong buffer len:" + to_string(bytes_written) + "!=" + to_string(bufferLen));
+          LOG4CXX_FATAL(logger, "Wrong buffer len:" + to_string(bytes_written) + "!=" + to_string(bufferLen));
         }
 
       }
@@ -79,7 +80,7 @@ bool Breeze::extractFile(const std::string &archivedFile, const std::string &ext
         fclose(file);
         if (dwBytes != bufferLen)
         {
-          LOG4CXX_FATAL(mLogger, "Wrong buffer len:" + to_string(dwBytes) + "!=" + to_string(bufferLen));
+          LOG4CXX_FATAL(logger, "Wrong buffer len:" + to_string(dwBytes) + "!=" + to_string(bufferLen));
         }
       }
     }

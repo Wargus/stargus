@@ -13,6 +13,7 @@
 #include "Storm.h"
 #include "Preferences.h"
 #include "StringUtil.h"
+#include "Logger.h"
 
 // C
 #include <stdlib.h>
@@ -22,8 +23,10 @@
 
 using namespace std;
 
+static Logger logger = Logger("startool.Font");
+
 Font::Font(std::shared_ptr<Hurricane> hurricane) :
-  mLogger("startool.Font"), mHurricane(hurricane)
+  mHurricane(hurricane)
 {
 
 }
@@ -45,7 +48,7 @@ bool Font::convert(const std::string &arcfile, Storage file)
   int h;
   bool result = true;
 
-  LOG4CXX_TRACE(mLogger, "convert:" + arcfile + "," + file);
+  LOG4CXX_TRACE(logger, "convert:" + arcfile + "," + file);
 
   shared_ptr<DataChunk> data = mHurricane->extractDataChunk(arcfile);
   if (data && mPalette)
@@ -100,7 +103,7 @@ unsigned char *Font::convertImage(unsigned char *start, int *wp, int *hp)
   int image_width = 0;
   int image_height = 0;
 
-  LOG4CXX_DEBUG(mLogger, "convertImage");
+  LOG4CXX_DEBUG(logger, "convertImage");
 
   bp = start;
 
@@ -121,14 +124,14 @@ unsigned char *Font::convertImage(unsigned char *start, int *wp, int *hp)
   {
     sprintf(buf, "li:%i / hi:%i / mw:%i / mh:%i", header.lowIndex,
             header.highIndex, header.maxWidth, header.maxHeight);
-    LOG4CXX_DEBUG(mLogger, string("FONT header found: ") + buf);
+    LOG4CXX_DEBUG(logger, string("FONT header found: ") + buf);
 
     //bp += 2; // DWORD unused
 
     image_width = header.maxWidth;
     image_height = letterCount * header.maxHeight;
     sprintf(buf, "w:%i / h:%i", image_width, image_height);
-    LOG4CXX_DEBUG(mLogger, string("Image size: ") + buf);
+    LOG4CXX_DEBUG(logger, string("Image size: ") + buf);
 
     // calculate the offsets for each font letter header
     offsets = (unsigned int *) malloc(letterCount * sizeof(FontLetterHeader));
@@ -141,7 +144,7 @@ unsigned char *Font::convertImage(unsigned char *start, int *wp, int *hp)
     image = (unsigned char *) malloc(image_width * image_height);
     if (!image)
     {
-      LOG4CXX_FATAL(mLogger, "Can't allocate image memory");
+      LOG4CXX_FATAL(logger, "Can't allocate image memory");
     }
 
     // Give image a transparent background
@@ -166,7 +169,7 @@ unsigned char *Font::convertImage(unsigned char *start, int *wp, int *hp)
       letter.yOffset = FetchByte(bp);
       sprintf(buf, "%i# w:%i / h:%i / x:%i / y:%i", i, letter.width,
               letter.height, letter.xOffset, letter.yOffset);
-      LOG4CXX_DEBUG(mLogger, string("FontLetterRaw: ") + buf);
+      LOG4CXX_DEBUG(logger, string("FontLetterRaw: ") + buf);
 
       dp = image + letter.xOffset + letter.yOffset * header.maxWidth
            + i * (header.maxWidth * header.maxHeight);
@@ -206,10 +209,10 @@ unsigned char *Font::convertImage(unsigned char *start, int *wp, int *hp)
   }
   else
   {
-    LOG4CXX_WARN(mLogger, "No Font Header found!");
+    LOG4CXX_WARN(logger, "No Font Header found!");
   }
 
-  LOG4CXX_TRACE(mLogger, "Exported font letter number: " + to_string(letterCount));
+  LOG4CXX_TRACE(logger, "Exported font letter number: " + to_string(letterCount));
 
   *wp = header.maxWidth;
   *hp = header.maxHeight * letterCount;

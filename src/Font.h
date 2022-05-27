@@ -8,7 +8,6 @@
 #define FONT_H
 
 // Local
-#include "Logger.h"
 #include "Storage.h"
 
 // System
@@ -33,7 +32,6 @@ private:
    */
   unsigned char* convertImage(unsigned char *start, int *wp, int *hp);
 
-  Logger mLogger;
   std::shared_ptr<Hurricane> mHurricane;
   std::shared_ptr<Palette> mPalette;
 };

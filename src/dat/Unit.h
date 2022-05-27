@@ -10,7 +10,6 @@
 // project
 #include "Flingy.h"
 #include "DataHub.h"
-#include "Logger.h"
 
 namespace dat
 {
@@ -28,7 +27,6 @@ public:
   uint32_t hitpoints();
 
 private:
-  Logger mLogger;
   DataHub &mDatahub;
   uint8_t mId;
 };

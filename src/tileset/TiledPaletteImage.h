@@ -9,7 +9,6 @@
 
 // project
 #include "PaletteImage.h"
-#include "Logger.h"
 
 namespace tileset
 {
@@ -34,7 +33,6 @@ public:
 private:
   const Pos calcAbsolutePos(const Pos &tile_pos, const Pos &relative_pos);
 
-  Logger mLogger;
   Size mTileSize;
   Size mSubtileSize;
 };

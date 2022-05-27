@@ -26,7 +26,7 @@ public:
    */
   void off()
   {
-	log4cxx::BasicConfigurator::configure();
+	  log4cxx::BasicConfigurator::configure();
     mLogger->setLevel(log4cxx::Level::getOff());
   }
 

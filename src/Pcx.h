@@ -9,7 +9,6 @@
 
 // Project
 #include "Converter.h"
-#include "Logger.h"
 #include "Palette.h"
 #include "Storage.h"
 #include "PaletteImage.h"
@@ -76,7 +75,6 @@ private:
    */
   void extractImage();
 
-  Logger mLogger;
   std::shared_ptr<Palette> mPalette;
   std::shared_ptr<DataChunk> mRawData;
   std::shared_ptr<PaletteImage> mPaletteImage;

@@ -8,7 +8,7 @@
 #define DATACHUNK_H_
 
 // Local
-#include "Logger.h"
+
 
 // System
 #include <stdlib.h>
@@ -80,7 +80,6 @@ public:
   unsigned char at(size_t pos);
 
 private:
-  Logger mLogger;
   unsigned char *mData;
   size_t mSize;
 };
