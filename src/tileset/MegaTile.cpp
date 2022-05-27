@@ -37,7 +37,7 @@ void MegaTile::generateTiles()
 {
   mPaletteImage = make_shared<TiledPaletteImage>(Size(4, 4), Size(8, 8));
 
-  tileset_vx4_t::megatile_type_t *megatile = mTilesetHub.vx4_raw->elements()->at(mElement);
+  tileset_vx4_t::megatile_type_t *megatile = mTilesetHub.vx4->elements()->at(mElement);
 
   std::vector<tileset_vx4_t::graphic_ref_type_t *> *vx4_graphic_ref = megatile->graphic_ref();
 
@@ -47,7 +47,7 @@ void MegaTile::generateTiles()
     uint64_t g_ref = g->vr4_ref();
     bool horizontal_flip = g->horizontal_flip();
 
-    std::vector<tileset_vr4_t::pixel_type_t *> *pixel_ref = mTilesetHub.vr4_raw->elements();
+    std::vector<tileset_vr4_t::pixel_type_t *> *pixel_ref = mTilesetHub.vr4->elements();
 
     tileset_vr4_t::pixel_type_t *color_ref = pixel_ref->at(g_ref);
 
