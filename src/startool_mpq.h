@@ -39,8 +39,6 @@ Control Todo[] = {
 	{I,0,"ui/terran","dlgs\\terran.grp",0 __3},
 	{I,0,"ui/zerg","dlgs\\zerg.grp",0 __3},
 
-
-
 	{H,0,"ui/aggicons","game\\aggicons.pcx",0 __3},
 	{H,0,"ui/pconover","game\\pconover.pcx",0 __3},
 	{H,0,"ui/pconsole","game\\pconsole.pcx",0 __3},
@@ -84,7 +82,8 @@ Control Todo[] = {
 	{P,0,"mainmenu/multionfr","glue\\mainmenu\\multionfr.smk" __4},
 	{P,0,"mainmenu/singleones","glue\\mainmenu\\singleones.smk" __4},
 
-	{G,0,"ui/o022","unit\\thingy\\o022.grp",2 __3},
+	// those selectors are not needed as they're drawn from the engine, remove them later
+	/*{G,0,"ui/o022","unit\\thingy\\o022.grp",2 __3},
 	{G,0,"ui/o032","unit\\thingy\\o032.grp",2 __3},
 	{G,0,"ui/o048","unit\\thingy\\o048.grp",2 __3},
 	{G,0,"ui/o062","unit\\thingy\\o062.grp",2 __3},
@@ -105,7 +104,7 @@ Control Todo[] = {
 	{G,0,"ui/od122","unit\\thingy\\od122.grp",2 __3},
 	{G,0,"ui/od146","unit\\thingy\\od146.grp",2 __3},
 	{G,0,"ui/od224","unit\\thingy\\od224.grp",2 __3},
-#endif
+#endif*/
 
 	{H,0,"terran/briefing room","glue\\PalRt\\Backgnd.pcx",0 __3},
 	{H,0,"terran/victory screen","glue\\PalTv\\Backgnd.pcx",0 __3},
