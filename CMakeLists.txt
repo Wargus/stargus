@@ -63,43 +63,24 @@ set(scmconvert_HDRS
 )
 
 file(GLOB startool_SRCS
-	src/Casc.cpp
-	src/FileUtil.cpp
-	src/Palette.cpp
-	src/PngExporter.cpp
-	src/Tileset.cpp
-	src/Chk.cpp
-	src/Font.cpp
-	src/Grp.cpp
-	src/Panel.cpp
-	src/Preferences.cpp
-	src/startool.cpp
-	src/Widgets.cpp
-	src/DataChunk.cpp
-	src/Hurricane.cpp
-	src/Pcx.cpp
-	src/Scm.cpp
-	src/Storm.cpp
-	src/WorldMap.cpp
-	src/Dds.cpp
-	src/Breeze.cpp
-	src/Smacker.cpp
-	src/Converter.cpp
-	src/Tbl.cpp
-	src/DataHub.cpp
-	src/Storage.cpp
-	src/PaletteImage.cpp
-	src/Color.cpp
-	src/Wav.cpp
-	src/Palette2D.cpp
+	src/*.cpp
 	src/kaitai/*.cpp
+	src/dat/*.cpp
+	src/tileset/*.cpp
 )
 
-file(GLOB startool_HDRS src/*.h src/kaitai/*.h)
+file(GLOB startool_HDRS
+	src/*.h
+	src/kaitai/*.h
+	src/dat/*.h
+	src/tileset/*.h
+)
 
-set(stargus_SRCS
+file(GLOB stargus_SRCS
 	src/stargus.cpp
 )
+
+list(REMOVE_ITEM startool_SRCS "${stargus_SRCS}")
 
 if(WIN32)
 	set(stargus_SRCS
@@ -154,10 +135,14 @@ set(startool_LIBS ${scmconvert_LIBS} ${PNG_LIBRARIES} ${ZLIB_LIBRARIES} ${STORML
 
 # Platform specific definitions and compilation settings
 
+add_subdirectory("third-party/nlohmann-json")
+include_directories("third-party/nlohmann-json/include")
+set(startool_LIBS ${startool_LIBS} ${NLOHMANN_JSON_TARGET_NAME})
+
 if(WIN32 AND MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_DEPRECATE=1 -D_HAS_STD_BYTE=0)
-	add_subdirectory("win-iconv")
-	include_directories("win-iconv")
+	add_subdirectory("third-party/win-iconv")
+	include_directories("third-party/win-iconv")
 	set(startool_LIBS ${startool_LIBS} iconv-static)
 else()
 	include(CheckCXXSourceCompiles)

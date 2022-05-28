@@ -25,6 +25,7 @@ jobs:
     - name: Install ubuntu dependencies
       if: startsWith(matrix.os, 'ubuntu')
       run:  |
+        sudo apt-get update
         sudo apt-get install -yy libpng-dev libgtk2.0-dev zlib1g-dev libstorm-dev libmagick++-6.q16-dev libcppunit-dev wget
         wget https://github.com/Wargus/stratagus/archive/master.zip
         unzip master.zip
