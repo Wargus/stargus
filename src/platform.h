@@ -23,6 +23,10 @@ int unlink(const std::string &pathname);
 
 char *strdup(const char *s);
 
+#if defined(_MSC_VER) || defined(WIN32)
+typedef int mode_t;
+#endif
+
 int mkdir(const std::string &pathname, mode_t mode = 0);
 
 } /* namespace platform */

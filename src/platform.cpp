@@ -19,7 +19,6 @@ error "Missing the <filesystem> header."
 // <- filesystem
 
 #ifdef _MSC_VER
-#define strdup _strdup
 #define DEBUG _DEBUG
 #define PATH_MAX _MAX_PATH
 #include <direct.h>
