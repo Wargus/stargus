@@ -165,6 +165,60 @@ function AddMenuHelpers(menu)
     self:add(b, x, y)
     return b
   end
+  
+  function menu:addTextButton(caption, hotkey, x, y, callback)
+      
+    local fnt = Fonts["font16x"]
+    local label = menu:addLabel(caption, x, y, fnt, false)
+    
+    size = {label:getWidth(), label:getHeight()}
+    
+    local invisibleBtn = menu:addInvisibleButton(caption, hotkey, x, y, callback, size)
+
+    invisibleBtn:setHotKey(hotkey)
+    invisibleBtn:setActionCallback(callback)
+    self:add(invisibleBtn, x, y)
+    
+    local function actionText(evt, btn, cnt)
+      if evt == "mouseIn" then
+        print("mouseIn")
+      elseif evt == "mouseOut" then
+        print("mouseOut")
+      elseif evt == "mouseClick" then
+        print("mouseClick")
+        callback()
+      end
+    end
+
+    local listenerInvisible = LuaActionListener(actionText)
+    invisibleBtn:addMouseListener(listenerInvisible)
+    
+    return invisibleBtn
+  end
+  
+  function menu:addInvisibleButton(caption, hotkey, x, y, callback, size)
+    
+    local transparentImage = "ui/transparent.png"
+    if not CanAccessFile(transparentImage) then
+      transparentImage = "contrib/transparent.png"
+    end
+    
+    local invisible = CGraphic:New(transparentImage)
+    invisible:Load()
+    invisible:Resize(Video.Width, Video.Height)
+    invisibleWidget = ImageWidget(invisible)
+    
+    if (size == nil) then size = {100, 100} end
+    invisibleWidget:setSize(size[1], size[2])
+    
+    -- debug (1)
+    invisibleWidget:setBorderSize(1)
+    
+    invisibleWidget:setHotKey(hotkey)
+    invisibleWidget:setActionCallback(callback)
+    self:add(invisibleWidget, x, y)
+    return invisibleWidget
+  end
 
   function menu:addImageButton(caption, hotkey, x, y, callback)
     local b = ImageButton(caption)
@@ -437,6 +491,63 @@ function AddMenuHelpers(menu)
     self:add(b, x, y)
     return b
   end
+  
+  function menu:addAnimatedButton(filename, filenameOn, x, y, caption, hotkey, callback)
+    local mng1 = Mng:New(filename)
+    mng1:Load()
+    mng1:Reset()
+    local im1 = ImageWidget(mng1)
+    
+    menu:add(im1, x, y)
+          
+    local mngOn = Mng:New(filenameOn)
+    mngOn:Load()
+    local imOn = ImageWidget(mngOn)
+    menu:add(imOn, x, y)
+    imOn:setVisible(false)
+
+    -- debug
+    local im1_height = im1:getHeight()
+    local imOn_height = imOn:getHeight()
+    local im1_width = im1:getWidth()
+    local imOn_width = imOn:getWidth()
+    -- debug
+    
+    local label_x = x + im1:getWidth() / 2
+    local label_y = y + im1:getHeight() / 3
+    
+    local label_rel_x = label_x - x
+    local label_rel_y = label_y - y
+        
+    local label = menu:addTextButton(caption, hotkey, label_x, label_y, callback)
+    
+    local label_max_width = label:getWidth() + label_rel_x
+    local label_max_height = label:getHeight() + label_rel_y
+    
+    local max_width = math.max(im1:getWidth(), imOn:getWidth(), label_max_width)
+    local max_height = math.max(im1:getHeight(), imOn:getHeight(), label_max_height) 
+
+    print("max_width: " .. max_width)
+    print("max_height: " .. max_height)
+    
+    local invisibleBtn = menu:addInvisibleButton(caption, hotkey, x, y, callback, {max_width, max_height})
+        
+    local function actionInvisible(evt, btn, cnt)
+      if evt == "mouseIn" then
+        print("mouseIn")
+        imOn:setVisible(true)
+      elseif evt == "mouseOut" then
+        print("mouseOut")
+        imOn:setVisible(false)
+      elseif evt == "mouseClick" then
+        print("mouseClick")
+        callback()
+      end
+    end
+
+    local listenerInvisible = LuaActionListener(actionInvisible)
+    invisibleBtn:addMouseListener(listenerInvisible)
+  end
 end
 
 function WarMenu(title, background, resize)
@@ -685,34 +796,76 @@ function RunSinglePlayerGameMenu()
   menu:run()
 end
 
+
+
 function BuildProgramStartMenu()
   local menu = WarMenu()
   local offx = (Video.Width - 640) / 2
   local offy = (Video.Height - 480) / 2
 
-  menu:addLabel(Name .. " V" .. Version .. "  " .. Homepage, offx + 320, offy + 426 + 18*0)
+  menu:addLabel(Name .. " V" .. Version, offx + 320, offy + 426 + 18*0) 
+  --.. "  " .. Homepage
   menu:addLabel("Stratagus V" .. GetStratagusVersion() .. "  " .. GetStratagusHomepage(), offx + 320, offy + 426 + 18*1)
   menu:addLabel(Copyright, offx + 320, offy + 390 + 18*4)
+  
+  menu:addAnimatedButton(
+    "videos/mainmenu/single.mng",
+    "videos/mainmenu/singleon.mng",
+    100, 50,
+    "~light-green~S~!ingle Player",
+    "s",
+    function() RunSinglePlayerGameMenu(); menu:stop(1) end
+  )
+  
+  menu:addAnimatedButton(
+    "videos/mainmenu/multi.mng",
+    "videos/mainmenu/multion.mng",
+    80, 250,
+    "~light-green~M~!ultiplayer",
+    "m",
+    function() RunMultiPlayerGameMenu(); menu:stop(1) end
+  )
+  
+  menu:addAnimatedButton(
+    "videos/mainmenu/exit.mng",
+    "videos/mainmenu/exiton.mng",
+    550, 350,
+    "~light-green~E~!xit Program",
+    "x",
+    function() menu:stop() end
+  )
 
-  menu:addFullButton("~!Single Player Game", "s", offx + 208, offy + 104 + 36*0,
-    function() RunSinglePlayerGameMenu(); menu:stop(1) end)
-  menu:addFullButton("~!Multi Player Game", "m", offx + 208, offy + 104 + 36*1,
-    function() RunMultiPlayerGameMenu(); menu:stop(1) end)
+  --menu:addFullButton("~!Single Player Game", "s", offx + 208, offy + 104 + 36*0,
+    --function() RunSinglePlayerGameMenu(); menu:stop(1) end)
+
+  --menu:addFullButton("~!Multi Player Game", "m", offx + 208, offy + 104 + 36*1,
+    --function() RunMultiPlayerGameMenu(); menu:stop(1) end)
+
   menu:addFullButton("~!Campaign Game", "c", offx + 208, offy + 104 + 36*2,
     function() RunCampaignGameMenu(); menu:stop(1) end)
+
   menu:addFullButton("~!Load Game", "l", offx + 208, offy + 104 + 36*3,
     function() RunLoadGameMenu(); menu:stop(1) end)
+    
   menu:addFullButton("~!Replay Game", "r", offx + 208, offy + 104 + 36*4,
     function() RunReplayGameMenu(); menu:stop(1) end)
+    
   menu:addFullButton("~!Options", "o", offx + 208, offy + 104 + 36*5,
     function() RunOptionsMenu(); menu:stop(1) end)
-  menu:addFullButton("S~!how Credits", "h", offx + 208, offy + 104 + 36*6, RunShowCreditsMenu)
+    
+  --menu:addFullButton("S~!how Credits", "h", offx + 208, offy + 104 + 36*6, RunShowCreditsMenu)
+  
+  menu:addTextButton("~light-green~S~!how Credits", "c", 100, Video.Height-20, RunShowCreditsMenu)
 
-  menu:addFullButton("E~!xit Program", "x", offx + 208, offy + 104 + 36*8,
-    function() menu:stop() end)
+  --menu:addFullButton("E~!xit Program", "x", offx + 208, offy + 104 + 36*8,
+    --function() menu:stop() end)
+    
+
 
   return menu:run()
 end
+
+
 
 LoadGameFile = nil
 
