@@ -181,11 +181,11 @@ function AddMenuHelpers(menu)
     
     local function actionText(evt, btn, cnt)
       if evt == "mouseIn" then
-        print("mouseIn")
+        --print("mouseIn")
       elseif evt == "mouseOut" then
-        print("mouseOut")
+        --print("mouseOut")
       elseif evt == "mouseClick" then
-        print("mouseClick")
+        --print("mouseClick")
         callback()
       end
     end
@@ -212,7 +212,7 @@ function AddMenuHelpers(menu)
     invisibleWidget:setSize(size[1], size[2])
     
     -- debug (1)
-    invisibleWidget:setBorderSize(1)
+    invisibleWidget:setBorderSize(0)
     
     invisibleWidget:setHotKey(hotkey)
     invisibleWidget:setActionCallback(callback)
@@ -534,13 +534,13 @@ function AddMenuHelpers(menu)
         
     local function actionInvisible(evt, btn, cnt)
       if evt == "mouseIn" then
-        print("mouseIn")
+        --print("mouseIn")
         imOn:setVisible(true)
       elseif evt == "mouseOut" then
-        print("mouseOut")
+        --print("mouseOut")
         imOn:setVisible(false)
       elseif evt == "mouseClick" then
-        print("mouseClick")
+        --print("mouseClick")
         callback()
       end
     end
@@ -842,7 +842,7 @@ function BuildProgramStartMenu()
   menu:addAnimatedButton(
     "videos/mainmenu/exit.mng",
     "videos/mainmenu/exiton.mng",
-    550, 350,
+    Video.Width - 300, Video.Height - 200,
     "~light-green~E~!xit Program",
     "x",
     function() menu:stop() end
