@@ -708,6 +708,22 @@ function RunSelectScenarioMenu()
   menu:run()
 end
 
+function RunInfoMenu()
+  local menu = WarMenu()
+  local offx = (Video.Width - 640) / 2
+  local offy = (Video.Height - 480) / 2
+  
+  menu:addLabel("~<Game Information~>", offx + 640/2 + 12, offy + 192)
+  
+  menu:addFullButton("~!Back", "b", offx + 640 - 224 - 16, offy + 360 + 36*2, function() menu:stop() end)
+  
+  menu:addLabel(Name .. " V" .. Version .. "  " .. Homepage, offx + 320, offy + 226 + 18*0) 
+  menu:addLabel("Stratagus V" .. GetStratagusVersion() .. "  " .. GetStratagusHomepage(), offx + 320, offy + 226 + 18*1)
+  menu:addLabel(Copyright, offx + 320, offy + 290 + 18*4)
+  
+  menu:run()
+end
+
 function RunSinglePlayerGameMenu()
   local menu = WarMenu()
   local offx = (Video.Width - 640) / 2
@@ -803,10 +819,7 @@ function BuildProgramStartMenu()
   local offx = (Video.Width - 640) / 2
   local offy = (Video.Height - 480) / 2
 
-  menu:addLabel(Name .. " V" .. Version, offx + 320, offy + 426 + 18*0) 
-  --.. "  " .. Homepage
-  menu:addLabel("Stratagus V" .. GetStratagusVersion() .. "  " .. GetStratagusHomepage(), offx + 320, offy + 426 + 18*1)
-  menu:addLabel(Copyright, offx + 320, offy + 390 + 18*4)
+  menu:addLabel(Name .. " V" .. Version, Video.Width - 60, Video.Height - 18*1) 
   
   menu:addAnimatedButton(
     "videos/mainmenu/single.mng",
@@ -841,26 +854,32 @@ function BuildProgramStartMenu()
   --menu:addFullButton("~!Multi Player Game", "m", offx + 208, offy + 104 + 36*1,
     --function() RunMultiPlayerGameMenu(); menu:stop(1) end)
 
-  menu:addFullButton("~!Campaign Game", "c", offx + 208, offy + 104 + 36*2,
-    function() RunCampaignGameMenu(); menu:stop(1) end)
+  --menu:addFullButton("~!Campaign Game", "c", offx + 208, offy + 104 + 36*2,
+    --function() RunCampaignGameMenu(); menu:stop(1) end)
 
-  menu:addFullButton("~!Load Game", "l", offx + 208, offy + 104 + 36*3,
-    function() RunLoadGameMenu(); menu:stop(1) end)
+  --menu:addFullButton("~!Load Game", "l", offx + 208, offy + 104 + 36*3,
+    --function() RunLoadGameMenu(); menu:stop(1) end)
     
-  menu:addFullButton("~!Replay Game", "r", offx + 208, offy + 104 + 36*4,
-    function() RunReplayGameMenu(); menu:stop(1) end)
+  --menu:addFullButton("~!Replay Game", "r", offx + 208, offy + 104 + 36*4,
+    --function() RunReplayGameMenu(); menu:stop(1) end)
     
-  menu:addFullButton("~!Options", "o", offx + 208, offy + 104 + 36*5,
-    function() RunOptionsMenu(); menu:stop(1) end)
-    
-  --menu:addFullButton("S~!how Credits", "h", offx + 208, offy + 104 + 36*6, RunShowCreditsMenu)
+  --menu:addFullButton("~!Options", "o", offx + 208, offy + 104 + 36*5,
+  --  function() RunOptionsMenu(); menu:stop(1) end)
   
-  menu:addTextButton("~light-green~S~!how Credits", "c", 100, Video.Height-20, RunShowCreditsMenu)
-
-  --menu:addFullButton("E~!xit Program", "x", offx + 208, offy + 104 + 36*8,
+    --menu:addFullButton("E~!xit Program", "x", offx + 208, offy + 104 + 36*8,
     --function() menu:stop() end)
+  
+  menu:addTextButton("~light-green~Campaign Game", "c", 100, Video.Height-120, function() RunReplayGameMenu(); menu:stop(1) end)
+  
+  menu:addTextButton("~light-green~Load Game", "l", 100, Video.Height-100, function() RunReplayGameMenu(); menu:stop(1) end)
     
-
+  menu:addTextButton("~light-green~Replay Game", "r", 100, Video.Height-80, function() RunReplayGameMenu(); menu:stop(1) end)
+    
+  menu:addTextButton("~light-green~Options", "o", 100, Video.Height-60, function() RunOptionsMenu(); menu:stop(1) end)
+  
+  menu:addTextButton("~light-green~Show Info", "i", 100, Video.Height-40, function() RunInfoMenu(); menu:stop(1) end)
+  
+  menu:addTextButton("~light-green~Show Credits", "c", 100, Video.Height-20, RunShowCreditsMenu)
 
   return menu:run()
 end
