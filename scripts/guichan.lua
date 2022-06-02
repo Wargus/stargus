@@ -819,7 +819,7 @@ function BuildProgramStartMenu()
   local offx = (Video.Width - 640) / 2
   local offy = (Video.Height - 480) / 2
 
-  menu:addLabel(Name .. " V" .. Version, Video.Width - 60, Video.Height - 18*1) 
+  menu:addLabel("~white~" .. Name .. " V" .. Version, Video.Width - 60, Video.Height - 18*1) 
   
   menu:addAnimatedButton(
     "videos/mainmenu/single.mng",
