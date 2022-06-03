@@ -110,15 +110,47 @@ function RunCampaignGameMenu()
   local menu = WarMenu()
   local offx = (Video.Width - 640) / 2
   local offy = (Video.Height - 480) / 2
+  
+  menu:addAnimation("videos/campaign/disk.mng", 80 + 100, 250 + 150)
+  menu:addAnimatedButton(
+    "videos/campaign/terr.mng",
+    "videos/campaign/terron.mng",
+    80, 250,
+    "~light-green~T~!erran",
+    "t",
+    function() RunCampaign("scripts/terran/campaign1.lua"); menu:stop() end
+  )
+  
+  menu:addAnimation("videos/campaign/disk.mng", 350, 150 + 150)
+  menu:addAnimatedButton(
+    "videos/campaign/prot.mng",
+    "videos/campaign/proton.mng",
+    350, 150,
+    "~light-green~P~!rotoss",
+    "p",
+    function() RunCampaign("scripts/protoss/campaign1.lua"); menu:stop() end
+  )
+  
+  menu:addAnimation("videos/campaign/disk.mng", 550, 250 + 150)
+  menu:addAnimatedButton(
+    "videos/campaign/zerg.mng",
+    "videos/campaign/zergon.mng",
+    550, 250,
+    "~light-green~Z~!erg",
+    "z",
+    function() RunCampaign("scripts/zerg/campaign1.lua"); menu:stop() end
+  )
+  
+  
 
-  menu:addFullButton("~!Terran Campaign", "t", offx + 208, offy + 212 + (36 * 0),
-    function() RunCampaign("scripts/terran/campaign1.lua"); menu:stop() end)
-  menu:addFullButton("~!Zerg Campaign", "z", offx + 208, offy + 212 + (36 * 1),
-    function() RunCampaign("scripts/zerg/campaign1.lua"); menu:stop() end):setEnabled(false)
-  menu:addFullButton("~!Protoss Campaign", "p", offx + 208, offy + 212 + (36 * 2),
-    function() RunCampaign("scripts/protoss/campaign1.lua"); menu:stop() end):setEnabled(false)
+  --menu:addFullButton("~!Terran Campaign", "t", offx + 208, offy + 212 + (36 * 0),
+    --function() RunCampaign("scripts/terran/campaign1.lua"); menu:stop() end)
+  --menu:addFullButton("~!Zerg Campaign", "z", offx + 208, offy + 212 + (36 * 1),
+    --function() RunCampaign("scripts/zerg/campaign1.lua"); menu:stop() end):setEnabled(false)
+  --menu:addFullButton("~!Protoss Campaign", "p", offx + 208, offy + 212 + (36 * 2),
+    --function() RunCampaign("scripts/protoss/campaign1.lua"); menu:stop() end):setEnabled(false)
 
-  menu:addFullButton("~!Cancel", "c", offx + 208, offy + 212 + (36 * 5),
+  menu:addFullButton("~!Cancel", "c", offx + 208, offy + 232 + (36 * 5),
     function() menu:stop() end)
 
   menu:run()

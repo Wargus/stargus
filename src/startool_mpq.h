@@ -82,6 +82,38 @@ Control Todo[] = {
 	{P,0,"mainmenu/multionfr","glue\\mainmenu\\multionfr.smk" __4},
 	{P,0,"mainmenu/singleones","glue\\mainmenu\\singleones.smk" __4},
 
+	//race ready videos
+	{P,0,"readyp/ring","glue\\readyp\\ring.smk" __4},
+	{P,0,"readyp/glow","glue\\readyp\\glow.smk" __4},
+	{P,0,"readyz/start","glue\\readyz\\start.smk" __4},
+	{P,0,"readyz/starton","glue\\readyz\\starton.smk" __4},
+	{P,0,"readyz/drip","glue\\readyz\\drip.smk" __4},
+	{P,0,"readyt/start","glue\\readyt\\start.smk" __4},
+	{P,0,"readyt/starton","glue\\readyt\\starton.smk" __4},
+	{P,0,"readyt/proj","glue\\readyt\\proj.smk" __4},
+	{P,0,"readyt/proloop","glue\\readyt\\proloop.smk" __4},
+
+	//campaign videos
+	{P,0,"campaign/protonde","glue\\campaign\\protonde.smk" __4},
+	{P,0,"campaign/terr","glue\\campaign\\terr.smk" __4},
+	{P,0,"campaign/protonfr","glue\\campaign\\protonfr.smk" __4},
+	{P,0,"campaign/terron","glue\\campaign\\terron.smk" __4},
+	{P,0,"campaign/terronit","glue\\campaign\\terronit.smk" __4},
+	{P,0,"campaign/zergon","glue\\campaign\\zergon.smk" __4},
+	{P,0,"campaign/zergonde","glue\\campaign\\zergonde.smk" __4},
+	{P,0,"campaign/terrones","glue\\campaign\\terrones.smk" __4},
+	{P,0,"campaign/zergones","glue\\campaign\\zergones.smk" __4},
+	{P,0,"campaign/terronde","glue\\campaign\\terronde.smk" __4},
+	{P,0,"campaign/proton","glue\\campaign\\proton.smk" __4},
+	{P,0,"campaign/prot","glue\\campaign\\prot.smk" __4},
+  {P,0,"campaign/disk","glue\\campaign\\disk.smk" __4},
+  {P,0,"campaign/zergonit","glue\\campaign\\zergonit.smk" __4},
+  {P,0,"campaign/terronfr","glue\\campaign\\terronfr.smk" __4},
+  {P,0,"campaign/protonit","glue\\campaign\\protonit.smk" __4},
+  {P,0,"campaign/protones","glue\\campaign\\protones.smk" __4},
+  {P,0,"campaign/zergonfr","glue\\campaign\\zergonfr.smk" __4},
+  {P,0,"campaign/zerg","glue\\campaign\\zerg.smk" __4},
+
 	// those selectors are not needed as they're drawn from the engine, remove them later
 	/*{G,0,"ui/o022","unit\\thingy\\o022.grp",2 __3},
 	{G,0,"ui/o032","unit\\thingy\\o032.grp",2 __3},

@@ -57,24 +57,6 @@ namespace lg
   std::string quote(const std::string &text);
 
   /**
-   * Loop over the parameters and generate a comma separated function parameter list
-   *
-   * @param params_init_list give input list in form of {...} initializer list
-   *
-   * @return example: one, two, three
-   */
-  std::string params(const std::initializer_list<std::string> &params_init_list);
-
-  /**
-   * Loop over the parameters and generate a comma separated function parameter list
-   *
-   * @param param_vector give input list in form of vector initializer list
-   *
-   * @return example: one, two, three
-   */
-  std::string params(const std::vector<std::string> &param_vector);
-
-  /**
    * internal template function for implementation of params() outer interfaces
    */
   template<typename T>
@@ -98,11 +80,59 @@ namespace lg
   }
 
   /**
+   * Loop over the parameters and generate a comma separated function parameter list
+   *
+   * @param params_init_list give input list in form of {...} initializer list
+   *
+   * @return example: one, two, three
+   */
+  std::string params(const std::initializer_list<std::string> &params_init_list);
+
+  /**
+   * Loop over the parameters and generate a comma separated function parameter list
+   *
+   * @param param_vector give input list in form of vector initializer list
+   *
+   * @return example: one, two, three
+   */
+  std::string params(const std::vector<std::string> &params_vector);
+
+  /**
+   * internal template function for implementation of paramsQuote() outer interfaces
+   */
+  template<typename T>
+  std::string paramsQuote(T first, T last)
+  {
+    std::string param_str;
+
+    for(auto func_it = first; func_it != last; func_it++)
+    {
+      const std::string &param = *func_it;
+
+      if(func_it != first)
+      {
+        param_str += ", ";
+      }
+
+      param_str += "\"" + param + "\"";
+    }
+
+    return param_str;
+  }
+
+  /**
    * Convenience function to quote all parameters
    *
    * @return example: "one", "two", "three"
    */
-  std::string paramsQuote(const std::initializer_list<std::string> &params);
+  std::string paramsQuote(const std::initializer_list<std::string> &params_init_list);
+
+  /**
+   * Convenience function to quote all parameters
+   *
+   * @return example: "one", "two", "three"
+   */
+  std::string paramsQuote(const std::vector<std::string> &params_vector);
 
   /**
    * No function, just some explicit simple pretty printing by ensure to put a newline at the end.

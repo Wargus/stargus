@@ -35,7 +35,6 @@ Load("scripts/terran/anim.lua")
 Load("scripts/zerg/anim.lua")
 Load("scripts/neutral/anim.lua")
 
-
 DefineAnimations("animations-daemon", {
   Still = {"frame 0", "wait 4", "frame 5", "wait 4", "frame 10", "wait 4",
     "frame 15", "wait 4",},
