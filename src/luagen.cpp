@@ -59,30 +59,19 @@ std::string params(const std::initializer_list<std::string> &params_init_list)
   return params(params_init_list.begin(), params_init_list.end());
 }
 
-std::string params(const std::vector<std::string> &param_vector)
+std::string params(const std::vector<std::string> &params_vector)
 {
-  return params(param_vector.begin(), param_vector.end());
+  return params(params_vector.begin(), params_vector.end());
 }
 
-std::string paramsQuote(const std::initializer_list<std::string> &params)
+std::string paramsQuote(const std::initializer_list<std::string> &params_init_list)
 {
-  string param_str;
+  return paramsQuote(params_init_list.begin(), params_init_list.end());
+}
 
-  unsigned int i = 1;
-  for(auto func_it = params.begin(); func_it != params.end(); func_it++)
-  {
-    const std::string &param = *func_it;
-    param_str += "\"" + param + "\"";
-
-    if(i < params.size())
-    {
-      param_str += ", ";
-    }
-
-    i++;
-  }
-
-  return param_str;
+std::string paramsQuote(const std::vector<std::string> &params_vector)
+{
+  return paramsQuote(params_vector.begin(), params_vector.end());
 }
 
 std::string line(const std::string &str)
