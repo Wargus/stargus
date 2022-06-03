@@ -492,6 +492,17 @@ function AddMenuHelpers(menu)
     return b
   end
   
+  function menu:addAnimation(filename, x, y)
+    local mng1 = Mng:New(filename)
+    mng1:Load()
+    mng1:Reset()
+    local im1 = ImageWidget(mng1)
+    
+    menu:add(im1, x, y)
+    
+    return im1
+  end
+
   function menu:addAnimatedButton(filename, filenameOn, x, y, caption, hotkey, callback)
     local mng1 = Mng:New(filename)
     mng1:Load()
@@ -869,7 +880,7 @@ function BuildProgramStartMenu()
     --menu:addFullButton("E~!xit Program", "x", offx + 208, offy + 104 + 36*8,
     --function() menu:stop() end)
   
-  menu:addTextButton("~light-green~Campaign Game", "c", 100, Video.Height-120, function() RunReplayGameMenu(); menu:stop(1) end)
+  menu:addTextButton("~light-green~Campaign Game", "c", 100, Video.Height-120, function() RunCampaignGameMenu(); menu:stop(1) end)
   
   menu:addTextButton("~light-green~Load Game", "l", 100, Video.Height-100, function() RunReplayGameMenu(); menu:stop(1) end)
     
