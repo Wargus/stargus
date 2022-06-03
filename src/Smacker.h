@@ -30,6 +30,8 @@ public:
   bool ConvertPortrait(const std::string &arcfile,  Storage storage);
 
 private:
+  bool callConvert(const std::string &cmd);
+
   std::shared_ptr<Hurricane> mHurricane;
 };
 
