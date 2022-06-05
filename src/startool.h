@@ -55,7 +55,6 @@ const char NameLine[] =
 #include <string>
 
 #ifdef _MSC_VER
-#define strdup _strdup
 #define PATH_MAX _MAX_PATH
 #include <windows.h>
 #include <direct.h>

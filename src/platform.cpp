@@ -6,9 +6,7 @@
 
 #include "platform.h"
 
-
 #ifdef _MSC_VER
-#define strdup _strdup
 #define DEBUG _DEBUG
 #define PATH_MAX _MAX_PATH
 #include <direct.h>
@@ -35,16 +33,6 @@
 
 namespace platform
 {
-
-/*int remove(const std::string &pathname)
-{
-  return fs::remove(pathname);
-}
-
-int remove_all(const std::string &pathname)
-{
-  return fs::remove_all(pathname);
-}*/
 
 int unlink(const std::string &pathname)
 {
