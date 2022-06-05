@@ -48,15 +48,15 @@ bool PortraitsConverter::convert()
 
   Storage videos;
   videos.setDataPath(preferences.getDestDir());
-  videos.setDataType("videos/portraits");
+  videos.setDataType("videos/portrait");
 
   Storage luagen;
   luagen.setDataPath(preferences.getDestDir());
-  luagen.setDataType("luagen/portraits");
+  luagen.setDataType("luagen/portrait");
   CheckPath(luagen.getFullPath());
 
   ofstream lua_include;
-  lua_include.open (luagen("luagen-portraits.lua").getFullPath());
+  lua_include.open (luagen("luagen-portrait.lua").getFullPath());
   string lua_include_str;
 
   for(unsigned int i = 0; i < mDatahub.portrait->portrait_file()->size(); i++)
@@ -112,7 +112,7 @@ bool PortraitsConverter::convertMngPortraits(const std::string &arcfile, std::ve
 
   Storage videos;
   videos.setDataPath(preferences.getDestDir());
-  videos.setDataType("videos/portraits");
+  videos.setDataType("videos/portrait");
 
   while(smk_available && smk_num <= 3)
   {
@@ -130,7 +130,10 @@ bool PortraitsConverter::convertMngPortraits(const std::string &arcfile, std::ve
 
     smk_available = video.convertMNG(smk_arcfile, videos(target_basename));
 
-    portrait_list.push_back(videos.getDataType() + "/" + target_basename + ".mng");
+    if(smk_available)
+    {
+      portrait_list.push_back(videos.getDataType() + "/" + target_basename + ".mng");
+    }
 
     printf("...%s\n", smk_available ? "ok" : "nok");
     smk_num++;

@@ -34,7 +34,7 @@ Load("scripts/zerg/units.lua")
 Load("scripts/protoss/units.lua")
 Load("scripts/neutral/units.lua")
 
-Load("luagen/portraits/luagen-portraits.lua")
+Load("luagen/portrait/luagen-portrait.lua")
 Load("luagen/units/luagen-units.lua")
 
 
