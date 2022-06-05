@@ -6,6 +6,7 @@
 
 // project
 #include "CSVExporter.h"
+#include "Unit.h"
 
 // system
 #include <vector>
@@ -152,7 +153,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    if (units_portrait_file != DataHub::units_portrait_none)
+    if (units_portrait_file != Unit::portrait_none)
     {
       uint32_t portrait_file = portdata_portrait_file_vec->at(
                                  units_portrait_file);
@@ -167,7 +168,7 @@ void CSVExporter::print()
       csv_dat += CSV_SEPARATOR;
     }
 
-    if (units_portrait_file != DataHub::units_portrait_none)
+    if (units_portrait_file != Unit::portrait_none)
     {
       uint32_t portrait_file = portdata_portrait_file_vec->at(
                                  units_portrait_file);

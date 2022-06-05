@@ -31,6 +31,16 @@ bool Preferences::getVideoExtraction()
   return mVideoExtraction;
 }
 
+void Preferences::setSoundExtraction(bool sound)
+{
+  mSoundExtraction = sound;
+}
+
+bool Preferences::getSoundExtraction()
+{
+  return mSoundExtraction;
+}
+
 void Preferences::setArchiveDir(const std::string &dir)
 {
   mArchiveDir = dir;

@@ -124,5 +124,5 @@ void DataChunkTest::test4_write_compare()
   CPPUNIT_ASSERT(filecontent.at(3) == 0x4);
   CPPUNIT_ASSERT(filecontent.at(4) == 0x5);
 
-  platform::remove(savename);
+  fs::remove(savename);
 }

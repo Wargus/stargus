@@ -68,7 +68,7 @@ void BreezeTest::test2_txt_extractFile()
   CPPUNIT_ASSERT(result == true);
   CPPUNIT_ASSERT(content_result == filecontent);
 
-  platform::remove(savename);
+  fs::remove(savename);
 }
 
 void BreezeTest::test3_txt_extractFileCompressed()
@@ -108,5 +108,5 @@ void BreezeTest::test3_txt_extractFileCompressed()
   CPPUNIT_ASSERT(result == true);
   CPPUNIT_ASSERT(content_result == dest);
 
-  platform::remove(savename);
+  fs::remove(savename);
 }

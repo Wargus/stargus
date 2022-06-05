@@ -77,6 +77,22 @@ void luagenTest::test_params()
   CPPUNIT_ASSERT(vector_params == lua_result_spec);
 }
 
+void luagenTest::test_paramsQuote()
+{
+  vector<string> vector_params_input;
+  vector_params_input.push_back("one");
+  vector_params_input.push_back("two");
+  vector_params_input.push_back("three");
+
+  string intitializer_list_params = lg::paramsQuote({"one", "two", "three"});
+  string vector_params = lg::paramsQuote(vector_params_input);
+
+  string lua_result_spec("\"one\", \"two\", \"three\"");
+
+  CPPUNIT_ASSERT(intitializer_list_params == lua_result_spec);
+  CPPUNIT_ASSERT(vector_params == lua_result_spec);
+}
+
 void luagenTest::test_line()
 {
   string result = lg::line("example");

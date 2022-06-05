@@ -6,17 +6,6 @@
 
 #include "platform.h"
 
-// filesystem ->
-#if __has_include(<filesystem>)
-#include <filesystem>
-namespace fs = std::filesystem;
-#elif __has_include(<experimental/filesystem>)
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem;
-#else
-error "Missing the <filesystem> header."
-#endif
-// <- filesystem
 
 #ifdef _MSC_VER
 #define strdup _strdup
@@ -47,7 +36,7 @@ error "Missing the <filesystem> header."
 namespace platform
 {
 
-int remove(const std::string &pathname)
+/*int remove(const std::string &pathname)
 {
   return fs::remove(pathname);
 }
@@ -55,7 +44,7 @@ int remove(const std::string &pathname)
 int remove_all(const std::string &pathname)
 {
   return fs::remove_all(pathname);
-}
+}*/
 
 int unlink(const std::string &pathname)
 {

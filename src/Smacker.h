@@ -25,9 +25,9 @@ public:
   /**
    *  Convert SMK video to OGV
    */
-  bool ConvertVideo(const std::string &arcfile, Storage storage);
+  bool convertOGV(const std::string &arcfile, Storage storage);
 
-  bool ConvertPortrait(const std::string &arcfile,  Storage storage);
+  bool convertMNG(const std::string &arcfile,  Storage storage);
 
 private:
   bool callConvert(const std::string &cmd);

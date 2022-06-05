@@ -25,7 +25,7 @@ using namespace std;
 namespace dat
 {
 
-static Logger logger = Logger("startool.DataHub");
+static Logger logger = Logger("startool.dat.DataHub");
 
 DataHub::DataHub(std::shared_ptr<Hurricane> hurricane) :
   KaitaiConverter(hurricane)
@@ -433,160 +433,11 @@ int DataHub::get_dat_energy_max() const
   return orders_energy_max;
 }
 
-bool DataHub::convert()
-{
-  //printCSV();
-
-  //convertImages();
-
-  return true;
-}
-
-bool DataHub::convertUnits(json &unitsJson,
-                                std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
-                                std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap)
-{
-  bool result = true;
-
-  Preferences &preferences = Preferences::getInstance();
-
-  Storage graphics;
-  graphics.setDataPath(preferences.getDestDir());
-  graphics.setDataType("graphics");
-
-  Storage luagen;
-  luagen.setDataPath(preferences.getDestDir());
-  luagen.setDataType("luagen/units");
-  CheckPath(luagen.getFullPath());
-
-  ofstream lua_include;
-  lua_include.open (luagen("luagen-units.lua").getFullPath());
-  string lua_include_str;
-
-
-  // units.dat
-  for(auto &array : unitsJson)
-  {
-    string unit_name = array.at("name");
-    int unit_id = array.at("id");
-    bool extractor = true;
-    bool save_result = true;
-
-    LOG4CXX_TRACE(logger, string("Unit(") + to_string(unit_id) + ")");
-    dat::Unit unit(*this, unit_id);
-
-    try
-    {
-      extractor = array.at("extractor");
-    }
-    catch (const nlohmann::detail::out_of_range &json_range)
-    {
-      extractor = true; // default behaviour TODO: maybe better write into JSON file and skip default
-    }
-
-    if(extractor)
-    {
-      uint8_t draw_function = unit.flingy().sprite().image().draw_function();
-      uint8_t remapping_function = unit.flingy().sprite().image().remapping();
-
-      string arcfile =  "unit\\" + unit.flingy().sprite().image().grp().name1;
-
-      string grp_storage_file(arcfile);
-      replaceString("\\", "/", grp_storage_file);
-
-      // cut the file ending and lower case it
-      string grp_storage_file_base = to_lower(cutFileEnding(grp_storage_file, ".grp"));
-
-      cout << unit_name << " : " << arcfile << " => " << grp_storage_file_base;
-
-      Grp grp(mHurricane, arcfile);
-      std::shared_ptr<Palette> pal;
-      std::shared_ptr<Palette2D> pal2D;
-
-      if(draw_function == 9) // remapping
-      {
-        if(remapping_function == 1) // ofire
-        {
-          pal2D = palette2DMap.at("ofire");
-          grp.setPalette2D(pal2D);
-        }
-        else if(remapping_function == 2) // gfire
-        {
-          pal2D = palette2DMap.at("gfire");
-          grp.setPalette2D(pal2D);
-        }
-        else if(remapping_function == 3) // bfire
-        {
-          pal2D = palette2DMap.at("bfire");
-          grp.setPalette2D(pal2D);
-        }
-        else if(remapping_function == 4) // bexpl
-        {
-          pal2D = palette2DMap.at("bexpl");
-          grp.setPalette2D(pal2D);
-        }
-        else // TODO: as default use ofire until I've a better idea....
-        {
-          pal2D = palette2DMap.at("ofire");
-          grp.setPalette2D(pal2D);
-        }
-
-        grp.setRGBA(true);
-      }
-      else // default
-      {
-        pal = paletteMap.at("install");
-        grp.setPalette(pal);
-      }
-
-      // TODO: possible optimization possible as some units point toward the same grp
-      // could be checked before if the png is yet extracted in the same run
-      // idea: some list in memory to check which things (graphics, weapons, orders,...)
-      // referenced by units are yet exported. Then also the LUA files have not to be overwritten several times
-      Storage png_file = graphics(grp_storage_file_base + ".png");
-      save_result = grp.save(png_file);
-
-      Storage lua_file_store(luagen(unit_name + ".lua"));
-      //cout << "lua: " << lua_file_store.getFullPath() << endl;
-
-      ofstream lua_file;
-      lua_file.open (lua_file_store.getFullPath());
-
-      Size tilesize = grp.getTileSize();
-
-      string unit_image(lg::assign(
-          "Image",
-          lg::table({lg::quote("file"), lg::quote(png_file.getRelativePath()), lg::quote("size") , lg::sizeTable(tilesize)}))
-          );
-
-      string unit_hitpoints = lg::assign("HitPoints", to_string(unit.hitpoints()));
-      string unit_name_translated = lg::assign("Name", lg::quote(unit.name().name1));
-
-      string unit_defintion = lg::DefineUnitType(unit_name,
-                                                {unit_name_translated, unit_image, unit_hitpoints});
-
-      lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));
-
-      //cout << unit_defintion << endl;
-
-      lua_file << unit_defintion;
-      lua_file.close();
-    }
-
-    printf("...%s\n", save_result ? "ok" : "nok");
-  }
-
-  lua_include << lua_include_str;
-  lua_include.close();
-
-  return result;
-}
-
 bool DataHub::portdataCompare(int val1, int val2)
 {
   bool result = false;
 
-  if (val2 != units_portrait_none)
+  if (val2 != Unit::portrait_none)
   {
     result = val1 < val2;
   }

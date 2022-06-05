@@ -52,4 +52,28 @@ uint32_t Unit::hitpoints()
   return hitpoints;
 }
 
+Portrait Unit::portrait()
+{
+  uint16_t portrait_id = mDatahub.units->portrait()->at(mId);
+  if (portrait_id == Unit::portrait_none)
+  {
+    throw NoPortraitException(portrait_id);
+  }
+  LOG4CXX_TRACE(logger, string("portrait(") + to_string(portrait_id) + ")");
+
+  Portrait portrait(mDatahub, portrait_id);
+
+  return portrait;
+}
+
+const char *NoPortraitException::what() const throw()
+{
+  static string s;
+  s = "Portrait id not existing: ";
+  s += to_string(m_portraid_id);
+
+  return static_cast <const char *>(s.c_str());
+}
+
+
 } /* namespace dat */

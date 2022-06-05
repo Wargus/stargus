@@ -31,6 +31,10 @@ public:
   void setVideoExtraction(bool video);
   bool getVideoExtraction();
 
+  void setSoundExtraction(bool sound);
+  bool getSoundExtraction();
+
+
   void setArchiveDir(const std::string &dir);
   const std::string getArchiveDir();
 
@@ -42,6 +46,7 @@ public:
 
 private:
   bool mVideoExtraction;
+  bool mSoundExtraction;
   std::string mArchiveDir;
   std::string mDestDir;
 };

@@ -34,9 +34,11 @@ Load("scripts/zerg/units.lua")
 Load("scripts/protoss/units.lua")
 Load("scripts/neutral/units.lua")
 
+Load("luagen/portraits/luagen-portraits.lua")
 Load("luagen/units/luagen-units.lua")
 
 
+--[[
 for idx,icon in ipairs(icons) do
     local iconname = icon[1]
     
@@ -78,11 +80,11 @@ for idx,icon in ipairs(icons) do
 
             if #portrait_table > 1 then
                 print("Using " .. portrait_table[1] .. " and following for " .. unitname)
-                --DefineUnitType(unitname, { Portrait = portrait_table })
+                DefineUnitType(unitname, { Portrait = portrait_table })
                 break
             end
         end
     else
         -- a neutral unit
     end
-end
+end]]--

@@ -19,6 +19,7 @@ class luagenTest : public CPPUNIT_NS::TestFixture
   CPPUNIT_TEST(test_assign);
   CPPUNIT_TEST(test_quote);
   CPPUNIT_TEST(test_params);
+  CPPUNIT_TEST(test_paramsQuote);
   CPPUNIT_TEST(test_line);
 
   CPPUNIT_TEST_SUITE_END();
@@ -52,6 +53,11 @@ protected:
    * Test the LUA parameters (in functions, tables,... generators: a, b, c
    */
   void test_params();
+
+  /**
+   * Test the LUA parameters (in functions, tables,... generators: "a", "b", "c"
+   */
+  void test_paramsQuote();
 
   /**
    * The a simple newline generator: line\n

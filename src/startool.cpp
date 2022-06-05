@@ -33,6 +33,8 @@
  ----------------------------------------------------------------------------*/
 
 // project
+#include <dat/UnitsConverter.h>
+#include <dat/PortraitsConverter.h>
 #include "dat/DataHub.h"
 #include "tileset/TilesetHub.h"
 #include "PngExporter.h"
@@ -181,7 +183,7 @@ struct Arg: public option::Arg
 
 enum optionIndex
 {
-  UNKNOWN, HELP, VIDEO, VERSIONPARAM, DEV, DEV2
+  UNKNOWN, HELP, VIDEO, SOUND, VERSIONPARAM, DEV
 };
 const option::Descriptor usage[] =
 {
@@ -191,14 +193,9 @@ const option::Descriptor usage[] =
   },
   { HELP, 0, "h", "help", option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
   { VIDEO, 0, "v", "video", Arg::None, "  --video, -v  \t\tExtract and convert videos" },
-  {
-    DEV, 0, "d", "dev", Arg::None,
-    "  --dev, -d  \t\tSome test hooks while development. Don't use it if you don't know what it does!"
-  },
-  {
-    DEV2, 0, "d2", "dev2", Arg::None,
-    "  --dev2, -d2  \t\tSome test hooks while development. Don't use it if you don't know what it does!"
-  },
+  { SOUND, 0, "s", "sound", Arg::None, "  --sound, -v  \t\tExtract and convert sounds" },
+  { DEV, 0, "d", "dev", Arg::None,
+    "  --dev, -d  \t\tSome test hooks while development. Don't use it if you don't know what it does!"},
   { VERSIONPARAM, 0, "V", "version", Arg::None, "  --version, -V  \t\tShow version" },
   {
     UNKNOWN, 0, "", "", option::Arg::None,
@@ -232,14 +229,12 @@ int parseOptions(int argc, const char **argv)
     preferences.setVideoExtraction(true);
   }
 
-  // parse options
-  if (options[DEV].count() > 0)
+  if (options[SOUND].count() > 0)
   {
-    dev_hack = true;
+    preferences.setSoundExtraction(true);
   }
 
-  // parse options
-  if (options[DEV2].count() > 0)
+  if (options[DEV].count() > 0)
   {
     testHook();
   }
@@ -385,6 +380,12 @@ void testHook()
   //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
   dat::DataHub datahub(storm);
   //datahub.printCSV();
+
+  dat::PortraitsConverter portraits(storm, datahub);
+  portraits.convert();
+
+  //Smacker smack(storm);
+  //smack.convertMNG("glue\\mainmenu\\multi.smk", "/tmp/multi");
 
   /// Image 1
   Pcx pcx1(storm, "game\\tunit.pcx");
@@ -607,7 +608,11 @@ int main(int argc, const char **argv)
 
     loadPalettes(sub_storm, paletteMap, palette2DMap);
 
-    datahub.convertUnits(units_json, paletteMap, palette2DMap);
+    dat::PortraitsConverter portraitsConverter(sub_storm, datahub);
+    portraitsConverter.convert();
+
+    dat::UnitsConverter unitsConverter(sub_storm, datahub);
+    unitsConverter.convert(units_json, paletteMap, palette2DMap);
 
     for (i = 0; i <= 1; ++i)
     {
@@ -726,7 +731,7 @@ int main(int argc, const char **argv)
         }
         break;
         case W: // WORKS!
-          if (!dev_hack)
+          if (preferences.getSoundExtraction())
           {
             printf("ConvertWav: %s, %s", c[u].File, c[u].ArcFile);
             Wav wav(storm);
@@ -739,19 +744,19 @@ int main(int argc, const char **argv)
           {
             printf("ConvertSmacker: %s, %s", c[u].File, c[u].ArcFile);
             Smacker video(storm);
-            case_func = video.ConvertVideo(c[u].ArcFile, videos(c[u].File));
+            case_func = video.convertOGV(c[u].ArcFile, videos(c[u].File));
             printf("...%s\n", case_func ? "ok" : "nok");
           }
           break;
-        case P: // WORKS!
+        /*case P: // WORKS!
           if (preferences.getVideoExtraction())
           {
             printf("ConvertPortrait: %s, %s", c[u].File, c[u].ArcFile);
             Smacker video(storm);
-            case_func = video.ConvertPortrait(c[u].ArcFile, videos(c[u].File));
+            case_func = video.convertMNG(c[u].ArcFile, videos(c[u].File));
             printf("...%s\n", case_func ? "ok" : "nok");
           }
-          break;
+          break;*/
         case H: // WORKS!
         {
           printf("ConvertPcx: %s, %s", c[u].File, c[u].ArcFile);
@@ -771,7 +776,7 @@ int main(int argc, const char **argv)
           printf("ConvertCampaign (.chk): %s, %s", c[u].File, c[u].ArcFile);
           Chk chk(storm);
           chk.setUnitNames(unitNames);
-          case_func = chk.convert(c[u].ArcFile, c[u].File);
+          case_func = chk.convert(c[u].ArcFile, data(c[u].File));
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;

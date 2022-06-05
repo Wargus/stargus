@@ -75,8 +75,8 @@ void TiledPaletteImageTest::test1_tileStrategyCompare()
   // TODO: save both vectors into file and compare them with a working result!
   // maybe as other additional test??
 
-  platform::remove(save_num_name_png);
-  platform::remove(save_pos_name_png);
+  fs::remove(save_num_name_png);
+  fs::remove(save_pos_name_png);
 }
 
 void TiledPaletteImageTest::test2_tileHorizontalFlipping()
@@ -119,7 +119,7 @@ void TiledPaletteImageTest::test2_tileHorizontalFlipping()
 
   CPPUNIT_ASSERT(compareFiles(save_name_flipped_png, test_data_dir + "/" + reference_big_flipped_name_png));
 
-  platform::remove(save_name_flipped_png);
+  fs::remove(save_name_flipped_png);
 }
 
 Palette TiledPaletteImageTest::generateTestPalette()

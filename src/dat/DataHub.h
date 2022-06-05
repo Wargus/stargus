@@ -71,12 +71,6 @@ public:
   DataHub(std::shared_ptr<Hurricane> hurricane);
   virtual ~DataHub();
 
-  bool convert();
-
-  bool convertUnits(json &unitsJson,
-                         std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
-                         std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap);
-
   // Kaitai parsed objects
   std::shared_ptr<units_dat_t> units;
   std::shared_ptr<orders_dat_t> orders;
@@ -97,7 +91,7 @@ public:
   std::vector<TblEntry> portdata_tbl_vec;
   std::vector<TblEntry> mapdata_tbl_vec;
 
-  static const int units_portrait_none = 65535;
+
   static const int units_units_ready_sound_end = 106;
 
 private:

@@ -25,7 +25,7 @@ using namespace std;
 #define GAME_CD_FILE_PATTERNS "install.exe", "Install.exe", "stardat.mpq", "StarDat.mpq", "starcraft.mpq", "StarCraft.mpq"
 #define GAME "stargus"
 #define EXTRACTOR_TOOL "startool"
-#define EXTRACTOR_ARGS {"-v", NULL}
+#define EXTRACTOR_ARGS {"-v -s", NULL}
 #define CHECK_EXTRACTED_VERSION 1
 
 // configure here which files/directories will be copied from stargus (e.g. contrib)

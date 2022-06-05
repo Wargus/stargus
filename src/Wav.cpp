@@ -55,7 +55,7 @@ bool Wav::convert(const std::string &arcfile,  Storage storage)
     result = false;
   }
 
-  platform::remove(wav_file);
+  fs::remove(wav_file);
 
   return result;
 }

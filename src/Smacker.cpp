@@ -29,7 +29,7 @@ Smacker::~Smacker()
 
 }
 
-bool Smacker::ConvertVideo(const std::string &arcfile,  Storage storage)
+bool Smacker::convertOGV(const std::string &arcfile,  Storage storage)
 {
   bool result = true;
 
@@ -59,7 +59,7 @@ bool Smacker::ConvertVideo(const std::string &arcfile,  Storage storage)
   return result;
 }
 
-bool Smacker::ConvertPortrait(const std::string &arcfile,  Storage storage)
+bool Smacker::convertMNG(const std::string &arcfile,  Storage storage)
 {
   bool result = true;
 
@@ -72,8 +72,13 @@ bool Smacker::ConvertPortrait(const std::string &arcfile,  Storage storage)
   {
     CheckPath(png_path);
 
+    /**
+     * The framerate of animation SC smk files is 15.15fps (said ffprobe)
+     * I tried to calculate the framerate, but it didn't came out as expected, so I just compared it
+     * visually and tweeked the value until it fits: -r 117
+     */
     string ffmpeg_str =
-      string("ffmpeg -y -i \"") + smk_file + "\" -codec:v png -qscale:v 31 -pix_fmt yuv420p \"" + png_path + "\"image%05d.png";
+      string("ffmpeg -y -i \"") + smk_file + "\" -codec:v png -r 117 -qscale:v 31 -pix_fmt yuv420p \"" + png_path + "\"image%05d.png";
       LOG4CXX_DEBUG(logger, ffmpeg_str);
 
     // TODO: call it in a way we suppress the output to stdout
@@ -82,7 +87,7 @@ bool Smacker::ConvertPortrait(const std::string &arcfile,  Storage storage)
     {
       if(result)
       {
-        string mng_cmd = "convert \"" + png_path + "image*.png\" -delay 4 \"" + mng_file + "\""; // 60sec / 15fps = 4
+        string mng_cmd = "convert \"" + png_path + "image*.png\" \"" + mng_file + "\"";
         LOG4CXX_DEBUG(logger, mng_cmd);
 
         result = callConvert(mng_cmd);
