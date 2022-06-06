@@ -33,7 +33,6 @@ DefineConstruction("construction-protoss-shield-battery", {
 })
 
 DefineUnitType("unit-protoss-shield-battery", {
-  Shadow = {"file", "protoss/units/pgcshad.png", "size", {96, 64}},
   Animations = "animations-protoss-shield-battery", Icon = "icon-protoss-shield-battery",
   Costs = {"time", 30, "minerals", 100},
   RepairHp = 4,

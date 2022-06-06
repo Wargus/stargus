@@ -60,6 +60,13 @@ void luagenTest::test_quote()
   CPPUNIT_ASSERT(result == "\"example\"");
 }
 
+void luagenTest::test_singleQuote()
+{
+  string result = lg::singleQuote("example");
+
+  CPPUNIT_ASSERT(result == "'example'");
+}
+
 
 void luagenTest::test_params()
 {

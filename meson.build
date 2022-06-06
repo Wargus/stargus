@@ -27,6 +27,7 @@ cppunit_dep = dependency('cppunit', required : false)
 
 subdir('src')
 subdir('tools')
+subdir('test/lua')
 
 if cppunit_dep.found()
 	subdir('test/module')

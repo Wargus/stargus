@@ -9,7 +9,6 @@ DefineAnimations("animations-minerals", {
 })
 
 DefineUnitType("unit-resource-mineral-field", {
-  Shadow = {"file", "neutral/units/mineral1 shadow.png", "size", {128, 96}},
   Animations = "animations-minerals", Icon = "icon-minerals1",
   NeutralMinimapColor = {0, 228, 252},
   Speed = 0,
@@ -24,7 +23,6 @@ DefineUnitType("unit-resource-mineral-field", {
 })
 
 DefineUnitType("unit-resource-mineral-field-type-2", {
-  Shadow = {"file", "neutral/units/mineral2 shadow.png", "size", {128, 96}},
   Animations = "animations-minerals", Icon = "icon-minerals1",
   NeutralMinimapColor = {0, 228, 252},
   Speed = 0,
@@ -40,7 +38,6 @@ DefineUnitType("unit-resource-mineral-field-type-2", {
 })
 
 DefineUnitType("unit-resource-mineral-field-type-3", {
-  Shadow = {"file", "neutral/units/mineral3 shadow.png", "size", {128, 96}},
   Animations = "animations-minerals", Icon = "icon-minerals1",
   NeutralMinimapColor = {0, 228, 252},
   Speed = 0,

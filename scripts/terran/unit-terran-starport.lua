@@ -34,7 +34,6 @@ DefineConstruction("construction-terran-starport", {
 })
 
 DefineUnitType("unit-terran-starport", {
-  Shadow = {"file", "terran/units/starport shadow.png", "size", {128, 160}},
   Animations = "animations-terran-starport", Icon = "icon-terran-starport",
   Costs = {"time", 200, "minerals", 150, "gas", 100},
   RepairHp = 4,

@@ -56,7 +56,6 @@ DefineAnimations("animations-zerg-scourge", {
 
 
 DefineUnitType("unit-zerg-scourge", {
-  Shadow = {"file", "zerg/units/scourge.png", "size", {48, 48}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-zerg-scourge", Icon = "icon-zerg-scourge",
   Costs = {"time", 250, "minerals", 12, "gas", 38},

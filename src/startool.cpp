@@ -608,8 +608,11 @@ int main(int argc, const char **argv)
 
     loadPalettes(sub_storm, paletteMap, palette2DMap);
 
-    dat::PortraitsConverter portraitsConverter(sub_storm, datahub);
-    portraitsConverter.convert();
+    if (preferences.getVideoExtraction())
+    {
+      dat::PortraitsConverter portraitsConverter(sub_storm, datahub);
+      portraitsConverter.convert();
+    }
 
     dat::UnitsConverter unitsConverter(sub_storm, datahub);
     unitsConverter.convert(units_json, paletteMap, palette2DMap);

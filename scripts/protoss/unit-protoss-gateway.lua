@@ -34,7 +34,6 @@ DefineConstruction("construction-protoss-gateway", {
 })
 
 DefineUnitType("unit-protoss-gateway", {
-  Shadow = {"file", "protoss/units/pgashad.png", "size", {128, 160}},
   Animations = "animations-protoss-gateway", Icon = "icon-protoss-gateway",
   Costs = {"time", 200, "minerals", 150},
   RepairHp = 4,

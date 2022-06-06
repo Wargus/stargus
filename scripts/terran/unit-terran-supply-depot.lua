@@ -31,7 +31,6 @@ DefineConstruction("construction-terran-supply-depot", {
 })
 
 DefineUnitType("unit-terran-supply-depot", {
-  Shadow = {"file", "graphics/terran/units/supply depot shadow.png", "size", {96, 128}},
   Animations = "animations-terran-supply-depot", Icon = "icon-terran-supply-depot",
   Costs = {"time", 100, "minerals", 100},
   RepairHp = 4,

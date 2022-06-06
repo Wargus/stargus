@@ -25,7 +25,6 @@ DefineAnimations("animations-zerg-mutalisk", {
 
 
 DefineUnitType("unit-zerg-mutalisk", {
-  Shadow = {"file", "zerg/units/mutalisk.png", "size", {128, 128}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-zerg-mutalisk", Icon = "icon-zerg-mutalisk",
   Costs = {"time", 250, "minerals", 150, "gas", 100},

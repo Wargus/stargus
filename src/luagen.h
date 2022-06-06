@@ -57,6 +57,13 @@ namespace lg
   std::string quote(const std::string &text);
 
   /**
+   * Put surrounding quotes around:
+   *
+   * @return example: 'example'
+   */
+  std::string singleQuote(const std::string &text);
+
+  /**
    * internal template function for implementation of params() outer interfaces
    */
   template<typename T>

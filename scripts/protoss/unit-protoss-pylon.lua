@@ -31,7 +31,6 @@ DefineConstruction("construction-protoss-pylon", {
 })
 
 DefineUnitType("unit-protoss-pylon", {
-  Shadow = {"file", "graphics/protoss/units/ppyshad.png", "size", {64, 64}},
   Animations = "animations-protoss-pylon", Icon = "icon-protoss-pylon",
   Costs = {"time", 100, "minerals", 100},
   RepairHp = 4,

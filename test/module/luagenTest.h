@@ -18,6 +18,7 @@ class luagenTest : public CPPUNIT_NS::TestFixture
   CPPUNIT_TEST(test_table);
   CPPUNIT_TEST(test_assign);
   CPPUNIT_TEST(test_quote);
+  CPPUNIT_TEST(test_singleQuote);
   CPPUNIT_TEST(test_params);
   CPPUNIT_TEST(test_paramsQuote);
   CPPUNIT_TEST(test_line);
@@ -48,6 +49,11 @@ protected:
    * Test the LUA quoting generators to surround a string with ""
    */
   void test_quote();
+
+  /**
+   * Test the LUA quoting generators to surround a string with ''
+   */
+  void test_singleQuote();
 
   /**
    * Test the LUA parameters (in functions, tables,... generators: a, b, c

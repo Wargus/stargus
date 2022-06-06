@@ -12,7 +12,6 @@ DefineAnimations("animations-zerg-hydralisk-den", {
 
 
 DefineUnitType("unit-zerg-hydralisk-den", {
-  Shadow = {"file", "zerg/units/hydralisk den shadow.png", "size",  {160, 128}},
   Animations = "animations-zerg-hydralisk-den", Icon = "icon-zerg-hydralisk-den",
   Costs = {"time", 200, "minerals", 75, "gas", 25},
   RepairHp = 4,

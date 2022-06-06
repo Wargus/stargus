@@ -50,8 +50,6 @@ DefineAnimations("animations-zerg-defiler", {
 })
 
 DefineUnitType("unit-zerg-defiler", { Name = "Hydralisk",
-  Image = {"file", "zerg/units/defiler.png", "size", {80, 80}},
-  Shadow = {"file", "zerg/units/defiler.png", "size", {80, 80}, "offset", {0, 7}},
   Animations = "animations-zerg-defiler", Icon = "icon-zerg-defiler",
   Costs = {"time", 50, "minerals", 50, "gas", 150,},
   Speed = 10, NumDirections = 32,

@@ -33,7 +33,6 @@ DefineConstruction("construction-protoss-robotics-facility", {
 })
 
 DefineUnitType("unit-protoss-robotics-facility", {
-  Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-robotics-facility", Icon = "icon-protoss-robotics-facility",
   Costs = {"time", 30, "minerals", 100},
   RepairHp = 4,

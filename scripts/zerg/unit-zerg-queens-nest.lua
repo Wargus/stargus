@@ -12,7 +12,6 @@ DefineAnimations("animations-zerg-queens-nest", {
 
 
 DefineUnitType("unit-zerg-queens-nest", {
-  Shadow = {"file", "zerg/units/queen's nest shadow.png", "size",  {96, 128}},
   Animations = "animations-zerg-queens-nest", Icon = "icon-zerg-queens-nest",
   Costs = {"time", 200, "minerals", 100, "gas", 100},
   RepairHp = 4,

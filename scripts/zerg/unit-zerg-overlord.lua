@@ -51,7 +51,6 @@ DefineAnimations("animations-zerg-overlord", {
 
 
 DefineUnitType("unit-zerg-overlord", { Name = "Overlord",
-  Shadow = {"file", "zerg/units/overlord.png", "size", {84, 84}, "offset", {0, 42}},
   Animations = "animations-zerg-overlord", Icon = "icon-zerg-overlord",
   Costs = {"time", 45, "minerals", 100},
   RepairHp = 4,

@@ -26,7 +26,6 @@ DefineConstruction("construction-terran-refinery", {
 })
 
 DefineUnitType("unit-terran-refinery", { Name = "Refinery",
-  Shadow = {"file", "terran/units/refinery shadow.png", "size", {192, 192}},
   Animations = "animations-terran-refinery", Icon = "icon-terran-refinery",
   Costs = {"time", 200, "minerals", 100},
   Construction = "construction-terran-refinery",

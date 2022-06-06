@@ -29,7 +29,6 @@ DefineAnimations("animations-zerg-drone", {
 
 
 DefineUnitType("unit-zerg-drone", {
-  Shadow = {"file", "unit/zerg/drone.png", "size", {128, 128}},
   NumDirections = 32,
   Animations = "animations-zerg-drone", Icon = "icon-zerg-drone",
   Costs = {"time", 25, "minerals", 50},

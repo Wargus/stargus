@@ -34,7 +34,6 @@ DefineConstruction("construction-protoss-fleet-beacon", {
 })
 
 DefineUnitType("unit-protoss-fleet-beacon", {
-  Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-stargate", Icon = "icon-protoss-fleet-beacon",
   Costs = {"time", 30, "minerals", 100},
   RepairHp = 4,

@@ -34,7 +34,6 @@ DefineConstruction("construction-terran-missile-turret", {
 })
 
 DefineUnitType("unit-terran-missile-turret", {
-  Shadow = {"file", "terran/units/missile turret shadow.png", "size", {128, 128}},
   Animations = "animations-terran-missile-turret", Icon = "icon-terran-missile-turret",
   Costs = {"time", 190, "minerals", 200},
   RepairHp = 4,

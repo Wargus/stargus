@@ -15,7 +15,6 @@ DefineAnimations("animations-zerg-hive", {
 
 
 DefineUnitType("unit-zerg-hive", {
-  Shadow = {"file", "zerg/units/hive shadow.png", "size", {192, 224}},
   Animations = "animations-zerg-hive", Icon = "icon-zerg-hive",
   Costs = {"time", 255, "minerals", 300},
   RepairHp = 4,

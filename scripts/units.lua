@@ -29,62 +29,27 @@
 
 UnitTypeFiles = {}
 
-Load("scripts/terran/units.lua")
-Load("scripts/zerg/units.lua")
-Load("scripts/protoss/units.lua")
-Load("scripts/neutral/units.lua")
+-- this is just a dummy still animation as fallback
+DefineAnimations("animations-dummy-still", {
+  Still = {
+    "frame 0", "wait 125",
+  },
+})
 
 Load("luagen/portrait/luagen-portrait.lua")
 Load("luagen/units/luagen-units.lua")
 
 
---[[
-for idx,icon in ipairs(icons) do
-    local iconname = icon[1]
-    
-    local foldername, repls = string.gsub(iconname, "icon%-terran%-", "t")
-    local prefix = "t"
-    if repls ~= 1 then
-        foldername, repls = string.gsub(iconname, "icon%-protoss%-", "p")
-        prefix = "p"
-    end
-    if repls ~= 1 then
-        foldername, repls = string.gsub(iconname, "icon%-zerg%-", "z")
-        prefix = "z"
-    end
-    
-    if repls == 1 then
-        -- a terran, protoss, or zerg unit
-        local unitname, _ = string.gsub(iconname, "icon", "unit")
-        foldername = foldername:sub(1, 8)
-        folderprefix = "videos/portrait/"
-        
-        local portrait_table = {}
-        for _idx,foldername_to_try in ipairs({foldername, prefix .. "advisor"}) do
-            -- should have either their own portrait or the advisor portrait
-            for i=0,4,1 do
-                local filename = folderprefix .. foldername_to_try .. "/" .. foldername_to_try:sub(1, 3) .. "fid0" .. i .. ".mng"
-                if CanAccessFile(filename) then
-                    portrait_table[#portrait_table + 1] = filename
-                end
-            end
-            if #portrait_table > 1 then
-                portrait_table[#portrait_table + 1] = "talking"
-                for i=0,4,1 do
-                    local filename = folderprefix .. foldername_to_try .. "/" .. foldername_to_try:sub(1, 3) .. "tlk0" .. i .. ".mng"
-                    if CanAccessFile(filename) then
-                        portrait_table[#portrait_table + 1] = filename
-                    end
-                end
-            end
+Load("scripts/terran/units.lua")
+Load("scripts/zerg/units.lua")
+Load("scripts/protoss/units.lua")
+Load("scripts/neutral/units.lua")
 
-            if #portrait_table > 1 then
-                print("Using " .. portrait_table[1] .. " and following for " .. unitname)
-                DefineUnitType(unitname, { Portrait = portrait_table })
-                break
-            end
-        end
-    else
-        -- a neutral unit
-    end
-end]]--
+Load("luagen/tests/CreateUnitLuaTest.lua")
+
+function TestUnits()
+  for i=1,10 do 
+    CreateUnit("unit-zerg-guardian", 0, {10, 10})
+  end    
+end
+

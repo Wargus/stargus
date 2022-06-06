@@ -43,8 +43,6 @@ DefineAnimations("animations-zerg-egg", {
 })
 
 DefineUnitType("unit-zerg-egg", { Name = "Egg",
-  Image = {"file", "zerg/units/egg.png", "size", {96, 96}},
-  Shadow = {"file", "zerg/units/egg shadow.png", "size", {96, 96}},
   NumDirections = 1,
   DrawLevel = 30,
   Animations = "animations-zerg-egg", Icon = "icon-zerg-egg",

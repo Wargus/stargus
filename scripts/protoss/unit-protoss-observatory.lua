@@ -33,7 +33,6 @@ DefineConstruction("construction-protoss-observatory", {
 })
 
 DefineUnitType("unit-protoss-observatory", {
-  Shadow = {"file", "protoss/units/psgshad.png", "size", {128, 160}},
   Animations = "animations-protoss-observatory", Icon = "icon-protoss-observatory",
   Costs = {"time", 30, "minerals", 100},
   RepairHp = 4,

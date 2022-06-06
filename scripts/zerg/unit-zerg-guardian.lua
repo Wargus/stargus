@@ -48,9 +48,7 @@ DefineAnimations("animations-zerg-guardian", {
 })
 
 
-DefineUnitType("unit-zerg-guardian", { Name = "Guardian",
-  Image = {"file", "zerg/units/guardian.png", "size", {96, 96}},
-  Shadow = {"file", "zerg/units/guardian.png", "size", {96, 96}, "offset", {0, 42}},
+DefineUnitType("unit-zerg-guardian", {
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-zerg-guardian", Icon = "icon-zerg-guardian",
   Costs = {"time", 250, "minerals", 150, "gas", 200},
@@ -58,7 +56,7 @@ DefineUnitType("unit-zerg-guardian", { Name = "Guardian",
   DrawLevel = 60,
   TileSize = {1, 1}, BoxSize = {63, 63},
   SightRange = 11, ComputerReactionRange = 8, PersonReactionRange = 8,
-  Armor = 2, BasicDamage = 20, PiercingDamage = 16, --, Missile = "missile-zerg-guardian-glaive-wurm",
+  Armor = 2, BasicDamage = 20, PiercingDamage = 16, Missile = "missile-none",
   MaxAttackRange = 4,
   Priority = 65,
   Points = 150,

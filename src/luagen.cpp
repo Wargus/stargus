@@ -54,6 +54,15 @@ std::string quote(const std::string &text)
   return quote_str;
 }
 
+std::string singleQuote(const std::string &text)
+{
+  string quote_str("'");
+  quote_str += text;
+  quote_str += "'";
+
+  return quote_str;
+}
+
 std::string params(const std::initializer_list<std::string> &params_init_list)
 {
   return params(params_init_list.begin(), params_init_list.end());

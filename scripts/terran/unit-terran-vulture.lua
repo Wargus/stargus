@@ -25,7 +25,6 @@ DefineAnimations("animations-terran-vulture", {
 })
 
 DefineUnitType("unit-terran-vulture", {
-  Shadow = {"file", "terran/units/vulture.png", "size", {100, 100}, "offset", {0, 7}},
   Animations = "animations-terran-vulture", Icon = "icon-terran-vulture",
   Costs = {"time", 60, "minerals", 75},
   Speed = 10, NumDirections = 32,

@@ -20,6 +20,7 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include <nlohmann/json.hpp>
 
 using namespace std;
 
@@ -151,6 +152,9 @@ bool UnitsConverter::convert(json &unitsJson,
       catch (NoPortraitException &nex)
       {
         cout << nex.what() << endl;
+
+        // FIXME: just use the tadvisor as some fallback for now
+        unit_portraits = lg::assign("Portrait", "portrait_tadvisor");
       }
 
       // TODO: possible optimization possible as some units point toward the same grp
@@ -175,14 +179,21 @@ bool UnitsConverter::convert(json &unitsJson,
       string unit_name_translated = lg::assign("Name", lg::quote(unit.name().name1));
 
       // for now generate some dummy tilesize and boxsize otherwise it may crash
-      //string unit_tilesize = lg::assign("TileSize", lg::table({"1", "1"}));
-      //string unit_boxsize = lg::assign("BoxSize", lg::table({"1", "1"}));
+      string unit_tilesize = lg::assign("TileSize", lg::table({"1", "1"}));
+      string unit_boxsize = lg::assign("BoxSize", lg::table({"31", "31"}));
+      string unit_sightrange = lg::assign("SightRange", "1");
+
+      // generate some standard shadow
+      string unit_shadow = lg::assign("Shadow", lg::table({lg::quote("offset"), lg::posTable(Pos(-7, -7)), lg::quote("scale"), "1"}));
 
       // generate a dummy animation as fallback to not crash
-      //string unit_animations = lg::assign("Animations", lg::quote("still-dummy"));
+      string unit_animations = lg::assign("Animations", lg::quote("animations-dummy-still"));
+
+      // generate a dummy icon as fallback to not crash
+      string unit_icon = lg::assign("Icon", lg::quote("icon-terran-command-center"));
 
       string unit_defintion = lg::DefineUnitType(unit_name,
-                                                {unit_name_translated, unit_image, unit_hitpoints, unit_portraits});
+                                                {unit_name_translated, unit_image, unit_shadow, unit_icon, unit_animations, unit_portraits, unit_hitpoints, unit_tilesize, unit_boxsize, unit_sightrange});
 
       lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));
 

@@ -17,7 +17,6 @@ DefineAnimations("animations-protoss-scout", {
 })
 
 DefineUnitType("unit-protoss-scout", {
-  --Shadow = {"file", "terran/units/wraith.png", "size", {64, 64}, "offset", {0, 42}},
   DrawLevel = 45, NumDirections = 32,
   Animations = "animations-protoss-scout", Icon = "icon-protoss-scout",
   Costs = {"time", 250, "minerals", 150, "gas", 100},

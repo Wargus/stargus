@@ -60,7 +60,6 @@ DefineAnimations("animations-zerg-zergling", {
 
 
 DefineUnitType("unit-zerg-zergling", {
-  Shadow = {"file", "zerg/units/zergling shadow.png", "size", {128, 128}},
   Animations = "animations-zerg-zergling", Icon = "icon-zerg-zergling",
   Costs = {"time", 50, "minerals", 50},
   Speed = 10, NumDirections = 32,

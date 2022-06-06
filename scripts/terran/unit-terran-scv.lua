@@ -89,8 +89,6 @@ DefineAnimations("animations-terran-scv", {
 })
 
 DefineUnitType("unit-terran-scv", {
-  -- Shadow = {"file", "terran/units/scv.png", "size", {72, 72}, "offset", {0, -7}},
-  Shadow = {"offset", {0, -7}, "scale", 1},
   NumDirections = 32,
   Animations = "animations-terran-scv", Icon = "icon-terran-scv",
   Costs = {"time", 45, "minerals", 50},
