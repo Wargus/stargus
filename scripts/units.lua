@@ -47,9 +47,10 @@ Load("scripts/neutral/units.lua")
 
 Load("luagen/tests/CreateUnitLuaTest.lua")
 
-function TestUnits()
+
+function CreateUnitTest(unit)
   for i=1,10 do 
-    CreateUnit("unit-zerg-guardian", 0, {10, 10})
+    CreateUnit(unit, 0, {10, 10})
   end    
 end
 

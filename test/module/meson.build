@@ -10,7 +10,7 @@ StartoolUnitTest_sources = files(
   'PcxTest.cpp',
   'TiledPaletteImageTest.cpp',
   'luagenTest.cpp',
-  
+
   # needed internal dependencies to build the tests
   '../../src/Storm.cpp',
   '../../src/Breeze.cpp',
@@ -30,10 +30,10 @@ StartoolUnitTest_sources = files(
   '../../src/luagen.cpp'
   )
 
-executable('StartoolUnitTest', 
+executable('StartoolUnitTest',
 			StartoolUnitTest_sources,
 			include_directories : StartoolUnitTest_incdir,
 			dependencies : [cppunit_dep, log4cxx_dep, storm_dep, zlib_dep, png_dep, bzip2_dep],
 			install : false)
 
-	
+

@@ -16,6 +16,9 @@ class CreateUnitLuaTest
 public:
   CreateUnitLuaTest(json &unitsJson);
   virtual ~CreateUnitLuaTest();
+
+private:
+
 };
 
 #endif /* CREATEUNITLUATEST_H */

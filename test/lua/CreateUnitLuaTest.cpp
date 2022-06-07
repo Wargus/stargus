@@ -13,13 +13,14 @@
 // system
 #include <iostream>
 #include <fstream>
+#include <memory>
 
 using namespace std;
 
 CreateUnitLuaTest::CreateUnitLuaTest(json &unitsJson)
 {
   Storage luagen;
-  luagen.setDataPath("data"); // FIXME
+  luagen.setDataPath("data"); // FIXME for now need to copy this manually into your data directory
   luagen.setDataType("luagen/tests");
   CheckPath(luagen.getFullPath());
 
