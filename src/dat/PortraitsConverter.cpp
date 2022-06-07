@@ -18,7 +18,6 @@
 // system
 #include <iostream>
 #include <fstream>
-#include <libgen.h>
 #include <set>
 
 using namespace std;
