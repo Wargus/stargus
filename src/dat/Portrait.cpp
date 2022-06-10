@@ -56,7 +56,7 @@ std::string Portrait::PathToID(const std::string &portrait)
   replaceString("\\", "/", portrait_name);
   fs::path p(portrait_name);
 
-  portrait_name = to_lower(p.parent_path());
+  portrait_name = to_lower(p.parent_path().string());
   //cout << "portrait_name: " << portrait_name << endl;
 
   return portrait_name;
