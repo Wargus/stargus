@@ -67,7 +67,7 @@ bool TilesetHub::convert(std::shared_ptr<Palette> palette, Storage storage)
 {
   unsigned int num_tiles = vx4->elements()->size();
   int tiles_width = 16;
-  int tiles_height = ceil(static_cast<float>(num_tiles) / static_cast<float>(tiles_width));
+  int tiles_height = static_cast<int>(ceil(static_cast<float>(num_tiles) / static_cast<float>(tiles_width)));
 
   TiledPaletteImage ultraTile(Size(tiles_width, tiles_height), Size(32,32));
 
