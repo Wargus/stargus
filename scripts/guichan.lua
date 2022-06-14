@@ -518,10 +518,10 @@ function AddMenuHelpers(menu)
     imOn:setVisible(false)
 
     -- debug
-    local im1_height = im1:getHeight()
-    local imOn_height = imOn:getHeight()
-    local im1_width = im1:getWidth()
-    local imOn_width = imOn:getWidth()
+    --local im1_height = im1:getHeight()
+    --local imOn_height = imOn:getHeight()
+    --local im1_width = im1:getWidth()
+    --local imOn_width = imOn:getWidth()
     -- debug
     
     local label_x = x + im1:getWidth() / 2
@@ -537,9 +537,6 @@ function AddMenuHelpers(menu)
     
     local max_width = math.max(im1:getWidth(), imOn:getWidth(), label_max_width)
     local max_height = math.max(im1:getHeight(), imOn:getHeight(), label_max_height) 
-
-    print("max_width: " .. max_width)
-    print("max_height: " .. max_height)
     
     local invisibleBtn = menu:addInvisibleButton(caption, hotkey, x, y, callback, {max_width, max_height})
         

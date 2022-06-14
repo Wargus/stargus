@@ -19,7 +19,7 @@ using namespace std;
 static Logger logger = Logger("startool.Smacker");
 
 Smacker::Smacker(std::shared_ptr<Hurricane> hurricane) :
-  mHurricane(hurricane)
+  Converter(hurricane)
 {
 
 }

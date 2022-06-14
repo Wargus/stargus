@@ -296,9 +296,6 @@ AStar("fixed-unit-cost", 1000, "moving-unit-cost", 20, "know-unseen-terrain", "u
 
 -------------------------------------------------------------------------------
 
---  Maximum number of selectable units
-SetMaxSelectable(18)
-
 --  All player food unit limit
 SetAllPlayersUnitLimit(400)
 --  All player building limit
