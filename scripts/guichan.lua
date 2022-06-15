@@ -556,16 +556,18 @@ function WarMenu(title, background, resize)
   menu = MenuScreen()
 
   if background == nil then
-    bg = backgroundWidget
-  else
+    menu:add(backgroundWidget, 0, 0)
+  elseif type(background) == "string" then
     bgg = CGraphic:New(background)
     bgg:Load()
     if (resize == nil or resize == true) then
       bgg:Resize(Video.Width, Video.Height)
     end
-    bg = ImageWidget(bgg)
+    menu:add(ImageWidget(bgg), 0, 0)
+  else
+    menu:setOpaque(true)
+    menu:setBaseColor(Color(0, 0, 0, 255))
   end
-  menu:add(bg, 0, 0)
 
   AddMenuHelpers(menu)
 

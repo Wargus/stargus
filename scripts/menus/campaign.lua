@@ -107,7 +107,7 @@ function RunCampaign(campaign)
 end
 
 function RunCampaignGameMenu()
-  local menu = WarMenu()
+  local menu = WarMenu(nil, false)
   local offx = (Video.Width - 640) / 2
   local offy = (Video.Height - 480) / 2
   local center = Video.Width / 2
