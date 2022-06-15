@@ -7,16 +7,14 @@
 #ifndef VIDEO_H
 #define VIDEO_H
 
+// project
+#include "Storage.h"
+#include "Converter.h"
+
 // System
 #include <memory>
 
-// project
-#include "Storage.h"
-
-// Forward declarations
-class Hurricane;
-
-class Smacker
+class Smacker : public Converter
 {
 public:
   Smacker(std::shared_ptr<Hurricane> hurricane);
@@ -31,8 +29,6 @@ public:
 
 private:
   bool callConvert(const std::string &cmd);
-
-  std::shared_ptr<Hurricane> mHurricane;
 };
 
 #endif /* VIDEO_H */

@@ -4,10 +4,10 @@ subdir('dat')
 subdir('tileset')
 
 startool_sources = files(
-	'Casc.cpp', 
+	'Casc.cpp',
 	'FileUtil.cpp',
 	'Palette.cpp',
-	'PngExporter.cpp', 
+	'PngExporter.cpp',
 	'Chk.cpp',
 	'Font.cpp',
 	'Grp.cpp',
@@ -33,9 +33,10 @@ startool_sources = files(
 	'Palette2D.cpp',
 	'StringUtil.cpp',
 	'luagen.cpp',
-	'platform.cpp'
+	'platform.cpp',
+	'UIConsole.cpp'
 	)
-	
+
 stratagus_prefix = get_option('prefix')
 stratagus_bin = get_option('STRATAGUS_BIN')
 
@@ -53,7 +54,7 @@ message('Using stratagus: ' + stratagus_bin)
 
 stargus_sources = files('stargus.cpp')
 
-executable('startool', 
+executable('startool',
 	startool_sources,
 	startool_kaitai_sources,
 	startool_dat_sources,
@@ -61,7 +62,7 @@ executable('startool',
 	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep],
 	install : true)
 
-executable('stargus', 
+executable('stargus',
 	stargus_sources,
 	include_directories : stratagus_incdir,
 	install : true)

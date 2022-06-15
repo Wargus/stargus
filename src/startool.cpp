@@ -59,6 +59,7 @@
 #include "Wav.h"
 #include "tileset/TilesetHub.h"
 #include "platform.h"
+#include "UIConsole.h"
 
 // system
 #include <nlohmann/json.hpp>
@@ -378,11 +379,11 @@ void testHook()
   shared_ptr<Storm> storm = make_shared<Storm>(
                               "/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
   //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
-  dat::DataHub datahub(storm);
+  //dat::DataHub datahub(storm);
   //datahub.printCSV();
 
-  dat::PortraitsConverter portraits(storm, datahub);
-  portraits.convert();
+  //dat::PortraitsConverter portraits(storm, datahub);
+  //portraits.convert();
 
   //Smacker smack(storm);
   //smack.convertMNG("glue\\mainmenu\\multi.smk", "/tmp/multi");
@@ -429,15 +430,19 @@ void testHook()
   //grp.setRGBA(true);
 
 
-  //Tileset tileset(storm);
-  //tileset.convert("jungle", terrainPalette);
-
-  tileset::TilesetHub tilesethub(storm, "tileset\\jungle");
-  //tilesethub.convert(terrainPalette, "/tmp/test");
-
-  tilesethub.generateLua("Jungle", "tilesets/jungle/jungle.png", "/tmp/jungle.lua");
-
   grp.save("/tmp/marine.png");
+
+  Pcx pcx(storm, "game\\tconsole.pcx");
+  string console = "data/ui/tconsole";
+  bool case_func = pcx.savePNG(console + ".png");
+
+  UIConsole uic(storm);
+
+  //pixel count from left
+  int right = 296;
+  int left = 275;
+
+  uic.convert(console, left, right);
 
   cout << "end testHook()" << endl;
   exit(0);
@@ -788,6 +793,36 @@ int main(int argc, const char **argv)
         }
       }
     }
+
+    UIConsole uic(sub_storm);
+
+    // Terran console
+    string console = "ui/tconsole";
+    //pixel count from left
+    int left = 275;
+    int right = 296;
+
+    printf("UIConsole: %s", console.c_str());
+    uic.convert(graphics(console), left, right);
+    printf("...%s\n", case_func ? "ok" : "nok");
+
+    // Zerg console
+    console = "ui/zconsole";
+    left = 274;
+    right = 281;
+
+    printf("UIConsole: %s", console.c_str());
+    uic.convert(graphics(console), left, right);
+    printf("...%s\n", case_func ? "ok" : "nok");
+
+    // Protoss console
+    console = "ui/pconsole";
+    left = 227;
+    right = 265;
+
+    printf("UIConsole: %s", console.c_str());
+    uic.convert(graphics(console), left, right);
+    printf("...%s\n", case_func ? "ok" : "nok");
 
     // remove temporary sub files
     platform::unlink(sub_storm->getArchiveName());

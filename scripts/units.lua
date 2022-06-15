@@ -49,7 +49,7 @@ Load("luagen/tests/CreateUnitLuaTest.lua")
 
 
 function CreateUnitTest(unit)
-  for i=1,10 do 
+  for i=1,20 do 
     CreateUnit(unit, 0, {10, 10})
   end    
 end
