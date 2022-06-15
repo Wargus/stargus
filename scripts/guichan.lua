@@ -456,40 +456,48 @@ function AddMenuHelpers(menu)
   
   function menu:addAnimation(filename, x, y)
     local mng1 = Mng:New(filename)
-    mng1:Load()
-    mng1:Reset()
-    local im1 = ImageWidget(mng1)
-    
-    menu:add(im1, x, y)
-    
-    return im1
+    if mng1 then
+      mng1:Load()
+      mng1:Reset()
+      local im1 = ImageWidget(mng1)
+      
+      menu:add(im1, x, y)
+      
+      return im1
+    end
   end
 
   function menu:addAnimatedButton(filename, filenameOn, x, y, xOn, yOn, caption, hotkey, callback, animationIsBehind)
     local mng1 = Mng:New(filename)
-    mng1:Load()
-    mng1:Reset()
-    local im1 = ImageWidget(mng1)
+    if mng then
+      mng1:Load()
+      mng1:Reset()
+      local im1 = ImageWidget(mng1)
 
-    if not animationIsBehind then
-      self:add(im1, x, y)
-    end
+      if not animationIsBehind then
+        self:add(im1, x, y)
+      end
 
-    local mngOn = Mng:New(filenameOn)
-    mngOn:Load()
-    local imOn = ImageWidget(mngOn)
-    self:add(imOn, xOn, yOn)
-    imOn:setVisible(false)
+      local mngOn = Mng:New(filenameOn)
+      mngOn:Load()
+      local imOn = ImageWidget(mngOn)
+      self:add(imOn, xOn, yOn)
+      imOn:setVisible(false)
 
-    if animationIsBehind then
-      self:add(im1, x, y)
+      if animationIsBehind then
+        self:add(im1, x, y)
+      end
     end
 
     local fnt = Fonts["font16x"]
     local label_max_width = fnt:Width(caption)
     local label_max_height = fnt:Height()
-    local max_width = math.max(im1:getWidth(), label_max_width)
-    local max_height = math.max(im1:getHeight(), label_max_height) 
+    local max_width = label_max_width
+    local max_height = label_max_height
+    if im1 then
+      max_width = math.max(im1:getWidth(), label_max_width)
+      max_height = math.max(im1:getHeight(), label_max_height) 
+    end
 
     local label = MultiLineLabel(caption)
     label:setSize(max_width, max_height)
@@ -500,17 +508,19 @@ function AddMenuHelpers(menu)
     
     local button = self:addTextButton("", hotkey, x, y, callback, {max_width, max_height})
 
-    local function actioncb(evt, btn, cnt)
-      if evt == "mouseIn" then
-        mngOn:Reset()
-        imOn:setVisible(true)
-      elseif evt == "mouseOut" then
-        imOn:setVisible(false)
+    if mngOn then
+      local function actioncb(evt, btn, cnt)
+        if evt == "mouseIn" then
+          mngOn:Reset()
+          imOn:setVisible(true)
+        elseif evt == "mouseOut" then
+          imOn:setVisible(false)
+        end
       end
-    end
 
-    local actioncb = LuaActionListener(actioncb)
-    button:addMouseListener(actioncb)
+      local actioncb = LuaActionListener(actioncb)
+      button:addMouseListener(actioncb)
+    end
   end
 end
 
