@@ -454,33 +454,43 @@ function AddMenuHelpers(menu)
     return b
   end
   
-  function menu:addAnimation(filename, x, y)
+  function menu:addAnimation(filename, x, y, center)
     local mng1 = Mng:New(filename)
     if mng1 then
       mng1:Load()
       mng1:Reset()
       local im1 = ImageWidget(mng1)
       
+      if center then
+        x = x - (im1:getWidth() / 2)
+      end
       menu:add(im1, x, y)
       
       return im1
     end
   end
 
-  function menu:addAnimatedButton(filename, filenameOn, x, y, xOn, yOn, caption, hotkey, callback, animationIsBehind)
+  function menu:addAnimatedButton(filename, filenameOn, x, y, xOn, yOn, caption, hotkey, callback, animationIsBehind, center)
     local mng1 = Mng:New(filename)
-    if mng then
+    local im1
+    local mngOn
+    local imOn
+    if mng1 then
       mng1:Load()
       mng1:Reset()
-      local im1 = ImageWidget(mng1)
+      im1 = ImageWidget(mng1)
+
+      if center then
+        x = x - (im1:getWidth() / 2)
+      end
 
       if not animationIsBehind then
         self:add(im1, x, y)
       end
 
-      local mngOn = Mng:New(filenameOn)
+      mngOn = Mng:New(filenameOn)
       mngOn:Load()
-      local imOn = ImageWidget(mngOn)
+      imOn = ImageWidget(mngOn)
       self:add(imOn, xOn, yOn)
       imOn:setVisible(false)
 
@@ -521,6 +531,19 @@ function AddMenuHelpers(menu)
       local actioncb = LuaActionListener(actioncb)
       button:addMouseListener(actioncb)
     end
+  end
+
+  function menu:addBottomButton(caption, hotkey, x, row, callback)
+    local bckground = CGraphic:New("ui/readyt/butterr.png")
+    bckground:Load()
+    local backgroundWidget = ImageWidget(bckground)
+    local h = backgroundWidget:getHeight()
+    local x = x - (backgroundWidget:getWidth() / 2)
+    local y = Video.Height - (h * 0.5 * row) - h
+    menu:add(backgroundWidget, x, y)
+    local btn = menu:addTextButton(caption, hotkey, x, y + 16, callback)
+    btn:setSize(backgroundWidget:getWidth(), btn:getHeight())
+    return btn
   end
 end
 
@@ -802,7 +825,7 @@ function BuildProgramStartMenu()
     143, 115,
     "~light-green~S~!ingle Player",
     "s",
-    function() RunSinglePlayerGameMenu(); menu:stop(1) end,
+    function() RunCampaignGameMenu(); menu:stop(1) end,
     true
   )
   
@@ -847,11 +870,11 @@ function BuildProgramStartMenu()
     --menu:addFullButton("E~!xit Program", "x", offx + 208, offy + 104 + 36*8,
     --function() menu:stop() end)
   
-  menu:addTextButton("~light-green~C~white~ampaign Game", "c", 100, Video.Height-120, function() RunCampaignGameMenu(); menu:stop(1) end)
+  -- menu:addTextButton("~light-green~C~white~ampaign Game", "c", 100, Video.Height-120, function() RunCampaignGameMenu(); menu:stop(1) end)
   
-  menu:addTextButton("~light-green~L~white~oad Game", "l", 100, Video.Height-100, function() RunReplayGameMenu(); menu:stop(1) end)
+  -- menu:addTextButton("~light-green~L~white~oad Game", "l", 100, Video.Height-100, function() RunReplayGameMenu(); menu:stop(1) end)
     
-  menu:addTextButton("~light-green~R~white~eplay Game", "r", 100, Video.Height-80, function() RunReplayGameMenu(); menu:stop(1) end)
+  -- menu:addTextButton("~light-green~R~white~eplay Game", "r", 100, Video.Height-80, function() RunReplayGameMenu(); menu:stop(1) end)
     
   menu:addTextButton("~light-green~O~white~ptions", "o", 100, Video.Height-60, function() RunOptionsMenu(); menu:stop(1) end)
   

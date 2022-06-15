@@ -110,42 +110,55 @@ function RunCampaignGameMenu()
   local menu = WarMenu()
   local offx = (Video.Width - 640) / 2
   local offy = (Video.Height - 480) / 2
+  local center = Video.Width / 2
   
-  menu:addAnimation("videos/campaign/disk.mng", 160, 420)
+  local t_x = Video.Width / 6 * 3
+  local t_y = 50 + offy
+  local p_x = Video.Width / 6 * 5
+  local p_y = 100 + offy
+  local z_x = Video.Width / 6 * 1
+  local z_y = 100 + offy
+
+  menu:addAnimation("videos/campaign/disk.mng", t_x, t_y + 160, true)
+  menu:addAnimation("videos/campaign/disk.mng", p_x, p_y + 160, true)
+  menu:addAnimation("videos/campaign/disk.mng", z_x, z_y + 160, true)
+
   menu:addAnimatedButton(
     "videos/campaign/terr.mng",
     "videos/campaign/terron.mng",
-    80, 260,
-    90, 230,
+    t_x - 35, t_y,
+    t_x - 140, t_y - 50,
     "~light-green~T~!erran",
     "t",
-    function() RunCampaign("scripts/terran/campaign1.lua"); menu:stop() end
+    function() RunCampaign("scripts/terran/campaign1.lua"); menu:stop() end,
+    false,
+    true
   )
-  
-  menu:addAnimation("videos/campaign/disk.mng", 360, 315)
+
   menu:addAnimatedButton(
     "videos/campaign/prot.mng",
     "videos/campaign/proton.mng",
-    350, 150,
-    350, 120,
+    p_x, p_y,
+    p_x - 140, p_y - 90,
     "~light-green~P~!rotoss",
     "p",
-    function() RunCampaign("scripts/protoss/campaign1.lua"); menu:stop() end
+    function() RunCampaign("scripts/protoss/campaign1.lua"); menu:stop() end,
+    false,
+    true
   )
   
-  menu:addAnimation("videos/campaign/disk.mng", 560, 420)
   menu:addAnimatedButton(
     "videos/campaign/zerg.mng",
     "videos/campaign/zergon.mng",
-    550, 250,
-    550, 220,
+    z_x + 5, z_y - 15,
+    z_x - 105, z_y - 50,
     "~light-green~Z~!erg",
     "z",
-    function() RunCampaign("scripts/zerg/campaign1.lua"); menu:stop() end
+    function() RunCampaign("scripts/zerg/campaign1.lua"); menu:stop() end,
+    false,
+    true
   )
   
-  
-
   --menu:addFullButton("~!Terran Campaign", "t", offx + 208, offy + 212 + (36 * 0),
     --function() RunCampaign("scripts/terran/campaign1.lua"); menu:stop() end)
   --menu:addFullButton("~!Zerg Campaign", "z", offx + 208, offy + 212 + (36 * 1),
@@ -153,8 +166,10 @@ function RunCampaignGameMenu()
   --menu:addFullButton("~!Protoss Campaign", "p", offx + 208, offy + 212 + (36 * 2),
     --function() RunCampaign("scripts/protoss/campaign1.lua"); menu:stop() end):setEnabled(false)
 
-  menu:addFullButton("~!Cancel", "c", offx + 208, offy + 232 + (36 * 5),
-    function() menu:stop() end)
+  menu:addBottomButton("~!Skirmish", "s", center, 1.9, RunSinglePlayerGameMenu)
+  menu:addBottomButton("~!Load", "l", center, 0.7, RunReplayGameMenu)
+  menu:addBottomButton("~!Replay", "r", center, -0.5, RunReplayGameMenu)
+  menu:addBottomButton("~!Cancel", "c", center + Video.Width / 3, 0, function() menu:stop() end)
 
   menu:run()
 end
