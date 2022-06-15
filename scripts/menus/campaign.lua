@@ -111,31 +111,34 @@ function RunCampaignGameMenu()
   local offx = (Video.Width - 640) / 2
   local offy = (Video.Height - 480) / 2
   
-  menu:addAnimation("videos/campaign/disk.mng", 80 + 100, 250 + 150)
+  menu:addAnimation("videos/campaign/disk.mng", 160, 420)
   menu:addAnimatedButton(
     "videos/campaign/terr.mng",
     "videos/campaign/terron.mng",
-    80, 250,
+    80, 260,
+    90, 230,
     "~light-green~T~!erran",
     "t",
     function() RunCampaign("scripts/terran/campaign1.lua"); menu:stop() end
   )
   
-  menu:addAnimation("videos/campaign/disk.mng", 350, 150 + 150)
+  menu:addAnimation("videos/campaign/disk.mng", 360, 315)
   menu:addAnimatedButton(
     "videos/campaign/prot.mng",
     "videos/campaign/proton.mng",
     350, 150,
+    350, 120,
     "~light-green~P~!rotoss",
     "p",
     function() RunCampaign("scripts/protoss/campaign1.lua"); menu:stop() end
   )
   
-  menu:addAnimation("videos/campaign/disk.mng", 550, 250 + 150)
+  menu:addAnimation("videos/campaign/disk.mng", 560, 420)
   menu:addAnimatedButton(
     "videos/campaign/zerg.mng",
     "videos/campaign/zergon.mng",
     550, 250,
+    550, 220,
     "~light-green~Z~!erg",
     "z",
     function() RunCampaign("scripts/zerg/campaign1.lua"); menu:stop() end

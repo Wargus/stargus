@@ -166,58 +166,20 @@ function AddMenuHelpers(menu)
     return b
   end
   
-  function menu:addTextButton(caption, hotkey, x, y, callback)
-      
-    local fnt = Fonts["font16x"]
-    local label = menu:addLabel(caption, x, y, fnt, false)
-    
-    size = {label:getWidth(), label:getHeight()}
-    
-    local invisibleBtn = menu:addInvisibleButton(caption, hotkey, x, y, callback, size)
-
-    invisibleBtn:setHotKey(hotkey)
-    invisibleBtn:setActionCallback(callback)
-    self:add(invisibleBtn, x, y)
-    
-    local function actionText(evt, btn, cnt)
-      if evt == "mouseIn" then
-        --print("mouseIn")
-      elseif evt == "mouseOut" then
-        --print("mouseOut")
-      elseif evt == "mouseClick" then
-        --print("mouseClick")
-        callback()
-      end
+  function menu:addTextButton(caption, hotkey, x, y, callback, size)
+    local b = ButtonWidget(caption)
+    b:setFont(Fonts["font16x"])
+    b:setHotKey(hotkey)
+    b:setActionCallback(callback)
+    if size then
+      b:setSize(size[1], size[2])
+    else
+      b:adjustSize()
     end
-
-    local listenerInvisible = LuaActionListener(actionText)
-    invisibleBtn:addMouseListener(listenerInvisible)
-    
-    return invisibleBtn
-  end
-  
-  function menu:addInvisibleButton(caption, hotkey, x, y, callback, size)
-    
-    local transparentImage = "ui/transparent.png"
-    if not CanAccessFile(transparentImage) then
-      transparentImage = "contrib/transparent.png"
-    end
-    
-    local invisible = CGraphic:New(transparentImage)
-    invisible:Load()
-    invisible:Resize(Video.Width, Video.Height)
-    invisibleWidget = ImageWidget(invisible)
-    
-    if (size == nil) then size = {100, 100} end
-    invisibleWidget:setSize(size[1], size[2])
-    
-    -- debug (1)
-    invisibleWidget:setBorderSize(0)
-    
-    invisibleWidget:setHotKey(hotkey)
-    invisibleWidget:setActionCallback(callback)
-    self:add(invisibleWidget, x, y)
-    return invisibleWidget
+    b:setBackgroundColor(Color(0, 0, 0, 0))
+    b:setBaseColor(Color(0, 0, 0, 0))
+    self:add(b, x, y)
+    return b
   end
 
   function menu:addImageButton(caption, hotkey, x, y, callback)
@@ -503,58 +465,52 @@ function AddMenuHelpers(menu)
     return im1
   end
 
-  function menu:addAnimatedButton(filename, filenameOn, x, y, caption, hotkey, callback)
+  function menu:addAnimatedButton(filename, filenameOn, x, y, xOn, yOn, caption, hotkey, callback, animationIsBehind)
     local mng1 = Mng:New(filename)
     mng1:Load()
     mng1:Reset()
     local im1 = ImageWidget(mng1)
-    
-    menu:add(im1, x, y)
-          
+
+    if not animationIsBehind then
+      self:add(im1, x, y)
+    end
+
     local mngOn = Mng:New(filenameOn)
     mngOn:Load()
     local imOn = ImageWidget(mngOn)
-    menu:add(imOn, x, y)
+    self:add(imOn, xOn, yOn)
     imOn:setVisible(false)
 
-    -- debug
-    --local im1_height = im1:getHeight()
-    --local imOn_height = imOn:getHeight()
-    --local im1_width = im1:getWidth()
-    --local imOn_width = imOn:getWidth()
-    -- debug
+    if animationIsBehind then
+      self:add(im1, x, y)
+    end
+
+    local fnt = Fonts["font16x"]
+    local label_max_width = fnt:Width(caption)
+    local label_max_height = fnt:Height()
+    local max_width = math.max(im1:getWidth(), label_max_width)
+    local max_height = math.max(im1:getHeight(), label_max_height) 
+
+    local label = MultiLineLabel(caption)
+    label:setSize(max_width, max_height)
+    label:setAlignment(MultiLineLabel.RIGHT)
+    label:setVerticalAlignment(MultiLineLabel.BOTTOM)
+    label:setFont(fnt)
+    self:add(label, x, y)
     
-    local label_x = x + im1:getWidth() / 2
-    local label_y = y + im1:getHeight() / 3
-    
-    local label_rel_x = label_x - x
-    local label_rel_y = label_y - y
-        
-    local label = menu:addTextButton(caption, hotkey, label_x, label_y, callback)
-    
-    local label_max_width = label:getWidth() + label_rel_x
-    local label_max_height = label:getHeight() + label_rel_y
-    
-    local max_width = math.max(im1:getWidth(), imOn:getWidth(), label_max_width)
-    local max_height = math.max(im1:getHeight(), imOn:getHeight(), label_max_height) 
-    
-    local invisibleBtn = menu:addInvisibleButton(caption, hotkey, x, y, callback, {max_width, max_height})
-        
-    local function actionInvisible(evt, btn, cnt)
+    local button = self:addTextButton("", hotkey, x, y, callback, {max_width, max_height})
+
+    local function actioncb(evt, btn, cnt)
       if evt == "mouseIn" then
-        --print("mouseIn")
+        mngOn:Reset()
         imOn:setVisible(true)
       elseif evt == "mouseOut" then
-        --print("mouseOut")
         imOn:setVisible(false)
-      elseif evt == "mouseClick" then
-        --print("mouseClick")
-        callback()
       end
     end
 
-    local listenerInvisible = LuaActionListener(actionInvisible)
-    invisibleBtn:addMouseListener(listenerInvisible)
+    local actioncb = LuaActionListener(actioncb)
+    button:addMouseListener(actioncb)
   end
 end
 
@@ -833,15 +789,18 @@ function BuildProgramStartMenu()
     "videos/mainmenu/single.mng",
     "videos/mainmenu/singleon.mng",
     100, 50,
+    143, 115,
     "~light-green~S~!ingle Player",
     "s",
-    function() RunSinglePlayerGameMenu(); menu:stop(1) end
+    function() RunSinglePlayerGameMenu(); menu:stop(1) end,
+    true
   )
   
   menu:addAnimatedButton(
     "videos/mainmenu/multi.mng",
     "videos/mainmenu/multion.mng",
     80, 250,
+    99, 261,
     "~light-green~M~!ultiplayer",
     "m",
     function() RunMultiPlayerGameMenu(); menu:stop(1) end
@@ -851,6 +810,7 @@ function BuildProgramStartMenu()
     "videos/mainmenu/exit.mng",
     "videos/mainmenu/exiton.mng",
     Video.Width - 300, Video.Height - 200,
+    Video.Width - 285, Video.Height - 200,
     "~light-green~E~!xit Program",
     "x",
     function() menu:stop() end
@@ -877,17 +837,17 @@ function BuildProgramStartMenu()
     --menu:addFullButton("E~!xit Program", "x", offx + 208, offy + 104 + 36*8,
     --function() menu:stop() end)
   
-  menu:addTextButton("~light-green~Campaign Game", "c", 100, Video.Height-120, function() RunCampaignGameMenu(); menu:stop(1) end)
+  menu:addTextButton("~light-green~C~white~ampaign Game", "c", 100, Video.Height-120, function() RunCampaignGameMenu(); menu:stop(1) end)
   
-  menu:addTextButton("~light-green~Load Game", "l", 100, Video.Height-100, function() RunReplayGameMenu(); menu:stop(1) end)
+  menu:addTextButton("~light-green~L~white~oad Game", "l", 100, Video.Height-100, function() RunReplayGameMenu(); menu:stop(1) end)
     
-  menu:addTextButton("~light-green~Replay Game", "r", 100, Video.Height-80, function() RunReplayGameMenu(); menu:stop(1) end)
+  menu:addTextButton("~light-green~R~white~eplay Game", "r", 100, Video.Height-80, function() RunReplayGameMenu(); menu:stop(1) end)
     
-  menu:addTextButton("~light-green~Options", "o", 100, Video.Height-60, function() RunOptionsMenu(); menu:stop(1) end)
+  menu:addTextButton("~light-green~O~white~ptions", "o", 100, Video.Height-60, function() RunOptionsMenu(); menu:stop(1) end)
   
-  menu:addTextButton("~light-green~Show Info", "i", 100, Video.Height-40, function() RunInfoMenu(); menu:stop(1) end)
+  menu:addTextButton("~white~Show ~light-green~I~white~nfo", "i", 100, Video.Height-40, function() RunInfoMenu(); menu:stop(1) end)
   
-  menu:addTextButton("~light-green~Show Credits", "c", 100, Video.Height-20, RunShowCreditsMenu)
+  menu:addTextButton("~white~Show Cre~light-green~d~white~its", "d", 100, Video.Height-20, RunShowCreditsMenu)
 
   return menu:run()
 end
