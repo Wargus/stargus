@@ -189,6 +189,9 @@ Preference.GrayscaleIcons = true
 -- Western European Codepage
 SetFontCodePage(1252)
 
+-- Maximum fps for portraits and other animations
+Mng.MaxFPS = 15
+
 -------------------------------------------------------------------------------
 
 --  Define default resources
