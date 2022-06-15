@@ -505,7 +505,7 @@ Control Todo[] = {
 	{G,0,"protoss/units/carrier glow","unit\\thingy\\pcaGlow.grp",0 __3},
 	{G,0,"protoss/units/scarab explode","unit\\thingy\\psaExplo.grp",0 __3},
 	{G,0,"protoss/units/anti-matter missle","unit\\thingy\\HKexplod.grp",0 __3},
-	{G,0,"protoss/units/plasma shields?","unit\\thingy\\plasma.grp",0 __3},
+	{G,0,"protoss/units/plasma shields","unit\\thingy\\plasma.grp",0 __3},
 	{G,0,"protoss/units/psionic shock wave","unit\\thingy\\emsHit.grp",0 __3},
 	{G,0,"protoss/units/haluciantion cast","unit\\thingy\\eveCast.grp",0 __3},
 	{G,0,"protoss/units/halucination cast 2","unit\\thingy\\halmind.grp",0 __3},
