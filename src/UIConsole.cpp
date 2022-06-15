@@ -46,8 +46,8 @@ bool UIConsole::convert(Storage pngfile, int left, int right)
   //convert tconsole.png -crop ${width}x${height}-${left_abs}+0 tconsole_left.png
   //convert tconsole.png -crop ${width}x${height}+${right}+0 tconsole_right.png
 
-  string convert_left_cmd = "convert " + complete_file + " -crop " + wxh + "-" + to_string(left_abs) + "+0 " + left_file;
-  string convert_right_cmd = "convert " + complete_file + " -crop " + wxh + "+" + to_string(right) + "+0 " + right_file;
+  string convert_left_cmd = "convert \"" + complete_file + "\" -crop " + wxh + "-" + to_string(left_abs) + "+0 \"" + left_file + "\"";
+  string convert_right_cmd = "convert \"" + complete_file + "\" -crop " + wxh + "+" + to_string(right) + "+0 \"" + right_file + "\"";
   LOG4CXX_DEBUG(logger, convert_left_cmd);
   LOG4CXX_DEBUG(logger, convert_right_cmd);
 
@@ -70,8 +70,8 @@ bool UIConsole::convert(Storage pngfile, int left, int right)
   //convert tconsole.png -crop ${width}x${height}-${left_tmp}+0 tmp.png
   //convert tmp.png -crop ${width}x${height}+${middle_abs}+0 tconsole_middle.png
 
-  string convert_tmp_cmd = "convert " + complete_file + " -crop " + wxh + "-" + to_string(left_tmp) + "+0 " + tmp_file;
-  string convert_middle_cmd = "convert " + tmp_file + " -crop " + wxh + "+" + to_string(middle_abs) + "+0 " + middle_file;
+  string convert_tmp_cmd = "convert \"" + complete_file + "\" -crop " + wxh + "-" + to_string(left_tmp) + "+0 \"" + tmp_file + "\"";
+  string convert_middle_cmd = "convert \"" + tmp_file + "\" -crop " + wxh + "+" + to_string(middle_abs) + "+0 \"" + middle_file + "\"";
   LOG4CXX_DEBUG(logger, convert_tmp_cmd);
   LOG4CXX_DEBUG(logger, convert_middle_cmd);
 
