@@ -751,7 +751,7 @@ int main(int argc, const char **argv)
             printf("...%s\n", case_func ? "ok" : "nok");
           }
           break;
-        /*case P: // WORKS!
+        case P: // WORKS!
           if (preferences.getVideoExtraction())
           {
             printf("ConvertPortrait: %s, %s", c[u].File, c[u].ArcFile);
@@ -759,7 +759,7 @@ int main(int argc, const char **argv)
             case_func = video.convertMNG(c[u].ArcFile, videos(c[u].File));
             printf("...%s\n", case_func ? "ok" : "nok");
           }
-          break;*/
+          break;
         case H: // WORKS!
         {
           printf("ConvertPcx: %s, %s", c[u].File, c[u].ArcFile);
