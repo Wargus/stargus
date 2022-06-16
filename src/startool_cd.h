@@ -142,7 +142,7 @@ Control CDTodo[] = {
 	{W,0,"campaigns/terran/01/T1B02tad","campaign\\terran\\terran01\\staredit\\wav\\T1B02tad.wav" __4},
 	{W,0,"campaigns/terran/01/T1M01uci","campaign\\terran\\terran01\\staredit\\wav\\T1M01uci.wav" __4},
 	{W,0,"campaigns/terran/01/T1M20ura","campaign\\terran\\terran01\\staredit\\wav\\T1M20ura.wav" __4},
-	{L,0,"campaigns/terran/02","campaign\\terran\\terran02\\staredit\\scenario.chk" __4},
+	{L,0,"campaigns/terran/02/","campaign\\terran\\terran02\\staredit\\scenario.chk" __4},
 	{W,0,"campaigns/terran/02/ComBeep0","campaign\\terran\\terran02\\staredit\\wav\\ComBeep0.wav" __4},
 	{W,0,"campaigns/terran/02/ComBeep1","campaign\\terran\\terran02\\staredit\\wav\\ComBeep1.wav" __4},
 	{W,0,"campaigns/terran/02/T2B00tad","campaign\\terran\\terran02\\staredit\\wav\\T2B00tad.wav" __4},
