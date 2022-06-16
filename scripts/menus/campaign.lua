@@ -86,8 +86,8 @@ end
 function RunImageStep(filename, pagenum)
   local txt = LoadBuffer(filename)
 
-  local fadespeed = 10
-  local displaytime = 500
+  local fadespeed = 100
+  local displaytime = 5000
   local bg = false
   local verticalAlignment = MultiLineLabel.TOP
   local menu
@@ -100,9 +100,11 @@ function RunImageStep(filename, pagenum)
 
   for s in txt:gmatch("[^\r\n]*") do
     if s:find("</FADESPEED ", 1, true) then
-      fadespeed = (tonumber(s:sub(string.len("</FADESPEED "))) or 100) / 10
+      s = s:gsub("[^0-9]+", "")
+      fadespeed = tonumber(s)
     elseif s:find("</DISPLAYTIME ", 1, true) then
-      displaytime = (tonumber(s:sub(string.len("</DISPLAYTIME "))) or 5000) / 10
+      s = s:gsub("[^0-9]+", "")
+      displaytime = tonumber(s)
     elseif s:find("</BACKGROUND ", 1, true) then
       bg = s:sub(string.len("</BACKGROUND ") + 1):gsub("[\\]", "/"):gsub("%.pcx>", ".png")
       if CanAccessFile(bg) then
@@ -112,6 +114,7 @@ function RunImageStep(filename, pagenum)
         menu = WarMenu(nil, false)
       end
     elseif s:find("</SCREENLOWERLEFT>", 1, true) then
+      text = ""
       verticalAlignment = MultiLineLabel.BOTTOM
       label = MultiLineLabel("...")
       label:setForegroundColor(Color(128, 128, 128, 255))
@@ -119,6 +122,7 @@ function RunImageStep(filename, pagenum)
       label:setVerticalAlignment(verticalAlignment)
       label:setFont(Fonts["font16x"])
     elseif s:find("</SCREENLEFT>", 1, true) then
+      text = ""
       verticalAlignment = MultiLineLabel.TOP
       label = MultiLineLabel("...")
       label:setForegroundColor(Color(128, 128, 128, 255))
@@ -129,6 +133,7 @@ function RunImageStep(filename, pagenum)
       if pagenum == current_page then
         label:setCaption(text)
         label:setSize(Video.Width - 30, Video.Height - 30)
+        label:setLineWidth(Video.Width - 40)
         menu:add(label, 15, 15)
 
         local blackScreen = Container()
@@ -149,10 +154,10 @@ function RunImageStep(filename, pagenum)
           end
           if time >= displaytime then
             menu:stop()
-            RunImageStep(filename, pagenum + 1)
+            RunImageStep(filename, current_page + 1)
             GameResult = GameVictory
           end
-          time = time + 1
+          time = time + (1000 / (GetGameSpeed() + 1))
         end
         local listener = LuaActionListener(listen)
         menu:addLogicCallback(listener)
