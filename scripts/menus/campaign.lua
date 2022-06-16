@@ -128,8 +128,8 @@ function RunImageStep(filename, pagenum)
     elseif s:find("</PAGE>", 1, true) then
       if pagenum == current_page then
         label:setCaption(text)
-        label:setSize(Video.Width, Video.Height)
-        menu:add(label, 0, 0)
+        label:setSize(Video.Width - 30, Video.Height - 30)
+        menu:add(label, 15, 15)
 
         local blackScreen = Container()
         blackScreen:setSize(Video.Width, Video.Height)
@@ -142,7 +142,7 @@ function RunImageStep(filename, pagenum)
         local function listen()
           menu:setDirty(true)
           if time <= fadespeed then
-            alpha = alpha - 255 / fadespeed
+            alpha = math.max(0, alpha - 255 / fadespeed)
             blackScreen:setBaseColor(Color(0, 0, 0, math.floor(alpha)))
           else
             blackScreen:setVisible(false)
