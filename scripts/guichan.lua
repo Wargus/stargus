@@ -519,17 +519,14 @@ function AddMenuHelpers(menu)
     local button = self:addTextButton("", hotkey, x, y, callback, {max_width, max_height})
 
     if mngOn then
-      local function actioncb(evt, btn, cnt)
+      button:setMouseCallback(function(evt, btn, cnt)
         if evt == "mouseIn" then
           mngOn:Reset()
           imOn:setVisible(true)
         elseif evt == "mouseOut" then
           imOn:setVisible(false)
         end
-      end
-
-      local actioncb = LuaActionListener(actioncb)
-      button:addMouseListener(actioncb)
+      end)
     end
   end
 

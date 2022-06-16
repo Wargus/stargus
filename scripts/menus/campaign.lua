@@ -83,27 +83,140 @@ function CreateMapStep(map)
   end
 end
 
-function RunCampaign(campaign)
+function RunImageStep(filename, pagenum)
+  local txt = LoadBuffer(filename)
+
+  local fadespeed = 10
+  local displaytime = 500
+  local bg = false
+  local verticalAlignment = MultiLineLabel.TOP
+  local menu
+  local label
+  if pagenum == nil then
+    pagenum = 1
+  end
+  local current_page = 1
+  local text = ""
+
+  for s in txt:gmatch("[^\r\n]*") do
+    if s:find("</FADESPEED ", 1, true) then
+      fadespeed = (tonumber(s:sub(string.len("</FADESPEED "))) or 100) / 10
+    elseif s:find("</DISPLAYTIME ", 1, true) then
+      displaytime = (tonumber(s:sub(string.len("</DISPLAYTIME "))) or 5000) / 10
+    elseif s:find("</BACKGROUND ", 1, true) then
+      bg = s:sub(string.len("</BACKGROUND ") + 1):gsub("[\\]", "/"):gsub("%.pcx>", ".png")
+      if CanAccessFile(bg) then
+        menu = WarMenu(nil, bg)
+      else
+        print("Missing background: " .. bg)
+        menu = WarMenu(nil, false)
+      end
+    elseif s:find("</SCREENLOWERLEFT>", 1, true) then
+      verticalAlignment = MultiLineLabel.BOTTOM
+      label = MultiLineLabel("...")
+      label:setForegroundColor(Color(128, 128, 128, 255))
+      label:setAlignment(MultiLineLabel.LEFT)
+      label:setVerticalAlignment(verticalAlignment)
+      label:setFont(Fonts["font16x"])
+    elseif s:find("</SCREENLEFT>", 1, true) then
+      verticalAlignment = MultiLineLabel.TOP
+      label = MultiLineLabel("...")
+      label:setForegroundColor(Color(128, 128, 128, 255))
+      label:setAlignment(MultiLineLabel.LEFT)
+      label:setVerticalAlignment(verticalAlignment)
+      label:setFont(Fonts["font16x"])
+    elseif s:find("</PAGE>", 1, true) then
+      if pagenum == current_page then
+        label:setCaption(text)
+        label:setSize(Video.Width, Video.Height)
+        menu:add(label, 0, 0)
+
+        local blackScreen = Container()
+        blackScreen:setSize(Video.Width, Video.Height)
+        blackScreen:setBaseColor(Color(0, 0, 0, 255))
+        blackScreen:setOpaque(true)
+        menu:add(blackScreen, 0, 0)
+
+        local time = 0
+        local alpha = 255
+        local function listen()
+          menu:setDirty(true)
+          if time <= fadespeed then
+            alpha = alpha - 255 / fadespeed
+            blackScreen:setBaseColor(Color(0, 0, 0, math.floor(alpha)))
+          else
+            blackScreen:setVisible(false)
+          end
+          if time >= displaytime then
+            menu:stop()
+            RunImageStep(filename, pagenum + 1)
+            GameResult = GameVictory
+          end
+          time = time + 1
+        end
+        local listener = LuaActionListener(listen)
+        menu:addLogicCallback(listener)
+
+        label:setMouseCallback(function (evt, btn, cnt)
+          if evt == "mouseClick" then
+            time = displaytime
+          end
+        end)
+
+        menu:run()
+      end
+      current_page = current_page + 1
+    elseif not s:find("</", 1, true) then
+      if label then
+        text = text .. "\n" .. s
+      end
+    else
+      print("Unsupported tag: " .. s)
+    end
+  end
+end
+
+function RunCampaignSubmenu(campaign)
   Load(campaign)
 
-  if (campaign ~= currentCampaign or position == nil) then
-    position = 1
+  if not preferences.Progress then
+    preferences.Progress = {}
+    SavePreferences()
   end
+  local campaign_key = string.gsub(campaign, "[/.]", "_")
+  if not preferences.Progress[campaign_key] then
+    preferences.Progress[campaign_key] = #campaign_steps
+    SavePreferences()
+  end
+  campaign_position = preferences.Progress[campaign_key]
 
-  currentCampaign = campaign
+  local menu = WarMenu(nil, false)
 
-  while (position <= table.getn(campaign_steps)) do
-    campaign_steps[position]()
-    if (GameResult == GameVictory) then
-      position = position + 1
-    elseif (GameResult == GameDefeat) then
-    elseif (GameResult == GameDraw) then
-    else
-      break -- quit to menu
+  local function RunMission(number)
+    campaign_position = number
+    while (campaign_position <= #campaign_steps) do
+      campaign_steps[campaign_position]()
+      if (GameResult == GameVictory) then
+        campaign_position = campaign_position + 1
+        preferences.Progress[campaign_key] = math.max(preferences.Progress[campaign_key], campaign_position)
+        SavePreferences()
+      else
+        menu:stop() -- quit to menu
+        break
+      end
     end
   end
 
-  currentCampaign = nil
+  for i=1,#campaign_menu do
+    menu:addTextButton("Mission " .. i, nil, Video.Width / 2 - (Fonts["large"]:Width("Mission 10") / 2), 20 + i * Fonts["large"]:Height() * 2,
+      function() RunMission(campaign_menu[i]) end)
+  end
+
+  menu:addBottomButton("Cancel", "c", Video.Width / 2, 0, function()
+    menu:stop()
+  end)
+
+  menu:run()
 end
 
 function RunCampaignGameMenu()
@@ -130,7 +243,7 @@ function RunCampaignGameMenu()
     t_x - 140, t_y - 50,
     "~light-green~T~!erran",
     "t",
-    function() RunCampaign("scripts/terran/campaign1.lua"); menu:stop() end,
+    function() RunCampaignSubmenu("scripts/terran/campaign1.lua"); menu:stop() end,
     false,
     true
   )
@@ -142,7 +255,7 @@ function RunCampaignGameMenu()
     p_x - 140, p_y - 90,
     "~light-green~P~!rotoss",
     "p",
-    function() RunCampaign("scripts/protoss/campaign1.lua"); menu:stop() end,
+    function() RunCampaignSubmenu("scripts/protoss/campaign1.lua"); menu:stop() end,
     false,
     true
   )
@@ -154,7 +267,7 @@ function RunCampaignGameMenu()
     z_x - 105, z_y - 50,
     "~light-green~Z~!erg",
     "z",
-    function() RunCampaign("scripts/zerg/campaign1.lua"); menu:stop() end,
+    function() RunCampaignSubmenu("scripts/zerg/campaign1.lua"); menu:stop() end,
     false,
     true
   )
