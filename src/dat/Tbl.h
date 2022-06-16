@@ -54,12 +54,6 @@ public:
   virtual ~Tbl();
 
   std::vector<TblEntry> convertFromStream(std::shared_ptr<kaitai::kstream> ks);
-
-private:
-  /**
-   *  @return a UTF-8 string that has to be free()d after usage
-   */
-  char* iconvISO2UTF8(char *iso);
 };
 
 #endif /* STAT_TXT_TBL_H */

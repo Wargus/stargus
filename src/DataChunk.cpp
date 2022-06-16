@@ -51,10 +51,13 @@ void DataChunk::addData(unsigned char *data, const size_t size)
 
 void DataChunk::replaceData(unsigned char *data, const size_t size, size_t pos)
 {
-  if((pos * sizeof(unsigned char) + size * sizeof(unsigned char)) <= mSize)
+  size_t new_size = pos * sizeof(unsigned char) + size * sizeof(unsigned char);
+  if (new_size > mSize)
   {
-    memcpy(mData + pos * sizeof(unsigned char), data, size);
+    mData = (unsigned char *) realloc(mData, new_size);
+    mSize = new_size;
   }
+  memcpy(mData + pos * sizeof(unsigned char), data, size);
 }
 
 unsigned char *DataChunk::getDataPointer() const

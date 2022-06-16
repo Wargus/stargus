@@ -60,6 +60,7 @@
 #include "tileset/TilesetHub.h"
 #include "platform.h"
 #include "UIConsole.h"
+#include "StringUtil.h"
 
 // system
 #include <nlohmann/json.hpp>
@@ -774,11 +775,20 @@ int main(int argc, const char **argv)
         }
         break;
         case E: // WORKS
-          printf("RawExtract: %s, %s", c[u].File, c[u].ArcFile);
-          // TBD: I think campaigns this must be somehow converted to stratagus
-          case_func = RawExtract(storm, c[u].ArcFile, data(c[u].File));
+        {
+          printf("Extract text: %s, %s", c[u].File, c[u].ArcFile);
+          auto chunk = storm->extractDataChunk(c[u].ArcFile);
+          char *utf8 = iconvISO2UTF8(reinterpret_cast<char*>(chunk->getDataPointer()));
+          if (utf8) {
+            chunk->replaceData(reinterpret_cast<unsigned char*>(utf8), strlen(utf8), 0);
+            free(utf8);
+            case_func = chunk->write(data(c[u].File).getFullPath());
+          } else {
+            case_func = false;
+          }
           printf("...%s\n", case_func ? "ok" : "nok");
-          break;
+        }
+        break;
         case L:
         {
           printf("ConvertCampaign (.chk): %s, %s", c[u].File, c[u].ArcFile);

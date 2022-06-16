@@ -34,6 +34,13 @@ std::string to_lower(std::string line);
 int replaceString(const std::string &match, const std::string &replace, std::string &str);
 
 /**
+ * A helper to convert text to UTF-8.
+ *
+ * @return a UTF-8 string that has to be free()d after usage
+ */
+char* iconvISO2UTF8(char *iso);
+
+/**
  * print Vector on std::cout
  */
 template<typename T>
