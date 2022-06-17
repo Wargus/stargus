@@ -40,8 +40,6 @@ Load("scripts/gameui.lua")
 --   Offset={0, -1}, Size={108, 9}})
 --HealthSprite("ui/health.png", 1, -7, 7, 7)
 --HealthSprite("ui/ppbrfull.png", 0, -1, 108, 9)
--- DefineSprites({Name="sprite-health", File="ui/ppbrfull.png",
---   Offset={0, -1}, Size={108, 9}})
 
 --DefineSprites({Name = "sprite-spell", File = "ui/bloodlust,haste,slow,invisible,shield.png",
 --        Offset = {1, 1}, Size = {16, 16}})
@@ -61,7 +59,11 @@ Load("scripts/gameui.lua")
 --ShowHealthVertical()
 --ShowHealthHorizontal()
 --ShowHealthDot()
--- DefineDecorations({Index="HitPoints", HideNeutral=true, CenterX=true,
+
+-- DefineSprites({Name="sprite-health", File="ui/ppbrfull.png",
+--   Offset={0, -1}, Size={108, 9}})
+-- DefineDecorations({Index="HitPoints", HideNeutral=true, CenterX=true, ShowWhenMax=true,
+--   ShowOnlySelected=false,
 --   OffsetPercent={50, 100}, Method={"sprite", {"sprite-health"}}})
 
 --ShowManaBar()
@@ -90,14 +92,24 @@ Load("scripts/gameui.lua")
 --  FIXME: planned feature
 --DecorationOnTop()
 
-local offx = (Video.Width - 640) / 2
-local offy = Video.Height - 480
+local original_width = 640
+local original_height = 480
+
+local offx = 0
+-- TODO: for centered panel, use the offx below
+-- local offx = (Video.Width - original_width) / 2
+local offy = Video.Height - original_height
 
 --
 --  Define Panels
 --
 local info_panel_x = offx + 0
-local info_panel_y = offy + 200
+local info_panel_y = Video.Height - original_height + 200
+
+local name_line_x = 280
+local name_line_y = 198
+
+local line_height = Fonts["small"]:Height()
 
 local min_damage = Div(ActiveUnitVar("PiercingDamage"), 2)
 local max_damage = Add(ActiveUnitVar("PiercingDamage"), ActiveUnitVar("BasicDamage"))
@@ -115,29 +127,32 @@ DefinePanelContents(
 -- Default presentation. ------------------------
   {
     Ident = "panel-general-contents",
-    Pos = {info_panel_x, info_panel_x},
+    Pos = {info_panel_x, info_panel_y},
     DefaultFont = "game",
     Contents = {
       {
-        Pos = {160, 430}, More = {"Icon", {Unit = "ItSelf", SingleSelection = true}},
+        Pos = {160, 192}, More = {"Icon", {Unit = "ItSelf", SingleSelection = true}},
       },
-      -- { Pos = {offx + 332, 472}, Condition = {ShowOpponent = false, HideNeutral = true},
-      --   More = {"LifeBar", {Variable = "HitPoints", Height = 5, Width = 65, Border = false, Colors = {{75, "green"}, {50, "yellow"}, {25, "orange"}, {0, "red"}}}}
-      -- },
       {
-        Pos = {192, 496}, Condition = {ShowOpponent = false, HideNeutral = true},
+        Pos = {192, 256}, Condition = {ShowOpponent = false, HideNeutral = true},
         More = {"FormattedText2", {
           Font = "small", Variable = "HitPoints", Format = "~light-green~%d/%d",
           Component1 = "Value", Component2 = "Max", Centered = true}}
       },
-      { Pos = {280, 428}, More = {"Text", {Text = Line(1, UnitName("Active"), 110, "game"), Centered = false}} },
-      { Pos = {280, 436}, More = {"Text", {Text = Line(2, UnitName("Active"), 110, "game"), Centered = false}} },
+      {
+        Pos = {192, 256 + line_height}, Condition = {ShowOpponent = false, HideNeutral = true, ShieldPoints = "only"},
+        More = {"FormattedText2", {
+          Font = "small", Variable = "ShieldPoints", Format = "~light-blue~%d/%d",
+          Component1 = "Value", Component2 = "Max", Centered = true}}
+      },
+      { Pos = {name_line_x, name_line_y}, More = {"Text", {Text = Line(1, UnitName("Active"), 110, "game"), Centered = false}} },
+      { Pos = {name_line_x, name_line_y + line_height}, More = {"Text", {Text = Line(2, UnitName("Active"), 110, "game"), Centered = false}} },
 
       -- Resource Left
-      { Pos = {205, 301}, Condition = {ShowOpponent = false, GiveResource = "only"},
+      { Pos = {name_line_x, name_line_y + 2 * line_height}, Condition = {ShowOpponent = false, GiveResource = "only"},
         More = {"FormattedText2", {
           Format = "%s Left:%d", Variable = "GiveResource",
-          Component1 = "Name", Component2 = "Value", Centered = true}}
+          Component1 = "Name", Component2 = "Value", Centered = false}}
       },
     }
   },
@@ -147,15 +162,15 @@ DefinePanelContents(
     Condition = {ShowOpponent = false, HideNeutral = true, Build = "false", Supply = "only", Training = "false", UpgradeTo = "false"},
     Contents = {
       {
-        Pos = {offx + 200, offy + 86},
-        More = { "Text", { Text = Concat(_("Supply~|: "), String(PlayerData(ActiveUnitVar("Player", "Value"), "Supply", ""))) } }
+        Pos = {name_line_x, name_line_y + 2 * line_height},
+        More = { "Text", { Text = Concat(_("Supply: "), String(PlayerData(ActiveUnitVar("Player", "Value"), "Supply", ""))) } }
       },
       {
-        Pos = {offx + 200, offy + 102},
+        Pos = {name_line_x, name_line_y + 3 * line_height},
         More = {
           "Text",
           {
-            Text = Concat(_("Demand~|: "),
+            Text = Concat(_("Demand: "),
             If(GreaterThan(
             PlayerData(ActiveUnitVar("Player", "Value"), "Demand", ""),
             PlayerData(ActiveUnitVar("Player", "Value"), "Supply", "")),
@@ -172,47 +187,47 @@ DefinePanelContents(
     DefaultFont = "game",
     Condition = {ShowOpponent = false, Build = "only"},
     Contents = {
-      -- { Pos = {offx + 205, info_panel_y + 100}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
+      -- { Pos = {205, info_panel_y + 100}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
       --   More = {"CompleteBar", {Variable = "Build", Width = 100, Height = 6, Color = "green", Border = true}}
       -- },
-      { Pos = {offx + 199, offy + 100}, Condition = {Build = "only"}, More = {"Graphic", "ui/tpbrempt.png"}},
-      { Pos = {offx + 199 +  1*3, offy + 100}, Condition = {Build =  ">3"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  1}}},
-      { Pos = {offx + 199 +  2*3, offy + 100}, Condition = {Build =  ">6"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  2}}},
-      { Pos = {offx + 199 +  3*3, offy + 100}, Condition = {Build =  ">9"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  3}}},
-      { Pos = {offx + 199 +  4*3, offy + 100}, Condition = {Build = ">12"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  4}}},
-      { Pos = {offx + 199 +  5*3, offy + 100}, Condition = {Build = ">15"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  5}}},
-      { Pos = {offx + 199 +  6*3, offy + 100}, Condition = {Build = ">18"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  6}}},
-      { Pos = {offx + 199 +  7*3, offy + 100}, Condition = {Build = ">21"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  7}}},
-      { Pos = {offx + 199 +  8*3, offy + 100}, Condition = {Build = ">24"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  8}}},
-      { Pos = {offx + 199 +  9*3, offy + 100}, Condition = {Build = ">27"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  9}}},
-      { Pos = {offx + 199 + 10*3, offy + 100}, Condition = {Build = ">30"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 10}}},
-      { Pos = {offx + 199 + 11*3, offy + 100}, Condition = {Build = ">33"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 11}}},
-      { Pos = {offx + 199 + 12*3, offy + 100}, Condition = {Build = ">36"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 12}}},
-      { Pos = {offx + 199 + 13*3, offy + 100}, Condition = {Build = ">39"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 13}}},
-      { Pos = {offx + 199 + 14*3, offy + 100}, Condition = {Build = ">42"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 14}}},
-      { Pos = {offx + 199 + 15*3, offy + 100}, Condition = {Build = ">45"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 15}}},
-      { Pos = {offx + 199 + 16*3, offy + 100}, Condition = {Build = ">48"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 16}}},
-      { Pos = {offx + 199 + 17*3, offy + 100}, Condition = {Build = ">51"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 17}}},
-      { Pos = {offx + 199 + 18*3, offy + 100}, Condition = {Build = ">54"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 18}}},
-      { Pos = {offx + 199 + 19*3, offy + 100}, Condition = {Build = ">57"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 19}}},
-      { Pos = {offx + 199 + 20*3, offy + 100}, Condition = {Build = ">60"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 20}}},
-      { Pos = {offx + 199 + 21*3, offy + 100}, Condition = {Build = ">63"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 21}}},
-      { Pos = {offx + 199 + 22*3, offy + 100}, Condition = {Build = ">66"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 22}}},
-      { Pos = {offx + 199 + 23*3, offy + 100}, Condition = {Build = ">69"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 23}}},
-      { Pos = {offx + 199 + 24*3, offy + 100}, Condition = {Build = ">72"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 24}}},
-      { Pos = {offx + 199 + 25*3, offy + 100}, Condition = {Build = ">75"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 25}}},
-      { Pos = {offx + 199 + 26*3, offy + 100}, Condition = {Build = ">78"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 26}}},
-      { Pos = {offx + 199 + 27*3, offy + 100}, Condition = {Build = ">81"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 27}}},
-      { Pos = {offx + 199 + 28*3, offy + 100}, Condition = {Build = ">84"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 28}}},
-      { Pos = {offx + 199 + 29*3, offy + 100}, Condition = {Build = ">87"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 29}}},
-      { Pos = {offx + 199 + 30*3, offy + 100}, Condition = {Build = ">90"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 30}}},
-      { Pos = {offx + 199 + 31*3, offy + 100}, Condition = {Build = ">93"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 31}}},
-      { Pos = {offx + 199 + 32*3, offy + 100}, Condition = {Build = ">96"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 32}}},
-      { Pos = {offx + 199 + 33*3, offy + 100}, Condition = {Build = ">99"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 33}}},
-      
-      { Pos = {offx + 205, info_panel_y + 84}, More = {"Text", "Under Construction", "Centered", false} },
+      { Pos = {name_line_x - 2,        name_line_y + line_height * 2}, Condition = {Build = "only"}, More = {"Graphic", "ui/tpbrempt.png"}},
+      { Pos = {name_line_x - 2 +  1*3, name_line_y + line_height * 2}, Condition = {Build =  ">3"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  1}}},
+      { Pos = {name_line_x - 2 +  2*3, name_line_y + line_height * 2}, Condition = {Build =  ">6"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  2}}},
+      { Pos = {name_line_x - 2 +  3*3, name_line_y + line_height * 2}, Condition = {Build =  ">9"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  3}}},
+      { Pos = {name_line_x - 2 +  4*3, name_line_y + line_height * 2}, Condition = {Build = ">12"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  4}}},
+      { Pos = {name_line_x - 2 +  5*3, name_line_y + line_height * 2}, Condition = {Build = ">15"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  5}}},
+      { Pos = {name_line_x - 2 +  6*3, name_line_y + line_height * 2}, Condition = {Build = ">18"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  6}}},
+      { Pos = {name_line_x - 2 +  7*3, name_line_y + line_height * 2}, Condition = {Build = ">21"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  7}}},
+      { Pos = {name_line_x - 2 +  8*3, name_line_y + line_height * 2}, Condition = {Build = ">24"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  8}}},
+      { Pos = {name_line_x - 2 +  9*3, name_line_y + line_height * 2}, Condition = {Build = ">27"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  9}}},
+      { Pos = {name_line_x - 2 + 10*3, name_line_y + line_height * 2}, Condition = {Build = ">30"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 10}}},
+      { Pos = {name_line_x - 2 + 11*3, name_line_y + line_height * 2}, Condition = {Build = ">33"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 11}}},
+      { Pos = {name_line_x - 2 + 12*3, name_line_y + line_height * 2}, Condition = {Build = ">36"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 12}}},
+      { Pos = {name_line_x - 2 + 13*3, name_line_y + line_height * 2}, Condition = {Build = ">39"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 13}}},
+      { Pos = {name_line_x - 2 + 14*3, name_line_y + line_height * 2}, Condition = {Build = ">42"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 14}}},
+      { Pos = {name_line_x - 2 + 15*3, name_line_y + line_height * 2}, Condition = {Build = ">45"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 15}}},
+      { Pos = {name_line_x - 2 + 16*3, name_line_y + line_height * 2}, Condition = {Build = ">48"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 16}}},
+      { Pos = {name_line_x - 2 + 17*3, name_line_y + line_height * 2}, Condition = {Build = ">51"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 17}}},
+      { Pos = {name_line_x - 2 + 18*3, name_line_y + line_height * 2}, Condition = {Build = ">54"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 18}}},
+      { Pos = {name_line_x - 2 + 19*3, name_line_y + line_height * 2}, Condition = {Build = ">57"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 19}}},
+      { Pos = {name_line_x - 2 + 20*3, name_line_y + line_height * 2}, Condition = {Build = ">60"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 20}}},
+      { Pos = {name_line_x - 2 + 21*3, name_line_y + line_height * 2}, Condition = {Build = ">63"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 21}}},
+      { Pos = {name_line_x - 2 + 22*3, name_line_y + line_height * 2}, Condition = {Build = ">66"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 22}}},
+      { Pos = {name_line_x - 2 + 23*3, name_line_y + line_height * 2}, Condition = {Build = ">69"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 23}}},
+      { Pos = {name_line_x - 2 + 24*3, name_line_y + line_height * 2}, Condition = {Build = ">72"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 24}}},
+      { Pos = {name_line_x - 2 + 25*3, name_line_y + line_height * 2}, Condition = {Build = ">75"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 25}}},
+      { Pos = {name_line_x - 2 + 26*3, name_line_y + line_height * 2}, Condition = {Build = ">78"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 26}}},
+      { Pos = {name_line_x - 2 + 27*3, name_line_y + line_height * 2}, Condition = {Build = ">81"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 27}}},
+      { Pos = {name_line_x - 2 + 28*3, name_line_y + line_height * 2}, Condition = {Build = ">84"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 28}}},
+      { Pos = {name_line_x - 2 + 29*3, name_line_y + line_height * 2}, Condition = {Build = ">87"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 29}}},
+      { Pos = {name_line_x - 2 + 30*3, name_line_y + line_height * 2}, Condition = {Build = ">90"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 30}}},
+      { Pos = {name_line_x - 2 + 31*3, name_line_y + line_height * 2}, Condition = {Build = ">93"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 31}}},
+      { Pos = {name_line_x - 2 + 32*3, name_line_y + line_height * 2}, Condition = {Build = ">96"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 32}}},
+      { Pos = {name_line_x - 2 + 33*3, name_line_y + line_height * 2}, Condition = {Build = ">99"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 33}}},
 
-      -- { Pos = {offx + 165, info_panel_y + 78}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
+      { Pos = {name_line_x, name_line_y + line_height * 3}, More = {"Text", "Under Construction", "Centered", false} },
+
+      -- { Pos = {165, info_panel_y + 78}, Condition = {ShowOpponent = false, HideNeutral = true, Build = "only"},
       --   More = {"Icon", {Unit = "Worker"}}}
     }
   },
@@ -223,52 +238,52 @@ DefinePanelContents(
     Condition = {ShowOpponent = false, HideNeutral = true, Training = "only"},
     Contents = {
       -- boxes
-      { Pos = {238, 194}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
-      { Pos = {238, 232}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
-      { Pos = {276, 232}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
-      { Pos = {314, 232}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
-      { Pos = {352, 232}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {238, 194}, Condition = {Training = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {238, 232}, Condition = {Training = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {276, 232}, Condition = {Training = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {314, 232}, Condition = {Training = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {352, 232}, Condition = {Training = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
       -- numbers
-      { Pos = {238 + 7, 194 + 10}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 12}}},
-      { Pos = {238 + 7, 232 + 10}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 14}}},
-      { Pos = {276 + 7, 232 + 10}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 16}}},
-      { Pos = {314 + 7, 232 + 10}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 18}}},
-      { Pos = {352 + 7, 232 + 10}, Condition = {Training = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 20}}},
+      { Pos = {238 + 7, 194 + 10}, Condition = {Training = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 12}}},
+      { Pos = {238 + 7, 232 + 10}, Condition = {Training = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 14}}},
+      { Pos = {276 + 7, 232 + 10}, Condition = {Training = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 16}}},
+      { Pos = {314 + 7, 232 + 10}, Condition = {Training = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 18}}},
+      { Pos = {352 + 7, 232 + 10}, Condition = {Training = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 20}}},
       -- progressbar
-      { Pos = {offx + 199, offy + 100}, Condition = {Training = "only"}, More = {"Graphic", "ui/tpbrempt.png"}},
-      { Pos = {offx + 199 +  1*3, offy + 100}, Condition = {Training =  ">3"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  1}}},
-      { Pos = {offx + 199 +  2*3, offy + 100}, Condition = {Training =  ">6"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  2}}},
-      { Pos = {offx + 199 +  3*3, offy + 100}, Condition = {Training =  ">9"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  3}}},
-      { Pos = {offx + 199 +  4*3, offy + 100}, Condition = {Training = ">12"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  4}}},
-      { Pos = {offx + 199 +  5*3, offy + 100}, Condition = {Training = ">15"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  5}}},
-      { Pos = {offx + 199 +  6*3, offy + 100}, Condition = {Training = ">18"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  6}}},
-      { Pos = {offx + 199 +  7*3, offy + 100}, Condition = {Training = ">21"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  7}}},
-      { Pos = {offx + 199 +  8*3, offy + 100}, Condition = {Training = ">24"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  8}}},
-      { Pos = {offx + 199 +  9*3, offy + 100}, Condition = {Training = ">27"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  9}}},
-      { Pos = {offx + 199 + 10*3, offy + 100}, Condition = {Training = ">30"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 10}}},
-      { Pos = {offx + 199 + 11*3, offy + 100}, Condition = {Training = ">33"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 11}}},
-      { Pos = {offx + 199 + 12*3, offy + 100}, Condition = {Training = ">36"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 12}}},
-      { Pos = {offx + 199 + 13*3, offy + 100}, Condition = {Training = ">39"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 13}}},
-      { Pos = {offx + 199 + 14*3, offy + 100}, Condition = {Training = ">42"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 14}}},
-      { Pos = {offx + 199 + 15*3, offy + 100}, Condition = {Training = ">45"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 15}}},
-      { Pos = {offx + 199 + 16*3, offy + 100}, Condition = {Training = ">48"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 16}}},
-      { Pos = {offx + 199 + 17*3, offy + 100}, Condition = {Training = ">51"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 17}}},
-      { Pos = {offx + 199 + 18*3, offy + 100}, Condition = {Training = ">54"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 18}}},
-      { Pos = {offx + 199 + 19*3, offy + 100}, Condition = {Training = ">57"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 19}}},
-      { Pos = {offx + 199 + 20*3, offy + 100}, Condition = {Training = ">60"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 20}}},
-      { Pos = {offx + 199 + 21*3, offy + 100}, Condition = {Training = ">63"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 21}}},
-      { Pos = {offx + 199 + 22*3, offy + 100}, Condition = {Training = ">66"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 22}}},
-      { Pos = {offx + 199 + 23*3, offy + 100}, Condition = {Training = ">69"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 23}}},
-      { Pos = {offx + 199 + 24*3, offy + 100}, Condition = {Training = ">72"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 24}}},
-      { Pos = {offx + 199 + 25*3, offy + 100}, Condition = {Training = ">75"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 25}}},
-      { Pos = {offx + 199 + 26*3, offy + 100}, Condition = {Training = ">78"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 26}}},
-      { Pos = {offx + 199 + 27*3, offy + 100}, Condition = {Training = ">81"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 27}}},
-      { Pos = {offx + 199 + 28*3, offy + 100}, Condition = {Training = ">84"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 28}}},
-      { Pos = {offx + 199 + 29*3, offy + 100}, Condition = {Training = ">87"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 29}}},
-      { Pos = {offx + 199 + 30*3, offy + 100}, Condition = {Training = ">90"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 30}}},
-      { Pos = {offx + 199 + 31*3, offy + 100}, Condition = {Training = ">93"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 31}}},
-      { Pos = {offx + 199 + 32*3, offy + 100}, Condition = {Training = ">96"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 32}}},
-      { Pos = {offx + 199 + 33*3, offy + 100}, Condition = {Training = ">99"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 33}}},
+      { Pos = {name_line_x - 2,        name_line_y + line_height * 2}, Condition = {Training = "only"}, More = {"Graphic", "ui/tpbrempt.png"}},
+      { Pos = {name_line_x - 2 +  1*3, name_line_y + line_height * 2}, Condition = {Training =  ">3"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  1}}},
+      { Pos = {name_line_x - 2 +  2*3, name_line_y + line_height * 2}, Condition = {Training =  ">6"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  2}}},
+      { Pos = {name_line_x - 2 +  3*3, name_line_y + line_height * 2}, Condition = {Training =  ">9"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  3}}},
+      { Pos = {name_line_x - 2 +  4*3, name_line_y + line_height * 2}, Condition = {Training = ">12"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  4}}},
+      { Pos = {name_line_x - 2 +  5*3, name_line_y + line_height * 2}, Condition = {Training = ">15"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  5}}},
+      { Pos = {name_line_x - 2 +  6*3, name_line_y + line_height * 2}, Condition = {Training = ">18"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  6}}},
+      { Pos = {name_line_x - 2 +  7*3, name_line_y + line_height * 2}, Condition = {Training = ">21"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  7}}},
+      { Pos = {name_line_x - 2 +  8*3, name_line_y + line_height * 2}, Condition = {Training = ">24"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  8}}},
+      { Pos = {name_line_x - 2 +  9*3, name_line_y + line_height * 2}, Condition = {Training = ">27"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  9}}},
+      { Pos = {name_line_x - 2 + 10*3, name_line_y + line_height * 2}, Condition = {Training = ">30"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 10}}},
+      { Pos = {name_line_x - 2 + 11*3, name_line_y + line_height * 2}, Condition = {Training = ">33"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 11}}},
+      { Pos = {name_line_x - 2 + 12*3, name_line_y + line_height * 2}, Condition = {Training = ">36"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 12}}},
+      { Pos = {name_line_x - 2 + 13*3, name_line_y + line_height * 2}, Condition = {Training = ">39"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 13}}},
+      { Pos = {name_line_x - 2 + 14*3, name_line_y + line_height * 2}, Condition = {Training = ">42"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 14}}},
+      { Pos = {name_line_x - 2 + 15*3, name_line_y + line_height * 2}, Condition = {Training = ">45"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 15}}},
+      { Pos = {name_line_x - 2 + 16*3, name_line_y + line_height * 2}, Condition = {Training = ">48"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 16}}},
+      { Pos = {name_line_x - 2 + 17*3, name_line_y + line_height * 2}, Condition = {Training = ">51"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 17}}},
+      { Pos = {name_line_x - 2 + 18*3, name_line_y + line_height * 2}, Condition = {Training = ">54"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 18}}},
+      { Pos = {name_line_x - 2 + 19*3, name_line_y + line_height * 2}, Condition = {Training = ">57"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 19}}},
+      { Pos = {name_line_x - 2 + 20*3, name_line_y + line_height * 2}, Condition = {Training = ">60"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 20}}},
+      { Pos = {name_line_x - 2 + 21*3, name_line_y + line_height * 2}, Condition = {Training = ">63"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 21}}},
+      { Pos = {name_line_x - 2 + 22*3, name_line_y + line_height * 2}, Condition = {Training = ">66"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 22}}},
+      { Pos = {name_line_x - 2 + 23*3, name_line_y + line_height * 2}, Condition = {Training = ">69"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 23}}},
+      { Pos = {name_line_x - 2 + 24*3, name_line_y + line_height * 2}, Condition = {Training = ">72"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 24}}},
+      { Pos = {name_line_x - 2 + 25*3, name_line_y + line_height * 2}, Condition = {Training = ">75"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 25}}},
+      { Pos = {name_line_x - 2 + 26*3, name_line_y + line_height * 2}, Condition = {Training = ">78"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 26}}},
+      { Pos = {name_line_x - 2 + 27*3, name_line_y + line_height * 2}, Condition = {Training = ">81"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 27}}},
+      { Pos = {name_line_x - 2 + 28*3, name_line_y + line_height * 2}, Condition = {Training = ">84"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 28}}},
+      { Pos = {name_line_x - 2 + 29*3, name_line_y + line_height * 2}, Condition = {Training = ">87"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 29}}},
+      { Pos = {name_line_x - 2 + 30*3, name_line_y + line_height * 2}, Condition = {Training = ">90"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 30}}},
+      { Pos = {name_line_x - 2 + 31*3, name_line_y + line_height * 2}, Condition = {Training = ">93"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 31}}},
+      { Pos = {name_line_x - 2 + 32*3, name_line_y + line_height * 2}, Condition = {Training = ">96"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 32}}},
+      { Pos = {name_line_x - 2 + 33*3, name_line_y + line_height * 2}, Condition = {Training = ">99"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 33}}},
     }, 
   },
   {
@@ -278,52 +293,52 @@ DefinePanelContents(
     Condition = {ShowOpponent = false, HideNeutral = true, UpgradeTo = "only"},
     Contents = {
       -- boxes
-      { Pos = {238, 194}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
-      { Pos = {238, 232}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
-      { Pos = {276, 232}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
-      { Pos = {314, 232}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
-      { Pos = {352, 232}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {238, 194}, Condition = {UpgradeTo = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {238, 232}, Condition = {UpgradeTo = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {276, 232}, Condition = {UpgradeTo = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {314, 232}, Condition = {UpgradeTo = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
+      { Pos = {352, 232}, Condition = {UpgradeTo = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 6}}},
       -- numbers
-      { Pos = {238 + 7, 194 + 10}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 12}}},
-      { Pos = {238 + 7, 232 + 10}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 14}}},
-      { Pos = {276 + 7, 232 + 10}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 16}}},
-      { Pos = {314 + 7, 232 + 10}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 18}}},
-      { Pos = {352 + 7, 232 + 10}, Condition = {UpgradeTo = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 20}}},
+      { Pos = {238 + 7, 194 + 10}, Condition = {UpgradeTo = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 12}}},
+      { Pos = {238 + 7, 232 + 10}, Condition = {UpgradeTo = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 14}}},
+      { Pos = {276 + 7, 232 + 10}, Condition = {UpgradeTo = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 16}}},
+      { Pos = {314 + 7, 232 + 10}, Condition = {UpgradeTo = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 18}}},
+      { Pos = {352 + 7, 232 + 10}, Condition = {UpgradeTo = "only", Building = "only"}, More = {"Graphic", {Graphic = "pcmdbtns.png", Frame = 20}}},
       -- progressbar
-      { Pos = {offx + 199, offy + 100}, Condition = {UpgradeTo = "only"}, More = {"Graphic", "ui/tpbrempt.png"}},
-      { Pos = {offx + 199 +  1*3, offy + 100}, Condition = {UpgradeTo =  ">3"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  1}}},
-      { Pos = {offx + 199 +  2*3, offy + 100}, Condition = {UpgradeTo =  ">6"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  2}}},
-      { Pos = {offx + 199 +  3*3, offy + 100}, Condition = {UpgradeTo =  ">9"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  3}}},
-      { Pos = {offx + 199 +  4*3, offy + 100}, Condition = {UpgradeTo = ">12"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  4}}},
-      { Pos = {offx + 199 +  5*3, offy + 100}, Condition = {UpgradeTo = ">15"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  5}}},
-      { Pos = {offx + 199 +  6*3, offy + 100}, Condition = {UpgradeTo = ">18"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  6}}},
-      { Pos = {offx + 199 +  7*3, offy + 100}, Condition = {UpgradeTo = ">21"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  7}}},
-      { Pos = {offx + 199 +  8*3, offy + 100}, Condition = {UpgradeTo = ">24"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  8}}},
-      { Pos = {offx + 199 +  9*3, offy + 100}, Condition = {UpgradeTo = ">27"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  9}}},
-      { Pos = {offx + 199 + 10*3, offy + 100}, Condition = {UpgradeTo = ">30"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 10}}},
-      { Pos = {offx + 199 + 11*3, offy + 100}, Condition = {UpgradeTo = ">33"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 11}}},
-      { Pos = {offx + 199 + 12*3, offy + 100}, Condition = {UpgradeTo = ">36"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 12}}},
-      { Pos = {offx + 199 + 13*3, offy + 100}, Condition = {UpgradeTo = ">39"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 13}}},
-      { Pos = {offx + 199 + 14*3, offy + 100}, Condition = {UpgradeTo = ">42"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 14}}},
-      { Pos = {offx + 199 + 15*3, offy + 100}, Condition = {UpgradeTo = ">45"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 15}}},
-      { Pos = {offx + 199 + 16*3, offy + 100}, Condition = {UpgradeTo = ">48"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 16}}},
-      { Pos = {offx + 199 + 17*3, offy + 100}, Condition = {UpgradeTo = ">51"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 17}}},
-      { Pos = {offx + 199 + 18*3, offy + 100}, Condition = {UpgradeTo = ">54"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 18}}},
-      { Pos = {offx + 199 + 19*3, offy + 100}, Condition = {UpgradeTo = ">57"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 19}}},
-      { Pos = {offx + 199 + 20*3, offy + 100}, Condition = {UpgradeTo = ">60"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 20}}},
-      { Pos = {offx + 199 + 21*3, offy + 100}, Condition = {UpgradeTo = ">63"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 21}}},
-      { Pos = {offx + 199 + 22*3, offy + 100}, Condition = {UpgradeTo = ">66"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 22}}},
-      { Pos = {offx + 199 + 23*3, offy + 100}, Condition = {UpgradeTo = ">69"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 23}}},
-      { Pos = {offx + 199 + 24*3, offy + 100}, Condition = {UpgradeTo = ">72"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 24}}},
-      { Pos = {offx + 199 + 25*3, offy + 100}, Condition = {UpgradeTo = ">75"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 25}}},
-      { Pos = {offx + 199 + 26*3, offy + 100}, Condition = {UpgradeTo = ">78"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 26}}},
-      { Pos = {offx + 199 + 27*3, offy + 100}, Condition = {UpgradeTo = ">81"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 27}}},
-      { Pos = {offx + 199 + 28*3, offy + 100}, Condition = {UpgradeTo = ">84"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 28}}},
-      { Pos = {offx + 199 + 29*3, offy + 100}, Condition = {UpgradeTo = ">87"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 29}}},
-      { Pos = {offx + 199 + 30*3, offy + 100}, Condition = {UpgradeTo = ">90"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 30}}},
-      { Pos = {offx + 199 + 31*3, offy + 100}, Condition = {UpgradeTo = ">93"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 31}}},
-      { Pos = {offx + 199 + 32*3, offy + 100}, Condition = {UpgradeTo = ">96"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 32}}},
-      { Pos = {offx + 199 + 33*3, offy + 100}, Condition = {UpgradeTo = ">99"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 33}}},
+      { Pos = {name_line_x - 2,        name_line_y + line_height * 2}, Condition = {UpgradeTo = "only"}, More = {"Graphic", "ui/tpbrempt.png"}},
+      { Pos = {name_line_x - 2 +  1*3, name_line_y + line_height * 2}, Condition = {UpgradeTo =  ">3"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  1}}},
+      { Pos = {name_line_x - 2 +  2*3, name_line_y + line_height * 2}, Condition = {UpgradeTo =  ">6"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  2}}},
+      { Pos = {name_line_x - 2 +  3*3, name_line_y + line_height * 2}, Condition = {UpgradeTo =  ">9"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  3}}},
+      { Pos = {name_line_x - 2 +  4*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">12"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  4}}},
+      { Pos = {name_line_x - 2 +  5*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">15"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  5}}},
+      { Pos = {name_line_x - 2 +  6*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">18"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  6}}},
+      { Pos = {name_line_x - 2 +  7*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">21"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  7}}},
+      { Pos = {name_line_x - 2 +  8*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">24"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  8}}},
+      { Pos = {name_line_x - 2 +  9*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">27"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame =  9}}},
+      { Pos = {name_line_x - 2 + 10*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">30"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 10}}},
+      { Pos = {name_line_x - 2 + 11*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">33"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 11}}},
+      { Pos = {name_line_x - 2 + 12*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">36"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 12}}},
+      { Pos = {name_line_x - 2 + 13*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">39"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 13}}},
+      { Pos = {name_line_x - 2 + 14*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">42"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 14}}},
+      { Pos = {name_line_x - 2 + 15*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">45"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 15}}},
+      { Pos = {name_line_x - 2 + 16*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">48"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 16}}},
+      { Pos = {name_line_x - 2 + 17*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">51"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 17}}},
+      { Pos = {name_line_x - 2 + 18*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">54"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 18}}},
+      { Pos = {name_line_x - 2 + 19*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">57"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 19}}},
+      { Pos = {name_line_x - 2 + 20*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">60"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 20}}},
+      { Pos = {name_line_x - 2 + 21*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">63"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 21}}},
+      { Pos = {name_line_x - 2 + 22*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">66"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 22}}},
+      { Pos = {name_line_x - 2 + 23*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">69"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 23}}},
+      { Pos = {name_line_x - 2 + 24*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">72"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 24}}},
+      { Pos = {name_line_x - 2 + 25*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">75"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 25}}},
+      { Pos = {name_line_x - 2 + 26*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">78"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 26}}},
+      { Pos = {name_line_x - 2 + 27*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">81"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 27}}},
+      { Pos = {name_line_x - 2 + 28*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">84"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 28}}},
+      { Pos = {name_line_x - 2 + 29*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">87"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 29}}},
+      { Pos = {name_line_x - 2 + 30*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">90"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 30}}},
+      { Pos = {name_line_x - 2 + 31*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">93"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 31}}},
+      { Pos = {name_line_x - 2 + 32*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">96"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 32}}},
+      { Pos = {name_line_x - 2 + 33*3, name_line_y + line_height * 2}, Condition = {UpgradeTo = ">99"}, More = {"Graphic", {Graphic = "ui/tpbrfull.png", Frame = 33}}},
     }, 
   },
   {
@@ -351,65 +366,36 @@ DefinePanelContents(
     DefaultFont = "game",
     Condition = {ShowOpponent = false, HideNeutral = true, Build = "false"},
     Contents = {
-    --[[
       { Pos = {37, 86}, Condition = {PiercingDamage = "only"},
         More = {"Text", {Text = Concat("Damage: ", String(min_damage), "-", String(max_damage),
-                    If(Equal(0, damage_bonus), "",
-                      InverseVideo(Concat("+", String(damage_bonus)))) )}}
-
+                                        If(Equal(0, damage_bonus), "",
+                                        InverseVideo(Concat("+", String(damage_bonus)))) )}}
+      
       },
-
       { Pos = {47, 102}, Condition = {AttackRange = "only"},
-        More = {"Text", {
-              Text = "Range: ", Variable = "AttackRange" , Stat = true}}
+        More = {"Text", { Text = "Range: ", Variable = "AttackRange" , Stat = true}}
       },
-    ]]
-    -- Research
-    { Pos = {offx + 12, offy + 153}, Condition = {Research = "only"},
-      More = {"CompleteBar", {Variable = "Research", Width = 152, Height = 12}}
-    },
-    { Pos = {offx + 16, offy + 86}, Condition = {Research = "only"}, More = {"Text", "Researching:"}},
-    { Pos = {offx + 50, offy + 154}, Condition = {Research = "only"}, More = {"Text", "% Complete"}},
-  -- Mana
-  { Pos = {offx + 16, offy + 148}, Condition = {Mana = "only"},
-    More = {"CompleteBar", {Variable = "Mana", Height = 16, Width = 140, Border = true}}
-  },
-  { Pos = {offx + 86, offy + 150}, More = {"Text", {Variable = "Mana"}}, Condition = {Mana = "only"} },
+      -- Research
+      { Pos = {12, 153}, Condition = {Research = "only"},
+        More = {"CompleteBar", {Variable = "Research", Width = 152, Height = 12}}
+      },
+      { Pos = {16, 86}, Condition = {Research = "only"}, More = {"Text", "Researching:"}},
+      { Pos = {50, 154}, Condition = {Research = "only"}, More = {"Text", "% Complete"}},
+      -- Mana
+      { Pos = {16, 148}, Condition = {Mana = "only"},
+        More = {"CompleteBar", {Variable = "Mana", Height = 16, Width = 140, Border = true}}
+      },
+      { Pos = {86, 150}, More = {"Text", {Variable = "Mana"}}, Condition = {Mana = "only"} },
+      -- Ressource Carry
+      { Pos = {name_line_x, name_line_y + 2 * line_height}, Condition = {CarryResource = "only"},
+        More = {"FormattedText2", {
+          Format = "Carry: %d %s", Variable = "CarryResource",
+          Component1 = "Value", Component2 = "Name"
+        }}
+      }
 
-  -- Ressource Carry
-  { Pos = {offx + 61, offy + 149}, Condition = {CarryResource = "only"},
-    More = {"FormattedText2", {Format = "Carry: %d %s", Variable = "CarryResource",
-        Component1 = "Value", Component2 = "Name"}}
+    }
   }
-
-  } }--,
--- Attack Unit -----------------------------
---[[
-  {
-  Ident = "panel-attack-unit-contents",
-  Pos = {info_panel_x, info_panel_y},
-  DefaultFont = "game",
-  Condition = {ShowOpponent = false, HideNeutral = true, Building = "false", Build = "false"},
-  Contents = {
--- Unit caracteristics
-  { Pos = {114, 41},
-    More = {"FormattedText", {Variable = "Level", Format = "Level ~<%d~>"}}
-  },
-  { Pos = {114, 56},
-    More = {"FormattedText2", {Centered = true,
-      Variable1 = "Xp", Variable2 = "Kill", Format = "XP:~<%d~> Kills:~<%d~>"}}
-  },
-  { Pos = {47, 71}, Condition = {Armor = "only"},
-    More = {"Text", {
-          Text = "Armor: ", Variable = "Armor", Stat = true}}
-  },
-  { Pos = {54, 118}, Condition = {SightRange = "only"},
-    More = {"Text", {Text = "Sight: ", Variable = "SightRange", Stat = true}}
-  },
-  { Pos = {53, 133}, Condition = {Speed = "only"},
-    More = {"Text", {Text = "Speed: ", Variable = "Speed", Stat = true}}
-  } } }
-]]
   )
 
 UI.MessageFont = Fonts["game"]
