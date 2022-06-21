@@ -147,6 +147,8 @@ SetKeyScroll(true)
 --  Pixels to move per scrolled mouse pixel, negative = reversed
 SetMouseScrollSpeedDefault(4)
 
+SetKeyScrollSpeed(8);
+
 --  Same if Control is pressed
 SetMouseScrollSpeedControl(15)
 
@@ -178,7 +180,8 @@ else
   SetFogOfWarGraphics("contrib/fog.png")
 end
 
-SetTileSize(32, 32)
+SetEnableMapGrid(true)
+SetTileSize(8, 8)
 
 --  Choose your default for minimap with/without terrain.
 SetMinimapTerrain(true)

@@ -43,6 +43,8 @@ static const char *TypeNames[] =
 static const char *RaceNames[] =
 { "zerg", "terran", "protoss", NULL, "neutral" };
 
+constexpr int MinitileSubdivision = 4;
+
 Chk::Chk(std::shared_ptr<Hurricane> hurricane) :
   Converter(hurricane),
   map(new WorldMap())
@@ -856,7 +858,7 @@ void Chk::SaveSMP(Storage storage)
   }
   fprintf(fd, ")\n");
   fprintf(fd, "PresentMap(\"%s\", %d, %d, %d, %d)\n", map->Description, 2,
-          map->MapWidth, map->MapHeight, 0);
+          map->MapWidth * MinitileSubdivision, map->MapHeight * MinitileSubdivision, 0);
 
   fclose(fd);
 }
@@ -886,9 +888,9 @@ void Chk::SaveTrigger(FILE *fd, Trigger *trigger)
       break;
     case 3:
       fprintf(fd, "-- Bring(%d, %d, [%hu,%hu]-[%hu,%hu], %d)\n", c->Group,
-              c->UnitType, map->Locations[c->Location].StartX,
-              map->Locations[c->Location].StartY,
-              map->Locations[c->Location].EndX, map->Locations[c->Location].EndY,
+              c->UnitType, map->Locations[c->Location].StartX * MinitileSubdivision,
+              map->Locations[c->Location].StartY * MinitileSubdivision,
+              map->Locations[c->Location].EndX * MinitileSubdivision, map->Locations[c->Location].EndY * MinitileSubdivision,
               c->QualifiedNumber);
       break;
     case 4:
@@ -904,9 +906,9 @@ void Chk::SaveTrigger(FILE *fd, Trigger *trigger)
       break;
     case 7:
       fprintf(fd, "-- CommandMostAt(%d, [%hu,%hu]-[%hu,%hu])\n", c->UnitType,
-              map->Locations[c->Location].StartX,
-              map->Locations[c->Location].StartY,
-              map->Locations[c->Location].EndX, map->Locations[c->Location].EndY);
+              map->Locations[c->Location].StartX * MinitileSubdivision,
+              map->Locations[c->Location].StartY * MinitileSubdivision,
+              map->Locations[c->Location].EndX * MinitileSubdivision, map->Locations[c->Location].EndY * MinitileSubdivision);
       break;
     case 8:
       fprintf(fd, "-- MostKills(%d)\n", c->UnitType);
@@ -938,9 +940,9 @@ void Chk::SaveTrigger(FILE *fd, Trigger *trigger)
       break;
     case 17:
       fprintf(fd, "-- CommandLeastAt(%d, [%hu,%hu]-[%hu,%hu])\n", c->UnitType,
-              map->Locations[c->Location].StartX,
-              map->Locations[c->Location].StartY,
-              map->Locations[c->Location].EndX, map->Locations[c->Location].EndY);
+              map->Locations[c->Location].StartX * MinitileSubdivision,
+              map->Locations[c->Location].StartY * MinitileSubdivision,
+              map->Locations[c->Location].EndX * MinitileSubdivision, map->Locations[c->Location].EndY * MinitileSubdivision);
       break;
     case 18:
       fprintf(fd, "-- LeastKills(%d)\n", c->UnitType);
@@ -999,8 +1001,8 @@ void Chk::SaveTrigger(FILE *fd, Trigger *trigger)
       fprintf(fd,
               "--  Transmission(%s, %d, [%hu,%hu]-[%hu,%hu], %d, %d, %d, %d)\n",
               map->Strings[a->TriggerNumber - 1].c_str(), a->Status,
-              map->Locations[a->Source].StartX, map->Locations[a->Source].StartY,
-              map->Locations[a->Source].EndX, map->Locations[a->Source].EndY,
+              map->Locations[a->Source].StartX * MinitileSubdivision, map->Locations[a->Source].StartY * MinitileSubdivision,
+              map->Locations[a->Source].EndX * MinitileSubdivision, map->Locations[a->Source].EndY * MinitileSubdivision,
               a->Time, a->NumUnits, a->WavNumber, a->Time);
       break;
     case 8:
@@ -1012,9 +1014,9 @@ void Chk::SaveTrigger(FILE *fd, Trigger *trigger)
       break;
     case 10:
       fprintf(fd, "--  CenterMap(%hu, %hu)\n",
-              (map->Locations[a->Source].StartX + map->Locations[a->Source].EndX)
+              (map->Locations[a->Source].StartX * MinitileSubdivision + map->Locations[a->Source].EndX * MinitileSubdivision)
               / 2 / 32,
-              (map->Locations[a->Source].StartY + map->Locations[a->Source].EndY)
+              (map->Locations[a->Source].StartY * MinitileSubdivision + map->Locations[a->Source].EndY * MinitileSubdivision)
               / 2 / 32);
       break;
     case 12:
@@ -1060,8 +1062,8 @@ void Chk::SaveSMS(Storage storage)
       // inactive
       continue;
     }
-    fprintf(fd, "SetStartView(%d, %d, %d)\n", i, map->PlayerStart[i].X,
-            map->PlayerStart[i].Y);
+    fprintf(fd, "SetStartView(%d, %d, %d)\n", i, map->PlayerStart[i].X * MinitileSubdivision,
+            map->PlayerStart[i].Y * MinitileSubdivision);
     fprintf(fd, "SetPlayerData(%d, \"Resources\", \"minerals\", %d)\n", i, 0);
     fprintf(fd, "SetPlayerData(%d, \"Resources\", \"gas\", %d)\n", i, 0);
     fprintf(fd, "SetPlayerData(%d, \"RaceName\", \"%s\")\n", i,
@@ -1080,8 +1082,8 @@ void Chk::SaveSMS(Storage storage)
   {
     for (int w = 0; w < map->MapWidth; ++w)
     {
-      fprintf(fd, "SetTile(%d, %d, %d)\n", map->Tiles[h * map->MapWidth + w], w,
-              h);
+      fprintf(fd, "SetTile(%d, %d, %d)\n", map->Tiles[h * map->MapWidth + w], w * MinitileSubdivision,
+              h * MinitileSubdivision);
     }
   }
 
@@ -1095,7 +1097,7 @@ void Chk::SaveSMS(Storage storage)
     string lua_str = lg::line(
                        lg::assign(
                          "unit",
-                         lg::CreateUnit(unitName, (map->Units[i]).Player, Pos(map->Units[i].X, map->Units[i].Y)))
+                         lg::CreateUnit(unitName, (map->Units[i]).Player, Pos(map->Units[i].X * MinitileSubdivision, map->Units[i].Y * MinitileSubdivision)))
                      );
 
     fprintf(fd, "%s", lua_str.c_str()); // TODO: c++ this
