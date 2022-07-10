@@ -159,7 +159,7 @@ SetDoubleClickDelay(300)
 SetHoldClickDelay(1000)
 
 --  Uncomment next, to reveal the complete map.
---RevealMap()
+RevealMap("known")
 
 --  Choose your default fog of war state (enabled #t/disabled #f).
 --    disabled is a C&C like fog of war.
@@ -298,7 +298,10 @@ end)
 
 -------------------------------------------------------------------------------
 
-AStar("fixed-unit-cost", 1000, "moving-unit-cost", 20, "know-unseen-terrain", "unseen-terrain-cost", 2)
+AStar("fixed-unit-cost", 1000,
+      "moving-unit-cost", 20,
+      "dont-know-unseen-terrain",
+      "unseen-terrain-cost", 2)
 
 -------------------------------------------------------------------------------
 
