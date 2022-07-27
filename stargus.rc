@@ -9,7 +9,7 @@
 #define VIVERSION 3,3,0,0
 #define HOMEPAGE "https://github.com/Wargus/stargus"
 #define LICENSE "GPL v2"
-#define COPYRIGHT "Copyright (c) 1998-2015 by The Stratagus Project and Pali Rohar"
+#define COPYRIGHT "Copyright (c) 2002-2022 by The Stratagus Project and Pali Rohar"
 
 1 ICON "stargus.ico"
 1 VERSIONINFO
