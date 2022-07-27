@@ -34,10 +34,10 @@
  --  General
  ----------------------------------------------------------------------------*/
 
-#define VERSION "2.4.1" // Version of extractor startool
+#define VERSION "3.3.0" // Version of extractor startool
 
 const char NameLine[] =
-    "startool V" VERSION " for Stratagus (c) 2002-2021 by the Stratagus Project.\n";
+    "startool V" VERSION " for Stratagus (c) 2002-2022 by the Stratagus Project.\n";
 
 /*----------------------------------------------------------------------------
  --  Includes

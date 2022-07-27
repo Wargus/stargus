@@ -38,10 +38,10 @@
 -------------------------------------------------------------------------------
 
 Name = "Stargus"
-Version = "3.1.3"
+Version = "3.3.0"
 Homepage = "https://github.com/Wargus/stargus"
 Licence = "GPL v2"
-Copyright = "Copyright (c) 1998-2015 by The Stratagus Project and Pali Rohar"
+Copyright = "Copyright (c) 1998-2022 by The Stratagus Project and Pali Rohar"
 
 -- activate debugging
 pcall(function() require("scripts/mobdebug").start() end)
