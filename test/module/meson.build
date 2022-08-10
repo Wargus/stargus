@@ -32,7 +32,7 @@ StartoolUnitTest_sources = files(
 
 executable('StartoolUnitTest',
 			StartoolUnitTest_sources,
-			include_directories : StartoolUnitTest_incdir,
+			include_directories : [StartoolUnitTest_incdir, config_incdir],
 			dependencies : [cppunit_dep, log4cxx_dep, storm_dep, zlib_dep, png_dep, bzip2_dep],
 			install : false)
 

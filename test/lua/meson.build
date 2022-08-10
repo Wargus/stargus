@@ -26,7 +26,7 @@ LuaTest_sources = files(
 
 executable('LuaTest',
 			LuaTest_sources,
-			include_directories : LuaTest_incdir,
+			include_directories : [LuaTest_incdir, config_incdir],
 			dependencies : [log4cxx_dep, storm_dep, zlib_dep, png_dep, bzip2_dep],
 			install : false)
 

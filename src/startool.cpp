@@ -61,6 +61,7 @@
 #include "platform.h"
 #include "UIConsole.h"
 #include "StringUtil.h"
+#include "pacman.h"
 
 // system
 #include <nlohmann/json.hpp>
@@ -283,7 +284,7 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
                   std::map<std::string, std::shared_ptr<Palette2D>> &palette2DMap)
 {
   // read in the json file
-  std::ifstream json_file("dataset/palettes.json");
+  std::ifstream json_file(pacman::searchFile("dataset/palettes.json"));
 
   json palettes_json; //create unitiialized json object
 
@@ -597,7 +598,7 @@ int main(int argc, const char **argv)
     dat::DataHub datahub(sub_storm);
 
     // read in the json file
-    std::ifstream json_file("dataset/units.json");
+    std::ifstream json_file(pacman::searchFile("dataset/units.json"));
 
     json units_json; //create unitiialized json object
 
