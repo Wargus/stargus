@@ -2,16 +2,17 @@
 #include <config.h>
 #endif
 
-/* STD */
-#include <libgen.h>
+// system
 #include <cstring>
 #include <cstdlib>
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <iostream>
+
+// project
 #include "pacman.h"
 #include "FileNotFoundException.h"
+#include "platform.h"
 
 using namespace std;
 
@@ -32,8 +33,6 @@ const std::string searchFile(const std::string &data)
   name_vector.push_back(string(PACKAGE_SOURCE_DIR));
 #endif
 
-
-
   const string &file = statFile(name_vector);
 
   if (file.empty())
@@ -48,12 +47,9 @@ const std::string searchDir(const std::string &data)
 {
   const string &file = searchFile(data);
 
-  char *file_c = strdup(file.c_str());
-  char *dir_c = dirname(file_c);
-  string dir(dir_c);
-  free(file_c);
+  fs::path p(file);
 
-  return dir;
+  return p.remove_filename();
 }
 
 const std::string statFile(std::vector <std::string> &name_vector)
