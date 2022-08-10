@@ -49,7 +49,7 @@ const std::string searchDir(const std::string &data)
 
   fs::path p(file);
 
-  return p.remove_filename();
+  return p.remove_filename().string();
 }
 
 const std::string statFile(std::vector <std::string> &name_vector)
