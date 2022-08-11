@@ -8,6 +8,7 @@
 #include "Breeze.h"
 #include "FileUtil.h"
 #include "Logger.h"
+#include "StringUtil.h"
 
 // System
 #include <stdio.h>
@@ -99,6 +100,8 @@ bool Breeze::extractMemory(const std::string &archivedFile, unsigned char **szEn
   unsigned char *szEntryBuffer = nullptr;
 
   string archivedFilePath = mArchiveName + "/" + archivedFile;
+
+  replaceString("\\", "/", archivedFilePath);
 
   f = fopen(archivedFilePath.c_str(), "r");
   if (f)

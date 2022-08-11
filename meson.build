@@ -52,3 +52,4 @@ if cppunit_dep.found()
 	subdir('test/module')
 endif
 
+subdir('test/datafiles/dat')

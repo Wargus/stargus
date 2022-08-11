@@ -4,6 +4,10 @@ subdir('dat')
 subdir('tileset')
 
 startool_sources = files(
+	'startool.cpp'
+)
+
+startool_lib_sources = files(
 	'Casc.cpp',
 	'FileUtil.cpp',
 	'Palette.cpp',
@@ -13,7 +17,6 @@ startool_sources = files(
 	'Grp.cpp',
 	'Panel.cpp',
 	'Preferences.cpp',
-	'startool.cpp',
 	'Widgets.cpp',
 	'DataChunk.cpp',
 	'Hurricane.cpp',
@@ -57,6 +60,7 @@ message('Using stratagus: ' + stratagus_bin)
 stargus_sources = files('stargus.cpp')
 
 executable('startool',
+	startool_lib_sources,
 	startool_sources,
 	startool_kaitai_sources,
 	startool_dat_sources,
