@@ -13,7 +13,10 @@ Control Todo_bootstrap[] = {
 
   {F,0,"","stardat.mpq" __4},
   {F,0,"","StarDat.mpq" __4},
+  {F,0,"","broodat.mpq" __4},
+  {F,0,"","BrooDat.mpq" __4},
   {F,0,"","remove-stardat.mpq" __4},
+  {F,0,"","remove-broodat.mpq" __4},
 };
 
 Control Todo[] = {
