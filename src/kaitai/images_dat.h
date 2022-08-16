@@ -100,11 +100,40 @@ public:
 
     /**
      * The drawing function used for the image. This property has rather various effects and not all options works with all entries so expect crashes. It can produce very interesting effects though, especially spell-related.
+     * 0 - normal\n
+     * 1 - doesn't draw hallucination\n
+     * 2 - non-vision cloaking\n
+     * 3 - non-vision cloaked\n
+     * 4 - non-vision uncloaking\n
+     * 5 - vision cloaking\n
+     * 6 - vision cloaked\n
+     * 7 - vision uncloaking\n
+     * 8 - EMP\n
+     * 9 - uses remapping\n
+     * 10 - shadow\n
+     * 11 - HP bar\n
+     * 12 - warp texture\n
+     * 13 - selection circle remapping\n
+     * 14 - draw original player color (used for flags -- player color stored in coloring data)\n
+     * 15 - draw update rect\n
+     * 16 - hallucination\n
+     * 17 - warp flash\n
      */
     std::vector<uint8_t>* draw_function() const { return m_draw_function; }
 
     /**
      * An additional remapping "palette" that is to be used. Each tileset has its own files responsible for remapping. Used only if the Draw property is set to "9-Use Remapping". Values 8 and 9 produce a weird effect and most probably are a result of an error in Starcraft.
+     * If 'draw_function' is 9:
+     * 0 = No remapping\n
+     * 1 = ofire.pcx (Orange)\n
+     * 2 = gfire.pcx (Green)\n
+     * 3 = bfire.pcx (Blue)\n
+     * 4 = bexpl.pcx (Blue2)\n
+     * 5 = Special (Own cloak)\n
+     * 6 = (crash)\n
+     * 7 = (crash)\n
+     * 8 = Unk8 (?)\n
+     * 9 = Unk9 (?)\n
      */
     std::vector<uint8_t>* remapping() const { return m_remapping; }
 
