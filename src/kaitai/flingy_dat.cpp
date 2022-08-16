@@ -2,10 +2,9 @@
 
 #include "flingy_dat.h"
 
-flingy_dat_t::flingy_dat_t(uint8_t p_num_lines, kaitai::kstream* p__io, kaitai::kstruct* p__parent, flingy_dat_t* p__root) : kaitai::kstruct(p__io) {
+flingy_dat_t::flingy_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, flingy_dat_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = this;
-    m_num_lines = p_num_lines;
     m_sprite = 0;
     m_speed = 0;
     m_acceleration = 0;
@@ -13,6 +12,9 @@ flingy_dat_t::flingy_dat_t(uint8_t p_num_lines, kaitai::kstream* p__io, kaitai::
     m_turn_radius = 0;
     m_unused = 0;
     m_movement_control = 0;
+    f_num_lines = false;
+    f_record_size = false;
+    f_file_size = false;
 
     try {
         _read();
@@ -93,4 +95,28 @@ void flingy_dat_t::_clean_up() {
     if (m_movement_control) {
         delete m_movement_control; m_movement_control = 0;
     }
+}
+
+int32_t flingy_dat_t::num_lines() {
+    if (f_num_lines)
+        return m_num_lines;
+    m_num_lines = (file_size() / record_size());
+    f_num_lines = true;
+    return m_num_lines;
+}
+
+int8_t flingy_dat_t::record_size() {
+    if (f_record_size)
+        return m_record_size;
+    m_record_size = 15;
+    f_record_size = true;
+    return m_record_size;
+}
+
+int32_t flingy_dat_t::file_size() {
+    if (f_file_size)
+        return m_file_size;
+    m_file_size = _io()->size();
+    f_file_size = true;
+    return m_file_size;
 }

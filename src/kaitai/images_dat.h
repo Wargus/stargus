@@ -15,7 +15,7 @@ class images_dat_t : public kaitai::kstruct {
 
 public:
 
-    images_dat_t(uint16_t p_num_lines, kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, images_dat_t* p__root = 0);
+    images_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, images_dat_t* p__root = 0);
 
 private:
     void _read();
@@ -23,6 +23,35 @@ private:
 
 public:
     ~images_dat_t();
+
+private:
+    bool f_num_lines;
+    int32_t m_num_lines;
+
+public:
+
+    /**
+     * A division of file size though the record size gives the number of records in the file to parse.
+     */
+    int32_t num_lines();
+
+private:
+    bool f_record_size;
+    int8_t m_record_size;
+
+public:
+
+    /**
+     * The size of one data record. This is all type sizes in the format summarized.
+     */
+    int8_t record_size();
+
+private:
+    bool f_file_size;
+    int32_t m_file_size;
+
+public:
+    int32_t file_size();
 
 private:
     std::vector<uint32_t>* m_grp;
@@ -39,7 +68,6 @@ private:
     std::vector<uint32_t>* m_special_overlay;
     std::vector<uint32_t>* m_landing_dust_overlay;
     std::vector<uint32_t>* m_lift_off_dust_overlay;
-    uint16_t m_num_lines;
     images_dat_t* m__root;
     kaitai::kstruct* m__parent;
 
@@ -72,41 +100,11 @@ public:
 
     /**
      * The drawing function used for the image. This property has rather various effects and not all options works with all entries so expect crashes. It can produce very interesting effects though, especially spell-related.
-     * 0 - normal\n
-     * 1 - doesn't draw hallucination\n
-     * 2 - non-vision cloaking\n
-     * 3 - non-vision cloaked\n
-     * 4 - non-vision uncloaking\n
-     * 5 - vision cloaking\n
-     * 6 - vision cloaked\n
-     * 7 - vision uncloaking\n
-     * 8 - EMP\n
-     * 9 - uses remapping\n
-     * 10 - shadow\n
-     * 11 - HP bar\n
-     * 12 - warp texture\n
-     * 13 - selection circle remapping\n
-     * 14 - draw original player color (used for flags -- player color stored in coloring data)\n
-     * 15 - draw update rect\n
-     * 16 - hallucination\n
-     * 17 - warp flash\n
      */
     std::vector<uint8_t>* draw_function() const { return m_draw_function; }
 
     /**
      * An additional remapping "palette" that is to be used. Each tileset has its own files responsible for remapping. Used only if the Draw property is set to "9-Use Remapping". Values 8 and 9 produce a weird effect and most probably are a result of an error in Starcraft.
-     * If 'draw_function' is 9:
-     * 0 = No remapping\n
-     * 1 = ofire.pcx (Orange)\n
-     * 2 = gfire.pcx (Green)\n
-     * 3 = bfire.pcx (Blue)\n
-     * 4 = bexpl.pcx (Blue2)\n
-     * 5 = Special (Own cloak)\n
-     * 6 = (crash)\n
-     * 7 = (crash)\n
-     * 8 = Unk8 (?)\n
-     * 9 = Unk9 (?)\n
-     *     
      */
     std::vector<uint8_t>* remapping() const { return m_remapping; }
 
@@ -144,7 +142,6 @@ public:
      * Complementary to "Landing Dust", this one controls the placement of the lifting-off dust. Some units (Dropship, Science Vessel) originally had this too, but the idea was abandoned. [pointer to a LOD file in images.tbl]
      */
     std::vector<uint32_t>* lift_off_dust_overlay() const { return m_lift_off_dust_overlay; }
-    uint16_t num_lines() const { return m_num_lines; }
     images_dat_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };

@@ -34,6 +34,8 @@ public:
    */
   bool extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen);
 
+  unsigned int getRecordCount(const std::string &archivedFile, unsigned int recordsize);
+
 private:
   void *mMpqHandle; // Open archive handle
 

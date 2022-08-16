@@ -100,7 +100,6 @@ bool Breeze::extractMemory(const std::string &archivedFile, unsigned char **szEn
   unsigned char *szEntryBuffer = nullptr;
 
   string archivedFilePath = mArchiveName + "/" + archivedFile;
-
   replaceString("\\", "/", archivedFilePath);
 
   f = fopen(archivedFilePath.c_str(), "r");

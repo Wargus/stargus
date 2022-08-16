@@ -15,7 +15,7 @@ class techdata_dat_t : public kaitai::kstruct {
 
 public:
 
-    techdata_dat_t(bool p_has_broodwar_flag, uint8_t p_num_lines, kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, techdata_dat_t* p__root = 0);
+    techdata_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, techdata_dat_t* p__root = 0);
 
 private:
     void _read();
@@ -23,6 +23,79 @@ private:
 
 public:
     ~techdata_dat_t();
+
+private:
+    bool f_record_count_broodwar;
+    int32_t m_record_count_broodwar;
+
+public:
+
+    /**
+     * Count of records in the data file. (Need to check with modulo operator if this is the case) [broodwar data]
+     */
+    int32_t record_count_broodwar();
+
+private:
+    bool f_record_count;
+    int32_t m_record_count;
+
+public:
+
+    /**
+     * Count of records in the data file. (Need to check with modulo operator if this is the case)
+     */
+    int32_t record_count();
+
+private:
+    bool f_num_lines;
+    int32_t m_num_lines;
+
+public:
+
+    /**
+     * A division of file size though the record size gives the number of records in the file to parse.
+     */
+    int32_t num_lines();
+
+private:
+    bool f_has_broodwar_flag;
+    bool m_has_broodwar_flag;
+
+public:
+
+    /**
+     * true in case the brodowar data is parsed
+     */
+    bool has_broodwar_flag();
+
+private:
+    bool f_file_size;
+    int32_t m_file_size;
+
+public:
+    int32_t file_size();
+
+private:
+    bool f_record_size;
+    int8_t m_record_size;
+
+public:
+
+    /**
+     * The size of one data record. This is all type sizes in the format summarized.
+     */
+    int8_t record_size();
+
+private:
+    bool f_record_size_broodwar;
+    int8_t m_record_size_broodwar;
+
+public:
+
+    /**
+     * The size of one data record. This is all type sizes in the format summarized. [broodwar data]
+     */
+    int8_t record_size_broodwar();
 
 private:
     std::vector<uint16_t>* m_mineral_cost;
@@ -41,8 +114,6 @@ public:
     bool _is_null_broodwar_flag() { broodwar_flag(); return n_broodwar_flag; };
 
 private:
-    bool m_has_broodwar_flag;
-    uint8_t m_num_lines;
     techdata_dat_t* m__root;
     kaitai::kstruct* m__parent;
 
@@ -97,8 +168,6 @@ public:
      * Makes the technology available only while playing the BroodWar expansion set.
      */
     std::vector<uint8_t>* broodwar_flag() const { return m_broodwar_flag; }
-    bool has_broodwar_flag() const { return m_has_broodwar_flag; }
-    uint8_t num_lines() const { return m_num_lines; }
     techdata_dat_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };

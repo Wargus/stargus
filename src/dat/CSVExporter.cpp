@@ -65,7 +65,7 @@ void CSVExporter::print()
 
   sfxdata_sound_file_vec = mDatahub.sfxdata->sound_file();
 
-  std::vector<uint32_t> *portdata_portrait_file_vec = mDatahub.portrait->portrait_file();
+  std::vector<uint32_t> *portdata_portrait_file_vec = mDatahub.portrait->video();
 
   // upgrades.dat
   std::vector<uint16_t> *upgrades_label_vec = mDatahub.upgrades->label();
@@ -308,7 +308,7 @@ void CSVExporter::print()
   }
 
   // sfxdata.dat
-  for (unsigned int i = 0; i < sfxdata_sound_file_vec->size(); i++)
+  for (unsigned int i = 0; i < sfxdata_sound_file_vec->size()-1; i++)
   {
     csv_dat += "sfxdata.dat";
 
@@ -349,7 +349,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry = mDatahub.portdata_tbl_vec.at(portrait_file);
+    TblEntry tblEntry = mDatahub.portdata_tbl_vec.at(portrait_file-1);
     csv_dat += "ref:file=" + tblEntry.name1;
 
     csv_dat += CSV_SEPARATOR;

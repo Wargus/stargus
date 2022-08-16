@@ -2,10 +2,9 @@
 
 #include "orders_dat.h"
 
-orders_dat_t::orders_dat_t(uint8_t p_num_lines, kaitai::kstream* p__io, kaitai::kstruct* p__parent, orders_dat_t* p__root) : kaitai::kstruct(p__io) {
+orders_dat_t::orders_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, orders_dat_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = this;
-    m_num_lines = p_num_lines;
     m_label = 0;
     m_use_weapon_targeting = 0;
     m_unknown2 = 0;
@@ -25,6 +24,9 @@ orders_dat_t::orders_dat_t(uint8_t p_num_lines, kaitai::kstream* p__io, kaitai::
     m_highlight = 0;
     m_unknown17 = 0;
     m_obscured_order = 0;
+    f_num_lines = false;
+    f_record_size = false;
+    f_file_size = false;
 
     try {
         _read();
@@ -213,4 +215,28 @@ void orders_dat_t::_clean_up() {
     if (m_obscured_order) {
         delete m_obscured_order; m_obscured_order = 0;
     }
+}
+
+int32_t orders_dat_t::num_lines() {
+    if (f_num_lines)
+        return m_num_lines;
+    m_num_lines = (file_size() / record_size());
+    f_num_lines = true;
+    return m_num_lines;
+}
+
+int8_t orders_dat_t::record_size() {
+    if (f_record_size)
+        return m_record_size;
+    m_record_size = 22;
+    f_record_size = true;
+    return m_record_size;
+}
+
+int32_t orders_dat_t::file_size() {
+    if (f_file_size)
+        return m_file_size;
+    m_file_size = _io()->size();
+    f_file_size = true;
+    return m_file_size;
 }

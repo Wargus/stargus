@@ -15,7 +15,7 @@ class sprites_dat_t : public kaitai::kstruct {
 
 public:
 
-    sprites_dat_t(uint16_t p_num_lines, uint16_t p_num_decorations, kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, sprites_dat_t* p__root = 0);
+    sprites_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, sprites_dat_t* p__root = 0);
 
 private:
     void _read();
@@ -25,14 +25,75 @@ public:
     ~sprites_dat_t();
 
 private:
+    bool f_file_size_rest;
+    int32_t m_file_size_rest;
+
+public:
+
+    /**
+     * File size for the records after 130. This number might change from file to file.
+     */
+    int32_t file_size_rest();
+
+private:
+    bool f_file_size_first_130;
+    int32_t m_file_size_first_130;
+
+public:
+
+    /**
+     * File size for the first 130 records that is always static size.
+     */
+    int32_t file_size_first_130();
+
+private:
+    bool f_num_lines;
+    int32_t m_num_lines;
+
+public:
+
+    /**
+     * A division of the dynamic rest file size though the record size gives the number of records in the file to parse.
+     * The static first 130 are then added to this number.
+     */
+    int32_t num_lines();
+
+private:
+    bool f_file_size;
+    int32_t m_file_size;
+
+public:
+    int32_t file_size();
+
+private:
+    bool f_record_size;
+    int8_t m_record_size;
+
+public:
+
+    /**
+     * The size of one data record. This is all type sizes in the format summarized (starting from record 130).
+     */
+    int8_t record_size();
+
+private:
+    bool f_record_size_first_130;
+    int8_t m_record_size_first_130;
+
+public:
+
+    /**
+     * The size of one data record. This is all type sizes in the format summarized (the first 130 records).
+     */
+    int8_t record_size_first_130();
+
+private:
     std::vector<uint16_t>* m_image;
-    std::vector<uint8_t>* m_heath_bar;
+    std::vector<uint8_t>* m_health_bar;
     std::vector<uint8_t>* m_unknown2;
     std::vector<uint8_t>* m_is_visible;
     std::vector<uint8_t>* m_select_circle_image_size;
     std::vector<uint8_t>* m_select_circle_vertical_pos;
-    uint16_t m_num_lines;
-    uint16_t m_num_decorations;
     sprites_dat_t* m__root;
     kaitai::kstruct* m__parent;
 
@@ -47,7 +108,7 @@ public:
      * The length of the Hit Points/Shields/Energy bar below the sprite, in pixels. The way the actual number of "boxes" is calculated is the following: substract 1 from the value, divide the result by 3 and round it down. Even though a sprite may actually USE less than 6 boxes, 6 boxes is the minimal amount that will be SHOWN in-game (just that some will not be functional). Values below 6 will all result in 1 box being USED.
      * This property is only available from unit index 130 to num_lines
      */
-    std::vector<uint8_t>* heath_bar() const { return m_heath_bar; }
+    std::vector<uint8_t>* health_bar() const { return m_health_bar; }
 
     /**
      * tbd
@@ -70,8 +131,6 @@ public:
      * This property is only available from unit index 130 to num_lines
      */
     std::vector<uint8_t>* select_circle_vertical_pos() const { return m_select_circle_vertical_pos; }
-    uint16_t num_lines() const { return m_num_lines; }
-    uint16_t num_decorations() const { return m_num_decorations; }
     sprites_dat_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };

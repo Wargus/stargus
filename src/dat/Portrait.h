@@ -24,7 +24,7 @@ public:
   static std::string PathToID(const std::string &portrait);
 
 private:
-  uint32_t file();
+  uint32_t video(bool talking = false);
 
   DataHub &mDatahub;
   uint16_t mId;

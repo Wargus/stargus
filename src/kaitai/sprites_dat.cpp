@@ -2,17 +2,21 @@
 
 #include "sprites_dat.h"
 
-sprites_dat_t::sprites_dat_t(uint16_t p_num_lines, uint16_t p_num_decorations, kaitai::kstream* p__io, kaitai::kstruct* p__parent, sprites_dat_t* p__root) : kaitai::kstruct(p__io) {
+sprites_dat_t::sprites_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, sprites_dat_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = this;
-    m_num_lines = p_num_lines;
-    m_num_decorations = p_num_decorations;
     m_image = 0;
-    m_heath_bar = 0;
+    m_health_bar = 0;
     m_unknown2 = 0;
     m_is_visible = 0;
     m_select_circle_image_size = 0;
     m_select_circle_vertical_pos = 0;
+    f_file_size_rest = false;
+    f_file_size_first_130 = false;
+    f_num_lines = false;
+    f_file_size = false;
+    f_record_size = false;
+    f_record_size_first_130 = false;
 
     try {
         _read();
@@ -29,11 +33,11 @@ void sprites_dat_t::_read() {
     for (int i = 0; i < l_image; i++) {
         m_image->push_back(m__io->read_u2le());
     }
-    int l_heath_bar = (num_lines() - num_decorations());
-    m_heath_bar = new std::vector<uint8_t>();
-    m_heath_bar->reserve(l_heath_bar);
-    for (int i = 0; i < l_heath_bar; i++) {
-        m_heath_bar->push_back(m__io->read_u1());
+    int l_health_bar = (num_lines() - 130);
+    m_health_bar = new std::vector<uint8_t>();
+    m_health_bar->reserve(l_health_bar);
+    for (int i = 0; i < l_health_bar; i++) {
+        m_health_bar->push_back(m__io->read_u1());
     }
     int l_unknown2 = num_lines();
     m_unknown2 = new std::vector<uint8_t>();
@@ -47,13 +51,13 @@ void sprites_dat_t::_read() {
     for (int i = 0; i < l_is_visible; i++) {
         m_is_visible->push_back(m__io->read_u1());
     }
-    int l_select_circle_image_size = (num_lines() - num_decorations());
+    int l_select_circle_image_size = (num_lines() - 130);
     m_select_circle_image_size = new std::vector<uint8_t>();
     m_select_circle_image_size->reserve(l_select_circle_image_size);
     for (int i = 0; i < l_select_circle_image_size; i++) {
         m_select_circle_image_size->push_back(m__io->read_u1());
     }
-    int l_select_circle_vertical_pos = (num_lines() - num_decorations());
+    int l_select_circle_vertical_pos = (num_lines() - 130);
     m_select_circle_vertical_pos = new std::vector<uint8_t>();
     m_select_circle_vertical_pos->reserve(l_select_circle_vertical_pos);
     for (int i = 0; i < l_select_circle_vertical_pos; i++) {
@@ -69,8 +73,8 @@ void sprites_dat_t::_clean_up() {
     if (m_image) {
         delete m_image; m_image = 0;
     }
-    if (m_heath_bar) {
-        delete m_heath_bar; m_heath_bar = 0;
+    if (m_health_bar) {
+        delete m_health_bar; m_health_bar = 0;
     }
     if (m_unknown2) {
         delete m_unknown2; m_unknown2 = 0;
@@ -84,4 +88,52 @@ void sprites_dat_t::_clean_up() {
     if (m_select_circle_vertical_pos) {
         delete m_select_circle_vertical_pos; m_select_circle_vertical_pos = 0;
     }
+}
+
+int32_t sprites_dat_t::file_size_rest() {
+    if (f_file_size_rest)
+        return m_file_size_rest;
+    m_file_size_rest = (file_size() - file_size_first_130());
+    f_file_size_rest = true;
+    return m_file_size_rest;
+}
+
+int32_t sprites_dat_t::file_size_first_130() {
+    if (f_file_size_first_130)
+        return m_file_size_first_130;
+    m_file_size_first_130 = (record_size_first_130() * 130);
+    f_file_size_first_130 = true;
+    return m_file_size_first_130;
+}
+
+int32_t sprites_dat_t::num_lines() {
+    if (f_num_lines)
+        return m_num_lines;
+    m_num_lines = ((file_size_rest() / record_size()) + 130);
+    f_num_lines = true;
+    return m_num_lines;
+}
+
+int32_t sprites_dat_t::file_size() {
+    if (f_file_size)
+        return m_file_size;
+    m_file_size = _io()->size();
+    f_file_size = true;
+    return m_file_size;
+}
+
+int8_t sprites_dat_t::record_size() {
+    if (f_record_size)
+        return m_record_size;
+    m_record_size = 7;
+    f_record_size = true;
+    return m_record_size;
+}
+
+int8_t sprites_dat_t::record_size_first_130() {
+    if (f_record_size_first_130)
+        return m_record_size_first_130;
+    m_record_size_first_130 = 4;
+    f_record_size_first_130 = true;
+    return m_record_size_first_130;
 }

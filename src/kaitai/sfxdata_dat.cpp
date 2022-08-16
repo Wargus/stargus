@@ -2,15 +2,17 @@
 
 #include "sfxdata_dat.h"
 
-sfxdata_dat_t::sfxdata_dat_t(uint16_t p_num_lines, kaitai::kstream* p__io, kaitai::kstruct* p__parent, sfxdata_dat_t* p__root) : kaitai::kstruct(p__io) {
+sfxdata_dat_t::sfxdata_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, sfxdata_dat_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = this;
-    m_num_lines = p_num_lines;
     m_sound_file = 0;
     m_unknown1 = 0;
     m_unknown2 = 0;
     m_unknown3 = 0;
     m_unknown4 = 0;
+    f_num_lines = false;
+    f_record_size = false;
+    f_file_size = false;
 
     try {
         _read();
@@ -73,4 +75,28 @@ void sfxdata_dat_t::_clean_up() {
     if (m_unknown4) {
         delete m_unknown4; m_unknown4 = 0;
     }
+}
+
+int32_t sfxdata_dat_t::num_lines() {
+    if (f_num_lines)
+        return m_num_lines;
+    m_num_lines = (file_size() / record_size());
+    f_num_lines = true;
+    return m_num_lines;
+}
+
+int8_t sfxdata_dat_t::record_size() {
+    if (f_record_size)
+        return m_record_size;
+    m_record_size = 9;
+    f_record_size = true;
+    return m_record_size;
+}
+
+int32_t sfxdata_dat_t::file_size() {
+    if (f_file_size)
+        return m_file_size;
+    m_file_size = _io()->size();
+    f_file_size = true;
+    return m_file_size;
 }

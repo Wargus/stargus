@@ -30,7 +30,8 @@ int main(int argc, char **argv)
   }
 #endif // HAVE_LOG4CXX
 
-  shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ_stardat.mpq");
+  shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ_stardat.mpq/");
+  //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/broodwar_install.exe_MPQ_broodat.mpq/");
   dat::DataHub datahub(storm);
 
   dat::CSVExporter csvexporter(datahub);

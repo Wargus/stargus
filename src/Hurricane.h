@@ -49,7 +49,6 @@ public:
 
 	virtual const std::string &getArchiveName() const;
 
-
 protected:
 
 	std::string mArchiveName;

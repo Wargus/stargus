@@ -2,11 +2,9 @@
 
 #include "upgrades_dat.h"
 
-upgrades_dat_t::upgrades_dat_t(bool p_has_broodwar_flag, uint8_t p_num_lines, kaitai::kstream* p__io, kaitai::kstruct* p__parent, upgrades_dat_t* p__root) : kaitai::kstruct(p__io) {
+upgrades_dat_t::upgrades_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, upgrades_dat_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = this;
-    m_has_broodwar_flag = p_has_broodwar_flag;
-    m_num_lines = p_num_lines;
     m_mineral_cost_base = 0;
     m_mineral_cost_factor = 0;
     m_vespene_cost_base = 0;
@@ -19,6 +17,13 @@ upgrades_dat_t::upgrades_dat_t(bool p_has_broodwar_flag, uint8_t p_num_lines, ka
     m_race = 0;
     m_max_repeats = 0;
     m_broodwar_flags = 0;
+    f_record_count_broodwar = false;
+    f_record_count = false;
+    f_num_lines = false;
+    f_has_broodwar_flag = false;
+    f_file_size = false;
+    f_record_size = false;
+    f_record_size_broodwar = false;
 
     try {
         _read();
@@ -150,4 +155,60 @@ void upgrades_dat_t::_clean_up() {
             delete m_broodwar_flags; m_broodwar_flags = 0;
         }
     }
+}
+
+int32_t upgrades_dat_t::record_count_broodwar() {
+    if (f_record_count_broodwar)
+        return m_record_count_broodwar;
+    m_record_count_broodwar = (file_size() / record_size_broodwar());
+    f_record_count_broodwar = true;
+    return m_record_count_broodwar;
+}
+
+int32_t upgrades_dat_t::record_count() {
+    if (f_record_count)
+        return m_record_count;
+    m_record_count = (file_size() / record_size());
+    f_record_count = true;
+    return m_record_count;
+}
+
+int32_t upgrades_dat_t::num_lines() {
+    if (f_num_lines)
+        return m_num_lines;
+    m_num_lines = ((kaitai::kstream::mod(file_size(), record_size()) == 0) ? (record_count()) : (record_count_broodwar()));
+    f_num_lines = true;
+    return m_num_lines;
+}
+
+bool upgrades_dat_t::has_broodwar_flag() {
+    if (f_has_broodwar_flag)
+        return m_has_broodwar_flag;
+    m_has_broodwar_flag = ((kaitai::kstream::mod(file_size(), record_size()) == 0) ? (false) : (true));
+    f_has_broodwar_flag = true;
+    return m_has_broodwar_flag;
+}
+
+int32_t upgrades_dat_t::file_size() {
+    if (f_file_size)
+        return m_file_size;
+    m_file_size = _io()->size();
+    f_file_size = true;
+    return m_file_size;
+}
+
+int8_t upgrades_dat_t::record_size() {
+    if (f_record_size)
+        return m_record_size;
+    m_record_size = 20;
+    f_record_size = true;
+    return m_record_size;
+}
+
+int8_t upgrades_dat_t::record_size_broodwar() {
+    if (f_record_size_broodwar)
+        return m_record_size_broodwar;
+    m_record_size_broodwar = 21;
+    f_record_size_broodwar = true;
+    return m_record_size_broodwar;
 }

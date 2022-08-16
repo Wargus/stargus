@@ -1,13 +1,6 @@
 meta:
   id: weapons_dat
   endian: le
-  
-# There're some different weapons.dat versions out there available.
-# 'num_lines' == number of highest air_weapon|ground_weapon in units.dat
-#
-params:
-  - id: num_lines
-    type: u1
 
 seq:
   - id: label
@@ -16,14 +9,14 @@ seq:
     repeat-expr: num_lines
     doc: |
       The name of the weapon, displayed when you highlight its icon in the control bar. [pointer to stat_txt.tbl]
-    
+
   - id: graphics
     type: u4
     repeat: expr
     repeat-expr: num_lines
     doc: |
       The main graphics that the weapon uses. 0-Scourge = No graphics.[pointer to flingy.dat]
-    
+
   - id: explosion
     type: u1
     repeat: expr
@@ -70,7 +63,7 @@ seq:
     #  3 = Attacks Ground and Air
     #  4 = Units Only (No Buildings)
     # 18 = Ground Units (No Hover) Only
-    
+
   - id: minimum_range
     type: u4
     repeat: expr
@@ -78,7 +71,7 @@ seq:
     doc: |
       Minimal range from which the weapon can be used.
       TODO: StaDat shows here value/16 but no sure why.
-    
+
   - id: maximum_range
     type: u4
     repeat: expr
@@ -86,7 +79,7 @@ seq:
     doc: |
       Maximal range from which the weapon can be used.
       TODO: StaDat shows here value/16 but no sure why.
-    
+
   - id: damage_upgrade
     type: u1
     repeat: expr
@@ -147,63 +140,63 @@ seq:
     # 13 = Dark Swarm
     # 14 = Normal
     # 15 = Normal
-    
+
   - id: inner_splash_range
     type: u2
     repeat: expr
     repeat-expr: num_lines
     doc: |
       Distance from the target at which the weapon will deal 100% of its base damage. Works ONLY if the "Explosion" is set to "Nuclear Missile", "Splash (Radial)", "Splash (Enemy)" or "Splash (Air)".
-    
+
   - id: medium_splash_range
     type: u2
     repeat: expr
     repeat-expr: num_lines
     doc: |
       Distance from the target at which the weapon will deal 50% of its base damage. Works ONLY if the "Explosion" is set to "Nuclear Missile", "Splash (Radial)", "Splash (Enemy)" or "Splash (Air)".
-    
+
   - id: outer_splash_range
     type: u2
     repeat: expr
     repeat-expr: num_lines
     doc: |
       Distance from the target at which the weapon will deal 25% of its base damage. Works ONLY if the "Explosion" is set to "Nuclear Missile", "Splash (Radial)", "Splash (Enemy)" or "Splash (Air)".
-    
+
   - id: damage_amount
     type: u2
     repeat: expr
     repeat-expr: num_lines
     doc: |
       The basic amount of damage the weapon will inflict when it hits.
-    
+
   - id: damage_bonus
     type: u2
     repeat: expr
     repeat-expr: num_lines
     doc: |
       The amount of damage added to the basic value for each level of the upgrade.
-    
+
   - id: weapon_cooldown
     type: u1
     repeat: expr
     repeat-expr: num_lines
     doc: |
       "Reload time" - time delay between two attacks. Depends on the game speed used. 1 game second equals: on Fastest-24, on Faster-21, on Fast-18, on Normal-15, on Slow-12, on Slower-9 and on Slowest-6. Value of 0 will crash the game.
-    
+
   - id: damage_factor
     type: u1
     repeat: expr
     repeat-expr: num_lines
     doc: |
       Usually, multiple this value by the Damage Amount to get the total damage that is DISPLAYED for the weapon. To a degree also the number of weapons used per attack, but anything other than 2 will result in 1 weapon being used. (e.g. Goliath, Scout and Valkyrie use 2 missiles per attack).
-    
+
   - id: attack_angle
     type: u1
     repeat: expr
     repeat-expr: num_lines
     doc: |
       Angle within which the weapon can be fired without waiting for the unit's graphics to turn. 128 = 180 degrees.
-      
+
   - id: launch_spin
     type: u1
     repeat: expr
@@ -231,19 +224,27 @@ seq:
     repeat-expr: num_lines
     doc: |
       The line displayed when the weapon is to acquire an invalid target (e.g. attacking a Mutalisk with a ground-only weapon, like Flamethrower) [pointer to stat_txt.tbl]
-    
+
   - id: icon
     type: u2
     repeat: expr
     repeat-expr: num_lines
     doc: |
       The icon used for the weapon. [pointer to a frame in unit\cmdbtns\cmdicons.grp]
-    
-# set those intances to debug the values while development
-# in this case the parameters at top of this file have to be commented out
-#instances:
-#  num_lines:
-#    value: 100
+
+instances:
+  num_lines:
+    value: file_size / record_size
+    doc: |
+      A division of file size though the record size gives the number of records in the file to parse.
+
+  record_size:
+    value: 42
+    doc: |
+      The size of one data record. This is all type sizes in the format summarized.
+
+  file_size:
+    value: '_io.size'
 
 enums:
   attack_type_enum:
@@ -252,11 +253,11 @@ enums:
     3: ground_and_air
     4: units_only # no buildings
     18: ground_units_only # no hover units
-    
+
   weapon_type_enum:
     0: ndependent
     1: explosive
     2: concussive
     3: normal
     4: ignore_amor
-    
+

@@ -91,7 +91,6 @@ public:
   std::vector<TblEntry> portdata_tbl_vec;
   std::vector<TblEntry> mapdata_tbl_vec;
 
-
   static const int units_units_ready_sound_end = 106;
 
 private:
@@ -100,31 +99,31 @@ private:
       bool has_max_ground_hits);
 
   // orders.dat
-  void init_orders_dat(int num_lines);
+  void init_orders_dat();
 
   // weapons.dat
-  void init_weapons_dat(int num_lines);
+  void init_weapons_dat();
 
   // flingy.dat
-  void init_flingy_dat(int num_lines);
+  void init_flingy_dat();
 
   // sprites.dat
-  void init_sprites_dat(int num_lines, int num_decorations);
+  void init_sprites_dat();
 
   // images.dat
-  void init_images_dat(int num_lines);
+  void init_images_dat();
 
   // sfxdata.dat
-  void init_sfxdata_dat(int num_lines);
+  void init_sfxdata_dat();
 
   // portdata.dat
-  void init_portdata_dat(int num_lines);
+  void init_portdata_dat();
 
   // upgrades.dat
-  void init_upgrades_dat(int num_lines, bool has_broodwar_flag);
+  void init_upgrades_dat();
 
   // techdata.dat
-  void init_techdata_dat(int num_lines, bool has_broodwar_flag);
+  void init_techdata_dat();
 
   // mapdata.dat
   void init_mapdata_dat();
@@ -143,26 +142,6 @@ private:
 
   // mapdata.tbl
   void init_mapdata_tbl();
-
-  int get_dat_ai_max() const;
-
-  int get_dat_weapons_max() const;
-
-  int get_dat_graphics_max() const;
-
-  int get_dat_sprites_max() const;
-
-  int get_dat_images_max() const;
-
-  int get_dat_sounds_max() const;
-
-  int get_dat_portraits_max() const;
-
-  int get_dat_upgrades_max() const;
-
-  int get_dat_energy_max() const;
-
-  static bool portdataCompare(int val1, int val2);
 
 };
 
