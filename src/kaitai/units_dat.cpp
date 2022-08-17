@@ -2,12 +2,9 @@
 
 #include "units_dat.h"
 
-units_dat_t::units_dat_t(bool p_has_broodwar_flag, bool p_has_max_air_hits, bool p_has_max_ground_hits, kaitai::kstream* p__io, kaitai::kstruct* p__parent, units_dat_t* p__root) : kaitai::kstruct(p__io) {
+units_dat_t::units_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, units_dat_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = this;
-    m_has_broodwar_flag = p_has_broodwar_flag;
-    m_has_max_air_hits = p_has_max_air_hits;
-    m_has_max_ground_hits = p_has_max_ground_hits;
     m_flingy = 0;
     m_subunit1 = 0;
     m_subunit2 = 0;
@@ -68,6 +65,11 @@ units_dat_t::units_dat_t(bool p_has_broodwar_flag, bool p_has_max_air_hits, bool
     m_staredit_availability_flags = 0;
     m__raw_staredit_availability_flags = 0;
     m__io__raw_staredit_availability_flags = 0;
+    f_sc_file_size = false;
+    f_bw_file_size = false;
+    f_file_size = false;
+    f_is_format_sc = false;
+    f_is_format_bw = false;
 
     try {
         _read();
@@ -187,7 +189,7 @@ void units_dat_t::_read() {
         m_ground_weapon->push_back(m__io->read_u1());
     }
     n_max_ground_hits = true;
-    if (has_max_ground_hits() == true) {
+    if (is_format_bw() == true) {
         n_max_ground_hits = false;
         int l_max_ground_hits = 228;
         m_max_ground_hits = new std::vector<uint8_t>();
@@ -203,7 +205,7 @@ void units_dat_t::_read() {
         m_air_weapon->push_back(m__io->read_u1());
     }
     n_max_air_hits = true;
-    if (has_max_air_hits() == true) {
+    if (is_format_bw() == true) {
         n_max_air_hits = false;
         int l_max_air_hits = 228;
         m_max_air_hits = new std::vector<uint8_t>();
@@ -413,7 +415,7 @@ void units_dat_t::_read() {
         m_unit_map_string->push_back(m__io->read_u2le());
     }
     n_broodwar_flag = true;
-    if (has_broodwar_flag() == true) {
+    if (is_format_bw() == true) {
         n_broodwar_flag = false;
         int l_broodwar_flag = 228;
         m_broodwar_flag = new std::vector<uint8_t>();
@@ -882,4 +884,44 @@ units_dat_t::staredit_availability_flags_type_t::~staredit_availability_flags_ty
 }
 
 void units_dat_t::staredit_availability_flags_type_t::_clean_up() {
+}
+
+int32_t units_dat_t::sc_file_size() {
+    if (f_sc_file_size)
+        return m_sc_file_size;
+    m_sc_file_size = 19192;
+    f_sc_file_size = true;
+    return m_sc_file_size;
+}
+
+int32_t units_dat_t::bw_file_size() {
+    if (f_bw_file_size)
+        return m_bw_file_size;
+    m_bw_file_size = 19876;
+    f_bw_file_size = true;
+    return m_bw_file_size;
+}
+
+int32_t units_dat_t::file_size() {
+    if (f_file_size)
+        return m_file_size;
+    m_file_size = _io()->size();
+    f_file_size = true;
+    return m_file_size;
+}
+
+bool units_dat_t::is_format_sc() {
+    if (f_is_format_sc)
+        return m_is_format_sc;
+    m_is_format_sc = ((file_size() == sc_file_size()) ? (true) : (false));
+    f_is_format_sc = true;
+    return m_is_format_sc;
+}
+
+bool units_dat_t::is_format_bw() {
+    if (f_is_format_bw)
+        return m_is_format_bw;
+    m_is_format_bw = ((file_size() == bw_file_size()) ? (true) : (false));
+    f_is_format_bw = true;
+    return m_is_format_bw;
 }

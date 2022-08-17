@@ -31,11 +31,7 @@ static Logger logger = Logger("startool.dat.DataHub");
 DataHub::DataHub(std::shared_ptr<Hurricane> hurricane) :
   KaitaiConverter(hurricane)
 {
-  bool has_broodwar_flag = false;
-  bool has_max_air_hits = false;
-  bool has_max_ground_hits = false;
-
-  init_units_dat(has_broodwar_flag, has_max_air_hits, has_max_ground_hits);
+  init_units_dat();
 
   init_orders_dat();
 
@@ -72,8 +68,7 @@ DataHub::~DataHub()
 {
 }
 
-void DataHub::init_units_dat(bool has_broodwar_flag, bool has_max_air_hits,
-                             bool has_max_ground_hits)
+void DataHub::init_units_dat()
 {
   string sc_arr_units_dat = "arr\\units.dat";
 
@@ -81,8 +76,7 @@ void DataHub::init_units_dat(bool has_broodwar_flag, bool has_max_air_hits,
   units_ks = getKaitaiStream(sc_arr_units_dat);
 
   std::shared_ptr<units_dat_t> units_loc(
-    new units_dat_t(has_broodwar_flag, has_max_air_hits, has_max_ground_hits,
-                    units_ks.get()));
+    new units_dat_t(units_ks.get()));
   units = units_loc;
 }
 

@@ -95,8 +95,7 @@ public:
 
 private:
   // units.dat
-  void init_units_dat(bool has_broodwar_flag, bool has_max_air_hits,
-      bool has_max_ground_hits);
+  void init_units_dat();
 
   // orders.dat
   void init_orders_dat();

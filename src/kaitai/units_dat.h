@@ -39,7 +39,7 @@ public:
         RIGHT_CLICK_ACTION_ENUM_NOTHING_WITH_INDICATOR = 6
     };
 
-    units_dat_t(bool p_has_broodwar_flag, bool p_has_max_air_hits, bool p_has_max_ground_hits, kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, units_dat_t* p__root = 0);
+    units_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, units_dat_t* p__root = 0);
 
 private:
     void _read();
@@ -57,7 +57,6 @@ public:
      * factory: Unit is a "Factory"-type unit for triggers.
      * independent: Unit is treated as an Independent unit (abandoned unit type).
      * neutral: Unit is treated as a Neutral unit.
-     *   
      */
 
     class staredit_group_flags_type_t : public kaitai::kstruct {
@@ -164,9 +163,9 @@ public:
      * resourceminer: Unit can gather/return resources. Does NOT affect building construction abilities (except a tiny Drone glitch if you cancel a building morph). Requires a .LOO file pointed from the "Overlay 3" property in Images.dat to work. Vespene Gas harvesting seems good for all units, but Minerals may cause crashes, depending on the unit you use (e.g. Marine is OK, but the Firebat will crash)
      * subunit: Makes the unit a "sub-unit", i.e. allows it to be a part of another unit (like the tank turret to the tank body) through the Subunit property (see Graphics tab). A non-subunit-type unit used as a subunit will crash the game. To have a sub-unit properly placed on a unit, you also require altering the images.dat properties of the base sprite as well as certain other settings. Expect crashes more than often while working with this property.
      * flyingbuilding: Allows/Disallows the unit to be in the "In Transit" (or "Flying") state both in the game and in StarEdit, but it will crash if the unit does not have a Lift-off and Landing animations (in Iscript.bin). Does not affect buttons available for the unit.
-     * hero: Unit has all its upgrades researched from the start and receives a white wireframe box (instead of the standard blue one). If a unit is also a spellcaster, it will have 250 energy points, regardless if there is an energy upgrade for it or not. 
+     * hero: Unit has all its upgrades researched from the start and receives a white wireframe box (instead of the standard blue one). If a unit is also a spellcaster, it will have 250 energy points, regardless if there is an energy upgrade for it or not.
      * regenerate: Unit will slowly regain Hit Points, until its full HP capacity.
-     * animatedidle: 
+     * animatedidle:
      * cloakable: Allows/Disallows the unit to use the Cloak technology. It does NOT give/remove the "Cloak" button but allows the unit to display the "Group (Cloakers)" button set when selected in a group.
      * twounitsinoneegg: 2 units will come out of one Zerg Egg instead of just one. The cost for morphing will NOT be doubled, but the amount of the used supplies will equal 2 times the normal amount. To accomplish the full effect you will also have to add a "Construction" graphics and set a "Landing Dust" overlay to it.
      * singleentity: Unit cannot be selected in a group, but only as a single unit. Unit cannot be selected by dragging a selection box, by a SHIFT-Click nor a double-click.
@@ -176,8 +175,8 @@ public:
      * detector: Unit can detect cloaked enemy units and receives the "Detector" title under its name.
      * organic: Unit is treated as an organic-type target for weapons and spells (e.g. Maelstrom).
      * requirescreep: Building MUST be built on creep. It will also get a creep outline around it.
-     * unused: 
-     * requirespsi: Unit must be built within a PSI field, like that produced by pylons. If it is not within a PSI field, it will become "Disabled" and not function. Can be given to any unit. You can also disable it on Protoss buildings so they can be built anywhere. 
+     * unused:
+     * requirespsi: Unit must be built within a PSI field, like that produced by pylons. If it is not within a PSI field, it will become "Disabled" and not function. Can be given to any unit. You can also disable it on Protoss buildings so they can be built anywhere.
      * burrowable: Allows/Disallows the unit to use the Burrow technology. It does NOT give/remove the "Burrow" button.
      * spellcaster: Unit receives a mana bar and will slowly regain mana points through time. Combined with the Permanent Cloak property, will prevent unit from regaining mana.
      * permanentcloak: Unit is constantly cloaked. If the unit is also a Spellcaster, giving this property will make it lose mana until 0.
@@ -186,11 +185,10 @@ public:
      * usemediumoverlays: Unit will use medium spell overlay graphics.
      * uselargeoverlays: Unit will use large spell overlay graphics.
      * battlereactions: Unit will show battle reactions,i.e. if it sees an enemy it will move to it and attack, if it is attacked by an unreachable enemy (e.g. an Air unit and it doesn't have an Air weapon) it will run away. Works ONLY if the unit's Idle AI Orders are set to Guard.
-     * fullautoattack: Unit will attack any enemy that enters its firing range. If unchecked, unit will attack the enemy ONLY if it is facing its direction, e.g. because it has an animated idle state. 
+     * fullautoattack: Unit will attack any enemy that enters its firing range. If unchecked, unit will attack the enemy ONLY if it is facing its direction, e.g. because it has an animated idle state.
      * invincible: Unit cannot be a target of any sort of weapons or spells. It also hides the unit's Hit Points value.
      * mechanical: Unit is treated as a mechanical-type target for weapons and spells (e.g. Lockdown). It can also be repaired by SCVs.
-     * producesunits: 
-     *   
+     * producesunits:
      */
 
     class special_ability_flags_type_t : public kaitai::kstruct {
@@ -393,6 +391,49 @@ public:
     };
 
 private:
+    bool f_sc_file_size;
+    int32_t m_sc_file_size;
+
+public:
+    int32_t sc_file_size();
+
+private:
+    bool f_bw_file_size;
+    int32_t m_bw_file_size;
+
+public:
+    int32_t bw_file_size();
+
+private:
+    bool f_file_size;
+    int32_t m_file_size;
+
+public:
+    int32_t file_size();
+
+private:
+    bool f_is_format_sc;
+    bool m_is_format_sc;
+
+public:
+
+    /**
+     * This is true if plain starcraft units.dat is found
+     */
+    bool is_format_sc();
+
+private:
+    bool f_is_format_bw;
+    bool m_is_format_bw;
+
+public:
+
+    /**
+     * This is true if broodwar or remastered units.dat is found
+     */
+    bool is_format_bw();
+
+private:
     std::vector<uint8_t>* m_flingy;
     std::vector<uint16_t>* m_subunit1;
     std::vector<uint16_t>* m_subunit2;
@@ -465,9 +506,6 @@ public:
 
 private:
     std::vector<staredit_availability_flags_type_t*>* m_staredit_availability_flags;
-    bool m_has_broodwar_flag;
-    bool m_has_max_air_hits;
-    bool m_has_max_ground_hits;
     units_dat_t* m__root;
     kaitai::kstruct* m__parent;
     std::vector<std::string>* m__raw_special_ability_flags;
@@ -572,7 +610,7 @@ public:
 
     /**
      * Max number of times unit hits its target per Ground attack. This value is for statistics purposes only. Changing it only affects the value displayed in StarEdit.
-     * Only some variants of units.dat have this data block. If your version has this block activate the parameter.
+     * Only broodwar/remastered variants of units.dat have this data block.
      */
     std::vector<uint8_t>* max_ground_hits() const { return m_max_ground_hits; }
 
@@ -583,7 +621,7 @@ public:
 
     /**
      * Max number of times unit hits its target per Air attack. This value is for statistics purposes only. Changing it only affects the value displayed in StarEdit.
-     * Only some variants of units.dat have this data block. If your version has this block activate the parameter.
+     * Only broodwar/remastered variants of units.dat have this data block.
      */
     std::vector<uint8_t>* max_air_hits() const { return m_max_air_hits; }
 
@@ -628,7 +666,7 @@ public:
     std::vector<right_click_action_enum_t>* right_click_action() const { return m_right_click_action; }
 
     /**
-     * Sound played after the unit is trained/built. 0=No sound, substract 1 to get the target sfxdata.dat entry. [pointer to sfxdata.dat] 
+     * Sound played after the unit is trained/built. 0=No sound, substract 1 to get the target sfxdata.dat entry. [pointer to sfxdata.dat]
      * Only unit id 0 to 106 have this sound.
      */
     std::vector<uint16_t>* ready_sound() const { return m_ready_sound; }
@@ -747,7 +785,7 @@ public:
 
     /**
      * Makes the unit available only while playing BroodWar expansion set.
-     * Only some variants of units.dat have this data block. If your version has this block activate the parameter.
+     * Only broodwar/remastered variants of units.dat have this data block.
      */
     std::vector<uint8_t>* broodwar_flag() const { return m_broodwar_flag; }
 
@@ -755,9 +793,6 @@ public:
      * Flags used in StarEdit. Check the type for detail specification.
      */
     std::vector<staredit_availability_flags_type_t*>* staredit_availability_flags() const { return m_staredit_availability_flags; }
-    bool has_broodwar_flag() const { return m_has_broodwar_flag; }
-    bool has_max_air_hits() const { return m_has_max_air_hits; }
-    bool has_max_ground_hits() const { return m_has_max_ground_hits; }
     units_dat_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
     std::vector<std::string>* _raw_special_ability_flags() const { return m__raw_special_ability_flags; }

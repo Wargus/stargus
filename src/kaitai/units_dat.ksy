@@ -3,28 +3,6 @@ meta:
   endian: le
   bit-endian: le
 
-# There're some different units.dat versions out there available.
-# Here is a list of files with md5sums which have been identified until now:
-#
-# -46ed51df10eda16215ccd5c18b736731
-#   has_brood_war_unit_flag=false
-#   has_max_air_hits=false
-#   has_max_ground_hits=false
-#
-# -e8d54a9ffe73a0db123907b7a7b2140a
-# -cecac677ae61351aaa3e52884de4abed
-#   has_brood_war_unit_flag=true
-#   has_max_air_hits=true
-#   has_max_ground_hits=true
-#
-params:
-  - id: has_broodwar_flag
-    type: b1
-  - id: has_max_air_hits
-    type: b1
-  - id: has_max_ground_hits
-    type: b1
-
 seq:
   - id: flingy
     type: u1
@@ -46,7 +24,7 @@ seq:
     repeat-expr: 228
     doc: |
       Secondary subunit. Unused. [pointer to units.dat]
-    
+
   - id: infestation
     type: u2
     repeat: expr
@@ -157,10 +135,10 @@ seq:
     type: u1
     repeat: expr
     repeat-expr: 228
-    if: has_max_ground_hits == true
+    if: is_format_bw == true
     doc: |
       Max number of times unit hits its target per Ground attack. This value is for statistics purposes only. Changing it only affects the value displayed in StarEdit.
-      Only some variants of units.dat have this data block. If your version has this block activate the parameter.
+      Only broodwar/remastered variants of units.dat have this data block.
 
   - id: air_weapon
     type: u1
@@ -173,11 +151,11 @@ seq:
     type: u1
     repeat: expr
     repeat-expr: 228
-    if: has_max_air_hits == true
+    if: is_format_bw == true
     doc: |
       Max number of times unit hits its target per Air attack. This value is for statistics purposes only. Changing it only affects the value displayed in StarEdit.
-      Only some variants of units.dat have this data block. If your version has this block activate the parameter.
-      
+      Only broodwar/remastered variants of units.dat have this data block.
+
   - id: ai_internal
     type: u1
     repeat: expr
@@ -242,7 +220,7 @@ seq:
     repeat: expr
     repeat-expr: 106
     doc: |
-      Sound played after the unit is trained/built. 0=No sound, substract 1 to get the target sfxdata.dat entry. [pointer to sfxdata.dat] 
+      Sound played after the unit is trained/built. 0=No sound, substract 1 to get the target sfxdata.dat entry. [pointer to sfxdata.dat]
       Only unit id 0 to 106 have this sound.
 
   - id: what_sound_start
@@ -406,10 +384,10 @@ seq:
     type: u1
     repeat: expr
     repeat-expr: 228
-    if: has_broodwar_flag == true
+    if: is_format_bw == true
     doc: |
       Makes the unit available only while playing BroodWar expansion set.
-      Only some variants of units.dat have this data block. If your version has this block activate the parameter.
+      Only broodwar/remastered variants of units.dat have this data block.
 
   - id: staredit_availability_flags
     type: staredit_availability_flags_type
@@ -419,15 +397,25 @@ seq:
     doc: |
       Flags used in StarEdit. Check the type for detail specification.
 
-# set those intances to debug the values while development
-# in this case the parameters at top of this file have to be commented out
-#instances:
-#  has_broodwar_flag:
-#    value: false
-#  has_max_air_hits:
-#    value: false
-#  has_max_ground_hits:
-#    value: false
+instances:
+  is_format_sc:
+    value: 'file_size == sc_file_size ? true : false'
+    doc: |
+      This is true if plain starcraft units.dat is found
+
+  is_format_bw:
+    value: 'file_size == bw_file_size ? true : false'
+    doc: |
+      This is true if broodwar or remastered units.dat is found
+
+  sc_file_size:
+    value: 19192
+
+  bw_file_size:
+    value: 19876
+
+  file_size:
+    value: '_io.size'
 
 types:
   staredit_placement_box_type:
@@ -450,7 +438,7 @@ types:
         type: u2be
       - id: hitpoints1
         type: u2be
-        
+
     instances:
       hitpoints:
         value: hitpoints0 + hitpoints1
@@ -465,7 +453,7 @@ types:
         type: u2
       - id: down
         type: u2
-   
+
   special_ability_flags_type:
     seq:
       - id: building
@@ -539,9 +527,9 @@ types:
       resourceminer: Unit can gather/return resources. Does NOT affect building construction abilities (except a tiny Drone glitch if you cancel a building morph). Requires a .LOO file pointed from the "Overlay 3" property in Images.dat to work. Vespene Gas harvesting seems good for all units, but Minerals may cause crashes, depending on the unit you use (e.g. Marine is OK, but the Firebat will crash)
       subunit: Makes the unit a "sub-unit", i.e. allows it to be a part of another unit (like the tank turret to the tank body) through the Subunit property (see Graphics tab). A non-subunit-type unit used as a subunit will crash the game. To have a sub-unit properly placed on a unit, you also require altering the images.dat properties of the base sprite as well as certain other settings. Expect crashes more than often while working with this property.
       flyingbuilding: Allows/Disallows the unit to be in the "In Transit" (or "Flying") state both in the game and in StarEdit, but it will crash if the unit does not have a Lift-off and Landing animations (in Iscript.bin). Does not affect buttons available for the unit.
-      hero: Unit has all its upgrades researched from the start and receives a white wireframe box (instead of the standard blue one). If a unit is also a spellcaster, it will have 250 energy points, regardless if there is an energy upgrade for it or not. 
+      hero: Unit has all its upgrades researched from the start and receives a white wireframe box (instead of the standard blue one). If a unit is also a spellcaster, it will have 250 energy points, regardless if there is an energy upgrade for it or not.
       regenerate: Unit will slowly regain Hit Points, until its full HP capacity.
-      animatedidle: 
+      animatedidle:
       cloakable: Allows/Disallows the unit to use the Cloak technology. It does NOT give/remove the "Cloak" button but allows the unit to display the "Group (Cloakers)" button set when selected in a group.
       twounitsinoneegg: 2 units will come out of one Zerg Egg instead of just one. The cost for morphing will NOT be doubled, but the amount of the used supplies will equal 2 times the normal amount. To accomplish the full effect you will also have to add a "Construction" graphics and set a "Landing Dust" overlay to it.
       singleentity: Unit cannot be selected in a group, but only as a single unit. Unit cannot be selected by dragging a selection box, by a SHIFT-Click nor a double-click.
@@ -551,8 +539,8 @@ types:
       detector: Unit can detect cloaked enemy units and receives the "Detector" title under its name.
       organic: Unit is treated as an organic-type target for weapons and spells (e.g. Maelstrom).
       requirescreep: Building MUST be built on creep. It will also get a creep outline around it.
-      unused: 
-      requirespsi: Unit must be built within a PSI field, like that produced by pylons. If it is not within a PSI field, it will become "Disabled" and not function. Can be given to any unit. You can also disable it on Protoss buildings so they can be built anywhere. 
+      unused:
+      requirespsi: Unit must be built within a PSI field, like that produced by pylons. If it is not within a PSI field, it will become "Disabled" and not function. Can be given to any unit. You can also disable it on Protoss buildings so they can be built anywhere.
       burrowable: Allows/Disallows the unit to use the Burrow technology. It does NOT give/remove the "Burrow" button.
       spellcaster: Unit receives a mana bar and will slowly regain mana points through time. Combined with the Permanent Cloak property, will prevent unit from regaining mana.
       permanentcloak: Unit is constantly cloaked. If the unit is also a Spellcaster, giving this property will make it lose mana until 0.
@@ -561,11 +549,11 @@ types:
       usemediumoverlays: Unit will use medium spell overlay graphics.
       uselargeoverlays: Unit will use large spell overlay graphics.
       battlereactions: Unit will show battle reactions,i.e. if it sees an enemy it will move to it and attack, if it is attacked by an unreachable enemy (e.g. an Air unit and it doesn't have an Air weapon) it will run away. Works ONLY if the unit's Idle AI Orders are set to Guard.
-      fullautoattack: Unit will attack any enemy that enters its firing range. If unchecked, unit will attack the enemy ONLY if it is facing its direction, e.g. because it has an animated idle state. 
+      fullautoattack: Unit will attack any enemy that enters its firing range. If unchecked, unit will attack the enemy ONLY if it is facing its direction, e.g. because it has an animated idle state.
       invincible: Unit cannot be a target of any sort of weapons or spells. It also hides the unit's Hit Points value.
       mechanical: Unit is treated as a mechanical-type target for weapons and spells (e.g. Lockdown). It can also be repaired by SCVs.
-      producesunits: 
-        
+      producesunits:
+
   staredit_group_flags_type:
     seq:
       - id: zerg
@@ -593,7 +581,7 @@ types:
       factory: Unit is a "Factory"-type unit for triggers.
       independent: Unit is treated as an Independent unit (abandoned unit type).
       neutral: Unit is treated as a Neutral unit.
-        
+
   staredit_availability_flags_type:
     seq:
       - id: non_neutral
@@ -628,7 +616,7 @@ types:
       unit_hero_settings: Unit is available in Unit&Hero Settings.
       location_triggers: Unit appears in the unit selection box when using locational triggers (Remove at, Kill at etc.). Even if unchecked, the unit WILL appear for selection when using the "Create at" trigger action.
       brood_war_only: Unit is available only if BroodWar Expansion is installed.
-   
+
 enums:
   unit_size_enum:
     0: indendent
