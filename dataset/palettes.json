@@ -9,7 +9,7 @@
 	        "name": "twire",
 	        "arcfile": "game\\twire.pcx"
 	    },
-	    
+
 	    {
 	        "name": "tfontgam",
 	        "arcfile": "game\\tfontgam.pcx",
@@ -79,6 +79,18 @@
 	    {
 	        "name": "platform",
 	        "arcfile": "tileset\\platform.wpe"
+	    },
+	    {
+	        "name": "desert",
+	        "arcfile": "tileset\\desert.wpe"
+	    },
+	    {
+	        "name": "ice",
+	        "arcfile": "tileset\\ice.wpe"
+	    },
+	    {
+	        "name": "twilight",
+	        "arcfile": "tileset\\twilight.wpe"
 	    }
 	]
 }

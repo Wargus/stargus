@@ -355,8 +355,11 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
 
     shared_ptr<DataChunk> dataWPE = hurricane->extractDataChunk(wpe_arcfile);
 
-    shared_ptr<Palette> pal = make_shared<Palette>(dataWPE);
-    paletteMap[wpe_name] = pal;
+    if (dataWPE)
+    {
+      shared_ptr<Palette> pal = make_shared<Palette>(dataWPE);
+      paletteMap[wpe_name] = pal;
+    }
 
     //cout << wpe_array << endl;
   }
@@ -707,12 +710,12 @@ int main(int argc, const char **argv)
           }
           else if (c[u].Arg1 == 1)
           {
-            pal = paletteMap.at("install");
+            pal = paletteMap.begin()->second;
             grp.setPalette(pal);
           }
           else // default palette
           {
-            pal = paletteMap.at("install");
+            pal = paletteMap.begin()->second;
             grp.setPalette(pal);
           }
 

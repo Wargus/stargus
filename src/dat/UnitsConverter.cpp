@@ -136,7 +136,7 @@ bool UnitsConverter::convert(json &unitsJson,
       }
       else // default
       {
-        pal = paletteMap.at("install");
+        pal = paletteMap.begin()->second;
         grp.setPalette(pal);
       }
 
