@@ -184,7 +184,15 @@ bool UnitsConverter::convert(json &unitsJson,
       string unit_sightrange = lg::assign("SightRange", "1");
 
       // generate some standard shadow
-      string unit_shadow = lg::assign("Shadow", lg::table({lg::quote("offset"), lg::posTable(Pos(-7, -7)), lg::quote("scale"), "1"}));
+      Pos shadow_position = Pos(-7, -7);
+
+      // some basic flyer shadow support => to be improved
+      if(unit.elevation_level() >= 16)
+      {
+        shadow_position = Pos(15, 15);
+      }
+
+      string unit_shadow = lg::assign("Shadow", lg::table({lg::quote("offset"), lg::posTable(shadow_position), lg::quote("scale"), "1"}));
 
       // generate a dummy animation as fallback to not crash
       string unit_animations = lg::assign("Animations", lg::quote("animations-dummy-still"));

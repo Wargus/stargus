@@ -66,6 +66,15 @@ Portrait Unit::portrait()
   return portrait;
 }
 
+uint8_t Unit::elevation_level()
+{
+  uint8_t elevation_level = mDatahub.units->elevation_level()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("elevation_level(") + to_string(elevation_level) + ")");
+
+  return elevation_level;
+}
+
 const char *NoPortraitException::what() const throw()
 {
   static string s;

@@ -29,6 +29,8 @@ public:
 
   Portrait portrait();
 
+  uint8_t elevation_level();
+
   static const int portrait_none = 65535;
 
 private:
