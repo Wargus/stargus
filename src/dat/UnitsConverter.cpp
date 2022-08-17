@@ -144,7 +144,7 @@ bool UnitsConverter::convert(json &unitsJson,
       string unit_portraits;
       try
       {
-        string portrait_name = unit.portrait().idle().name1;
+        string portrait_name = unit.portrait().tbl_idle().name1;
         string portrait_id = Portrait::PathToID(portrait_name);
         string portrait_lua = "portrait_" + portrait_id;
         unit_portraits = lg::assign("Portrait", portrait_lua);

@@ -54,24 +54,38 @@ public:
     int32_t file_size();
 
 private:
-    std::vector<uint32_t>* m_video;
-    std::vector<uint8_t>* m_smk_change;
-    std::vector<uint8_t>* m_unknown1;
+    std::vector<uint32_t>* m_video_idle;
+    std::vector<uint32_t>* m_video_talking;
+    std::vector<uint8_t>* m_change_idle;
+    std::vector<uint8_t>* m_change_talking;
+    std::vector<uint8_t>* m_unknown1_idle;
+    std::vector<uint8_t>* m_unknown1_talking;
     portdata_dat_t* m__root;
     kaitai::kstruct* m__parent;
 
 public:
 
     /**
-     * Smacker portrait video for idle and talking animation. Add 110 to get the talking animation. [1-based pointer to portdata.tbl]
+     * Smacker portrait video for idle animations. [1-based pointer to portdata.tbl]
      */
-    std::vector<uint32_t>* video() const { return m_video; }
+    std::vector<uint32_t>* video_idle() const { return m_video_idle; }
 
     /**
-     * Controls how often the first SMK animation, with the index of 0, will be overlooked and a portrait with different index will be played. The higher the value and the more it gets near 100, the more often will the first SMK be skipped. Values over 100 make the game use only the first portrait.
+     * Smacker portrait video for talking animations. [1-based pointer to portdata.tbl]
      */
-    std::vector<uint8_t>* smk_change() const { return m_smk_change; }
-    std::vector<uint8_t>* unknown1() const { return m_unknown1; }
+    std::vector<uint32_t>* video_talking() const { return m_video_talking; }
+
+    /**
+     * Controls how often the first idle animation, with the index of 0, will be overlooked and a portrait with different index will be played. The higher the value and the more it gets near 100, the more often will the first animation be skipped. Values over 100 make the game use only the first portrait.
+     */
+    std::vector<uint8_t>* change_idle() const { return m_change_idle; }
+
+    /**
+     * Controls how often the first talking animation, with the index of 0, will be overlooked and a portrait with different index will be played. The higher the value and the more it gets near 100, the more often will the first animation be skipped. Values over 100 make the game use only the first portrait.
+     */
+    std::vector<uint8_t>* change_talking() const { return m_change_talking; }
+    std::vector<uint8_t>* unknown1_idle() const { return m_unknown1_idle; }
+    std::vector<uint8_t>* unknown1_talking() const { return m_unknown1_talking; }
     portdata_dat_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };

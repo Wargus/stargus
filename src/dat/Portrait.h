@@ -18,13 +18,16 @@ public:
   Portrait(DataHub &datahub,  uint16_t id);
   virtual ~Portrait();
 
-  TblEntry idle();
-  TblEntry talking();
+  uint32_t video_idle();
+  uint32_t video_talking();
+
+  TblEntry tbl_idle();
+  TblEntry tbl_talking();
 
   static std::string PathToID(const std::string &portrait);
 
 private:
-  uint32_t video(bool talking = false);
+
 
   DataHub &mDatahub;
   uint16_t mId;

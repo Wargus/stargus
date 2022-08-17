@@ -50,7 +50,6 @@ void CSVExporter::print()
 
   // orders.dat
   std::vector<uint16_t> *orders_label_vec = mDatahub.orders->label();
-  std::vector<uint8_t> *orders_energy_vec = mDatahub.orders->energy();
 
   // weapons.dat
   std::vector<uint16_t> *weapon_label_vec = mDatahub.weapons->label();
@@ -65,16 +64,13 @@ void CSVExporter::print()
 
   sfxdata_sound_file_vec = mDatahub.sfxdata->sound_file();
 
-  std::vector<uint32_t> *portdata_portrait_file_vec = mDatahub.portrait->video();
+  std::vector<uint32_t> *portdata_portrait_idle_vec = mDatahub.portrait->video_idle();
+  std::vector<uint32_t> *portdata_portrait_talking_vec = mDatahub.portrait->video_talking();
 
   // upgrades.dat
   std::vector<uint16_t> *upgrades_label_vec = mDatahub.upgrades->label();
 
   // techdata.dat
-  uint8_t orders_energy_max = *max_element(orders_energy_vec->begin(),
-                              orders_energy_vec->end());
-
-  printf("orders_energy_max=%d\n", orders_energy_max);
   std::vector<uint16_t> *techdata_label_vec = mDatahub.techdata->label();
 
   // mapdata.dat
@@ -155,8 +151,7 @@ void CSVExporter::print()
 
     if (units_portrait_file != Unit::portrait_none)
     {
-      uint32_t portrait_file = portdata_portrait_file_vec->at(
-                                 units_portrait_file);
+      uint32_t portrait_file = portdata_portrait_idle_vec->at(units_portrait_file);
       sprintf(buf, "ref:portrait_idle_file=%d", portrait_file - 1);
       csv_dat += buf;
 
@@ -170,14 +165,13 @@ void CSVExporter::print()
 
     if (units_portrait_file != Unit::portrait_none)
     {
-      uint32_t portrait_file = portdata_portrait_file_vec->at(
-                                 units_portrait_file);
+      uint32_t portrait_file = portdata_portrait_talking_vec->at(units_portrait_file);
       sprintf(buf, "ref:portrait_talking_file=%d", portrait_file);
       csv_dat += buf;
 
       csv_dat += CSV_SEPARATOR;
 
-      TblEntry tblEntry_portrait = mDatahub.portdata_tbl_vec.at(portrait_file);
+      TblEntry tblEntry_portrait = mDatahub.portdata_tbl_vec.at(portrait_file - 1);
       csv_dat += "ref:portrait_talking=" + tblEntry_portrait.name1;
 
       csv_dat += CSV_SEPARATOR;
@@ -333,7 +327,7 @@ void CSVExporter::print()
   }
 
   // portrait.dat
-  for (unsigned int i = 0; i < portdata_portrait_file_vec->size(); i++)
+  for (unsigned int i = 0; i < portdata_portrait_idle_vec->size(); i++)
   {
     csv_dat += "portrait.dat";
 
@@ -343,14 +337,25 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    uint32_t portrait_file = portdata_portrait_file_vec->at(i);
-    sprintf(buf, "portrait_file=%d", portrait_file);
+    uint32_t portrait_idle = portdata_portrait_idle_vec->at(i);
+    sprintf(buf, "portrait_idle=%d", portrait_idle);
     csv_dat += buf;
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry = mDatahub.portdata_tbl_vec.at(portrait_file-1);
-    csv_dat += "ref:file=" + tblEntry.name1;
+    TblEntry tblEntry_idle = mDatahub.portdata_tbl_vec.at(portrait_idle - 1);
+    csv_dat += "ref:idle=" + tblEntry_idle.name1;
+
+    csv_dat += CSV_SEPARATOR;
+
+    uint32_t portrait_talking = portdata_portrait_talking_vec->at(i);
+    sprintf(buf, "portrait_talking=%d", portrait_talking);
+    csv_dat += buf;
+
+    csv_dat += CSV_SEPARATOR;
+
+    TblEntry tblEntry_talking = mDatahub.portdata_tbl_vec.at(portrait_talking - 1);
+    csv_dat += "ref:talking=" + tblEntry_talking.name1;
 
     csv_dat += CSV_SEPARATOR;
 

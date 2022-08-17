@@ -4,24 +4,46 @@ meta:
   bit-endian: le
 
 seq:
-  - id: video
+  - id: video_idle
     type: u4
     repeat: expr
-    repeat-expr: num_lines
+    repeat-expr: num_lines / 2
     doc: |
-      Smacker portrait video for idle and talking animation. Add 110 to get the talking animation. [1-based pointer to portdata.tbl]
+      Smacker portrait video for idle animations. [1-based pointer to portdata.tbl]
 
-  - id: smk_change
+  - id: video_talking
+    type: u4
+    repeat: expr
+    repeat-expr: num_lines / 2
+    doc: |
+      Smacker portrait video for talking animations. [1-based pointer to portdata.tbl]
+
+
+  - id: change_idle
     type: u1
     repeat: expr
-    repeat-expr: num_lines
+    repeat-expr: num_lines / 2
     doc: |
-      Controls how often the first SMK animation, with the index of 0, will be overlooked and a portrait with different index will be played. The higher the value and the more it gets near 100, the more often will the first SMK be skipped. Values over 100 make the game use only the first portrait.
+      Controls how often the first idle animation, with the index of 0, will be overlooked and a portrait with different index will be played. The higher the value and the more it gets near 100, the more often will the first animation be skipped. Values over 100 make the game use only the first portrait.
 
-  - id: unknown1
+  - id: change_talking
     type: u1
     repeat: expr
-    repeat-expr: num_lines
+    repeat-expr: num_lines / 2
+    doc: |
+      Controls how often the first talking animation, with the index of 0, will be overlooked and a portrait with different index will be played. The higher the value and the more it gets near 100, the more often will the first animation be skipped. Values over 100 make the game use only the first portrait.
+
+
+  - id: unknown1_idle
+    type: u1
+    repeat: expr
+    repeat-expr: num_lines / 2
+
+  - id: unknown1_talking
+    type: u1
+    repeat: expr
+    repeat-expr: num_lines / 2
+
 
 instances:
   num_lines:
