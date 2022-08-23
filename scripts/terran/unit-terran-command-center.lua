@@ -44,7 +44,6 @@ DefineUnitType("unit-terran-command-center", {
   BurnDamageRate = 1,
   DrawLevel = 50,
   BuilderOutside = true,
-  SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 35, AnnoyComputerFactor = 45,
   Points = 200,

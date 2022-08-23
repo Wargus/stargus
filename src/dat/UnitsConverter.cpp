@@ -191,10 +191,16 @@ bool UnitsConverter::convert(json &unitsJson,
       int unit_boxsize_width = unit_tilesize_width * tilesize_pixel;
       int unit_boxsize_height = unit_tilesize_height * tilesize_pixel;
 
-      // for now generate some dummy tilesize and boxsize otherwise it may crash
-      string unit_tilesize = lg::assign("TileSize", lg::table({to_string(unit_tilesize_width), to_string(unit_tilesize_height)}));
-      string unit_boxsize = lg::assign("BoxSize", lg::table({to_string(unit_boxsize_width), to_string(unit_boxsize_height)}));
-      string unit_sightrange = lg::assign("SightRange", "1");
+      string unit_LuaTileSize = lg::assign("TileSize", lg::table({to_string(unit_tilesize_width), to_string(unit_tilesize_height)}));
+      string unit_LuaBoxSize = lg::assign("BoxSize", lg::table({to_string(unit_boxsize_width), to_string(unit_boxsize_height)}));
+
+      int unit_sight_range = unit.sight_range();
+      string unit_computer_reaction_rangeStr ("math.ceil(" + to_string(unit_sight_range) + " * ComputerReactionRangeFactor)");
+      string unit_person_reaction_rangeStr ("math.floor(" + to_string(unit_sight_range) + " * PersonReactionRangeFactor)");
+
+      string unit_LuaSightRange = lg::assign("SightRange", to_string(unit_sight_range));
+      string unit_LuaComputerReactionRange = lg::assign("ComputerReactionRange", unit_computer_reaction_rangeStr);
+      string unit_LuaPersonReactionRange = lg::assign("PersonReactionRange", unit_person_reaction_rangeStr);
 
       // generate some standard shadow
       Pos shadow_position = Pos(-7, -7);
@@ -214,7 +220,9 @@ bool UnitsConverter::convert(json &unitsJson,
       string unit_icon = lg::assign("Icon", lg::quote("icon-terran-command-center"));
 
       string unit_defintion = lg::DefineUnitType(unit_name,
-                                                {unit_name_translated, unit_image, unit_shadow, unit_icon, unit_animations, unit_portraits, unit_hitpoints, unit_tilesize, unit_boxsize, unit_sightrange});
+                                                {unit_name_translated, unit_image, unit_shadow, unit_icon, unit_animations,
+                                                 unit_portraits, unit_hitpoints, unit_LuaTileSize, unit_LuaBoxSize,
+                                                 unit_LuaSightRange, unit_LuaComputerReactionRange, unit_LuaPersonReactionRange});
 
       lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));
 

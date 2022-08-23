@@ -34,7 +34,6 @@ DefineUnitType("unit-zerg-drone", {
   Costs = {"time", 25, "minerals", 50},
   Speed = 10,
   DrawLevel = 30,
-  SightRange = 7, ComputerReactionRange = 6, PersonReactionRange = 4,
   BasicDamage = 5, PiercingDamage = 2, Missile = "missile-zerg-spit",
   MaxAttackRange = 1,
   Priority = 50,

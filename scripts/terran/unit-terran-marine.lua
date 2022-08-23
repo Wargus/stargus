@@ -74,7 +74,6 @@ DefineUnitType("unit-terran-marine", {
   Costs = {"time", 60, "minerals", 50},
   Speed = 10, NumDirections = 32,
   DrawLevel = 40,
-  SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 2, BasicDamage = 6, PiercingDamage = 2, Missile = "missile-none",
   AnnoyComputerFactor = 50,
   MaxAttackRange = 4,

@@ -44,7 +44,6 @@ DefineUnitType("unit-terran-missile-turret", {
   BurnDamageRate = 1,
   DrawLevel = 50,
   BuilderOutside = true,
-  SightRange = 9, ComputerReactionRange = 7, PersonReactionRange = 7,
   Armor = 20, BasicDamage = 50, PiercingDamage = 0, Missile = "missile-small-cannon",
   MinAttackRange = 2, MaxAttackRange = 7,
   Priority = 40, AnnoyComputerFactor = 50,

@@ -40,7 +40,6 @@ DefineUnitType("unit-protoss-shield-battery", {
   Construction = "construction-protoss-shield-battery",
   Speed = 0,
   DrawLevel = 50,
-  SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 30, AnnoyComputerFactor = 35,
   Points = 160,

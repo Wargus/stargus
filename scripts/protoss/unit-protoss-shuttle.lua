@@ -50,7 +50,6 @@ DefineUnitType("unit-protoss-shuttle", {
   Speed = 0, 
   NumDirections = 16,
   DrawLevel = 45,
-  SightRange = 10,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 45,
   Points = 200,

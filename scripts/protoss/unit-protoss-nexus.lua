@@ -660,7 +660,6 @@ DefineUnitType("unit-protoss-nexus", {
   Construction = "construction-protoss-nexus",
   Speed = 0,
   DrawLevel = 50,
-  SightRange = 1, 
   BuilderOutside = true, 
   AutoBuildRate = 30,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",

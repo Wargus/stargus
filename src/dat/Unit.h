@@ -33,6 +33,8 @@ public:
 
   units_dat_t::unit_dimension_type_t *unit_dimension();
 
+  uint8_t sight_range();
+
   static const int portrait_none = 65535;
 
 private:

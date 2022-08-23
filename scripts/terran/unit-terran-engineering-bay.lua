@@ -44,7 +44,6 @@ DefineUnitType("unit-terran-engineering-bay", {
   BurnDamageRate = 1,
   DrawLevel = 50,
   BuilderOutside = true,
-  SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,
   Points = 170,

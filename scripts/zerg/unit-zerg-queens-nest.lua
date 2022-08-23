@@ -19,7 +19,6 @@ DefineUnitType("unit-zerg-queens-nest", {
   Construction = "construction-zerg",
   Speed = 0,
   DrawLevel = 30,
-  SightRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,
   Points = 170,

@@ -22,7 +22,6 @@ DefineUnitType("unit-terran-science-vessel", {
   Costs = {"time", 250, "minerals", 100, "gas", 225},
   Speed = 14,
   DrawLevel = 60,
-  SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
   Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-none",
   MaxAttackRange = 4,
   Priority = 65,

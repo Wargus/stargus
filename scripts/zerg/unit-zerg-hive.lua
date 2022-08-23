@@ -22,7 +22,6 @@ DefineUnitType("unit-zerg-hive", {
   Construction = "construction-zerg",
   Speed = 0,
   DrawLevel = 30,
-  SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 35, AnnoyComputerFactor = 45,
   Points = 200,

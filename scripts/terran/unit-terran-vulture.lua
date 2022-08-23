@@ -30,7 +30,6 @@ DefineUnitType("unit-terran-vulture", {
   Speed = 10, NumDirections = 32,
   DrawLevel = 40,
   BoardSize = 2,
-  SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-terran-vulture-grenade",
   AnnoyComputerFactor = 55,
   Priority = 60,

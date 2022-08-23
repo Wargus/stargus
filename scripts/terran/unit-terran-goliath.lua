@@ -34,7 +34,6 @@ DefineUnitType("unit-terran-goliath", {
   Costs = {"time", 60, "minerals", 100, "gas", 50},
   Speed = 10, NumDirections = 32,
   DrawLevel = 40,
-  SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-none",
   AnnoyComputerFactor = 55,
   MaxAttackRange = 1,

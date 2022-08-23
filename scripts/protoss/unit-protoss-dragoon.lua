@@ -56,7 +56,6 @@ DefineUnitType("unit-protoss-dragoon", {
   Speed = 10, NumDirections = 32,
   ShieldPoints = 200,
   DrawLevel = 40,
-  SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 2, BasicDamage = 10, PiercingDamage = 3, Missile = "missile-none",
   MaxAttackRange = 2,
   Priority = 60,

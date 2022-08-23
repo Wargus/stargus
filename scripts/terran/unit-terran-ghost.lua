@@ -51,7 +51,6 @@ DefineUnitType("unit-terran-ghost", {
   Costs = {"time", 60, "minerals", 25, "gas", 75},
   Speed = 10, NumDirections = 32,
   DrawLevel = 40,
-  SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-none",
   MaxAttackRange = 1,
   Priority = 60,

@@ -89,6 +89,15 @@ units_dat_t::unit_dimension_type_t *Unit::unit_dimension()
   return unit_dimension;
 }
 
+uint8_t Unit::sight_range()
+{
+  uint8_t sight_range = mDatahub.units->sight_range()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("sight_range(") + to_string(sight_range) + ")");
+
+  return sight_range;
+}
+
 /* Exceptions */
 
 const char *NoPortraitException::what() const throw()
