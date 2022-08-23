@@ -41,7 +41,6 @@ DefineUnitType("unit-protoss-gateway", {
   Construction = "construction-protoss-gateway",
   Speed = 0,
   DrawLevel = 50,
-  TileSize = {4, 3}, BoxSize = {127, 95},
   SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 30, AnnoyComputerFactor = 35,

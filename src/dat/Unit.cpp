@@ -75,6 +75,22 @@ uint8_t Unit::elevation_level()
   return elevation_level;
 }
 
+units_dat_t::unit_dimension_type_t *Unit::unit_dimension()
+{
+  units_dat_t::unit_dimension_type_t *unit_dimension = mDatahub.units->unit_dimension()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("unit_dimension(") +
+      " l: " + to_string(unit_dimension->left()) +
+      " r: " + to_string(unit_dimension->right()) +
+      " u: " + to_string(unit_dimension->up()) +
+      " d: " + to_string(unit_dimension->down()) +
+      ")");
+
+  return unit_dimension;
+}
+
+/* Exceptions */
+
 const char *NoPortraitException::what() const throw()
 {
   static string s;

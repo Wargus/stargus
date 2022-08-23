@@ -64,7 +64,6 @@ DefineUnitType("unit-zerg-zergling", {
   Costs = {"time", 50, "minerals", 50},
   Speed = 10, NumDirections = 32,
   DrawLevel = 40,
-  TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-none",
   AnnoyComputerFactor = 50,

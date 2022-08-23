@@ -61,7 +61,6 @@ DefineUnitType("unit-zerg-scourge", {
   Costs = {"time", 250, "minerals", 12, "gas", 38},
   Speed = 14,
   DrawLevel = 60,
-  TileSize = {1, 1}, BoxSize = {63, 63},
   SightRange = 5, ComputerReactionRange = 5, PersonReactionRange = 5,
   Armor = 0, BasicDamage = 110, PiercingDamage = 16, Missile = "missile-none",
   MaxAttackRange = 1,

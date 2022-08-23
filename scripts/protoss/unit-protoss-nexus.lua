@@ -660,7 +660,6 @@ DefineUnitType("unit-protoss-nexus", {
   Construction = "construction-protoss-nexus",
   Speed = 0,
   DrawLevel = 50,
-  TileSize = {4, 3}, BoxSize = {126, 95},
   SightRange = 1, 
   BuilderOutside = true, 
   AutoBuildRate = 30,

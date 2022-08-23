@@ -178,9 +178,22 @@ bool UnitsConverter::convert(json &unitsJson,
       string unit_hitpoints = lg::assign("HitPoints", to_string(unit.hitpoints()));
       string unit_name_translated = lg::assign("Name", lg::quote(unit.name().name1));
 
+      units_dat_t::unit_dimension_type_t *unit_dimension_tilesize = unit.unit_dimension();
+
+      int unit_width = unit_dimension_tilesize->left() + unit_dimension_tilesize->right();
+      int unit_height = unit_dimension_tilesize->up() + unit_dimension_tilesize->down();
+
+      int tilesize_pixel = 32;
+
+      int unit_tilesize_width = ceil(unit_width / (double) tilesize_pixel);
+      int unit_tilesize_height = ceil(unit_height / (double) tilesize_pixel);
+
+      int unit_boxsize_width = unit_tilesize_width * tilesize_pixel;
+      int unit_boxsize_height = unit_tilesize_height * tilesize_pixel;
+
       // for now generate some dummy tilesize and boxsize otherwise it may crash
-      string unit_tilesize = lg::assign("TileSize", lg::table({"1", "1"}));
-      string unit_boxsize = lg::assign("BoxSize", lg::table({"31", "31"}));
+      string unit_tilesize = lg::assign("TileSize", lg::table({to_string(unit_tilesize_width), to_string(unit_tilesize_height)}));
+      string unit_boxsize = lg::assign("BoxSize", lg::table({to_string(unit_boxsize_width), to_string(unit_boxsize_height)}));
       string unit_sightrange = lg::assign("SightRange", "1");
 
       // generate some standard shadow

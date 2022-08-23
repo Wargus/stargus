@@ -41,7 +41,6 @@ DefineUnitType("unit-terran-supply-depot", {
   Speed = 0,
   DrawLevel = 50,
   BuilderOutside = true,
-  TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 45,

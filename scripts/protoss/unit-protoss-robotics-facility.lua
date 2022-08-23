@@ -40,7 +40,6 @@ DefineUnitType("unit-protoss-robotics-facility", {
   Construction = "construction-protoss-robotics-facility",
   Speed = 0,
   DrawLevel = 50,
-  TileSize = {3, 2}, BoxSize = {95, 63},
   SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 30, AnnoyComputerFactor = 35,

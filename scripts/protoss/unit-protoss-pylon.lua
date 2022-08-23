@@ -38,7 +38,6 @@ DefineUnitType("unit-protoss-pylon", {
   Construction = "construction-protoss-pylon",
   Speed = 0,
   DrawLevel = 50,
-  TileSize = {2, 2}, BoxSize = {63, 63},
   SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 45,

@@ -635,7 +635,6 @@ DefineUnitType("unit-protoss-assimulator", {
   Construction = "construction-protoss-assimulator",
   Speed = 0,
   DrawLevel = 30,
-  TileSize = {4, 2}, BoxSize = {127, 63},
   SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 20,

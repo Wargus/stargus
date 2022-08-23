@@ -638,7 +638,6 @@ DefineUnitType("unit-protoss-photon-cannon", {
   Construction = "construction-protoss-photon-cannon",
   Speed = 0,
   DrawLevel = 30,
-  TileSize = {2, 2}, BoxSize = {63, 63},
   SightRange = 7, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,

@@ -39,7 +39,6 @@ DefineUnitType("unit-protoss-zealot", {
   Costs = {"time", 100, "minerals", 100},
   Speed = 10, NumDirections = 32,
   DrawLevel = 40,
-  TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 4, BasicDamage = 10, PiercingDamage = 3, Missile = "missile-none",
   MaxAttackRange = 1,

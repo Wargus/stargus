@@ -11,8 +11,9 @@ log4j.logger.startool.main=TRACE
 #log4j.logger.startool.Chk=TRACE
 #log4j.logger.startool.tileset.CV5=TRACE
 #log4j.logger.startool.Pcx=TRACE
-#log4j.logger.startool.dat.Unit=TRACE
+log4j.logger.startool.dat.Unit=TRACE
+log4j.logger.startool.dat.UnitConverter=TRACE
 #log4j.logger.startool.DataHub=TRACE
-log4j.logger.startool=TRACE
+#log4j.logger.startool=TRACE
 
 

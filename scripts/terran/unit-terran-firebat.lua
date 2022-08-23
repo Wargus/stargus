@@ -43,7 +43,6 @@ DefineUnitType("unit-terran-firebat", {
   Costs = {"time", 60, "minerals", 50, "gas", 25},
   Speed = 10, NumDirections = 32,
   DrawLevel = 40,
-  TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-terran-firebat-flame",
   AnnoyComputerFactor = 50,

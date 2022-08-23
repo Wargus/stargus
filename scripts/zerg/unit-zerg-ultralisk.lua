@@ -79,7 +79,6 @@ DefineUnitType("unit-zerg-ultralisk", {
   Costs = {"time", 200, "minerals", 200, "gas", 200},
   Speed = 12, NumDirections = 32,
   DrawLevel = 40,
-  TileSize = {1, 1}, BoxSize = {31, 31},
   SightRange = 5, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 3, BasicDamage = 20, PiercingDamage = 10, Missile = "missile-none",
   AnnoyComputerFactor = 55,

@@ -22,7 +22,6 @@ DefineUnitType("unit-terran-battlecruiser", {
   Costs = {"time", 250, "minerals", 400, "gas", 300},
   Speed = 14,
   DrawLevel = 60,
-  TileSize = {1, 1}, BoxSize = {63, 63},
   SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
   Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-terran-battlecruiser-laser",
   AnnoyComputerFactor = 55,

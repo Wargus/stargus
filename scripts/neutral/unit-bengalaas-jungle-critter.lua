@@ -8,7 +8,6 @@ DefineUnitType("unit-critter-bengalaas", {
   Animations = "animations-bengalaas-jungle-critter", Icon = "icon-bengalaas-jungle-critter",
   NeutralMinimapColor = {0, 228, 252},
   DrawLevel = 5,
-  TileSize = {2, 1}, BoxSize = {63, 31},
   SightRange = 0,
   BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 0,

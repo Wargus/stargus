@@ -31,6 +31,8 @@ public:
 
   uint8_t elevation_level();
 
+  units_dat_t::unit_dimension_type_t *unit_dimension();
+
   static const int portrait_none = 65535;
 
 private:

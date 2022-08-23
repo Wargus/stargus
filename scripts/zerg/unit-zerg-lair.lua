@@ -22,7 +22,6 @@ DefineUnitType("unit-zerg-lair", {
   Construction = "construction-zerg",
   Speed = 0,
   DrawLevel = 30,
-  TileSize = {4, 3}, BoxSize = {126, 95},--FIXME: wrong size
   SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 35, AnnoyComputerFactor = 45,

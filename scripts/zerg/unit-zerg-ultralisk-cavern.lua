@@ -22,7 +22,6 @@ DefineUnitType("unit-zerg-ultralisk-cavern", {
   Construction = "construction-zerg",
   Speed = 0,
   DrawLevel = 30,
-  TileSize = {2, 2}, BoxSize = {63, 63},
   SightRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,

@@ -36,7 +36,6 @@ DefineUnitType("unit-zerg-queen", {
   RepairHp = 1,
   Speed = 4, NumDirections = 32,
   DrawLevel = 45,
-  TileSize = {1, 1}, BoxSize = {50, 50},--FIXME: wrong box size
   SightRange = 7,
   Demand = 2,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",

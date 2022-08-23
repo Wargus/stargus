@@ -21,7 +21,6 @@ DefineUnitType("unit-terran-dropship", {
   Speed = 14,
   DrawLevel = 60,
   MaxOnBoard = 8,
-  TileSize = {1, 1}, BoxSize = {63, 63},
   SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
   Armor = 5, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   MaxAttackRange = 4,
