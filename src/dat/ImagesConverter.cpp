@@ -216,15 +216,21 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
 
       Size tilesize = grp.getTileSize();
 
-      string unit_image(
-          lg::table({lg::quote("file"), lg::quote(png_file.getRelativePath()), lg::quote("size") , lg::sizeTable(tilesize)})
-          );
+      string unit_image_file(lg::assign("image_" + image_id + "_file", lg::quote(png_file.getRelativePath())));
+      lua_file << unit_image_file << endl;
 
-      string image_table = lg::assign("image_" + image_id ,unit_image);
+      string unit_image_size(lg::assign("image_" + image_id + "_size", lg::sizeTable(tilesize)));
+      lua_file << unit_image_size << endl;
+
+      string unit_image_table(
+          lg::table({lg::quote("file"), "image_" + image_id + "_file",
+          lg::quote("size") , "image_" + image_id + "_size"}));
+
+      string unit_image = lg::assign("image_" + image_id, unit_image_table);
+      lua_file << unit_image;
 
       lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));
 
-      lua_file << image_table;
       lua_file.close();
 
       string grp_save_trace(to_string(i) +  ": " + grp_name + " : " + grp_arcfile + " => " + grp_storage_file_base);
