@@ -24,8 +24,6 @@ public:
 
   bool convert();
 
-
-
 private:
   /**
    * check all smk files for a portrait, export them, convert to mng and save the raw name

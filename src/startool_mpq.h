@@ -221,13 +221,13 @@ Control Todo[] = {
 	{G,0,"tilesets/platform/creep","tileset\\platform.grp",1 __3},
 
 	// Neutral
-	{G,0,"neutral/flamer","unit\\thingy\\flamer.grp",3 __3},
+	/*{G,0,"neutral/flamer","unit\\thingy\\flamer.grp",3 __3},
 	{G,0,"neutral/smoke","unit\\thingy\\smoke.grp",3 __3},
 	{G,0,"neutral/building burnc","unit\\thingy\\oFireC.grp",3 __3},
 	{G,0,"neutral/building burnf","unit\\thingy\\oFireF.grp",3 __3},
-	{G,0,"neutral/building burnv","unit\\thingy\\oFireV.grp",3 __3},
+	{G,0,"neutral/building burnv","unit\\thingy\\oFireV.grp",3 __3},*/
 
-	{G,0,"neutral/missiles/blastcan","unit\\bullet\\blastcan.grp",1 __3},
+	/*{G,0,"neutral/missiles/blastcan","unit\\bullet\\blastcan.grp",1 __3},
 	{G,0,"neutral/missiles/circle14","unit\\bullet\\circle14.grp",1 __3},
 	{G,0,"neutral/missiles/dragbull","unit\\bullet\\dragbull.grp",1 __3},
 	{G,0,"neutral/missiles/epbbul","unit\\bullet\\epbBul.grp",1 __3},
@@ -249,9 +249,9 @@ Control Todo[] = {
 	{G,0,"neutral/missiles/squib2","unit\\bullet\\squib2.grp",1 __3},
 	{G,0,"neutral/missiles/tentacle","unit\\bullet\\Tentacle.grp",1 __3},
 	{G,0,"neutral/missiles/tspark","unit\\bullet\\tspark.grp",1 __3},
-	{G,0,"neutral/missiles/zspark","unit\\bullet\\zspark.grp",1 __3},
+	{G,0,"neutral/missiles/zspark","unit\\bullet\\zspark.grp",1 __3},*/
 
-	{G,0,"neutral/units/ragnasaur ashworld critter shadow","unit\\neutral\\nacShad.grp",0 __3},
+	/*{G,0,"neutral/units/ragnasaur ashworld critter shadow","unit\\neutral\\nacShad.grp",0 __3},
 	{G,0,"neutral/units/rhynadon badlands critter shadow","unit\\neutral\\nbcShad.grp",0 __3},
 	{G,0,"neutral/units/bengalaas jungle critter shadow","unit\\neutral\\njcShad.grp",0 __3},
 	{G,0,"neutral/units/geyser shadow","unit\\neutral\\geyShad.grp",1 __3},
@@ -274,8 +274,8 @@ Control Todo[] = {
 	{G,0,"neutral/units/ore chunk shadow","unit\\neutral\\norShad.grp",1 __3},
 	{G,0,"neutral/units/psi emitter shadow","unit\\neutral\\npsShad.grp",1 __3},
 	{G,0,"neutral/units/psi emitter shadow2","unit\\neutral\\npsSha2.grp",1 __3},
-	{G,0,"neutral/units/starbase","unit\\neutral\\starbase.grp",1 __3},
-
+	{G,0,"neutral/units/starbase","unit\\neutral\\starbase.grp",1 __3},*/
+/*
 #if 0
 	{G,0,"neutral/units/pg1deb","unit\\flingy\\pg1deb.grp",1 __3},
 	{G,0,"neutral/units/pg2deb","unit\\flingy\\pg2deb.grp",1 __3},
@@ -285,7 +285,8 @@ Control Todo[] = {
 	{G,0,"neutral/units/pscdeb","unit\\flingy\\pscdeb.grp",1 __3},
 	{G,0,"neutral/units/tg5deb","unit\\flingy\\tg5deb.grp",1 __3},
 #endif
-
+*/
+	/*
 	{G,0,"tilesets/badlands/thingy/HDRock01","unit\\thingy\\tileset\\Badlands\\HDRock01.grp",1 __3},
 	{G,0,"tilesets/badlands/thingy/HDRock02","unit\\thingy\\tileset\\Badlands\\HDRock02.grp",1 __3},
 	{G,0,"tilesets/badlands/thingy/HDRock03","unit\\thingy\\tileset\\Badlands\\HDRock03.grp",1 __3},
@@ -386,9 +387,9 @@ Control Todo[] = {
 	{G,0,"tilesets/jungle/thingy/tree2sha","unit\\thingy\\tileset\\Jungle\\tree2sha.grp",1 __3},
 	{G,0,"tilesets/jungle/thingy/tree3sha","unit\\thingy\\tileset\\Jungle\\tree3sha.grp",1 __3},
 	{G,0,"tilesets/jungle/thingy/tree4sha","unit\\thingy\\tileset\\Jungle\\tree4sha.grp",1 __3},
-
+*/
 	// Terran unit graphics
-	{G,0,"terran/units/civilian shadow","unit\\neutral\\nciShad.grp",0 __3},
+/*	{G,0,"terran/units/civilian shadow","unit\\neutral\\nciShad.grp",0 __3},
 	{G,0,"terran/units/academy-t","unit\\terran\\AcademyT.grp",0 __3},
 	{G,0,"terran/units/battlecruiser glow","unit\\thingy\\tbaGlow.grp",3 __3},
 	{G,0,"terran/units/armory-t","unit\\terran\\chemlabT.grp",0 __3},
@@ -465,7 +466,8 @@ Control Todo[] = {
 	{G,0,"terran/tank turret attack overlay2","unit\\thingy\\ettFlash.grp",3 __3},
 	{G,0,"terran/laser","unit\\thingy\\elbfireW.grp",3 __3},
 	{G,0,"terran/laser2","unit\\thingy\\elbfire.grp",3 __3},
-
+*/
+	/*
 	// Protoss unit graphics
 	{G,0,"protoss/units/rubble large","unit\\thingy\\prubblel.grp",0 __3},
 	{G,0,"protoss/units/rubble small","unit\\thingy\\prubbles.grp",0 __3},
@@ -582,7 +584,7 @@ Control Todo[] = {
 	{G,0,"zerg/units/spores","unit\\thingy\\gSmoke.grp",0 __3},
 	{G,0,"zerg/units/glave wurm","unit\\thingy\\SpoTrail.grp",0 __3},
 	{G,0,"zerg/units/guardian attack overlay","unit\\thingy\\eplMuzz.grp",0 __3},
-
+*/
 	// Terran sounds
 	{W,0,"terran/building place","sound\\misc\\tbldgplc.wav" __4},
 	{W,0,"terran/on fire large","sound\\terran\\bldg\\onfirlrg.wav" __4},
@@ -1491,7 +1493,7 @@ Control Todo[] = {
 	{W,0,"misc/explosm","sound\\misc\\explosm.wav" __4},
 
 	//Portrait Videos
-	{P,0,"portrait/uflag8/uf8fid00","portrait\\uflag8\\uf8fid00.smk" __4},
+	/*{P,0,"portrait/uflag8/uf8fid00","portrait\\uflag8\\uf8fid00.smk" __4},
 	{P,0,"portrait/uflag8/uf8tlk00","portrait\\uflag8\\uf8tlk00.smk" __4},
 	{P,0,"portrait/zlarva/zlafid00","portrait\\zlarva\\zlafid00.smk" __4},
 	{P,0,"portrait/zlarva/zlatlk00","portrait\\zlarva\\zlatlk00.smk" __4},
@@ -1915,7 +1917,7 @@ Control Todo[] = {
 	{P,0,"portrait/zzergl/zzefid00","portrait\\zzergl\\zzefid00.smk" __4},
 	{P,0,"portrait/zzergl/zzetlk01","portrait\\zzergl\\zzetlk01.smk" __4},
 	{P,0,"portrait/zzergl/zzefid03","portrait\\zzergl\\zzefid03.smk" __4},
-	{P,0,"portrait/zzergl/zzefid01","portrait\\zzergl\\zzefid01.smk" __4}
+	{P,0,"portrait/zzergl/zzefid01","portrait\\zzergl\\zzefid01.smk" __4}*/
 };
 
 

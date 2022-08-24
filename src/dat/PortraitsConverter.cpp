@@ -65,8 +65,8 @@ bool PortraitsConverter::convert()
     string portrait_arcfile_idle(portrait.tbl_idle().name1);
     string portrait_arcfile_talking(portrait.tbl_talking().name1);
 
-    string portrait_idle_id(Portrait::PathToID(portrait_arcfile_idle));
-    string portrait_talking_id(Portrait::PathToID(portrait_arcfile_talking));
+    string portrait_idle_id(Portrait::createID(portrait_arcfile_idle));
+    string portrait_talking_id(Portrait::createID(portrait_arcfile_talking));
 
     // just to ensure the idle / talking consistency in the database
     // this should also be the case otherwise something is broken

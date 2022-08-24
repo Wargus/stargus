@@ -36,9 +36,10 @@ DefineAnimations("animations-dummy-still", {
   },
 })
 
+-- order of lua includes matter
 Load("luagen/portrait/luagen-portrait.lua")
+Load("luagen/images/luagen-images.lua")
 Load("luagen/units/luagen-units.lua")
-
 
 Load("scripts/terran/units.lua")
 Load("scripts/zerg/units.lua")

@@ -6,6 +6,8 @@
 
 #include "Image.h"
 #include "Logger.h"
+#include "platform.h"
+#include "StringUtil.h"
 
 using namespace std;
 
@@ -50,6 +52,18 @@ uint8_t Image::remapping()
   LOG4CXX_TRACE(logger, string("remapping(") + to_string(remapping_id) + ")");
 
   return remapping_id;
+}
+
+std::string Image::createID(const std::string &image)
+{
+  string image_name(image);
+  replaceString("\\", "/", image_name);
+  fs::path p(image_name);
+
+  image_name = to_lower(cutFileEnding(p.filename().string()));
+  //cout << "image_name: " << image_name << endl;
+
+  return image_name;
 }
 
 } /* namespace dat */

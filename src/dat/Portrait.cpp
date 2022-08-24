@@ -60,7 +60,7 @@ TblEntry Portrait::tbl_talking()
   return tbl_entry;
 }
 
-std::string Portrait::PathToID(const std::string &portrait)
+std::string Portrait::createID(const std::string &portrait)
 {
   string portrait_name(portrait);
   replaceString("\\", "/", portrait_name);

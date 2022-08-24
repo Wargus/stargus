@@ -62,6 +62,7 @@
 #include "UIConsole.h"
 #include "StringUtil.h"
 #include "pacman.h"
+#include "dat/ImagesConverter.h"
 
 // system
 #include <nlohmann/json.hpp>
@@ -292,14 +293,15 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
 
   //std::cout << units_json << std::endl; // prints json object to screen
 
-
-
   /** PCX **/
   auto &pcx_section = palettes_json.at("PCX");
 
   for(auto &pcx_array : pcx_section)
   {
     string pcx_name = pcx_array.at("name");
+
+    // FIXME: this will fail with broodwar data until I use a generic way to identify the PCX palettes in palettes.json
+    // idea is just to use the first found palette that is available and use that as it's not important which one we use...
     string pcx_arcfile = pcx_array.at("arcfile");
 
     Pcx pcx(hurricane, pcx_arcfile);
@@ -384,14 +386,8 @@ void testHook()
   shared_ptr<Storm> storm = make_shared<Storm>(
                               "/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
   //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
-  //dat::DataHub datahub(storm);
+  dat::DataHub datahub(storm);
   //datahub.printCSV();
-
-  //dat::PortraitsConverter portraits(storm, datahub);
-  //portraits.convert();
-
-  //Smacker smack(storm);
-  //smack.convertMNG("glue\\mainmenu\\multi.smk", "/tmp/multi");
 
   /// Image 1
   Pcx pcx1(storm, "game\\tunit.pcx");
@@ -436,18 +432,6 @@ void testHook()
 
 
   grp.save("/tmp/marine.png");
-
-  Pcx pcx(storm, "game\\tconsole.pcx");
-  string console = "data/ui/tconsole";
-  bool case_func = pcx.savePNG(console + ".png");
-
-  UIConsole uic(storm);
-
-  //pixel count from left
-  int right = 296;
-  int left = 275;
-
-  uic.convert(console, left, right);
 
   cout << "end testHook()" << endl;
   exit(0);
@@ -627,6 +611,9 @@ int main(int argc, const char **argv)
     dat::UnitsConverter unitsConverter(sub_storm, datahub);
     unitsConverter.convert(units_json, paletteMap, palette2DMap);
 
+    dat::ImagesConverter im_conv(sub_storm, datahub);
+    im_conv.convert(paletteMap, palette2DMap);
+
     for (i = 0; i <= 1; ++i)
     {
       switch (i)
@@ -699,8 +686,6 @@ int main(int argc, const char **argv)
           {
             pal2D = palette2DMap.at("ofire");
             grp.setPalette2D(pal2D);
-            //grp.setPalette(pal);
-            //grp.setTransparent(127);
             grp.setRGBA(true);
           }
           else if (c[u].Arg1 == 2)

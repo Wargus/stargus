@@ -25,6 +25,8 @@ public:
 
   uint8_t remapping();
 
+  static std::string createID(const std::string &image);
+
 private:
   DataHub &mDatahub;
   uint16_t mId;

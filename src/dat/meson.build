@@ -8,5 +8,6 @@ startool_dat_sources = files(
 	'CSVExporter.cpp',
 	'UnitsConverter.cpp',
 	'PortraitsConverter.cpp',
+	'ImagesConverter.cpp',
 	'Portrait.cpp'
 )

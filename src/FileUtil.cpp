@@ -6,7 +6,6 @@
 
 // project
 #include "FileUtil.h"
-
 // system
 #include <sys/types.h>
 #include <sys/stat.h>

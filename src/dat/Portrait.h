@@ -24,7 +24,7 @@ public:
   TblEntry tbl_idle();
   TblEntry tbl_talking();
 
-  static std::string PathToID(const std::string &portrait);
+  static std::string createID(const std::string &portrait);
 
 private:
 
