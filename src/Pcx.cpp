@@ -80,6 +80,18 @@ std::shared_ptr<Palette> Pcx::getPalette()
   return mPalette;
 }
 
+Size Pcx::getSize()
+{
+  Size imageSize;
+
+  if(mPaletteImage)
+  {
+    imageSize = mPaletteImage->getSize();
+  }
+
+  return imageSize;
+}
+
 void Pcx::mapIndexPalette(int length, int start, int index)
 {
   if (mPaletteImage && mPalette)
