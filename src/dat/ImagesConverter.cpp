@@ -203,7 +203,7 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
       // cut the file ending and lower case it
       string grp_storage_file_base = to_lower(cutFileEnding(grp_storage_file, ".grp"));
 
-      string image_id = Image::createID(grp_storage_file);
+      string image_id = Image::createID(grp_arcfile);
       string image_lua = "image_" + image_id + ".lua";
 
       Storage png_file = graphics(grp_storage_file_base + ".png");

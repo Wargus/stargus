@@ -13,11 +13,11 @@ DefineAnimations("animations-terran-engineering-bay", {
 
 DefineConstruction("construction-terran-engineering-bay", {
   Files = {
-    File = image_tbldlrg_file,
-    Size = image_tbldlrg_size},
+    File = image_unit_terran_tbldlrg_file,
+    Size = image_unit_terran_tbldlrg_size},
   ShadowFiles = {
-    File = image_tbldlrg_file,
-    Size = image_tbldlrg_size},
+    File = image_unit_terran_tbldlrg_file,
+    Size = image_unit_terran_tbldlrg_size},
   Constructions = {
    {Percent = 0,
     File = "construction",

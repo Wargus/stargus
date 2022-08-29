@@ -57,10 +57,10 @@ uint8_t Image::remapping()
 std::string Image::createID(const std::string &image)
 {
   string image_name(image);
-  replaceString("\\", "/", image_name);
-  fs::path p(image_name);
+  replaceString("\\", "_", image_name);
+  //fs::path p(image_name);
 
-  image_name = to_lower(cutFileEnding(p.filename().string()));
+  image_name = to_lower(cutFileEnding(image_name));
   //cout << "image_name: " << image_name << endl;
 
   return image_name;
