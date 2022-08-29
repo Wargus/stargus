@@ -14,7 +14,7 @@ DefineAnimations("animations-zerg-ultralisk-death", {
 
 
 DefineUnitType("unit-zerg-ultralisk-death", { Name = "Dead Zergling",
-  Image = {"file", "zerg/units/ultralisk death.png", "size", {128, 128}},
+  Image = image_unit_zerg_zuldeath,
   Animations = "animations-zerg-ultralisk-death", Icon = "icon-zerg-ultralisk",
   NumDirections = 1,
   HitPoints = 255,

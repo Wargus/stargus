@@ -9,7 +9,7 @@ DefineAnimations("animations-terran-marine-death", {
 })
 
 DefineUnitType("unit-terran-marine-death", { Name = "Dead Marine",
-  Image = {"file", "terran/units/marine death.png", "size", {64, 64}},
+  Image = image_unit_terran_tmadeath,
   Animations = "animations-terran-marine-death", Icon = "icon-terran-marine",
   NumDirections = 1,
   HitPoints = 255,
