@@ -10,11 +10,11 @@ DefineAnimations("animations-protoss-pylon", {
 
 DefineConstruction("construction-protoss-pylon", {
   Files = {
-    File = "terran/units/building construction medium.png",
-    Size = {96, 96}},
+    File = image_unit_terran_tbldmed_file,
+    Size = image_unit_terran_tbldmed_size},
   ShadowFiles = {
-    File = "terran/units/building construction medium shadow.png",
-    Size = {96, 96}},
+    File = image_unit_terran_tbldmed_file,
+    Size = image_unit_terran_tbldmed_size},
   Constructions = {
    {Percent = 0,
     File = "construction",

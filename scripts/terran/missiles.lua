@@ -35,15 +35,15 @@ DefineMissileType("missile-terran-vulture-grenade", {
 
 -- FIXME: wrong graphic
 DefineMissileType("missile-terran-battlecruiser-laser", {
-  File = "neutral/missiles/blastcan.png", Size = {32, 32},
-  Frames = 17, NumDirections = 32, DrawLevel = 50,
-  Class = "missile-class-point-to-point", Sleep = 1, Speed = 4, Range = 0,
+  File = image_unit_thingy_elbfire_file, Size = image_unit_thingy_elbfire_size,
+  Frames = 17, NumDirections = 22, DrawLevel = 50,
+  Class = "missile-class-point-to-point-with-hit", Sleep = 1, Speed = 4, Range = 2,
 })
 
 -- FIXME: wrong graphic
 DefineMissileType("missile-terran-wraith-laser", {
-  File = "neutral/missiles/blastcan.png", Size = {32, 32},
-  Frames = 17, NumDirections = 32, DrawLevel = 50,
-  Class = "missile-class-point-to-point", Sleep = 1, Speed = 4, Range = 0,
+  File = image_unit_thingy_elbfirew_file, Size = image_unit_thingy_elbfirew_size,
+  Frames = 17, NumDirections = 16, DrawLevel = 50,
+  Class = "missile-class-point-to-point", Sleep = 1, Speed = 4, Range = 2,
 })
 

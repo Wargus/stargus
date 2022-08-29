@@ -12,11 +12,11 @@ DefineAnimations("animations-protoss-arbiter-tribunal", {
 
 DefineConstruction("construction-protoss-arbiter-tribunal", {
   Files = {
-    File = "terran/units/building construction large.png",
-    Size = {160, 128}},
+    File = image_unit_terran_tbldlrg_file,
+    Size = image_unit_terran_tbldlrg_size},
   ShadowFiles = {
-    File = "terran/units/building construction large shadow.png",
-    Size = {128, 128}},
+    File = image_unit_terran_tbldlrg_file,
+    Size = image_unit_terran_tbldlrg_size},
   Constructions = {
    {Percent = 0,
     File = "construction",
