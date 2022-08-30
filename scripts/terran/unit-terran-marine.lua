@@ -43,11 +43,11 @@ DefineAnimations("animations-terran-marine", {
     "label 7172", "frame 17", "wait 1", "frame 0", "wait 1", "goto 70FD",
   },
   Move = {
-    "unbreakable begin", "move 4", "wait 1", "frame 85", "move 4", "wait 1", "frame 102", "unbreakable end", "wait 1",
-    "unbreakable begin", "move 4", "wait 1", "frame 119", "move 4", "wait 1", "frame 136", "unbreakable end", "wait 1",
-    "unbreakable begin", "move 4", "wait 1", "frame 153", "move 4", "wait 1", "frame 170", "unbreakable end", "wait 1",
-    "unbreakable begin", "move 4", "wait 1", "frame 187", "move 4", "wait 1", "frame 68", "unbreakable end", "wait 1",
-    "unbreakable begin", "move 4", "wait 1", "frame 204", "move 4", "wait 1", "frame 68", "unbreakable end", "wait 1",
+    "unbreakable begin", "move 4", "frame 85", "wait 1", "move 4", "frame 102", "unbreakable end", "wait 1",
+    "unbreakable begin", "move 4", "frame 119", "wait 1", "move 4", "frame 136", "unbreakable end", "wait 1",
+    "unbreakable begin", "move 4", "frame 153", "wait 1", "move 4", "frame 170", "unbreakable end", "wait 1",
+    "unbreakable begin", "move 4", "frame 187", "wait 1", "move 4", "frame 68", "unbreakable end", "wait 1",
+    "unbreakable begin", "move 4", "frame 204", "wait 1", "move 4", "frame 85", "unbreakable end", "wait 1",
   },
 --  StartAttack = {"frame 0", "wait 1", "frame 17", "wait 1", "frame 34",},
   Attack = {
