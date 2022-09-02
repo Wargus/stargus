@@ -41,7 +41,7 @@ DefineAnimations("animations-terran-firebat", {
 DefineUnitType("unit-terran-firebat", {
   Animations = "animations-terran-firebat", Icon = "icon-terran-firebat",
   Costs = {"time", 60, "minerals", 50, "gas", 25},
-  Speed = 10, NumDirections = 32,
+  Speed = 10,
   DrawLevel = 40,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-terran-firebat-flame",
   AnnoyComputerFactor = 50,

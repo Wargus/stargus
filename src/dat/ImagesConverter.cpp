@@ -216,11 +216,22 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
 
       Size tilesize = grp.getTileSize();
 
+
+      int NumDirections = 1;
+      if(image.gfx_turns() == true)
+      {
+        // it seems all animations which are calculated by gfx_turns have 32 directions
+        NumDirections = 32;
+      }
+
       string unit_image_file(lg::assign("image_" + image_id + "_file", lg::quote(png_file.getRelativePath())));
       lua_file << unit_image_file << endl;
 
       string unit_image_size(lg::assign("image_" + image_id + "_size", lg::sizeTable(tilesize)));
       lua_file << unit_image_size << endl;
+
+      string unit_image_NumDirections(lg::assign("image_" + image_id + "_NumDirections", to_string(NumDirections)));
+      lua_file << unit_image_NumDirections << endl;
 
       string unit_image_table(
           lg::table({lg::quote("file"), "image_" + image_id + "_file",

@@ -158,13 +158,16 @@ bool UnitsConverter::convert(json &unitsJson,
       // generate a dummy icon as fallback to not crash
       string unit_icon = lg::assign("Icon", lg::quote("icon-terran-command-center"));
 
+      string unit_LuaNumDirections = lg::assign("NumDirections", image_lua + "_NumDirections");
+
       // FIXME: just make everything able to move as test
       //string unit_LuaSpeed = lg::assign("Speed", "10");
 
       string unit_defintion = lg::DefineUnitType(unit_name,
                                                 {unit_name_translated, unit_image, unit_shadow, unit_icon, unit_animations,
                                                  unit_portraits, unit_hitpoints, unit_LuaTileSize, unit_LuaBoxSize,
-                                                 unit_LuaSightRange, unit_LuaComputerReactionRange, unit_LuaPersonReactionRange});
+                                                 unit_LuaSightRange, unit_LuaComputerReactionRange, unit_LuaPersonReactionRange,
+                                                 unit_LuaNumDirections});
 
       lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));
 

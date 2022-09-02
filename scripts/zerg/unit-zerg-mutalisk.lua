@@ -25,7 +25,7 @@ DefineAnimations("animations-zerg-mutalisk", {
 
 
 DefineUnitType("unit-zerg-mutalisk", {
-  DrawLevel = 45, NumDirections = 32,
+  DrawLevel = 45,
   Animations = "animations-zerg-mutalisk", Icon = "icon-zerg-mutalisk",
   Costs = {"time", 250, "minerals", 150, "gas", 100},
   Speed = 14,

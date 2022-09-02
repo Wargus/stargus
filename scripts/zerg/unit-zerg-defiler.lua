@@ -52,7 +52,7 @@ DefineAnimations("animations-zerg-defiler", {
 DefineUnitType("unit-zerg-defiler", { Name = "Hydralisk",
   Animations = "animations-zerg-defiler", Icon = "icon-zerg-defiler",
   Costs = {"time", 50, "minerals", 50, "gas", 150,},
-  Speed = 10, NumDirections = 32,
+  Speed = 10,
   Mana = 200,
   DrawLevel = 30,
   Armor = 1, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",

@@ -15,7 +15,6 @@ DefineAnimations("animations-protoss-observer-death", {
 DefineUnitType("unit-protoss-observer-death", { Name = "Dead Overlord",
   Image = image_unit_zerg_zovdeath,
   Animations = "animations-zerg-overlord-death", Icon = "icon-zerg-overlord",
-  NumDirections = 1,
   HitPoints = 255,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {63, 63},
@@ -31,31 +30,22 @@ DefineAnimations("animations-protoss-observer", {
   Still = {
     "frame 0", "wait 125",
   },
-  Move = {
-    "frame 0", "wait 2", "frame 17", "wait 2",
-    "label 42D8", "unbreakable begin",
-    "frame 34", "move 2", "wait 2", "frame 51", "move 2", "wait 2",
-    "frame 34", "move 2", "wait 2", "frame 51", "move 2", "wait 2",
-    "frame 34", "move 2", "wait 2", "frame 51", "move 2", "wait 2",
-    "frame 34", "move 2", "wait 2", "frame 51", "move 2", "wait 2",
-    "frame 34", "move 2", "wait 2", "frame 51", "move 2", "wait 2",
-    "frame 34", "move 2", "wait 2", "frame 51", "move 2", "wait 2",
-    "frame 34", "move 2", "wait 2", "frame 51", "move 2", "wait 2",
-    "frame 34", "move 2", "wait 2", "frame 51", "move 2", "wait 2",
-    "unbreakable end", "wait 1", "goto 42D8",
-  },
+  Move = {"unbreakable begin", "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",
+    "frame 0", "move 3", "wait 2", "frame 0", "move 2", "wait 1",
+    "frame 0", "move 3", "wait 1", "frame 0", "move 2", "wait 1",
+    "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",
+    "frame 0", "move 3", "wait 2", "frame 0", "move 2", "wait 1",
+    "frame 0", "move 3", "wait 1", "frame 0", "move 2", "unbreakable end", "wait 1",},
   Death = {
     --"sound zerg-overlord-death", "wait 1",
   },
 })
-
 
 DefineUnitType("unit-protoss-observer", {
   Animations = "animations-protoss-observer", Icon = "icon-protoss-observer",
   Costs = {"time", 45, "minerals", 100},
   RepairHp = 4,
   Speed = 20, 
-  NumDirections = 8,
   DrawLevel = 45,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 45,

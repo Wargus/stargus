@@ -17,7 +17,7 @@ DefineAnimations("animations-terran-science-vessel", {
 })
 
 DefineUnitType("unit-terran-science-vessel", {
-  DrawLevel = 45, NumDirections = 1,
+  DrawLevel = 45,
   Animations = "animations-terran-science-vessel", Icon = "icon-terran-science-vessel",
   Costs = {"time", 250, "minerals", 100, "gas", 225},
   Speed = 14,

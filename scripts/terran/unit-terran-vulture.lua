@@ -27,7 +27,7 @@ DefineAnimations("animations-terran-vulture", {
 DefineUnitType("unit-terran-vulture", {
   Animations = "animations-terran-vulture", Icon = "icon-terran-vulture",
   Costs = {"time", 60, "minerals", 75},
-  Speed = 10, NumDirections = 32,
+  Speed = 10,
   DrawLevel = 40,
   BoardSize = 2,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-terran-vulture-grenade",

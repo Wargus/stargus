@@ -15,7 +15,7 @@ DefineAnimations("animations-terran-dropship", {
 })
 
 DefineUnitType("unit-terran-dropship", {
-  DrawLevel = 45, NumDirections = 32,
+  DrawLevel = 45,
   Animations = "animations-terran-dropship", Icon = "icon-terran-dropship",
   Costs = {"time", 250, "minerals", 400, "gas", 300},
   Speed = 14,

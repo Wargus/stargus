@@ -56,7 +56,7 @@ DefineAnimations("animations-zerg-scourge", {
 
 
 DefineUnitType("unit-zerg-scourge", {
-  DrawLevel = 45, NumDirections = 32,
+  DrawLevel = 45,
   Animations = "animations-zerg-scourge", Icon = "icon-zerg-scourge",
   Costs = {"time", 250, "minerals", 12, "gas", 38},
   Speed = 14,

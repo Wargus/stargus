@@ -62,7 +62,7 @@ DefineAnimations("animations-zerg-zergling", {
 DefineUnitType("unit-zerg-zergling", {
   Animations = "animations-zerg-zergling", Icon = "icon-zerg-zergling",
   Costs = {"time", 50, "minerals", 50},
-  Speed = 10, NumDirections = 32,
+  Speed = 10,
   DrawLevel = 40,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-none",
   AnnoyComputerFactor = 50,

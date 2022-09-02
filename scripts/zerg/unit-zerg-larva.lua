@@ -35,7 +35,6 @@ DefineAnimations("animations-zerg-larva", {
 })
 
 DefineUnitType("unit-zerg-larva", { Name = "Larva",
-  NumDirections = 17,
   DrawLevel = 30,
   Animations = "animations-zerg-larva", Icon = "icon-zerg-larva",
   Armor = 10, Missile = "missile-none",

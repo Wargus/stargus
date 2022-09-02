@@ -48,10 +48,18 @@ uint8_t Image::draw_function()
 
 uint8_t Image::remapping()
 {
-  uint8_t remapping_id = mDatahub.images->draw_function()->at(mId);
-  LOG4CXX_TRACE(logger, string("remapping(") + to_string(remapping_id) + ")");
+  uint8_t remapping = mDatahub.images->draw_function()->at(mId);
+  LOG4CXX_TRACE(logger, string("remapping(") + to_string(remapping) + ")");
 
-  return remapping_id;
+  return remapping;
+}
+
+bool Image::gfx_turns()
+{
+  bool gfx_turns = mDatahub.images->gfx_turns()->at(mId);
+  LOG4CXX_TRACE(logger, string("gfx_turns(") + to_string(gfx_turns) + ")");
+
+  return gfx_turns;
 }
 
 std::string Image::createID(const std::string &image)

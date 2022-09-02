@@ -17,7 +17,7 @@ DefineAnimations("animations-terran-battlecruiser", {
 })
 
 DefineUnitType("unit-terran-battlecruiser", {
-  DrawLevel = 45, NumDirections = 32,
+  DrawLevel = 45,
   Animations = "animations-terran-battlecruiser", Icon = "icon-terran-battlecruiser",
   Costs = {"time", 250, "minerals", 400, "gas", 300},
   Speed = 14,

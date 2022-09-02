@@ -72,7 +72,7 @@ DefineAnimations("animations-terran-marine", {
 DefineUnitType("unit-terran-marine", {
   Animations = "animations-terran-marine", Icon = "icon-terran-marine",
   Costs = {"time", 60, "minerals", 50},
-  Speed = 10, NumDirections = 32,
+  Speed = 10,
   DrawLevel = 40,
   Armor = 2, BasicDamage = 6, PiercingDamage = 2, Missile = "missile-none",
   AnnoyComputerFactor = 50,

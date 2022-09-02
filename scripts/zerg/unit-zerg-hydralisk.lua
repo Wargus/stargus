@@ -75,7 +75,7 @@ DefineAnimations("animations-zerg-hydralisk", {
 DefineUnitType("unit-zerg-hydralisk", { Name = "Hydralisk",
   Animations = "animations-zerg-hydralisk", Icon = "icon-zerg-hydralisk",
   Costs = {"time", 35, "minerals", 75, "gas", 25,},
-  Speed = 0, NumDirections = 32,
+  Speed = 0,
   DrawLevel = 40,
   BoardSize = 2,
   Armor = 2, BasicDamage = 10, PiercingDamage = 4, Missile = "missile-zerg-spit",

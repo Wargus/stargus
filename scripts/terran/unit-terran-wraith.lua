@@ -17,7 +17,7 @@ DefineAnimations("animations-terran-wraith", {
 })
 
 DefineUnitType("unit-terran-wraith", {
-DrawLevel = 45, NumDirections = 32,
+DrawLevel = 45,
   Animations = "animations-terran-wraith", Icon = "icon-terran-wraith",
   Costs = {"time", 250, "minerals", 150, "gas", 100},
   Speed = 14,

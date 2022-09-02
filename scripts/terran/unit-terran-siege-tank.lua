@@ -29,7 +29,7 @@ DefineAnimations("animations-terran-siege-tank", {
 DefineUnitType("unit-terran-siege-tank", {
   Animations = "animations-terran-siege-tank", Icon = "icon-terran-siege-tank",
   Costs = {"time", 60, "minerals", 150, "gas", 100},
-  Speed = 10, NumDirections = 32,
+  Speed = 10,
   DrawLevel = 40,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-none",
   AnnoyComputerFactor = 55,

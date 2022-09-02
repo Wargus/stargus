@@ -89,7 +89,6 @@ DefineAnimations("animations-terran-scv", {
 })
 
 DefineUnitType("unit-terran-scv", {
-  NumDirections = 32,
   Animations = "animations-terran-scv", Icon = "icon-terran-scv",
   Costs = {"time", 45, "minerals", 50},
   Speed = 10,

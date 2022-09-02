@@ -27,7 +27,6 @@ Still = {"frame 0", "wait 125",},
 
 
 DefineUnitType("unit-protoss-probe", {
-  NumDirections = 32,
   DrawLevel = 19,
   Animations = "animations-protoss-probe", Icon = "icon-protoss-probe",
   Costs = {"time", 45, "minerals", 50},

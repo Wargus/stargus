@@ -34,7 +34,7 @@ DefineUnitType("unit-zerg-queen", {
   Animations = "animations-zerg-queen", Icon = "icon-zerg-queen",
   Costs = {"time", 100, "minerals", 100, "gas", 100,},
   RepairHp = 1,
-  Speed = 4, NumDirections = 32,
+  Speed = 4,
   DrawLevel = 45,
   Demand = 2,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",

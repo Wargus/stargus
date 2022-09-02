@@ -43,7 +43,6 @@ DefineAnimations("animations-zerg-egg", {
 })
 
 DefineUnitType("unit-zerg-egg", { Name = "Egg",
-  NumDirections = 1,
   DrawLevel = 30,
   Animations = "animations-zerg-egg", Icon = "icon-zerg-egg",
   Armor = 10, Missile = "missile-none",

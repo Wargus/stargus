@@ -37,7 +37,7 @@ DefineConstruction("construction-terran-barracks", {
 
 DefineUnitType("unit-terran-barracks", {
   Animations = "animations-terran-barracks", Icon = "icon-terran-barracks",
-  Costs = {"time", 200, "minerals", 150},
+  Costs = {"time", 60, "minerals", 150},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-barracks",
