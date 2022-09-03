@@ -4,12 +4,13 @@
 
 DefineAnimations("animations-terran-dropship", {
   Still = {"frame 0", "wait 125",--[[FIXME: shift down 79A2]]},
-  Move = {"unbreakable begin", "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",
-    "frame 0", "move 3", "wait 2", "frame 0", "move 2", "wait 1",
-    "frame 0", "move 3", "wait 1", "frame 0", "move 2", "wait 1",
-    "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",
-    "frame 0", "move 3", "wait 2", "frame 0", "move 2", "wait 1",
-    "frame 0", "move 3", "wait 1", "frame 0", "move 2", "unbreakable end", "wait 1",},
+  Move = {
+    "unbreakable begin", -- accellerate
+      "frame 0", "move 1", "wait 1", "frame 0", "move 2", "wait 1",
+      "frame 0", "move 3", "wait 1", "frame 0", "move 2",
+    "unbreakable end", "wait 1",
+    "label fullspeed", "unbreakable begin", "frame 0", "move 3", "wait 1", "frame 0", "move 2", "wait 1", "frame 0", "move 3", "unbreakable end", "wait 1",
+    "goto fullspeed",},
   Death = {"unbreakable begin", "sound terran-dropship-death",
     --[[active overlay 332,0]] "wait 3", "unbreakable end", "wait 1",},
 })
@@ -21,7 +22,7 @@ DefineUnitType("unit-terran-dropship", {
   Speed = 14,
   DrawLevel = 60,
   MaxOnBoard = 8,
-  TileSize = {1, 1}, BoxSize = {63, 63},
+  TileSize = {2, 2}, BoxSize = {63, 63}, PersonalSpace = {7, 7},
   SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
   Armor = 5, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   MaxAttackRange = 4,
