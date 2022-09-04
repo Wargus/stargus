@@ -22,14 +22,13 @@ const std::string searchFile(const std::string &data)
 {
   vector <string> name_vector;
 
-#ifdef HAVE_CONFIG_H
-  // first search in the package directory (e.g. /usr/share/<package>
-  name_vector.push_back(string(PACKAGE_DATA_DIR));
-
-  // if this fails it search the data in a relative position
   name_vector.push_back(data);
 
-  // and if this still fails we assume the developer case and search the data in absolute source folder
+#ifdef HAVE_CONFIG_H
+  // search in the package directory (e.g. /usr/share/<package>
+  name_vector.push_back(string(PACKAGE_DATA_DIR));
+
+  // if this still fails we assume the developer case and search the data in absolute source folder
   name_vector.push_back(string(PACKAGE_SOURCE_DIR));
 #endif
 
