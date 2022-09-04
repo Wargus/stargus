@@ -20,7 +20,8 @@ Control CDTodo_bootstrap[] = {
   {F,0,"","starcraft archive" __4 },
   {F,0,"","StarCraft Archive" __4 },
 
-  {Q,0,"remove-stardat.mpq","files\\stardat.mpq" __4}
+  {Q,0,"remove-stardat.mpq","files\\stardat.mpq" __4},
+  {Q,0,"remove-broodat.mpq","files\\broodat.mpq" __4}
 };
 
 Control CDTodo[] = {

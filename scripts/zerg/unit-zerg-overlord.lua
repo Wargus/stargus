@@ -13,7 +13,7 @@ DefineAnimations("animations-zerg-overlord-death", {
 
 
 DefineUnitType("unit-zerg-overlord-death", {
-  Image = {"file", "zerg/units/overlord death.png", "size", {72, 72}},
+  Image = image_unit_zerg_zovdeath,
   Animations = "animations-zerg-overlord-death", Icon = "icon-zerg-overlord",
   NumDirections = 1,
   HitPoints = 255,
@@ -54,10 +54,8 @@ DefineUnitType("unit-zerg-overlord", { Name = "Overlord",
   Animations = "animations-zerg-overlord", Icon = "icon-zerg-overlord",
   Costs = {"time", 45, "minerals", 100},
   RepairHp = 4,
-  Speed = 0, NumDirections = 32,
+  Speed = 0,
   DrawLevel = 45,
-  TileSize = {1, 1}, BoxSize = {63, 63},
-  SightRange = 10,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 45,
   Points = 200,

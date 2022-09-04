@@ -15,11 +15,11 @@ DefineAnimations("animations-terran-barracks", {
 
 DefineConstruction("construction-terran-barracks", {
   Files = {
-    File = "terran/units/building construction large.png",
-    Size = {160, 128}},
+    File = image_unit_terran_tbldlrg_file,
+    Size = image_unit_terran_tbldlrg_size},
   ShadowFiles = {
-    File = "terran/units/building construction large shadow.png",
-    Size = {128, 128}},
+    File = image_unit_terran_tbldlrg_file,
+    Size = image_unit_terran_tbldlrg_size},
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -37,7 +37,7 @@ DefineConstruction("construction-terran-barracks", {
 
 DefineUnitType("unit-terran-barracks", {
   Animations = "animations-terran-barracks", Icon = "icon-terran-barracks",
-  Costs = {"time", 200, "minerals", 150},
+  Costs = {"time", 60, "minerals", 150},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-barracks",
@@ -46,8 +46,6 @@ DefineUnitType("unit-terran-barracks", {
   BurnDamageRate = 1,
   DrawLevel = 50,
   BuilderOutside = true,
-  TileSize = {4, 3}, BoxSize = {127, 95},
-  SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 30, AnnoyComputerFactor = 35,
   Points = 160,

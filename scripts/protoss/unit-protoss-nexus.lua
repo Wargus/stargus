@@ -9,11 +9,11 @@ DefineAnimations("animations-protoss-nexus", {
 
 DefineConstruction("construction-protoss-nexus", {
   Files = {
-    File = "terran/units/building construction large.png",
-    Size = {160, 128}},
+    File = image_unit_terran_tbldlrg_file,
+    Size = image_unit_terran_tbldlrg_size},
   ShadowFiles = {
-    File = "terran/units/building construction large shadow.png",
-    Size = {128, 128}},
+    File = image_unit_terran_tbldlrg_file,
+    Size = image_unit_terran_tbldlrg_size},
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -660,8 +660,6 @@ DefineUnitType("unit-protoss-nexus", {
   Construction = "construction-protoss-nexus",
   Speed = 0,
   DrawLevel = 50,
-  TileSize = {4, 3}, BoxSize = {126, 95},
-  SightRange = 1, 
   BuilderOutside = true, 
   AutoBuildRate = 30,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",

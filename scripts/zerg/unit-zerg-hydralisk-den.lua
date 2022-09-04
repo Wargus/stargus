@@ -19,8 +19,6 @@ DefineUnitType("unit-zerg-hydralisk-den", {
   Construction = "construction-zerg",
   Speed = 0,
   DrawLevel = 30,
-  TileSize = {3, 2}, BoxSize = {100, 63},
-  SightRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,
   Points = 170,

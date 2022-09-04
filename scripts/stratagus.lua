@@ -174,6 +174,12 @@ SetMMFogOfWarOpacityLevels(0x55, 0xAA, 0xFF) -- default values
 SetFogOfWarType("enhanced") -- set to "fast", "tiled", or "enhanced"
 SetFogOfWarBilinear(true)
 
+-- Define the factor when computer AI reacts relative to sight of a unit
+ComputerReactionRangeFactor = 1.5
+
+-- Define the factor when person AI reacts relative to sight of a unit
+PersonReactionRangeFactor = 0.8
+
 if CanAccessFile("tilesets/fog.png") then
   SetFogOfWarGraphics("tilesets/fog.png")
 else

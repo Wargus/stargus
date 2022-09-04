@@ -3,16 +3,19 @@
 	[
 	    {
 	        "name": "tunit",
-	        "arcfile": "game\\tunit.pcx"
+	        "arcfile": "game\\tunit.pcx",
+	        "palette": "tunit.pal"
 	    },
 	    {
 	        "name": "twire",
-	        "arcfile": "game\\twire.pcx"
+	        "arcfile": "game\\twire.pcx",
+	        "palette": "twire.pal"
 	    },
-	    
+
 	    {
 	        "name": "tfontgam",
 	        "arcfile": "game\\tfontgam.pcx",
+	        "palette": "fontgam.pal",
 			"mapping": {
 		        "length": 8,
 		        "start": 1,
@@ -22,6 +25,7 @@
 	    {
 	        "name": "ticon-0",
 	        "arcfile": "unit\\cmdbtns\\ticon.pcx",
+	        "palette": "ticon-0.pal",
 			"mapping": {
 		        "length": 16,
 		        "start": 0,
@@ -31,6 +35,7 @@
 	    {
 	        "name": "tselect-0",
 	        "arcfile": "game\\tselect.pcx",
+	        "palette": "tselect.pal",
 			"mapping": {
 		        "length": 8,
 		        "start": 1,
@@ -42,19 +47,19 @@
 	[
 	    {
 	        "name": "ofire",
-	        "arcfile": "tileset\\ashworld\\ofire.pcx"
+	        "arcfile": "tileset\\<?>\\ofire.pcx"
 	    },
 	    {
 	        "name": "gfire",
-	        "arcfile": "tileset\\ashworld\\gfire.pcx"
+	        "arcfile": "tileset\\<?>\\gfire.pcx"
 	    },
 	    {
 	        "name": "bfire",
-	        "arcfile": "tileset\\ashworld\\bfire.pcx"
+	        "arcfile": "tileset\\<?>\\bfire.pcx"
 	    },
 	    {
 	        "name": "bexpl",
-	        "arcfile": "tileset\\ashworld\\bexpl.pcx"
+	        "arcfile": "tileset\\<?>\\bexpl.pcx"
 	    }
 
 	],
@@ -62,23 +67,43 @@
 	[
 	    {
 	        "name": "ashworld",
-	        "arcfile": "tileset\\ashworld.wpe"
+	        "arcfile": "tileset\\ashworld.wpe",
+	        "palette": "ashworld.pal"
 	    },
 	    {
 	        "name": "badlands",
-	        "arcfile": "tileset\\badlands.wpe"
+	        "arcfile": "tileset\\badlands.wpe",
+	        "palette": "badlands.pal"
 	    },
 	    {
 	        "name": "install",
-	        "arcfile": "tileset\\install.wpe"
+	        "arcfile": "tileset\\install.wpe",
+	        "palette": "install.pal"
 	    },
 	    {
 	        "name": "jungle",
-	        "arcfile": "tileset\\jungle.wpe"
+	        "arcfile": "tileset\\jungle.wpe",
+	        "palette": "jungle.pal"
 	    },
 	    {
 	        "name": "platform",
-	        "arcfile": "tileset\\platform.wpe"
+	        "arcfile": "tileset\\platform.wpe",
+	        "palette": "platform.pal"
+	    },
+	    {
+	        "name": "desert",
+	        "arcfile": "tileset\\desert.wpe",
+	        "palette": "desert.pal"
+	    },
+	    {
+	        "name": "ice",
+	        "arcfile": "tileset\\ice.wpe",
+	        "palette": "ice.pal"
+	    },
+	    {
+	        "name": "twilight",
+	        "arcfile": "tileset\\twilight.wpe",
+	        "palette": "twilight.pal"
 	    }
 	]
 }

@@ -61,6 +61,8 @@
 #include "platform.h"
 #include "UIConsole.h"
 #include "StringUtil.h"
+#include "pacman.h"
+#include "dat/ImagesConverter.h"
 
 // system
 #include <nlohmann/json.hpp>
@@ -279,11 +281,12 @@ int parseOptions(int argc, const char **argv)
 
 
 void loadPalettes(std::shared_ptr<Hurricane> hurricane,
+                  Storage palStorage,
                   std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
                   std::map<std::string, std::shared_ptr<Palette2D>> &palette2DMap)
 {
   // read in the json file
-  std::ifstream json_file("dataset/palettes.json");
+  std::ifstream json_file(pacman::searchFile("dataset/palettes.json"));
 
   json palettes_json; //create unitiialized json object
 
@@ -291,38 +294,93 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
 
   //std::cout << units_json << std::endl; // prints json object to screen
 
+  // needed to fix broodware tileset parser. TODO: think abot the concept
+  vector<string> wpeNames;
 
+  /** WPE **/
+  auto &wpe_section = palettes_json.at("WPE");
+
+  for(auto &wpe_array : wpe_section)
+  {
+    string name = wpe_array.at("name");
+    string wpe_arcfile = wpe_array.at("arcfile");
+    string pal_palette = wpe_array.at("palette");
+
+    shared_ptr<DataChunk> dataWPE = hurricane->extractDataChunk(wpe_arcfile);
+
+    if (dataWPE) // load from WPE palette
+    {
+      shared_ptr<Palette> pal = make_shared<Palette>(dataWPE);
+      paletteMap[name] = pal;
+      wpeNames.push_back(name);
+
+      string pal_file(palStorage.getFullPath() + pal_palette);
+      CheckPath(pal_file);
+      pal->write(pal_file);
+    }
+    else // load from stored .pal palette
+    {
+      Breeze localPal(palStorage.getFullPath());
+      shared_ptr<DataChunk> dataPal = localPal.extractDataChunk(pal_palette);
+
+      if(dataPal)
+      {
+        std::shared_ptr<Palette> pal = make_shared<Palette>(dataPal);
+        paletteMap[name] = pal;
+      }
+    }
+
+    //cout << wpe_array << endl;
+  }
 
   /** PCX **/
   auto &pcx_section = palettes_json.at("PCX");
 
   for(auto &pcx_array : pcx_section)
   {
-    string pcx_name = pcx_array.at("name");
+    string name = pcx_array.at("name");
     string pcx_arcfile = pcx_array.at("arcfile");
+    string pal_palette = pcx_array.at("palette");
 
     Pcx pcx(hurricane, pcx_arcfile);
 
-    try
+    if(!pcx.getSize().isEmpty()) // load from PCX palette
     {
-      auto &pcx_mapping = pcx_array.at("mapping");
+      try
+      {
+        auto &pcx_mapping = pcx_array.at("mapping");
 
-      int length = pcx_mapping.at("length");
-      int start = pcx_mapping.at("start");
-      int index = pcx_mapping.at("index");
+        int length = pcx_mapping.at("length");
+        int start = pcx_mapping.at("start");
+        int index = pcx_mapping.at("index");
 
+        pcx.mapIndexPalette(length, start, index);
+        //cout << pcx_mapping << endl;
+      }
+      catch (const nlohmann::detail::out_of_range &json_range)
+      {
+        // just ignore if the section is not availabe
+      }
 
-      pcx.mapIndexPalette(length, start, index);
-      //cout << pcx_mapping << endl;
+      std::shared_ptr<Palette> pal = pcx.getPalette();
+
+      string pal_file(palStorage.getFullPath() + pal_palette);
+      CheckPath(pal_file);
+      pal->write(pal_file);
+
+      paletteMap[name] = pal;
     }
-    catch (const nlohmann::detail::out_of_range &json_range)
+    else // load from stored .pal palette
     {
-      // just ignore if the section is not availabe
+      Breeze localPal(palStorage.getFullPath());
+      shared_ptr<DataChunk> dataPal = localPal.extractDataChunk(pal_palette);
+
+      if(dataPal)
+      {
+        std::shared_ptr<Palette> pal = make_shared<Palette>(dataPal);
+        paletteMap[name] = pal;
+      }
     }
-
-    std::shared_ptr<Palette> pal = pcx.getPalette();
-
-    paletteMap[pcx_name] = pal;
 
     //cout << pcx_array << endl;
   }
@@ -335,6 +393,8 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
     string pcx_name = pcx_array.at("name");
     string pcx_arcfile = pcx_array.at("arcfile");
 
+    replaceString("<?>", *wpeNames.begin(), pcx_arcfile);
+
     Pcx pcx(hurricane, pcx_arcfile);
 
     std::shared_ptr<Palette2D> pal2D = pcx.map2DPalette();
@@ -344,21 +404,7 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
     //cout << pcx_array << endl;
   }
 
-  /** WPE **/
-  auto &wpe_section = palettes_json.at("WPE");
 
-  for(auto &wpe_array : wpe_section)
-  {
-    string wpe_name = wpe_array.at("name");
-    string wpe_arcfile = wpe_array.at("arcfile");
-
-    shared_ptr<DataChunk> dataWPE = hurricane->extractDataChunk(wpe_arcfile);
-
-    shared_ptr<Palette> pal = make_shared<Palette>(dataWPE);
-    paletteMap[wpe_name] = pal;
-
-    //cout << wpe_array << endl;
-  }
 }
 
 /**
@@ -380,14 +426,8 @@ void testHook()
   shared_ptr<Storm> storm = make_shared<Storm>(
                               "/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
   //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
-  //dat::DataHub datahub(storm);
+  dat::DataHub datahub(storm);
   //datahub.printCSV();
-
-  //dat::PortraitsConverter portraits(storm, datahub);
-  //portraits.convert();
-
-  //Smacker smack(storm);
-  //smack.convertMNG("glue\\mainmenu\\multi.smk", "/tmp/multi");
 
   /// Image 1
   Pcx pcx1(storm, "game\\tunit.pcx");
@@ -432,18 +472,6 @@ void testHook()
 
 
   grp.save("/tmp/marine.png");
-
-  Pcx pcx(storm, "game\\tconsole.pcx");
-  string console = "data/ui/tconsole";
-  bool case_func = pcx.savePNG(console + ".png");
-
-  UIConsole uic(storm);
-
-  //pixel count from left
-  int right = 296;
-  int left = 275;
-
-  uic.convert(console, left, right);
 
   cout << "end testHook()" << endl;
   exit(0);
@@ -525,6 +553,10 @@ int main(int argc, const char **argv)
   luagen.setDataPath(preferences.getDestDir());
   luagen.setDataType("luagen");
 
+  Storage palStorage;
+  palStorage.setDataPath(preferences.getDestDir());
+  palStorage.setDataType("palette");
+
   Storage data;
   data.setDataPath(preferences.getDestDir());
 
@@ -597,7 +629,7 @@ int main(int argc, const char **argv)
     dat::DataHub datahub(sub_storm);
 
     // read in the json file
-    std::ifstream json_file("dataset/units.json");
+    std::ifstream json_file(pacman::searchFile("dataset/units.json"));
 
     json units_json; //create unitiialized json object
 
@@ -612,7 +644,7 @@ int main(int argc, const char **argv)
       unitNames.push_back(unit_name);
     }
 
-    loadPalettes(sub_storm, paletteMap, palette2DMap);
+    loadPalettes(sub_storm, palStorage, paletteMap, palette2DMap);
 
     if (preferences.getVideoExtraction())
     {
@@ -622,6 +654,9 @@ int main(int argc, const char **argv)
 
     dat::UnitsConverter unitsConverter(sub_storm, datahub);
     unitsConverter.convert(units_json, paletteMap, palette2DMap);
+
+    dat::ImagesConverter im_conv(sub_storm, datahub);
+    im_conv.convert(paletteMap, palette2DMap);
 
     for (i = 0; i <= 1; ++i)
     {
@@ -695,8 +730,6 @@ int main(int argc, const char **argv)
           {
             pal2D = palette2DMap.at("ofire");
             grp.setPalette2D(pal2D);
-            //grp.setPalette(pal);
-            //grp.setTransparent(127);
             grp.setRGBA(true);
           }
           else if (c[u].Arg1 == 2)
@@ -706,12 +739,12 @@ int main(int argc, const char **argv)
           }
           else if (c[u].Arg1 == 1)
           {
-            pal = paletteMap.at("install");
+            pal = paletteMap.begin()->second;
             grp.setPalette(pal);
           }
           else // default palette
           {
-            pal = paletteMap.at("install");
+            pal = paletteMap.begin()->second;
             grp.setPalette(pal);
           }
 

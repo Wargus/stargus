@@ -16,14 +16,13 @@ DefineAnimations("animations-terran-dropship", {
 })
 
 DefineUnitType("unit-terran-dropship", {
-  DrawLevel = 45, NumDirections = 32,
+  DrawLevel = 45,
   Animations = "animations-terran-dropship", Icon = "icon-terran-dropship",
   Costs = {"time", 250, "minerals", 400, "gas", 300},
   Speed = 14,
   DrawLevel = 60,
   MaxOnBoard = 8,
-  TileSize = {2, 2}, BoxSize = {63, 63}, PersonalSpace = {7, 7},
-  SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
+  -- PersonalSpace = {7, 7}, TileSize = {2, 2}
   Armor = 5, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   MaxAttackRange = 4,
   Priority = 65,

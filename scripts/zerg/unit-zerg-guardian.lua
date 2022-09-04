@@ -49,13 +49,11 @@ DefineAnimations("animations-zerg-guardian", {
 
 
 DefineUnitType("unit-zerg-guardian", {
-  DrawLevel = 45, NumDirections = 32,
+  DrawLevel = 45,
   Animations = "animations-zerg-guardian", Icon = "icon-zerg-guardian",
   Costs = {"time", 250, "minerals", 150, "gas", 200},
   Speed = 14,
   DrawLevel = 60,
-  TileSize = {1, 1}, BoxSize = {63, 63},
-  SightRange = 11, ComputerReactionRange = 8, PersonReactionRange = 8,
   Armor = 2, BasicDamage = 20, PiercingDamage = 16, Missile = "missile-none",
   MaxAttackRange = 4,
   Priority = 65,

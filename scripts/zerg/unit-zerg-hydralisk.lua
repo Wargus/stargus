@@ -14,7 +14,7 @@ DefineAnimations("animations-zerg-hydralisk-death", {
 
 
 DefineUnitType("unit-zerg-hydralisk-death", {
-  Image = {"file", "zerg/units/hydralisk death.png", "size", {128, 128}},
+  Image = image_unit_zerg_zhydeath,
   Animations = "animations-zerg-hydralisk-death", Icon = "icon-zerg-hydralisk",
   NumDirections = 1,
   HitPoints = 255,
@@ -75,11 +75,9 @@ DefineAnimations("animations-zerg-hydralisk", {
 DefineUnitType("unit-zerg-hydralisk", { Name = "Hydralisk",
   Animations = "animations-zerg-hydralisk", Icon = "icon-zerg-hydralisk",
   Costs = {"time", 35, "minerals", 75, "gas", 25,},
-  Speed = 0, NumDirections = 32,
+  Speed = 0,
   DrawLevel = 40,
-  TileSize = {1, 1}, BoxSize = {31, 31},
   BoardSize = 2,
-  SightRange = 6, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 2, BasicDamage = 10, PiercingDamage = 4, Missile = "missile-zerg-spit",
   AnnoyComputerFactor = 50,
   MaxAttackRange = 5,

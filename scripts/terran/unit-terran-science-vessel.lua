@@ -17,13 +17,11 @@ DefineAnimations("animations-terran-science-vessel", {
 })
 
 DefineUnitType("unit-terran-science-vessel", {
-  DrawLevel = 45, NumDirections = 1,
+  DrawLevel = 45,
   Animations = "animations-terran-science-vessel", Icon = "icon-terran-science-vessel",
   Costs = {"time", 250, "minerals", 100, "gas", 225},
   Speed = 14,
   DrawLevel = 60,
-  TileSize = {1, 1}, BoxSize = {63, 63},
-  SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
   Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-none",
   MaxAttackRange = 4,
   Priority = 65,

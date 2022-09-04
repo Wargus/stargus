@@ -15,7 +15,7 @@ class images_dat_t : public kaitai::kstruct {
 
 public:
 
-    images_dat_t(uint16_t p_num_lines, kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, images_dat_t* p__root = 0);
+    images_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, images_dat_t* p__root = 0);
 
 private:
     void _read();
@@ -23,6 +23,35 @@ private:
 
 public:
     ~images_dat_t();
+
+private:
+    bool f_num_lines;
+    int32_t m_num_lines;
+
+public:
+
+    /**
+     * A division of file size though the record size gives the number of records in the file to parse.
+     */
+    int32_t num_lines();
+
+private:
+    bool f_record_size;
+    int8_t m_record_size;
+
+public:
+
+    /**
+     * The size of one data record. This is all type sizes in the format summarized.
+     */
+    int8_t record_size();
+
+private:
+    bool f_file_size;
+    int32_t m_file_size;
+
+public:
+    int32_t file_size();
 
 private:
     std::vector<uint32_t>* m_grp;
@@ -39,7 +68,6 @@ private:
     std::vector<uint32_t>* m_special_overlay;
     std::vector<uint32_t>* m_landing_dust_overlay;
     std::vector<uint32_t>* m_lift_off_dust_overlay;
-    uint16_t m_num_lines;
     images_dat_t* m__root;
     kaitai::kstruct* m__parent;
 
@@ -106,7 +134,6 @@ public:
      * 7 = (crash)\n
      * 8 = Unk8 (?)\n
      * 9 = Unk9 (?)\n
-     *     
      */
     std::vector<uint8_t>* remapping() const { return m_remapping; }
 
@@ -144,7 +171,6 @@ public:
      * Complementary to "Landing Dust", this one controls the placement of the lifting-off dust. Some units (Dropship, Science Vessel) originally had this too, but the idea was abandoned. [pointer to a LOD file in images.tbl]
      */
     std::vector<uint32_t>* lift_off_dust_overlay() const { return m_lift_off_dust_overlay; }
-    uint16_t num_lines() const { return m_num_lines; }
     images_dat_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };

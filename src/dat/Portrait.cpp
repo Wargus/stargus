@@ -28,29 +28,39 @@ Portrait::~Portrait()
 
 }
 
-uint32_t Portrait::file()
+uint32_t Portrait::video_idle()
 {
-  uint32_t portrait_file_id = mDatahub.portrait->portrait_file()->at(mId);
-  LOG4CXX_TRACE(logger, string("file(") + to_string(portrait_file_id) + ")");
+  uint32_t portrait_id = mDatahub.portrait->video_idle()->at(mId);
+  LOG4CXX_TRACE(logger, string("video_idle(") + to_string(portrait_id) + ")");
 
-  return portrait_file_id;
+  return portrait_id;
 }
 
-TblEntry Portrait::idle()
+uint32_t Portrait::video_talking()
 {
-  TblEntry tbl_entry = mDatahub.portdata_tbl_vec.at(file()-1);
+  uint32_t portrait_id = mDatahub.portrait->video_talking()->at(mId);
+  LOG4CXX_TRACE(logger, string("video_talking(") + to_string(portrait_id) + ")");
+
+  return portrait_id;
+}
+
+TblEntry Portrait::tbl_idle()
+{
+  TblEntry tbl_entry = mDatahub.portdata_tbl_vec.at(video_idle() - 1);
+  LOG4CXX_TRACE(logger, string("tbl_idle(") + tbl_entry.name1 + ")");
 
   return tbl_entry;
 }
 
-TblEntry Portrait::talking()
+TblEntry Portrait::tbl_talking()
 {
-  TblEntry tbl_entry = mDatahub.portdata_tbl_vec.at(file());
+  TblEntry tbl_entry = mDatahub.portdata_tbl_vec.at(video_talking() - 1);
+  LOG4CXX_TRACE(logger, string("tbl_talking(") + tbl_entry.name1 + ")");
 
   return tbl_entry;
 }
 
-std::string Portrait::PathToID(const std::string &portrait)
+std::string Portrait::createID(const std::string &portrait)
 {
   string portrait_name(portrait);
   replaceString("\\", "/", portrait_name);

@@ -202,3 +202,9 @@ bool Storm::extractFile(const std::string &archivedFile, const std::string &extr
   return result;
 }
 
+unsigned int Storm::getRecordCount(const std::string &archivedFile, unsigned int recordsize)
+{
+  // TODO: implement
+  return 0;
+}
+

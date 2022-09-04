@@ -10,11 +10,11 @@ DefineAnimations("animations-protoss-photon-cannon", {
 
 DefineConstruction("construction-protoss-photon-cannon", {
   Files = {
-    File = "zerg/units/building morph.png",
-    Size = {160, 192}},
+    File = image_unit_zerg_zbuild_file,
+    Size = image_unit_zerg_zbuild_size},
   ShadowFiles = {
-    File = "zerg/units/building morph shadow.png",
-    Size = {160, 192}},
+    File = image_unit_zerg_zbuild_file,
+    Size = image_unit_zerg_zbuild_size},
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -638,8 +638,6 @@ DefineUnitType("unit-protoss-photon-cannon", {
   Construction = "construction-protoss-photon-cannon",
   Speed = 0,
   DrawLevel = 30,
-  TileSize = {2, 2}, BoxSize = {63, 63},
-  SightRange = 7, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,
   MaxAttackRange = 7,

@@ -22,8 +22,6 @@ DefineUnitType("unit-zerg-greater-spire", {
   Construction = "construction-zerg",
   Speed = 0,
   DrawLevel = 30,
-  TileSize = {2, 2}, BoxSize = {63, 63},--FIXME:wrong box size
-  SightRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,
   Points = 170,

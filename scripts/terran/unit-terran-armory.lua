@@ -13,11 +13,11 @@ DefineAnimations("animations-terran-armory", {
 
 DefineConstruction("construction-terran-armory", {
   Files = {
-    File = "terran/units/building construction medium.png",
-    Size = {96, 96}},
+    File = image_unit_terran_tbldmed_file,
+    Size = image_unit_terran_tbldmed_size},
   ShadowFiles = {
-    File = "terran/units/building construction medium shadow.png",
-    Size = {96, 96}},
+    File = image_unit_terran_tbldmed_file,
+    Size = image_unit_terran_tbldmed_size},
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -44,8 +44,6 @@ DefineUnitType("unit-terran-armory", {
   BurnDamageRate = 1,
   DrawLevel = 50,
   BuilderOutside = true,
-  TileSize = {3, 2}, BoxSize = {95, 63},
-  SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 30, AnnoyComputerFactor = 35,
   Points = 160,

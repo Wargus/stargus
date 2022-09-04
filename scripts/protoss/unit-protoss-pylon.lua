@@ -10,11 +10,11 @@ DefineAnimations("animations-protoss-pylon", {
 
 DefineConstruction("construction-protoss-pylon", {
   Files = {
-    File = "terran/units/building construction medium.png",
-    Size = {96, 96}},
+    File = image_unit_terran_tbldmed_file,
+    Size = image_unit_terran_tbldmed_size},
   ShadowFiles = {
-    File = "terran/units/building construction medium shadow.png",
-    Size = {96, 96}},
+    File = image_unit_terran_tbldmed_file,
+    Size = image_unit_terran_tbldmed_size},
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -38,8 +38,6 @@ DefineUnitType("unit-protoss-pylon", {
   Construction = "construction-protoss-pylon",
   Speed = 0,
   DrawLevel = 50,
-  TileSize = {2, 2}, BoxSize = {63, 63},
-  SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 45,
   Points = 100,

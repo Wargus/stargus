@@ -34,10 +34,8 @@ DefineUnitType("unit-zerg-queen", {
   Animations = "animations-zerg-queen", Icon = "icon-zerg-queen",
   Costs = {"time", 100, "minerals", 100, "gas", 100,},
   RepairHp = 1,
-  Speed = 4, NumDirections = 32,
+  Speed = 4,
   DrawLevel = 45,
-  TileSize = {1, 1}, BoxSize = {50, 50},--FIXME: wrong box size
-  SightRange = 7,
   Demand = 2,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 45,

@@ -37,10 +37,8 @@ DefineAnimations("animations-protoss-reaver", {
 DefineUnitType("unit-protoss-reaver", {
   Animations = "animations-protoss-reaver", Icon = "icon-protoss-reaver",
   Costs = {"time", 100, "minerals", 100},
-  Speed = 10, NumDirections = 32,
+  Speed = 10,
   DrawLevel = 40,
-  TileSize = {1, 1}, BoxSize = {179, 48},
-  SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 4, BasicDamage = 10, PiercingDamage = 3, Missile = "missile-none",
   MaxAttackRange = 1,
   Priority = 60,

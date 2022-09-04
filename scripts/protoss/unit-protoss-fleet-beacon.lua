@@ -13,11 +13,11 @@ DefineAnimations("animations-protoss-fleet-beacon", {
 
 DefineConstruction("construction-protoss-fleet-beacon", {
   Files = {
-    File = "terran/units/building construction large.png",
-    Size = {160, 128}},
+    File = image_unit_terran_tbldlrg_file,
+    Size = image_unit_terran_tbldlrg_size},
   ShadowFiles = {
-    File = "terran/units/building construction large shadow.png",
-    Size = {128, 128}},
+    File = image_unit_terran_tbldlrg_file,
+    Size = image_unit_terran_tbldlrg_size},
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -41,8 +41,6 @@ DefineUnitType("unit-protoss-fleet-beacon", {
   Construction = "construction-protoss-fleet-beacon",
   Speed = 0,
   DrawLevel = 50,
-  TileSize = {3, 2}, BoxSize = {95, 63},
-  SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 30, AnnoyComputerFactor = 35,
   Points = 160,

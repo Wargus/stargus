@@ -13,6 +13,12 @@
 namespace dat
 {
 
+/**
+ * Wrapper interface for Kaitai parser images_dat.ksy, but with easier access in the game logic.
+ * New functions are added on need as wrapper functions. The function names should stay the same
+ * and documentation in only mandatory if needed to understand the difference.
+ *
+ */
 class Image
 {
 public:
@@ -24,6 +30,11 @@ public:
   uint8_t draw_function();
 
   uint8_t remapping();
+
+  bool gfx_turns();
+
+  /***/
+  static std::string createID(const std::string &image);
 
 private:
   DataHub &mDatahub;

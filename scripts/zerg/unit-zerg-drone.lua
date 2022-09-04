@@ -29,13 +29,10 @@ DefineAnimations("animations-zerg-drone", {
 
 
 DefineUnitType("unit-zerg-drone", {
-  NumDirections = 32,
   Animations = "animations-zerg-drone", Icon = "icon-zerg-drone",
   Costs = {"time", 25, "minerals", 50},
   Speed = 10,
   DrawLevel = 30,
-  TileSize = {1, 1}, BoxSize = {31, 31},
-  SightRange = 7, ComputerReactionRange = 6, PersonReactionRange = 4,
   BasicDamage = 5, PiercingDamage = 2, Missile = "missile-zerg-spit",
   MaxAttackRange = 1,
   Priority = 50,
@@ -49,13 +46,13 @@ DefineUnitType("unit-zerg-drone", {
   LandUnit = true,
   Coward = true,
   CanGatherResources = {
-   {"file-when-loaded", "graphics/unit/zerg/drone.png",
+   {"file-when-loaded", image_unit_zerg_drone_file,
     "resource-id", "minerals",
     "harvest-from-outside",
     "resource-capacity", 8,
     "wait-at-resource", 150,
     "wait-at-depot", 50},
-   {"file-when-loaded", "graphics/unit/zerg/drone.png",
+   {"file-when-loaded", image_unit_zerg_drone_file,
     "resource-id", "gas",
     "resource-capacity", 8,
     "wait-at-resource", 50,

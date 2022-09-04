@@ -33,11 +33,10 @@ DefineAnimations("animations-terran-vulture", {
 DefineUnitType("unit-terran-vulture", {
   Animations = "animations-terran-vulture", Icon = "icon-terran-vulture",
   Costs = {"time", 60, "minerals", 75},
-  Speed = 10, NumDirections = 32,
+  Speed = 10,
   DrawLevel = 40,
-  TileSize = {5, 5}, BoxSize = {47, 47}, Offset = {1, -2}, BoxOffset = {1, -2},
+  -- TileSize = {5, 5}, BoxSize = {47, 47}, Offset = {1, -2}, BoxOffset = {1, -2},
   BoardSize = 2,
-  SightRange = 16, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-terran-vulture-grenade",
   AnnoyComputerFactor = 55,
   Priority = 60,

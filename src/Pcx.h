@@ -49,6 +49,8 @@ public:
 
   std::shared_ptr<Palette2D> map2DPalette();
 
+  Size getSize();
+
 private:
   struct PCXheader
   {

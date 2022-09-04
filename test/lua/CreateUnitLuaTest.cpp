@@ -29,7 +29,16 @@ CreateUnitLuaTest::CreateUnitLuaTest(json &unitsJson)
   ofstream lua_file;
   lua_file.open (lua_file_store.getFullPath());
 
-  lua_file << lg::line("function CreateUnitLuaTest()");
+
+  lua_file << lg::line("function CreateUnitLuaTest_intern(unit, part)");
+  lua_file << lg::line("  if not part then part = \"\" end");
+  lua_file << lg::line("  if string.find(unit, part) then");
+  lua_file << lg::line("    print('CreateUnit(\"' .. unit .. '\", 0, {0, 0})')");
+  lua_file << lg::line("    CreateUnit(unit, 0, {0, 0})");
+  lua_file << lg::line("  end");
+  lua_file << lg::line("end");
+
+  lua_file << lg::line("function CreateUnitLuaTest(part)");
 
   unsigned int end = 0;
   for(auto &array : unitsJson)
@@ -43,10 +52,9 @@ CreateUnitLuaTest::CreateUnitLuaTest(json &unitsJson)
 
     if(std::find(brokenUnits.begin(), brokenUnits.end(), unit_name) == brokenUnits.end())
     {
-      string create_unit = lg::CreateUnit(unit_name, 0, Pos(0,0));
-      string print_create_unit = lg::function("print", lg::singleQuote(create_unit));
+      //string create_unit = lg::CreateUnit(unit_name, 0, Pos(0,0));
+      string create_unit = lg::function("CreateUnitLuaTest_intern", {lg::singleQuote(unit_name), "part"});
 
-      lua_file << print_create_unit << endl;
       lua_file << create_unit << endl;
     }
 

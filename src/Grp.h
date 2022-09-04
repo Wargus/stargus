@@ -57,6 +57,7 @@ public:
 
   void setTransparent(int transparent);
 
+  // FIXME: returns only valid size after saving
   Size getTileSize();
 
 protected:

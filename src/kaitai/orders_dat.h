@@ -15,7 +15,7 @@ class orders_dat_t : public kaitai::kstruct {
 
 public:
 
-    orders_dat_t(uint8_t p_num_lines, kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, orders_dat_t* p__root = 0);
+    orders_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, orders_dat_t* p__root = 0);
 
 private:
     void _read();
@@ -23,6 +23,35 @@ private:
 
 public:
     ~orders_dat_t();
+
+private:
+    bool f_num_lines;
+    int32_t m_num_lines;
+
+public:
+
+    /**
+     * A division of file size though the record size gives the number of records in the file to parse.
+     */
+    int32_t num_lines();
+
+private:
+    bool f_record_size;
+    int8_t m_record_size;
+
+public:
+
+    /**
+     * The size of one data record. This is all type sizes in the format summarized.
+     */
+    int8_t record_size();
+
+private:
+    bool f_file_size;
+    int32_t m_file_size;
+
+public:
+    int32_t file_size();
 
 private:
     std::vector<uint16_t>* m_label;
@@ -44,14 +73,13 @@ private:
     std::vector<uint16_t>* m_highlight;
     std::vector<uint16_t>* m_unknown17;
     std::vector<uint8_t>* m_obscured_order;
-    uint8_t m_num_lines;
     orders_dat_t* m__root;
     kaitai::kstruct* m__parent;
 
 public:
 
     /**
-     * Probably the label of the order. Doesn't do anything - used only for convenience.[pointer to stat_txt.tbl]
+     * Probably the label of the order. Doesn't do anything - used only for convenience. [pointer to stat_txt.tbl]
      */
     std::vector<uint16_t>* label() const { return m_label; }
 
@@ -104,7 +132,6 @@ public:
      * Order to be run if the target is obscured by the Fog-of-War. [pointer to orders.dat]
      */
     std::vector<uint8_t>* obscured_order() const { return m_obscured_order; }
-    uint8_t num_lines() const { return m_num_lines; }
     orders_dat_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };

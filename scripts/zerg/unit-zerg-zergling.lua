@@ -14,7 +14,7 @@ DefineAnimations("animations-zerg-zergling-death", {
 
 
 DefineUnitType("unit-zerg-zergling-death", { Name = "Dead Zergling",
-  Image = {"file", "zerg/units/zergling death.png", "size", {128, 128}},
+  Image = image_unit_zerg_zzedeath,
   Animations = "animations-zerg-zergling-death", Icon = "icon-zerg-zergling",
   NumDirections = 1,
   HitPoints = 255,
@@ -62,10 +62,8 @@ DefineAnimations("animations-zerg-zergling", {
 DefineUnitType("unit-zerg-zergling", {
   Animations = "animations-zerg-zergling", Icon = "icon-zerg-zergling",
   Costs = {"time", 50, "minerals", 50},
-  Speed = 10, NumDirections = 32,
+  Speed = 10,
   DrawLevel = 40,
-  TileSize = {1, 1}, BoxSize = {31, 31},
-  SightRange = 4, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-none",
   AnnoyComputerFactor = 50,
   MaxAttackRange = 1,

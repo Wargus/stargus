@@ -88,13 +88,10 @@ DefineAnimations("animations-terran-scv", {
 })
 
 DefineUnitType("unit-terran-scv", {
-  NumDirections = 32,
   Animations = "animations-terran-scv", Icon = "icon-terran-scv",
   Costs = {"time", 45, "minerals", 50},
   Speed = 10,
   DrawLevel = 45,
-  TileSize = {1*4, 1*4}, BoxSize = {31, 31},
-  SightRange = 4*4, ComputerReactionRange = 6*4, PersonReactionRange = 4*4,
   BasicDamage = 3, PiercingDamage = 2, Missile = "missile-none",
   MaxAttackRange = 1,
   Priority = 50,
@@ -108,13 +105,13 @@ DefineUnitType("unit-terran-scv", {
   LandUnit = true,
   Coward = true,
   CanGatherResources = {
-   {"file-when-loaded", "graphics/unit/terran/scv.png",
+   {"file-when-loaded", image_unit_terran_scv_file,
     "resource-id", "minerals",
     "harvest-from-outside",
     "resource-capacity", 8,
     "wait-at-resource", 150,
     "wait-at-depot", 50},
-   {"file-when-loaded", "graphics/unit/terran/scv.png",
+   {"file-when-loaded", image_unit_terran_scv_file,
     "resource-id", "gas",
     "resource-capacity", 8,
     "wait-at-resource", 50,

@@ -17,13 +17,11 @@ DefineAnimations("animations-protoss-scout", {
 })
 
 DefineUnitType("unit-protoss-scout", {
-  DrawLevel = 45, NumDirections = 32,
+  DrawLevel = 45,
   Animations = "animations-protoss-scout", Icon = "icon-protoss-scout",
   Costs = {"time", 250, "minerals", 150, "gas", 100},
   Speed = 14,
   DrawLevel = 60,
-  TileSize = {1, 1}, BoxSize = {63, 63},
-  SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
   Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-none",
   AnnoyComputerFactor = 55,
   MaxAttackRange = 4,

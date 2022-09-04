@@ -66,6 +66,40 @@ Portrait Unit::portrait()
   return portrait;
 }
 
+uint8_t Unit::elevation_level()
+{
+  uint8_t elevation_level = mDatahub.units->elevation_level()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("elevation_level(") + to_string(elevation_level) + ")");
+
+  return elevation_level;
+}
+
+units_dat_t::unit_dimension_type_t *Unit::unit_dimension()
+{
+  units_dat_t::unit_dimension_type_t *unit_dimension = mDatahub.units->unit_dimension()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("unit_dimension(") +
+      " l: " + to_string(unit_dimension->left()) +
+      " r: " + to_string(unit_dimension->right()) +
+      " u: " + to_string(unit_dimension->up()) +
+      " d: " + to_string(unit_dimension->down()) +
+      ")");
+
+  return unit_dimension;
+}
+
+uint8_t Unit::sight_range()
+{
+  uint8_t sight_range = mDatahub.units->sight_range()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("sight_range(") + to_string(sight_range) + ")");
+
+  return sight_range;
+}
+
+/* Exceptions */
+
 const char *NoPortraitException::what() const throw()
 {
   static string s;

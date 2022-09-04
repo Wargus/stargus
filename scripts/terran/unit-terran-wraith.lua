@@ -17,13 +17,11 @@ DefineAnimations("animations-terran-wraith", {
 })
 
 DefineUnitType("unit-terran-wraith", {
-DrawLevel = 45, NumDirections = 32,
+DrawLevel = 45,
   Animations = "animations-terran-wraith", Icon = "icon-terran-wraith",
   Costs = {"time", 250, "minerals", 150, "gas", 100},
   Speed = 14,
   DrawLevel = 60,
-  TileSize = {1, 1}, BoxSize = {63, 63},
-  SightRange = 6, ComputerReactionRange = 8, PersonReactionRange = 6,
   Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-terran-wraith-laser",
   AnnoyComputerFactor = 55,
   MaxAttackRange = 4,

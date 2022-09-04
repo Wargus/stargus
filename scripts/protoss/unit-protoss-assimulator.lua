@@ -9,11 +9,11 @@ DefineAnimations("animations-protoss-assimulator", {
 
 DefineConstruction("construction-protoss-assimulator", {
   Files = {
-    File = "zerg/units/building morph.png",
-    Size = {160, 192}},
+    File = image_unit_zerg_zbuild_file,
+    Size = image_unit_zerg_zbuild_size},
   ShadowFiles = {
-    File = "zerg/units/building morph shadow.png",
-    Size = {160, 192}},
+    File = image_unit_zerg_zbuild_file,
+    Size = image_unit_zerg_zbuild_size},
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -635,8 +635,6 @@ DefineUnitType("unit-protoss-assimulator", {
   Construction = "construction-protoss-assimulator",
   Speed = 0,
   DrawLevel = 30,
-  TileSize = {4, 2}, BoxSize = {127, 63},
-  SightRange = 1,
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 20,
   Points = 160,

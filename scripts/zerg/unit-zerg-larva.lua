@@ -15,7 +15,7 @@ DefineAnimations("animations-zerg-larva-death", {
 
 
 DefineUnitType("unit-zerg-larve-death", {
-  Image = {"file", "zerg/units/larva death.png", "size", {64, 64}},
+  Image = image_unit_zerg_zladeath,
   Animations = "animations-zerg-larve-death", Icon = "icon-zerg-larva",
   NumDirections = 1,
   HitPoints = 255,
@@ -35,9 +35,7 @@ DefineAnimations("animations-zerg-larva", {
 })
 
 DefineUnitType("unit-zerg-larva", { Name = "Larva",
-  NumDirections = 17,
   DrawLevel = 30,
-  TileSize = {1, 1}, BoxSize = {31, 31},
   Animations = "animations-zerg-larva", Icon = "icon-zerg-larva",
   Armor = 10, Missile = "missile-none",
   Corpse = "unit-zerg-larva-death",

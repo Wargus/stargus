@@ -13,11 +13,11 @@ DefineAnimations("animations-terran-missile-turret", {
 
 DefineConstruction("construction-terran-missile-turret", {
   Files = {
-    File = "terran/units/building construction small.png",
-    Size = {96, 96}},
+    File = image_unit_terran_tbldsml_file,
+    Size = image_unit_terran_tbldsml_size},
   ShadowFiles = {
-    File = "terran/units/building construction small shadow.png",
-    Size = {96, 96}},
+    File = image_unit_terran_tbldsml_file,
+    Size = image_unit_terran_tbldsml_size},
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -44,8 +44,6 @@ DefineUnitType("unit-terran-missile-turret", {
   BurnDamageRate = 1,
   DrawLevel = 50,
   BuilderOutside = true,
-  TileSize = {2, 2}, BoxSize = {63, 63},
-  SightRange = 9, ComputerReactionRange = 7, PersonReactionRange = 7,
   Armor = 20, BasicDamage = 50, PiercingDamage = 0, Missile = "missile-small-cannon",
   MinAttackRange = 2, MaxAttackRange = 7,
   Priority = 40, AnnoyComputerFactor = 50,

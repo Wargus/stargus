@@ -6,6 +6,8 @@
 
 #include "Image.h"
 #include "Logger.h"
+#include "platform.h"
+#include "StringUtil.h"
 
 using namespace std;
 
@@ -46,10 +48,30 @@ uint8_t Image::draw_function()
 
 uint8_t Image::remapping()
 {
-  uint8_t remapping_id = mDatahub.images->draw_function()->at(mId);
-  LOG4CXX_TRACE(logger, string("remapping(") + to_string(remapping_id) + ")");
+  uint8_t remapping = mDatahub.images->draw_function()->at(mId);
+  LOG4CXX_TRACE(logger, string("remapping(") + to_string(remapping) + ")");
 
-  return remapping_id;
+  return remapping;
+}
+
+bool Image::gfx_turns()
+{
+  bool gfx_turns = mDatahub.images->gfx_turns()->at(mId);
+  LOG4CXX_TRACE(logger, string("gfx_turns(") + to_string(gfx_turns) + ")");
+
+  return gfx_turns;
+}
+
+std::string Image::createID(const std::string &image)
+{
+  string image_name(image);
+  replaceString("\\", "_", image_name);
+  //fs::path p(image_name);
+
+  image_name = to_lower(cutFileEnding(image_name));
+  //cout << "image_name: " << image_name << endl;
+
+  return image_name;
 }
 
 } /* namespace dat */

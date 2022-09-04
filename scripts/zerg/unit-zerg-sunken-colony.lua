@@ -29,8 +29,6 @@ DefineUnitType("unit-zerg-sunken-colony", {
   Construction = "construction-zerg",
   Speed = 0,
   DrawLevel = 30,
-  TileSize = {3, 2}, BoxSize = {95, 63},
-  SightRange = 7, ComputerReactionRange = 6, PersonReactionRange = 4,
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   MaxAttackRange = 7,
   Priority = 15, AnnoyComputerFactor = 20,

@@ -19,6 +19,8 @@ bool hasFileEnding(const std::string &filename, const std::string &ending);
 std::string cutFileEnding(std::string filename, const std::string &ending = "");
 
 /**
+ * TODO: Does this modify the input string? Check and document
+ *
  * @return the lower case string variant
  */
 std::string to_lower(std::string line);
