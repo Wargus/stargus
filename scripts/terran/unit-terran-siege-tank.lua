@@ -2,19 +2,52 @@
 -- unit-terran-siege-tank
 --
 
+function moveTurret(self)
+  local turret = GetUnitVariable(self, "Summoned")
+  local pixelPos = GetUnitVariable(self, "PixelPos")
+  local ix = math.fmod(pixelPos.x, 8)
+  local iy = math.fmod(pixelPos.y, 8)
+  local x = math.floor(pixelPos.x / 8) - 1
+  local y = math.floor(pixelPos.y / 8) - 1
+  MoveUnit(turret, {x, y}, {ix - 8, iy - 16})
+end
+
+function turnTurret(self, goal, off)
+  local turret = GetUnitVariable(self, "Summoned")
+  if off == 0 then
+    TurnTowardsLocation(turret, goal)
+  else
+    x = GetUnitVariable(goal, "PosX")
+    y = GetUnitVariable(goal, "PosY")
+    TurnTowardsLocation(turret, {x + off, y + off})
+  end
+end
+
 DefineAnimations("animations-terran-siege-tank", {
   Still = {
     "frame 0", "wait 125",
   },
   Move = {
-    "unbreakable begin", "move 4", "wait 1", "frame 0", "move 4", "unbreakable end", "wait 1",
-    "unbreakable begin", "frame 17", "move 4", "wait 1", "frame 34", "move 4", "unbreakable end", "wait 1",
-    "unbreakable begin", "frame 0", "move 4", "wait 1", "frame 17", "move 4", "unbreakable end", "wait 1",
-    "unbreakable begin", "frame 34", "move 4", "wait 1", "frame 0", "move 4", "unbreakable end", "wait 1", "frame 17",
+    "unbreakable begin", "move 4", "lua-callback moveTurret U", "wait 1", "frame 0", "move 4", "lua-callback moveTurret U", "unbreakable end", "wait 1",
+    "unbreakable begin", "frame 17", "move 4", "lua-callback moveTurret U", "wait 1", "frame 34", "move 4", "lua-callback moveTurret U", "unbreakable end", "wait 1",
+    "unbreakable begin", "frame 0", "move 4", "lua-callback moveTurret U", "wait 1", "frame 17", "move 4", "lua-callback moveTurret U", "unbreakable end", "wait 1",
+    "unbreakable begin", "frame 34", "move 4", "lua-callback moveTurret U", "wait 1", "frame 0", "move 4", "lua-callback moveTurret U", "unbreakable end", "wait 1", "frame 17",
   },
   Attack = {
-    "unbreakable begin", "sound terran-siege-tank-attack", "attack",
+    "unbreakable begin",
+      "lua-callback turnTurret U G 1",
+      "wait 3",
+      "lua-callback turnTurret U G 0",
+      "wait 3",
+      "lua-callback turnTurret U G -1",
+      "wait 3",
+    "unbreakable end",
+    "label shoot",
+    "unbreakable begin",
+      "lua-callback turnTurret U G 0",
+      "sound terran-siege-tank-attack", "attack", "wait 60",
     "unbreakable end", "wait 1",
+    "goto shoot",
   },
   Death = {
     "unbreakable begin",
@@ -40,12 +73,13 @@ DefineUnitType("unit-terran-siege-tank-tank-mode", {
   CanAttack = true,
   CanTargetLand = true,
   LandUnit = true,
-  organic = true,
+  SurroundAttack = true,
+  organic = false,
   SelectableByRectangle = true,
   OnReady = function(self)
-    local turret = CreateUnit("unit-terran-siege-tank-turret", GetUnitVariable(self, "Player"), {GetUnitVariable(self, "PosX") + 4, GetUnitVariable(self, "PosY") + 4})
-    SetUnitVariable(turret, "Summoned", self)
+    local turret = CreateUnit("unit-terran-siege-tank-tank-mode-turret", GetUnitVariable(self, "Player"), {0, 0})
     SetUnitVariable(self, "Summoned", turret)
+    moveTurret(self)
   end,
   OnDeath = function(self)
     local turret = GetUnitVariable(self, "Summoned", turret)
@@ -60,19 +94,15 @@ DefineUnitType("unit-terran-siege-tank-tank-mode", {
 
 DefineAnimations("animations-terran-siege-tank-turret", {
   Still = {
-    "frame 0", "random-rotate 1", "wait 8",
+    "frame 0", "wait 125", -- "random-rotate 1", "wait 8",
   },
 })
 
-DefineUnitType("unit-terran-siege-tank-turret", {
-  Image = {"file", "graphics/unit/terran/stankt.png", "size", {128, 128}},
-  TileSize = {1, 1},
+DefineUnitType("unit-terran-siege-tank-tank-mode-turret", {
   Animations = "animations-terran-siege-tank-turret",
   DrawLevel = 50,
-  SightRange = 0,
   Indestructible = 1,
   Flip = false,
-  NumDirections = 32,
   IsNotSelectable = true,
   NonSolid = true,
   ComputerReactionRange = 0,
@@ -80,10 +110,5 @@ DefineUnitType("unit-terran-siege-tank-turret", {
   AnnoyComputerFactor = -100,
   AiAdjacentRange = 0,
   Revealer = false,
-  Decoration = true,
-  OnEachCycle = function(self)
-    local owner = GetUnitVariable(self, "Summoned")
-    -- local pixelPos = GetUnitVariable(owner, "PixelPos")
-    MoveUnit(self, {GetUnitVariable(owner, "PosX") + 1, GetUnitVariable(owner, "PosY")})
-  end,
+  Decoration = true
 })
