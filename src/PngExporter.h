@@ -54,6 +54,7 @@ public:
 
   static int saveRGBA(const std::string &name, PaletteImage &palImageh,
       Palette2D &palette2d, int transparent);
+
 };
 
 #endif /* PNG_H_ */

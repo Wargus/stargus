@@ -195,12 +195,12 @@ int PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Palet
       unsigned char color_b = 0;
       unsigned char color_a = 0;
 
-      if (pal_pos != 255)
+      if (pal_pos != transparent)
       {
         color_r = pal[pal_pos * RGB_BYTE_SIZE + 0];
         color_g = pal[pal_pos * RGB_BYTE_SIZE + 1];
         color_b = pal[pal_pos * RGB_BYTE_SIZE + 2];
-        color_a = transparent;
+        color_a = 255;
       }
 
       row_pointers[h_pos][w_pos * RGBA_BYTE_SIZE + 0] = color_r;
@@ -301,7 +301,7 @@ int PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Palet
 
       Color color_result;
 
-      if (pal_pos != 255)
+      if (pal_pos != transparent)
       {
         const Color &color_orig = palette2d.at(pal_beneath, pal_pos-1);
 

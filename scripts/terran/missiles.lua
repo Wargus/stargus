@@ -24,7 +24,7 @@ DefineMissileType("missile-terran-firebat-flame", {
   File = image_unit_thingy_flamer_file, Size = image_unit_thingy_flamer_size,
   Frames = 221, NumDirections = 32, DrawLevel = 50,
   SplashFactor = 10;
-  Class = "missile-class-point-to-point", Sleep = 1, Speed = 4, Range = 0,
+  Class = "missile-class-point-to-point", Sleep = 1, Speed = 4, Range = 2,
 })
 
 DefineMissileType("missile-terran-vulture-grenade", {

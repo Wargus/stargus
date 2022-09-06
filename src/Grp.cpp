@@ -27,7 +27,7 @@ Grp::Grp(std::shared_ptr<Hurricane> hurricane) :
   Converter(hurricane),
   mRGBA(false),
   mGFX(true),
-  mTransparent(255)
+  mTransparent(254)
 {
 }
 
@@ -35,7 +35,7 @@ Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
   Converter(hurricane),
   mRGBA(false),
   mGFX(true),
-  mTransparent(255)
+  mTransparent(254)
 {
   load(arcfile);
 }
@@ -45,7 +45,7 @@ Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::
   mPal(pal),
   mRGBA(false),
   mGFX(true),
-  mTransparent(255)
+  mTransparent(254)
 {
   load(arcfile);
 }
@@ -118,7 +118,7 @@ bool Grp::save(Storage filename)
       {
         if (!*p)
         {
-          *p = 0xFF;
+          *p = mTransparent;
         }
         ++p;
       }
@@ -129,7 +129,7 @@ bool Grp::save(Storage filename)
 
     if (!getRGBA())
     {
-      PngExporter::save(filename.getFullPath(), palImage, *mPal, 255);
+      PngExporter::save(filename.getFullPath(), palImage, *mPal, mTransparent);
     }
     else
     {
@@ -246,7 +246,7 @@ void Grp::DecodeGfxEntry(int index, unsigned char *start, unsigned char *image, 
         // transparent
         ctrl &= 0x7F;
 //				printf("-%d,", ctrl);
-        memset(dp + h * iadd + w, 255, ctrl);
+        memset(dp + h * iadd + w, mTransparent, ctrl);
         w += ctrl;
       }
       else if (ctrl & 0x40)
@@ -383,7 +383,7 @@ unsigned char *Grp::ConvertGraphic(bool gfx, unsigned char *bp, int *wp, int *hp
     printf("Can't allocate image\n");
   }
   // Set all to transparent.
-  memset(image, 255, best_width * best_height * length);
+  memset(image, mTransparent, best_width * best_height * length);
 
   if (gfx)
   {

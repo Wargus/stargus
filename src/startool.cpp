@@ -424,7 +424,7 @@ void testHook()
    font.convert("font16.fnt", "font16");*/
 
   shared_ptr<Storm> storm = make_shared<Storm>(
-                              "/home/andreas/Downloads/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
+                              "/home/andreas/BigSpace/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
   //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
   dat::DataHub datahub(storm);
   //datahub.printCSV();
@@ -463,15 +463,16 @@ void testHook()
   terrainPalette->createDataChunk()->write("/tmp/terrainPalette.pal");
 
   //string grp_file = "unit\\protoss\\pbaGlow.grp";
-  string grp_file = "unit\\terran\\marine.grp";
+  string grp_file = "unit\\cmdbtns\\cmdicons.grp";
   Grp grp(storm, grp_file);
-  grp.setPalette(pal);
+  grp.setPalette(pal2);
+  grp.setRGBA(true);
   //grp.setPalette(terrainPalette);
   //grp.setTransparent(200);
   //grp.setRGBA(true);
 
 
-  grp.save("/tmp/marine.png");
+  grp.save("/tmp/cmdicons.png");
 
   cout << "end testHook()" << endl;
   exit(0);
