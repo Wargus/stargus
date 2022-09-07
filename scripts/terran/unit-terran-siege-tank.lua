@@ -7,25 +7,26 @@ function moveTurret(self)
   local pixelPos = GetUnitVariable(self, "PixelPos")
   local ix = math.fmod(pixelPos.x, 8)
   local iy = math.fmod(pixelPos.y, 8)
-  local x = math.floor(pixelPos.x / 8) - 1
-  local y = math.floor(pixelPos.y / 8) - 1
-  MoveUnit(turret, {x, y}, {ix - 8, iy - 16})
+  local x = math.floor(pixelPos.x / 8) - 2
+  local y = math.floor(pixelPos.y / 8) - 3
+  MoveUnit(turret, {x, y}, {ix, iy})
 end
 
-function turnTurret(self, goal, off)
+function turnTurret(self, goal, y)
   local turret = GetUnitVariable(self, "Summoned")
-  if off == 0 then
-    TurnTowardsLocation(turret, goal)
+  if y then
+    TurnTowardsLocation(turret, {goal, y})
   else
-    x = GetUnitVariable(goal, "PosX")
-    y = GetUnitVariable(goal, "PosY")
-    TurnTowardsLocation(turret, {x + off, y + off})
+    TurnTowardsLocation(turret, goal)
   end
 end
 
 DefineAnimations("animations-terran-siege-tank", {
   Still = {
-    "frame 0", "wait 125",
+    "label still", "frame 0", "wait 125",
+    "random-goto 25 turn",
+    "goto still",
+    "label turn", "lua-callback turnTurret U r.64 r.64",
   },
   Move = {
     "unbreakable begin", "move 4", "lua-callback moveTurret U", "wait 1", "frame 0", "move 4", "lua-callback moveTurret U", "unbreakable end", "wait 1",
@@ -34,17 +35,9 @@ DefineAnimations("animations-terran-siege-tank", {
     "unbreakable begin", "frame 34", "move 4", "lua-callback moveTurret U", "wait 1", "frame 0", "move 4", "lua-callback moveTurret U", "unbreakable end", "wait 1", "frame 17",
   },
   Attack = {
-    "unbreakable begin",
-      "lua-callback turnTurret U G 1",
-      "wait 3",
-      "lua-callback turnTurret U G 0",
-      "wait 3",
-      "lua-callback turnTurret U G -1",
-      "wait 3",
-    "unbreakable end",
     "label shoot",
     "unbreakable begin",
-      "lua-callback turnTurret U G 0",
+      "lua-callback turnTurret U G", "wait 3",
       "sound terran-siege-tank-attack", "attack", "wait 60",
     "unbreakable end", "wait 1",
     "goto shoot",
@@ -60,12 +53,14 @@ DefineUnitType("unit-terran-siege-tank-tank-mode", {
   Animations = "animations-terran-siege-tank", Icon = "icon-terran-siege-tank",
   Costs = {"time", 60, "minerals", 150, "gas", 100},
   Speed = 10,
+  RotationSpeed = 4,
   DrawLevel = 40,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-none",
   AnnoyComputerFactor = 55,
   MaxAttackRange = 1,
   Priority = 60,
   Points = 50,
+  MinAttackRange = 8, MaxAttackRange = 48,
   Demand = 2,
   ExplodeWhenKilled = "missile-terran-explosion-medium",
   Type = "land",
@@ -100,6 +95,7 @@ DefineAnimations("animations-terran-siege-tank-turret", {
 
 DefineUnitType("unit-terran-siege-tank-tank-mode-turret", {
   Animations = "animations-terran-siege-tank-turret",
+  RotationSpeed = 8,
   DrawLevel = 50,
   Indestructible = 1,
   Flip = false,
