@@ -38,23 +38,35 @@ void TilesetHub::init(const std::string &arcfile)
 {
   std::shared_ptr<kaitai::kstream> cv5_ks;
   cv5_ks = getKaitaiStream(arcfile + ".cv5");
-  std::shared_ptr<tileset_cv5_t> cv5_loc(new tileset_cv5_t(cv5_ks.get()));
-  cv5 = cv5_loc;
+  if(cv5_ks)
+  {
+    std::shared_ptr<tileset_cv5_t> cv5_loc(new tileset_cv5_t(cv5_ks.get()));
+    cv5 = cv5_loc;
+  }
 
   std::shared_ptr<kaitai::kstream> vx4_ks;
   vx4_ks = getKaitaiStream(arcfile + ".vx4");
-  std::shared_ptr<tileset_vx4_t> vx4_loc(new tileset_vx4_t(vx4_ks.get()));
-  vx4 = vx4_loc;
+  if(vx4_ks)
+  {
+    std::shared_ptr<tileset_vx4_t> vx4_loc(new tileset_vx4_t(vx4_ks.get()));
+    vx4 = vx4_loc;
+  }
 
   std::shared_ptr<kaitai::kstream> vf4_ks;
   vf4_ks = getKaitaiStream(arcfile + ".vf4");
-  std::shared_ptr<tileset_vf4_t> vf4_loc(new tileset_vf4_t(vf4_ks.get()));
-  vf4 = vf4_loc;
+  if(vf4_ks)
+  {
+    std::shared_ptr<tileset_vf4_t> vf4_loc(new tileset_vf4_t(vf4_ks.get()));
+    vf4 = vf4_loc;
+  }
 
   std::shared_ptr<kaitai::kstream> vr4_ks;
   vr4_ks = getKaitaiStream(arcfile + ".vr4");
+  if(vr4_ks)
+  {
   std::shared_ptr<tileset_vr4_t> vr4_loc(new tileset_vr4_t(vr4_ks.get()));
   vr4 = vr4_loc;
+  }
 
   //cout << "cv5_raw->elements()->size(): " << cv5_raw->elements()->size() << endl;
   //cout << "vx4_raw->elements()->size(): " << vx4_raw->elements()->size() << endl;
@@ -65,6 +77,16 @@ void TilesetHub::init(const std::string &arcfile)
 
 bool TilesetHub::convert(std::shared_ptr<Palette> palette, Storage storage)
 {
+  if(!vx4) // if it isn't available just return false
+  {
+    return false;
+  }
+
+  if(!palette) // if something wrong with palette just return false
+  {
+    return false;
+  }
+
   unsigned int num_tiles = vx4->elements()->size();
   int tiles_width = 16;
   int tiles_height = static_cast<int>(ceil(static_cast<float>(num_tiles) / static_cast<float>(tiles_width)));
@@ -86,6 +108,11 @@ bool TilesetHub::convert(std::shared_ptr<Palette> palette, Storage storage)
 
 void TilesetHub::generateLua(const std::string &name, const std::string &image, Storage luafile)
 {
+  if(!cv5) // if it isn't available just return with no action
+  {
+    return;
+  }
+
   unsigned int num_cv5 = cv5->elements()->size();
 
   int num_doodad = 0;
