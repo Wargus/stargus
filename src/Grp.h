@@ -39,6 +39,9 @@ public:
 
   bool getRGBA();
 
+  /**
+   * FIXME: load should really load the file and not just set the name (instead of save() does all)
+   */
   bool load(const std::string &arcfile);
 
   /**

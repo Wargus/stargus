@@ -208,44 +208,48 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
 
       Storage png_file = graphics(grp_storage_file_base + ".png");
 
-      Storage lua_file_store(luagen(image_lua));
-      ofstream lua_file;
-      lua_file.open (lua_file_store.getFullPath());
-
       result = grp.save(png_file);
 
-      Size tilesize = grp.getTileSize();
+      Storage lua_file_store(luagen(image_lua));
 
-
-      int NumDirections = 1;
-      if(image.gfx_turns() == true)
+      // only generate LUA file with the image properties in case it could be saved successful
+      if(result)
       {
-        // it seems all animations which are calculated by gfx_turns have 32 directions
-        NumDirections = 32;
+        ofstream lua_file;
+        lua_file.open (lua_file_store.getFullPath());
+
+        Size tilesize = grp.getTileSize();
+
+        int NumDirections = 1;
+        if(image.gfx_turns() == true)
+        {
+          // it seems all animations which are calculated by gfx_turns have 32 directions
+          NumDirections = 32;
+        }
+
+        string unit_image_file(lg::assign("image_" + image_id + "_file", lg::quote(png_file.getRelativePath())));
+        lua_file << unit_image_file << endl;
+
+        string unit_image_size(lg::assign("image_" + image_id + "_size", lg::sizeTable(tilesize)));
+        lua_file << unit_image_size << endl;
+
+        string unit_image_NumDirections(lg::assign("image_" + image_id + "_NumDirections", to_string(NumDirections)));
+        lua_file << unit_image_NumDirections << endl;
+
+        string unit_image_table(
+            lg::table({lg::quote("file"), "image_" + image_id + "_file",
+            lg::quote("size") , "image_" + image_id + "_size"}));
+
+        string unit_image = lg::assign("image_" + image_id, unit_image_table);
+        lua_file << unit_image;
+
+        lua_file.close();
+
+        string grp_save_trace(to_string(i) +  ": " + grp_name + " : " + grp_arcfile + " => " + grp_storage_file_base);
+        LOG4CXX_TRACE(logger, grp_save_trace);
       }
-
-      string unit_image_file(lg::assign("image_" + image_id + "_file", lg::quote(png_file.getRelativePath())));
-      lua_file << unit_image_file << endl;
-
-      string unit_image_size(lg::assign("image_" + image_id + "_size", lg::sizeTable(tilesize)));
-      lua_file << unit_image_size << endl;
-
-      string unit_image_NumDirections(lg::assign("image_" + image_id + "_NumDirections", to_string(NumDirections)));
-      lua_file << unit_image_NumDirections << endl;
-
-      string unit_image_table(
-          lg::table({lg::quote("file"), "image_" + image_id + "_file",
-          lg::quote("size") , "image_" + image_id + "_size"}));
-
-      string unit_image = lg::assign("image_" + image_id, unit_image_table);
-      lua_file << unit_image;
-
+      // write the Load call even if Grp not present to preserve the SC base files
       lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));
-
-      lua_file.close();
-
-      string grp_save_trace(to_string(i) +  ": " + grp_name + " : " + grp_arcfile + " => " + grp_storage_file_base);
-      LOG4CXX_TRACE(logger, grp_save_trace);
     }
   }
 
