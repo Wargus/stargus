@@ -4,3 +4,4 @@ build_linux/
 .vscode/*
 **/.DS_Store
 campaigns
+*/clangd/**

@@ -227,7 +227,12 @@ if(STRATAGUS_FOUND)
       COMMENT "Generating stargus.png" VERBATIM
     )
     add_custom_target(icon ALL DEPENDS stargus.png)
-    install(FILES "${PROJECT_BINARY_DIR}/stargus.png" DESTINATION ${ICONDIR})
+    install(FILES
+      "${PROJECT_BINARY_DIR}/stargus.png"
+      "${CMAKE_CURRENT_SOURCE_DIR}/dataset/palettes.json"
+      "${CMAKE_CURRENT_SOURCE_DIR}/dataset/units.json"
+      DESTINATION ${ICONDIR}
+    )
     add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/stargus.xpm"
       COMMAND convert
       ARGS "${PROJECT_SOURCE_DIR}/stargus.ico" -resize 32x32 "${PROJECT_BINARY_DIR}/stargus.xpm"

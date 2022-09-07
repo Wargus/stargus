@@ -5,9 +5,8 @@
 DefineAnimations("animations-terran-scv", {
   Still = {"frame 0", "wait 125",},
   Move = {"unbreakable begin",
-    "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
-    "move 4", "wait 1", "move 4", "wait 1", "move 4", "wait 1",
-    "move 4", "wait 1", "move 4", "unbreakable end", "wait 1",},
+          "move 4", "wait 1", "move 4", "wait 1",
+          "unbreakable end", "wait 1",},
   Attack = {"unbreakable begin", "frame 34", "sound terran-scv-attack",
     "wait 1", "frame 17", "unbreakable end", "wait 1",},
   Harvest_minerals = {"unbreakable begin",

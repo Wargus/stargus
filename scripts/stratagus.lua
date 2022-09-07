@@ -147,6 +147,8 @@ SetKeyScroll(true)
 --  Pixels to move per scrolled mouse pixel, negative = reversed
 SetMouseScrollSpeedDefault(4)
 
+SetKeyScrollSpeed(8);
+
 --  Same if Control is pressed
 SetMouseScrollSpeedControl(15)
 
@@ -157,7 +159,7 @@ SetDoubleClickDelay(300)
 SetHoldClickDelay(1000)
 
 --  Uncomment next, to reveal the complete map.
---RevealMap()
+RevealMap("known")
 
 --  Choose your default fog of war state (enabled #t/disabled #f).
 --    disabled is a C&C like fog of war.
@@ -184,7 +186,18 @@ else
   SetFogOfWarGraphics("contrib/fog.png")
 end
 
-SetTileSize(32, 32)
+SetEnableMapGrid(true)
+SetTileSize(8, 8)
+
+-- TODO: TEMPORARY, until we generate the tile sizes in minitiles
+local OldDefineUnitType = DefineUnitType
+function DefineUnitType(name, spec)
+  if spec["TileSize"] then
+    spec["TileSize"][1] = spec["TileSize"][1] * 4
+    spec["TileSize"][2] = spec["TileSize"][2] * 4
+  end
+  return OldDefineUnitType(name, spec)
+end
 
 --  Choose your default for minimap with/without terrain.
 SetMinimapTerrain(true)
@@ -301,7 +314,10 @@ end)
 
 -------------------------------------------------------------------------------
 
-AStar("fixed-unit-cost", 1000, "moving-unit-cost", 20, "know-unseen-terrain", "unseen-terrain-cost", 2)
+AStar("fixed-unit-cost", 1000,
+      "moving-unit-cost", 20,
+      "dont-know-unseen-terrain",
+      "unseen-terrain-cost", 2)
 
 -------------------------------------------------------------------------------
 

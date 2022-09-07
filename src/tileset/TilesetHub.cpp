@@ -150,21 +150,18 @@ void TilesetHub::generateLua(const std::string &name, const std::string &image, 
 
       tileset_vf4_t::minitile_t* minitile = vf4->elements()->at(elem);
 
-      unsigned int walkable_median = 0;
+      std::string subtilePassableFlags = "";
       for(auto flags : *minitile->flags())
       {
-          walkable_median += flags->walkable();
+        if (flags->walkable()) {
+          subtilePassableFlags += "p";
+        } else {
+          subtilePassableFlags += "u";
+        }
       }
-
-
-      walkable_median /= 16; // 8 is the 50% unpassable Minitles per Megatile rule
 
       tile_solids_vector.push_back(to_string(elem));
-
-      if(!walkable_median)
-      {
-        tile_solids_vector.push_back(lg::table(lg::quote("unpassable")));
-      }
+      tile_solids_vector.push_back(lg::table(lg::quote(subtilePassableFlags)));
 
       //cout << ", ";
     }

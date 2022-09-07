@@ -115,7 +115,7 @@ std::string CreateUnit(const std::string &id, int playerID, const Pos &pos)
 
 std::string DefineTileset(const std::string &name, const std::string &image, const std::initializer_list<std::string> &slotsTable)
 {
-  return function("DefineTileset", {quote("name"), quote(name), quote("image"), quote(image), quote("slots"), table(slotsTable)});
+  return function("DefineTileset", {quote("name"), quote(name), quote("size"), table({"32", "32"}), quote("image"), quote(image), quote("slots"), table(slotsTable)});
 }
 
 std::string tilesetSlotEntry(const std::string &type, const std::initializer_list<std::string> &propertiesQuotedParams, const std::initializer_list<std::string> &tilesTable)
