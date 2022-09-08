@@ -14,9 +14,9 @@ DefineAnimations("animations-zerg-zergling-death", {
 
 
 DefineUnitType("unit-zerg-zergling-death", { Name = "Dead Zergling",
-  Image = image_unit_zerg_zzedeath,
+  Image = image_57_zerg_zzedeath,
   Animations = "animations-zerg-zergling-death", Icon = "icon-zerg-zergling",
-  NumDirections = 1,
+  NumDirections = image_57_zerg_zzedeath_NumDirections,
   HitPoints = 255,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {31, 31},

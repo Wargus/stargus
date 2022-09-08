@@ -8,7 +8,7 @@ DefineAnimations("animations-protoss-dragoon-death", {
 })
 
 DefineUnitType("unit-protoss-dragoon-death", { Name = "Dead dragoon",
-  Image = image_unit_protoss_pdrdeath,
+  Image = image_124_protoss_pdrdeath,
   Animations = "animations-terran-marine-death", Icon = "icon-terran-marine",
   HitPoints = 255,
   DrawLevel = 30,

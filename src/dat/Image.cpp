@@ -48,7 +48,7 @@ uint8_t Image::draw_function()
 
 uint8_t Image::remapping()
 {
-  uint8_t remapping = mDatahub.images->draw_function()->at(mId);
+  uint8_t remapping = mDatahub.images->remapping()->at(mId);
   LOG4CXX_TRACE(logger, string("remapping(") + to_string(remapping) + ")");
 
   return remapping;

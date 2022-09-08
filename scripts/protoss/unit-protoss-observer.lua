@@ -13,7 +13,7 @@ DefineAnimations("animations-protoss-observer-death", {
 
 
 DefineUnitType("unit-protoss-observer-death", { Name = "Dead Overlord",
-  Image = image_unit_zerg_zovdeath,
+  Image = image_45_zerg_zovdeath,
   Animations = "animations-zerg-overlord-death", Icon = "icon-zerg-overlord",
   HitPoints = 255,
   DrawLevel = 30,

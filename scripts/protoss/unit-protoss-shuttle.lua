@@ -13,7 +13,7 @@ DefineAnimations("animations-protoss-shuttle-death", {
 
 
 DefineUnitType("unit-protoss-shuttle-death", { Name = "Dead Shuttle",
-  Image = image_unit_zerg_zovdeath,
+  Image = image_45_zerg_zovdeath,
   Animations = "animations-zerg-overlord-death", Icon = "icon-zerg-overlord",
   NumDirections = 1,
   HitPoints = 255,

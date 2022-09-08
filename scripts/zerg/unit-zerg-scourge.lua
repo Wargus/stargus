@@ -14,9 +14,9 @@ DefineAnimations("animations-zerg-scourge-death", {
 
 
 DefineUnitType("unit-zerg-scourge-death", { Name = "Dead Scourge",
-  Image = image_unit_zerg_zavdeath,
+  Image = image_3_zerg_zavdeath,
   Animations = "animations-zerg-scourge-death", Icon = "icon-zerg-scourge",
-  NumDirections = 1,
+  NumDirections = image_3_zerg_zavdeath_NumDirections,
   HitPoints = 255,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {31, 31},

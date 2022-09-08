@@ -9,12 +9,8 @@ DefineAnimations("animations-protoss-photon-cannon", {
 })
 
 DefineConstruction("construction-protoss-photon-cannon", {
-  Files = {
-    File = image_unit_zerg_zbuild_file,
-    Size = image_unit_zerg_zbuild_size},
-  ShadowFiles = {
-    File = image_unit_zerg_zbuild_file,
-    Size = image_unit_zerg_zbuild_size},
+  Files = image_325_terran_tbldlrg_var,
+  ShadowFiles = image_325_terran_tbldlrg_var,
   Constructions = {
    {Percent = 0,
     File = "construction",

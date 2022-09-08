@@ -12,12 +12,8 @@ DefineAnimations("animations-terran-missile-turret", {
 })
 
 DefineConstruction("construction-terran-missile-turret", {
-  Files = {
-    File = image_unit_terran_tbldsml_file,
-    Size = image_unit_terran_tbldsml_size},
-  ShadowFiles = {
-    File = image_unit_terran_tbldsml_file,
-    Size = image_unit_terran_tbldsml_size},
+  Files = image_329_terran_tbldsml_var,
+  ShadowFiles = image_329_terran_tbldsml_var,
   Constructions = {
    {Percent = 0,
     File = "construction",

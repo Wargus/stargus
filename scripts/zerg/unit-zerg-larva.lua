@@ -15,9 +15,9 @@ DefineAnimations("animations-zerg-larva-death", {
 
 
 DefineUnitType("unit-zerg-larve-death", {
-  Image = image_unit_zerg_zladeath,
+  Image = image_37_zerg_zladeath,
   Animations = "animations-zerg-larve-death", Icon = "icon-zerg-larva",
-  NumDirections = 1,
+  NumDirections = image_37_zerg_zladeath_NumDirections,
   HitPoints = 255,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {31, 31},

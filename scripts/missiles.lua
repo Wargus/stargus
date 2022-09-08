@@ -33,29 +33,29 @@ Load("scripts/terran/missiles.lua")
 Load("scripts/zerg/missiles.lua")
 
 DefineMissileType("missile-small-fire",
-  { File = image_unit_thingy_ofirec_file, Size = image_unit_thingy_ofirec_size, Frames = 6, NumDirections = 1,
+  { File = image_450_thingy_ofirec_file, Size = image_450_thingy_ofirec_size, Frames = 6, NumDirections = 1,
   DrawLevel = 200, Class = "missile-class-fire", Sleep = 8, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-big-fire",
-  { File = image_unit_thingy_ofiref_file, Size = image_unit_thingy_ofiref_size, Frames = 10, NumDirections = 1,
+  { File = image_451_thingy_ofiref_file, Size = image_451_thingy_ofiref_size, Frames = 10, NumDirections = 1,
   DrawLevel = 200, Class = "missile-class-fire", Sleep = 8, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-impact",
-  { File = image_unit_bullet_blastcan_file, Size = image_unit_bullet_blastcan_size, Frames = 17, NumDirections = 1,
+  { File = image_522_bullet_blastcan_file, Size = image_522_bullet_blastcan_size, Frames = 17, NumDirections = 1,
   DrawLevel = 50, Class = "missile-class-stay", Sleep = 1, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-explosion",
-  { File = image_unit_bullet_explo1_file, Size = image_unit_bullet_explo1_size, Frames = 10, NumDirections = 1,
+  { File = image_215_thingy_tbangx_file, Size = image_215_thingy_tbangx_size, Frames = 10, NumDirections = 1,
   DrawLevel = 50, Class = "missile-class-stay", Sleep = 1, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-small-cannon",
-  { File = image_unit_bullet_blastcan_file, Size = image_unit_bullet_blastcan_size, Frames = 17, NumDirections = 5,
+  { File = image_522_bullet_blastcan_file, Size = image_522_bullet_blastcan_size, Frames = 17, NumDirections = 5,
   DrawLevel = 50, ImpactSound = "explosion",
   Class = "missile-class-parabolic", Sleep = 1, Speed = 16, Range = 1,
   ImpactMissile = "missile-cannon-explosion" } )
 
 DefineMissileType("missile-cannon-explosion",
-  { File = image_unit_bullet_blastcan_file, Size = image_unit_bullet_blastcan_size, Frames = 17, NumDirections = 1,
+  { File = image_522_bullet_blastcan_file, Size = image_522_bullet_blastcan_size, Frames = 17, NumDirections = 1,
   DrawLevel = 50, Class = "missile-class-stay", Sleep = 1, Speed = 16, Range = 1 } )
 
 DefineMissileType("missile-green-cross",

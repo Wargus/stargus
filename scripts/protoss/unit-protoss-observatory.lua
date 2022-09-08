@@ -11,12 +11,8 @@ DefineAnimations("animations-protoss-observatory", {
 })
 
 DefineConstruction("construction-protoss-observatory", {
-  Files = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
-  ShadowFiles = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
+  Files = image_325_terran_tbldlrg_var,
+  ShadowFiles = image_325_terran_tbldlrg_var,
   Constructions = {
    {Percent = 0,
     File = "construction",

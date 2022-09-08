@@ -9,12 +9,8 @@ DefineAnimations("animations-terran-bunker", {
 })
 
 DefineConstruction("construction-terran-bunker", {
-  Files = {
-    File = image_unit_terran_tbldmed_file,
-    Size = image_unit_terran_tbldmed_size},
-  ShadowFiles = {
-    File = image_unit_terran_tbldmed_file,
-    Size = image_unit_terran_tbldmed_size},
+  Files = image_327_terran_tbldmed_var,
+  ShadowFiles = image_327_terran_tbldmed_var,
   Constructions = {
    {Percent = 0,
     File = "construction",

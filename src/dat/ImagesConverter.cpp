@@ -98,6 +98,7 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
     Grp grp(mHurricane, grp_arcfile);
     std::shared_ptr<Palette> pal;
     std::shared_ptr<Palette2D> pal2D;
+    string remapping;
 
     bool save_grp = true;
 
@@ -106,29 +107,27 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
     {
       if(image.remapping() == 1) // ofire
       {
-        pal2D = palette2DMap.at("ofire");
-        grp.setPalette2D(pal2D);
+        remapping = "ofire";
       }
       else if(image.remapping() == 2) // gfire
       {
-        pal2D = palette2DMap.at("gfire");
-        grp.setPalette2D(pal2D);
+        remapping = "gfire";
       }
       else if(image.remapping() == 3) // bfire
       {
-        pal2D = palette2DMap.at("bfire");
-        grp.setPalette2D(pal2D);
+        remapping = "bfire";
       }
       else if(image.remapping() == 4) // bexpl
       {
-        pal2D = palette2DMap.at("bexpl");
-        grp.setPalette2D(pal2D);
+        remapping = "bexpl";
       }
       else // as default use ofire until I've a better idea....
       {
-        pal2D = palette2DMap.at("ofire");
-        grp.setPalette2D(pal2D);
+        remapping = "ofire";
       }
+
+      pal2D = palette2DMap.at(remapping);
+      grp.setPalette2D(pal2D);
 
       grp.setRGBA(true);
     }
@@ -203,12 +202,18 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
       // cut the file ending and lower case it
       string grp_storage_file_base = to_lower(cutFileEnding(grp_storage_file, ".grp"));
 
-      string image_id = image.createID();
-      string image_lua = image_id + ".lua";
+      // if a remapping function is used for that Grp than save with specific name
+      if(!remapping.empty())
+      {
+        grp_storage_file_base += "_" + remapping;
+      }
 
       Storage png_file = graphics(grp_storage_file_base + ".png");
 
       result = grp.save(png_file);
+
+      string image_id = image.createID();
+      string image_lua = image_id + ".lua";
 
       Storage lua_file_store(luagen(image_lua));
 
@@ -239,9 +244,14 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
         string unit_image_table(
             lg::table({lg::quote("file"), image_id + "_file",
             lg::quote("size") , image_id + "_size"}));
-
         string unit_image = lg::assign(image_id, unit_image_table);
-        lua_file << unit_image;
+        lua_file << unit_image << endl;
+
+        string unit_image_table_var(
+            lg::table({lg::assign("File", image_id + "_file"),
+            lg::assign("Size" , image_id + "_size")}));
+        string unit_image_var = lg::assign(image_id + "_var", unit_image_table_var);
+        lua_file << unit_image_var << endl;
 
         lua_file.close();
 

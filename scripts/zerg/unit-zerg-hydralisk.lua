@@ -14,9 +14,9 @@ DefineAnimations("animations-zerg-hydralisk-death", {
 
 
 DefineUnitType("unit-zerg-hydralisk-death", {
-  Image = image_unit_zerg_zhydeath,
+  Image = image_32_zerg_zhydeath,
   Animations = "animations-zerg-hydralisk-death", Icon = "icon-zerg-hydralisk",
-  NumDirections = 1,
+  NumDirections = image_32_zerg_zhydeath_NumDirections,
   HitPoints = 255,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {31, 31},

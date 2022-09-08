@@ -13,9 +13,9 @@ DefineAnimations("animations-zerg-overlord-death", {
 
 
 DefineUnitType("unit-zerg-overlord-death", {
-  Image = image_unit_zerg_zovdeath,
+  Image = image_45_zerg_zovdeath,
   Animations = "animations-zerg-overlord-death", Icon = "icon-zerg-overlord",
-  NumDirections = 1,
+  NumDirections = image_45_zerg_zovdeath_NumDirections,
   HitPoints = 255,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {63, 63},
