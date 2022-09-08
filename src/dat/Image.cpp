@@ -62,9 +62,9 @@ bool Image::gfx_turns()
   return gfx_turns;
 }
 
-std::string Image::createID(const std::string &image)
+std::string Image::createID()
 {
-  string image_name(image);
+  string image_name("image_" + to_string(mId) + "_" + grp().name1);
   replaceString("\\", "_", image_name);
   //fs::path p(image_name);
 

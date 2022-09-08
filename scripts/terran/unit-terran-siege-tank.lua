@@ -71,7 +71,7 @@ DefineUnitType("unit-terran-siege-tank-tank-mode", {
   SurroundAttack = true,
   organic = false,
   SelectableByRectangle = true,
-  OnReady = function(self)
+  OnInit = function(self)
     local turret = CreateUnit("unit-terran-siege-tank-tank-mode-turret", GetUnitVariable(self, "Player"), {0, 0})
     SetUnitVariable(self, "Summoned", turret)
     moveTurret(self)

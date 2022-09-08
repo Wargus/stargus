@@ -48,9 +48,10 @@ Load("scripts/neutral/units.lua")
 
 Load("luagen/tests/CreateUnitLuaTest.lua")
 
-
-function CreateUnitTest(unit)
-  for i=1,20 do 
+function CreateUnitTest(unit, num)
+  if not num then num = 10 end
+  
+  for i=1,num do 
     CreateUnit(unit, 0, {10, 10})
   end    
 end

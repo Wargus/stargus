@@ -203,8 +203,8 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
       // cut the file ending and lower case it
       string grp_storage_file_base = to_lower(cutFileEnding(grp_storage_file, ".grp"));
 
-      string image_id = Image::createID(grp_arcfile);
-      string image_lua = "image_" + image_id + ".lua";
+      string image_id = image.createID();
+      string image_lua = image_id + ".lua";
 
       Storage png_file = graphics(grp_storage_file_base + ".png");
 
@@ -227,20 +227,20 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
           NumDirections = 32;
         }
 
-        string unit_image_file(lg::assign("image_" + image_id + "_file", lg::quote(png_file.getRelativePath())));
+        string unit_image_file(lg::assign(image_id + "_file", lg::quote(png_file.getRelativePath())));
         lua_file << unit_image_file << endl;
 
-        string unit_image_size(lg::assign("image_" + image_id + "_size", lg::sizeTable(tilesize)));
+        string unit_image_size(lg::assign(image_id + "_size", lg::sizeTable(tilesize)));
         lua_file << unit_image_size << endl;
 
-        string unit_image_NumDirections(lg::assign("image_" + image_id + "_NumDirections", to_string(NumDirections)));
+        string unit_image_NumDirections(lg::assign(image_id + "_NumDirections", to_string(NumDirections)));
         lua_file << unit_image_NumDirections << endl;
 
         string unit_image_table(
-            lg::table({lg::quote("file"), "image_" + image_id + "_file",
-            lg::quote("size") , "image_" + image_id + "_size"}));
+            lg::table({lg::quote("file"), image_id + "_file",
+            lg::quote("size") , image_id + "_size"}));
 
-        string unit_image = lg::assign("image_" + image_id, unit_image_table);
+        string unit_image = lg::assign(image_id, unit_image_table);
         lua_file << unit_image;
 
         lua_file.close();

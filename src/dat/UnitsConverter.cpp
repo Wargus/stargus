@@ -110,8 +110,8 @@ bool UnitsConverter::convert(json &unitsJson,
       ofstream lua_file;
       lua_file.open (lua_file_store.getFullPath());
 
-      string image_id = Image::createID(grp_arcfile);
-      string image_lua = "image_" + image_id;
+      string image_id = unit.flingy().sprite().image().createID();
+      string image_lua = image_id;
       string unit_image = lg::assign("Image", image_lua);
 
       string unit_hitpoints = lg::assign("HitPoints", to_string(unit.hitpoints()));

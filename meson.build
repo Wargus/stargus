@@ -7,7 +7,7 @@ cpp = meson.get_compiler('cpp')
 pkgdatadir = join_paths(get_option('datadir'), 'stargus')
 conf = configuration_data()
 conf.set_quoted('PACKAGE_DATA_DIR', join_paths(get_option('prefix'), pkgdatadir))
-conf.set_quoted('PACKAGE_SOURCE_DIR', meson.current_build_dir())
+conf.set_quoted('PACKAGE_SOURCE_DIR', meson.current_source_dir())
 configure_file(
   output: 'config.h',
   configuration: conf

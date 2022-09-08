@@ -34,7 +34,7 @@ public:
   bool gfx_turns();
 
   /***/
-  static std::string createID(const std::string &image);
+  std::string createID();
 
 private:
   DataHub &mDatahub;
