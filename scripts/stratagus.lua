@@ -189,16 +189,6 @@ end
 SetEnableMapGrid(true)
 SetTileSize(8, 8)
 
--- TODO: TEMPORARY, until we generate the tile sizes in minitiles
-local OldDefineUnitType = DefineUnitType
-function DefineUnitType(name, spec)
-  if spec["TileSize"] then
-    spec["TileSize"][1] = spec["TileSize"][1] * 4
-    spec["TileSize"][2] = spec["TileSize"][2] * 4
-  end
-  return OldDefineUnitType(name, spec)
-end
-
 --  Choose your default for minimap with/without terrain.
 SetMinimapTerrain(true)
 --SetMinimapTerrain(false)

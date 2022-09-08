@@ -49,6 +49,9 @@ bool UnitsConverter::convert(json &unitsJson,
 
   Preferences &preferences = Preferences::getInstance();
 
+  const int tilesize_pixel = 8; // size of a MiniTile in pixels
+  const int minitile_multi = 4; // number of MiniTiles in one MegaTile
+
   Storage graphics;
   graphics.setDataPath(preferences.getDestDir());
   graphics.setDataType("graphics");
@@ -122,8 +125,6 @@ bool UnitsConverter::convert(json &unitsJson,
       int unit_width = unit_dimension_tilesize->left() + unit_dimension_tilesize->right();
       int unit_height = unit_dimension_tilesize->up() + unit_dimension_tilesize->down();
 
-      int tilesize_pixel = 32;
-
       int unit_tilesize_width = ceil(unit_width / (double) tilesize_pixel);
       int unit_tilesize_height = ceil(unit_height / (double) tilesize_pixel);
 
@@ -133,7 +134,7 @@ bool UnitsConverter::convert(json &unitsJson,
       string unit_LuaTileSize = lg::assign("TileSize", lg::table({to_string(unit_tilesize_width), to_string(unit_tilesize_height)}));
       string unit_LuaBoxSize = lg::assign("BoxSize", lg::table({to_string(unit_boxsize_width), to_string(unit_boxsize_height)}));
 
-      int unit_sight_range = unit.sight_range();
+      int unit_sight_range = unit.sight_range() * minitile_multi;
       string unit_computer_reaction_rangeStr ("math.ceil(" + to_string(unit_sight_range) + " * ComputerReactionRangeFactor)");
       string unit_person_reaction_rangeStr ("math.floor(" + to_string(unit_sight_range) + " * PersonReactionRangeFactor)");
 
