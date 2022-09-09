@@ -10,6 +10,11 @@ using namespace std;
 
 namespace lg {
 
+std::string boolean(bool b)
+{
+  return b ? "true" : "false";
+}
+
 std::string function(const std::string &name, const std::initializer_list<std::string> &functionParams)
 {
   return function(name, params(functionParams));

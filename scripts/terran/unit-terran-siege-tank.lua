@@ -63,13 +63,10 @@ DefineUnitType("unit-terran-siege-tank-tank-mode", {
   MinAttackRange = 8, MaxAttackRange = 48,
   Demand = 2,
   ExplodeWhenKilled = "missile-terran-explosion-medium",
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
-  LandUnit = true,
   SurroundAttack = true,
-  organic = false,
   SelectableByRectangle = true,
   OnInit = function(self)
     local turret = CreateUnit("unit-terran-siege-tank-tank-mode-turret", GetUnitVariable(self, "Player"), {0, 0})

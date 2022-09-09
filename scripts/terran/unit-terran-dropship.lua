@@ -29,13 +29,10 @@ DefineUnitType("unit-terran-dropship", {
   Points = 150,
   Demand = 2,
   ExplodeWhenKilled = "missile-terran-explosion-small",
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   RightMouseAction = "move",
   CanAttack = false,
-  AirUnit = true,
   CanTransport = {},
   DetectCloak = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "terran-dropship-selected",

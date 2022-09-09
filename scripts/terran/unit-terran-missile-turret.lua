@@ -46,10 +46,9 @@ DefineUnitType("unit-terran-missile-turret", {
   Points = 250,
   Corpse = "unit-destroyed-2x2-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
   CanAttack = true,
   CanTargetLand = true, CanTargetSea = true,
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   DetectCloak = true,
   Sounds = {
     "selected", "terran-missile-turret-selected",

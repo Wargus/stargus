@@ -24,6 +24,9 @@
  */
 namespace lg
 {
+  // type generators
+  std::string boolean(bool b);
+
   // generic LUA language generators
   std::string function(const std::string &name, const std::initializer_list<std::string> &functionParams);
   std::string function(const std::string &name, const std::string &functionParams);

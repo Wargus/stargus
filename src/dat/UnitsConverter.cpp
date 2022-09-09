@@ -161,14 +161,47 @@ bool UnitsConverter::convert(json &unitsJson,
 
       string unit_LuaNumDirections = lg::assign("NumDirections", image_lua + "_NumDirections");
 
+      string unit_LuaType(lg::assign("Type", lg::quote("land"))); // land is fallback
+      string unit_LuaLandUnit(lg::assign("LandUnit", lg::boolean(true))); // LandUnit=true is fallback
+
+      bool unit_flyer = unit.special_ability_flags()->flyer();
+      string unit_LuaFlyer =  lg::assign("AirUnit", lg::boolean(unit_flyer));
+      if(unit_flyer)
+      {
+        unit_LuaType = lg::assign("Type", lg::quote("fly"));
+        unit_LuaLandUnit = lg::assign("LandUnit", lg::boolean(false));
+      }
+
+      bool unit_building = unit.special_ability_flags()->building();
+      string unit_LuaBuilding =  lg::assign("Building", lg::boolean(unit_building));
+
+      bool unit_organic = unit.special_ability_flags()->organic();
+      string unit_LuaOrganic =  lg::assign("organic", lg::boolean(unit_organic));
+
+
       // FIXME: just make everything able to move as test
       //string unit_LuaSpeed = lg::assign("Speed", "10");
 
       string unit_defintion = lg::DefineUnitType(unit_name,
-                                                {unit_name_translated, unit_image, unit_shadow, unit_icon, unit_animations,
-                                                 unit_portraits, unit_hitpoints, unit_LuaTileSize, unit_LuaBoxSize,
-                                                 unit_LuaSightRange, unit_LuaComputerReactionRange, unit_LuaPersonReactionRange,
-                                                 unit_LuaNumDirections});
+                                                {lg::line(unit_name_translated),
+                                                 lg::line(unit_image),
+                                                 lg::line(unit_shadow),
+                                                 lg::line(unit_icon),
+                                                 lg::line(unit_animations),
+                                                 lg::line(unit_portraits),
+                                                 lg::line(unit_hitpoints),
+                                                 lg::line(unit_LuaTileSize),
+                                                 lg::line( unit_LuaBoxSize),
+                                                 lg::line(unit_LuaSightRange),
+                                                 lg::line(unit_LuaComputerReactionRange),
+                                                 lg::line(unit_LuaPersonReactionRange),
+                                                 lg::line(unit_LuaNumDirections),
+                                                 lg::line(unit_LuaFlyer),
+                                                 lg::line(unit_LuaType),
+                                                 lg::line(unit_LuaBuilding),
+                                                 lg::line(unit_LuaOrganic),
+                                                 lg::line(unit_LuaLandUnit)
+                                                });
 
       lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));
 

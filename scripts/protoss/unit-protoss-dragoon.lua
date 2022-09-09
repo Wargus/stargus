@@ -60,13 +60,10 @@ DefineUnitType("unit-protoss-dragoon", {
   Priority = 60,
   Points = 50,
   Demand = 2,
-  Type = "land",
   RightMouseAction = "attack",
   Corpse = "unit-protoss-dragoon-death",
   CanAttack = true,
   CanTargetLand = true, CanTargetAir = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "protoss-dragoon-selected",

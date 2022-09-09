@@ -39,11 +39,9 @@ DefineUnitType("unit-zerg-drone", {
   RegenerationRate = 1,
   Points = 30,
   Demand = 1,
-  Type = "land",
   RightMouseAction = "harvest",
   CanAttack = true, RepairRange = 0,
   CanTargetLand = true,
-  LandUnit = true,
   Coward = true,
   CanGatherResources = {
    {"file-when-loaded", image_17_zerg_drone_file,

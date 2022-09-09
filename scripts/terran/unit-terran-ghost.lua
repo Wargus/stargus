@@ -57,12 +57,9 @@ DefineUnitType("unit-terran-ghost", {
   Points = 50,
   Demand = 1,
 --  Corpse = "unit-dead-body",
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "terran-ghost-selected",

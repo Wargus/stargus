@@ -72,12 +72,9 @@ DefineUnitType("unit-zerg-zergling", {
   Demand = 1,
   Corpse = "unit-zerg-zergling-death",
   RegenerationRate = 1,
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "zerg-zergling-selected",

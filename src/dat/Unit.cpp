@@ -98,6 +98,15 @@ uint8_t Unit::sight_range()
   return sight_range;
 }
 
+units_dat_t::special_ability_flags_type_t *Unit::special_ability_flags()
+{
+  units_dat_t::special_ability_flags_type_t *special_ability_flags = mDatahub.units->special_ability_flags()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("special_ability_flags()"));
+
+  return special_ability_flags;
+}
+
 /* Exceptions */
 
 const char *NoPortraitException::what() const throw()

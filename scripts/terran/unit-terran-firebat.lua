@@ -50,12 +50,9 @@ DefineUnitType("unit-terran-firebat", {
   Points = 50,
   Demand = 1,
   ExplodeWhenKilled = "missile-terran-explosion-small",
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "terran-firebat-selected",

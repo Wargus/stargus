@@ -25,9 +25,8 @@ DefineUnitType("unit-zerg-extractor", {
   Points = 160,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-explosion",
-  Type = "land",
   BuilderLost = true,
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   BuildingRules = { { "ontop", { Type = "unit-resource-vespene-geyser", ReplaceOnDie = true, ReplaceOnBuild = true} } },
   GivesResource = "gas", CanHarvest = true,
   Sounds = {

@@ -39,9 +39,6 @@ DefineUnitType("unit-zerg-larva", { Name = "Larva",
   Animations = "animations-zerg-larva", Icon = "icon-zerg-larva",
   Armor = 10, Missile = "missile-none",
   Corpse = "unit-zerg-larva-death",
-  Type = "land",
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
 } )
 

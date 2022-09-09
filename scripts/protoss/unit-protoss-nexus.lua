@@ -663,8 +663,7 @@ DefineUnitType("unit-protoss-nexus", {
   Points = 200,
   Supply = 10,  Corpse = "unit-destroyed-4x4-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   BuildingRules = { { "distance", { Distance = 3, DistanceType = ">", Type = "unit-minerals1"} } },
   CanStore = {"gas", "minerals"},
   Sounds = {

@@ -35,6 +35,10 @@ public:
 
   uint8_t sight_range();
 
+  units_dat_t::special_ability_flags_type_t *special_ability_flags();
+
+  /* constants */
+
   static const int portrait_none = 65535;
 
 private:

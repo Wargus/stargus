@@ -88,12 +88,9 @@ DefineUnitType("unit-terran-vulture", {
   Points = 50,
   Demand = 2,
   ExplodeWhenKilled = "missile-terran-explosion-small",
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "terran-vulture-selected",

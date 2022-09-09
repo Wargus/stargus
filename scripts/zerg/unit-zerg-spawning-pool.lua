@@ -28,8 +28,7 @@ DefineUnitType("unit-zerg-spawning-pool", {
   BuilderLost = true,
 --  Corpse = "unit-zerg-rubble-large",
   ExplodeWhenKilled = "missile-none",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   Sounds = {
     "selected", "zerg-spawning-pool-selected",
     "ready", "zerg-building-ready",

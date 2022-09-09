@@ -41,8 +41,7 @@ DefineUnitType("unit-protoss-citadel-of-adun", {
   Points = 160,
   BuilderOutside = true,
   AutoBuildRate = 2,
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   BuildingRules = { { "distance", { Distance = 3, DistanceType = "<", Type = "unit-protoss-pylon"} } },
   Sounds = {
     "selected", "protoss-cybernetics-core-selected",

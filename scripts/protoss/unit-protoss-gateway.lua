@@ -44,8 +44,7 @@ DefineUnitType("unit-protoss-gateway", {
   --ExplodeWhenKilled = "missile-terran-explosion-large",
   BuilderOutside = true,  
   AutoBuildRate = 2,
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   BuildingRules = { { "distance", { Distance = 3, DistanceType = "<", Type = "unit-protoss-pylon"} } },
   Sounds = {
     "selected", "protoss-gateway-selected",

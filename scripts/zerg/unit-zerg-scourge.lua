@@ -67,13 +67,11 @@ DefineUnitType("unit-zerg-scourge", {
   Points = 150,
   Demand = 1,
   Corpse = "unit-zerg-scourge-death",
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = false, CanTargetSea = false, CanTargetAir = true,
   AirUnit = true,
   DetectCloak = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "zerg-scourge-selected",

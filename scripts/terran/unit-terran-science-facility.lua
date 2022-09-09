@@ -45,8 +45,7 @@ DefineUnitType("unit-terran-science-facility", {
   Points = 160,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   Sounds = {
     "selected", "terran-science-facility-selected",
     "ready", "terran-scv-done",

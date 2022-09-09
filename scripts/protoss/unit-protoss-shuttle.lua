@@ -59,7 +59,6 @@ DefineUnitType("unit-protoss-shuttle", {
   --Corpse = "unit-zerg-overlord-death",
   SelectableByRectangle = true,
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   Sounds = {
     "selected", "protoss-shuttle-selected",
     "acknowledge", "protoss-shuttle-acknowledge",

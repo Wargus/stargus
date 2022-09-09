@@ -42,7 +42,6 @@ DefineUnitType("unit-zerg-queen", {
   Points = 200,
   ExplodeWhenKilled = "missile-terran-explosion-large",
   RegenerationRate = 1,
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   Sounds = {
     "selected", "zerg-queen-selected",
     "acknowledge", "zerg-queen-acknowledgement",

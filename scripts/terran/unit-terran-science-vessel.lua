@@ -28,13 +28,10 @@ DefineUnitType("unit-terran-science-vessel", {
   Points = 150,
   Demand = 2,
   ExplodeWhenKilled = "missile-terran-explosion-medium",
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true, CanTargetSea = true, CanTargetAir = true,
-  AirUnit = true,
   DetectCloak = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "terran-science-vessel-selected",

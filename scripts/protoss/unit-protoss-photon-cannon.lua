@@ -640,13 +640,12 @@ DefineUnitType("unit-protoss-photon-cannon", {
   Points = 170,
   --[[Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",--]]
-  Type = "land",
   RightMouseAction = "attack",
   BuilderOutside = true,
   AutoBuildRate = 30,
   CanAttack = true,
   CanTargetLand = true,
-  Building = true, VisibleUnderFog = true,
+  VisibleUnderFog = true,
   BuildingRules = { { "distance", { Distance = 3, DistanceType = "<", Type = "unit-protoss-pylon"} } },
   Sounds = {
     "selected", "protoss-photon-cannon-selected",

@@ -44,12 +44,9 @@ DefineUnitType("unit-protoss-zealot", {
   Priority = 60,
   Points = 50,
   Demand = 1,
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "protoss-zealot-selected",

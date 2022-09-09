@@ -38,11 +38,9 @@ DefineUnitType("unit-protoss-probe", {
   Points = 30,
   Demand = 1,
   --ExplodeWhenKilled = "missile-terran-explosion-small",
-  Type = "land",
   RightMouseAction = "harvest",
   CanAttack = true, RepairRange = 1,
   CanTargetLand = true,
-  LandUnit = true,
   Coward = true,
   CanGatherResources = {
    {"file-when-loaded", "graphics/unit/protoss/probe.png",

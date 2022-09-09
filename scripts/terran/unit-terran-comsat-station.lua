@@ -28,8 +28,7 @@ DefineUnitType("unit-terran-comsat-station", {
   Supply = 10,
   Corpse = "unit-destroyed-4x4-place",
   ExplodeWhenKilled = "missile-terran-explosion-small",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   BuildingRules = { { "addon", { OffsetX = 4, OffsetY = -5, Type = "unit-terran-command-center"}}},
   Sounds = {
     "selected", "button",

@@ -45,8 +45,7 @@ DefineUnitType("unit-terran-armory", {
   Points = 160,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   Sounds = {
     "selected", "terran-armory-selected",
     "ready", "terran-scv-done",

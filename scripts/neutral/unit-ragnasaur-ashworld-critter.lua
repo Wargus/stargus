@@ -11,7 +11,4 @@ DefineUnitType("unit-critter-ragnasaur", {
   DrawLevel = 5,
   BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 0,
-  Type = "land",
-  LandUnit = true,
-  organic = true,
 })

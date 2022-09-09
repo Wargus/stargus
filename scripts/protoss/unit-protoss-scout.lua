@@ -29,13 +29,10 @@ DefineUnitType("unit-protoss-scout", {
   Points = 150,
   Demand = 2,
   ExplodeWhenKilled = "missile-terran-explosion-small",
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true, CanTargetSea = true, CanTargetAir = true,
-  AirUnit = true,
   DetectCloak = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "protoss-scout-selected",

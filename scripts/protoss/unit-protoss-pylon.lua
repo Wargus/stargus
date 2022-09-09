@@ -42,8 +42,7 @@ DefineUnitType("unit-protoss-pylon", {
   Supply = 8,
   Corpse = "unit-destroyed-2x2-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   Sounds = {
     "selected", "protoss-pylon-selected",
 --    "acknowledge", "farm-acknowledge",

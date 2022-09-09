@@ -48,10 +48,9 @@ DefineUnitType("unit-zerg-hatchery", {
   Supply = 8,
   RegenerationRate = 1,
 --  ExplodeWhenKilled = "missle-zerg-rubble-large",
-  Type = "land",
 --  Corpse = "unit-zerg-rubble-large",
   BuilderLost = true,
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   BuildingRules = { { "distance", { Distance = 3, DistanceType = ">", Type = "unit-minerals1"} } },
   CanStore = {"gas", "minerals"},
   Sounds = {
