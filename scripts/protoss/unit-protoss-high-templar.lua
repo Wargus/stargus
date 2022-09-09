@@ -36,7 +36,6 @@ DefineAnimations("animations-protoss-high-templar", {
 
 DefineUnitType("unit-protoss-high-templar", {
   Animations = "animations-protoss-high-templar", Icon = "icon-protoss-high-templar",
-  Costs = {"time", 100, "minerals", 100},
   Speed = 10,
   DrawLevel = 40,
   Armor = 4, BasicDamage = 10, PiercingDamage = 3, Missile = "missile-none",

@@ -58,7 +58,6 @@ DefineAnimations("animations-zerg-scourge", {
 DefineUnitType("unit-zerg-scourge", {
   DrawLevel = 45,
   Animations = "animations-zerg-scourge", Icon = "icon-zerg-scourge",
-  Costs = {"time", 250, "minerals", 12, "gas", 38},
   Speed = 14,
   DrawLevel = 60,
   Armor = 0, BasicDamage = 110, PiercingDamage = 16, Missile = "missile-none",

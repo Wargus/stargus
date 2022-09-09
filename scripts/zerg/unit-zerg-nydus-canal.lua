@@ -13,7 +13,6 @@ DefineAnimations("animations-zerg-nydus-canal", {
 
 DefineUnitType("unit-zerg-nydus-canal", {
   Animations = "animations-zerg-nydus-canal", Icon = "icon-zerg-nydus-canal",
-  Costs = {"time", 200, "minerals", 100, "gas", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",

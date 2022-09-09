@@ -14,7 +14,6 @@ DefineAnimations("animations-zerg-creep-colony", {
 
 DefineUnitType("unit-zerg-creep-colony", {
   Animations = "animations-zerg-creep-colony", Icon = "icon-zerg-creep-colony",
-  Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",

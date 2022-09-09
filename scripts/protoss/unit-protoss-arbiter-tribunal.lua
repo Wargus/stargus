@@ -30,7 +30,6 @@ DefineConstruction("construction-protoss-arbiter-tribunal", {
 
 DefineUnitType("unit-protoss-arbiter-tribunal", {
   Animations = "animations-protoss-arbiter-tribunal", Icon = "icon-protoss-arbiter-tribunal",
-  Costs = {"time", 30, "minerals", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-arbiter-tribunal",

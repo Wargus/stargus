@@ -13,7 +13,6 @@ DefineAnimations("animations-terran-comsat-station", {
 
 DefineUnitType("unit-terran-comsat-station", {
   Animations = "animations-terran-comsat-station", Icon = "icon-terran-comsat-station",
-  Costs = {"time", 75, "minerals", 50},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
 --  Construction = "construction-terran-comsat-station",

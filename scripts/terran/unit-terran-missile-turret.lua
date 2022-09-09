@@ -31,7 +31,6 @@ DefineConstruction("construction-terran-missile-turret", {
 
 DefineUnitType("unit-terran-missile-turret", {
   Animations = "animations-terran-missile-turret", Icon = "icon-terran-missile-turret",
-  Costs = {"time", 190, "minerals", 200},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-missile-turret",

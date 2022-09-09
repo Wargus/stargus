@@ -43,7 +43,6 @@ DefineAnimations("animations-protoss-observer", {
 
 DefineUnitType("unit-protoss-observer", {
   Animations = "animations-protoss-observer", Icon = "icon-protoss-observer",
-  Costs = {"time", 45, "minerals", 100},
   RepairHp = 4,
   Speed = 20, 
   DrawLevel = 45,

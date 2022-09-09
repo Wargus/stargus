@@ -32,7 +32,6 @@ DefineAnimations("animations-zerg-queen", {
 
 DefineUnitType("unit-zerg-queen", {
   Animations = "animations-zerg-queen", Icon = "icon-zerg-queen",
-  Costs = {"time", 100, "minerals", 100, "gas", 100,},
   RepairHp = 1,
   Speed = 4,
   DrawLevel = 45,

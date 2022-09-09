@@ -13,7 +13,6 @@ DefineAnimations("animations-zerg-defiler-mound", {
 
 DefineUnitType("unit-zerg-defiler-mound", {
   Animations = "animations-zerg-defiler-mound", Icon = "icon-zerg-defiler-mound",
-  Costs = {"time", 200, "minerals", 100, "gas", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",

@@ -31,7 +31,6 @@ DefineConstruction("construction-protoss-forge", {
 
 DefineUnitType("unit-protoss-forge", {
   Animations = "animations-protoss-forge", Icon = "icon-protoss-forge",
-  Costs = {"time", 200, "minerals", 150},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-forge",

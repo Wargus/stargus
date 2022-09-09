@@ -27,7 +27,6 @@ DefineConstruction("construction-terran-refinery", {
 
 DefineUnitType("unit-terran-refinery", { Name = "Refinery",
   Animations = "animations-terran-refinery", Icon = "icon-terran-refinery",
-  Costs = {"time", 200, "minerals", 100},
   Construction = "construction-terran-refinery",
   Speed = 0,
   BurnPercent = 30,

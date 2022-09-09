@@ -31,7 +31,6 @@ DefineConstruction("construction-terran-command-center", {
 
 DefineUnitType("unit-terran-command-center", {
   Animations = "animations-terran-command-center", Icon = "icon-terran-command-center",
-  Costs = {"time", 255, "minerals", 400},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-command-center",

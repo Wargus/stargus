@@ -45,7 +45,6 @@ DefineAnimations("animations-protoss-shuttle", {
 
 DefineUnitType("unit-protoss-shuttle", {
   Animations = "animations-protoss-shuttle", Icon = "icon-protoss-shuttle",
-  Costs = {"time", 45, "minerals", 100},
   RepairHp = 4,
   Speed = 10,
   DrawLevel = 45,

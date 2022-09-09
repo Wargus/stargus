@@ -51,7 +51,6 @@ DefineAnimations("animations-terran-siege-tank", {
 
 DefineUnitType("unit-terran-siege-tank-tank-mode", {
   Animations = "animations-terran-siege-tank", Icon = "icon-terran-siege-tank",
-  Costs = {"time", 60, "minerals", 150, "gas", 100},
   Speed = 10,
   RotationSpeed = 4,
   DrawLevel = 40,

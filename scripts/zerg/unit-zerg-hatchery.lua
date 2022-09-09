@@ -36,7 +36,6 @@ DefineUnitType("unit-zerg-hatchery", {
 	   SetUnitVariable(self, "LarvaTimeout", timeout - 1)
 	end
   end),
-  Costs = {"time", 255, "minerals", 300},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 0},
   Construction = "construction-zerg",

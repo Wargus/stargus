@@ -31,7 +31,6 @@ DefineConstruction("construction-protoss-gateway", {
 
 DefineUnitType("unit-protoss-gateway", {
   Animations = "animations-protoss-gateway", Icon = "icon-protoss-gateway",
-  Costs = {"time", 200, "minerals", 150},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-gateway",

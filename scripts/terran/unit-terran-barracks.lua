@@ -14,8 +14,8 @@ DefineAnimations("animations-terran-barracks", {
 })
 
 DefineConstruction("construction-terran-barracks", {
-  Files = image_325_terran_tbldlr_var,
-  ShadowFiles = image_325_terran_tbldlr_var,
+  Files = image_325_terran_tbldlrg_var,
+  ShadowFiles = image_325_terran_tbldlrg_var,
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -33,7 +33,6 @@ DefineConstruction("construction-terran-barracks", {
 
 DefineUnitType("unit-terran-barracks", {
   Animations = "animations-terran-barracks", Icon = "icon-terran-barracks",
-  Costs = {"time", 60, "minerals", 150},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-barracks",

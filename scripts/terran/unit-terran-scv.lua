@@ -89,7 +89,6 @@ DefineAnimations("animations-terran-scv", {
 
 DefineUnitType("unit-terran-scv", {
   Animations = "animations-terran-scv", Icon = "icon-terran-scv",
-  Costs = {"time", 45, "minerals", 50},
   Speed = 10,
   DrawLevel = 45,
   BasicDamage = 3, PiercingDamage = 2, Missile = "missile-none",

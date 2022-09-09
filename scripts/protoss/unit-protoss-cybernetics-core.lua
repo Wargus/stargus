@@ -31,7 +31,6 @@ DefineConstruction("construction-protoss-cybernetics-core", {
 
 DefineUnitType("unit-protoss-cybernetics-core", {
   Animations = "animations-protoss-cybernetics-core", Icon = "icon-protoss-cybernetics-core",
-  Costs = {"time", 200, "minerals", 200},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-cybernetics-core",

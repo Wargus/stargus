@@ -31,7 +31,6 @@ DefineConstruction("construction-terran-engineering-bay", {
 
 DefineUnitType("unit-terran-engineering-bay", {
   Animations = "animations-terran-engineering-bay", Icon = "icon-terran-engineering-bay",
-  Costs = {"time", 200, "minerals", 125},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-engineering-bay",

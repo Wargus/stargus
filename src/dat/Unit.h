@@ -37,6 +37,12 @@ public:
 
   units_dat_t::special_ability_flags_type_t *special_ability_flags();
 
+  uint16_t build_time();
+
+  uint16_t vespene_cost();
+
+  uint16_t mineral_cost();
+
   /* constants */
 
   static const int portrait_none = 65535;

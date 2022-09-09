@@ -30,7 +30,6 @@ DefineConstruction("construction-protoss-robotics-facility", {
 
 DefineUnitType("unit-protoss-robotics-facility", {
   Animations = "animations-protoss-robotics-facility", Icon = "icon-protoss-robotics-facility",
-  Costs = {"time", 30, "minerals", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-robotics-facility",

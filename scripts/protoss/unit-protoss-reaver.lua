@@ -36,7 +36,6 @@ DefineAnimations("animations-protoss-reaver", {
 
 DefineUnitType("unit-protoss-reaver", {
   Animations = "animations-protoss-reaver", Icon = "icon-protoss-reaver",
-  Costs = {"time", 100, "minerals", 100},
   Speed = 10,
   DrawLevel = 40,
   Armor = 4, BasicDamage = 10, PiercingDamage = 3, Missile = "missile-none",

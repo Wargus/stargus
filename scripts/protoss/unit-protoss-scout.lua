@@ -19,7 +19,6 @@ DefineAnimations("animations-protoss-scout", {
 DefineUnitType("unit-protoss-scout", {
   DrawLevel = 45,
   Animations = "animations-protoss-scout", Icon = "icon-protoss-scout",
-  Costs = {"time", 250, "minerals", 150, "gas", 100},
   Speed = 14,
   DrawLevel = 60,
   Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-none",

@@ -31,7 +31,6 @@ DefineConstruction("construction-terran-science-facility", {
 
 DefineUnitType("unit-terran-science-facility", {
   Animations = "animations-terran-science-facility", Icon = "icon-terran-science-facility",
-  Costs = {"time", 200, "minerals", 100, "gas", 150},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-science-facility",

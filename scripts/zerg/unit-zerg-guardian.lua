@@ -51,7 +51,6 @@ DefineAnimations("animations-zerg-guardian", {
 DefineUnitType("unit-zerg-guardian", {
   DrawLevel = 45,
   Animations = "animations-zerg-guardian", Icon = "icon-zerg-guardian",
-  Costs = {"time", 250, "minerals", 150, "gas", 200},
   Speed = 14,
   DrawLevel = 60,
   Armor = 2, BasicDamage = 20, PiercingDamage = 16, Missile = "missile-none",

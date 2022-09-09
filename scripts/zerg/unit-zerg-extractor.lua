@@ -16,7 +16,6 @@ DefineAnimations("animations-zerg-extractor", {
 
 DefineUnitType("unit-zerg-extractor", {
   Animations = "animations-zerg-extractor", Icon = "icon-zerg-extractor",
-  Costs = {"time", 200, "minerals", 50},
   Construction = "construction-zerg",
   Speed = 0,
   DrawLevel = 30,

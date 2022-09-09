@@ -16,7 +16,6 @@ DefineAnimations("animations-zerg-ultralisk-cavern", {
 
 DefineUnitType("unit-zerg-ultralisk-cavern", {
   Animations = "animations-zerg-ultralisk-cavern", Icon = "icon-zerg-ultralisk-cavern",
-  Costs = {"time", 200, "minerals", 150, "gas", 200},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",

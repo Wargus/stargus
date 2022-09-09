@@ -30,7 +30,6 @@ DefineConstruction("construction-protoss-observatory", {
 
 DefineUnitType("unit-protoss-observatory", {
   Animations = "animations-protoss-observatory", Icon = "icon-protoss-observatory",
-  Costs = {"time", 30, "minerals", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-observatory",

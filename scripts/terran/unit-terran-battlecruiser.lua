@@ -4,13 +4,12 @@
 
 DefineAnimations("animations-terran-battlecruiser", {
   Still = {"frame 0", "wait 125",},
-  Move = {
-    "unbreakable begin", -- accellerate
-      "frame 0", "move 1", "wait 1", "frame 0", "move 2", "wait 1",
-      "frame 0", "move 3", "wait 1", "frame 0", "move 2",
-    "unbreakable end", "wait 1",
-    "label fullspeed", "unbreakable begin", "frame 0", "move 3", "wait 1", "frame 0", "move 2", "wait 1", "frame 0", "move 3", "unbreakable end", "wait 1",
-    "goto fullspeed",},
+  Move = {"unbreakable begin", "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",
+    "frame 0", "move 3", "wait 2", "frame 0", "move 2", "wait 1",
+    "frame 0", "move 3", "wait 1", "frame 0", "move 2", "wait 1",
+    "frame 0", "move 3", "wait 2", "frame 0", "move 3", "wait 1",
+    "frame 0", "move 3", "wait 2", "frame 0", "move 2", "wait 1",
+    "frame 0", "move 3", "wait 1", "frame 0", "move 2", "unbreakable end", "wait 1",},
   Attack = {"unbreakable begin", "attack", "sound terran-battlecruiser-attack",
     "unbreakable end", "wait 1",},
   Death = {"unbreakable begin", "sound terran-battlecruiser-death",
@@ -20,7 +19,6 @@ DefineAnimations("animations-terran-battlecruiser", {
 DefineUnitType("unit-terran-battlecruiser", {
   DrawLevel = 45,
   Animations = "animations-terran-battlecruiser", Icon = "icon-terran-battlecruiser",
-  Costs = {"time", 250, "minerals", 400, "gas", 300},
   Speed = 14,
   DrawLevel = 60,
   Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-terran-battlecruiser-laser",

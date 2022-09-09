@@ -178,6 +178,14 @@ bool UnitsConverter::convert(json &unitsJson,
       bool unit_organic = unit.special_ability_flags()->organic();
       string unit_LuaOrganic =  lg::assign("organic", lg::boolean(unit_organic));
 
+      int unit_build_time = ((double)unit.build_time() / 24.0) * 6.0; // SC time is 1/24 sec and *6 is stratagus magic
+      int unit_minaral_costs = unit.mineral_cost();
+      int unit_vespene_costs = unit.vespene_cost();
+
+      string unit_LuaCosts =  lg::assign("Costs", lg::table({lg::quote("time"), to_string(unit_build_time),
+                                                             lg::quote("minerals"), to_string(unit_minaral_costs),
+                                                             lg::quote("gas"), to_string(unit_vespene_costs)
+                                                            }));
 
       // FIXME: just make everything able to move as test
       //string unit_LuaSpeed = lg::assign("Speed", "10");
@@ -200,7 +208,8 @@ bool UnitsConverter::convert(json &unitsJson,
                                                  lg::line(unit_LuaType),
                                                  lg::line(unit_LuaBuilding),
                                                  lg::line(unit_LuaOrganic),
-                                                 lg::line(unit_LuaLandUnit)
+                                                 lg::line(unit_LuaLandUnit),
+                                                 lg::line(unit_LuaCosts)
                                                 });
 
       lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));

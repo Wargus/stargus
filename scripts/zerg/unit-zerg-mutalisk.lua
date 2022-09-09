@@ -27,7 +27,6 @@ DefineAnimations("animations-zerg-mutalisk", {
 DefineUnitType("unit-zerg-mutalisk", {
   DrawLevel = 45,
   Animations = "animations-zerg-mutalisk", Icon = "icon-zerg-mutalisk",
-  Costs = {"time", 250, "minerals", 150, "gas", 100},
   Speed = 14,
   DrawLevel = 60,
   Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-zerg-mutalisk-glaive-wurm",

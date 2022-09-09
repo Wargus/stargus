@@ -31,7 +31,6 @@ DefineConstruction("construction-protoss-fleet-beacon", {
 
 DefineUnitType("unit-protoss-fleet-beacon", {
   Animations = "animations-protoss-stargate", Icon = "icon-protoss-fleet-beacon",
-  Costs = {"time", 30, "minerals", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-fleet-beacon",

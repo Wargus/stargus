@@ -16,7 +16,6 @@ DefineAnimations("animations-zerg-spire", {
 
 DefineUnitType("unit-zerg-spire", {
   Animations = "animations-zerg-spire", Icon = "icon-zerg-spire",
-  Costs = {"time", 200, "minerals", 200, "gas", 200},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",

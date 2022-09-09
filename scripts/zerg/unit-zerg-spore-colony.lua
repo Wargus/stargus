@@ -18,7 +18,6 @@ DefineAnimations("animations-zerg-spore-colony", {
 
 DefineUnitType("unit-zerg-spore-colony", {
   Animations = "animations-zerg-spore-colony", Icon = "icon-zerg-spore-colony",
-  Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",

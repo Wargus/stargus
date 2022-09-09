@@ -650,7 +650,6 @@ DefineConstruction("construction-zerg-hatchery", {
 
 DefineUnitType("unit-protoss-nexus", {
   Animations = "animations-protoss-nexus", Icon = "icon-protoss-nexus",
-  Costs = {"time", 255, "minerals", 400},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 0},
   Construction = "construction-protoss-nexus",

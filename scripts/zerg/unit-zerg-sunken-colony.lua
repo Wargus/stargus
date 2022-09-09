@@ -23,7 +23,6 @@ DefineAnimations("animations-zerg-sunken-colony", {
 
 DefineUnitType("unit-zerg-sunken-colony", {
   Animations = "animations-zerg-sunken-colony", Icon = "icon-zerg-sunken-colony",
-  Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",

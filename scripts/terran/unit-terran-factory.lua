@@ -31,7 +31,6 @@ DefineConstruction("construction-terran-factory", {
 
 DefineUnitType("unit-terran-factory", {
   Animations = "animations-terran-factory", Icon = "icon-terran-factory",
-  Costs = {"time", 200, "minerals", 200, "gas", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-factory",

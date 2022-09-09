@@ -31,7 +31,6 @@ DefineConstruction("construction-terran-armory", {
 
 DefineUnitType("unit-terran-armory", {
   Animations = "animations-terran-armory", Icon = "icon-terran-armory",
-  Costs = {"time", 200, "minerals", 100, "gas", 50},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-armory",

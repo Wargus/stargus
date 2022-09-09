@@ -48,7 +48,6 @@ DefineAnimations("animations-terran-ghost", {
 
 DefineUnitType("unit-terran-ghost", {
   Animations = "animations-terran-ghost", Icon = "icon-terran-ghost",
-  Costs = {"time", 60, "minerals", 25, "gas", 75},
   Speed = 10,
   DrawLevel = 40,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-none",

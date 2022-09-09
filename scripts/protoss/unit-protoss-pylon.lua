@@ -28,7 +28,6 @@ DefineConstruction("construction-protoss-pylon", {
 
 DefineUnitType("unit-protoss-pylon", {
   Animations = "animations-protoss-pylon", Icon = "icon-protoss-pylon",
-  Costs = {"time", 100, "minerals", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-pylon",

@@ -627,7 +627,6 @@ DefineConstruction("construction-protoss-assimulator", {
 
 DefineUnitType("unit-protoss-assimulator", {
   Animations = "animations-protoss-assimulator", Icon = "icon-zerg-extractor",
-  Costs = {"time", 200, "minerals", 100},
   Construction = "construction-protoss-assimulator",
   Speed = 0,
   DrawLevel = 30,

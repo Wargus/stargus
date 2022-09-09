@@ -15,7 +15,6 @@ DefineAnimations("animations-zerg-spawning-pool", {
 
 DefineUnitType("unit-zerg-spawning-pool", {
   Animations = "animations-zerg-spawning-pool", Icon = "icon-zerg-spawning-pool",
-  Costs = {"time", 200, "minerals", 150},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",

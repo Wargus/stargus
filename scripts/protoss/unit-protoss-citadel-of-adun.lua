@@ -30,7 +30,6 @@ DefineConstruction("construction-protoss-citadel-of-adun", {
 
 DefineUnitType("unit-protoss-citadel-of-adun", {
   Animations = "animations-protoss-citadel-of-adun", Icon = "icon-protoss-citadel-of-adun",
-  Costs = {"time", 30, "minerals", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-citadel-of-adun",

@@ -51,7 +51,6 @@ DefineAnimations("animations-protoss-dragoon", {
 
 DefineUnitType("unit-protoss-dragoon", {
   Animations = "animations-protoss-dragoon", Icon = "icon-protoss-dragoon",
-  Costs = {"time", 60, "minerals", 125, "gas", 25},
   Speed = 10,
   ShieldPoints = 200,
   DrawLevel = 40,

@@ -76,7 +76,6 @@ DefineAnimations("animations-zerg-ultralisk", {
 
 DefineUnitType("unit-zerg-ultralisk", {
   Animations = "animations-zerg-ultralisk", Icon = "icon-zerg-ultralisk",
-  Costs = {"time", 200, "minerals", 200, "gas", 200},
   Speed = 12,
   DrawLevel = 40,
   Armor = 3, BasicDamage = 20, PiercingDamage = 10, Missile = "missile-none",

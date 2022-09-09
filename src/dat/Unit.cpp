@@ -107,6 +107,33 @@ units_dat_t::special_ability_flags_type_t *Unit::special_ability_flags()
   return special_ability_flags;
 }
 
+uint16_t Unit::build_time()
+{
+  uint16_t build_time = mDatahub.units->build_time()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("build_time(") + to_string(build_time) + ")");
+
+  return build_time;
+}
+
+uint16_t Unit::vespene_cost()
+{
+  uint16_t vespene_cost = mDatahub.units->vespene_cost()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("vespene_cost(") + to_string(vespene_cost) + ")");
+
+  return vespene_cost;
+}
+
+uint16_t Unit::mineral_cost()
+{
+  uint16_t mineral_cost = mDatahub.units->mineral_cost()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("mineral_cost(") + to_string(mineral_cost) + ")");
+
+  return mineral_cost;
+}
+
 /* Exceptions */
 
 const char *NoPortraitException::what() const throw()

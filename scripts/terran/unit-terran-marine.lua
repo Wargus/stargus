@@ -69,7 +69,6 @@ DefineAnimations("animations-terran-marine", {
 
 DefineUnitType("unit-terran-marine", {
   Animations = "animations-terran-marine", Icon = "icon-terran-marine",
-  Costs = {"time", 60, "minerals", 50},
   Speed = 10,
   DrawLevel = 40,
   -- TileSize = {2, 2}, BoxSize = {31, 31}, Offset = {0, -8}, BoxOffset = {0, -8}, PersonalSpace = {1, 1},

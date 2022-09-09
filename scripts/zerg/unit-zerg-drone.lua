@@ -30,7 +30,6 @@ DefineAnimations("animations-zerg-drone", {
 
 DefineUnitType("unit-zerg-drone", {
   Animations = "animations-zerg-drone", Icon = "icon-zerg-drone",
-  Costs = {"time", 25, "minerals", 50},
   Speed = 10,
   DrawLevel = 30,
   BasicDamage = 5, PiercingDamage = 2, Missile = "missile-zerg-spit",

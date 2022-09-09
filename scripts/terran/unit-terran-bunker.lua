@@ -28,7 +28,6 @@ DefineConstruction("construction-terran-bunker", {
 
 DefineUnitType("unit-terran-bunker", {
   Animations = "animations-terran-bunker", Icon = "icon-terran-bunker",
-  Costs = {"time", 200, "minerals", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-bunker",
