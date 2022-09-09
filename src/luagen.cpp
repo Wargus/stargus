@@ -15,6 +15,11 @@ std::string boolean(bool b)
   return b ? "true" : "false";
 }
 
+std::string integer(int i)
+{
+  return to_string(i);
+}
+
 std::string function(const std::string &name, const std::initializer_list<std::string> &functionParams)
 {
   return function(name, params(functionParams));

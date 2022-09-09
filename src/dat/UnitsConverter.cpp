@@ -120,19 +120,31 @@ bool UnitsConverter::convert(json &unitsJson,
       string unit_hitpoints = lg::assign("HitPoints", to_string(unit.hitpoints()));
       string unit_name_translated = lg::assign("Name", lg::quote(unit.name().name1));
 
+      bool unit_building = unit.special_ability_flags()->building();
+      string unit_LuaBuilding =  lg::assign("Building", lg::boolean(unit_building));
+
       units_dat_t::unit_dimension_type_t *unit_dimension_tilesize = unit.unit_dimension();
 
       int unit_width = unit_dimension_tilesize->left() + unit_dimension_tilesize->right();
       int unit_height = unit_dimension_tilesize->up() + unit_dimension_tilesize->down();
 
-      int unit_tilesize_width = ceil(unit_width / (double) tilesize_pixel);
-      int unit_tilesize_height = ceil(unit_height / (double) tilesize_pixel);
+      double unit_tilesize_width = unit_width / (double) tilesize_pixel;
+      double unit_tilesize_height = unit_height / (double) tilesize_pixel;
 
-      int unit_boxsize_width = unit_tilesize_width * tilesize_pixel;
-      int unit_boxsize_height = unit_tilesize_height * tilesize_pixel;
+      int unit_boxsize_width = round(unit_tilesize_width * tilesize_pixel);
+      int unit_boxsize_height = round(unit_tilesize_height * tilesize_pixel);
 
-      string unit_LuaTileSize = lg::assign("TileSize", lg::table({to_string(unit_tilesize_width), to_string(unit_tilesize_height)}));
+      // for all units which could move (all non-buildings) set a square size as optimization for stratagus
+      if(!unit_building)
+      {
+        unit_tilesize_width = unit_tilesize_height = round(sqrt(unit_tilesize_width * unit_tilesize_height));
+      }
+
+      string unit_LuaTileSize = lg::assign("TileSize", lg::table({lg::integer(unit_tilesize_width), lg::integer(unit_tilesize_height)}));
       string unit_LuaBoxSize = lg::assign("BoxSize", lg::table({to_string(unit_boxsize_width), to_string(unit_boxsize_height)}));
+
+      // for now just give each unit a PersonalSpace of 1 around
+      string unit_LuaPersonalSpace = lg::assign("PersonalSpace", lg::table({lg::integer(1), lg::integer(1)}));
 
       int unit_sight_range = unit.sight_range() * minitile_multi;
       string unit_computer_reaction_rangeStr ("math.ceil(" + to_string(unit_sight_range) + " * ComputerReactionRangeFactor)");
@@ -172,9 +184,6 @@ bool UnitsConverter::convert(json &unitsJson,
         unit_LuaLandUnit = lg::assign("LandUnit", lg::boolean(false));
       }
 
-      bool unit_building = unit.special_ability_flags()->building();
-      string unit_LuaBuilding =  lg::assign("Building", lg::boolean(unit_building));
-
       bool unit_organic = unit.special_ability_flags()->organic();
       string unit_LuaOrganic =  lg::assign("organic", lg::boolean(unit_organic));
 
@@ -209,7 +218,8 @@ bool UnitsConverter::convert(json &unitsJson,
                                                  lg::line(unit_LuaBuilding),
                                                  lg::line(unit_LuaOrganic),
                                                  lg::line(unit_LuaLandUnit),
-                                                 lg::line(unit_LuaCosts)
+                                                 lg::line(unit_LuaCosts),
+                                                 lg::line(unit_LuaPersonalSpace)
                                                 });
 
       lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));
