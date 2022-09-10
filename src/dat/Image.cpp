@@ -27,12 +27,17 @@ Image::~Image()
 
 }
 
-std::shared_ptr<TblEntry> Image::grp()
+uint32_t Image::grp()
 {
   uint32_t grp_id = mDatahub.images->grp()->at(mId);
   LOG4CXX_TRACE(logger, string("grp(") + to_string(grp_id) + ")");
 
-  std::shared_ptr<TblEntry> tbl_entry = mDatahub.images_tbl_vec.at(grp_id-1);
+  return grp_id;
+}
+
+TblEntry Image::grp_tbl()
+{
+  TblEntry tbl_entry = mDatahub.images_tbl_vec.at(grp()-1);
 
   return tbl_entry;
 }
@@ -63,7 +68,7 @@ bool Image::gfx_turns()
 
 std::string Image::createID()
 {
-  string image_name("image_" + to_string(mId) + "_" + grp()->name1);
+  string image_name("image_" + to_string(mId) + "_" + grp_tbl().name1);
   replaceString("\\", "_", image_name);
   //fs::path p(image_name);
 

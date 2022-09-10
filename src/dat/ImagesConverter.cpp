@@ -63,7 +63,7 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
   {
     Image image(mDatahub, i);
 
-    string grp_name(image.grp()->name1);
+    string grp_name(image.grp_tbl().name1);
     grp_name = to_lower(grp_name); // make lower case to match it always
 
     // find first slash

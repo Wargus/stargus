@@ -25,7 +25,9 @@ public:
   Image(DataHub &datahub, unsigned int id);
   virtual ~Image();
 
-  std::shared_ptr<TblEntry> grp();
+  uint32_t grp();
+
+  TblEntry grp_tbl();
 
   uint8_t draw_function();
 

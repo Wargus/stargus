@@ -43,18 +43,18 @@ uint32_t Portrait::video_talking()
   return portrait_id;
 }
 
-std::shared_ptr<TblEntry> Portrait::tbl_idle()
+TblEntry Portrait::video_idle_tbl()
 {
-  std::shared_ptr<TblEntry> tbl_entry = mDatahub.portdata_tbl_vec.at(video_idle() - 1);
-  LOG4CXX_TRACE(logger, string("tbl_idle(") + tbl_entry->name1 + ")");
+  TblEntry tbl_entry = mDatahub.portdata_tbl_vec.at(video_idle() - 1);
+  LOG4CXX_TRACE(logger, string("video_idle_tbl(") + tbl_entry.name1 + ")");
 
   return tbl_entry;
 }
 
-std::shared_ptr<TblEntry> Portrait::tbl_talking()
+TblEntry Portrait::video_talking_tbl()
 {
-  std::shared_ptr<TblEntry> tbl_entry = mDatahub.portdata_tbl_vec.at(video_talking() - 1);
-  LOG4CXX_TRACE(logger, string("tbl_talking(") + tbl_entry->name1 + ")");
+  TblEntry tbl_entry = mDatahub.portdata_tbl_vec.at(video_talking() - 1);
+  LOG4CXX_TRACE(logger, string("video_talking_tbl(") + tbl_entry.name1 + ")");
 
   return tbl_entry;
 }

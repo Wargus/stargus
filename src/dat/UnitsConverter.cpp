@@ -9,7 +9,6 @@
 #include "Preferences.h"
 #include "FileUtil.h"
 #include "Logger.h"
-#include "Unit.h"
 #include "StringUtil.h"
 #include "Grp.h"
 #include "luagen.h"
@@ -77,7 +76,6 @@ bool UnitsConverter::convert(json &unitsJson,
     bool save_result = true;
 
     LOG4CXX_TRACE(logger, string("Unit(") + to_string(unit_id) + ")");
-    dat::Unit unit(mDatahub, unit_id);
 
     try
     {
@@ -90,13 +88,15 @@ bool UnitsConverter::convert(json &unitsJson,
 
     if(extractor)
     {
-      string grp_arcfile =  "unit\\" + unit.flingy().sprite().image().grp()->name1;
+      Unit unit(mDatahub, unit_id);
+
+      string grp_arcfile =  "unit\\" + unit.flingy().sprite().image().grp_tbl().name1;
 
       // for the LUA reference it's enough to use the idle name as we save only one LUA for idle+talking
       string unit_portraits;
       try
       {
-        string portrait_name = unit.portrait().tbl_idle()->name1;
+        string portrait_name = unit.portrait().video_idle_tbl().name1;
         string portrait_id = Portrait::createID(portrait_name);
         string portrait_lua = "portrait_" + portrait_id;
         unit_portraits = lg::assign("Portrait", portrait_lua);
@@ -113,12 +113,14 @@ bool UnitsConverter::convert(json &unitsJson,
       ofstream lua_file;
       lua_file.open (lua_file_store.getFullPath());
 
+      makeSounds(unit);
+
       string image_id = unit.flingy().sprite().image().createID();
       string image_lua = image_id;
       string unit_image = lg::assign("Image", image_lua);
 
       string unit_hitpoints = lg::assign("HitPoints", to_string(unit.hitpoints()));
-      string unit_name_translated = lg::assign("Name", lg::quote(unit.name()->name1));
+      string unit_name_translated = lg::assign("Name", lg::quote(unit.name().name1));
 
       bool unit_building = unit.special_ability_flags()->building();
       string unit_LuaBuilding =  lg::assign("Building", lg::boolean(unit_building));
@@ -239,9 +241,22 @@ bool UnitsConverter::convert(json &unitsJson,
   return result;
 }
 
-void convertGrp(const std::string &arcfile, Storage storage)
+std::string UnitsConverter::makeSounds(Unit &unit)
 {
+  string make_sound;
 
+  try
+  {
+    TblEntry unit_ready_sound_tbl_entry = unit.ready_sound().sound_file_tbl();
+
+    cout << "Ready_Sound: " <<  unit_ready_sound_tbl_entry.name1 << endl;
+  }
+  catch(NoSfxException &nex)
+  {
+    cout << "no sound: " << nex.what() << endl;
+  }
+
+  return make_sound;
 }
 
 } /* namespace dat */

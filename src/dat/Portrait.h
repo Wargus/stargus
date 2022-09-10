@@ -21,8 +21,8 @@ public:
   uint32_t video_idle();
   uint32_t video_talking();
 
-  std::shared_ptr<TblEntry> tbl_idle();
-  std::shared_ptr<TblEntry> tbl_talking();
+  TblEntry video_idle_tbl();
+  TblEntry video_talking_tbl();
 
   static std::string createID(const std::string &portrait);
 

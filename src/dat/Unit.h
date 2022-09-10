@@ -11,6 +11,7 @@
 #include "Flingy.h"
 #include "ObjectAccess.h"
 #include "Portrait.h"
+#include "Sfx.h"
 
 namespace dat
 {
@@ -23,7 +24,7 @@ public:
 
   Flingy flingy();
 
-  std::shared_ptr<TblEntry> name();
+  TblEntry name();
 
   uint32_t hitpoints();
 
@@ -43,9 +44,12 @@ public:
 
   uint16_t mineral_cost();
 
+  Sfx ready_sound();
+
   /* constants */
 
   static const int portrait_none = 65535;
+  static const int sound_none = 0;
 
 private:
 
@@ -62,6 +66,19 @@ public:
 
 private:
   uint16_t m_portraid_id;
+};
+
+class NoSfxException : public std::exception
+{
+public:
+  NoSfxException(uint16_t sfx_id) {m_sfx_id = sfx_id;}
+
+  virtual ~NoSfxException() throw() {}
+
+  const char *what() const throw();
+
+private:
+  uint16_t m_sfx_id;
 };
 
 

@@ -118,8 +118,8 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    std::shared_ptr<TblEntry> tblEntry = mDatahub.stat_txt_vec.at(i);
-    csv_dat += "ref:name=" + tblEntry->name1;
+    TblEntry tblEntry = mDatahub.stat_txt_vec.at(i);
+    csv_dat += "ref:name=" + tblEntry.name1;
 
     csv_dat += CSV_SEPARATOR;
 
@@ -157,8 +157,8 @@ void CSVExporter::print()
 
       csv_dat += CSV_SEPARATOR;
 
-      std::shared_ptr<TblEntry> tblEntry_portrait = mDatahub.portdata_tbl_vec.at(portrait_file - 1);
-      csv_dat += "ref:portrait_idle=" + tblEntry_portrait->name1;
+      TblEntry tblEntry_portrait = mDatahub.portdata_tbl_vec.at(portrait_file - 1);
+      csv_dat += "ref:portrait_idle=" + tblEntry_portrait.name1;
 
       csv_dat += CSV_SEPARATOR;
     }
@@ -171,8 +171,8 @@ void CSVExporter::print()
 
       csv_dat += CSV_SEPARATOR;
 
-      std::shared_ptr<TblEntry> tblEntry_portrait = mDatahub.portdata_tbl_vec.at(portrait_file - 1);
-      csv_dat += "ref:portrait_talking=" + tblEntry_portrait->name1;
+      TblEntry tblEntry_portrait = mDatahub.portdata_tbl_vec.at(portrait_file - 1);
+      csv_dat += "ref:portrait_talking=" + tblEntry_portrait.name1;
 
       csv_dat += CSV_SEPARATOR;
     }
@@ -205,8 +205,8 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    std::shared_ptr<TblEntry> tblEntry_label = mDatahub.stat_txt_vec.at(label_id);
-    csv_dat += "ref:name=" + tblEntry_label->name1;
+    TblEntry tblEntry_label = mDatahub.stat_txt_vec.at(label_id);
+    csv_dat += "ref:name=" + tblEntry_label.name1;
 
     csv_dat += CSV_SEPARATOR;
 
@@ -222,8 +222,8 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    std::shared_ptr<TblEntry> tblEntry_error = mDatahub.stat_txt_vec.at(error_id);
-    csv_dat += " ref:error_text=" + tblEntry_error->name1;
+    TblEntry tblEntry_error = mDatahub.stat_txt_vec.at(error_id);
+    csv_dat += " ref:error_text=" + tblEntry_error.name1;
 
     csv_dat += CSV_SEPARATOR;
 
@@ -287,8 +287,8 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    std::shared_ptr<TblEntry> tblEntry = mDatahub.images_tbl_vec.at(grp_id - 1); // spec says first index is -1
-    csv_dat += "ref:name=" + tblEntry->name1;
+    TblEntry tblEntry = mDatahub.images_tbl_vec.at(grp_id - 1); // spec says first index is -1
+    csv_dat += "ref:name=" + tblEntry.name1;
 
     csv_dat += CSV_SEPARATOR;
 
@@ -318,8 +318,8 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    std::shared_ptr<TblEntry> tblEntry = mDatahub.sfxdata_tbl_vec.at(sound_file);
-    csv_dat += "ref:name=" + tblEntry->name1;
+    TblEntry tblEntry = mDatahub.sfxdata_tbl_vec.at(sound_file);
+    csv_dat += "ref:name=" + tblEntry.name1;
 
     csv_dat += CSV_SEPARATOR;
 
@@ -343,8 +343,8 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    std::shared_ptr<TblEntry> tblEntry_idle = mDatahub.portdata_tbl_vec.at(portrait_idle - 1);
-    csv_dat += "ref:idle=" + tblEntry_idle->name1;
+    TblEntry tblEntry_idle = mDatahub.portdata_tbl_vec.at(portrait_idle - 1);
+    csv_dat += "ref:idle=" + tblEntry_idle.name1;
 
     csv_dat += CSV_SEPARATOR;
 
@@ -354,8 +354,8 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    std::shared_ptr<TblEntry> tblEntry_talking = mDatahub.portdata_tbl_vec.at(portrait_talking - 1);
-    csv_dat += "ref:talking=" + tblEntry_talking->name1;
+    TblEntry tblEntry_talking = mDatahub.portdata_tbl_vec.at(portrait_talking - 1);
+    csv_dat += "ref:talking=" + tblEntry_talking.name1;
 
     csv_dat += CSV_SEPARATOR;
 
@@ -379,9 +379,9 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    std::shared_ptr<TblEntry> tblEntry = mDatahub.stat_txt_vec.at(upgrades_label);
-    csv_dat += "ref:label=" + tblEntry->name1;
-    sprintf(buf, "ref:shortcut=%s", tblEntry->shortcut.c_str());
+    TblEntry tblEntry = mDatahub.stat_txt_vec.at(upgrades_label);
+    csv_dat += "ref:label=" + tblEntry.name1;
+    sprintf(buf, "ref:shortcut=%s", tblEntry.shortcut.c_str());
     csv_dat += buf;
 
     csv_dat += CSV_SEPARATOR;
@@ -406,8 +406,8 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    std::shared_ptr<TblEntry> tblEntry = mDatahub.stat_txt_vec.at(orders_label);
-    csv_dat += "ref:label=" + tblEntry->name1;
+    TblEntry tblEntry = mDatahub.stat_txt_vec.at(orders_label);
+    csv_dat += "ref:label=" + tblEntry.name1;
 
     csv_dat += CSV_SEPARATOR;
 
@@ -431,14 +431,14 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    std::shared_ptr<TblEntry> tblEntry = mDatahub.stat_txt_vec.at(techdata_label);
-    csv_dat += "ref:label=" + tblEntry->name1;
+    TblEntry tblEntry = mDatahub.stat_txt_vec.at(techdata_label);
+    csv_dat += "ref:label=" + tblEntry.name1;
     csv_dat += CSV_SEPARATOR;
-    sprintf(buf, "ref:shortcut=%s", tblEntry->shortcut.c_str());
+    sprintf(buf, "ref:shortcut=%s", tblEntry.shortcut.c_str());
     csv_dat += buf;
 
     csv_dat += CSV_SEPARATOR;
-    sprintf(buf, "ref:shortcut_pos=%d", tblEntry->shortcut_pos);
+    sprintf(buf, "ref:shortcut_pos=%d", tblEntry.shortcut_pos);
     csv_dat += buf;
 
     csv_dat += CSV_SEPARATOR;
@@ -463,8 +463,8 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    std::shared_ptr<TblEntry> tblEntry = mDatahub.mapdata_tbl_vec.at(mapdata_label - 1);
-    csv_dat += "ref:dir=" + tblEntry->name1;
+    TblEntry tblEntry = mDatahub.mapdata_tbl_vec.at(mapdata_label - 1);
+    csv_dat += "ref:dir=" + tblEntry.name1;
 
     csv_dat += CSV_SEPARATOR;
 

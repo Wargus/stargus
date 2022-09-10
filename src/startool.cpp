@@ -430,6 +430,21 @@ void testHook()
   dat::DataHub datahub(storm);
   //datahub.printCSV();
 
+  //dat::SfxConverter sfxConverter(storm, datahub);
+  //sfxConverter.convert();
+
+  dat::Unit unit(datahub, 39);
+
+  unit.name();
+
+  dat::Sfx sfx = unit.ready_sound();
+  sfx.sound_file_tbl();
+
+  dat::Portrait portrait = unit.portrait();
+
+  portrait.video_talking_tbl();
+  portrait.video_idle_tbl();
+
   /// Image 1
   Pcx pcx1(storm, "game\\tunit.pcx");
   pcx1.savePNG("/tmp/tunit.png");
@@ -656,6 +671,8 @@ int main(int argc, const char **argv)
 
     dat::UnitsConverter unitsConverter(sub_storm, datahub);
     unitsConverter.convert(units_json, paletteMap, palette2DMap);
+
+    exit(1);
 
     dat::ImagesConverter imagesConverter(sub_storm, datahub);
     imagesConverter.convert(paletteMap, palette2DMap);

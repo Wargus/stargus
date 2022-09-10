@@ -27,6 +27,7 @@ public:
   int shortcut_pos;
   std::string shortcut;
 
+
   void removeSpaces()
   {
     size_t pos;
@@ -53,7 +54,7 @@ public:
   Tbl();
   virtual ~Tbl();
 
-  std::vector<std::shared_ptr<TblEntry>> convertFromStream(std::shared_ptr<kaitai::kstream> ks);
+  std::vector<TblEntry> convertFromStream(std::shared_ptr<kaitai::kstream> ks);
 };
 
 #endif /* TBL_H */

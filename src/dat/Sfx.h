@@ -22,7 +22,9 @@ public:
   Sfx(DataHub &datahub, unsigned int id);
   virtual ~Sfx();
 
-  std::shared_ptr<TblEntry> sound_file();
+  uint32_t sound_file();
+
+  TblEntry sound_file_tbl();
 
 private:
 

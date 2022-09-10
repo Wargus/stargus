@@ -10,6 +10,7 @@
 // project
 #include "DataHub.h"
 #include "Storage.h"
+#include "Unit.h"
 
 // system
 
@@ -30,7 +31,7 @@ public:
                std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap);
 
 private:
-  void convertGrp(const std::string &arcfile, Storage storage);
+  std::string makeSounds(Unit &unit);
 
   DataHub &mDatahub;
 };

@@ -85,11 +85,11 @@ public:
   std::shared_ptr<mapdata_dat_t> mapdata;
 
   // kaitai parsed Tbl vectors
-  std::vector<std::shared_ptr<TblEntry>> stat_txt_vec;
-  std::vector<std::shared_ptr<TblEntry>> images_tbl_vec;
-  std::vector<std::shared_ptr<TblEntry>> sfxdata_tbl_vec;
-  std::vector<std::shared_ptr<TblEntry>> portdata_tbl_vec;
-  std::vector<std::shared_ptr<TblEntry>> mapdata_tbl_vec;
+  std::vector<TblEntry> stat_txt_vec;
+  std::vector<TblEntry> images_tbl_vec;
+  std::vector<TblEntry> sfxdata_tbl_vec;
+  std::vector<TblEntry> portdata_tbl_vec;
+  std::vector<TblEntry> mapdata_tbl_vec;
 
   static const int units_units_ready_sound_end = 106;
 

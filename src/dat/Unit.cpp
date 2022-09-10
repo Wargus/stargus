@@ -33,11 +33,12 @@ Flingy Unit::flingy()
   return flingy;
 }
 
-std::shared_ptr<TblEntry> Unit::name()
+TblEntry Unit::name()
 {
   LOG4CXX_TRACE(logger, string("name(") + to_string(mId) + ")");
 
-  std::shared_ptr<TblEntry> tbl_entry = mDatahub.stat_txt_vec.at(mId);
+  TblEntry tbl_entry = mDatahub.stat_txt_vec.at(mId);
+  LOG4CXX_TRACE(logger, string("name(") + tbl_entry.name1 + ")");
 
   return tbl_entry;
 }
@@ -133,6 +134,27 @@ uint16_t Unit::mineral_cost()
   return mineral_cost;
 }
 
+Sfx Unit::ready_sound()
+{
+  if(mId >= 106)
+  {
+    throw NoSfxException(mId);
+  }
+
+  uint16_t ready_sound_id = mDatahub.units->ready_sound()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("ready_sound(") + to_string(ready_sound_id) + ")");
+
+  if(ready_sound_id == Unit::sound_none)
+  {
+    throw NoSfxException(ready_sound_id);
+  }
+
+  Sfx sfx(mDatahub, ready_sound_id);
+
+  return sfx;
+}
+
 /* Exceptions */
 
 const char *NoPortraitException::what() const throw()
@@ -140,6 +162,15 @@ const char *NoPortraitException::what() const throw()
   static string s;
   s = "Portrait id not existing: ";
   s += to_string(m_portraid_id);
+
+  return static_cast <const char *>(s.c_str());
+}
+
+const char *NoSfxException::what() const throw()
+{
+  static string s;
+  s = "Sfx id not existing: ";
+  s += to_string(m_sfx_id);
 
   return static_cast <const char *>(s.c_str());
 }

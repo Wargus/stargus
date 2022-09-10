@@ -43,7 +43,7 @@ Tbl::~Tbl()
  * understood. But somehow there're shortcuts and a marker which char should be highlighted in the GUI...
  * r<EOT>Pa<ETX>r<SOH>asit entwickeln<LF>(Für Königin)<NULL>
  */
-vector<std::shared_ptr<TblEntry>> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
+vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
 {
   file_tbl_t file_tbl = file_tbl_t(ks.get());
 
@@ -51,7 +51,7 @@ vector<std::shared_ptr<TblEntry>> Tbl::convertFromStream(std::shared_ptr<kaitai:
     file_tbl.tbl_entries();
 
   unsigned int i = 0;
-  vector<std::shared_ptr<TblEntry>> tbl_entry_vec;
+  vector<TblEntry> tbl_entry_vec;
   for (vector<file_tbl_t::tbl_entry_t *>::iterator file_tbl_entry_it =
          file_tbl_entry_vec->begin();
        file_tbl_entry_it != file_tbl_entry_vec->end(); file_tbl_entry_it++)
@@ -65,7 +65,7 @@ vector<std::shared_ptr<TblEntry>> Tbl::convertFromStream(std::shared_ptr<kaitai:
     //"#entry: " << entry_char_vec->size() << endl;
 
     //uint8_t last_control = 0;
-    std::shared_ptr<TblEntry> tbl_entry = make_shared<TblEntry>();
+    TblEntry tbl_entry;
     string entry_str_tmp;
     unsigned int null_counter = 0;
     bool etx = false;
@@ -87,7 +87,7 @@ vector<std::shared_ptr<TblEntry>> Tbl::convertFromStream(std::shared_ptr<kaitai:
             // TODO: special handling of ESC key if I ever come to this point...
             if (last != 0x1B) // !Escape
             {
-              tbl_entry->shortcut = last;
+              tbl_entry.shortcut = last;
               entry_str_tmp.clear();
             }
           }
@@ -95,17 +95,17 @@ vector<std::shared_ptr<TblEntry>> Tbl::convertFromStream(std::shared_ptr<kaitai:
           {
             if (null_counter == 0)
             {
-              tbl_entry->name1 = entry_str_tmp;
+              tbl_entry.name1 = entry_str_tmp;
               entry_str_tmp.clear();
             }
             else if (null_counter == 1)
             {
-              tbl_entry->name2 = entry_str_tmp;
+              tbl_entry.name2 = entry_str_tmp;
               entry_str_tmp.clear();
             }
             else if (null_counter == 2)
             {
-              tbl_entry->name3 = entry_str_tmp;
+              tbl_entry.name3 = entry_str_tmp;
               entry_str_tmp.clear();
             }
             null_counter++;
@@ -119,25 +119,25 @@ vector<std::shared_ptr<TblEntry>> Tbl::convertFromStream(std::shared_ptr<kaitai:
           dbg_printf("<SOH>");
           if (!etx) // <ETX><SOH> is a special case
           {
-            tbl_entry->shortcut = entry_char_vec->at(n - 1);
+            tbl_entry.shortcut = entry_char_vec->at(n - 1);
             entry_str_tmp.clear();
           }
           break;
         case 0x02: // Start of Text
           dbg_printf("<STX>");
-          tbl_entry->shortcut = entry_char_vec->at(n - 1);
+          tbl_entry.shortcut = entry_char_vec->at(n - 1);
           entry_str_tmp.clear();
           break;
         case 0x03: // End of Text
           dbg_printf("<ETX>");
           if (n == 1) // first char is shortcut special case
           {
-            tbl_entry->shortcut = entry_char_vec->at(n - 1);
+            tbl_entry.shortcut = entry_char_vec->at(n - 1);
             entry_str_tmp.clear();
           }
           else
           {
-            tbl_entry->shortcut_pos = entry_str_tmp.length();
+            tbl_entry.shortcut_pos = entry_str_tmp.length();
             etx = true;
           }
           break;
@@ -145,7 +145,7 @@ vector<std::shared_ptr<TblEntry>> Tbl::convertFromStream(std::shared_ptr<kaitai:
           dbg_printf("<EOT>");
           if (n > 0)
           {
-            tbl_entry->shortcut = entry_char_vec->at(n - 1);
+            tbl_entry.shortcut = entry_char_vec->at(n - 1);
             entry_str_tmp.clear();
           }
           break;
@@ -203,18 +203,18 @@ vector<std::shared_ptr<TblEntry>> Tbl::convertFromStream(std::shared_ptr<kaitai:
     dbg_printf("\n");
 
     // fix trailing characters
-    if (tbl_entry->shortcut == " ")
+    if (tbl_entry.shortcut == " ")
     {
-      tbl_entry->shortcut = "";
+      tbl_entry.shortcut = "";
     }
 
-    tbl_entry->removeSpaces();
+    tbl_entry.removeSpaces();
 
-    dbg_printf("tbl_entry.name(): %s\n", tbl_entry->name1.c_str());
-    dbg_printf("tbl_entry.category1(): %s\n", tbl_entry->name2.c_str());
-    dbg_printf("tbl_entry.category2(): %s\n", tbl_entry->name3.c_str());
-    dbg_printf("tbl_entry.shortcut(): %s\n", tbl_entry->shortcut.c_str());
-    dbg_printf("tbl_entry.shortcut_pos(): %d\n", tbl_entry->shortcut_pos);
+    dbg_printf("tbl_entry.name(): %s\n", tbl_entry.name1.c_str());
+    dbg_printf("tbl_entry.category1(): %s\n", tbl_entry.name2.c_str());
+    dbg_printf("tbl_entry.category2(): %s\n", tbl_entry.name3.c_str());
+    dbg_printf("tbl_entry.shortcut(): %s\n", tbl_entry.shortcut.c_str());
+    dbg_printf("tbl_entry.shortcut_pos(): %d\n", tbl_entry.shortcut_pos);
 
     i++;
     tbl_entry_vec.push_back(tbl_entry);
