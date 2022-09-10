@@ -9,6 +9,7 @@
 #include "Hurricane.h"
 #include "platform.h"
 #include "Logger.h"
+#include "FileUtil.h"
 
 // system
 
@@ -39,6 +40,7 @@ bool Wav::convert(const std::string &arcfile,  Storage storage)
   string wav_file = storage.getFullPath() + ".wav";
   string ogg_file = storage.getFullPath() + ".ogg";
 
+  CheckPath(wav_file);
   result = mHurricane->extractFile(arcfile, wav_file, false);
 
   string ffmpeg_str =

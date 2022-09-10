@@ -4,8 +4,8 @@
  *      Author: Andreas Volz
  */
 
-#ifndef STAT_TXT_TBL_H
-#define STAT_TXT_TBL_H
+#ifndef TBL_H
+#define TBL_H
 
 // Local
 #include "kaitai/file_tbl.h"
@@ -53,7 +53,7 @@ public:
   Tbl();
   virtual ~Tbl();
 
-  std::vector<TblEntry> convertFromStream(std::shared_ptr<kaitai::kstream> ks);
+  std::vector<std::shared_ptr<TblEntry>> convertFromStream(std::shared_ptr<kaitai::kstream> ks);
 };
 
-#endif /* STAT_TXT_TBL_H */
+#endif /* TBL_H */

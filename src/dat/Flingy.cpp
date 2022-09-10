@@ -14,9 +14,8 @@ namespace dat
 
 static Logger logger = Logger("startool.dat.Flingy");
 
-Flingy::Flingy(DataHub &datahub, uint8_t id) :
-  mDatahub(datahub),
-  mId(id)
+Flingy::Flingy(DataHub &datahub, unsigned int id) :
+  ObjectAccess(datahub, id)
 {
 
 

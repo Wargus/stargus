@@ -90,13 +90,13 @@ bool UnitsConverter::convert(json &unitsJson,
 
     if(extractor)
     {
-      string grp_arcfile =  "unit\\" + unit.flingy().sprite().image().grp().name1;
+      string grp_arcfile =  "unit\\" + unit.flingy().sprite().image().grp()->name1;
 
       // for the LUA reference it's enough to use the idle name as we save only one LUA for idle+talking
       string unit_portraits;
       try
       {
-        string portrait_name = unit.portrait().tbl_idle().name1;
+        string portrait_name = unit.portrait().tbl_idle()->name1;
         string portrait_id = Portrait::createID(portrait_name);
         string portrait_lua = "portrait_" + portrait_id;
         unit_portraits = lg::assign("Portrait", portrait_lua);
@@ -118,7 +118,7 @@ bool UnitsConverter::convert(json &unitsJson,
       string unit_image = lg::assign("Image", image_lua);
 
       string unit_hitpoints = lg::assign("HitPoints", to_string(unit.hitpoints()));
-      string unit_name_translated = lg::assign("Name", lg::quote(unit.name().name1));
+      string unit_name_translated = lg::assign("Name", lg::quote(unit.name()->name1));
 
       bool unit_building = unit.special_ability_flags()->building();
       string unit_LuaBuilding =  lg::assign("Building", lg::boolean(unit_building));

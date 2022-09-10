@@ -8,7 +8,7 @@
 #define IMAGE_H
 
 // project
-#include "DataHub.h"
+#include "ObjectAccess.h"
 
 namespace dat
 {
@@ -19,13 +19,13 @@ namespace dat
  * and documentation in only mandatory if needed to understand the difference.
  *
  */
-class Image
+class Image : public ObjectAccess
 {
 public:
-  Image(DataHub &datahub, uint16_t id);
+  Image(DataHub &datahub, unsigned int id);
   virtual ~Image();
 
-  TblEntry grp();
+  std::shared_ptr<TblEntry> grp();
 
   uint8_t draw_function();
 
@@ -37,8 +37,7 @@ public:
   std::string createID();
 
 private:
-  DataHub &mDatahub;
-  uint16_t mId;
+
 };
 
 } /* namespace dat */

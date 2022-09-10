@@ -8,23 +8,22 @@
 #define FLINGY_H
 
 // project
-#include "DataHub.h"
+#include "ObjectAccess.h"
 #include "Sprite.h"
 
 namespace dat
 {
 
-class Flingy
+class Flingy : public ObjectAccess
 {
 public:
-  Flingy(DataHub &datahub, uint8_t id);
+  Flingy(DataHub &datahub, unsigned int id);
   virtual ~Flingy();
 
   Sprite sprite();
 
 private:
-  DataHub &mDatahub;
-  uint8_t mId;
+
 };
 
 } /* namespace dat */

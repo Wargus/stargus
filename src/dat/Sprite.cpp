@@ -14,9 +14,8 @@ namespace dat
 
 static Logger logger = Logger("startool.dat.Sprite");
 
-Sprite::Sprite(DataHub &datahub, uint16_t id) :
-  mDatahub(datahub),
-  mId(id)
+Sprite::Sprite(DataHub &datahub, unsigned int id) :
+  ObjectAccess(datahub, id)
 {
 
 }

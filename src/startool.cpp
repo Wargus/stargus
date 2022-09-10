@@ -63,6 +63,7 @@
 #include "StringUtil.h"
 #include "pacman.h"
 #include "dat/ImagesConverter.h"
+#include "dat/SfxConverter.h"
 
 // system
 #include <nlohmann/json.hpp>
@@ -653,11 +654,16 @@ int main(int argc, const char **argv)
       portraitsConverter.convert();
     }
 
-    dat::UnitsConverter unitsConverter(sub_storm, datahub);
+    /*dat::UnitsConverter unitsConverter(sub_storm, datahub);
     unitsConverter.convert(units_json, paletteMap, palette2DMap);
 
-    dat::ImagesConverter im_conv(sub_storm, datahub);
-    im_conv.convert(paletteMap, palette2DMap);
+    dat::ImagesConverter imagesConverter(sub_storm, datahub);
+    imagesConverter.convert(paletteMap, palette2DMap);*/
+
+    dat::SfxConverter sfxConverter(sub_storm, datahub);
+    sfxConverter.convert();
+
+    exit(0);
 
     for (i = 0; i <= 1; ++i)
     {

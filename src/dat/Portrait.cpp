@@ -16,9 +16,8 @@ namespace dat
 
 static Logger logger = Logger("startool.dat.Portrait");
 
-Portrait::Portrait(DataHub &datahub,  uint16_t id) :
-  mDatahub(datahub),
-  mId(id)
+Portrait::Portrait(DataHub &datahub, unsigned int id) :
+  ObjectAccess(datahub, id)
 {
 
 }
@@ -44,18 +43,18 @@ uint32_t Portrait::video_talking()
   return portrait_id;
 }
 
-TblEntry Portrait::tbl_idle()
+std::shared_ptr<TblEntry> Portrait::tbl_idle()
 {
-  TblEntry tbl_entry = mDatahub.portdata_tbl_vec.at(video_idle() - 1);
-  LOG4CXX_TRACE(logger, string("tbl_idle(") + tbl_entry.name1 + ")");
+  std::shared_ptr<TblEntry> tbl_entry = mDatahub.portdata_tbl_vec.at(video_idle() - 1);
+  LOG4CXX_TRACE(logger, string("tbl_idle(") + tbl_entry->name1 + ")");
 
   return tbl_entry;
 }
 
-TblEntry Portrait::tbl_talking()
+std::shared_ptr<TblEntry> Portrait::tbl_talking()
 {
-  TblEntry tbl_entry = mDatahub.portdata_tbl_vec.at(video_talking() - 1);
-  LOG4CXX_TRACE(logger, string("tbl_talking(") + tbl_entry.name1 + ")");
+  std::shared_ptr<TblEntry> tbl_entry = mDatahub.portdata_tbl_vec.at(video_talking() - 1);
+  LOG4CXX_TRACE(logger, string("tbl_talking(") + tbl_entry->name1 + ")");
 
   return tbl_entry;
 }

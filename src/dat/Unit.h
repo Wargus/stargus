@@ -9,21 +9,21 @@
 
 // project
 #include "Flingy.h"
-#include "DataHub.h"
+#include "ObjectAccess.h"
 #include "Portrait.h"
 
 namespace dat
 {
 
-class Unit
+class Unit : public ObjectAccess
 {
 public:
-  Unit(DataHub &datahub, uint8_t id);
+  Unit(DataHub &datahub, unsigned int id);
   virtual ~Unit();
 
   Flingy flingy();
 
-  TblEntry name();
+  std::shared_ptr<TblEntry> name();
 
   uint32_t hitpoints();
 
@@ -48,8 +48,7 @@ public:
   static const int portrait_none = 65535;
 
 private:
-  DataHub &mDatahub;
-  uint8_t mId;
+
 };
 
 class NoPortraitException : public std::exception

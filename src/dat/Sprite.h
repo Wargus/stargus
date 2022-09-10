@@ -8,23 +8,22 @@
 #define SPRITE_H
 
 // project
-#include "DataHub.h"
+#include "ObjectAccess.h"
 #include "Image.h"
 
 namespace dat
 {
 
-class Sprite
+class Sprite : public ObjectAccess
 {
 public:
-  Sprite(DataHub &datahub, uint16_t id);
+  Sprite(DataHub &datahub, unsigned int id);
   virtual ~Sprite();
 
   Image image();
 
 private:
-  DataHub &mDatahub;
-  uint16_t mId;
+
 };
 
 } /* namespace dat */

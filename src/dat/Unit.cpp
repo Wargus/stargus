@@ -14,9 +14,8 @@ namespace dat
 
 static Logger logger = Logger("startool.dat.Unit");
 
-Unit::Unit(DataHub &datahub, uint8_t id) :
-  mDatahub(datahub),
-  mId(id)
+Unit::Unit(DataHub &datahub, unsigned int id) :
+    ObjectAccess(datahub, id)
 {
 }
 
@@ -34,11 +33,11 @@ Flingy Unit::flingy()
   return flingy;
 }
 
-TblEntry Unit::name()
+std::shared_ptr<TblEntry> Unit::name()
 {
   LOG4CXX_TRACE(logger, string("name(") + to_string(mId) + ")");
 
-  TblEntry tbl_entry = mDatahub.stat_txt_vec.at(mId);
+  std::shared_ptr<TblEntry> tbl_entry = mDatahub.stat_txt_vec.at(mId);
 
   return tbl_entry;
 }
