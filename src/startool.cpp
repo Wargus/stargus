@@ -654,14 +654,17 @@ int main(int argc, const char **argv)
       portraitsConverter.convert();
     }
 
-    /*dat::UnitsConverter unitsConverter(sub_storm, datahub);
+    dat::UnitsConverter unitsConverter(sub_storm, datahub);
     unitsConverter.convert(units_json, paletteMap, palette2DMap);
 
     dat::ImagesConverter imagesConverter(sub_storm, datahub);
-    imagesConverter.convert(paletteMap, palette2DMap);*/
+    imagesConverter.convert(paletteMap, palette2DMap);
 
-    dat::SfxConverter sfxConverter(sub_storm, datahub);
-    sfxConverter.convert();
+    if(preferences.getSoundExtraction())
+    {
+      dat::SfxConverter sfxConverter(sub_storm, datahub);
+      sfxConverter.convert();
+    }
 
     exit(0);
 
