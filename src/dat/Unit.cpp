@@ -14,13 +14,19 @@ namespace dat
 
 static Logger logger = Logger("startool.dat.Unit");
 
-Unit::Unit(DataHub &datahub, unsigned int id) :
-    ObjectAccess(datahub, id)
+Unit::Unit(DataHub &datahub, unsigned int id, const std::string &identString) :
+  ObjectAccess(datahub, id),
+  mIdentString(identString)
 {
 }
 
 Unit::~Unit()
 {
+}
+
+std::string Unit::createID()
+{
+  return mIdentString;
 }
 
 Flingy Unit::flingy()
@@ -136,7 +142,7 @@ uint16_t Unit::mineral_cost()
 
 Sfx Unit::ready_sound()
 {
-  if(mId >= 106)
+  if(mId >= 106) // only unit IDs < 106 have ready_sound
   {
     throw NoSfxException(mId);
   }
@@ -147,12 +153,94 @@ Sfx Unit::ready_sound()
 
   if(ready_sound_id == Unit::sound_none)
   {
-    throw NoSfxException(ready_sound_id);
+    throw NoSfxException(Unit::sound_none);
   }
 
   Sfx sfx(mDatahub, ready_sound_id);
 
   return sfx;
+}
+
+std::vector<Sfx> Unit::what_sound()
+{
+  std::vector<Sfx> sfx_vector;
+
+  uint16_t what_sound_start_id = mDatahub.units->what_sound_start()->at(mId);
+  uint16_t what_sound_end_id = mDatahub.units->what_sound_end()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("what_sound_start(") + to_string(what_sound_start_id) + ")");
+  LOG4CXX_TRACE(logger, string("what_sound_end(") + to_string(what_sound_end_id) + ")");
+
+  if((what_sound_start_id || what_sound_end_id) == Unit::sound_none)
+  {
+    throw NoSfxException(Unit::sound_none);
+  }
+
+  for(unsigned int i = what_sound_start_id; i <= what_sound_end_id; i++)
+  {
+    Sfx sfx(mDatahub, i);
+    sfx_vector.push_back(sfx);
+  }
+
+  return sfx_vector;
+}
+
+std::vector<Sfx> Unit::yes_sound()
+{
+  if(mId >= 106) // only unit IDs < 106 have ready_sound
+  {
+    throw NoSfxException(mId);
+  }
+
+  std::vector<Sfx> sfx_vector;
+
+  uint16_t yes_sound_start_id = mDatahub.units->yes_sound_start()->at(mId);
+  uint16_t yes_sound_end_id = mDatahub.units->yes_sound_end()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("yes_sound_start(") + to_string(yes_sound_start_id) + ")");
+  LOG4CXX_TRACE(logger, string("yes_sound_end(") + to_string(yes_sound_end_id) + ")");
+
+  if((yes_sound_start_id || yes_sound_end_id) == Unit::sound_none)
+  {
+    throw NoSfxException(Unit::sound_none);
+  }
+
+  for(unsigned int i = yes_sound_start_id; i <= yes_sound_end_id; i++)
+  {
+    Sfx sfx(mDatahub, i);
+    sfx_vector.push_back(sfx);
+  }
+
+  return sfx_vector;
+}
+
+std::vector<Sfx> Unit::piss_sound()
+{
+  if(mId >= 106) // only unit IDs < 106 have ready_sound
+  {
+    throw NoSfxException(mId);
+  }
+
+  std::vector<Sfx> sfx_vector;
+
+  uint16_t piss_sound_start_id = mDatahub.units->piss_sound_start()->at(mId);
+  uint16_t piss_sound_end_id = mDatahub.units->piss_sound_end()->at(mId);
+
+  LOG4CXX_TRACE(logger, string("piss_sound_start(") + to_string(piss_sound_start_id) + ")");
+  LOG4CXX_TRACE(logger, string("piss_sound_end(") + to_string(piss_sound_end_id) + ")");
+
+  if((piss_sound_start_id || piss_sound_end_id) == Unit::sound_none)
+  {
+    throw NoSfxException(Unit::sound_none);
+  }
+
+  for(unsigned int i = piss_sound_start_id; i <= piss_sound_end_id; i++)
+  {
+    Sfx sfx(mDatahub, i);
+    sfx_vector.push_back(sfx);
+  }
+
+  return sfx_vector;
 }
 
 /* Exceptions */

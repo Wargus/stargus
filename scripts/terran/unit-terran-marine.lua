@@ -84,9 +84,11 @@ DefineUnitType("unit-terran-marine", {
   CanTargetLand = true,
   CanTargetAir = true,
   SelectableByRectangle = true,
-  Sounds = {
+  --[[Sounds = {
     "selected", "terran-marine-selected",
     "acknowledge", "terran-marine-acknowledge",
     "ready", "terran-marine-ready",
-    "help", "terran-units-attacked",} } )
+    "help", "terran-units-attacked",} ]]--
+    
+    } )
 

@@ -64,8 +64,9 @@ bool UnitsConverter::convert(json &unitsJson,
   lua_include.open (luagen("luagen-units.lua").getFullPath());
   string lua_include_str;
 
-  // this cache ensure not to extract GRP several times the same
-  //vector<string> grp_name_cache;
+  /*ofstream lua_sounds;
+  lua_sounds.open (luagen("luagen-sounds.lua").getFullPath());
+  string lua_lua_sounds_str;*/
 
   // units.dat
   for(auto &array : unitsJson)
@@ -88,11 +89,11 @@ bool UnitsConverter::convert(json &unitsJson,
 
     if(extractor)
     {
-      Unit unit(mDatahub, unit_id);
+      Unit unit(mDatahub, unit_id, unit_name);
 
       string grp_arcfile =  "unit\\" + unit.flingy().sprite().image().grp_tbl().name1;
 
-      // for the LUA reference it's enough to use the idle name as we save only one LUA for idle+talking
+      // for the LUA reference it's enough to use the idle name as we save only one LUA for idle+talking portrait
       string unit_portraits;
       try
       {
@@ -113,7 +114,62 @@ bool UnitsConverter::convert(json &unitsJson,
       ofstream lua_file;
       lua_file.open (lua_file_store.getFullPath());
 
-      makeSounds(unit);
+      // generate sounds Lua -->
+
+      string makeLuaReadySounds = makeReadySounds(unit);
+      string makeLuaWhatSounds = makeWhatSounds(unit);
+      string makeLuaYesSounds = makeYesSounds(unit);
+      string makeLuaPissSounds = makePissSounds(unit);
+
+      vector<string> unit_LuaSounds;
+
+      // add Ready sounds direct to the unit
+      if(!makeLuaReadySounds.empty())
+      {
+        string unit_LuaSound_ready = lg::paramsQuote({"ready", unit_name + "-sound-ready"});
+        unit_LuaSounds.push_back(unit_LuaSound_ready);
+      }
+
+      // add Yes/Acknowledge sounds direct to the unit
+      if(!makeLuaYesSounds.empty())
+      {
+        string unit_LuaSound_acknowledge = lg::paramsQuote({"acknowledge", unit_name + "-sound-yes"});
+        unit_LuaSounds.push_back(unit_LuaSound_acknowledge);
+      }
+
+      // make a sound group from What...
+      vector<string> unit_LuaSelectedSounds;
+      if(!makeLuaWhatSounds.empty())
+      {
+        unit_LuaSelectedSounds.push_back(unit_name + "-sound-what");
+      }
+
+      // ...and Piss group
+      if(!makeLuaPissSounds.empty())
+      {
+        unit_LuaSelectedSounds.push_back(unit_name + "-sound-piss");
+      }
+
+      // create a what/piss sound group if both are existing...
+      string makeLuaSelectedSound;
+      // ... and add this sound group to unit Sounds
+      if(unit_LuaSelectedSounds.size() > 1)
+      {
+        string unit_LuaSound_selected = lg::paramsQuote({"selected", unit_name + "-sound-selected"});
+        unit_LuaSounds.push_back(unit_LuaSound_selected);
+
+        makeLuaSelectedSound = lg::function("MakeSoundGroup", {lg::quote(unit_name + "-sound-selected"),
+                                                               lg::paramsQuote(unit_LuaSelectedSounds)});
+      }
+      else if (unit_LuaSelectedSounds.size() == 1) // ...otherwise assign it direct to selected
+      {
+        string unit_LuaSound_selected = lg::paramsQuote({"selected", unit_LuaSelectedSounds.at(0)});
+        unit_LuaSounds.push_back(unit_LuaSound_selected);
+      }
+
+      string unit_sounds = lg::assign("Sounds", lg::table({lg::params(unit_LuaSounds)}));
+
+      // generate images and other properties Lua -->
 
       string image_id = unit.flingy().sprite().image().createID();
       string image_lua = image_id;
@@ -140,6 +196,18 @@ bool UnitsConverter::convert(json &unitsJson,
       if(!unit_building)
       {
         unit_tilesize_width = unit_tilesize_height = round(sqrt(unit_tilesize_width * unit_tilesize_height));
+      }
+
+      // ensure minimal unit width
+      if(unit_tilesize_width < 1)
+      {
+        unit_tilesize_width = 1;
+      }
+
+      // ensure minimal unit height
+      if(unit_tilesize_height < 1)
+      {
+        unit_tilesize_height = 1;
       }
 
       string unit_LuaTileSize = lg::assign("TileSize", lg::table({lg::integer(unit_tilesize_width), lg::integer(unit_tilesize_height)}));
@@ -221,14 +289,41 @@ bool UnitsConverter::convert(json &unitsJson,
                                                  lg::line(unit_LuaOrganic),
                                                  lg::line(unit_LuaLandUnit),
                                                  lg::line(unit_LuaCosts),
-                                                 lg::line(unit_LuaPersonalSpace)
+                                                 lg::line(unit_LuaPersonalSpace),
+                                                 lg::line(unit_sounds)
                                                 });
 
       lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));
 
-      //cout << unit_defintion << endl;
+      lua_file << unit_defintion << endl;
 
-      lua_file << unit_defintion;
+
+      // write all the Lua sound functions
+      if(!makeLuaReadySounds.empty())
+      {
+        lua_file <<  makeLuaReadySounds << endl;
+      }
+
+      if(!makeLuaWhatSounds.empty())
+      {
+        lua_file <<  makeLuaWhatSounds << endl;
+      }
+
+      if(!makeLuaYesSounds.empty())
+      {
+        lua_file <<  makeLuaYesSounds << endl;
+      }
+
+      if(!makeLuaPissSounds.empty())
+      {
+        lua_file <<  makeLuaPissSounds << endl;
+      }
+
+      if(!makeLuaSelectedSound.empty())
+      {
+        lua_file <<  makeLuaSelectedSound << endl;
+      }
+
       lua_file.close();
     }
 
@@ -238,10 +333,12 @@ bool UnitsConverter::convert(json &unitsJson,
   lua_include << lua_include_str;
   lua_include.close();
 
+  //lua_sounds.close();
+
   return result;
 }
 
-std::string UnitsConverter::makeSounds(Unit &unit)
+std::string UnitsConverter::makeReadySounds(Unit &unit)
 {
   string make_sound;
 
@@ -249,14 +346,156 @@ std::string UnitsConverter::makeSounds(Unit &unit)
   {
     TblEntry unit_ready_sound_tbl_entry = unit.ready_sound().sound_file_tbl();
 
-    cout << "Ready_Sound: " <<  unit_ready_sound_tbl_entry.name1 << endl;
+    string unit_sound_ready_id = unit.createID() + "-sound-ready";
+
+    string unit_ready_sound = unit_ready_sound_tbl_entry.name1;
+
+    cout << "Ready Sound: " << unit_ready_sound  << endl;
+
+    string sound_file_base(unit_ready_sound);
+    replaceString("\\", "/", sound_file_base);
+    sound_file_base = cutFileEnding(to_lower(sound_file_base), ".wav");
+    string sound_file_ogg = "sounds/unit/" + sound_file_base + ".ogg";
+
+    make_sound = lg::function("MakeSound", {lg::quote(unit_sound_ready_id), lg::table({lg::quote(sound_file_ogg)})});
   }
   catch(NoSfxException &nex)
   {
-    cout << "no sound: " << nex.what() << endl;
+    cout << "no Ready sound: " << nex.what() << endl;
   }
 
   return make_sound;
+}
+
+std::string UnitsConverter::makeWhatSounds(Unit &unit)
+{
+  string make_sound;
+
+  try
+  {
+    vector<Sfx> sfx_vec = unit.what_sound();
+    vector<string> what_sound_vec;
+
+    if(!sfx_vec.empty())
+    {
+      string unit_sound_ready_id = unit.createID() + "-sound-what";
+
+      for (auto sfx : sfx_vec)
+      {
+        TblEntry unit_what_sound_tbl_entry = sfx.sound_file_tbl();
+
+        string unit_what_sound = unit_what_sound_tbl_entry.name1;
+
+        cout << "What Sound: " << unit_what_sound  << endl;
+
+        string sound_file_base(unit_what_sound);
+        replaceString("\\", "/", sound_file_base);
+        sound_file_base = cutFileEnding(to_lower(sound_file_base), ".wav");
+        string sound_file_ogg = "sounds/unit/" + sound_file_base + ".ogg";
+
+        what_sound_vec.push_back(sound_file_ogg);
+      }
+
+      string unit_LuaWhatSoundParams = lg::paramsQuote(what_sound_vec);
+
+      make_sound = lg::function("MakeSound", {lg::quote(unit_sound_ready_id), lg::table(unit_LuaWhatSoundParams)});
+    }
+  }
+  catch(NoSfxException &nex)
+  {
+    cout << "no What sound: " << nex.what() << endl;
+  }
+
+  return make_sound;
+}
+
+std::string UnitsConverter::makeYesSounds(Unit &unit)
+{
+  string make_sound;
+
+  try
+  {
+    vector<Sfx> sfx_vec = unit.yes_sound();
+    vector<string> yes_sound_vec;
+
+    if(!sfx_vec.empty())
+    {
+      string unit_yes_ready_id = unit.createID() + "-sound-yes";
+
+      for (auto sfx : sfx_vec)
+      {
+        TblEntry unit_yes_sound_tbl_entry = sfx.sound_file_tbl();
+
+        string unit_yes_sound = unit_yes_sound_tbl_entry.name1;
+
+        cout << "Yes Sound: " << unit_yes_sound  << endl;
+
+        string sound_file_base(unit_yes_sound);
+        replaceString("\\", "/", sound_file_base);
+        sound_file_base = cutFileEnding(to_lower(sound_file_base), ".wav");
+        string sound_file_ogg = "sounds/unit/" + sound_file_base + ".ogg";
+
+        yes_sound_vec.push_back(sound_file_ogg);
+      }
+
+      string unit_LuaYesSoundParams = lg::paramsQuote(yes_sound_vec);
+
+      make_sound = lg::function("MakeSound", {lg::quote(unit_yes_ready_id), lg::table(unit_LuaYesSoundParams)});
+    }
+  }
+  catch(NoSfxException &nex)
+  {
+    cout << "no Yes sound: " << nex.what() << endl;
+  }
+
+  return make_sound;
+}
+
+std::string UnitsConverter::makePissSounds(Unit &unit)
+{
+  string make_sound;
+
+  try
+  {
+    vector<Sfx> sfx_vec = unit.piss_sound();
+    vector<string> piss_sound_vec;
+
+    if(!sfx_vec.empty())
+    {
+      string unit_sound_piss_id = unit.createID() + "-sound-piss";
+
+      for (auto sfx : sfx_vec)
+      {
+        TblEntry unit_piss_sound_tbl_entry = sfx.sound_file_tbl();
+
+        string unit_piss_sound = unit_piss_sound_tbl_entry.name1;
+
+        cout << "Piss Sound: " << unit_piss_sound  << endl;
+
+        string sound_file_base(unit_piss_sound);
+        replaceString("\\", "/", sound_file_base);
+        sound_file_base = cutFileEnding(to_lower(sound_file_base), ".wav");
+        string sound_file_ogg = "sounds/unit/" + sound_file_base + ".ogg";
+
+        piss_sound_vec.push_back(sound_file_ogg);
+      }
+
+      string unit_LuaPissSoundParams = lg::paramsQuote(piss_sound_vec);
+
+      make_sound = lg::function("MakeSound", {lg::quote(unit_sound_piss_id), lg::table(unit_LuaPissSoundParams)});
+    }
+  }
+  catch(NoSfxException &nex)
+  {
+    cout << "no Piss sound: " << nex.what() << endl;
+  }
+
+  return make_sound;
+}
+
+std::string UnitsConverter::makeHelpSounds(Unit &unit)
+{
+
 }
 
 } /* namespace dat */

@@ -119,7 +119,9 @@ DefineUnitType("unit-terran-scv", {
     "acknowledge", "terran-scv-acknowledge",
     "ready", "terran-scv-ready",
     "help", "terran-units-attacked",
-    "dead", "terran-scv-death"} } )
+    "dead", "terran-scv-death"} 
+  
+  } )
 
 
 --

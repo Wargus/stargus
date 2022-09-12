@@ -47,15 +47,6 @@ bool SfxConverter::convert()
   sounds.setDataPath(preferences.getDestDir());
   sounds.setDataType("sounds/unit");
 
-  /*Storage luagen;
-  luagen.setDataPath(preferences.getDestDir());
-  luagen.setDataType("luagen/sounds");
-  CheckPath(luagen.getFullPath());
-
-  ofstream lua_include;
-  lua_include.open (luagen("luagen-sounds.lua").getFullPath());
-  string lua_include_str;*/
-
   // start with i=1 as 0=none and couldn't be read
   for(unsigned int i = 1; i < static_cast<unsigned int>(mDatahub.sfxdata->num_lines()); i++)
   {
@@ -83,8 +74,6 @@ bool SfxConverter::convert()
     printf("...%s\n", case_func ? "ok" : "nok");
   }
 
-  //lua_include << lua_include_str;
-  //lua_include.close();
 
   return result;
 }

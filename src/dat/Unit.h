@@ -19,7 +19,7 @@ namespace dat
 class Unit : public ObjectAccess
 {
 public:
-  Unit(DataHub &datahub, unsigned int id);
+  Unit(DataHub &datahub, unsigned int id, const std::string &identString);
   virtual ~Unit();
 
   Flingy flingy();
@@ -46,13 +46,21 @@ public:
 
   Sfx ready_sound();
 
+  std::vector<Sfx> what_sound();
+
+  std::vector<Sfx> yes_sound();
+
+  std::vector<Sfx> piss_sound();
+
+  std::string createID();
+
   /* constants */
 
   static const int portrait_none = 65535;
   static const int sound_none = 0;
 
 private:
-
+  std::string mIdentString;
 };
 
 class NoPortraitException : public std::exception

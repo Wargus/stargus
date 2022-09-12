@@ -433,7 +433,7 @@ void testHook()
   //dat::SfxConverter sfxConverter(storm, datahub);
   //sfxConverter.convert();
 
-  dat::Unit unit(datahub, 39);
+  dat::Unit unit(datahub, 39, "test");
 
   unit.name();
 
@@ -672,8 +672,6 @@ int main(int argc, const char **argv)
     dat::UnitsConverter unitsConverter(sub_storm, datahub);
     unitsConverter.convert(units_json, paletteMap, palette2DMap);
 
-    exit(1);
-
     dat::ImagesConverter imagesConverter(sub_storm, datahub);
     imagesConverter.convert(paletteMap, palette2DMap);
 
@@ -682,8 +680,6 @@ int main(int argc, const char **argv)
       dat::SfxConverter sfxConverter(sub_storm, datahub);
       sfxConverter.convert();
     }
-
-    exit(0);
 
     for (i = 0; i <= 1; ++i)
     {
@@ -940,7 +936,7 @@ int main(int argc, const char **argv)
   fprintf(f, VERSION "\n");
   fclose(f);
 
-  printf("New Done.\n");
+  printf("Done startool!\n");
 
   return 0;
 }

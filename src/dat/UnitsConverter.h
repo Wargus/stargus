@@ -31,7 +31,11 @@ public:
                std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap);
 
 private:
-  std::string makeSounds(Unit &unit);
+  std::string makeReadySounds(Unit &unit);
+  std::string makeWhatSounds(Unit &unit);
+  std::string makeYesSounds(Unit &unit);
+  std::string makePissSounds(Unit &unit);
+  std::string makeHelpSounds(Unit &unit);
 
   DataHub &mDatahub;
 };
