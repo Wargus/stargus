@@ -13,3 +13,4 @@ startool_dat_sources = files(
 	'Sfx.cpp',
 	'SfxConverter.cpp'
 )
+

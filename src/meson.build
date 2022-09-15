@@ -59,9 +59,8 @@ message('Using stratagus: ' + stratagus_bin)
 
 stargus_sources = files('stargus.cpp')
 
-executable('startool',
+libstartool = library('startool',
 	startool_lib_sources,
-	startool_sources,
 	startool_kaitai_sources,
 	startool_dat_sources,
 	startool_tileset_sources,
@@ -69,7 +68,16 @@ executable('startool',
 	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep],
 	install : true)
 
+executable('startool',
+	startool_sources,
+	include_directories : config_incdir,
+	dependencies : [log4cxx_dep],
+	link_with : libstartool,
+	install : true)
+
 executable('stargus',
 	stargus_sources,
 	include_directories : [stratagus_incdir, config_incdir],
 	install : true)
+	
+

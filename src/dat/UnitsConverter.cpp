@@ -495,7 +495,7 @@ std::string UnitsConverter::makePissSounds(Unit &unit)
 
 std::string UnitsConverter::makeHelpSounds(Unit &unit)
 {
-
+  return "";
 }
 
 } /* namespace dat */
