@@ -64,6 +64,7 @@
 #include "pacman.h"
 #include "dat/ImagesConverter.h"
 #include "dat/SfxConverter.h"
+#include "optparser.h"
 
 // system
 #include <nlohmann/json.hpp>
@@ -71,15 +72,6 @@
 
 using json = nlohmann::json;
 
-// as this is 3rd party code I don't fix it ->
-#ifndef _MSC_VER
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
-#endif
-#include "optionparser.h"
-#ifndef _MSC_VER
-#pragma GCC diagnostic pop
-#endif
 // <-
 
 // System
