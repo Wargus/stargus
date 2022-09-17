@@ -53,9 +53,8 @@ tileset_dddata_bin_t::doodad_type_t::doodad_type_t(kaitai::kstream* p__io, tiles
 }
 
 void tileset_dddata_bin_t::doodad_type_t::_read() {
-    int l_placing = 512;
     m_placing = new std::vector<uint16_t>();
-    m_placing->reserve(l_placing);
+    const int l_placing = 512;
     for (int i = 0; i < l_placing; i++) {
         m_placing->push_back(m__io->read_u2le());
     }

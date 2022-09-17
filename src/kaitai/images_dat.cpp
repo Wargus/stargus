@@ -32,87 +32,73 @@ images_dat_t::images_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, i
 }
 
 void images_dat_t::_read() {
-    int l_grp = num_lines();
     m_grp = new std::vector<uint32_t>();
-    m_grp->reserve(l_grp);
+    const int l_grp = num_lines();
     for (int i = 0; i < l_grp; i++) {
         m_grp->push_back(m__io->read_u4le());
     }
-    int l_gfx_turns = num_lines();
     m_gfx_turns = new std::vector<uint8_t>();
-    m_gfx_turns->reserve(l_gfx_turns);
+    const int l_gfx_turns = num_lines();
     for (int i = 0; i < l_gfx_turns; i++) {
         m_gfx_turns->push_back(m__io->read_u1());
     }
-    int l_clickable = num_lines();
     m_clickable = new std::vector<uint8_t>();
-    m_clickable->reserve(l_clickable);
+    const int l_clickable = num_lines();
     for (int i = 0; i < l_clickable; i++) {
         m_clickable->push_back(m__io->read_u1());
     }
-    int l_use_full_iscript = num_lines();
     m_use_full_iscript = new std::vector<uint8_t>();
-    m_use_full_iscript->reserve(l_use_full_iscript);
+    const int l_use_full_iscript = num_lines();
     for (int i = 0; i < l_use_full_iscript; i++) {
         m_use_full_iscript->push_back(m__io->read_u1());
     }
-    int l_draw_if_cloaked = num_lines();
     m_draw_if_cloaked = new std::vector<uint8_t>();
-    m_draw_if_cloaked->reserve(l_draw_if_cloaked);
+    const int l_draw_if_cloaked = num_lines();
     for (int i = 0; i < l_draw_if_cloaked; i++) {
         m_draw_if_cloaked->push_back(m__io->read_u1());
     }
-    int l_draw_function = num_lines();
     m_draw_function = new std::vector<uint8_t>();
-    m_draw_function->reserve(l_draw_function);
+    const int l_draw_function = num_lines();
     for (int i = 0; i < l_draw_function; i++) {
         m_draw_function->push_back(m__io->read_u1());
     }
-    int l_remapping = num_lines();
     m_remapping = new std::vector<uint8_t>();
-    m_remapping->reserve(l_remapping);
+    const int l_remapping = num_lines();
     for (int i = 0; i < l_remapping; i++) {
         m_remapping->push_back(m__io->read_u1());
     }
-    int l_iscript_id = num_lines();
     m_iscript_id = new std::vector<uint32_t>();
-    m_iscript_id->reserve(l_iscript_id);
+    const int l_iscript_id = num_lines();
     for (int i = 0; i < l_iscript_id; i++) {
         m_iscript_id->push_back(m__io->read_u4le());
     }
-    int l_shield_overlay = num_lines();
     m_shield_overlay = new std::vector<uint32_t>();
-    m_shield_overlay->reserve(l_shield_overlay);
+    const int l_shield_overlay = num_lines();
     for (int i = 0; i < l_shield_overlay; i++) {
         m_shield_overlay->push_back(m__io->read_u4le());
     }
-    int l_attack_overlay = num_lines();
     m_attack_overlay = new std::vector<uint32_t>();
-    m_attack_overlay->reserve(l_attack_overlay);
+    const int l_attack_overlay = num_lines();
     for (int i = 0; i < l_attack_overlay; i++) {
         m_attack_overlay->push_back(m__io->read_u4le());
     }
-    int l_damage_overlay = num_lines();
     m_damage_overlay = new std::vector<uint32_t>();
-    m_damage_overlay->reserve(l_damage_overlay);
+    const int l_damage_overlay = num_lines();
     for (int i = 0; i < l_damage_overlay; i++) {
         m_damage_overlay->push_back(m__io->read_u4le());
     }
-    int l_special_overlay = num_lines();
     m_special_overlay = new std::vector<uint32_t>();
-    m_special_overlay->reserve(l_special_overlay);
+    const int l_special_overlay = num_lines();
     for (int i = 0; i < l_special_overlay; i++) {
         m_special_overlay->push_back(m__io->read_u4le());
     }
-    int l_landing_dust_overlay = num_lines();
     m_landing_dust_overlay = new std::vector<uint32_t>();
-    m_landing_dust_overlay->reserve(l_landing_dust_overlay);
+    const int l_landing_dust_overlay = num_lines();
     for (int i = 0; i < l_landing_dust_overlay; i++) {
         m_landing_dust_overlay->push_back(m__io->read_u4le());
     }
-    int l_lift_off_dust_overlay = num_lines();
     m_lift_off_dust_overlay = new std::vector<uint32_t>();
-    m_lift_off_dust_overlay->reserve(l_lift_off_dust_overlay);
+    const int l_lift_off_dust_overlay = num_lines();
     for (int i = 0; i < l_lift_off_dust_overlay; i++) {
         m_lift_off_dust_overlay->push_back(m__io->read_u4le());
     }

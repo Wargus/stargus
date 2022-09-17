@@ -1,6 +1,4 @@
 
-LuaTest_incdir = include_directories('../../src')
-
 LuaTest_sources = files(
   'CreateUnitLuaTest.cpp',
   'LuaTest.cpp'
@@ -8,9 +6,8 @@ LuaTest_sources = files(
 
 executable('LuaTest',
 			LuaTest_sources,
-			include_directories : [LuaTest_incdir, config_incdir],
-			dependencies : [log4cxx_dep],
-			link_with : libstartool,
+			include_directories : [config_incdir],
+			dependencies : [log4cxx_dep, libstarformat_dep],
 			install : false)
 
 

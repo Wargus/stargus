@@ -2,12 +2,13 @@
 #define KAITAI_STREAM_H
 
 // Kaitai Struct runtime API version: x.y.z = 'xxxyyyzzz' decimal
-#define KAITAI_STRUCT_VERSION 9000L
+#define KAITAI_STRUCT_VERSION 10000L
 
 #include <istream>
 #include <sstream>
 #include <stdint.h>
 #include <sys/types.h>
+#include <limits>
 
 namespace kaitai {
 
@@ -224,7 +225,33 @@ public:
      * Should be used in place of std::to_string() (which is available only
      * since C++11) in older C++ implementations.
      */
-    static std::string to_string(int val);
+    template<typename I>
+// check for C++11 support - https://stackoverflow.com/a/40512515
+#if __cplusplus >= 201103L || (defined(_MSC_VER) && _MSC_VER >= 1900)
+    // https://stackoverflow.com/a/27913885
+    typename std::enable_if<
+            std::is_integral<I>::value &&
+            // check if we don't have something too large like GCC's `__int128_t`
+            std::numeric_limits<I>::max() >= 0 &&
+            std::numeric_limits<I>::max() <= std::numeric_limits<uint64_t>::max(),
+            std::string
+    >::type
+#else
+    std::string
+#endif
+    static to_string(I val) {
+        // in theory, `digits10 + 3` would be enough (minus sign + leading digit
+        // + null terminator), but let's add a little more to be safe
+        char buf[std::numeric_limits<I>::digits10 + 5];
+        if (val < 0) {
+            buf[0] = '-';
+            // get absolute value without undefined behavior (https://stackoverflow.com/a/12231604)
+            unsigned_to_decimal(-static_cast<uint64_t>(val), &buf[1]);
+        } else {
+            unsigned_to_decimal(val, buf);
+        }
+        return std::string(buf);
+    }
 
     /**
      * Reverses given string `val`, so that the first character becomes the
@@ -258,7 +285,7 @@ private:
     void init();
     void exceptions_enable() const;
 
-    static uint64_t get_mask_ones(int n);
+    static void unsigned_to_decimal(uint64_t number, char *buffer);
 
     static const int ZLIB_BUF_SIZE = 128 * 1024;
 };
