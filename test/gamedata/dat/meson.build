@@ -1,5 +1,6 @@
 TestDatafilesDat_sources = files(
   'DatTest.cpp',
+  'CSVExporter.cpp'
   )
 
 executable('DatTest',

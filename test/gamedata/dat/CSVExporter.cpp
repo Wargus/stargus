@@ -6,7 +6,7 @@
 
 // project
 #include "CSVExporter.h"
-#include "Unit.h"
+#include "dat/Unit.h"
 
 // system
 #include <vector>
@@ -14,9 +14,7 @@
 #include <string>
 
 using namespace std;
-
-namespace dat
-{
+using namespace dat;
 
 CSVExporter::CSVExporter(DataHub &datahub) :
   mDatahub(datahub)
@@ -474,6 +472,3 @@ void CSVExporter::print()
   // stdout
   cout << csv_dat;
 }
-
-
-} /* namespace dat */

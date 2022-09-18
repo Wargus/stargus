@@ -1,16 +1,18 @@
 /*
- * DatTest.cpp
+ * scdat2json.cpp
  *
  *      Author: Andreas Volz
  */
 
 // project
-#include "dat/DataHub.h"
-#include "CSVExporter.h"
 #include "Breeze.h"
+#include "Storm.h"
+#include "Casc.h"
 #include "FileUtil.h"
-#include "Logger.h"
+#include "StringUtil.h"
 #include "optparser.h"
+#include "dat/DataHub.h"
+#include "SCJsonExporter.h"
 
 // system
 #include <iostream>
@@ -18,9 +20,14 @@
 using namespace std;
 
 // some global variables
-static Logger logger("startool.DatTest");
-string dat_files_directory;
+string backend;
+string archive;
+string destination_directory;
 
+bool CheckCASCDataFolder(const std::string &dir)
+{
+  return FileExists(dir + "/.build.info");
+}
 
 /** option parser **/
 struct Arg: public option::Arg
@@ -77,17 +84,20 @@ struct Arg: public option::Arg
 
 enum optionIndex
 {
-  UNKNOWN, HELP
+  UNKNOWN, HELP, COMPRESS, BACKEND
 };
 const option::Descriptor usage[] =
 {
   {
-    UNKNOWN, 0, "", "", option::Arg::None, "USAGE: DatTest <dat_files_directory>\n\n"
+    UNKNOWN, 0, "", "", option::Arg::None, "USAGE: sauwetter archive archive-file destination-directory\n\n"
     "Options:"
   },
-  { HELP, 0, "h", "help", option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },  {
+  { HELP, 0, "h", "help", option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
+  { BACKEND, 0, "b", "backend", Arg::Required, "  --backend, -b  \t\tChoose a backend (Storm=St*arcr*ft1/Br**dwar;Casc=Remastered;Breeze=Folder)" },
+  {
     UNKNOWN, 0, "", "", option::Arg::None,
-    "\ndat_files_directory \t\tDirectory which contain the extracted stardat.mpq files with arr/*.dat inside...\n"
+    "\narchive \t\tDestination to the archive (mpq, casc or dummy folder) based on backend.\n"
+    "\ndestination-directory \t\tWhere to save the extracted file with same relative path.\n"
 
   },
   { 0, 0, 0, 0, 0, 0 }
@@ -110,6 +120,17 @@ int parseOptions(int argc, const char **argv)
     exit(0);
   }
 
+  if(options[BACKEND].count() > 0)
+  {
+    backend = options[BACKEND].arg;
+  }
+  else
+  {
+    cerr << "Error: 'backend' not given!" << endl << endl;
+    option::printUsage(std::cout, usage);
+    exit(1);
+  }
+
   // parse options
 
   for (option::Option *opt = options[UNKNOWN]; opt; opt = opt->next())
@@ -120,17 +141,28 @@ int parseOptions(int argc, const char **argv)
     switch (i)
     {
     case 0:
-      cerr << "archive-directory #" << i << ": " << parse.nonOption(i) << "\n";
-      dat_files_directory = parse.nonOption(i);
+      //cerr << "archive #" << i << ": " << parse.nonOption(i) << "\n";
+      archive = parse.nonOption(i);
+      break;
+    case 1:
+      //cerr << "destination-directory #" << i << ": " << parse.nonOption(i) << "\n";
+      destination_directory = parse.nonOption(i);
       break;
     default:
       break;
     }
   }
 
-  if (dat_files_directory.empty())
+  if (archive.empty())
   {
-    cerr << "Error: 'dat_files_directory' not given!" << endl << endl;
+    cerr << "Error: 'archive' not given!" << endl << endl;
+    option::printUsage(std::cout, usage);
+    exit(1);
+  }
+
+  if (destination_directory.empty())
+  {
+    cerr << "Error: 'destination_directory' not given!" << endl << endl;
     option::printUsage(std::cout, usage);
     exit(1);
   }
@@ -140,27 +172,43 @@ int parseOptions(int argc, const char **argv)
 
 int main(int argc, const char **argv)
 {
-#ifdef HAVE_LOG4CXX
-  if (FileExists("logging.prop"))
-  {
-    log4cxx::PropertyConfigurator::configure("logging.prop");
-  }
-  else
-  {
-    logger.off();
-  }
-#endif // HAVE_LOG4CXX
-
   parseOptions(argc, argv);
 
+  bool archive_exists = FileExists(archive);
+  if(!archive_exists)
+  {
+    cerr << "archive not existing - exit!" << endl;
+    exit(1);
+  }
 
-  shared_ptr<Breeze> storm = make_shared<Breeze>(dat_files_directory);
-  dat::DataHub datahub(storm);
+  shared_ptr<Hurricane> hurricane;
 
-  CSVExporter csvexporter(datahub);
+  cerr << "Backend: " << backend << endl;
+  if(to_lower(backend) == "breeze")
+  {
+    hurricane = make_shared<Breeze>(archive);
+  }
+  else if(to_lower(backend) == "storm")
+  {
+    hurricane = make_shared<Storm>(archive);
+  }
+  else if(to_lower(backend) == "casc")
+  {
+    if(CheckCASCDataFolder(archive))
+    {
+      hurricane = make_shared<Casc>(archive);
+    }
+    else
+    {
+      cerr << "Error: 'archive' is not a CASC archive!" << endl;
+    }
+  }
 
-  csvexporter.print();
+  dat::DataHub datahub(hurricane);
+
+  SCJsonExporter scjsonexporter(datahub);
+
+  scjsonexporter.export_unit_dat();
 
   return 0;
 }
-
