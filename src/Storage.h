@@ -38,9 +38,9 @@ public:
 
   Storage operator()(std::string filename);
 
-  //std::string operator+(const Storage& storage);
-
   std::string operator=(const Storage& storage);
+
+  operator std::string() const;
 
 private:
   std::string mDataPath;

@@ -58,7 +58,7 @@ bool PortraitsConverter::convert()
   lua_include.open (luagen("luagen-portrait.lua").getFullPath());
   string lua_include_str;
 
-  for(unsigned int i = 0; i < mDatahub.portrait->video_idle()->size(); i++)
+  for(unsigned int i = 0; i < mDatahub.portdata->video_idle()->size(); i++)
   {
     Portrait portrait(mDatahub, i);
 

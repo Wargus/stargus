@@ -79,13 +79,13 @@ public:
   std::shared_ptr<sprites_dat_t> sprites;
   std::shared_ptr<images_dat_t> images;
   std::shared_ptr<sfxdata_dat_t> sfxdata;
-  std::shared_ptr<portdata_dat_t> portrait;
+  std::shared_ptr<portdata_dat_t> portdata;
   std::shared_ptr<upgrades_dat_t> upgrades;
   std::shared_ptr<techdata_dat_t> techdata;
   std::shared_ptr<mapdata_dat_t> mapdata;
 
   // kaitai parsed Tbl vectors
-  std::vector<TblEntry> stat_txt_vec;
+  std::vector<TblEntry> stat_txt_tbl_vec;
   std::vector<TblEntry> images_tbl_vec;
   std::vector<TblEntry> sfxdata_tbl_vec;
   std::vector<TblEntry> portdata_tbl_vec;

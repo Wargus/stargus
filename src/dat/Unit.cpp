@@ -43,7 +43,7 @@ TblEntry Unit::name()
 {
   LOG4CXX_TRACE(logger, string("name(") + to_string(mId) + ")");
 
-  TblEntry tbl_entry = mDatahub.stat_txt_vec.at(mId);
+  TblEntry tbl_entry = mDatahub.stat_txt_tbl_vec.at(mId);
   LOG4CXX_TRACE(logger, string("name(") + tbl_entry.name1 + ")");
 
   return tbl_entry;

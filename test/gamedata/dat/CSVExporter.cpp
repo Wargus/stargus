@@ -62,8 +62,8 @@ void CSVExporter::print()
 
   sfxdata_sound_file_vec = mDatahub.sfxdata->sound_file();
 
-  std::vector<uint32_t> *portdata_portrait_idle_vec = mDatahub.portrait->video_idle();
-  std::vector<uint32_t> *portdata_portrait_talking_vec = mDatahub.portrait->video_talking();
+  std::vector<uint32_t> *portdata_portrait_idle_vec = mDatahub.portdata->video_idle();
+  std::vector<uint32_t> *portdata_portrait_talking_vec = mDatahub.portdata->video_talking();
 
   // upgrades.dat
   std::vector<uint16_t> *upgrades_label_vec = mDatahub.upgrades->label();
@@ -116,7 +116,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry = mDatahub.stat_txt_vec.at(i);
+    TblEntry tblEntry = mDatahub.stat_txt_tbl_vec.at(i);
     csv_dat += "ref:name=" + tblEntry.name1;
 
     csv_dat += CSV_SEPARATOR;
@@ -203,7 +203,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry_label = mDatahub.stat_txt_vec.at(label_id);
+    TblEntry tblEntry_label = mDatahub.stat_txt_tbl_vec.at(label_id);
     csv_dat += "ref:name=" + tblEntry_label.name1;
 
     csv_dat += CSV_SEPARATOR;
@@ -220,7 +220,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry_error = mDatahub.stat_txt_vec.at(error_id);
+    TblEntry tblEntry_error = mDatahub.stat_txt_tbl_vec.at(error_id);
     csv_dat += " ref:error_text=" + tblEntry_error.name1;
 
     csv_dat += CSV_SEPARATOR;
@@ -377,7 +377,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry = mDatahub.stat_txt_vec.at(upgrades_label);
+    TblEntry tblEntry = mDatahub.stat_txt_tbl_vec.at(upgrades_label);
     csv_dat += "ref:label=" + tblEntry.name1;
     sprintf(buf, "ref:shortcut=%s", tblEntry.shortcut.c_str());
     csv_dat += buf;
@@ -404,7 +404,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry = mDatahub.stat_txt_vec.at(orders_label);
+    TblEntry tblEntry = mDatahub.stat_txt_tbl_vec.at(orders_label);
     csv_dat += "ref:label=" + tblEntry.name1;
 
     csv_dat += CSV_SEPARATOR;
@@ -429,7 +429,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry = mDatahub.stat_txt_vec.at(techdata_label);
+    TblEntry tblEntry = mDatahub.stat_txt_tbl_vec.at(techdata_label);
     csv_dat += "ref:label=" + tblEntry.name1;
     csv_dat += CSV_SEPARATOR;
     sprintf(buf, "ref:shortcut=%s", tblEntry.shortcut.c_str());

@@ -162,7 +162,7 @@ void DataHub::init_portdata_dat()
   // 5. +2 because index starting at zero
   std::shared_ptr<portdata_dat_t> portrait_loc(
     new portdata_dat_t(portrait_ks.get()));
-  portrait = portrait_loc;
+  portdata = portrait_loc;
 }
 
 void DataHub::init_upgrades_dat()
@@ -205,7 +205,7 @@ void DataHub::init_stat_txt_tbl()
   std::shared_ptr<kaitai::kstream> stat_txt_ks = getKaitaiStream(sc_rez_stat_txt_tbl);
 
   Tbl stat_txt;
-  stat_txt_vec = stat_txt.convertFromStream(stat_txt_ks);
+  stat_txt_tbl_vec = stat_txt.convertFromStream(stat_txt_ks);
 }
 
 void DataHub::init_images_tbl()

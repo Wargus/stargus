@@ -29,7 +29,7 @@ Portrait::~Portrait()
 
 uint32_t Portrait::video_idle()
 {
-  uint32_t portrait_id = mDatahub.portrait->video_idle()->at(mId);
+  uint32_t portrait_id = mDatahub.portdata->video_idle()->at(mId);
   LOG4CXX_TRACE(logger, string("video_idle(") + to_string(portrait_id) + ")");
 
   return portrait_id;
@@ -37,7 +37,7 @@ uint32_t Portrait::video_idle()
 
 uint32_t Portrait::video_talking()
 {
-  uint32_t portrait_id = mDatahub.portrait->video_talking()->at(mId);
+  uint32_t portrait_id = mDatahub.portdata->video_talking()->at(mId);
   LOG4CXX_TRACE(logger, string("video_talking(") + to_string(portrait_id) + ")");
 
   return portrait_id;
