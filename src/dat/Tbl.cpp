@@ -17,6 +17,8 @@
 
 using namespace std;
 
+namespace dat {
+
 static Logger logger = Logger("startool.DataHub.Tbl");
 
 // this is a very local debug print concept. But for this use case of sequence character debugging perfect...
@@ -222,3 +224,5 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
 
   return tbl_entry_vec;
 }
+
+} /* namespace dat */

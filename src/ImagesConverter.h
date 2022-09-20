@@ -8,24 +8,19 @@
 #define IMAGESCONVERTER_H
 
 #include "Converter.h"
-#include "DataHub.h"
-
-namespace dat
-{
+#include "dat/DataHub.h"
 
 class ImagesConverter: public Converter
 {
 public:
-  ImagesConverter(std::shared_ptr<Hurricane> hurricane, DataHub &datahub);
+  ImagesConverter(std::shared_ptr<Hurricane> hurricane, dat::DataHub &datahub);
   virtual ~ImagesConverter();
 
   bool convert(std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
                std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap);
 
 private:
-  DataHub &mDatahub;
+  dat::DataHub &mDatahub;
 };
-
-} /* namespace dat */
 
 #endif /* IMAGESCONVERTER_H */

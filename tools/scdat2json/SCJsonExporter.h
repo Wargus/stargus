@@ -29,7 +29,7 @@ public:
   json export_techdata_dat();
   json export_mapdata_dat();
 
-  json export_file_tbl(std::vector<TblEntry> &tblentry_vec);
+  json export_file_tbl(std::vector<dat::TblEntry> &tblentry_vec);
 
 private:
   dat::DataHub &mDatahub;

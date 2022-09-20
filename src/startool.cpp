@@ -33,8 +33,8 @@
  ----------------------------------------------------------------------------*/
 
 // project
-#include <dat/UnitsConverter.h>
-#include <dat/PortraitsConverter.h>
+#include <UnitsConverter.h>
+#include <PortraitsConverter.h>
 #include "dat/DataHub.h"
 #include "tileset/TilesetHub.h"
 #include "PngExporter.h"
@@ -62,8 +62,8 @@
 #include "UIConsole.h"
 #include "StringUtil.h"
 #include "pacman.h"
-#include "dat/ImagesConverter.h"
-#include "dat/SfxConverter.h"
+#include "ImagesConverter.h"
+#include "SfxConverter.h"
 #include "optparser.h"
 
 // system
@@ -657,19 +657,19 @@ int main(int argc, const char **argv)
 
     if (preferences.getVideoExtraction())
     {
-      dat::PortraitsConverter portraitsConverter(sub_storm, datahub);
+      PortraitsConverter portraitsConverter(sub_storm, datahub);
       portraitsConverter.convert();
     }
 
     dat::UnitsConverter unitsConverter(sub_storm, datahub);
     unitsConverter.convert(units_json, paletteMap, palette2DMap);
 
-    dat::ImagesConverter imagesConverter(sub_storm, datahub);
+    ImagesConverter imagesConverter(sub_storm, datahub);
     imagesConverter.convert(paletteMap, palette2DMap);
 
     if(preferences.getSoundExtraction())
     {
-      dat::SfxConverter sfxConverter(sub_storm, datahub);
+      SfxConverter sfxConverter(sub_storm, datahub);
       sfxConverter.convert();
     }
 

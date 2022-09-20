@@ -39,7 +39,11 @@ starformat_lib_sources = files(
 	'platform.cpp',
 	'UIConsole.cpp',
 	'pacman.cpp',
-	'FileNotFoundException.cpp'
+	'FileNotFoundException.cpp',
+	'UnitsConverter.cpp',
+	'PortraitsConverter.cpp',
+	'ImagesConverter.cpp',
+	'SfxConverter.cpp'
 	)
 
 stratagus_prefix = get_option('prefix')

@@ -16,6 +16,8 @@
 using namespace std;
 using namespace dat;
 
+static const int units_units_ready_sound_end = 106;
+
 CSVExporter::CSVExporter(DataHub &datahub) :
   mDatahub(datahub)
 {
@@ -131,7 +133,7 @@ void CSVExporter::print()
     sprintf(buf, "weapon=%d", weapon_id);
     csv_dat += buf;
 
-    if (i < DataHub::units_units_ready_sound_end)
+    if (i < units_units_ready_sound_end)
     {
       csv_dat += CSV_SEPARATOR;
       uint16_t ready_sound_id = units_ready_sound_vec->at(i);

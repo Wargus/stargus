@@ -12,7 +12,7 @@
 #include "StringUtil.h"
 #include "Grp.h"
 #include "luagen.h"
-#include "DataHub.h"
+#include "dat/DataHub.h"
 
 // system
 #include <iostream>

@@ -91,8 +91,6 @@ public:
   std::vector<TblEntry> portdata_tbl_vec;
   std::vector<TblEntry> mapdata_tbl_vec;
 
-  static const int units_units_ready_sound_end = 106;
-
 private:
   // units.dat
   void init_units_dat();

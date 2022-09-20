@@ -6,7 +6,7 @@
 
 // project
 #include "PortraitsConverter.h"
-#include "Portrait.h"
+#include "dat/Portrait.h"
 #include "Smacker.h"
 #include "StringUtil.h"
 #include "Preferences.h"
@@ -21,9 +21,7 @@
 #include <set>
 
 using namespace std;
-
-namespace dat
-{
+using namespace dat;
 
 static Logger mLogger = Logger("startool.dat.PortraitsConverter");
 
@@ -140,5 +138,3 @@ bool PortraitsConverter::convertMngPortraits(const std::string &arcfile, std::ve
 
   return true;
 }
-
-} /* namespace dat */

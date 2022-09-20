@@ -13,6 +13,8 @@
 // System
 #include <memory>
 
+namespace dat {
+
 class TblEntry
 {
 public:
@@ -56,5 +58,7 @@ public:
 
   std::vector<TblEntry> convertFromStream(std::shared_ptr<kaitai::kstream> ks);
 };
+
+} /* namespace dat */
 
 #endif /* TBL_H */

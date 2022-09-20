@@ -11,7 +11,7 @@
 #include "Storage.h"
 #include "luagen.h"
 #include "FileUtil.h"
-#include "Image.h"
+#include "dat/Image.h"
 #include "StringUtil.h"
 #include "Grp.h"
 
@@ -21,9 +21,7 @@
 #include <string>
 
 using namespace std;
-
-namespace dat
-{
+using namespace dat;
 
 static Logger logger = Logger("startool.dat.ImagesConverter");
 
@@ -268,5 +266,3 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
 
   return result;
 }
-
-} /* namespace dat */

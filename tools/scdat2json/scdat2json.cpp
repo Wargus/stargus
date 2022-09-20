@@ -14,6 +14,7 @@
 #include "dat/DataHub.h"
 #include "Storage.h"
 #include "SCJsonExporter.h"
+#include "UnitsJsonExporter.h"
 
 
 // system
@@ -226,6 +227,9 @@ int main(int argc, const char **argv)
   }
 
   dat::DataHub datahub(hurricane);
+
+  UnitsJsonExporter unitsjsonexporter(datahub);
+  unitsjsonexporter.exportUnit(0);
 
   SCJsonExporter scjsonexporter(datahub);
 

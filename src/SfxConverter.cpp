@@ -9,7 +9,7 @@
 #include "Storage.h"
 #include "Preferences.h"
 #include "FileUtil.h"
-#include "Sfx.h"
+#include "dat/Sfx.h"
 #include "Wav.h"
 #include "Logger.h"
 #include "StringUtil.h"
@@ -19,11 +19,10 @@
 #include <fstream>
 
 using namespace std;
+using namespace dat;
 
 static Logger logger = Logger("startool.dat.SfxConverter");
 
-namespace dat
-{
 
 SfxConverter::SfxConverter(std::shared_ptr<Hurricane> hurricane, DataHub &datahub) :
   Converter(hurricane),
@@ -77,5 +76,3 @@ bool SfxConverter::convert()
 
   return result;
 }
-
-} /* namespace dat */
