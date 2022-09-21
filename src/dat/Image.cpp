@@ -66,7 +66,7 @@ bool Image::gfx_turns()
   return gfx_turns;
 }
 
-std::string Image::createID()
+std::string Image::getIDString()
 {
   string image_name("image_" + to_string(mId) + "_" + grp_tbl().name1);
   replaceString("\\", "_", image_name);

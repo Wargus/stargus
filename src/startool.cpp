@@ -427,12 +427,12 @@ void testHook()
 
   dat::Unit unit(datahub, 39, "test");
 
-  unit.name();
+  unit.name_tbl();
 
-  dat::Sfx sfx = unit.ready_sound();
+  dat::Sfx sfx = unit.ready_sound_obj();
   sfx.sound_file_tbl();
 
-  dat::Portrait portrait = unit.portrait();
+  dat::Portrait portrait = unit.portrait_obj();
 
   portrait.video_talking_tbl();
   portrait.video_idle_tbl();

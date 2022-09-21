@@ -36,7 +36,7 @@ public:
   bool gfx_turns();
 
   /***/
-  std::string createID();
+  std::string getIDString();
 
 private:
 

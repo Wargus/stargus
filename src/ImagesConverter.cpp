@@ -210,7 +210,7 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
 
       result = grp.save(png_file);
 
-      string image_id = image.createID();
+      string image_id = image.getIDString();
       string image_lua = image_id + ".lua";
 
       Storage lua_file_store(luagen(image_lua));

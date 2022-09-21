@@ -24,7 +24,7 @@ public:
   TblEntry video_idle_tbl();
   TblEntry video_talking_tbl();
 
-  static std::string createID(const std::string &portrait);
+  static std::string getIDString(const std::string &portrait);
 
 private:
 

@@ -1,5 +1,7 @@
 #include "to_json.h"
 
+#include <iostream>
+
 using namespace std;
 using namespace dat;
 
@@ -104,14 +106,204 @@ void to_json(json &j, TblEntry t)
   };
 }
 
-void to_json(json &j, Unit *u)
+void to_json(json &j, Sfx s)
 {
   j = json{
-    {"id", u->createID()},
-    {"hitpoints", u->hitpoints()},
-    {"name", u->name()}
-
+    {"sound_file", s.sound_file()},
+    {"sound_file_tbl", s.sound_file_tbl()}
   };
 }
 
+void to_json(json &j, Portrait p)
+{
+  j = json{
+    {"video_idle", p.video_idle()},
+    {"video_idle_tbl", p.video_idle_tbl()}
+  };
 }
+
+void to_json(json &j, Image i)
+{
+  j = json{
+    {"grp", i.grp()},
+    {"grp_tbl", i.grp_tbl()}
+  };
+}
+
+void to_json(json &j, Sprite s)
+{
+  j = json{
+    {"image", s.image()}
+  };
+}
+
+void to_json(json &j, Flingy f)
+{
+  j = json{
+    {"sprite", f.sprite()}
+  };
+}
+
+void to_json(json &j, Unit u)
+{
+  j["getIDString"] = json(u.getIDString());
+  j["name_tbl"] = json(u.name_tbl());
+  j["flingy"] = json(u.flingy());
+  j["flingy_obj"] = json(u.flingy_obj());
+  j["subunit1"] = json(u.subunit1());
+
+  try
+  {
+    j["subunit1_obj"] = json(u.subunit1_obj());
+  }
+  catch(UnitPropertyNotAvailableException &ex)
+  {
+    // it's fine, do nothing
+  }
+
+  j["subunit2"] = json(u.subunit2());
+
+  try
+  {
+    j["subunit2_obj"] = json(u.subunit2_obj());
+  }
+  catch(UnitPropertyNotAvailableException &ex)
+  {
+    // it's fine, do nothing
+  }
+
+  try
+  {
+    j["infestation"] = json(u.infestation());
+    j["infestation_obj"] = json(u.infestation_obj());
+  }
+  catch(UnitPropertyNotAvailableException &ex)
+  {
+    // it's fine, do nothing
+  }
+
+  j["construction_animation"] = json(u.construction_animation());
+  j["construction_animation_obj"] = json(u.construction_animation_obj());
+  j["unit_direction"] = json(u.unit_direction());
+  j["shield_enable"] = json(u.shield_enable());
+  j["shield_amount"] = json(u.shield_amount());
+  j["hitpoints"] = json(u.hitpoints());
+  j["elevation_level"] = json(u.elevation_level());
+  j["unknown"] = json(u.unknown());
+  j["rank"] = json(u.rank());
+  j["ai_computer_idle"] = json(u.ai_computer_idle());
+  j["ai_human_idle"] = json(u.ai_human_idle());
+  j["ai_return_to_idle"] = json(u.ai_return_to_idle());
+  j["ai_attack_unit"] = json(u.ai_attack_unit());
+  j["ai_attack_move"] = json(u.ai_attack_move());
+  j["ground_weapon"] = json(u.ground_weapon());
+
+  if(u.is_format_bw())
+  {
+    j["max_ground_hits"] = json(u.max_ground_hits());
+  }
+
+  j["air_weapon"] = json(u.air_weapon());
+
+  if(u.is_format_bw())
+  {
+    j["max_air_hits"] = json(u.max_air_hits());
+  }
+
+  j["ai_internal"] = json(u.ai_internal());
+  j["special_ability_flags"] = json(u.special_ability_flags());
+  j["target_acquisition_range"] = json(u.target_acquisition_range());
+  j["sight_range"] = json(u.sight_range());
+  j["armor_upgrade"] = json(u.armor_upgrade());
+  j["unit_size"] = json(u.unit_size());
+  j["armor"] = json(u.armor());
+  j["right_click_action"] = json(u.right_click_action());
+
+  try
+  {
+    j["ready_sound"] = json(u.ready_sound());
+    j["ready_sound_obj"] = json(u.ready_sound_obj());
+  }
+  catch(UnitPropertyNotAvailableException &ex)
+  {
+    // it's fine, do nothing
+  }
+
+  try
+  {
+    j["what_sound_start"] = json(u.what_sound_start());
+    j["what_sound_end"] = json(u.what_sound_end());
+    j["what_sound_obj"] = json(u.what_sound_obj());
+  }
+  catch(UnitPropertyNotAvailableException &ex)
+  {
+    // it's fine, do nothing
+  }
+
+  try
+  {
+    j["piss_sound_start"] = json(u.piss_sound_start());
+    j["piss_sound_end"] = json(u.piss_sound_end());
+    j["piss_sound_obj"] = json(u.piss_sound_obj());
+  }
+  catch(UnitPropertyNotAvailableException &ex)
+  {
+    // it's fine, do nothing
+  }
+
+  try
+  {
+    j["what_sound_start"] = json(u.what_sound_start());
+    j["what_sound_end"] = json(u.what_sound_end());
+    j["what_sound_obj"] = json(u.what_sound_obj());
+  }
+  catch(UnitPropertyNotAvailableException &ex)
+  {
+    // it's fine, do nothing
+  }
+
+  try
+  {
+    j["yes_sound_start"] = json(u.yes_sound_start());
+    j["yes_sound_end"] = json(u.yes_sound_end());
+    j["yes_sound_obj"] = json(u.yes_sound_obj());
+  }
+  catch(UnitPropertyNotAvailableException &ex)
+  {
+    // it's fine, do nothing
+  }
+
+  j["staredit_placement_box"] = json(u.staredit_placement_box());
+  j["addon_position"] = json(u.addon_position());
+  j["unit_dimension"] = json(u.unit_dimension());
+  j["portrait"] = json(u.portrait());
+
+  try
+  {
+    j["portrait_obj"] = json(u.portrait_obj());
+  }
+  catch(UnitPropertyNotAvailableException &ex)
+  {
+    // it's fine, do nothing
+  }
+
+  j["mineral_cost"] = json(u.mineral_cost());
+  j["vespene_cost"] = json(u.vespene_cost());
+  j["build_time"] = json(u.build_time());
+  j["requirements"] = json(u.requirements());
+  j["staredit_group_flags"] = json(u.staredit_group_flags());
+  j["supply_required"] = json(u.supply_required());
+  j["space_provided"] = json(u.space_provided());
+  j["build_score"] = json(u.build_score());
+  j["destroy_score"] = json(u.destroy_score());
+  j["unit_map_string"] = json(u.unit_map_string());
+
+  if(u.is_format_bw())
+  {
+    j["broodwar_flag"] = json(u.broodwar_flag());
+  }
+
+  j["is_format_bw"] = json(u.is_format_bw());
+}
+
+} /* namespace dat */

@@ -27,7 +27,8 @@ void to_json(json &j, units_dat_t::staredit_availability_flags_type_t* t);
 namespace dat {
 
 void to_json(json &j, TblEntry t);
-void to_json(json &j, Unit *u);
+void to_json(json &j, Flingy f);
+void to_json(json &j, Unit u);
 
 } /* namespace dat */
 

@@ -15,7 +15,7 @@
 #include "Storage.h"
 #include "SCJsonExporter.h"
 #include "UnitsJsonExporter.h"
-
+#include "Logger.h"
 
 // system
 #include <iostream>
@@ -27,6 +27,8 @@ using namespace std;
  * At this point of transformation isn't much format conversation done. Just put the data as in original data structures, but readable.
  * Only exception for now is that .tbl files get some basic control sequence parsing.
  */
+
+static Logger logger("startool.scdat2json");
 
 // some global variables
 string backend;
@@ -195,6 +197,17 @@ int parseOptions(int argc, const char **argv)
 
 int main(int argc, const char **argv)
 {
+#ifdef HAVE_LOG4CXX
+  if (FileExists("logging.prop"))
+  {
+    log4cxx::PropertyConfigurator::configure("logging.prop");
+  }
+  else
+  {
+    logger.off();
+  }
+#endif // HAVE_LOG4CXX
+
   parseOptions(argc, argv);
 
   bool archive_exists = FileExists(archive);
@@ -229,7 +242,7 @@ int main(int argc, const char **argv)
   dat::DataHub datahub(hurricane);
 
   UnitsJsonExporter unitsjsonexporter(datahub);
-  unitsjsonexporter.exportUnit(0);
+  unitsjsonexporter.exportUnit(2);
 
   SCJsonExporter scjsonexporter(datahub);
 
