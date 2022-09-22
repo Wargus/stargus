@@ -16,9 +16,12 @@
 #include "SCJsonExporter.h"
 #include "UnitsJsonExporter.h"
 #include "Logger.h"
+#include "pacman.h"
 
 // system
 #include <iostream>
+#include <nlohmann/json.hpp>
+#include <fstream>
 
 using namespace std;
 
@@ -217,6 +220,11 @@ int main(int argc, const char **argv)
     exit(1);
   }
 
+  // read in the json file
+  std::ifstream json_file(pacman::searchFile("dataset/units.json"));
+  json units_json; //create unitiialized json object
+  json_file >> units_json; // initialize json object with what was read from file
+
   shared_ptr<Hurricane> hurricane;
 
   if(to_lower(backend) == "breeze")
@@ -242,7 +250,13 @@ int main(int argc, const char **argv)
   dat::DataHub datahub(hurricane);
 
   UnitsJsonExporter unitsjsonexporter(datahub);
-  unitsjsonexporter.exportUnit(2);
+  for(auto &array : units_json)
+  {
+    string id_string = array.at("name");
+    int id = array.at("id");
+    unitsjsonexporter.exportUnit(id, id_string);
+    cout << endl << "<NEW UNIT>" << endl << endl;
+  }
 
   SCJsonExporter scjsonexporter(datahub);
 

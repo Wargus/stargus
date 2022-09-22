@@ -132,15 +132,45 @@ void to_json(json &j, Image i)
 
 void to_json(json &j, Sprite s)
 {
-  j = json{
-    {"image", s.image()}
-  };
+  j["image"] = json(s.image());
+  j["image_obj"] = json(s.image());
+
+  try
+  {
+    j["health_bar"] = json(s.health_bar());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
+
+  j["unknown2"] = json(s.unknown2());
+  j["is_visible"] = json(s.is_visible());
+
+  try
+  {
+    j["select_circle_image_size"] = json(s.select_circle_image_size());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
+
+  try
+  {
+    j["select_circle_vertical_pos"] = json(s.select_circle_vertical_pos());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
 }
 
 void to_json(json &j, Flingy f)
 {
   j = json{
-    {"sprite", f.sprite()}
+    {"sprite", f.sprite()},
+    {"sprite_obj", f.sprite_obj()},
+    {"speed", f.speed()},
+    {"acceleration", f.acceleration()},
+    {"halt_distance", f.halt_distance()},
+    {"turn_radius", f.turn_radius()},
+    {"unused", f.unused()},
+    {"movement_control", f.movement_control()}
   };
 }
 
@@ -156,10 +186,8 @@ void to_json(json &j, Unit u)
   {
     j["subunit1_obj"] = json(u.subunit1_obj());
   }
-  catch(UnitPropertyNotAvailableException &ex)
-  {
-    // it's fine, do nothing
-  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
 
   j["subunit2"] = json(u.subunit2());
 
@@ -167,20 +195,16 @@ void to_json(json &j, Unit u)
   {
     j["subunit2_obj"] = json(u.subunit2_obj());
   }
-  catch(UnitPropertyNotAvailableException &ex)
-  {
-    // it's fine, do nothing
-  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
 
   try
   {
     j["infestation"] = json(u.infestation());
     j["infestation_obj"] = json(u.infestation_obj());
   }
-  catch(UnitPropertyNotAvailableException &ex)
-  {
-    // it's fine, do nothing
-  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
 
   j["construction_animation"] = json(u.construction_animation());
   j["construction_animation_obj"] = json(u.construction_animation_obj());
@@ -224,10 +248,8 @@ void to_json(json &j, Unit u)
     j["ready_sound"] = json(u.ready_sound());
     j["ready_sound_obj"] = json(u.ready_sound_obj());
   }
-  catch(UnitPropertyNotAvailableException &ex)
-  {
-    // it's fine, do nothing
-  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
 
   try
   {
@@ -235,10 +257,8 @@ void to_json(json &j, Unit u)
     j["what_sound_end"] = json(u.what_sound_end());
     j["what_sound_obj"] = json(u.what_sound_obj());
   }
-  catch(UnitPropertyNotAvailableException &ex)
-  {
-    // it's fine, do nothing
-  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
 
   try
   {
@@ -246,10 +266,8 @@ void to_json(json &j, Unit u)
     j["piss_sound_end"] = json(u.piss_sound_end());
     j["piss_sound_obj"] = json(u.piss_sound_obj());
   }
-  catch(UnitPropertyNotAvailableException &ex)
-  {
-    // it's fine, do nothing
-  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
 
   try
   {
@@ -257,10 +275,8 @@ void to_json(json &j, Unit u)
     j["what_sound_end"] = json(u.what_sound_end());
     j["what_sound_obj"] = json(u.what_sound_obj());
   }
-  catch(UnitPropertyNotAvailableException &ex)
-  {
-    // it's fine, do nothing
-  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
 
   try
   {
@@ -268,13 +284,18 @@ void to_json(json &j, Unit u)
     j["yes_sound_end"] = json(u.yes_sound_end());
     j["yes_sound_obj"] = json(u.yes_sound_obj());
   }
-  catch(UnitPropertyNotAvailableException &ex)
-  {
-    // it's fine, do nothing
-  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
 
   j["staredit_placement_box"] = json(u.staredit_placement_box());
-  j["addon_position"] = json(u.addon_position());
+
+  try
+  {
+    j["addon_position"] = json(u.addon_position());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
+
   j["unit_dimension"] = json(u.unit_dimension());
   j["portrait"] = json(u.portrait());
 
@@ -282,10 +303,8 @@ void to_json(json &j, Unit u)
   {
     j["portrait_obj"] = json(u.portrait_obj());
   }
-  catch(UnitPropertyNotAvailableException &ex)
-  {
-    // it's fine, do nothing
-  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
 
   j["mineral_cost"] = json(u.mineral_cost());
   j["vespene_cost"] = json(u.vespene_cost());

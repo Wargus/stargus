@@ -15,7 +15,7 @@ public:
   UnitsJsonExporter(dat::DataHub &datahub);
   virtual ~UnitsJsonExporter();
 
-  void exportUnit(unsigned int id);
+  void exportUnit(unsigned int id, const std::string &idString);
 
 private:
   dat::DataHub &mDatahub;

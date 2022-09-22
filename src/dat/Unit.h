@@ -12,6 +12,7 @@
 #include "ObjectAccess.h"
 #include "Portrait.h"
 #include "Sfx.h"
+#include "PropertyNotAvailableException.h"
 
 namespace dat
 {
@@ -156,26 +157,6 @@ public:
 
 private:
   std::string mIdentString;
-};
-
-/**
- * This Exception is thrown if a property isn't available for a specific Unit, but requested by the caller
- */
-class UnitPropertyNotAvailableException : public std::exception
-{
-public:
-  UnitPropertyNotAvailableException(int unit_id, const std::string &property) :
-    m_unit_id(unit_id),
-    m_property(property)
-  {}
-
-  virtual ~UnitPropertyNotAvailableException() throw() {}
-
-  const char *what() const throw();
-
-private:
-  int m_unit_id;
-  std::string m_property;
 };
 
 } /* namespace dat */

@@ -91,7 +91,7 @@ bool UnitsConverter::convert(json &unitsJson,
     {
       Unit unit(mDatahub, unit_id, unit_name);
 
-      string grp_arcfile =  "unit\\" + unit.flingy_obj().sprite().image().grp_tbl().name1;
+      string grp_arcfile =  "unit\\" + unit.flingy_obj().sprite_obj().image_obj().grp_tbl().name1;
 
       // for the LUA reference it's enough to use the idle name as we save only one LUA for idle+talking portrait
       string unit_portraits;
@@ -102,7 +102,7 @@ bool UnitsConverter::convert(json &unitsJson,
         string portrait_lua = "portrait_" + portrait_id;
         unit_portraits = lg::assign("Portrait", portrait_lua);
       }
-      catch (UnitPropertyNotAvailableException &nex)
+      catch (PropertyNotAvailableException &nex)
       {
         cout << nex.what() << endl;
 
@@ -171,7 +171,7 @@ bool UnitsConverter::convert(json &unitsJson,
 
       // generate images and other properties Lua -->
 
-      string image_id = unit.flingy_obj().sprite().image().getIDString();
+      string image_id = unit.flingy_obj().sprite_obj().image_obj().getIDString();
       string image_lua = image_id;
       string unit_image = lg::assign("Image", image_lua);
 
@@ -359,7 +359,7 @@ std::string UnitsConverter::makeReadySounds(Unit &unit)
 
     make_sound = lg::function("MakeSound", {lg::quote(unit_sound_ready_id), lg::table({lg::quote(sound_file_ogg)})});
   }
-  catch(UnitPropertyNotAvailableException &nex)
+  catch(PropertyNotAvailableException &nex)
   {
     cout << "no Ready sound: " << nex.what() << endl;
   }
@@ -401,7 +401,7 @@ std::string UnitsConverter::makeWhatSounds(Unit &unit)
       make_sound = lg::function("MakeSound", {lg::quote(unit_sound_ready_id), lg::table(unit_LuaWhatSoundParams)});
     }
   }
-  catch(UnitPropertyNotAvailableException &nex)
+  catch(PropertyNotAvailableException &nex)
   {
     cout << "no What sound: " << nex.what() << endl;
   }
@@ -443,7 +443,7 @@ std::string UnitsConverter::makeYesSounds(Unit &unit)
       make_sound = lg::function("MakeSound", {lg::quote(unit_yes_ready_id), lg::table(unit_LuaYesSoundParams)});
     }
   }
-  catch(UnitPropertyNotAvailableException &nex)
+  catch(PropertyNotAvailableException &nex)
   {
     cout << "no Yes sound: " << nex.what() << endl;
   }
@@ -485,7 +485,7 @@ std::string UnitsConverter::makePissSounds(Unit &unit)
       make_sound = lg::function("MakeSound", {lg::quote(unit_sound_piss_id), lg::table(unit_LuaPissSoundParams)});
     }
   }
-  catch(UnitPropertyNotAvailableException &nex)
+  catch(PropertyNotAvailableException &nex)
   {
     cout << "no Piss sound: " << nex.what() << endl;
   }

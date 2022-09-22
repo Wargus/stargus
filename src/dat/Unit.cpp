@@ -13,6 +13,8 @@
 
 using namespace std;
 
+
+
 namespace dat
 {
 
@@ -30,12 +32,14 @@ Unit::~Unit()
 
 std::string Unit::getIDString()
 {
+  // trace at least the id string that we know where we are
+  LOG4CXX_TRACE(logger, LOG_CUR_FUNC + "()=>" + mIdentString);
   return mIdentString;
 }
 
 TblEntry Unit::name_tbl()
 {
-  return mDatahub.stat_txt_tbl_vec.at(mId);;
+  return mDatahub.stat_txt_tbl_vec.at(mId);
 }
 
 uint8_t Unit::flingy()
@@ -59,7 +63,7 @@ Unit Unit::subunit1_obj()
 
   if(subunit_id == Unit::subunit_none)
   {
-    throw UnitPropertyNotAvailableException(mId, "subunit1");
+    throw PropertyNotAvailableException(mId, "subunit1");
   }
 
   return Unit(mDatahub, subunit_id, "<unknown>");
@@ -76,7 +80,7 @@ Unit Unit::subunit2_obj()
 
   if(subunit_id == Unit::subunit_none)
   {
-    throw UnitPropertyNotAvailableException(mId, "subunit2");
+    throw PropertyNotAvailableException(mId, "subunit2");
   }
 
   return Unit(mDatahub, subunit_id, "<unknown>");
@@ -94,7 +98,7 @@ uint16_t Unit::infestation()
   catch (const std::out_of_range& oor)
   {
     LOG4CXX_ERROR(logger, string("Exception: infestation(") + to_string(infestation) + ")");
-    throw UnitPropertyNotAvailableException(mId, "infestation");
+    throw PropertyNotAvailableException(mId, "infestation");
   }
 
   return infestation;
@@ -106,7 +110,7 @@ Unit Unit::infestation_obj()
 
   if(infestation_id == Unit::infestation_none)
   {
-    throw UnitPropertyNotAvailableException(mId, "infestation_obj");
+    throw PropertyNotAvailableException(mId, "infestation_obj");
   }
 
   return Unit(mDatahub, infestation_id, "<unknown>");
@@ -254,7 +258,7 @@ uint16_t Unit::ready_sound()
   catch (const std::out_of_range& oor)
   {
     LOG4CXX_ERROR(logger, string("Exception: ready_sound(") + to_string(ready_sound) + ")");
-    throw UnitPropertyNotAvailableException(mId, "ready_sound");
+    throw PropertyNotAvailableException(mId, "ready_sound");
   }
 
   return ready_sound;
@@ -267,7 +271,7 @@ Sfx Unit::ready_sound_obj()
   if(ready_sound_id == Unit::sound_none)
   {
     LOG4CXX_ERROR(logger, string("Exception: ready_sound_obj(") + to_string(ready_sound_id) + ")");
-    throw UnitPropertyNotAvailableException(mId, "ready_sound_obj");
+    throw PropertyNotAvailableException(mId, "ready_sound_obj");
   }
 
   Sfx sfx(mDatahub, ready_sound_id);
@@ -295,7 +299,7 @@ std::vector<Sfx> Unit::what_sound_obj()
   if((what_sound_start_id || what_sound_end_id) == Unit::sound_none)
   {
     LOG4CXX_ERROR(logger, string("Exception: what_sound_obj(") + to_string(mId) + ")");
-    throw UnitPropertyNotAvailableException(mId, "what_sound_obj");
+    throw PropertyNotAvailableException(mId, "what_sound_obj");
   }
 
   for(unsigned int i = what_sound_start_id; i <= what_sound_end_id; i++)
@@ -319,7 +323,7 @@ uint16_t Unit::piss_sound_start()
   catch (const std::out_of_range& oor)
   {
     LOG4CXX_ERROR(logger, string("Exception: piss_sound_start(") + to_string(mId) + ")");
-    throw UnitPropertyNotAvailableException(mId, "piss_sound_start");
+    throw PropertyNotAvailableException(mId, "piss_sound_start");
   }
 
   return piss_sound_start;
@@ -337,7 +341,7 @@ uint16_t Unit::piss_sound_end()
   catch (const std::out_of_range& oor)
   {
     LOG4CXX_ERROR(logger, string("Exception: piss_sound_end(") + to_string(mId) + ")");
-    throw UnitPropertyNotAvailableException(mId, "piss_sound_end");
+    throw PropertyNotAvailableException(mId, "piss_sound_end");
   }
 
   return piss_sound_end;
@@ -353,7 +357,7 @@ std::vector<Sfx> Unit::piss_sound_obj()
   if((piss_sound_start_id || piss_sound_end_id) == Unit::sound_none)
   {
     LOG4CXX_ERROR(logger, string("Exception: piss_sound_obj(") + to_string(mId) + ")");
-    throw UnitPropertyNotAvailableException(mId, "piss_sound_obj");
+    throw PropertyNotAvailableException(mId, "piss_sound_obj");
   }
 
   for(unsigned int i = piss_sound_start_id; i <= piss_sound_end_id; i++)
@@ -377,7 +381,7 @@ uint16_t Unit::yes_sound_start()
   catch (const std::out_of_range& oor)
   {
     LOG4CXX_ERROR(logger, string("Exception: piss_sound_start(") + to_string(mId) + ")");
-    throw UnitPropertyNotAvailableException(mId, "yes_sound_start");
+    throw PropertyNotAvailableException(mId, "yes_sound_start");
   }
 
   return yes_sound_start;
@@ -395,7 +399,7 @@ uint16_t Unit::yes_sound_end()
   catch (const std::out_of_range& oor)
   {
     LOG4CXX_ERROR(logger, string("Exception: yes_sound_end(") + to_string(mId) + ")");
-    throw UnitPropertyNotAvailableException(mId, "yes_sound_end");
+    throw PropertyNotAvailableException(mId, "yes_sound_end");
   }
 
   return yes_sound_end;
@@ -411,7 +415,7 @@ std::vector<Sfx> Unit::yes_sound_obj()
   if((yes_sound_start_id || yes_sound_end_id) == Unit::sound_none)
   {
     LOG4CXX_ERROR(logger, string("Exception: yes_sound_obj(") + to_string(mId) + ")");
-    throw UnitPropertyNotAvailableException(mId, "yes_sound_obj");
+    throw PropertyNotAvailableException(mId, "yes_sound_obj");
   }
 
   for(unsigned int i = yes_sound_start_id; i <= yes_sound_end_id; i++)
@@ -440,7 +444,7 @@ units_dat_t::addon_position_type_t* Unit::addon_position()
   catch (const std::out_of_range& oor)
   {
     LOG4CXX_ERROR(logger, string("Exception: addon_position(") + to_string(mId) + ")");
-    throw UnitPropertyNotAvailableException(mId, "addon_position");
+    throw PropertyNotAvailableException(mId, "addon_position");
   }
 
   return addon;
@@ -463,7 +467,7 @@ Portrait Unit::portrait_obj()
   if (portrait_id == Unit::portrait_none)
   {
     LOG4CXX_ERROR(logger, string("Exception: portrait_obj(") + to_string(mId) + ")");
-    throw UnitPropertyNotAvailableException(mId, "portrait_obj");
+    throw PropertyNotAvailableException(mId, "portrait_obj");
   }
 
   Portrait portrait(mDatahub, portrait_id);
@@ -537,19 +541,6 @@ units_dat_t::staredit_availability_flags_type_t* Unit::staredit_availability_fla
 bool Unit::is_format_bw()
 {
   return mDatahub.units->is_format_bw();
-}
-
-/* Exceptions */
-
-const char *UnitPropertyNotAvailableException::what() const throw()
-{
-  static string s;
-  s = "Property '";
-  s += m_property;
-  s += "' not existing for unit: ";
-  s += to_string(m_unit_id);
-
-  return static_cast <const char *>(s.c_str());
 }
 
 } /* namespace dat */

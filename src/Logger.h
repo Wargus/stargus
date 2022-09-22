@@ -44,6 +44,9 @@ private:
   log4cxx::LoggerPtr mLogger;
 };
 
+// print the calling function
+#define LOG_CUR_FUNC string(__func__)
+
 #else // no LOG4CXX available...
 
 #include <iostream>

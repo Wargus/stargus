@@ -30,9 +30,9 @@ UnitsJsonExporter::~UnitsJsonExporter()
 
 
 
-void UnitsJsonExporter::exportUnit(unsigned int id)
+void UnitsJsonExporter::exportUnit(unsigned int id, const std::string &idString)
 {
-  Unit unit(mDatahub, id, "test");
+  Unit unit(mDatahub, id, idString);
 
   json j;
 
