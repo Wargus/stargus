@@ -152,6 +152,7 @@ public:
 
   static const int portrait_none = 65535;
   static const int sound_none = 0;
+  static const int construction_none = 0;
   static const int subunit_none = 228;
   static const int infestation_none = 228;
 

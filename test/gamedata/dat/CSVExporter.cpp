@@ -77,8 +77,8 @@ void CSVExporter::print()
   mapdata_mission_dir_vec = mDatahub.mapdata->mission_dir();
 
   // images.dat
-  std::vector<uint8_t> *images_draw_function = mDatahub.images->draw_function();
-  std::vector<uint8_t> *images_remapping_function = mDatahub.images->remapping();
+  std::vector<images_dat_t::draw_function_enum_t> *images_draw_function = mDatahub.images->draw_function();
+  std::vector<images_dat_t::remapping_enum_t> *images_remapping_function = mDatahub.images->remapping();
 
   // units.dat
   for (unsigned int i = 0; i < units_graphics_vec->size(); i++)

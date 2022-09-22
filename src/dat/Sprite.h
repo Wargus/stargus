@@ -28,7 +28,7 @@ public:
 
   uint8_t unknown2();
 
-  uint8_t is_visible();
+  bool is_visible();
 
   uint8_t select_circle_image_size();
 

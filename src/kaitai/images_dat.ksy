@@ -41,6 +41,7 @@ seq:
 
   - id: draw_function
     type: u1
+    enum: draw_function_enum
     repeat: expr
     repeat-expr: num_lines
     doc: |
@@ -53,7 +54,7 @@ seq:
       5 - vision cloaking\n
       6 - vision cloaked\n
       7 - vision uncloaking\n
-      8 - EMP\n
+      8 - EMP shockwave\n
       9 - uses remapping\n
       10 - shadow\n
       11 - HP bar\n
@@ -66,6 +67,7 @@ seq:
 
   - id: remapping
     type: u1
+    enum: remapping_enum
     repeat: expr
     repeat-expr: num_lines
     doc: |
@@ -144,3 +146,37 @@ instances:
 
   file_size:
     value: '_io.size'
+    
+enums:
+  draw_function_enum:
+    0: normal
+    1: no_hallucination
+    2: non_vision_cloaking
+    3: non_vision_cloaked
+    4: non_vision_uncloaking
+    5: vision_cloaking
+    6: vision_cloaked
+    7: vision_uncloaking
+    8: emp_shockwave
+    9: remapping
+    10: shadow
+    11: hp_bar
+    12: warp_texture
+    13: sel_circle_remapping
+    14: player_color
+    15: update_rect
+    16: hallucination
+    17: warp_flash
+
+  remapping_enum:
+    0: no_remapping
+    1: ofire
+    2: gfire
+    3: bfire
+    4: bexpl
+    5: special
+    6: unknown1
+    7: unknown2
+    8: unknown3
+    9: unknown4
+

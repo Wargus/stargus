@@ -126,7 +126,24 @@ void to_json(json &j, Image i)
 {
   j = json{
     {"grp", i.grp()},
-    {"grp_tbl", i.grp_tbl()}
+    {"grp_tbl", i.grp_tbl()},
+    {"gfx_turns", i.gfx_turns()},
+    {"clickable", i.clickable()},
+    {"use_full_iscript", i.use_full_iscript()},
+    {"draw_if_cloaked", i.draw_if_cloaked()},
+    {"draw_function", i.draw_function()},
+    {"remapping", i.remapping()},
+    {"iscript_id", i.iscript_id()},
+    {"shield_overlay", i.shield_overlay()},
+    {"shield_overlay_tbl", i.shield_overlay_tbl()},
+    {"attack_overlay", i.attack_overlay()},
+    {"attack_overlay_tbl", i.attack_overlay_tbl()},
+    {"damage_overlay", i.damage_overlay()},
+    {"damage_overlay_tbl", i.damage_overlay_tbl()},
+    {"special_overlay", i.special_overlay()},
+    {"special_overlay_tbl", i.special_overlay_tbl()},
+    {"landing_dust_overlay", i.landing_dust_overlay()},
+    {"landing_dust_overlay_tbl", i.landing_dust_overlay_tbl()}
   };
 }
 
@@ -206,8 +223,14 @@ void to_json(json &j, Unit u)
   catch(PropertyNotAvailableException &ex)
   { /*it's fine, do nothing */ }
 
-  j["construction_animation"] = json(u.construction_animation());
-  j["construction_animation_obj"] = json(u.construction_animation_obj());
+  try
+  {
+    j["construction_animation"] = json(u.construction_animation());
+    j["construction_animation_obj"] = json(u.construction_animation_obj());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
+
   j["unit_direction"] = json(u.unit_direction());
   j["shield_enable"] = json(u.shield_enable());
   j["shield_amount"] = json(u.shield_amount());

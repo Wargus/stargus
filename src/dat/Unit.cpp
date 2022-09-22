@@ -33,32 +33,37 @@ Unit::~Unit()
 std::string Unit::getIDString()
 {
   // trace at least the id string that we know where we are
-  LOG4CXX_TRACE(logger, LOG_CUR_FUNC + "()=>" + mIdentString);
+  LOG4CXX_TRACE(logger,  mIdentString + "=>" + LOG_CUR_FUNC + "()");
   return mIdentString;
 }
 
 TblEntry Unit::name_tbl()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.stat_txt_tbl_vec.at(mId);
 }
 
 uint8_t Unit::flingy()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->flingy()->at(mId);
 }
 
 Flingy Unit::flingy_obj()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return Flingy(mDatahub, flingy());
 }
 
 uint16_t Unit::subunit1()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->subunit1()->at(mId);
 }
 
 Unit Unit::subunit1_obj()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   uint16_t subunit_id = subunit1();
 
   if(subunit_id == Unit::subunit_none)
@@ -66,16 +71,18 @@ Unit Unit::subunit1_obj()
     throw PropertyNotAvailableException(mId, "subunit1");
   }
 
-  return Unit(mDatahub, subunit_id, "<unknown>");
+  return Unit(mDatahub, subunit_id, "<subunit2>");
 }
 
 uint16_t Unit::subunit2()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->subunit2()->at(mId);
 }
 
 Unit Unit::subunit2_obj()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   uint16_t subunit_id = subunit2();
 
   if(subunit_id == Unit::subunit_none)
@@ -83,11 +90,12 @@ Unit Unit::subunit2_obj()
     throw PropertyNotAvailableException(mId, "subunit2");
   }
 
-  return Unit(mDatahub, subunit_id, "<unknown>");
+  return Unit(mDatahub, subunit_id, "<subunit2>");
 }
 
 uint16_t Unit::infestation()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   uint16_t infestation = 0;
 
   try
@@ -106,6 +114,7 @@ uint16_t Unit::infestation()
 
 Unit Unit::infestation_obj()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   uint16_t infestation_id = infestation();
 
   if(infestation_id == Unit::infestation_none)
@@ -113,141 +122,176 @@ Unit Unit::infestation_obj()
     throw PropertyNotAvailableException(mId, "infestation_obj");
   }
 
-  return Unit(mDatahub, infestation_id, "<unknown>");
+  return Unit(mDatahub, infestation_id, "<infestation>");
 }
 
 uint32_t Unit::construction_animation()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->construction_animation()->at(mId);
 }
 
 Image Unit::construction_animation_obj()
 {
-  return Image(mDatahub, construction_animation());
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+
+  uint32_t construction_animation_id = construction_animation();
+
+  if(construction_animation_id == Unit::construction_none)
+  {
+    throw PropertyNotAvailableException(mId, "construction_animation_obj");
+  }
+
+  return Image(mDatahub, construction_animation_id);
 }
 
 uint8_t Unit::unit_direction()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->unit_direction()->at(mId);
 }
 
 uint8_t Unit::shield_enable()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->shield_enable()->at(mId);
 }
 
 uint16_t Unit::shield_amount()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->shield_amount()->at(mId);
 }
 
 uint32_t Unit::hitpoints()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->hit_points()->at(mId)->hitpoints();
 }
 
 uint8_t Unit::elevation_level()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->elevation_level()->at(mId);
 }
 
 uint8_t Unit::unknown()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->unknown()->at(mId);
 }
 
 uint8_t Unit::rank()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->rank()->at(mId);
 }
 
 uint8_t Unit::ai_computer_idle()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->ai_computer_idle()->at(mId);
 }
 
 uint8_t Unit::ai_human_idle()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->ai_human_idle()->at(mId);
 }
 
 uint8_t Unit::ai_return_to_idle()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->ai_return_to_idle()->at(mId);
 }
 
 uint8_t Unit::ai_attack_unit()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->ai_attack_unit()->at(mId);
 }
 
 uint8_t Unit::ai_attack_move()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->ai_attack_move()->at(mId);
 }
 
 uint8_t Unit::ground_weapon()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->ground_weapon()->at(mId);
 }
 
 uint8_t Unit::max_ground_hits()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->max_ground_hits()->at(mId);
 }
 
 uint8_t Unit::air_weapon()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->air_weapon()->at(mId);
 }
 
 uint8_t Unit::max_air_hits()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->max_air_hits()->at(mId);
 }
 
 uint8_t Unit::ai_internal()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->ai_internal()->at(mId);
 }
 
 units_dat_t::special_ability_flags_type_t* Unit::special_ability_flags()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->special_ability_flags()->at(mId);
 }
 
 uint8_t Unit::target_acquisition_range()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->target_acquisition_range()->at(mId);
 }
 
 uint8_t Unit::sight_range()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->sight_range()->at(mId);
 }
 
 uint8_t Unit::armor_upgrade()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->armor_upgrade()->at(mId);
 }
 
 units_dat_t::unit_size_enum_t Unit::unit_size()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->unit_size()->at(mId);
 }
 
 uint8_t Unit::armor()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->armor()->at(mId);
 }
 
 units_dat_t::right_click_action_enum_t Unit::right_click_action()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->right_click_action()->at(mId);
 }
 
 uint16_t Unit::ready_sound()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   uint16_t ready_sound = 0;
 
   try
@@ -266,6 +310,7 @@ uint16_t Unit::ready_sound()
 
 Sfx Unit::ready_sound_obj()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   uint16_t ready_sound_id = ready_sound();
 
   if(ready_sound_id == Unit::sound_none)
@@ -281,16 +326,19 @@ Sfx Unit::ready_sound_obj()
 
 uint16_t Unit::what_sound_start()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->what_sound_start()->at(mId);
 }
 
 uint16_t Unit::what_sound_end()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->what_sound_end()->at(mId);
 }
 
 std::vector<Sfx> Unit::what_sound_obj()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   std::vector<Sfx> sfx_vector;
 
   uint16_t what_sound_start_id = what_sound_start();
@@ -313,6 +361,7 @@ std::vector<Sfx> Unit::what_sound_obj()
 
 uint16_t Unit::piss_sound_start()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   uint16_t piss_sound_start = 0;
 
   try
@@ -331,6 +380,7 @@ uint16_t Unit::piss_sound_start()
 
 uint16_t Unit::piss_sound_end()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   uint16_t piss_sound_end = 0;
 
   try
@@ -349,6 +399,7 @@ uint16_t Unit::piss_sound_end()
 
 std::vector<Sfx> Unit::piss_sound_obj()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   std::vector<Sfx> sfx_vector;
 
   uint16_t piss_sound_start_id = piss_sound_start();
@@ -371,6 +422,7 @@ std::vector<Sfx> Unit::piss_sound_obj()
 
 uint16_t Unit::yes_sound_start()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   uint16_t yes_sound_start = 0;
 
   try
@@ -389,6 +441,7 @@ uint16_t Unit::yes_sound_start()
 
 uint16_t Unit::yes_sound_end()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   uint16_t yes_sound_end = 0;
 
   try
@@ -407,6 +460,7 @@ uint16_t Unit::yes_sound_end()
 
 std::vector<Sfx> Unit::yes_sound_obj()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   std::vector<Sfx> sfx_vector;
 
   uint16_t yes_sound_start_id = yes_sound_start();
@@ -429,11 +483,13 @@ std::vector<Sfx> Unit::yes_sound_obj()
 
 units_dat_t::staredit_placement_box_type_t* Unit::staredit_placement_box()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->staredit_placement_box()->at(mId);
 }
 
 units_dat_t::addon_position_type_t* Unit::addon_position()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   units_dat_t::addon_position_type_t* addon = nullptr;
 
   try
@@ -452,16 +508,19 @@ units_dat_t::addon_position_type_t* Unit::addon_position()
 
 units_dat_t::unit_dimension_type_t *Unit::unit_dimension()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->unit_dimension()->at(mId);
 }
 
 uint16_t Unit::portrait()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->portrait()->at(mId);
 }
 
 Portrait Unit::portrait_obj()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   uint16_t portrait_id = portrait();
 
   if (portrait_id == Unit::portrait_none)
@@ -478,63 +537,75 @@ Portrait Unit::portrait_obj()
 
 uint16_t Unit::mineral_cost()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->mineral_cost()->at(mId);
 }
 
 uint16_t Unit::vespene_cost()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->vespene_cost()->at(mId);
 }
 
 
 uint16_t Unit::build_time()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->build_time()->at(mId);
 }
 
 uint16_t Unit::requirements()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->requirements()->at(mId);
 }
 
 units_dat_t::staredit_group_flags_type_t* Unit::staredit_group_flags()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->staredit_group_flags()->at(mId);
 }
 
 uint8_t Unit::supply_required()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->supply_required()->at(mId);
 }
 
 uint8_t Unit::space_provided()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->space_provided()->at(mId);
 }
 
 uint16_t Unit::build_score()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->build_score()->at(mId);
 }
 
 uint16_t Unit::destroy_score()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->destroy_score()->at(mId);
 }
 
 // TODO: a unit_map_string_string_tbl() might be helpful...
 uint16_t Unit::unit_map_string()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->unit_map_string()->at(mId);
 }
 
 uint8_t Unit::broodwar_flag()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->broodwar_flag()->at(mId);
 }
 
 units_dat_t::staredit_availability_flags_type_t* Unit::staredit_availability_flags()
 {
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->staredit_availability_flags()->at(mId);
 }
 

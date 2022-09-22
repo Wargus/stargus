@@ -57,15 +57,15 @@ void images_dat_t::_read() {
     for (int i = 0; i < l_draw_if_cloaked; i++) {
         m_draw_if_cloaked->push_back(m__io->read_u1());
     }
-    m_draw_function = new std::vector<uint8_t>();
+    m_draw_function = new std::vector<draw_function_enum_t>();
     const int l_draw_function = num_lines();
     for (int i = 0; i < l_draw_function; i++) {
-        m_draw_function->push_back(m__io->read_u1());
+        m_draw_function->push_back(static_cast<images_dat_t::draw_function_enum_t>(m__io->read_u1()));
     }
-    m_remapping = new std::vector<uint8_t>();
+    m_remapping = new std::vector<remapping_enum_t>();
     const int l_remapping = num_lines();
     for (int i = 0; i < l_remapping; i++) {
-        m_remapping->push_back(m__io->read_u1());
+        m_remapping->push_back(static_cast<images_dat_t::remapping_enum_t>(m__io->read_u1()));
     }
     m_iscript_id = new std::vector<uint32_t>();
     const int l_iscript_id = num_lines();
