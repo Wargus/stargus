@@ -19,12 +19,20 @@ public:
   virtual ~Portrait();
 
   uint32_t video_idle();
-  uint32_t video_talking();
-
   TblEntry video_idle_tbl();
+
+  uint32_t video_talking();
   TblEntry video_talking_tbl();
 
-  static std::string getIDString(const std::string &portrait);
+  uint8_t change_idle();
+
+  uint8_t change_talking();
+
+  uint8_t unknown1_idle();
+
+  uint8_t unknown1_talking();
+
+  std::string getIDString(const std::string &portrait);
 
 private:
 

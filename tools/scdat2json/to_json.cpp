@@ -120,7 +120,13 @@ void to_json(json &j, Portrait p)
   j = json{
     {"id", p.getID()},
     {"video_idle", p.video_idle()},
-    {"video_idle_tbl", p.video_idle_tbl()}
+    {"video_idle_tbl", p.video_idle_tbl()},
+    {"video_talking", p.video_idle()},
+    {"video_talking_tbl", p.video_idle_tbl()},
+    {"change_idle", p.change_idle()},
+    {"change_talking", p.change_talking()},
+    {"unknown1_idle", p.unknown1_idle()},
+    {"unknown1_talking", p.unknown1_talking()}
   };
 }
 

@@ -98,7 +98,7 @@ bool UnitsConverter::convert(json &unitsJson,
       try
       {
         string portrait_name = unit.portrait_obj().video_idle_tbl().name1;
-        string portrait_id = Portrait::getIDString(portrait_name);
+        string portrait_id = unit.portrait_obj().getIDString(portrait_name);
         string portrait_lua = "portrait_" + portrait_id;
         unit_portraits = lg::assign("Portrait", portrait_lua);
       }

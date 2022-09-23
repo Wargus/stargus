@@ -29,34 +29,50 @@ Portrait::~Portrait()
 
 uint32_t Portrait::video_idle()
 {
-  uint32_t portrait_id = mDatahub.portdata->video_idle()->at(mId);
-  LOG4CXX_TRACE(logger, string("video_idle(") + to_string(portrait_id) + ")");
-
-  return portrait_id;
-}
-
-uint32_t Portrait::video_talking()
-{
-  uint32_t portrait_id = mDatahub.portdata->video_talking()->at(mId);
-  LOG4CXX_TRACE(logger, string("video_talking(") + to_string(portrait_id) + ")");
-
-  return portrait_id;
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata->video_idle()->at(mId);
 }
 
 TblEntry Portrait::video_idle_tbl()
 {
-  TblEntry tbl_entry = mDatahub.portdata_tbl_vec.at(video_idle() - 1);
-  LOG4CXX_TRACE(logger, string("video_idle_tbl(") + tbl_entry.name1 + ")");
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata_tbl_vec.at(video_idle() - 1);
+}
 
-  return tbl_entry;
+uint32_t Portrait::video_talking()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata->video_talking()->at(mId);
 }
 
 TblEntry Portrait::video_talking_tbl()
 {
-  TblEntry tbl_entry = mDatahub.portdata_tbl_vec.at(video_talking() - 1);
-  LOG4CXX_TRACE(logger, string("video_talking_tbl(") + tbl_entry.name1 + ")");
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata_tbl_vec.at(video_talking() - 1);
+}
 
-  return tbl_entry;
+uint8_t Portrait::change_idle()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata->change_idle()->at(mId);
+}
+
+uint8_t Portrait::change_talking()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata->change_talking()->at(mId);
+}
+
+uint8_t Portrait::unknown1_idle()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata->unknown1_idle()->at(mId);
+}
+
+uint8_t Portrait::unknown1_talking()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata->unknown1_talking()->at(mId);
 }
 
 std::string Portrait::getIDString(const std::string &portrait)
