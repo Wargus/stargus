@@ -13,6 +13,7 @@
 #include "Portrait.h"
 #include "Sfx.h"
 #include "PropertyNotAvailableException.h"
+#include "Weapon.h"
 
 namespace dat
 {
@@ -65,10 +66,12 @@ public:
   uint8_t ai_attack_move();
 
   uint8_t ground_weapon();
+  Weapon ground_weapon_obj();
 
   uint8_t max_ground_hits();
 
   uint8_t air_weapon();
+  Weapon air_weapon_obj();
 
   uint8_t max_air_hits();
 
@@ -149,7 +152,6 @@ public:
   std::string getIDString();
 
   /* constants */
-
   static const int portrait_none = 65535;
   static const int sound_none = 0;
   static const int construction_none = 0;

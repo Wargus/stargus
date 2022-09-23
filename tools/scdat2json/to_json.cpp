@@ -106,19 +106,56 @@ void to_json(json &j, TblEntry t)
   };
 }
 
+void to_json(json &j, Weapon w)
+{
+  j["id"] = json(w.id());
+  j["label"] = json(w.label());
+  j["label_tbl"] = json(w.label_tbl());
+  j["graphics"] = json(w.graphics());
+  j["graphics_obj"] = json(w.graphics_obj());
+  j["explosion"] = json(w.explosion());
+  j["target_flags"] = json(w.target_flags());
+  j["minimum_range"] = json(w.minimum_range());
+  j["maximum_range"] = json(w.maximum_range());
+  j["damage_upgrade"] = json(w.damage_upgrade());
+  j["weapon_type"] = json(w.weapon_type());
+  j["weapon_behaviour"] = json(w.weapon_behaviour());
+  j["remove_after"] = json(w.remove_after());
+  j["explosive_type"] = json(w.explosive_type());
+  j["inner_splash_range"] = json(w.inner_splash_range());
+  j["medium_splash_range"] = json(w.medium_splash_range());
+  j["outer_splash_range"] = json(w.outer_splash_range());
+  j["damage_amount"] = json(w.damage_amount());
+  j["damage_bonus"] = json(w.damage_bonus());
+  j["weapon_cooldown"] = json(w.weapon_cooldown());
+  j["damage_factor"] = json(w.damage_factor());
+  j["attack_angle"] = json(w.attack_angle());
+  j["launch_spin"] = json(w.launch_spin());
+  j["x_offset"] = json(w.x_offset());
+  j["y_offset"] = json(w.y_offset());
+  j["error_message"] = json(w.error_message());
+  j["error_message_tbl"] = json(w.error_message_tbl());
+  j["icon"] = json(w.icon());
+
+}
+
 void to_json(json &j, Sfx s)
 {
   j = json{
-    {"id", s.getID()},
+    {"id", s.id()},
     {"sound_file", s.sound_file()},
-    {"sound_file_tbl", s.sound_file_tbl()}
+    {"sound_file_tbl", s.sound_file_tbl()},
+    {"unknown1", s.unknown1()},
+    {"unknown2", s.unknown2()},
+    {"unknown3", s.unknown3()},
+    {"unknown4", s.unknown4()}
   };
 }
 
 void to_json(json &j, Portrait p)
 {
   j = json{
-    {"id", p.getID()},
+    {"id", p.id()},
     {"video_idle", p.video_idle()},
     {"video_idle_tbl", p.video_idle_tbl()},
     {"video_talking", p.video_idle()},
@@ -132,7 +169,7 @@ void to_json(json &j, Portrait p)
 
 void to_json(json &j, Image i)
 {
-  j["id"] = json(i.getID());
+  j["id"] = json(i.id());
   j["grp"] = json(i.grp());
   j["grp_tbl"] = json(i.grp_tbl());
   j["gfx_turns"] = json(i.gfx_turns());
@@ -186,9 +223,9 @@ void to_json(json &j, Image i)
 
 void to_json(json &j, Sprite s)
 {
-  j["id"] = json(s.getID());
+  j["id"] = json(s.id());
   j["image"] = json(s.image());
-  j["image_obj"] = json(s.image());
+  j["image_obj"] = json(s.image_obj());
 
   try
   {
@@ -218,7 +255,7 @@ void to_json(json &j, Sprite s)
 void to_json(json &j, Flingy f)
 {
   j = json{
-    {"id", f.getID()},
+    {"id", f.id()},
     {"sprite", f.sprite()},
     {"sprite_obj", f.sprite_obj()},
     {"speed", f.speed()},
@@ -232,7 +269,7 @@ void to_json(json &j, Flingy f)
 
 void to_json(json &j, Unit u)
 {
-  j["id"] = json(u.getID());
+  j["id"] = json(u.id());
   j["id_string"] = json(u.getIDString());
   j["name_tbl"] = json(u.name_tbl());
   j["flingy"] = json(u.flingy());
@@ -283,14 +320,27 @@ void to_json(json &j, Unit u)
   j["ai_return_to_idle"] = json(u.ai_return_to_idle());
   j["ai_attack_unit"] = json(u.ai_attack_unit());
   j["ai_attack_move"] = json(u.ai_attack_move());
-  j["ground_weapon"] = json(u.ground_weapon());
+
+  try
+  {
+    j["ground_weapon"] = json(u.ground_weapon());
+    j["ground_weapon_obj"] = json(u.ground_weapon_obj());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
 
   if(u.is_format_bw())
   {
     j["max_ground_hits"] = json(u.max_ground_hits());
   }
 
-  j["air_weapon"] = json(u.air_weapon());
+  try
+  {
+    j["air_weapon"] = json(u.air_weapon());
+    j["air_weapon_obj"] = json(u.air_weapon_obj());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
 
   if(u.is_format_bw())
   {

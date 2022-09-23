@@ -36,4 +36,24 @@ TblEntry Sfx::sound_file_tbl()
   return mDatahub.sfxdata_tbl_vec.at(sound_file()-1);
 }
 
+uint8_t Sfx::unknown1()
+{
+  return mDatahub.sfxdata->unknown1()->at(mId);
+}
+
+uint8_t Sfx::unknown2()
+{
+  return mDatahub.sfxdata->unknown2()->at(mId);
+}
+
+uint8_t Sfx::unknown3()
+{
+  return mDatahub.sfxdata->unknown3()->at(mId);
+}
+
+uint8_t Sfx::unknown4()
+{
+  return mDatahub.sfxdata->unknown4()->at(mId);
+}
+
 } /* namespace dat */

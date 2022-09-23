@@ -68,7 +68,7 @@ Unit Unit::subunit1_obj()
 
   if(subunit_id == Unit::subunit_none)
   {
-    throw PropertyNotAvailableException(mId, "subunit1");
+    throw PropertyNotAvailableException(mId, "subunit1_obj");
   }
 
   return Unit(mDatahub, subunit_id, "<subunit2>");
@@ -87,7 +87,7 @@ Unit Unit::subunit2_obj()
 
   if(subunit_id == Unit::subunit_none)
   {
-    throw PropertyNotAvailableException(mId, "subunit2");
+    throw PropertyNotAvailableException(mId, "subunit2_obj");
   }
 
   return Unit(mDatahub, subunit_id, "<subunit2>");
@@ -101,7 +101,7 @@ uint16_t Unit::infestation()
   try
   {
     // only for units of ID 106-201 (buildings)
-    infestation = mDatahub.units->infestation()->at(mId);
+    infestation = mDatahub.units->infestation()->at(mId-106);
   }
   catch (const std::out_of_range& oor)
   {
@@ -220,7 +220,23 @@ uint8_t Unit::ai_attack_move()
 uint8_t Unit::ground_weapon()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+
+  uint8_t ground_weapon = mDatahub.units->ground_weapon()->at(mId);
+
+  // strange logic in the data. If the weapon links to a index bigger than weapon then it's 'none'
+  if(ground_weapon >= mDatahub.weapons->label()->size())
+  {
+    LOG4CXX_ERROR(logger, string("Exception: ground_weapon > size"));
+    throw PropertyNotAvailableException(mId, "ground_weapon");
+  }
+
   return mDatahub.units->ground_weapon()->at(mId);
+}
+
+Weapon Unit::ground_weapon_obj()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return Weapon(mDatahub, ground_weapon());
 }
 
 uint8_t Unit::max_ground_hits()
@@ -232,7 +248,23 @@ uint8_t Unit::max_ground_hits()
 uint8_t Unit::air_weapon()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+
+  uint8_t air_weapon = mDatahub.units->air_weapon()->at(mId);
+
+  // strange logic in the data. If the weapon links to a index bigger than weapon then it's 'none'
+  if(air_weapon >= mDatahub.weapons->label()->size())
+  {
+    LOG4CXX_ERROR(logger, string("Exception: air_weapon > size"));
+    throw PropertyNotAvailableException(mId, "air_weapon");
+  }
+
   return mDatahub.units->air_weapon()->at(mId);
+}
+
+Weapon Unit::air_weapon_obj()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return Weapon(mDatahub, air_weapon());
 }
 
 uint8_t Unit::max_air_hits()
@@ -495,7 +527,7 @@ units_dat_t::addon_position_type_t* Unit::addon_position()
   try
   {
     // Exists only for units of ID 106-201 (buildings)
-    addon = mDatahub.units->addon_position()->at(mId);
+    addon = mDatahub.units->addon_position()->at(mId-106);
   }
   catch (const std::out_of_range& oor)
   {

@@ -19,7 +19,9 @@ public:
   ObjectAccess(DataHub &datahub, unsigned int id) : mDatahub(datahub), mId(id) {}
   virtual ~ObjectAccess() {}
 
-  unsigned int getID() {return mId;}
+  virtual unsigned int id() {return mId;}
+
+  //virtual std::string id_string() = 0;
 
 protected:
   DataHub &mDatahub;

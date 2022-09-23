@@ -7,6 +7,7 @@ startool_dat_sources = files(
 	'Tbl.cpp',
 	'Portrait.cpp',
 	'Sfx.cpp',
+	'Weapon.cpp',
 	'PropertyNotAvailableException.cpp'
 )
 

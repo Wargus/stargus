@@ -23,6 +23,8 @@ public:
     shortcut_pos = -1;
     shortcut = ' ';
   }
+
+  // TODO: this was a bad decision: make this functional access to add some logging functions...
   std::string name1;
   std::string name2;
   std::string name3;
