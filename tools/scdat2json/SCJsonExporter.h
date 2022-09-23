@@ -15,8 +15,6 @@ public:
   SCJsonExporter(dat::DataHub &datahub);
   virtual ~SCJsonExporter();
 
-  void save(json &j, const std::string &file, bool pretty);
-
   json export_unit_dat();
   json export_orders_dat();
   json export_weapons_dat();

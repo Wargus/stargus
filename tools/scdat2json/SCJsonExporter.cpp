@@ -465,16 +465,3 @@ json SCJsonExporter::export_file_tbl(std::vector<TblEntry> &tblentry_vec)
   return j;
 }
 
-void SCJsonExporter::save(json &j, const std::string &file, bool pretty)
-{
-  std::ofstream filestream(file);
-
-  if(pretty)
-  {
-    filestream << std::setw(4) << j;
-  }
-  else
-  {
-    filestream << j;
-  }
-}

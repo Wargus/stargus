@@ -92,7 +92,14 @@ uint32_t Image::shield_overlay()
 TblEntry Image::shield_overlay_tbl()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return mDatahub.images_tbl_vec.at(shield_overlay());
+  uint32_t overlay = shield_overlay();
+
+  if(overlay == Image::overlay_none)
+    {
+      throw PropertyNotAvailableException(mId, "shield_overlay_tbl");
+    }
+
+  return  mDatahub.images_tbl_vec.at(overlay);
 }
 
 uint32_t Image::attack_overlay()
@@ -104,7 +111,14 @@ uint32_t Image::attack_overlay()
 TblEntry Image::attack_overlay_tbl()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return mDatahub.images_tbl_vec.at(attack_overlay());
+  uint32_t overlay = attack_overlay();
+
+  if(overlay == Image::overlay_none)
+    {
+      throw PropertyNotAvailableException(mId, "attack_overlay_tbl");
+    }
+
+  return  mDatahub.images_tbl_vec.at(overlay);
 }
 
 uint32_t Image::damage_overlay()
@@ -116,7 +130,14 @@ uint32_t Image::damage_overlay()
 TblEntry Image::damage_overlay_tbl()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return mDatahub.images_tbl_vec.at(damage_overlay());
+  uint32_t overlay = damage_overlay();
+
+  if(overlay == Image::overlay_none)
+    {
+      throw PropertyNotAvailableException(mId, "damage_overlay_tbl");
+    }
+
+  return  mDatahub.images_tbl_vec.at(overlay);
 }
 
 uint32_t Image::special_overlay()
@@ -128,7 +149,14 @@ uint32_t Image::special_overlay()
 TblEntry Image::special_overlay_tbl()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return mDatahub.images_tbl_vec.at(special_overlay());
+  uint32_t overlay = special_overlay();
+
+  if(overlay == Image::overlay_none)
+    {
+      throw PropertyNotAvailableException(mId, "special_overlay_tbl");
+    }
+
+  return  mDatahub.images_tbl_vec.at(overlay);
 }
 
 uint32_t Image::landing_dust_overlay()
@@ -140,7 +168,14 @@ uint32_t Image::landing_dust_overlay()
 TblEntry Image::landing_dust_overlay_tbl()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return mDatahub.images_tbl_vec.at(landing_dust_overlay());
+  uint32_t overlay = landing_dust_overlay();
+
+  if(overlay == Image::overlay_none)
+    {
+      throw PropertyNotAvailableException(mId, "landing_dust_overlay_tbl");
+    }
+
+  return  mDatahub.images_tbl_vec.at(overlay);
 }
 
 uint32_t Image::lift_off_dust_overlay()
@@ -152,7 +187,14 @@ uint32_t Image::lift_off_dust_overlay()
 TblEntry Image::lift_off_dust_overlay_tbl()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return mDatahub.images_tbl_vec.at(lift_off_dust_overlay());
+  uint32_t overlay = lift_off_dust_overlay();
+
+  if(overlay == Image::overlay_none)
+    {
+      throw PropertyNotAvailableException(mId, "lift_off_dust_overlay_tbl");
+    }
+
+  return  mDatahub.images_tbl_vec.at(overlay);
 }
 
 std::string Image::getIDString()

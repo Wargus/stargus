@@ -19,6 +19,8 @@ public:
   ObjectAccess(DataHub &datahub, unsigned int id) : mDatahub(datahub), mId(id) {}
   virtual ~ObjectAccess() {}
 
+  unsigned int getID() {return mId;}
+
 protected:
   DataHub &mDatahub;
   unsigned int mId;

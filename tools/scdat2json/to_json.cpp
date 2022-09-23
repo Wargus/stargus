@@ -109,6 +109,7 @@ void to_json(json &j, TblEntry t)
 void to_json(json &j, Sfx s)
 {
   j = json{
+    {"id", s.getID()},
     {"sound_file", s.sound_file()},
     {"sound_file_tbl", s.sound_file_tbl()}
   };
@@ -117,6 +118,7 @@ void to_json(json &j, Sfx s)
 void to_json(json &j, Portrait p)
 {
   j = json{
+    {"id", p.getID()},
     {"video_idle", p.video_idle()},
     {"video_idle_tbl", p.video_idle_tbl()}
   };
@@ -124,31 +126,61 @@ void to_json(json &j, Portrait p)
 
 void to_json(json &j, Image i)
 {
-  j = json{
-    {"grp", i.grp()},
-    {"grp_tbl", i.grp_tbl()},
-    {"gfx_turns", i.gfx_turns()},
-    {"clickable", i.clickable()},
-    {"use_full_iscript", i.use_full_iscript()},
-    {"draw_if_cloaked", i.draw_if_cloaked()},
-    {"draw_function", i.draw_function()},
-    {"remapping", i.remapping()},
-    {"iscript_id", i.iscript_id()},
-    {"shield_overlay", i.shield_overlay()},
-    {"shield_overlay_tbl", i.shield_overlay_tbl()},
-    {"attack_overlay", i.attack_overlay()},
-    {"attack_overlay_tbl", i.attack_overlay_tbl()},
-    {"damage_overlay", i.damage_overlay()},
-    {"damage_overlay_tbl", i.damage_overlay_tbl()},
-    {"special_overlay", i.special_overlay()},
-    {"special_overlay_tbl", i.special_overlay_tbl()},
-    {"landing_dust_overlay", i.landing_dust_overlay()},
-    {"landing_dust_overlay_tbl", i.landing_dust_overlay_tbl()}
-  };
+  j["id"] = json(i.getID());
+  j["grp"] = json(i.grp());
+  j["grp_tbl"] = json(i.grp_tbl());
+  j["gfx_turns"] = json(i.gfx_turns());
+  j["clickable"] = json(i.clickable());
+  j["use_full_iscript"] = json(i.use_full_iscript());
+  j["draw_if_cloaked"] = json(i.draw_if_cloaked());
+  j["draw_function"] = json(i.draw_function());
+  j["remapping"] = json(i.remapping());
+  j["iscript_id"] = json(i.iscript_id());
+
+  j["shield_overlay"] = json(i.shield_overlay());
+  try
+  {
+    j["shield_overlay_tbl"] = json(i.shield_overlay_tbl());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
+
+  j["attack_overlay"] = json(i.attack_overlay());
+  try
+  {
+    j["attack_overlay_tbl"] = json(i.attack_overlay_tbl());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
+
+  j["damage_overlay"] = json(i.damage_overlay());
+  try
+  {
+    j["damage_overlay_tbl"] = json(i.damage_overlay_tbl());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
+
+  j["special_overlay"] = json(i.special_overlay());
+  try
+  {
+    j["special_overlay_tbl"] = json(i.special_overlay_tbl());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
+
+  j["landing_dust_overlay"] = json(i.landing_dust_overlay());
+  try
+  {
+    j["landing_dust_overlay_tbl"] = json(i.landing_dust_overlay_tbl());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
 }
 
 void to_json(json &j, Sprite s)
 {
+  j["id"] = json(s.getID());
   j["image"] = json(s.image());
   j["image_obj"] = json(s.image());
 
@@ -180,6 +212,7 @@ void to_json(json &j, Sprite s)
 void to_json(json &j, Flingy f)
 {
   j = json{
+    {"id", f.getID()},
     {"sprite", f.sprite()},
     {"sprite_obj", f.sprite_obj()},
     {"speed", f.speed()},
@@ -193,7 +226,8 @@ void to_json(json &j, Flingy f)
 
 void to_json(json &j, Unit u)
 {
-  j["getIDString"] = json(u.getIDString());
+  j["id"] = json(u.getID());
+  j["id_string"] = json(u.getIDString());
   j["name_tbl"] = json(u.name_tbl());
   j["flingy"] = json(u.flingy());
   j["flingy_obj"] = json(u.flingy_obj());

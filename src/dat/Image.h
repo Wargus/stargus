@@ -9,6 +9,7 @@
 
 // project
 #include "ObjectAccess.h"
+#include "PropertyNotAvailableException.h"
 
 namespace dat
 {
@@ -63,6 +64,8 @@ public:
 
   /***/
   std::string getIDString();
+
+  static const int overlay_none = 0;
 
 private:
 

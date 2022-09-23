@@ -32,15 +32,13 @@ UnitsJsonExporter::~UnitsJsonExporter()
 
 void UnitsJsonExporter::exportUnit(unsigned int id, const std::string &idString)
 {
-  Unit unit(mDatahub, id, idString);
+  /*Unit unit(mDatahub, id, idString);
 
   json j;
 
   json j_unit(unit);
-  j["unit"] = j_unit;
+  j["unit"] = j_unit;*/
 
-  //cout << j_unit << endl;
-  cout << std::setw(4) << j;
 
 }
 

@@ -17,6 +17,8 @@
 #include "UnitsJsonExporter.h"
 #include "Logger.h"
 #include "pacman.h"
+#include "dat/Unit.h"
+#include "to_json.h"
 
 // system
 #include <iostream>
@@ -24,6 +26,7 @@
 #include <fstream>
 
 using namespace std;
+using namespace dat;
 
 /**
  * The scdat2json tool idea is to export the data in all relevant *.dat and corresponding *.tbl in a raw format to JSON.
@@ -198,6 +201,20 @@ int parseOptions(int argc, const char **argv)
   return 0;
 }
 
+void saveJson(json &j, const std::string &file, bool pretty)
+{
+  std::ofstream filestream(file);
+
+  if(pretty)
+  {
+    filestream << std::setw(4) << j;
+  }
+  else
+  {
+    filestream << j;
+  }
+}
+
 int main(int argc, const char **argv)
 {
 #ifdef HAVE_LOG4CXX
@@ -249,69 +266,74 @@ int main(int argc, const char **argv)
 
   dat::DataHub datahub(hurricane);
 
-  UnitsJsonExporter unitsjsonexporter(datahub);
+  Storage jsonStorage;
+  jsonStorage.setDataPath(destination_directory);
+
+  //UnitsJsonExporter unitsjsonexporter(datahub);
   for(auto &array : units_json)
   {
     string id_string = array.at("name");
     int id = array.at("id");
-    unitsjsonexporter.exportUnit(id, id_string);
-    cout << endl << "<NEW UNIT>" << endl << endl;
+    //unitsjsonexporter.exportUnit(id, id_string);
+
+    Unit unit(datahub, id, id_string);
+
+    json j_unit(unit);
+
+    saveJson(j_unit, jsonStorage(id_string + ".json"), pretty);
   }
 
   SCJsonExporter scjsonexporter(datahub);
 
-  Storage jsonStorage;
-  jsonStorage.setDataPath(destination_directory);
-
   json j_unit_dat = scjsonexporter.export_unit_dat();
-  scjsonexporter.save(j_unit_dat, jsonStorage("units_dat.json"), pretty);
+  saveJson(j_unit_dat, jsonStorage("units_dat.json"), pretty);
 
   json j_orders_dat = scjsonexporter.export_orders_dat();
-  scjsonexporter.save(j_orders_dat, jsonStorage("orders_dat.json"), pretty);
+  saveJson(j_orders_dat, jsonStorage("orders_dat.json"), pretty);
 
   json j_weapons_dat = scjsonexporter.export_weapons_dat();
-  scjsonexporter.save(j_weapons_dat, jsonStorage("weapons_dat.json"), pretty);
+  saveJson(j_weapons_dat, jsonStorage("weapons_dat.json"), pretty);
 
   json j_flingy_dat = scjsonexporter.export_flingy_dat();
-  scjsonexporter.save(j_flingy_dat, jsonStorage("flingy_dat.json"), pretty);
+  saveJson(j_flingy_dat, jsonStorage("flingy_dat.json"), pretty);
 
   json j_sprites_dat = scjsonexporter.export_sprites_dat();
-  scjsonexporter.save(j_sprites_dat, jsonStorage("sprites_dat.json"), pretty);
+  saveJson(j_sprites_dat, jsonStorage("sprites_dat.json"), pretty);
 
   json j_images_dat = scjsonexporter.export_images_dat();
-  scjsonexporter.save(j_images_dat, jsonStorage("images_dat.json"), pretty);
+  saveJson(j_images_dat, jsonStorage("images_dat.json"), pretty);
 
   json j_sfxdata_dat = scjsonexporter.export_sfxdata_dat();
-  scjsonexporter.save(j_sfxdata_dat, jsonStorage("sfxdata_dat.json"), pretty);
+  saveJson(j_sfxdata_dat, jsonStorage("sfxdata_dat.json"), pretty);
 
   json j_portdata_dat = scjsonexporter.export_portdata_dat();
-  scjsonexporter.save(j_portdata_dat, jsonStorage("portdata_dat.json"), pretty);
+  saveJson(j_portdata_dat, jsonStorage("portdata_dat.json"), pretty);
 
   json j_upgrades_dat = scjsonexporter.export_upgrades_dat();
-  scjsonexporter.save(j_upgrades_dat, jsonStorage("upgrades_dat.json"), pretty);
+  saveJson(j_upgrades_dat, jsonStorage("upgrades_dat.json"), pretty);
 
   json j_techdata_dat = scjsonexporter.export_techdata_dat();
-  scjsonexporter.save(j_techdata_dat, jsonStorage("techdata_dat.json"), pretty);
+  saveJson(j_techdata_dat, jsonStorage("techdata_dat.json"), pretty);
 
   json j_mapdata_dat = scjsonexporter.export_mapdata_dat();
-  scjsonexporter.save(j_mapdata_dat, jsonStorage("mapdata_dat.json"), pretty);
+  saveJson(j_mapdata_dat, jsonStorage("mapdata_dat.json"), pretty);
 
   // export all the .tbl ->
 
   json j_stat_txt_tbl = scjsonexporter.export_file_tbl(datahub.stat_txt_tbl_vec);
-  scjsonexporter.save(j_stat_txt_tbl, jsonStorage("stat_txt_tbl.json"), pretty);
+  saveJson(j_stat_txt_tbl, jsonStorage("stat_txt_tbl.json"), pretty);
 
   json j_images_tbl = scjsonexporter.export_file_tbl(datahub.images_tbl_vec);
-  scjsonexporter.save(j_images_tbl, jsonStorage("images_tbl.json"), pretty);
+  saveJson(j_images_tbl, jsonStorage("images_tbl.json"), pretty);
 
   json j_sfxdata_tbl = scjsonexporter.export_file_tbl(datahub.sfxdata_tbl_vec);
-  scjsonexporter.save(j_sfxdata_tbl, jsonStorage("sfxdata_tbl.json"), pretty);
+  saveJson(j_sfxdata_tbl, jsonStorage("sfxdata_tbl.json"), pretty);
 
   json j_portdata_tbl = scjsonexporter.export_file_tbl(datahub.portdata_tbl_vec);
-  scjsonexporter.save(j_portdata_tbl, jsonStorage("portdata_tbl.json"), pretty);
+  saveJson(j_portdata_tbl, jsonStorage("portdata_tbl.json"), pretty);
 
   json j_mapdata_tbl = scjsonexporter.export_file_tbl(datahub.mapdata_tbl_vec);
-  scjsonexporter.save(j_mapdata_tbl, jsonStorage("mapdata_tbl.json"), pretty);
+  saveJson(j_mapdata_tbl, jsonStorage("mapdata_tbl.json"), pretty);
 
   return 0;
 }
