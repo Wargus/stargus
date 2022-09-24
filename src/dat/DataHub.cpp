@@ -154,12 +154,6 @@ void DataHub::init_portdata_dat()
 
   std::shared_ptr<kaitai::kstream> portrait_ks = getKaitaiStream(sc_arr_portdata_dat);
 
-  // TODO: remove comment if working
-  // 1. units_portrait_max => idle portraits
-  // 2. 4x flags => idle portraits
-  // 3. units_portrait_max => talking portraits
-  // 4. 4x flags => talking portraits
-  // 5. +2 because index starting at zero
   std::shared_ptr<portdata_dat_t> portrait_loc(
     new portdata_dat_t(portrait_ks.get()));
   portdata = portrait_loc;

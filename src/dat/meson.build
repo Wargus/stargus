@@ -5,6 +5,7 @@ startool_dat_sources = files(
 	'Sprite.cpp',
 	'Image.cpp',
 	'Tbl.cpp',
+	'TblEntry.cpp',
 	'Portrait.cpp',
 	'Sfx.cpp',
 	'Weapon.cpp',
