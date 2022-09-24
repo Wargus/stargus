@@ -54,4 +54,4 @@ if cppunit_dep.found()
 	subdir('test/module')
 endif
 
-subdir('test/gamedata/dat')
+#subdir('test/gamedata/dat')

@@ -49,8 +49,7 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
 {
   file_tbl_t file_tbl = file_tbl_t(ks.get());
 
-  std::vector<file_tbl_t::tbl_entry_t *> *file_tbl_entry_vec =
-    file_tbl.tbl_entries();
+  std::vector<file_tbl_t::tbl_entry_t *> *file_tbl_entry_vec = file_tbl.tbl_entries();
 
   unsigned int i = 0;
   vector<TblEntry> tbl_entry_vec;

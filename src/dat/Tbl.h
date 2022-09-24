@@ -50,6 +50,7 @@ public:
       name3 = name3.replace(pos, 2, " ");
     }
   }
+
 };
 
 class Tbl

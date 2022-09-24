@@ -205,7 +205,33 @@ void DataHub::init_stat_txt_tbl()
   std::shared_ptr<kaitai::kstream> stat_txt_ks = getKaitaiStream(sc_rez_stat_txt_tbl);
 
   Tbl stat_txt;
-  stat_txt_tbl_vec = stat_txt.convertFromStream(stat_txt_ks);
+  std::vector<TblEntry> stat_txt_tbl_vec = stat_txt.convertFromStream(stat_txt_ks);
+
+  int vec_pos = 0;
+
+  stat_txt_units_tbl_vec.resize(units->flingy()->size());
+  std::copy(stat_txt_tbl_vec.begin() + vec_pos, stat_txt_tbl_vec.begin() + units->flingy()->size(), stat_txt_units_tbl_vec.begin());
+  vec_pos += units->flingy()->size();
+
+  stat_txt_weapons_tbl_vec.resize(weapons->label()->size());
+  std::copy(stat_txt_tbl_vec.begin() + vec_pos, stat_txt_tbl_vec.begin() + vec_pos + weapons->label()->size(), stat_txt_weapons_tbl_vec.begin());
+  vec_pos += weapons->label()->size();
+
+  stat_txt_error_messages_tbl_vec.resize(weapons->error_message()->size());
+  std::copy(stat_txt_tbl_vec.begin() + vec_pos, stat_txt_tbl_vec.begin() + vec_pos + weapons->error_message()->size(), stat_txt_error_messages_tbl_vec.begin());
+  vec_pos += weapons->error_message()->size();
+
+  stat_txt_upgrades_tbl_vec.resize(upgrades->label()->size());
+  std::copy(stat_txt_tbl_vec.begin() + vec_pos, stat_txt_tbl_vec.begin() + vec_pos + upgrades->label()->size(), stat_txt_upgrades_tbl_vec.begin());
+  vec_pos += upgrades->label()->size();
+
+  stat_txt_orders_tbl_vec.resize(orders->label()->size());
+  std::copy(stat_txt_tbl_vec.begin() + vec_pos, stat_txt_tbl_vec.begin() + vec_pos + orders->label()->size(), stat_txt_orders_tbl_vec.begin());
+  vec_pos += orders->label()->size();
+
+  stat_txt_techdata_tbl_vec.resize(techdata->label()->size());
+  std::copy(stat_txt_tbl_vec.begin() + vec_pos, stat_txt_tbl_vec.begin() + vec_pos + techdata->label()->size(), stat_txt_techdata_tbl_vec.begin());
+  vec_pos += techdata->label()->size();
 }
 
 void DataHub::init_images_tbl()

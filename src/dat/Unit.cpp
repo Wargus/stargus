@@ -40,7 +40,7 @@ std::string Unit::getIDString()
 TblEntry Unit::name_tbl()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return mDatahub.stat_txt_tbl_vec.at(mId);
+  return mDatahub.stat_txt_units_tbl_vec.at(mId);
 }
 
 uint8_t Unit::flingy()

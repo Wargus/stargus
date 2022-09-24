@@ -320,9 +320,6 @@ int main(int argc, const char **argv)
 
   // export all the .tbl ->
 
-  json j_stat_txt_tbl = scjsonexporter.export_file_tbl(datahub.stat_txt_tbl_vec);
-  saveJson(j_stat_txt_tbl, jsonStorage("stat_txt_tbl.json"), pretty);
-
   json j_images_tbl = scjsonexporter.export_file_tbl(datahub.images_tbl_vec);
   saveJson(j_images_tbl, jsonStorage("images_tbl.json"), pretty);
 
@@ -334,6 +331,27 @@ int main(int argc, const char **argv)
 
   json j_mapdata_tbl = scjsonexporter.export_file_tbl(datahub.mapdata_tbl_vec);
   saveJson(j_mapdata_tbl, jsonStorage("mapdata_tbl.json"), pretty);
+
+  /// save all the the stat_txt.tbl parts...
+
+  json stat_txt_units_tbl = scjsonexporter.export_file_tbl(datahub.stat_txt_units_tbl_vec);
+  saveJson(stat_txt_units_tbl, jsonStorage("stat_txt_units_tbl.json"), pretty);
+
+  json stat_txt_weapons_tbljson = scjsonexporter.export_file_tbl(datahub.stat_txt_weapons_tbl_vec);
+  saveJson(stat_txt_weapons_tbljson, jsonStorage("stat_txt_weapons_tbl.json"), pretty);
+
+  json stat_txt_error_messages_tbl = scjsonexporter.export_file_tbl(datahub.stat_txt_error_messages_tbl_vec);
+  saveJson(stat_txt_error_messages_tbl, jsonStorage("stat_txt_error_messages_tbl.json"), pretty);
+
+  json stat_txt_upgrades_tbl = scjsonexporter.export_file_tbl(datahub.stat_txt_upgrades_tbl_vec);
+  saveJson(stat_txt_upgrades_tbl, jsonStorage("stat_txt_upgrades_tbl.json"), pretty);
+
+  json stat_txt_orders_tbl = scjsonexporter.export_file_tbl(datahub.stat_txt_orders_tbl_vec);
+  saveJson(stat_txt_orders_tbl, jsonStorage("stat_txt_orders_tbl.json"), pretty);
+
+  json stat_txt_techdata_tbl = scjsonexporter.export_file_tbl(datahub.stat_txt_techdata_tbl_vec);
+  saveJson(stat_txt_techdata_tbl, jsonStorage("stat_txt_techdata_tbl.json"), pretty);
+
 
   return 0;
 }

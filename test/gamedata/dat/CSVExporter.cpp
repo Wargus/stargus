@@ -118,7 +118,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry = mDatahub.stat_txt_tbl_vec.at(i);
+    TblEntry tblEntry = mDatahub.stat_txt_units_tbl_vec.at(i);
     csv_dat += "ref:name=" + tblEntry.name1;
 
     csv_dat += CSV_SEPARATOR;

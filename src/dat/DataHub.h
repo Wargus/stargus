@@ -47,11 +47,11 @@ namespace dat
  * - arr\\upgrades.dat
  * - arr\\techdata.dat
  * - arr\\mapdata.dat
- * - rez\\stat_txt.tbl
  * - arr\\images.tbl
  * - arr\\sfxdata.tbl
  * - arr\\portdata.tbl
  * - arr\\mapdata.tbl
+ * - rez\\stat_txt.tbl
  *
  * As those data has have depends on each other they're all parsed together in one run. After being parsed
  * to Kaitai data structures they could be accessed from outside.
@@ -85,7 +85,13 @@ public:
   std::shared_ptr<mapdata_dat_t> mapdata;
 
   // kaitai parsed Tbl vectors
-  std::vector<TblEntry> stat_txt_tbl_vec;
+  std::vector<TblEntry> stat_txt_units_tbl_vec;
+  std::vector<TblEntry> stat_txt_weapons_tbl_vec;
+  std::vector<TblEntry> stat_txt_error_messages_tbl_vec;
+  std::vector<TblEntry> stat_txt_upgrades_tbl_vec;
+  std::vector<TblEntry> stat_txt_orders_tbl_vec;
+  std::vector<TblEntry> stat_txt_techdata_tbl_vec;
+
   std::vector<TblEntry> images_tbl_vec;
   std::vector<TblEntry> sfxdata_tbl_vec;
   std::vector<TblEntry> portdata_tbl_vec;
