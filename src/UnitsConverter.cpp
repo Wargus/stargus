@@ -91,13 +91,13 @@ bool UnitsConverter::convert(json &unitsJson,
     {
       Unit unit(mDatahub, unit_id, unit_name);
 
-      string grp_arcfile =  "unit\\" + unit.flingy_obj().sprite_obj().image_obj().grp_tbl().name1;
+      string grp_arcfile =  "unit\\" + unit.flingy_obj().sprite_obj().image_obj().grp_tbl().name1();
 
       // for the LUA reference it's enough to use the idle name as we save only one LUA for idle+talking portrait
       string unit_portraits;
       try
       {
-        string portrait_name = unit.portrait_obj().video_idle_tbl().name1;
+        string portrait_name = unit.portrait_obj().video_idle_tbl().name1();
         string portrait_id = unit.portrait_obj().getIDString(portrait_name);
         string portrait_lua = "portrait_" + portrait_id;
         unit_portraits = lg::assign("Portrait", portrait_lua);
@@ -176,7 +176,7 @@ bool UnitsConverter::convert(json &unitsJson,
       string unit_image = lg::assign("Image", image_lua);
 
       string unit_hitpoints = lg::assign("HitPoints", to_string(unit.hitpoints()));
-      string unit_name_translated = lg::assign("Name", lg::quote(unit.name_tbl().name1));
+      string unit_name_translated = lg::assign("Name", lg::quote(unit.name_tbl().name1()));
 
       bool unit_building = unit.special_ability_flags()->building();
       string unit_LuaBuilding =  lg::assign("Building", lg::boolean(unit_building));
@@ -348,7 +348,7 @@ std::string UnitsConverter::makeReadySounds(Unit &unit)
 
     string unit_sound_ready_id = unit.getIDString() + "-sound-ready";
 
-    string unit_ready_sound = unit_ready_sound_tbl_entry.name1;
+    string unit_ready_sound = unit_ready_sound_tbl_entry.name1();
 
     cout << "Ready Sound: " << unit_ready_sound  << endl;
 
@@ -384,7 +384,7 @@ std::string UnitsConverter::makeWhatSounds(Unit &unit)
       {
         TblEntry unit_what_sound_tbl_entry = sfx.sound_file_tbl();
 
-        string unit_what_sound = unit_what_sound_tbl_entry.name1;
+        string unit_what_sound = unit_what_sound_tbl_entry.name1();
 
         cout << "What Sound: " << unit_what_sound  << endl;
 
@@ -426,7 +426,7 @@ std::string UnitsConverter::makeYesSounds(Unit &unit)
       {
         TblEntry unit_yes_sound_tbl_entry = sfx.sound_file_tbl();
 
-        string unit_yes_sound = unit_yes_sound_tbl_entry.name1;
+        string unit_yes_sound = unit_yes_sound_tbl_entry.name1();
 
         cout << "Yes Sound: " << unit_yes_sound  << endl;
 
@@ -468,7 +468,7 @@ std::string UnitsConverter::makePissSounds(Unit &unit)
       {
         TblEntry unit_piss_sound_tbl_entry = sfx.sound_file_tbl();
 
-        string unit_piss_sound = unit_piss_sound_tbl_entry.name1;
+        string unit_piss_sound = unit_piss_sound_tbl_entry.name1();
 
         cout << "Piss Sound: " << unit_piss_sound  << endl;
 

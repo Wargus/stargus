@@ -200,7 +200,7 @@ TblEntry Image::lift_off_dust_overlay_tbl()
 std::string Image::getIDString()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  string image_name("image_" + to_string(mId) + "_" + grp_tbl().name1);
+  string image_name("image_" + to_string(mId) + "_" + grp_tbl().name1());
   replaceString("\\", "_", image_name);
   //fs::path p(image_name);
 

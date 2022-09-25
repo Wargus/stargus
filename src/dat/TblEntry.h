@@ -19,15 +19,21 @@ public:
   TblEntry();
   virtual ~TblEntry();
 
-  // TODO: this was a bad decision: make this functional access to add some logging functions...
-  std::string name1;
-  std::string name2;
-  std::string name3;
-  int shortcut_pos;
-  std::string shortcut;
+  std::string name1();
+  std::string name2();
+  std::string name3();
+  int shortcut_pos();
+  std::string shortcut();
 
-  void removeSpaces();
 
+private:
+  std::string m_name1;
+  std::string m_name2;
+  std::string m_name3;
+  int m_shortcut_pos;
+  std::string m_shortcut;
+
+  friend class Tbl;
 };
 
 } /* namespace dat */

@@ -59,8 +59,8 @@ bool SfxConverter::convert()
 
     TblEntry sound_file = sfx.sound_file_tbl();
 
-    string sound_arcfile("sound\\" + sound_file.name1);
-    string sound_file_base(sound_file.name1);
+    string sound_arcfile("sound\\" + sound_file.name1());
+    string sound_file_base(sound_file.name1());
     replaceString("\\", "/", sound_file_base);
     sound_file_base = cutFileEnding(to_lower(sound_file_base), ".wav");
 

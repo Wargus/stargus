@@ -25,6 +25,9 @@ public:
   virtual ~Tbl();
 
   std::vector<TblEntry> convertFromStream(std::shared_ptr<kaitai::kstream> ks);
+
+private:
+  void removeDoubleSpaces(std::string &str);
 };
 
 } /* namespace dat */

@@ -282,7 +282,7 @@ int main(int argc, const char **argv)
 
     saveJson(j_unit, jsonStorage(id_string + ".json"), pretty);
   }
-
+  exit(1);
   SCJsonExporter scjsonexporter(datahub);
 
   json j_unit_dat = scjsonexporter.export_unit_dat();

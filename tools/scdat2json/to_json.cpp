@@ -98,11 +98,11 @@ namespace dat {
 void to_json(json &j, TblEntry t)
 {
   j = json{
-    {"name1", t.name1},
-    {"name2", t.name2},
-    {"name3", t.name3},
-    {"shortcut_pos", t.shortcut_pos},
-    {"shortcut", t.shortcut}
+    {"name1", t.name1()},
+    {"name2", t.name2()},
+    {"name3", t.name3()},
+    {"shortcut_pos", t.shortcut_pos()},
+    {"shortcut", t.shortcut()}
   };
 }
 

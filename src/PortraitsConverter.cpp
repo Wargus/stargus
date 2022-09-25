@@ -60,8 +60,8 @@ bool PortraitsConverter::convert()
   {
     Portrait portrait(mDatahub, i);
 
-    string portrait_arcfile_idle(portrait.video_idle_tbl().name1);
-    string portrait_arcfile_talking(portrait.video_talking_tbl().name1);
+    string portrait_arcfile_idle(portrait.video_idle_tbl().name1());
+    string portrait_arcfile_talking(portrait.video_talking_tbl().name1());
 
     string portrait_idle_id(portrait.getIDString(portrait_arcfile_idle));
     string portrait_talking_id(portrait.getIDString(portrait_arcfile_talking));
