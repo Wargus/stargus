@@ -37,9 +37,12 @@ public:
 
   uint8_t unused();
 
-  uint8_t broodwar_flag();
+  bool broodwar_flag();
 
   bool has_broodwar_flag();
+
+  /* constants */
+  static const int label_none = 0;
 };
 
 } /* namespace dat */

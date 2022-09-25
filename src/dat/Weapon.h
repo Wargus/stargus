@@ -11,6 +11,7 @@
 #include "ObjectAccess.h"
 #include "PropertyNotAvailableException.h"
 #include "Flingy.h"
+#include "Upgrade.h"
 
 namespace dat
 {
@@ -36,8 +37,8 @@ public:
 
   uint32_t maximum_range();
 
-  // TODO: Pointer to [upgrades.dat]
   uint8_t damage_upgrade();
+  Upgrade damage_upgrade_obj();
 
   uint8_t weapon_type();
 
@@ -80,6 +81,7 @@ public:
   /* constants */
 
   static const int graphics_none = 0;
+  static const int label_none = 0;
 
 private:
 

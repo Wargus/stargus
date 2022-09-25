@@ -106,6 +106,29 @@ void to_json(json &j, TblEntry t)
   };
 }
 
+void to_json(json &j, Upgrade u)
+{
+  j["id"] = json(u.id());
+  j["mineral_cost_base"] = json(u.mineral_cost_base());
+  j["mineral_cost_factor"] = json(u.mineral_cost_factor());
+  j["vespene_cost_base"] = json(u.vespene_cost_base());
+  j["vespene_cost_factor"] = json(u.vespene_cost_factor());
+  j["research_time_base"] = json(u.research_time_base());
+  j["research_time_factor"] = json(u.research_time_factor());
+  j["unknown6"] = json(u.unknown6());
+  j["icon"] = json(u.icon());
+  j["label"] = json(u.label());
+  j["label_tbl"] = json(u.label_tbl());
+  j["race"] = json(u.race());
+  j["max_repeats"] = json(u.max_repeats());
+
+  if(u.has_broodwar_flag())
+  {
+    j["broodwar_flags"] = json(u.broodwar_flags());
+  }
+
+}
+
 void to_json(json &j, Order o)
 {
   j["id"] = json(o.id());
@@ -178,6 +201,7 @@ void to_json(json &j, Weapon w)
   j["minimum_range"] = json(w.minimum_range());
   j["maximum_range"] = json(w.maximum_range());
   j["damage_upgrade"] = json(w.damage_upgrade());
+  j["damage_upgrade_obj"] = json(w.damage_upgrade_obj());
   j["weapon_type"] = json(w.weapon_type());
   j["weapon_behaviour"] = json(w.weapon_behaviour());
   j["remove_after"] = json(w.remove_after());

@@ -33,8 +33,14 @@ uint16_t Weapon::label()
 
 TblEntry Weapon::label_tbl()
 {
-  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return mDatahub.stat_txt_tbl_vec.at(label());
+  LOG4CXX_TRACE(logger, to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+
+  if(label() == Weapon::label_none)
+  {
+    throw PropertyNotAvailableException(mId, "label_tbl");
+  }
+
+  return mDatahub.stat_txt_tbl_vec.at(label()-1);
 }
 
 uint32_t Weapon::graphics()
@@ -86,6 +92,12 @@ uint8_t Weapon::damage_upgrade()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.weapons->damage_upgrade()->at(mId);
+}
+
+Upgrade Weapon::damage_upgrade_obj()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return Upgrade(mDatahub, damage_upgrade());
 }
 
 uint8_t Weapon::weapon_type()

@@ -27,6 +27,7 @@ void to_json(json &j, units_dat_t::staredit_availability_flags_type_t* t);
 namespace dat {
 
 void to_json(json &j, TblEntry t);
+void to_json(json &j, Upgrade u);
 void to_json(json &j, Techdata t);
 void to_json(json &j, Order o);
 void to_json(json &j, Weapon w);
