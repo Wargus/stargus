@@ -10,6 +10,7 @@
 // project
 #include "ObjectAccess.h"
 #include "Weapon.h"
+#include "Techdata.h"
 
 namespace dat
 {
@@ -50,8 +51,8 @@ public:
   uint8_t targeting();
   Weapon targeting_obj();
 
-  // TODO [pointer to techdata.dat]
   uint8_t energy();
+  Techdata energy_obj();
 
   uint8_t animation();
 

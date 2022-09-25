@@ -124,21 +124,46 @@ void to_json(json &j, Order o)
   j["unknown11"] = json(o.unknown11());
   j["unknown12"] = json(o.unknown12());
 
+  j["targeting"] = json(o.targeting());
   try
   {
-    j["targeting"] = json(o.targeting());
     j["targeting_obj"] = json(o.targeting_obj());
   }
   catch(PropertyNotAvailableException &ex)
   { /*it's fine, do nothing */ }
 
-
   j["energy"] = json(o.energy());
+  try
+  {
+    j["energy_obj"] = json(o.energy_obj());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
+
   j["animation"] = json(o.animation());
   j["highlight"] = json(o.highlight());
   j["unknown17"] = json(o.unknown17());
   j["obscured_order"] = json(o.obscured_order());
   //j["obscured_order_obj"] = json(o.obscured_order_obj());
+}
+
+void to_json(json &j, Techdata t)
+{
+  j["id"] = json(t.id());
+  j["mineral_cost"] = json(t.mineral_cost());
+  j["vespene_cost"] = json(t.vespene_cost());
+  j["research_time"] = json(t.research_time());
+  j["energy_required"] = json(t.energy_required());
+  j["unknown4"] = json(t.unknown4());
+  j["icon"] = json(t.icon());
+  j["label"] = json(t.label());
+  j["race"] = json(t.race());
+  j["unused"] = json(t.unused());
+
+  if(t.has_broodwar_flag())
+  {
+    j["broodwar_flag"] = json(t.broodwar_flag());
+  }
 }
 
 void to_json(json &j, Weapon w)

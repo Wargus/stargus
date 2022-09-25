@@ -250,23 +250,23 @@ Order Unit::ai_attack_move_obj()
 uint8_t Unit::ground_weapon()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-
-  uint8_t ground_weapon = mDatahub.units->ground_weapon()->at(mId);
-
-  // strange logic in the data. If the weapon links to a index bigger than weapon then it's 'none'
-  if(ground_weapon >= mDatahub.weapons->label()->size())
-  {
-    LOG4CXX_ERROR(logger, string("Exception: ground_weapon > size"));
-    throw PropertyNotAvailableException(mId, "ground_weapon");
-  }
-
   return mDatahub.units->ground_weapon()->at(mId);
 }
 
 Weapon Unit::ground_weapon_obj()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return Weapon(mDatahub, ground_weapon());
+
+  uint8_t ground_weapon_id = mDatahub.units->ground_weapon()->at(mId);
+
+  // strange logic in the data. If the weapon links to a index bigger than weapon then it's 'none'
+  if(ground_weapon_id >= mDatahub.weapons->label()->size())
+  {
+    LOG4CXX_ERROR(logger, string("Exception: ground_weapon_obj > size"));
+    throw PropertyNotAvailableException(mId, "ground_weapon_obj");
+  }
+
+  return Weapon(mDatahub, ground_weapon_id);
 }
 
 uint8_t Unit::max_ground_hits()
@@ -278,23 +278,23 @@ uint8_t Unit::max_ground_hits()
 uint8_t Unit::air_weapon()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-
-  uint8_t air_weapon = mDatahub.units->air_weapon()->at(mId);
-
-  // strange logic in the data. If the weapon links to a index bigger than weapon then it's 'none'
-  if(air_weapon >= mDatahub.weapons->label()->size())
-  {
-    LOG4CXX_ERROR(logger, string("Exception: air_weapon > size"));
-    throw PropertyNotAvailableException(mId, "air_weapon");
-  }
-
   return mDatahub.units->air_weapon()->at(mId);
 }
 
 Weapon Unit::air_weapon_obj()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return Weapon(mDatahub, air_weapon());
+
+  uint8_t air_weapon_id = mDatahub.units->air_weapon()->at(mId);
+
+  // strange logic in the data. If the weapon links to a index bigger than weapon then it's 'none'
+  if(air_weapon_id >= mDatahub.weapons->label()->size())
+  {
+    LOG4CXX_ERROR(logger, string("Exception: air_weapon_obj > size"));
+    throw PropertyNotAvailableException(mId, "air_weapon_obj");
+  }
+
+  return Weapon(mDatahub, air_weapon_id);
 }
 
 uint8_t Unit::max_air_hits()

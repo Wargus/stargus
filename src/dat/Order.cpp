@@ -113,29 +113,45 @@ uint8_t Order::unknown12()
 uint8_t Order::targeting()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-
-  uint8_t targeting = mDatahub.orders->targeting()->at(mId);
-
-  // strange logic in the data. If the weapon links to a index bigger than weapon then it's 'none'
-  if(targeting >= mDatahub.weapons->label()->size())
-  {
-    LOG4CXX_ERROR(logger, string("Exception: targeting > size"));
-    throw PropertyNotAvailableException(mId, "targeting");
-  }
-
   return mDatahub.orders->targeting()->at(mId);
 }
 
 Weapon Order::targeting_obj()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return Weapon(mDatahub, targeting());
+
+  uint8_t targeting_id = targeting();
+
+  // strange logic in the data. If the weapon links to a index bigger than weapon then it's 'none'
+  if(targeting_id >= mDatahub.weapons->label()->size())
+  {
+    LOG4CXX_ERROR(logger, string("Exception: targeting_obj > size"));
+    throw PropertyNotAvailableException(mId, "targeting_obj");
+  }
+
+  return Weapon(mDatahub, targeting_id);
 }
 
 uint8_t Order::energy()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.orders->energy()->at(mId);
+}
+
+Techdata Order::energy_obj()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+
+  uint8_t energy_id = energy();
+
+  // strange logic in the data. If the weapon links to a index bigger than weapon then it's 'none'
+  if(energy_id >= mDatahub.techdata->label()->size())
+  {
+    LOG4CXX_ERROR(logger, string("Exception: energy_obj > size"));
+    throw PropertyNotAvailableException(mId, "energy_obj");
+  }
+
+  return Techdata(mDatahub, energy_id);
 }
 
 uint8_t Order::animation()
