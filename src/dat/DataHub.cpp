@@ -199,11 +199,11 @@ void DataHub::init_stat_txt_tbl()
   std::shared_ptr<kaitai::kstream> stat_txt_ks = getKaitaiStream(sc_rez_stat_txt_tbl);
 
   Tbl stat_txt;
-  std::vector<TblEntry> stat_txt_tbl_vec = stat_txt.convertFromStream(stat_txt_ks);
+  /*std::vector<TblEntry>*/ stat_txt_tbl_vec = stat_txt.convertFromStream(stat_txt_ks);
 
   int vec_pos = 0;
 
-  stat_txt_units_tbl_vec.resize(units->flingy()->size());
+  /*stat_txt_units_tbl_vec.resize(units->flingy()->size());
   std::copy(stat_txt_tbl_vec.begin() + vec_pos, stat_txt_tbl_vec.begin() + units->flingy()->size(), stat_txt_units_tbl_vec.begin());
   vec_pos += units->flingy()->size();
 
@@ -225,7 +225,7 @@ void DataHub::init_stat_txt_tbl()
 
   stat_txt_techdata_tbl_vec.resize(techdata->label()->size());
   std::copy(stat_txt_tbl_vec.begin() + vec_pos, stat_txt_tbl_vec.begin() + vec_pos + techdata->label()->size(), stat_txt_techdata_tbl_vec.begin());
-  vec_pos += techdata->label()->size();
+  vec_pos += techdata->label()->size();*/
 }
 
 void DataHub::init_images_tbl()

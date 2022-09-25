@@ -14,6 +14,7 @@
 #include "Sfx.h"
 #include "PropertyNotAvailableException.h"
 #include "Weapon.h"
+#include "Order.h"
 
 namespace dat
 {
@@ -56,14 +57,19 @@ public:
   uint8_t rank();
 
   uint8_t ai_computer_idle();
+  Order ai_computer_idle_obj();
 
   uint8_t ai_human_idle();
+  Order ai_human_idle_obj();
 
   uint8_t ai_return_to_idle();
+  Order ai_return_to_idle_obj();
 
   uint8_t ai_attack_unit();
+  Order ai_attack_unit_obj();
 
   uint8_t ai_attack_move();
+  Order ai_attack_move_obj();
 
   uint8_t ground_weapon();
   Weapon ground_weapon_obj();

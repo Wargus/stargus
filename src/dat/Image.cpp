@@ -30,9 +30,7 @@ Image::~Image()
 uint32_t Image::grp()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  uint32_t grp_id = mDatahub.images->grp()->at(mId);
-
-  return grp_id;
+  return  mDatahub.images->grp()->at(mId);
 }
 
 TblEntry Image::grp_tbl()

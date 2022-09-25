@@ -40,7 +40,7 @@ std::string Unit::getIDString()
 TblEntry Unit::name_tbl()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return mDatahub.stat_txt_units_tbl_vec.at(mId);
+  return mDatahub.stat_txt_tbl_vec.at(mId);
 }
 
 uint8_t Unit::flingy()
@@ -193,10 +193,22 @@ uint8_t Unit::ai_computer_idle()
   return mDatahub.units->ai_computer_idle()->at(mId);
 }
 
+Order Unit::ai_computer_idle_obj()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return Order(mDatahub, ai_computer_idle());
+}
+
 uint8_t Unit::ai_human_idle()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->ai_human_idle()->at(mId);
+}
+
+Order Unit::ai_human_idle_obj()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return Order(mDatahub, ai_human_idle());
 }
 
 uint8_t Unit::ai_return_to_idle()
@@ -205,16 +217,34 @@ uint8_t Unit::ai_return_to_idle()
   return mDatahub.units->ai_return_to_idle()->at(mId);
 }
 
+Order Unit::ai_return_to_idle_obj()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return Order(mDatahub, ai_return_to_idle());
+}
+
 uint8_t Unit::ai_attack_unit()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->ai_attack_unit()->at(mId);
 }
 
+Order Unit::ai_attack_unit_obj()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return Order(mDatahub, ai_attack_unit());
+}
+
 uint8_t Unit::ai_attack_move()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->ai_attack_move()->at(mId);
+}
+
+Order Unit::ai_attack_move_obj()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return Order(mDatahub, ai_attack_move());
 }
 
 uint8_t Unit::ground_weapon()

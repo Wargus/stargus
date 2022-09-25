@@ -34,7 +34,7 @@ uint16_t Weapon::label()
 TblEntry Weapon::label_tbl()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return mDatahub.stat_txt_weapons_tbl_vec.at(mId);
+  return mDatahub.stat_txt_tbl_vec.at(label());
 }
 
 uint32_t Weapon::graphics()
@@ -188,7 +188,7 @@ uint16_t Weapon::error_message()
 TblEntry Weapon::error_message_tbl()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return mDatahub.stat_txt_error_messages_tbl_vec.at(mId);
+  return mDatahub.stat_txt_tbl_vec.at(error_message());
 }
 
 uint16_t Weapon::icon()

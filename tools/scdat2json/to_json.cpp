@@ -106,6 +106,41 @@ void to_json(json &j, TblEntry t)
   };
 }
 
+void to_json(json &j, Order o)
+{
+  j["id"] = json(o.id());
+  j["label"] = json(o.label());
+  j["label_tbl"] = json(o.label_tbl());
+  j["use_weapon_targeting"] = json(o.use_weapon_targeting());
+  j["unknown2"] = json(o.unknown2());
+  j["unknown3"] = json(o.unknown3());
+  j["unknown4"] = json(o.unknown4());
+  j["unknown5"] = json(o.unknown5());
+  j["interruptible"] = json(o.interruptible());
+  j["unknown7"] = json(o.unknown7());
+  j["queueable"] = json(o.queueable());
+  j["unknown9"] = json(o.unknown9());
+  j["unknown10"] = json(o.unknown10());
+  j["unknown11"] = json(o.unknown11());
+  j["unknown12"] = json(o.unknown12());
+
+  try
+  {
+    j["targeting"] = json(o.targeting());
+    j["targeting_obj"] = json(o.targeting_obj());
+  }
+  catch(PropertyNotAvailableException &ex)
+  { /*it's fine, do nothing */ }
+
+
+  j["energy"] = json(o.energy());
+  j["animation"] = json(o.animation());
+  j["highlight"] = json(o.highlight());
+  j["unknown17"] = json(o.unknown17());
+  j["obscured_order"] = json(o.obscured_order());
+  //j["obscured_order_obj"] = json(o.obscured_order_obj());
+}
+
 void to_json(json &j, Weapon w)
 {
   j["id"] = json(w.id());
@@ -316,10 +351,15 @@ void to_json(json &j, Unit u)
   j["unknown"] = json(u.unknown());
   j["rank"] = json(u.rank());
   j["ai_computer_idle"] = json(u.ai_computer_idle());
+  j["ai_computer_idle_obj"] = json(u.ai_computer_idle_obj());
   j["ai_human_idle"] = json(u.ai_human_idle());
+  j["ai_human_idle_obj"] = json(u.ai_human_idle_obj());
   j["ai_return_to_idle"] = json(u.ai_return_to_idle());
+  j["ai_return_to_idle_obj"] = json(u.ai_return_to_idle_obj());
   j["ai_attack_unit"] = json(u.ai_attack_unit());
+  j["ai_attack_unit_obj"] = json(u.ai_attack_unit_obj());
   j["ai_attack_move"] = json(u.ai_attack_move());
+  j["ai_attack_move_obj"] = json(u.ai_attack_move_obj());
 
   try
   {
