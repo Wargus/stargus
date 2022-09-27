@@ -287,7 +287,6 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
 
   //std::cout << units_json << std::endl; // prints json object to screen
 
-  // needed to fix broodware tileset parser. TODO: think abot the concept
   vector<string> wpeNames;
 
   /** WPE **/
@@ -378,7 +377,7 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
     //cout << pcx_array << endl;
   }
 
-  /** PCX2D **/
+  /** PCX2D (after WPE block has been read in) **/
   auto &pcx2d_section = palettes_json.at("PCX2D");
 
   for(auto &pcx_array : pcx2d_section)
@@ -386,6 +385,7 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
     string pcx_name = pcx_array.at("name");
     string pcx_arcfile = pcx_array.at("arcfile");
 
+    // replace this with the first of the WPE palettes. Which one doesn't care for the palette logic.
     replaceString("<?>", *wpeNames.begin(), pcx_arcfile);
 
     Pcx pcx(hurricane, pcx_arcfile);
@@ -719,7 +719,7 @@ int main(int argc, const char **argv)
         break;
         case G: // WORKS!
         {
-          printf("ConvertGfx: %s, %s", c[u].File, c[u].ArcFile);
+          printf("ConvertGfx: %s, %s, %d", c[u].File, c[u].ArcFile, c[u].Arg1);
           Grp grp(storm, c[u].ArcFile);
           std::shared_ptr<Palette> pal;
           std::shared_ptr<Palette2D> pal2D;

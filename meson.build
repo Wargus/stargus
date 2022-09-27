@@ -48,6 +48,7 @@ subdir('src')
 subdir('tools')
 subdir('tools/sauwetter')
 subdir('tools/scdat2json')
+#subdir('tools/scpalette')
 subdir('test/lua')
 
 if cppunit_dep.found()

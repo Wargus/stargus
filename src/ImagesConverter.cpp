@@ -57,38 +57,45 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
   lua_include.open (luagen("luagen-images.lua").getFullPath());
   string lua_include_str;
 
-  for (unsigned int i = 0; i < mDatahub.images->draw_function()->size(); i++)
+  for (unsigned int i = 0; i < mDatahub.images->grp()->size(); i++)
   {
     Image image(mDatahub, i);
 
     string grp_name(image.grp_tbl().name1());
     grp_name = to_lower(grp_name); // make lower case to match it always
 
+    LOG4CXX_TRACE(logger, "image: " + grp_name);
+
+    /* The following code splits a full GRP path/file into a logic of image type, subtype and subsubtype.
+     * The idea is to identify the logic which palette should be used to decode that specific GRP image.
+     */
+
+    string imageType;
+    string imageSubType;
+    string imageSubSubType;
+
     // find first slash
     size_t found = grp_name.find('\\');
-    string imageType;
     if(found != string::npos)
     {
       imageType = grp_name.substr (0, found);
       LOG4CXX_TRACE(logger, "imageType: " + imageType);
-    }
 
-    // find second slash
-    size_t found2 = grp_name.find('\\', found+1);
-    string imageSubType;
-    if(found2 != string::npos)
-    {
-      imageSubType = grp_name.substr (found+1, found2 - found-1);
-      LOG4CXX_TRACE(logger, "imageSubType: " + imageSubType);
-    }
+      // find second slash
+      size_t found2 = grp_name.find('\\', found+1);
+      if(found2 != string::npos)
+      {
+        imageSubType = grp_name.substr (found+1, found2 - found-1);
+        LOG4CXX_TRACE(logger, "imageSubType: " + imageSubType);
 
-    // find third slash
-    size_t found3 = grp_name.find('\\', found2+1);
-    string imageSubSubType;
-    if(found3 != string::npos)
-    {
-      imageSubSubType = grp_name.substr (found2+1, found3 - found2-1);
-      LOG4CXX_TRACE(logger, "imageSubSubType: " + imageSubSubType);
+        // find third slash
+        size_t found3 = grp_name.find('\\', found2+1);
+        if(found3 != string::npos)
+        {
+          imageSubSubType = grp_name.substr (found2+1, found3 - found2-1);
+          LOG4CXX_TRACE(logger, "imageSubSubType: " + imageSubSubType);
+        }
+      }
     }
 
     string grp_arcfile =  "unit\\" + grp_name;
@@ -100,22 +107,21 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
 
     bool save_grp = true;
 
-    // TODO: map this constants in Kaitai parser
-    if (image.draw_function() == 9) // uses remapping
+    if (image.draw_function() == images_dat_t::DRAW_FUNCTION_ENUM_REMAPPING)
     {
-      if(image.remapping() == 1) // ofire
+      if(image.remapping() == images_dat_t::REMAPPING_ENUM_OFIRE)
       {
         remapping = "ofire";
       }
-      else if(image.remapping() == 2) // gfire
+      else if(image.remapping() == images_dat_t::REMAPPING_ENUM_GFIRE)
       {
         remapping = "gfire";
       }
-      else if(image.remapping() == 3) // bfire
+      else if(image.remapping() == images_dat_t::REMAPPING_ENUM_BFIRE)
       {
         remapping = "bfire";
       }
-      else if(image.remapping() == 4) // bexpl
+      else if(image.remapping() == images_dat_t::REMAPPING_ENUM_BEXPL)
       {
         remapping = "bexpl";
       }
@@ -129,7 +135,7 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
 
       grp.setRGBA(true);
     }
-    else if (image.draw_function() == 10) // shadow
+    else if (image.draw_function() == images_dat_t::DRAW_FUNCTION_ENUM_SHADOW)
     {
       // do not export shadows images as the stratagus engine has a better way to generate them
       save_grp = false;
@@ -266,3 +272,4 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
 
   return result;
 }
+

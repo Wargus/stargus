@@ -83,7 +83,7 @@ struct Arg: public option::Arg
 
 enum optionIndex
 {
-  UNKNOWN, HELP, COMPRESS, BACKEND
+  UNKNOWN, HELP, BACKEND
 };
 const option::Descriptor usage[] =
 {

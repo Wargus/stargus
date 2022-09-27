@@ -102,7 +102,7 @@ struct Arg: public option::Arg
 
 enum optionIndex
 {
-  UNKNOWN, HELP, COMPRESS, BACKEND, PRETTY
+  UNKNOWN, HELP, BACKEND, PRETTY
 };
 const option::Descriptor usage[] =
 {
@@ -282,6 +282,15 @@ int main(int argc, const char **argv)
 
     saveJson(j_unit, jsonStorage(id_string + ".json"), pretty);
   }
+
+  /*for(unsigned int i = 0; i < datahub.images->grp()->size(); i++)
+  {
+    Image image(datahub, i);
+
+    json j_image(image);
+
+    saveJson(j_image, jsonStorage(image.getIDString() + ".json"), pretty);
+  }*/
 
   SCJsonExporter scjsonexporter(datahub);
 

@@ -43,7 +43,7 @@ uint16_t Sprite::image()
   }
   else
   {
-    LOG4CXX_WARN(logger, string("not found image->at(") + to_string(mId) + ") mapped to 0");
+    LOG4CXX_TRACE(logger, string("not found image->at(") + to_string(mId) + ") mapped to 0");
   }
 
   return image_id;
@@ -67,7 +67,7 @@ uint8_t Sprite::health_bar()
   }
   catch (const std::out_of_range& oor)
   {
-    LOG4CXX_ERROR(logger, string("Exception: health_bar(") + to_string(health_bar) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: health_bar(") + to_string(health_bar) + ")");
     throw PropertyNotAvailableException(mId, "health_bar");
   }
 
@@ -91,7 +91,7 @@ uint8_t Sprite::unknown2()
   }
   else
   {
-    LOG4CXX_WARN(logger, string("not found unknown2->at(") + to_string(mId) + ") mapped to 0");
+    LOG4CXX_TRACE(logger, string("not found unknown2->at(") + to_string(mId) + ") mapped to 0");
   }
 
   return unknown2;
@@ -115,7 +115,7 @@ bool Sprite::is_visible()
   }
   else
   {
-    LOG4CXX_WARN(logger, string("not found is_visible->at(") + to_string(mId) + ") mapped to 1");
+    LOG4CXX_TRACE(logger, string("not found is_visible->at(") + to_string(mId) + ") mapped to 1");
   }
 
   return is_visible;
@@ -133,7 +133,7 @@ uint8_t Sprite::select_circle_image_size()
   }
   catch (const std::out_of_range& oor)
   {
-    LOG4CXX_ERROR(logger, string("Exception: select_circle_image_size(") + to_string(select_circle_image_size) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: select_circle_image_size(") + to_string(select_circle_image_size) + ")");
     throw PropertyNotAvailableException(mId, "select_circle_image_size");
   }
 
@@ -152,7 +152,7 @@ uint8_t Sprite::select_circle_vertical_pos()
   }
   catch (const std::out_of_range& oor)
   {
-    LOG4CXX_ERROR(logger, string("Exception: select_circle_vertical_pos(") + to_string(select_circle_vertical_pos) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: select_circle_vertical_pos(") + to_string(select_circle_vertical_pos) + ")");
     throw PropertyNotAvailableException(mId, "select_circle_vertical_pos");
   }
 

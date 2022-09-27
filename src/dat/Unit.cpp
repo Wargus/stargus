@@ -105,7 +105,7 @@ uint16_t Unit::infestation()
   }
   catch (const std::out_of_range& oor)
   {
-    LOG4CXX_ERROR(logger, string("Exception: infestation(") + to_string(infestation) + ")");
+    LOG4CXX_DEBUG(logger, string("Exception: infestation(") + to_string(infestation) + ")");
     throw PropertyNotAvailableException(mId, "infestation");
   }
 
@@ -262,7 +262,7 @@ Weapon Unit::ground_weapon_obj()
   // strange logic in the data. If the weapon links to a index bigger than weapon then it's 'none'
   if(ground_weapon_id >= mDatahub.weapons->label()->size())
   {
-    LOG4CXX_ERROR(logger, string("Exception: ground_weapon_obj > size"));
+    LOG4CXX_TRACE(logger, string("Exception: ground_weapon_obj > size"));
     throw PropertyNotAvailableException(mId, "ground_weapon_obj");
   }
 
@@ -290,7 +290,7 @@ Weapon Unit::air_weapon_obj()
   // strange logic in the data. If the weapon links to a index bigger than weapon then it's 'none'
   if(air_weapon_id >= mDatahub.weapons->label()->size())
   {
-    LOG4CXX_ERROR(logger, string("Exception: air_weapon_obj > size"));
+    LOG4CXX_TRACE(logger, string("Exception: air_weapon_obj > size"));
     throw PropertyNotAvailableException(mId, "air_weapon_obj");
   }
 
@@ -363,7 +363,7 @@ uint16_t Unit::ready_sound()
   }
   catch (const std::out_of_range& oor)
   {
-    LOG4CXX_ERROR(logger, string("Exception: ready_sound(") + to_string(ready_sound) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: ready_sound(") + to_string(ready_sound) + ")");
     throw PropertyNotAvailableException(mId, "ready_sound");
   }
 
@@ -377,7 +377,7 @@ Sfx Unit::ready_sound_obj()
 
   if(ready_sound_id == Unit::sound_none)
   {
-    LOG4CXX_ERROR(logger, string("Exception: ready_sound_obj(") + to_string(ready_sound_id) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: ready_sound_obj(") + to_string(ready_sound_id) + ")");
     throw PropertyNotAvailableException(mId, "ready_sound_obj");
   }
 
@@ -408,7 +408,7 @@ std::vector<Sfx> Unit::what_sound_obj()
 
   if((what_sound_start_id || what_sound_end_id) == Unit::sound_none)
   {
-    LOG4CXX_ERROR(logger, string("Exception: what_sound_obj(") + to_string(mId) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: what_sound_obj(") + to_string(mId) + ")");
     throw PropertyNotAvailableException(mId, "what_sound_obj");
   }
 
@@ -433,7 +433,7 @@ uint16_t Unit::piss_sound_start()
   }
   catch (const std::out_of_range& oor)
   {
-    LOG4CXX_ERROR(logger, string("Exception: piss_sound_start(") + to_string(mId) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: piss_sound_start(") + to_string(mId) + ")");
     throw PropertyNotAvailableException(mId, "piss_sound_start");
   }
 
@@ -452,7 +452,7 @@ uint16_t Unit::piss_sound_end()
   }
   catch (const std::out_of_range& oor)
   {
-    LOG4CXX_ERROR(logger, string("Exception: piss_sound_end(") + to_string(mId) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: piss_sound_end(") + to_string(mId) + ")");
     throw PropertyNotAvailableException(mId, "piss_sound_end");
   }
 
@@ -469,7 +469,7 @@ std::vector<Sfx> Unit::piss_sound_obj()
 
   if((piss_sound_start_id || piss_sound_end_id) == Unit::sound_none)
   {
-    LOG4CXX_ERROR(logger, string("Exception: piss_sound_obj(") + to_string(mId) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: piss_sound_obj(") + to_string(mId) + ")");
     throw PropertyNotAvailableException(mId, "piss_sound_obj");
   }
 
@@ -494,7 +494,7 @@ uint16_t Unit::yes_sound_start()
   }
   catch (const std::out_of_range& oor)
   {
-    LOG4CXX_ERROR(logger, string("Exception: piss_sound_start(") + to_string(mId) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: piss_sound_start(") + to_string(mId) + ")");
     throw PropertyNotAvailableException(mId, "yes_sound_start");
   }
 
@@ -513,7 +513,7 @@ uint16_t Unit::yes_sound_end()
   }
   catch (const std::out_of_range& oor)
   {
-    LOG4CXX_ERROR(logger, string("Exception: yes_sound_end(") + to_string(mId) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: yes_sound_end(") + to_string(mId) + ")");
     throw PropertyNotAvailableException(mId, "yes_sound_end");
   }
 
@@ -530,7 +530,7 @@ std::vector<Sfx> Unit::yes_sound_obj()
 
   if((yes_sound_start_id || yes_sound_end_id) == Unit::sound_none)
   {
-    LOG4CXX_ERROR(logger, string("Exception: yes_sound_obj(") + to_string(mId) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: yes_sound_obj(") + to_string(mId) + ")");
     throw PropertyNotAvailableException(mId, "yes_sound_obj");
   }
 
@@ -561,7 +561,7 @@ units_dat_t::addon_position_type_t* Unit::addon_position()
   }
   catch (const std::out_of_range& oor)
   {
-    LOG4CXX_ERROR(logger, string("Exception: addon_position(") + to_string(mId) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: addon_position(") + to_string(mId) + ")");
     throw PropertyNotAvailableException(mId, "addon_position");
   }
 
@@ -587,7 +587,7 @@ Portrait Unit::portrait_obj()
 
   if (portrait_id == Unit::portrait_none)
   {
-    LOG4CXX_ERROR(logger, string("Exception: portrait_obj(") + to_string(mId) + ")");
+    LOG4CXX_TRACE(logger, string("Exception: portrait_obj(") + to_string(mId) + ")");
     throw PropertyNotAvailableException(mId, "portrait_obj");
   }
 

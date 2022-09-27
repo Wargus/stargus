@@ -11,14 +11,14 @@ log4j.appender.R.File=stargus.log
 log4j.appender.A1.layout.ConversionPattern=%d %20.20F:%-4L %-5p %c - %m%n
 
 # Print only messages of level WARN or above in the package com.foo.
-log4j.logger.startool.main=TRACE
+#log4j.logger.startool.main=TRACE
 #log4j.logger.startool.Font=TRACE
 #log4j.logger.startool.Chk=TRACE
 #log4j.logger.startool.tileset.CV5=TRACE
 #log4j.logger.startool.Pcx=TRACE
 #log4j.logger.startool.dat.Image=TRACE
-#log4j.logger.startool.dat.ImagesConverter=TRACE
+log4j.logger.startool.dat.ImagesConverter=TRACE
 #log4j.logger.startool.DataHub=TRACE
-log4j.logger.startool=TRACE
+#log4j.logger.startool=TRACE
 
 

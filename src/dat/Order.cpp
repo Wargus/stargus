@@ -125,7 +125,7 @@ Weapon Order::targeting_obj()
   // strange logic in the data. If the weapon links to a index bigger than weapon then it's 'none'
   if(targeting_id >= mDatahub.weapons->label()->size())
   {
-    LOG4CXX_ERROR(logger, string("Exception: targeting_obj > size"));
+    LOG4CXX_TRACE(logger, string("Exception: targeting_obj > size"));
     throw PropertyNotAvailableException(mId, "targeting_obj");
   }
 
@@ -147,7 +147,7 @@ Techdata Order::energy_obj()
   // strange logic in the data. If the weapon links to a index bigger than weapon then it's 'none'
   if(energy_id >= mDatahub.techdata->label()->size())
   {
-    LOG4CXX_ERROR(logger, string("Exception: energy_obj > size"));
+    LOG4CXX_TRACE(logger, string("Exception: energy_obj > size"));
     throw PropertyNotAvailableException(mId, "energy_obj");
   }
 

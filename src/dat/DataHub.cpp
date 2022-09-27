@@ -201,9 +201,12 @@ void DataHub::init_stat_txt_tbl()
   Tbl stat_txt;
   /*std::vector<TblEntry>*/ stat_txt_tbl_vec = stat_txt.convertFromStream(stat_txt_ks);
 
-  int vec_pos = 0;
+  /*int vec_pos = 0;
 
-  /*stat_txt_units_tbl_vec.resize(units->flingy()->size());
+  // This below splits the big string vector to smaller ones per type. I found later that regarding the data index one
+  // big file is easier to handle. But maybe I change my mind later to enable this again...
+
+  stat_txt_units_tbl_vec.resize(units->flingy()->size());
   std::copy(stat_txt_tbl_vec.begin() + vec_pos, stat_txt_tbl_vec.begin() + units->flingy()->size(), stat_txt_units_tbl_vec.begin());
   vec_pos += units->flingy()->size();
 
