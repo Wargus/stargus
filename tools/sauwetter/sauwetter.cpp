@@ -88,7 +88,7 @@ enum optionIndex
 const option::Descriptor usage[] =
 {
   {
-    UNKNOWN, 0, "", "", option::Arg::None, "USAGE: sauwetter archive archive-file destination-directory\n\n"
+    UNKNOWN, 0, "", "", option::Arg::None, "USAGE: sauwetter archive [options] archive-file destination-directory\n\n"
     "Options:"
   },
   { HELP, 0, "h", "help", option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
