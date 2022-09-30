@@ -28,7 +28,7 @@ Palette2D::Palette2D(std::shared_ptr<DataChunk> rawPalette) :
   mSize(rawPalette->getSize()/256)
 {
   /**
-   * For initial construction just check that the DataChunk is a multible of 256 bytes
+   * For initial construction just check that the DataChunk is a multiple of 256 bytes
    * which is an hint for a valid 2D palette.
    */
   if((rawPalette->getSize() % 256) != 0)
@@ -59,8 +59,6 @@ void Palette2D::load(std::shared_ptr<DataChunk> rawPalette)
   }
 }
 
-
-
 std::shared_ptr<DataChunk> Palette2D::createDataChunk()
 {
   std::shared_ptr<DataChunk> datachunk = make_shared<DataChunk>();
@@ -84,18 +82,18 @@ std::shared_ptr<DataChunk> Palette2D::createDataChunk()
   return datachunk;
 }
 
-const Color &Palette2D::at(int x, int y) const
+const Color &Palette2D::at(int column, int row) const
 {
-  const auto &color_array = mColorPalette2D.at(y);
-  const Color &color = color_array.at(x);
+  const auto &color_array = mColorPalette2D.at(row);
+  const Color &color = color_array.at(column);
 
   return color;
 }
 
-Color &Palette2D::at(int x, int y)
+Color &Palette2D::at(int column, int row)
 {
-  auto &color_array = mColorPalette2D.at(y);
-  Color &color = color_array.at(x);
+  auto &color_array = mColorPalette2D.at(row);
+  Color &color = color_array.at(column);
 
   return color;
 }

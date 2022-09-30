@@ -31,9 +31,12 @@ public:
    */
   std::shared_ptr<DataChunk> createDataChunk();
 
-  const Color &at(int x, int y) const;
+  const Color &at(int column, int row) const;
 
-  Color &at(int x, int y);
+  /**
+   * Property change of a color with r-value
+   */
+  Color &at(int column, int row);
 
   int getSize();
 
