@@ -24,10 +24,11 @@ public:
   bool load(const std::string &arcfile);
 
   /**
-   *  Convert a pcx graphic to PNG format
+   *  Convert a PCX graphic to PNG format.
+   *  The PCX files is always saved with the original unmapped palette as mapping is
+   *  only relevant for GRP colors.
    *
-   *  @param arcfile File identifier in the MPQ file
-   *  @param file Place to save the file on the drive
+   *  @param storage where to save the PNG image
    */
   bool savePNG(Storage storage);
 
