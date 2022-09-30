@@ -16,7 +16,7 @@ using namespace std;
 
 static Logger logger = Logger("startool.Palette2D");
 
-Palette2D::Palette2D(int size) :
+Palette2D::Palette2D(unsigned int size) :
   mColorPalette2D(size),
   mSize(size)
 {
@@ -48,7 +48,7 @@ void Palette2D::load(std::shared_ptr<DataChunk> rawPalette)
 {
   mColorPalette2D.clear();
 
-  for(int i = 0; i < mSize; i++)
+  for(unsigned int i = 0; i < mSize; i++)
   {
     shared_ptr<DataChunk> dc;
     dc->addData(rawPalette->getDataPointer(), 256);
@@ -82,23 +82,21 @@ std::shared_ptr<DataChunk> Palette2D::createDataChunk()
   return datachunk;
 }
 
-const Color &Palette2D::at(int column, int row) const
+Color &Palette2D::at(unsigned int column, unsigned int row)
 {
-  const auto &color_array = mColorPalette2D.at(row);
-  const Color &color = color_array.at(column);
+  if(row <= mSize)
+  {
+    // dynamic grow the palette if one try to access a not available row
+    mColorPalette2D.resize(row);
+  }
 
-  return color;
-}
-
-Color &Palette2D::at(int column, int row)
-{
   auto &color_array = mColorPalette2D.at(row);
   Color &color = color_array.at(column);
 
   return color;
 }
 
-int Palette2D::getSize()
+unsigned int Palette2D::getSize()
 {
   return mSize;
 }

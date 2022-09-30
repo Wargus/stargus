@@ -44,12 +44,10 @@ public:
    */
   std::shared_ptr<DataChunk> createDataChunk();
 
-  const Color &at(int index) const;
-
   /**
    * Property change of a color with r-value
    */
-  Color &at(int index);
+  Color &at(unsigned int index);
 
   void load(std::shared_ptr<DataChunk> rawPalette);
 

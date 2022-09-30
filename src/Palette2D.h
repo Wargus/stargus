@@ -18,7 +18,7 @@
 class Palette2D
 {
 public:
-  Palette2D(int size);
+  Palette2D(unsigned int size);
 
   Palette2D(std::shared_ptr<DataChunk> rawPalette);
 
@@ -31,14 +31,12 @@ public:
    */
   std::shared_ptr<DataChunk> createDataChunk();
 
-  const Color &at(int column, int row) const;
-
   /**
    * Property change of a color with r-value
    */
-  Color &at(int column, int row);
+  Color &at(unsigned int column, unsigned int row = 0);
 
-  int getSize();
+  unsigned int getSize();
 
   void load(std::shared_ptr<DataChunk> rawPalette);
 
@@ -48,7 +46,7 @@ public:
 
 private:
   std::vector<Palette> mColorPalette2D;
-  int mSize;
+  unsigned int mSize;
 };
 
 #endif /* PALETTE2D_H */

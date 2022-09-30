@@ -84,12 +84,7 @@ std::shared_ptr<DataChunk> Palette::createDataChunk()
   return datachunk;
 }
 
-const Color &Palette::at(int index) const
-{
-  return mColorPalette.at(index);
-}
-
-Color &Palette::at(int index)
+Color &Palette::at(unsigned int index)
 {
   return mColorPalette.at(index);
 }
