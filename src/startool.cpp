@@ -384,6 +384,7 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
   {
     string pcx_name = pcx_array.at("name");
     string pcx_arcfile = pcx_array.at("arcfile");
+    string pal_palette = pcx_array.at("palette");
 
     // replace this with the first of the WPE palettes. Which one doesn't care for the palette logic.
     replaceString("<?>", *wpeNames.begin(), pcx_arcfile);
@@ -391,6 +392,10 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
     Pcx pcx(hurricane, pcx_arcfile);
 
     std::shared_ptr<Palette2D> pal2D = pcx.map2DPalette();
+
+    string pal_file(palStorage.getFullPath() + pal_palette);
+    CheckPath(pal_file);
+    pal2D->write(pal_file);
 
     palette2DMap[pcx_name] = pal2D;
 

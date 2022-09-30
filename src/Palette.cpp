@@ -13,7 +13,7 @@
 
 using namespace std;
 
-static Logger mLogger = Logger("startool.Palette");
+static Logger logger = Logger("startool.Palette");
 
 Palette::Palette()
 {
@@ -30,37 +30,42 @@ Palette::~Palette()
 {
 }
 
-void Palette::load(std::shared_ptr<DataChunk> rawPalette)
+bool Palette::load(std::shared_ptr<DataChunk> rawPalette)
 {
+  bool result = true;
+
   if(rawPalette->getSize() == 256 * 4) // RGBx/WPE size type
+  {
+    for(unsigned int i = 0; i < rawPalette->getSize(); i += 4)
     {
-      for(unsigned int i = 0; i < rawPalette->getSize(); i += 4)
-      {
-        unsigned char red = rawPalette->at(i);
-        unsigned char green = rawPalette->at(i+1);
-        unsigned char blue = rawPalette->at(i+2);
-        // ignore the 4th component, as it is not used as alpha
+      unsigned char red = rawPalette->at(i);
+      unsigned char green = rawPalette->at(i+1);
+      unsigned char blue = rawPalette->at(i+2);
+      // ignore the 4th component, as it is not used as alpha
 
-        Color rgb(red, green, blue);
-        at(i/4) = rgb;
-      }
+      Color rgb(red, green, blue);
+      at(i/4) = rgb;
     }
-    else if(rawPalette->getSize() == 256 * 3) // RGB size type
+  }
+  else if(rawPalette->getSize() == 256 * 3) // RGB size type
+  {
+    for(unsigned int i = 0; i < rawPalette->getSize(); i += 3)
     {
-      for(unsigned int i = 0; i < rawPalette->getSize(); i += 3)
-      {
-        unsigned char red = rawPalette->at(i);
-        unsigned char green = rawPalette->at(i+1);
-        unsigned char blue = rawPalette->at(i+2);
+      unsigned char red = rawPalette->at(i);
+      unsigned char green = rawPalette->at(i+1);
+      unsigned char blue = rawPalette->at(i+2);
 
-        Color rgb(red, green, blue);
-        at(i/3) = rgb;
-      }
+      Color rgb(red, green, blue);
+      at(i/3) = rgb;
     }
-    else
-    {
-      LOG4CXX_ERROR(mLogger, string("Palette size doesn't fit to RGB (256*3 bytes) or RGBx/WPE (256*4 bytes): ") + to_string(rawPalette->getSize()) + " bytes");
-    }
+  }
+  else
+  {
+    LOG4CXX_ERROR(logger, string("Palette size doesn't fit to RGB (256*3 bytes) or RGBx/WPE (256*4 bytes): ") + to_string(rawPalette->getSize()) + " bytes");
+    result = false;
+  }
+
+  return result;
 }
 
 std::shared_ptr<DataChunk> Palette::createDataChunk()
@@ -112,28 +117,21 @@ bool Palette::write(const std::string &filename)
 {
   bool result = true;
 
-  ofstream wf(filename, ios::out | ios::binary);
+  std::shared_ptr<DataChunk> dc_pal = createDataChunk();
+  result = dc_pal->write(filename);
 
-  if (wf)
+  return result;
+}
+
+bool Palette::read(const std::string &filename)
+{
+  bool result = true;
+
+  std::shared_ptr<DataChunk> dc_pal = make_shared<DataChunk>();
+  result = dc_pal->read(filename);
+  if(result)
   {
-    for(auto col_vec_it = mColorPalette.begin(); col_vec_it != mColorPalette.end(); col_vec_it++)
-    {
-      Color &color = *col_vec_it;
-      char red = color.getRed();
-      char green = color.getGreen();
-      char blue = color.getBlue();
-
-
-      wf.write((char *) &red, sizeof(unsigned char));
-      wf.write((char *) &green, sizeof(unsigned char));
-      wf.write((char *) &blue, sizeof(unsigned char));
-    }
-    wf.close();
-  }
-  else
-  {
-    LOG4CXX_DEBUG(mLogger, string("Couldn't write in: ") + filename);
-    result = false;
+    result = load(dc_pal);
   }
 
   return result;

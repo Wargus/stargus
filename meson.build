@@ -48,6 +48,7 @@ subdir('src')
 subdir('tools')
 subdir('tools/sauwetter')
 subdir('tools/scdat2json')
+subdir('tools/grptool')
 #subdir('tools/scpalette')
 subdir('test/lua')
 

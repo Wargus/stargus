@@ -31,7 +31,7 @@ public:
 
   virtual ~Palette();
 
-  void load(std::shared_ptr<DataChunk> rawPalette);
+  bool load(std::shared_ptr<DataChunk> rawPalette);
 
   // TODO: this might be just complete replaced by at()
   void replaceIndexColor(unsigned int index, const Color &rgb);
@@ -53,6 +53,8 @@ public:
   Color &at(int index);
 
   bool write(const std::string &filename);
+
+  bool read(const std::string &filename);
 
 private:
   std::array<Color, 256> mColorPalette;

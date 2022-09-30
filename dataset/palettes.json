@@ -47,19 +47,23 @@
 	[
 	    {
 	        "name": "ofire",
-	        "arcfile": "tileset\\<?>\\ofire.pcx"
+	        "arcfile": "tileset\\<?>\\ofire.pcx",
+	        "palette": "ofire.pal2d"
 	    },
 	    {
 	        "name": "gfire",
-	        "arcfile": "tileset\\<?>\\gfire.pcx"
+	        "arcfile": "tileset\\<?>\\gfire.pcx",
+	        "palette": "gfire.pal2d"
 	    },
 	    {
 	        "name": "bfire",
-	        "arcfile": "tileset\\<?>\\bfire.pcx"
+	        "arcfile": "tileset\\<?>\\bfire.pcx",
+	        "palette": "bfire.pal2d"
 	    },
 	    {
 	        "name": "bexpl",
-	        "arcfile": "tileset\\<?>\\bexpl.pcx"
+	        "arcfile": "tileset\\<?>\\bexpl.pcx",
+	        "palette": "bexpl.pal2d"
 	    }
 
 	],
