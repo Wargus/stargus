@@ -34,7 +34,7 @@ public:
   /**
    * Property change of a color with r-value
    */
-  Color &at(unsigned int column, unsigned int row = 0);
+  Color &at(unsigned int column, unsigned int row);
 
   unsigned int getSize();
 
