@@ -338,6 +338,7 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
 
     if(!pcx.getSize().isEmpty()) // load from PCX palette
     {
+      std::shared_ptr<Palette> pal;
       try
       {
         auto &pcx_mapping = pcx_array.at("mapping");
@@ -346,15 +347,13 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
         int start = pcx_mapping.at("start");
         int index = pcx_mapping.at("index");
 
-        pcx.mapIndexPalette(length, start, index);
+        pal = pcx.mapIndexPalette(length, start, index);
         //cout << pcx_mapping << endl;
       }
       catch (const nlohmann::detail::out_of_range &json_range)
       {
         // just ignore if the section is not availabe
       }
-
-      std::shared_ptr<Palette> pal = pcx.getPalette();
 
       string pal_file(palStorage.getFullPath() + pal_palette);
       CheckPath(pal_file);
@@ -445,30 +444,28 @@ void testHook()
   /// Image 1
   Pcx pcx1(storm, "game\\tunit.pcx");
   pcx1.savePNG("/tmp/tunit.png");
-  pcx1.mapIndexPalette(8, 8, 2);
-  std::shared_ptr<Palette> pal = pcx1.getPalette();
+  std::shared_ptr<Palette> pal = pcx1.mapIndexPalette(8, 8, 2);
   pal->createDataChunk()->write("/tmp/tunit.pal");
 
   // Image 2
   Pcx pcx2(storm, "unit\\cmdbtns\\ticon.pcx");
   pcx2.savePNG("/tmp/ticon.png");
-  pcx2.mapIndexPalette(16, 0, 0);
-  std::shared_ptr<Palette> pal2 = pcx2.getPalette();
+  std::shared_ptr<Palette> pal2 = pcx2.mapIndexPalette(16, 0, 0);
   pal2->createDataChunk()->write("/tmp/ticon.pal");
 
   // Image 3
   Pcx pcx3(storm, "tileset\\ashworld\\ofire.pcx");
   pcx3.savePNG("/tmp/ofire.png");
   std::shared_ptr<Palette2D> pal2D_3 = pcx3.map2DPalette();
-  std::shared_ptr<Palette> pal3 = pcx3.getPalette();
-  pal3->createDataChunk()->write("/tmp/ofire.pal");
+  Palette pal3 = pcx3.getPalette();
+  pal3.createDataChunk()->write("/tmp/ofire.pal");
 
   // Image 4
   Pcx pcx4(storm, "tileset\\ashworld\\bfire.pcx");
   pcx4.savePNG("/tmp/bfire.png");
   std::shared_ptr<Palette2D> pal2D_4 = pcx4.map2DPalette();
-  std::shared_ptr<Palette> pal4 = pcx4.getPalette();
-  pal4->createDataChunk()->write("/tmp/bfire.pal");
+  Palette pal4 = pcx4.getPalette();
+  pal4.createDataChunk()->write("/tmp/bfire.pal");
 
 
   shared_ptr<DataChunk> terrainWPE = storm->extractDataChunk("tileset\\jungle.wpe");
