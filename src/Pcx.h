@@ -34,9 +34,9 @@ public:
 
   /**
    *
-   * @return get the unmodified original pcx palette information
+   * @return get a copy of the unmodified original pcx palette information
    */
-  Palette getPalette();
+  std::shared_ptr<Palette> getPalette();
 
   /**
    * Map palette colors from one place in the image to a position in the color palette

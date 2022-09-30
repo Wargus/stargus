@@ -348,11 +348,10 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
         int index = pcx_mapping.at("index");
 
         pal = pcx.mapIndexPalette(length, start, index);
-        //cout << pcx_mapping << endl;
       }
       catch (const nlohmann::detail::out_of_range &json_range)
       {
-        // just ignore if the section is not availabe
+        pal = pcx.getPalette();
       }
 
       string pal_file(palStorage.getFullPath() + pal_palette);
@@ -457,15 +456,15 @@ void testHook()
   Pcx pcx3(storm, "tileset\\ashworld\\ofire.pcx");
   pcx3.savePNG("/tmp/ofire.png");
   std::shared_ptr<Palette2D> pal2D_3 = pcx3.map2DPalette();
-  Palette pal3 = pcx3.getPalette();
-  pal3.createDataChunk()->write("/tmp/ofire.pal");
+  std::shared_ptr<Palette> pal3 = pcx3.getPalette();
+  pal3->createDataChunk()->write("/tmp/ofire.pal");
 
   // Image 4
   Pcx pcx4(storm, "tileset\\ashworld\\bfire.pcx");
   pcx4.savePNG("/tmp/bfire.png");
   std::shared_ptr<Palette2D> pal2D_4 = pcx4.map2DPalette();
-  Palette pal4 = pcx4.getPalette();
-  pal4.createDataChunk()->write("/tmp/bfire.pal");
+  std::shared_ptr<Palette> pal4 = pcx4.getPalette();
+  pal4->createDataChunk()->write("/tmp/bfire.pal");
 
 
   shared_ptr<DataChunk> terrainWPE = storm->extractDataChunk("tileset\\jungle.wpe");

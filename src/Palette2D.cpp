@@ -84,11 +84,11 @@ std::shared_ptr<DataChunk> Palette2D::createDataChunk()
 
 Color &Palette2D::at(unsigned int column, unsigned int row)
 {
-  if(row <= mSize)
+  /*if(row <= mSize)
   {
     // dynamic grow the palette if one try to access a not available row
     mColorPalette2D.resize(row);
-  }
+  }*/
 
   auto &color_array = mColorPalette2D.at(row);
   Color &color = color_array.at(column);

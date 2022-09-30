@@ -75,9 +75,9 @@ bool Pcx::savePNG(Storage storage)
   return result;
 }
 
-Palette Pcx::getPalette()
+std::shared_ptr<Palette> Pcx::getPalette()
 {
-  return Palette(*mPalette);
+  return make_shared<Palette>(*mPalette);
 }
 
 Size Pcx::getSize()
