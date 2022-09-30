@@ -4,10 +4,12 @@
  *      Author: Andreas Volz
  */
 
+// project
 #include <Palette.h>
 #include "Logger.h"
+#include "NoValidPaletteException.h"
 
-// C++
+// system
 #include <iostream>
 #include <fstream>
 
@@ -30,10 +32,8 @@ Palette::~Palette()
 {
 }
 
-bool Palette::load(std::shared_ptr<DataChunk> rawPalette)
+void Palette::load(std::shared_ptr<DataChunk> rawPalette)
 {
-  bool result = true;
-
   if(rawPalette->getSize() == 256 * 4) // RGBx/WPE size type
   {
     for(unsigned int i = 0; i < rawPalette->getSize(); i += 4)
@@ -61,11 +61,8 @@ bool Palette::load(std::shared_ptr<DataChunk> rawPalette)
   }
   else
   {
-    LOG4CXX_ERROR(logger, string("Palette size doesn't fit to RGB (256*3 bytes) or RGBx/WPE (256*4 bytes): ") + to_string(rawPalette->getSize()) + " bytes");
-    result = false;
+    throw NoValidPaletteException(rawPalette->getSize());
   }
-
-  return result;
 }
 
 std::shared_ptr<DataChunk> Palette::createDataChunk()
@@ -97,21 +94,23 @@ Color &Palette::at(int index)
   return mColorPalette.at(index);
 }
 
-void Palette::replaceIndexColor(unsigned int index, const Color &rgb)
+// DEPRECATED
+/*void Palette::replaceIndexColor(unsigned int index, const Color &rgb)
 {
   if(index <= mColorPalette.size())
   {
     mColorPalette.at(index) = rgb;
   }
-}
+}*/
 
-void Palette::replaceIndexColorRange(const Palette &pal, unsigned int startIndex, unsigned int endIndex)
+// DEPRECATED
+/*void Palette::replaceIndexColorRange(const Palette &pal, unsigned int startIndex, unsigned int endIndex)
 {
   for(unsigned int index = startIndex; index <= endIndex; index++)
   {
     replaceIndexColor(index, pal.at(index));
   }
-}
+}*/
 
 bool Palette::write(const std::string &filename)
 {
@@ -131,7 +130,7 @@ bool Palette::read(const std::string &filename)
   result = dc_pal->read(filename);
   if(result)
   {
-    result = load(dc_pal);
+    load(dc_pal);
   }
 
   return result;

@@ -31,12 +31,11 @@ public:
 
   virtual ~Palette();
 
-  bool load(std::shared_ptr<DataChunk> rawPalette);
+  // DEPRECATED
+  //void replaceIndexColor(unsigned int index, const Color &rgb);
 
-  // TODO: this might be just complete replaced by at()
-  void replaceIndexColor(unsigned int index, const Color &rgb);
-
-  void replaceIndexColorRange(const Palette &pal, unsigned int startIndex, unsigned int endIndex);
+  // DEPRECATED
+  //void replaceIndexColorRange(const Palette &pal, unsigned int startIndex, unsigned int endIndex);
 
   /**
    * Create a new DataChunk copy for (old) functions that need the data aligned in a big unsigned char*
@@ -51,6 +50,8 @@ public:
    * Property change of a color with r-value
    */
   Color &at(int index);
+
+  void load(std::shared_ptr<DataChunk> rawPalette);
 
   bool write(const std::string &filename);
 

@@ -44,7 +44,8 @@ starformat_lib_sources = files(
 	'UnitsConverter.cpp',
 	'PortraitsConverter.cpp',
 	'ImagesConverter.cpp',
-	'SfxConverter.cpp'
+	'SfxConverter.cpp',
+	'NoValidPaletteException.cpp'
 	)
 
 stratagus_prefix = get_option('prefix')

@@ -24,13 +24,24 @@ public:
 
   virtual ~Palette2D();
 
+  /**
+   * Create a new DataChunk copy for (old) functions that need the data aligned in a big unsigned char*
+   * Pay attention of the std::shared_ptr nature:
+   *    If you directly call createDataChunk()->getDataPointer() without saving it before to a std::shared_ptr<DataChunk> it won't work!
+   */
+  std::shared_ptr<DataChunk> createDataChunk();
+
   const Color &at(int x, int y) const;
 
   Color &at(int x, int y);
 
   int getSize();
 
+  void load(std::shared_ptr<DataChunk> rawPalette);
+
   bool write(const std::string &filename);
+
+  bool read(const std::string &filename);
 
 private:
   std::vector<Palette> mColorPalette2D;

@@ -10,6 +10,7 @@
 #include "Logger.h"
 #include "FileUtil.h"
 #include "Breeze.h"
+#include "NoValidPaletteException.h"
 
 // system
 #include <iostream>
@@ -193,19 +194,36 @@ int main(int argc, const char **argv)
   parseOptions(argc, argv);
 
   std::shared_ptr<Palette> myGRPPallete = make_shared<Palette>();
-  myGRPPallete->read(palette_file);
-  myGRPPallete->write("test.pal");
+  bool pal_ok = false;
 
-  GRPImage myGRPImage(grp_file, remove_duplicates);
-  myGRPImage.SetColorPalette(myGRPPallete);
+  try
+  {
+    pal_ok = myGRPPallete->read(palette_file);
+  }
+  catch(NoValidPaletteException &palEx)
+  {
+    cerr << palEx.what() << endl;
+  }
 
-  //image_per_row=17 => starcraft
-  myGRPImage.SaveConvertedPNG("output_frame.png", 0, myGRPImage.getNumberOfFrames(), single_stiched, image_per_row);
+  if(pal_ok)
+  {
+    myGRPPallete->write("test.pal");
 
-  //myGRPImage.SaveConvertedImage("output_frame_magic.png", 0, myGRPImage.getNumberOfFrames(), single_stiched, image_per_row);
+    GRPImage myGRPImage(grp_file, remove_duplicates);
+    myGRPImage.SetColorPalette(myGRPPallete);
 
-  //myGRPImage.LoadImage(grp_file, remove_duplicates);
-  //myGRPImage.SaveConvertedImage("output_big_file.png", 0, myGRPImage.getNumberOfFrames(), false, 17);
+    //image_per_row=17 => starcraft
+    myGRPImage.SaveConvertedPNG("output_frame.png", 0, myGRPImage.getNumberOfFrames(), single_stiched, image_per_row);
+
+    //myGRPImage.SaveConvertedImage("output_frame_magic.png", 0, myGRPImage.getNumberOfFrames(), single_stiched, image_per_row);
+
+    //myGRPImage.LoadImage(grp_file, remove_duplicates);
+    //myGRPImage.SaveConvertedImage("output_big_file.png", 0, myGRPImage.getNumberOfFrames(), false, 17);
+  }
+  else
+  {
+    cerr << "Palette not successful loaded - Exit!" << endl;
+  }
 
   cerr << "Application finished!" << endl;
 

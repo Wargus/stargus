@@ -4,9 +4,12 @@
  *      Author: Andreas Volz
  */
 
+// project
 #include "Palette2D.h"
 #include "Logger.h"
+#include "NoValidPaletteException.h"
 
+// system
 #include <fstream>
 
 using namespace std;
@@ -24,7 +27,26 @@ Palette2D::Palette2D(std::shared_ptr<DataChunk> rawPalette) :
   mColorPalette2D(rawPalette->getSize()/256),
   mSize(rawPalette->getSize()/256)
 {
-  // TODO check if size match and if not throw Exception/assert
+  /**
+   * For initial construction just check that the DataChunk is a multible of 256 bytes
+   * which is an hint for a valid 2D palette.
+   */
+  if((rawPalette->getSize() % 256) != 0)
+  {
+    throw NoValidPaletteException(rawPalette->getSize());
+  }
+
+  load(rawPalette);
+}
+
+Palette2D::~Palette2D()
+{
+
+}
+
+void Palette2D::load(std::shared_ptr<DataChunk> rawPalette)
+{
+  mColorPalette2D.clear();
 
   for(int i = 0; i < mSize; i++)
   {
@@ -37,9 +59,29 @@ Palette2D::Palette2D(std::shared_ptr<DataChunk> rawPalette) :
   }
 }
 
-Palette2D::~Palette2D()
-{
 
+
+std::shared_ptr<DataChunk> Palette2D::createDataChunk()
+{
+  std::shared_ptr<DataChunk> datachunk = make_shared<DataChunk>();
+
+  for(Palette &pal : mColorPalette2D)
+  {
+    for(unsigned int i = 0; i < 256; i++)
+    {
+      unsigned char red = pal.at(i).getRed();
+      unsigned char green = pal.at(i).getGreen();
+      unsigned char blue = pal.at(i).getBlue();
+
+      datachunk->addData(&red, 1);
+      datachunk->addData(&green, 1);
+      datachunk->addData(&blue, 1);
+
+      i++;
+    }
+  }
+
+  return datachunk;
 }
 
 const Color &Palette2D::at(int x, int y) const
@@ -67,32 +109,21 @@ bool Palette2D::write(const std::string &filename)
 {
   bool result = true;
 
-  ofstream wf(filename, ios::out | ios::binary);
+  std::shared_ptr<DataChunk> dc_pal = createDataChunk();
+  result = dc_pal->write(filename);
 
-  if (wf)
+  return result;
+}
+
+bool Palette2D::read(const std::string &filename)
+{
+  bool result = true;
+
+  std::shared_ptr<DataChunk> dc_pal = make_shared<DataChunk>();
+  result = dc_pal->read(filename);
+  if(result)
   {
-    for(Palette &pal : mColorPalette2D)
-    {
-      for(unsigned int i = 0; i < 256; i++)
-      {
-        char red = pal.at(i).getRed();
-        char green = pal.at(i).getGreen();
-        char blue = pal.at(i).getBlue();
-
-
-        wf.write((char *) &red, sizeof(unsigned char));
-        wf.write((char *) &green, sizeof(unsigned char));
-        wf.write((char *) &blue, sizeof(unsigned char));
-
-        i++;
-      }
-    }
-    wf.close();
-  }
-  else
-  {
-    LOG4CXX_DEBUG(logger, string("Couldn't write in: ") + filename);
-    result = false;
+    load(dc_pal);
   }
 
   return result;

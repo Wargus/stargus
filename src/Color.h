@@ -26,8 +26,16 @@ public:
   unsigned char getBlue() const;
   unsigned char getAlpha() const;
 
+  /**
+   * @return The same color but 100% brightened
+   */
   Color getBrighened() const;
 
+  /**
+   * Blend the current color against a reference color (don't modify current color)
+   *
+   * @return The new blended color
+   */
   Color blendAgainstReference(const Color &reference) const;
 
   Color& operator=(const Color& color);
