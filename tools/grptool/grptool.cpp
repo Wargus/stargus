@@ -205,6 +205,13 @@ int main(int argc, const char **argv)
     cerr << palEx.what() << endl;
   }
 
+  bool grp_file_exist = FileExists(grp_file);
+  if(!grp_file_exist)
+  {
+    cerr << "GRP file not existing - Exit!" << endl;
+    exit(1);
+  }
+
   if(pal_ok)
   {
     //myGRPPallete->write("test.pal");
@@ -223,6 +230,7 @@ int main(int argc, const char **argv)
   else
   {
     cerr << "Palette not successful loaded - Exit!" << endl;
+    exit(1);
   }
 
   cerr << "Application finished!" << endl;

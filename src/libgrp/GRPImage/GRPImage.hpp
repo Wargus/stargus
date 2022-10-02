@@ -175,6 +175,10 @@ protected:
   void DecodeGRPFrameDataUncompressed(std::vector<char> *inputData, GRPFrame *targetFrame);
 
 private:
+  bool DetectUncompressed(std::vector<char> *inputImage);
+
+  void DecodeHeader(std::vector<char> *inputImage);
+
   //The decoded GRPFrames
   std::vector<GRPFrame *> mImageFrames;
 

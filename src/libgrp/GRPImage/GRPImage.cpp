@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#define VERBOSE 10 // debug
+//#define VERBOSE 10 // debug
 
 GRPImage::GRPImage(std::vector<char> *inputImage, bool removeDuplicates) :
   mCurrentPalette(nullptr),
@@ -37,10 +37,82 @@ GRPImage::~GRPImage()
   }
 }
 
-void GRPImage::LoadImage(std::vector<char> *inputImage, bool removeDuplicates)
+bool GRPImage::DetectUncompressed(std::vector<char> *inputImage)
 {
+  bool uncompressed = false;
 
-  CleanGRPImage();
+  std::vector<char>::iterator currentDataPosition = inputImage->begin();
+
+  // jump over the basic GRP header info
+  currentDataPosition += 2;
+
+  // jump over the maximum image width & height
+  currentDataPosition += 2;
+  currentDataPosition += 2;
+
+  //Temporary image demension placeholders
+  uint8_t tempWidth = 0;
+  uint8_t tempHeight = 0;
+  uint32_t tempDataOffset = 0;
+
+  uint32_t firstOffset = 0;
+  int imagePayload = 0;
+
+  //Create a hash table to stop the creation of duplicates
+  std::unordered_map<uint32_t, bool> uniqueGRPImages;
+  std::unordered_map<uint32_t, bool>::const_iterator uniqueGRPCheck;
+
+  //Load each GRP Header into a GRPFrame & Allocate
+  for(int currentGRPFrame = 0; currentGRPFrame < mNumberOfFrames; currentGRPFrame++)
+  {
+    //Jump over the image xOffset
+    currentDataPosition += 1;
+
+    //Jump over the image yOffset
+    currentDataPosition += 1;
+
+    //Read in the image width
+    std::copy(currentDataPosition, (currentDataPosition + 1),(char *) &tempWidth);
+    currentDataPosition += 1;
+
+    //Read in the image height
+    std::copy(currentDataPosition, (currentDataPosition + 1),(char *) &tempHeight);
+    currentDataPosition += 1;
+
+    //Read in the image dataOffset
+    std::copy(currentDataPosition, (currentDataPosition + 4),(char *) &tempDataOffset);
+    currentDataPosition += 4;
+
+    uniqueGRPCheck = uniqueGRPImages.find(tempDataOffset);
+    if(uniqueGRPCheck == uniqueGRPImages.end())
+    {
+      imagePayload += tempWidth * tempHeight;
+    }
+
+    uniqueGRPImages.insert(std::make_pair<uint32_t,bool>((uint32_t)tempDataOffset,true));
+
+    if(firstOffset == 0)
+    {
+      firstOffset = tempDataOffset;
+    }
+  }
+
+  //cout << "completeImageSize: "  << to_string(imagePayload + firstOffset) << endl;
+
+  if(firstOffset + imagePayload == inputImage->size())
+  {
+    uncompressed = true;
+  }
+  else
+  {
+    uncompressed = false;
+  }
+
+  return uncompressed;
+}
+
+void GRPImage::DecodeHeader(std::vector<char> *inputImage)
+{
   std::vector<char>::iterator currentDataPosition = inputImage->begin();
 
   //Get basic GRP header info
@@ -53,12 +125,27 @@ void GRPImage::LoadImage(std::vector<char> *inputImage, bool removeDuplicates)
 
   std::copy(currentDataPosition, (currentDataPosition + 2),(char *) &mMaxImageHeight);
   currentDataPosition += 2;
+}
 
-  // TODO: this might be the flag for uncompressed GRP
-  if(mMaxImageWidth * mMaxImageHeight == 32768)
+void GRPImage::LoadImage(std::vector<char> *inputImage, bool removeDuplicates)
+{
+  CleanGRPImage();
+  std::vector<char>::iterator currentDataPosition = inputImage->begin();
+
+  DecodeHeader(inputImage);
+
+  mUncompressed = DetectUncompressed(inputImage);
+
+  // jump over the basic GRP header info
+  currentDataPosition += 2;
+
+  // jump over the maximum image width & height
+  currentDataPosition += 2;
+  currentDataPosition += 2;
+
+  if(mUncompressed)
   {
-    mUncompressed = true;
-    cout << "uncompressed Grp" << endl;
+    //cout << "uncompressed Grp" << endl;
   }
 
 #if VERBOSE >= 2
@@ -331,18 +418,21 @@ void GRPImage::DecodeGRPFrameData(std::vector<char> *inputData, GRPFrame *target
         {
           //Copy Pixel Operation, and how many pixels to copy directly
           int operationCounter = rawPacket;
-          do
+          if(operationCounter > 0)
           {
-            std::copy(currentDataPosition, (currentDataPosition + 1),(char *) &convertedPacket);
-            currentDataPosition += 1;
+            do
+            {
+              std::copy(currentDataPosition, (currentDataPosition + 1),(char *) &convertedPacket);
+              currentDataPosition += 1;
 
-            currentUniquePixel.xPosition = currentProcessingRow;
-            currentUniquePixel.yPosition = currentProcessingHeight;
-            currentUniquePixel.colorPaletteReference = convertedPacket;
-            targetFrame->frameData.push_back(currentUniquePixel);
-            currentProcessingRow++;
+              currentUniquePixel.xPosition = currentProcessingRow;
+              currentUniquePixel.yPosition = currentProcessingHeight;
+              currentUniquePixel.colorPaletteReference = convertedPacket;
+              targetFrame->frameData.push_back(currentUniquePixel);
+              currentProcessingRow++;
+            }
+            while (--operationCounter);
           }
-          while (--operationCounter);
         }
       }
       else
