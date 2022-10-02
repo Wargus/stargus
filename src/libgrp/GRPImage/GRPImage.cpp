@@ -146,7 +146,6 @@ void GRPImage::LoadImage(std::vector<char> *inputImage, bool removeDuplicates)
         DecodeGRPFrameData(inputImage, currentImageFrame);
       }
 
-      //imageFrames.insert(imageFrames.end(), currentImageFrame);
       mImageFrames.push_back(currentImageFrame);
     }
   }
@@ -183,22 +182,6 @@ void GRPImage::DecodeGRPFrameDataUncompressed(std::vector<char> *inputData, GRPF
   std::vector<char>::iterator currentDataPosition = inputData->begin();
   currentDataPosition += targetFrame->GetDataOffset();
 
-  //Create a vector of all the Image row offsets
-  std::vector<uint16_t> imageRowOffsets;
-  imageRowOffsets.resize(targetFrame->GetImageHeight());
-
-  //Read in the ImageRow offsets
-  for (int currentReadingRowOffset = 0; currentReadingRowOffset < targetFrame->GetImageHeight(); currentReadingRowOffset++)
-  {
-    uint16_t tmp_offset;
-    std::copy(currentDataPosition, (currentDataPosition + 2),(char *) &tmp_offset);
-
-    imageRowOffsets.at(currentReadingRowOffset) = tmp_offset;
-    currentDataPosition += 2;
-
-    cout << "offset: " << tmp_offset << endl;
-  }
-
   //The currentRow (x coordinate) that the decoder is at, it is used to
   //set the image position.
   int currentProcessingRow = 0;
@@ -218,7 +201,7 @@ void GRPImage::DecodeGRPFrameDataUncompressed(std::vector<char> *inputData, GRPF
   {
 
 #if VERBOSE >= 2
-    std::cout << "Current row offset is: " << (targetFrame->GetDataOffset() + (imageRowOffsets.at(currentProcessingHeight))) << '\n';
+    //std::cout << "Current row offset is: " << (targetFrame->GetDataOffset() + (imageRowOffsets.at(currentProcessingHeight))) << '\n';
 #endif
     //Seek to the point of the first byte in the rowData from the
     //1.Skip over to the Frame data
@@ -309,7 +292,6 @@ void GRPImage::DecodeGRPFrameData(std::vector<char> *inputData, GRPFrame *target
     //Seek to the point of the first byte in the rowData from the
     //1.Skip over to the Frame data
     //2.Skip over by the Row offset mentioned in the list
-    //inputFile.seekg((targetFrame->GetDataOffset() + (imageRowOffsets.at(currentProcessingHeight))));
     currentDataPosition = inputData->begin();
     currentDataPosition += (targetFrame->GetDataOffset() + imageRowOffsets.at(currentProcessingHeight));
 
@@ -433,7 +415,6 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
   int currentImageDestinationColumn = 0;
   int currentImageDestinationRow = 0;
 
-
   for(int currentProcessingFrame = startingFrame; currentProcessingFrame < endingFrame; ++currentProcessingFrame)
   {
     GRPFrame *currentFrame = mImageFrames.at(currentProcessingFrame);
@@ -441,8 +422,8 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
     // create a image for each frame
     if(!singleStitchedImage)
     {
-      paletteImage = make_shared<PaletteImage>(Size(mMaxImageWidth, mMaxImageHeight));
-      //paletteImage = make_shared<PaletteImage>(Size(currentFrame->GetImageWidth(), currentFrame->GetImageHeight()));
+      //cout << "image size: " << to_string(currentFrame->GetImageWidth()) << "/" <<  to_string(currentFrame->GetImageHeight()) << endl;
+      paletteImage = make_shared<PaletteImage>(Size(currentFrame->GetImageWidth(), currentFrame->GetImageHeight()));
     }
 
     //If a row in a stitched image is complete, move onto the next row
@@ -455,8 +436,6 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
     //Start appling the pixels with the refence colorpalettes
     for (std::list<UniquePixel>::iterator currentProcessPixel = currentFrame->frameData.begin(); currentProcessPixel != currentFrame->frameData.end(); currentProcessPixel++)
     {
-      //currentPalettePixel = currentPalette->at(currentProcessPixel->colorPaletteReference);
-
       if(singleStitchedImage)
       {
         Pos pixel_pos((currentFrame->GetXOffset() + currentProcessPixel->xPosition) + (mMaxImageWidth * currentImageDestinationRow),
@@ -466,8 +445,9 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
       }
       else
       {
-        Pos pixel_pos((currentFrame->GetXOffset() + currentProcessPixel->xPosition),
-                      (currentFrame->GetYOffset() + currentProcessPixel->yPosition));
+        Pos pixel_pos((currentProcessPixel->xPosition),
+                      (currentProcessPixel->yPosition));
+        //cout << "put color to: " << to_string(pixel_pos.getX()) << "/" << to_string(pixel_pos.getY()) << endl;
 
         paletteImage->at(pixel_pos) = currentProcessPixel->colorPaletteReference;
       }
