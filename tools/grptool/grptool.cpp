@@ -207,7 +207,7 @@ int main(int argc, const char **argv)
 
   if(pal_ok)
   {
-    myGRPPallete->write("test.pal");
+    //myGRPPallete->write("test.pal");
 
     GRPImage myGRPImage(grp_file, remove_duplicates);
     myGRPImage.SetColorPalette(myGRPPallete);

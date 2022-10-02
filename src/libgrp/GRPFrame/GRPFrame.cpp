@@ -1,10 +1,12 @@
 #include "GRPFrame.hpp"
+
 GRPFrame::GRPFrame()
 {
   xOffset = 0;
   yOffset = 0;
   width = 0;
   height = 0;
+  dataOffset = 0;
 }
 
 void GRPFrame::SetImageSize(const uint8_t &inputFrameWidth, const uint8_t &inputFrameHeight)

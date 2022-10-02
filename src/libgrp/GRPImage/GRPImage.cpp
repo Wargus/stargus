@@ -6,14 +6,24 @@
 
 using namespace std;
 
+#define VERBOSE 10 // debug
+
 GRPImage::GRPImage(std::vector<char> *inputImage, bool removeDuplicates) :
-  currentPalette(nullptr)
+  mCurrentPalette(nullptr),
+  mNumberOfFrames(0),
+  mMaxImageWidth(0),
+  mMaxImageHeight(0),
+  mUncompressed(false)
 {
   LoadImage(inputImage, removeDuplicates);
 }
 
 GRPImage::GRPImage(std::string filePath, bool removeDuplicates) :
-  currentPalette(nullptr)
+  mCurrentPalette(nullptr),
+  mNumberOfFrames(0),
+  mMaxImageWidth(0),
+  mMaxImageHeight(0),
+  mUncompressed(false)
 {
   LoadImage(filePath, removeDuplicates);
 }
@@ -21,9 +31,9 @@ GRPImage::GRPImage(std::string filePath, bool removeDuplicates) :
 GRPImage::~GRPImage()
 {
   CleanGRPImage();
-  if(currentPalette != NULL)
+  if(mCurrentPalette != NULL)
   {
-    currentPalette = NULL;
+    mCurrentPalette = NULL;
   }
 }
 
@@ -34,36 +44,48 @@ void GRPImage::LoadImage(std::vector<char> *inputImage, bool removeDuplicates)
   std::vector<char>::iterator currentDataPosition = inputImage->begin();
 
   //Get basic GRP header info
-  std::copy(currentDataPosition,(currentDataPosition + 2),(char *) &numberOfFrames);
+  std::copy(currentDataPosition,(currentDataPosition + 2),(char *) &mNumberOfFrames);
   currentDataPosition += 2;
 
   //Get the maximum image width & height
-  std::copy(currentDataPosition, (currentDataPosition + 2),(char *) &maxImageWidth);
+  std::copy(currentDataPosition, (currentDataPosition + 2),(char *) &mMaxImageWidth);
   currentDataPosition += 2;
 
-  std::copy(currentDataPosition, (currentDataPosition + 2),(char *) &maxImageHeight);
+  std::copy(currentDataPosition, (currentDataPosition + 2),(char *) &mMaxImageHeight);
   currentDataPosition += 2;
+
+  // TODO: this might be the flag for uncompressed GRP
+  if(mMaxImageWidth * mMaxImageHeight == 32768)
+  {
+    mUncompressed = true;
+    cout << "uncompressed Grp" << endl;
+  }
 
 #if VERBOSE >= 2
-  std::cout << "GRP Image Number of Frames: " << numberOfFrames << " maxWidth: " << maxImageWidth << " maxHeight: " << maxImageHeight << '\n';
+  std::cout << "GRP Image Number of Frames: " << mNumberOfFrames << " maxWidth: " << mMaxImageWidth << " maxHeight: " << mMaxImageHeight << '\n';
 #endif
 
   //Temporary image demension placeholders
-  uint8_t tempValue1, tempValue2;
-  uint32_t tempDataOffset;
+  uint8_t tempValue1 = 0;
+  uint8_t tempValue2 = 0;
+  uint32_t tempDataOffset = 0;
 
   //Create a hash table to stop the creation of duplicates
   std::unordered_map<uint32_t, bool> uniqueGRPImages;
   std::unordered_map<uint32_t, bool>::const_iterator uniqueGRPCheck;
 
-  //Load each GRP Header into a GRPFrame & Allocate the
-  for(int currentGRPFrame = 0; currentGRPFrame < numberOfFrames; currentGRPFrame++)
+  int bestWidth = 0;
+  int bestHeight = 0;
+
+  //Load each GRP Header into a GRPFrame & Allocate
+  for(int currentGRPFrame = 0; currentGRPFrame < mNumberOfFrames; currentGRPFrame++)
   {
     GRPFrame *currentImageFrame = new GRPFrame;
 
     //Read in the image xOffset
     std::copy(currentDataPosition, (currentDataPosition + 1),(char *) &tempValue1);
     currentDataPosition += 1;
+
     //Read in the image yOffset
     std::copy(currentDataPosition, (currentDataPosition + 1),(char *) &tempValue2);
     currentDataPosition += 1;
@@ -72,15 +94,32 @@ void GRPImage::LoadImage(std::vector<char> *inputImage, bool removeDuplicates)
     //Read in the image width
     std::copy(currentDataPosition, (currentDataPosition + 1),(char *) &tempValue1);
     currentDataPosition += 1;
+
     //Read in the image height
     std::copy(currentDataPosition, (currentDataPosition + 1),(char *) &tempValue2);
     currentDataPosition += 1;
     currentImageFrame->SetImageSize(tempValue1, tempValue2);
+
     //Read in the image dataOffset
     std::copy(currentDataPosition, (currentDataPosition + 4),(char *) &tempDataOffset);
     currentDataPosition += 4;
     currentImageFrame->SetDataOffset(tempDataOffset);
 
+    // calculate the best width for that image (only for uncompressed)
+    if(mUncompressed)
+    {
+      if (currentImageFrame->GetXOffset() + currentImageFrame->GetImageWidth() > bestWidth)
+      {
+        bestWidth = currentImageFrame->GetXOffset() + currentImageFrame->GetImageWidth();
+      }
+
+      if (currentImageFrame->GetYOffset() + currentImageFrame->GetImageHeight() > bestHeight)
+      {
+        bestHeight = currentImageFrame->GetYOffset() + currentImageFrame->GetImageHeight();
+      }
+      mMaxImageWidth = bestWidth;
+      mMaxImageHeight = bestHeight;
+    }
 
 #if VERBOSE >= 2
     std::cout << "Current Frame: " << currentGRPFrame << " Width: " << (int) currentImageFrame->GetImageWidth() << " Height: "
@@ -98,115 +137,51 @@ void GRPImage::LoadImage(std::vector<char> *inputImage, bool removeDuplicates)
       uniqueGRPImages.insert(std::make_pair<uint32_t,bool>(currentImageFrame->GetDataOffset(),true));
 
       //Decode Frame here
-      DecodeGRPFrameData(inputImage, currentImageFrame);
+      if(mUncompressed)
+      {
+        DecodeGRPFrameDataUncompressed(inputImage, currentImageFrame);
+      }
+      else
+      {
+        DecodeGRPFrameData(inputImage, currentImageFrame);
+      }
 
       //imageFrames.insert(imageFrames.end(), currentImageFrame);
-      imageFrames.push_back(currentImageFrame);
+      mImageFrames.push_back(currentImageFrame);
     }
-
   }
 
   if (removeDuplicates)
   {
-    numberOfFrames = imageFrames.size();
+    mNumberOfFrames = mImageFrames.size();
   }
-
 }
 
 void GRPImage::LoadImage(std::string filePath, bool removeDuplicates)
 {
-  CleanGRPImage();
-  std::ifstream inputFile(filePath.c_str(), std::ios::binary);
-  inputFile.exceptions(std::ifstream::badbit | std::ifstream::failbit | std::ifstream::eofbit);
+  DataChunk dcImage;
+  dcImage.read(filePath);
+  vector<char> vecImage = dcImage.getCharVector();
 
-  //Read in some basic data about the grp.
-  inputFile.read((char *) &numberOfFrames, 2);
-
-  //Find the Maximum Image Width & Height
-  inputFile.read((char *) &maxImageWidth, 2);
-  inputFile.read((char *) &maxImageHeight, 2);
-#if VERBOSE >= 2
-  std::cout << "GRP Image Number of Frames: " << numberOfFrames << " maxWidth: " << maxImageWidth << " maxHeight: " << maxImageHeight << '\n';
-#endif
-
-  //Temporary image demension placeholders
-  uint8_t tempValue1, tempValue2;
-  uint32_t tempDataOffset;
-
-  //Create a hash table to stop the creation of duplicates
-  std::unordered_map<uint32_t, bool> uniqueGRPImages;
-  std::unordered_map<uint32_t, bool>::const_iterator uniqueGRPCheck;
-
-  //Load each GRP Header into a GRPFrame & Allocate the
-  for(int currentGRPFrame = 0; currentGRPFrame < numberOfFrames; currentGRPFrame++)
-  {
-    GRPFrame *currentImageFrame = new GRPFrame;
-
-    //Read in the image xOffset
-    inputFile.read((char *) &tempValue1, 1);
-    //Read in the image yOffset
-    inputFile.read((char *) &tempValue2, 1);
-    currentImageFrame->SetImageOffsets(tempValue1, tempValue2);
-
-    //Read in the image width
-    inputFile.read((char *) &tempValue1, 1);
-    //Read in the image height
-    inputFile.read((char *) &tempValue2, 1);
-    currentImageFrame->SetImageSize(tempValue1, tempValue2);
-    //Read in the image dataOffset
-    inputFile.read((char *) &tempDataOffset, 4);
-    currentImageFrame->SetDataOffset(tempDataOffset);
-
-
-#if VERBOSE >= 2
-    std::cout << "Current Frame: " << currentGRPFrame << " Width: " << (int) currentImageFrame->GetImageWidth() << " Height: "
-              << (int) currentImageFrame->GetImageHeight() << "\nxPosition: " << (int) currentImageFrame->GetXOffset()
-              << " yPosition: " << (int) currentImageFrame->GetYOffset() << " with offset " << (int)currentImageFrame->GetDataOffset() << '\n';
-#endif
-    uniqueGRPCheck = uniqueGRPImages.find(currentImageFrame->GetDataOffset());
-    if(removeDuplicates && (uniqueGRPCheck != uniqueGRPImages.end()))
-    {
-
-    }
-    else
-    {
-      //The GRPImage is unique save in the unordered set
-      uniqueGRPImages.insert(std::make_pair<uint32_t,bool>(currentImageFrame->GetDataOffset(),true));
-
-      //Decode Frame here
-      DecodeGRPFrameData(inputFile, currentImageFrame);
-
-      //imageFrames.insert(imageFrames.end(), currentImageFrame);
-      imageFrames.push_back(currentImageFrame);
-    }
-
-  }
-
-  if (removeDuplicates)
-  {
-    numberOfFrames = imageFrames.size();
-  }
-
+  LoadImage(&vecImage, removeDuplicates);
 }
 
-void GRPImage::DecodeGRPFrameData(std::ifstream &inputFile, GRPFrame *targetFrame)
+void GRPImage::DecodeGRPFrameDataUncompressed(std::vector<char> *inputData, GRPFrame *targetFrame)
 {
   if(targetFrame == NULL || (targetFrame->frameData.size() == 0))
   {
     GRPImageNoFrameLoaded noFrameLoaded;
     noFrameLoaded.SetErrorMessage("No GRP Frame is loaded");
   }
-  if(currentPalette == NULL)
+  if(mCurrentPalette == NULL)
   {
     GRPImageNoLoadedPaletteSet noPaletteLoaded;
     noPaletteLoaded.SetErrorMessage("No palette has been set or loaded");
   }
 
-  //Save the original file pointer position to continue loading GRPHeaders
-  std::ifstream::pos_type currentHeaderFilePosition = inputFile.tellg();
-
   //Seek to the Row offset data
-  inputFile.seekg(targetFrame->GetDataOffset());
+  std::vector<char>::iterator currentDataPosition = inputData->begin();
+  currentDataPosition += targetFrame->GetDataOffset();
 
   //Create a vector of all the Image row offsets
   std::vector<uint16_t> imageRowOffsets;
@@ -215,7 +190,13 @@ void GRPImage::DecodeGRPFrameData(std::ifstream &inputFile, GRPFrame *targetFram
   //Read in the ImageRow offsets
   for (int currentReadingRowOffset = 0; currentReadingRowOffset < targetFrame->GetImageHeight(); currentReadingRowOffset++)
   {
-    inputFile.read((char *) &imageRowOffsets.at(currentReadingRowOffset), 2);
+    uint16_t tmp_offset;
+    std::copy(currentDataPosition, (currentDataPosition + 2),(char *) &tmp_offset);
+
+    imageRowOffsets.at(currentReadingRowOffset) = tmp_offset;
+    currentDataPosition += 2;
+
+    cout << "offset: " << tmp_offset << endl;
   }
 
   //The currentRow (x coordinate) that the decoder is at, it is used to
@@ -227,14 +208,10 @@ void GRPImage::DecodeGRPFrameData(std::ifstream &inputFile, GRPFrame *targetFram
   //of the proceding data
   uint8_t rawPacket;
 
-  //The references to a particular color
-  uint8_t convertedPacket;
-
   //The struct keeps a (X,Y) coordinates to the position
   //of the referenced color to allow for drawing on the screen
   //or Imagemagick to convert.
   UniquePixel currentUniquePixel;
-
 
   //Goto each row and process the row data
   for(int currentProcessingHeight = 0; currentProcessingHeight < targetFrame->GetImageHeight(); currentProcessingHeight++)
@@ -245,68 +222,27 @@ void GRPImage::DecodeGRPFrameData(std::ifstream &inputFile, GRPFrame *targetFram
 #endif
     //Seek to the point of the first byte in the rowData from the
     //1.Skip over to the Frame data
-    //2.Skip over by the Row offset mentioned in the list
-    inputFile.seekg((targetFrame->GetDataOffset() + (imageRowOffsets.at(currentProcessingHeight))));
+    //2.Skip over the size of the targetFrame->size() last time read bytes
+    currentDataPosition = inputData->begin() + targetFrame->frameData.size();
+    currentDataPosition += (targetFrame->GetDataOffset());
 
     currentProcessingRow = 0;
 
     while(currentProcessingRow < targetFrame->GetImageWidth())
     {
-      inputFile.read((char *) &rawPacket, 1);
-      if(!(rawPacket & 0x80))
-      {
-        //Repeat Operation (The first byte indicates a repeat pixel operation)
-        //The next byte indicates how far down the row to repeat.
-        if(rawPacket & 0x40)
-        {
-          rawPacket &= 0x3f;
-          inputFile.read((char *) &convertedPacket, 1);
 
-          //Set the Player color (Not implemented yet :|
-          //covertedPacket = tableof unitColor[ colorbyte+gr_gamenr];
-          int operationCounter = rawPacket;
-          currentUniquePixel.xPosition = currentProcessingRow;
-          do
-          {
+        std::copy(currentDataPosition, (currentDataPosition + 1),(char *) &rawPacket);
+        currentDataPosition += 1;
 
-            currentUniquePixel.yPosition = currentProcessingHeight;
-            currentUniquePixel.colorPaletteReference = convertedPacket;
-            targetFrame->frameData.push_back(currentUniquePixel);
-            currentUniquePixel.xPosition++;
-          }
-          while (--operationCounter);
+        currentUniquePixel.xPosition = currentProcessingRow;
+        currentUniquePixel.yPosition = currentProcessingHeight;
+        currentUniquePixel.colorPaletteReference = rawPacket;
+        targetFrame->frameData.push_back(currentUniquePixel);
 
-          currentProcessingRow += rawPacket;
-        }
-        else
-        {
-          //Copy Pixel Operation, and how many pixels to copy directly
-          int operationCounter = rawPacket;
-          do
-          {
-            inputFile.read((char *)&convertedPacket, 1);
-
-            currentUniquePixel.xPosition = currentProcessingRow;
-            currentUniquePixel.yPosition = currentProcessingHeight;
-            currentUniquePixel.colorPaletteReference = convertedPacket;
-            targetFrame->frameData.push_back(currentUniquePixel);
-            currentProcessingRow++;
-          }
-          while (--operationCounter);
-        }
-      }
-      else
-      {
-        //Skip the next "rawPacket" # of pixels
-        rawPacket &= 0x7f;
-        currentProcessingRow += rawPacket;
-      }
+        currentProcessingRow++;
     }
   }
 
-
-  //Finished put the file position back
-  inputFile.seekg(currentHeaderFilePosition);
 #if VERBOSE >= 5
   std::cout << "Frame data is size: " << targetFrame->frameData.size() << '\n';
   for(std::list<UniquePixel>::iterator it = targetFrame->frameData.begin(); it != targetFrame->frameData.end(); it++)
@@ -323,7 +259,7 @@ void GRPImage::DecodeGRPFrameData(std::vector<char> *inputData, GRPFrame *target
     GRPImageNoFrameLoaded noFrameLoaded;
     noFrameLoaded.SetErrorMessage("No GRP Frame is loaded");
   }
-  if(currentPalette == NULL)
+  if(mCurrentPalette == NULL)
   {
     GRPImageNoLoadedPaletteSet noPaletteLoaded;
     noPaletteLoaded.SetErrorMessage("No palette has been set or loaded");
@@ -448,26 +384,26 @@ void GRPImage::DecodeGRPFrameData(std::vector<char> *inputData, GRPFrame *target
 
 uint16_t GRPImage::getNumberOfFrames() const
 {
-  return numberOfFrames;
+  return mNumberOfFrames;
 }
 uint16_t GRPImage::getMaxImageWidth() const
 {
-  return maxImageWidth;
+  return mMaxImageWidth;
 }
 uint16_t GRPImage::getMaxImageHeight() const
 {
-  return maxImageHeight;
+  return mMaxImageHeight;
 }
 
 void GRPImage::SetColorPalette(std::shared_ptr<Palette> selectedColorPalette)
 {
   if(selectedColorPalette)
-    currentPalette = selectedColorPalette;
+    mCurrentPalette = selectedColorPalette;
 }
 
 void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int endingFrame, bool singleStitchedImage, int imagesPerRow)
 {
-  if(!currentPalette)
+  if(!mCurrentPalette)
   {
     GRPImageNoLoadedPaletteSet noPalette;
     noPalette.SetErrorMessage("No loaded set");
@@ -475,13 +411,13 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
 
   shared_ptr<PaletteImage> paletteImage;
 
-  if(imagesPerRow >= numberOfFrames)
+  if(imagesPerRow >= mNumberOfFrames)
   {
-    imagesPerRow = numberOfFrames;
+    imagesPerRow = mNumberOfFrames;
   }
 
-  int image_width = (maxImageWidth * imagesPerRow);
-  int image_height = (maxImageHeight * (ceil( (float)numberOfFrames/imagesPerRow)));
+  int image_width = (mMaxImageWidth * imagesPerRow);
+  int image_height = (mMaxImageHeight * (ceil( (float)mNumberOfFrames/imagesPerRow)));
 
   if(singleStitchedImage)
   {
@@ -500,12 +436,13 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
 
   for(int currentProcessingFrame = startingFrame; currentProcessingFrame < endingFrame; ++currentProcessingFrame)
   {
-    GRPFrame *currentFrame = imageFrames.at(currentProcessingFrame);
+    GRPFrame *currentFrame = mImageFrames.at(currentProcessingFrame);
 
     // create a image for each frame
     if(!singleStitchedImage)
     {
-      paletteImage = make_shared<PaletteImage>(Size(maxImageWidth, maxImageHeight));
+      paletteImage = make_shared<PaletteImage>(Size(mMaxImageWidth, mMaxImageHeight));
+      //paletteImage = make_shared<PaletteImage>(Size(currentFrame->GetImageWidth(), currentFrame->GetImageHeight()));
     }
 
     //If a row in a stitched image is complete, move onto the next row
@@ -522,8 +459,8 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
 
       if(singleStitchedImage)
       {
-        Pos pixel_pos((currentFrame->GetXOffset() + currentProcessPixel->xPosition) + (maxImageWidth * currentImageDestinationRow),
-                      (currentFrame->GetYOffset() + currentProcessPixel->yPosition) + (maxImageHeight * currentImageDestinationColumn) );
+        Pos pixel_pos((currentFrame->GetXOffset() + currentProcessPixel->xPosition) + (mMaxImageWidth * currentImageDestinationRow),
+                      (currentFrame->GetYOffset() + currentProcessPixel->yPosition) + (mMaxImageHeight * currentImageDestinationColumn) );
 
         paletteImage->at(pixel_pos) = currentProcessPixel->colorPaletteReference;
       }
@@ -542,7 +479,7 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
     {
       string frameOutput = "frame" + to_string(currentProcessingFrame) + "_" + outFilePath;
 
-      PngExporter::save(frameOutput, *paletteImage, *currentPalette, 0);
+      PngExporter::save(frameOutput, *paletteImage, *mCurrentPalette, 0);
     }
     //Otherwise continue writing down the row
     else
@@ -554,7 +491,7 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
   //Now that all the pixels are in place, lets write the result to disk
   if(singleStitchedImage)
   {
-    PngExporter::save(outFilePath, *paletteImage, *currentPalette, 0);
+    PngExporter::save(outFilePath, *paletteImage, *mCurrentPalette, 0);
   }
 }
 
@@ -562,7 +499,7 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
 void GRPImage::SaveConvertedImage(std::string outFilePath, int startingFrame, int endingFrame, bool singleStitchedImage, int imagesPerRow)
 {
 
-  if(!currentPalette)
+  if(!mCurrentPalette)
   {
     GRPImageNoLoadedPaletteSet noPalette;
     noPalette.SetErrorMessage("No loaded set");
@@ -570,17 +507,17 @@ void GRPImage::SaveConvertedImage(std::string outFilePath, int startingFrame, in
   MagickCore::MagickCoreGenesis(NULL, MagickCore::MagickFalse);
   Magick::Image *convertedImage;
   //Due to how Imagemagick creates the image it must be set before usage and must be resized proportionally
-  if(imagesPerRow >= numberOfFrames)
+  if(imagesPerRow >= mNumberOfFrames)
   {
-    imagesPerRow = numberOfFrames;
+    imagesPerRow = mNumberOfFrames;
   }
   if(singleStitchedImage)
   {
-    convertedImage = new Magick::Image(Magick::Geometry((maxImageWidth * imagesPerRow), (maxImageHeight * (ceil( (float)numberOfFrames/imagesPerRow)))), "transparent");
+    convertedImage = new Magick::Image(Magick::Geometry((mMaxImageWidth * imagesPerRow), (mMaxImageHeight * (ceil( (float)mNumberOfFrames/imagesPerRow)))), "transparent");
   }
   else
   {
-    convertedImage = new Magick::Image(Magick::Geometry(maxImageWidth, maxImageHeight), "transparent");
+    convertedImage = new Magick::Image(Magick::Geometry(mMaxImageWidth, mMaxImageHeight), "transparent");
     //We will erase the image after writing the last processed image to disk
     convertedImage->backgroundColor("transparent");
   }
@@ -594,7 +531,7 @@ void GRPImage::SaveConvertedImage(std::string outFilePath, int startingFrame, in
 
   for(int currentProcessingFrame = startingFrame; currentProcessingFrame < endingFrame; ++currentProcessingFrame)
   {
-    GRPFrame *currentFrame = imageFrames.at(currentProcessingFrame);
+    GRPFrame *currentFrame = mImageFrames.at(currentProcessingFrame);
 
     //If a row in a stitched image is complete, move onto the next row
     if(singleStitchedImage && (currentImageDestinationRow >= imagesPerRow))
@@ -606,7 +543,7 @@ void GRPImage::SaveConvertedImage(std::string outFilePath, int startingFrame, in
     //Start appling the pixels with the refence colorpalettes
     for (std::list<UniquePixel>::iterator currentProcessPixel = currentFrame->frameData.begin(); currentProcessPixel != currentFrame->frameData.end(); currentProcessPixel++)
     {
-      currentPalettePixel = currentPalette->at(currentProcessPixel->colorPaletteReference);
+      currentPalettePixel = mCurrentPalette->at(currentProcessPixel->colorPaletteReference);
 
       currentMagickPixel.red(currentPalettePixel.getRed() / 255);
       currentMagickPixel.green(currentPalettePixel.getGreen() / 255);
@@ -615,7 +552,7 @@ void GRPImage::SaveConvertedImage(std::string outFilePath, int startingFrame, in
 
       if(singleStitchedImage)
       {
-        convertedImage->pixelColor(((currentFrame->GetXOffset() + currentProcessPixel->xPosition) + (maxImageWidth * currentImageDestinationRow)), ((currentFrame->GetYOffset() + currentProcessPixel->yPosition) + (maxImageHeight * currentImageDestinationColumn)), currentMagickPixel);
+        convertedImage->pixelColor(((currentFrame->GetXOffset() + currentProcessPixel->xPosition) + (mMaxImageWidth * currentImageDestinationRow)), ((currentFrame->GetYOffset() + currentProcessPixel->yPosition) + (mMaxImageHeight * currentImageDestinationColumn)), currentMagickPixel);
       }
       else
       {
@@ -662,14 +599,14 @@ void GRPImage::SaveConvertedImage(std::string outFilePath, int startingFrame, in
 #endif /* HAVE_IMAGEMAGICKPP */
 void GRPImage::CleanGRPImage()
 {
-  if(imageFrames.size() != 0)
+  if(mImageFrames.size() != 0)
   {
-    for(std::vector<GRPFrame *>::iterator currentDeleteFrame = imageFrames.begin(); currentDeleteFrame != imageFrames.end(); currentDeleteFrame++)
+    for(std::vector<GRPFrame *>::iterator currentDeleteFrame = mImageFrames.begin(); currentDeleteFrame != mImageFrames.end(); currentDeleteFrame++)
     {
       delete *currentDeleteFrame;
       *currentDeleteFrame = NULL;
     }
-    imageFrames.resize(0);
+    mImageFrames.resize(0);
   }
 }
 

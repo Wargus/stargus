@@ -51,6 +51,7 @@
  *  1. Author of the GRP Format (Patrick Wyatt)\n
  *      @ http://www.codeofhonor.com/blog/
  */
+
 #include "GRPImage/GRPImage.hpp"
 #include "Exceptions/GRPImage/GRPImageException.hpp"
 

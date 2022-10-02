@@ -164,40 +164,28 @@ protected:
   /*!Decode the GRP compression and save the unique pixels to the GRPFrame datastruct
    * \pre GRPImage Loaded
    * \post GRPImage Frame is decoded into the frame
-   * \param[in] inputFile a input file stream of the GRPImage file
-   * \param[in[ targetFrame The frame to store the resulting image data
-   * \note NA*/
-  void DecodeGRPFrameData(std::ifstream &inputFile, GRPFrame *targetFrame);
-
-  //!Decode the GRPFrameData
-  /*!Decode the GRP compression and save the unique pixels to the GRPFrame datastruct
-   * \pre GRPImage Loaded
-   * \post GRPImage Frame is decoded into the frame
    * \param[in] inputData A vector of the GRPImage file data
    * \param[in] targetFrame The frame to store the resulting image data
    * \note NA*/
   void DecodeGRPFrameData(std::vector<char> *inputData, GRPFrame *targetFrame);
 
-  //!Load file into a std::vector<char>
-  /*!Subroutine function to load a file into the internal imageData or
-   * or palette data (depending on the function call).
-   * \pre GRPImage must be defined and initialized, sourceFilePath must be a valid
-   *      file path. destinationVector must be defined and initialized (blank).
-   * \post The destinationVector contains the data from the file at path sourceFilePath
-   * \note NA*/
-  void LoadFileToVector(std::string sourceFilePath, std::vector<unsigned char> *destinationVector);
+  /*!Decode the GRP uncompressed data and save the unique pixels to the GRPFrame datastruct
+   *
+   */
+  void DecodeGRPFrameDataUncompressed(std::vector<char> *inputData, GRPFrame *targetFrame);
 
 private:
   //The decoded GRPFrames
-  std::vector<GRPFrame *> imageFrames;
+  std::vector<GRPFrame *> mImageFrames;
 
   //The palette that will be used during conversion
-  std::shared_ptr<Palette> currentPalette;
+  std::shared_ptr<Palette> mCurrentPalette;
 
 
   //GRPimage Header
-  uint16_t numberOfFrames;
-  uint16_t maxImageWidth;
-  uint16_t maxImageHeight;
+  uint16_t mNumberOfFrames;
+  uint16_t mMaxImageWidth;
+  uint16_t mMaxImageHeight;
+  bool mUncompressed;
 };
 #endif

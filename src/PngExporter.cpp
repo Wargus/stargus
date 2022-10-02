@@ -62,7 +62,8 @@ bool PngExporter::save(const std::string &name, PaletteImage &palImage, Palette 
 
   if (setjmp(png_jmpbuf(png_ptr)))
   {
-    // FIXME: must free buffers!!
+    free(lines);
+
     png_destroy_write_struct(&png_ptr, &info_ptr);
     fclose(fp);
     return false;
@@ -89,8 +90,6 @@ bool PngExporter::save(const std::string &name, PaletteImage &palImage, Palette 
 
   // write the file header information
   png_write_info(png_ptr, info_ptr);
-
-  // set transformation
 
   // prepare image
   lines = (unsigned char **) malloc(palImage.getSize().getHeight() * sizeof(*lines));

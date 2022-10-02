@@ -55,7 +55,10 @@ bool Widgets::convert(const char *arcfile,
     free(gfup);
 
     Preferences &preferences = Preferences::getInstance();
-    sprintf(buf, "%s/graphics/%s/", preferences.getDestDir().c_str(), file);
+
+    // TODO: the complete.png is not used in stargus UI, just saved for debug/understanding reason
+    sprintf(buf, "%s/graphics/%s/complete.png", preferences.getDestDir().c_str(), file);
+    //SaveImage(buf, image, *mPalette, 1, w, h);
 
     sprintf(buf, "%s/graphics/%s/menu.png", preferences.getDestDir().c_str(),
             file);
