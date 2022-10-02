@@ -3,6 +3,8 @@
 
 #include <string.h>
 #include <iostream>
+#include <cmath>
+#include <sstream>
 
 using namespace std;
 
@@ -500,6 +502,7 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
   {
     // create later in the loop the small ones...
   }
+
   Color currentPalettePixel;
   std::stringstream fileOutPath;
   int currentImageDestinationColumn = 0;
@@ -565,108 +568,6 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
   }
 }
 
-#if HAVE_IMAGEMAGICKPP
-void GRPImage::SaveConvertedImage(std::string outFilePath, int startingFrame, int endingFrame, bool singleStitchedImage, int imagesPerRow)
-{
-
-  if(!mCurrentPalette)
-  {
-    GRPImageNoLoadedPaletteSet noPalette;
-    noPalette.SetErrorMessage("No loaded set");
-  }
-  MagickCore::MagickCoreGenesis(NULL, MagickCore::MagickFalse);
-  Magick::Image *convertedImage;
-  //Due to how Imagemagick creates the image it must be set before usage and must be resized proportionally
-  if(imagesPerRow >= mNumberOfFrames)
-  {
-    imagesPerRow = mNumberOfFrames;
-  }
-  if(singleStitchedImage)
-  {
-    convertedImage = new Magick::Image(Magick::Geometry((mMaxImageWidth * imagesPerRow), (mMaxImageHeight * (ceil( (float)mNumberOfFrames/imagesPerRow)))), "transparent");
-  }
-  else
-  {
-    convertedImage = new Magick::Image(Magick::Geometry(mMaxImageWidth, mMaxImageHeight), "transparent");
-    //We will erase the image after writing the last processed image to disk
-    convertedImage->backgroundColor("transparent");
-  }
-  Color currentPalettePixel;
-  std::stringstream fileOutPath;
-  Magick::ColorRGB currentMagickPixel;
-  currentMagickPixel.alpha(0);
-  int currentImageDestinationColumn = 0;
-  int currentImageDestinationRow = 0;
-
-
-  for(int currentProcessingFrame = startingFrame; currentProcessingFrame < endingFrame; ++currentProcessingFrame)
-  {
-    GRPFrame *currentFrame = mImageFrames.at(currentProcessingFrame);
-
-    //If a row in a stitched image is complete, move onto the next row
-    if(singleStitchedImage && (currentImageDestinationRow >= imagesPerRow))
-    {
-      currentImageDestinationColumn++;
-      currentImageDestinationRow = 0;
-    }
-
-    //Start appling the pixels with the refence colorpalettes
-    for (std::list<UniquePixel>::iterator currentProcessPixel = currentFrame->frameData.begin(); currentProcessPixel != currentFrame->frameData.end(); currentProcessPixel++)
-    {
-      currentPalettePixel = mCurrentPalette->at(currentProcessPixel->colorPaletteReference);
-
-      currentMagickPixel.red(currentPalettePixel.getRed() / 255);
-      currentMagickPixel.green(currentPalettePixel.getGreen() / 255);
-      currentMagickPixel.blue(currentPalettePixel.getBlue() / 255);
-
-
-      if(singleStitchedImage)
-      {
-        convertedImage->pixelColor(((currentFrame->GetXOffset() + currentProcessPixel->xPosition) + (mMaxImageWidth * currentImageDestinationRow)), ((currentFrame->GetYOffset() + currentProcessPixel->yPosition) + (mMaxImageHeight * currentImageDestinationColumn)), currentMagickPixel);
-      }
-      else
-      {
-        convertedImage->pixelColor((currentFrame->GetXOffset() + currentProcessPixel->xPosition), (currentFrame->GetYOffset() + currentProcessPixel->yPosition), currentMagickPixel);
-      }
-
-    }
-
-    //If not stitched it's time to write the current frame to a file
-    if(!singleStitchedImage)
-    {
-      fileOutPath << std::setw(3) << std::setfill('0') << currentProcessingFrame << outFilePath;
-      convertedImage->write(fileOutPath.str());
-      fileOutPath.str(std::string());
-      convertedImage->erase();
-    }
-    //Otherwise continue writing down the row
-    else
-    {
-      currentImageDestinationRow++;
-    }
-
-  }
-  //Now that all the pixels are in place, lets write the result to disk
-  if(singleStitchedImage)
-  {
-    convertedImage->write(outFilePath);
-  }
-
-
-  //Clean up our pointers from earlier.
-  delete convertedImage;
-  convertedImage = NULL;
-
-}
-#else
-void GRPImage::SaveConvertedImage(std::string outFilePath, int startingFrame, int endingFrame, bool singleStitchedImage, int imagesPerRow)
-{
-  GRPImageImageMagickNotCompiledIn compiledError;
-  compiledError.SetErrorMessage("Imagemagick was not compiled into libgrp, method unavailable");
-  throw compiledError;
-}
-
-#endif /* HAVE_IMAGEMAGICKPP */
 void GRPImage::CleanGRPImage()
 {
   if(mImageFrames.size() != 0)

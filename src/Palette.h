@@ -31,12 +31,6 @@ public:
 
   virtual ~Palette();
 
-  // DEPRECATED
-  //void replaceIndexColor(unsigned int index, const Color &rgb);
-
-  // DEPRECATED
-  //void replaceIndexColorRange(const Palette &pal, unsigned int startIndex, unsigned int endIndex);
-
   /**
    * Create a new DataChunk copy for (old) functions that need the data aligned in a big unsigned char*
    * Pay attention of the std::shared_ptr nature:

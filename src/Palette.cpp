@@ -89,24 +89,6 @@ Color &Palette::at(unsigned int index)
   return mColorPalette.at(index);
 }
 
-// DEPRECATED
-/*void Palette::replaceIndexColor(unsigned int index, const Color &rgb)
-{
-  if(index <= mColorPalette.size())
-  {
-    mColorPalette.at(index) = rgb;
-  }
-}*/
-
-// DEPRECATED
-/*void Palette::replaceIndexColorRange(const Palette &pal, unsigned int startIndex, unsigned int endIndex)
-{
-  for(unsigned int index = startIndex; index <= endIndex; index++)
-  {
-    replaceIndexColor(index, pal.at(index));
-  }
-}*/
-
 bool Palette::write(const std::string &filename)
 {
   bool result = true;

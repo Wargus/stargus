@@ -5,6 +5,6 @@ grptool_sources = files(
 
 executable('grptool', 
 	grptool_sources,
-	dependencies : [log4cxx_dep,libstarformat_dep, imagemagickpp_dep],
+	dependencies : [log4cxx_dep,libstarformat_dep],
 	install : true)
 	

@@ -22,14 +22,6 @@
 #include <list>
 #include <fstream>
 
-//Gives the ability to convert images to other formats.
-#if HAVE_IMAGEMAGICKPP
-#include <sstream>
-#include <iomanip>
-#include <Magick++/Image.h>
-#include <Magick++/Pixels.h>
-#endif
-
 //Allow Windows to use 8/16/32 byte values
 #if defined(_WIN32)
 #include <stdint.h>
@@ -137,8 +129,7 @@ public:
    * \note NA*/
   void SetColorPalette(std::shared_ptr<Palette> selectedColorPalette);
 
-  //!Save the GRPImage frames to a file via ImageMaigck
-  /*!Save the GRPImage frames into the file format of your choosing
+  /*!Save the GRPImage frames to a PNG file via libpng
    * \pre GRPImage is loaded.
    * \post Outputs a image to the ourFilePath.
    * \param[in] outFilePath The output image file path.
@@ -147,8 +138,6 @@ public:
    * \param[in] singleStitchedImage Stitch the GRP frames together into one image.
    * \param[in] imagesPerRow If stitching is enabled, how many images should be save per row.
    * \note NA*/
-  void SaveConvertedImage(std::string outFilePath, int startingFrame, int endingFrame, bool singleStitchedImage = true, int imagesPerRow = 10);
-
   void SaveConvertedPNG(std::string outFilePath, int startingFrame, int endingFrame, bool singleStitchedImage, int imagesPerRow);
 
 protected:
