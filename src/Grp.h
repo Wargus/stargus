@@ -4,8 +4,8 @@
  *      Author: Andreas Volz
  */
 
-#ifndef GRP_H_
-#define GRP_H_
+#ifndef GRP_H
+#define GRP_H
 
 // Local
 #include "Converter.h"
@@ -28,7 +28,7 @@ class Grp: public Converter
 public:
   Grp(std::shared_ptr<Hurricane> hurricane);
   Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile);
-  Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<Palette> pal);
+  Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<AbstractPalette> pal);
   virtual ~Grp();
 
   /**
@@ -51,9 +51,7 @@ public:
    */
   bool save(Storage filename);
 
-  void setPalette(std::shared_ptr<Palette> pal);
-
-  void setPalette2D(std::shared_ptr<Palette2D> pal);
+  void setPalette(std::shared_ptr<AbstractPalette> pal);
 
   void setGFX(bool gfx);
   bool getGFX();
@@ -80,8 +78,7 @@ protected:
   void DecodeGfuEntry(int index, unsigned char *start, unsigned char *image, int ix, int iy, int iadd);
 
 private:
-  std::shared_ptr<Palette> mPal;
-  std::shared_ptr<Palette2D> mPal2D;
+  std::shared_ptr<AbstractPalette> mPal;
   std::string mArcfile;
   bool mRGBA;
   bool mGFX;
@@ -89,4 +86,4 @@ private:
   Size mTilesize;
 };
 
-#endif /* GRP_H_ */
+#endif /* GRP_H */

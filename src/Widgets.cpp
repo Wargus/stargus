@@ -62,95 +62,95 @@ bool Widgets::convert(const char *arcfile,
 
     sprintf(buf, "%s/graphics/%s/menu.png", preferences.getDestDir().c_str(),
             file);
-    SaveImage(buf, image, *mPalette, 1, 64, 20);
+    SaveImage(buf, image, 1, 64, 20);
 
     sprintf(buf, "%s/graphics/%s/menu pressed.png",
             preferences.getDestDir().c_str(), file);
-    SaveImage(buf, image, *mPalette, 2, 64, 20);
+    SaveImage(buf, image, 2, 64, 20);
 
     sprintf(buf, "%s/graphics/%s/minimap terrain disabled.png",
             preferences.getDestDir().c_str(), file);
-    SaveImage(buf, image, *mPalette, 3, 64, 20);
+    SaveImage(buf, image,3, 64, 20);
 
     sprintf(buf, "%s/graphics/%s/minimap terrain.png",
             preferences.getDestDir().c_str(), file);
-    SaveImage(buf, image, *mPalette, 4, 64, 20);
+    SaveImage(buf, image, 4, 64, 20);
 
     sprintf(buf, "%s/graphics/%s/minimap terrain pressed.png",
             preferences.getDestDir().c_str(), file);
-    SaveImage(buf, image, *mPalette, 5, 64, 20);
+    SaveImage(buf, image, 5, 64, 20);
 
     sprintf(buf, "%s/graphics/%s/diplomacy disabled.png",
             preferences.getDestDir().c_str(), file);
-    SaveImage(buf, image, *mPalette, 83, 64, 20);
+    SaveImage(buf, image, 83, 64, 20);
 
     sprintf(buf, "%s/graphics/%s/diplomacy.png",
             preferences.getDestDir().c_str(), file);
-    SaveImage(buf, image, *mPalette, 84, 64, 20);
+    SaveImage(buf, image, 84, 64, 20);
 
     sprintf(buf, "%s/graphics/%s/diplomacy pressed.png",
             preferences.getDestDir().c_str(), file);
-    SaveImage(buf, image, *mPalette, 85, 64, 20);
+    SaveImage(buf, image, 85, 64, 20);
 
     sprintf(buf, "%s/graphics/%s/button left disabled 224x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 224, 104);
+    SaveButton(buf, image, 224, 104);
 
     sprintf(buf, "%s/graphics/%s/button left 224x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 224, 107);
+    SaveButton(buf, image, 224, 107);
 
     sprintf(buf, "%s/graphics/%s/button left pressed 224x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 224, 110);
+    SaveButton(buf, image, 224, 110);
 
     sprintf(buf, "%s/graphics/%s/button left disabled 104x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 104, 104);
+    SaveButton(buf, image, 104, 104);
 
     sprintf(buf, "%s/graphics/%s/button left 104x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 104, 107);
+    SaveButton(buf, image, 104, 107);
 
     sprintf(buf, "%s/graphics/%s/button left pressed 104x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 104, 110);
+    SaveButton(buf, image, 104, 110);
 
     sprintf(buf, "%s/graphics/%s/button disabled 224x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 224, 113);
+    SaveButton(buf, image, 224, 113);
 
     sprintf(buf, "%s/graphics/%s/button 224x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 224, 116);
+    SaveButton(buf, image, 224, 116);
 
     sprintf(buf, "%s/graphics/%s/button pressed 224x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 224, 119);
+    SaveButton(buf, image, 224, 119);
 
     sprintf(buf, "%s/graphics/%s/button disabled 104x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 104, 113);
+    SaveButton(buf, image, 104, 113);
 
     sprintf(buf, "%s/graphics/%s/button 104x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 104, 116);
+    SaveButton(buf, image, 104, 116);
 
     sprintf(buf, "%s/graphics/%s/button pressed 104x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 104, 119);
+    SaveButton(buf, image, 104, 119);
 
     sprintf(buf, "%s/graphics/%s/button right disabled 104x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 104, 122);
+    SaveButton(buf, image, 104, 122);
 
     sprintf(buf, "%s/graphics/%s/button right 104x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 104, 125);
+    SaveButton(buf, image, 104, 125);
 
     sprintf(buf, "%s/graphics/%s/button right pressed 104x28.png",
             preferences.getDestDir().c_str(), file);
-    SaveButton(buf, image, *mPalette, 104, 128);
+    SaveButton(buf, image, 104, 128);
   }
   else
   {
@@ -163,12 +163,12 @@ bool Widgets::convert(const char *arcfile,
   return result;
 }
 
-void Widgets::setPalette(std::shared_ptr<Palette> pal)
+void Widgets::setPalette(std::shared_ptr<AbstractPalette> pal)
 {
   mPalette = pal;
 }
 
-void Widgets::SaveImage(char *name, unsigned char *image, Palette &pal,
+void Widgets::SaveImage(char *name, unsigned char *image,
                         int id, int w, int h)
 {
   unsigned char *buf = (unsigned char *) malloc(w * h);
@@ -182,10 +182,10 @@ void Widgets::SaveImage(char *name, unsigned char *image, Palette &pal,
   DataChunk dc_image(&buf, w * h);
   PaletteImage palImage(dc_image, Size(w, h));
 
-  PngExporter::saveRGB(name, palImage, pal, 255);
+  PngExporter::save(name, palImage, mPalette, 255);
 }
 
-void Widgets::SaveButton(char *name, unsigned char *image, Palette &pal,
+void Widgets::SaveButton(char *name, unsigned char *image,
                          int size, int id)
 {
   unsigned char *button;
@@ -216,6 +216,6 @@ void Widgets::SaveButton(char *name, unsigned char *image, Palette &pal,
   DataChunk dc_image(&button, size * 28);
   PaletteImage palImage(dc_image, Size(size, 28));
 
-  PngExporter::saveRGB(name, palImage, pal, 255);
+  PngExporter::save(name, palImage, mPalette, 255);
 }
 

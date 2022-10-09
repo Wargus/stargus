@@ -37,8 +37,7 @@ ImagesConverter::~ImagesConverter()
 
 }
 
-bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
-                              std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap)
+bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<AbstractPalette>> &paletteMap)
 {
   bool result = true;
 
@@ -101,8 +100,7 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
     string grp_arcfile =  "unit\\" + grp_name;
 
     Grp grp(mHurricane, grp_arcfile);
-    std::shared_ptr<Palette> pal;
-    std::shared_ptr<Palette2D> pal2D;
+    std::shared_ptr<AbstractPalette> pal;
     string remapping;
 
     bool save_grp = true;
@@ -130,8 +128,8 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
         remapping = "ofire";
       }
 
-      pal2D = palette2DMap.at(remapping);
-      grp.setPalette2D(pal2D);
+      pal = paletteMap.at(remapping);
+      grp.setPalette(pal);
 
       grp.setRGBA(true);
     }

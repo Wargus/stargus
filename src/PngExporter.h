@@ -25,7 +25,7 @@ public:
   //TODO: un-static this in the design!
 
   static bool save(const std::string &name, PaletteImage &palImage,
-        std::shared_ptr<AbstractPalette> abs_palette, int transparent);
+        std::shared_ptr<AbstractPalette> abs_palette, int transparent, bool rgba = false);
 
   /**
    **  Save a png file with 8-bit colormap palette

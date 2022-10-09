@@ -275,8 +275,7 @@ int parseOptions(int argc, const char **argv)
 
 void loadPalettes(std::shared_ptr<Hurricane> hurricane,
                   Storage palStorage,
-                  std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
-                  std::map<std::string, std::shared_ptr<Palette2D>> &palette2DMap)
+                  std::map<std::string, std::shared_ptr<AbstractPalette>> &paletteMap)
 {
   // read in the json file
   std::ifstream json_file(pacman::searchFile("dataset/palettes.json"));
@@ -395,7 +394,7 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
     CheckPath(pal_file);
     pal2D->write(pal_file);
 
-    palette2DMap[pcx_name] = pal2D;
+    paletteMap[pcx_name] = pal2D;
 
     //cout << pcx_array << endl;
   }
@@ -475,7 +474,7 @@ void testHook()
   //string grp_file = "unit\\protoss\\pbaGlow.grp";
   string grp_file = "unit\\thingy\\ofirec.grp";
   Grp grp(storm, grp_file);
-  grp.setPalette2D(pal2D_4);
+  grp.setPalette(pal2D_4);
   grp.setRGBA(true);
   //grp.setPalette(terrainPalette);
   //grp.setTransparent(200);
@@ -571,8 +570,7 @@ int main(int argc, const char **argv)
   Storage data;
   data.setDataPath(preferences.getDestDir());
 
-  map<string, shared_ptr<Palette>> paletteMap;
-  map<string, shared_ptr<Palette2D>> palette2DMap;
+  map<string, shared_ptr<AbstractPalette>> paletteMap;
 
   if (mpq)
   {
@@ -655,7 +653,7 @@ int main(int argc, const char **argv)
       unitNames.push_back(unit_name);
     }
 
-    loadPalettes(sub_storm, palStorage, paletteMap, palette2DMap);
+    loadPalettes(sub_storm, palStorage, paletteMap);
 
     if (preferences.getVideoExtraction())
     {
@@ -664,10 +662,10 @@ int main(int argc, const char **argv)
     }
 
     dat::UnitsConverter unitsConverter(sub_storm, datahub);
-    unitsConverter.convert(units_json, paletteMap, palette2DMap);
+    unitsConverter.convert(units_json);
 
     ImagesConverter imagesConverter(sub_storm, datahub);
-    imagesConverter.convert(paletteMap, palette2DMap);
+    imagesConverter.convert(paletteMap);
 
     if(preferences.getSoundExtraction())
     {
@@ -723,8 +721,7 @@ int main(int argc, const char **argv)
         {
           printf("ConvertGfx: %s, %s, %d", c[u].File, c[u].ArcFile, c[u].Arg1);
           Grp grp(storm, c[u].ArcFile);
-          std::shared_ptr<Palette> pal;
-          std::shared_ptr<Palette2D> pal2D;
+          std::shared_ptr<AbstractPalette> pal;
 
           if (c[u].Arg1 == 6)
           {
@@ -745,8 +742,8 @@ int main(int argc, const char **argv)
           }
           else if (c[u].Arg1 == 3)
           {
-            pal2D = palette2DMap.at("ofire");
-            grp.setPalette2D(pal2D);
+            pal = paletteMap.at("ofire");
+            grp.setPalette(pal);
             grp.setRGBA(true);
           }
           else if (c[u].Arg1 == 2)
@@ -773,7 +770,7 @@ int main(int argc, const char **argv)
         {
           printf("ConvertWidgets: %s, %s", c[u].File, c[u].ArcFile);
           Widgets widgets(storm);
-          std::shared_ptr<Palette> pal = paletteMap.at("tunit");
+          std::shared_ptr<AbstractPalette> pal = paletteMap.at("tunit");
           widgets.setPalette(pal);
           case_func = widgets.convert(c[u].ArcFile, c[u].File);
           printf("...%s\n", case_func ? "ok" : "nok");
@@ -783,7 +780,7 @@ int main(int argc, const char **argv)
         {
           printf("ConvertFont: %s, %s", c[u].File, c[u].ArcFile);
           Font font(storm);
-          std::shared_ptr<Palette> pal = paletteMap.at("tfontgam");
+          std::shared_ptr<AbstractPalette> pal = paletteMap.at("tfontgam");
           font.setPalette(pal);
           case_func = font.convert(c[u].ArcFile, fonts(string(c[u].File) + ".png"));
           printf("...%s\n", case_func ? "ok" : "nok");

@@ -21,22 +21,22 @@ public:
    */
   bool convert(const char *arcfile, const char *file);
 
-  void setPalette(std::shared_ptr<Palette> pal);
+  void setPalette(std::shared_ptr<AbstractPalette> pal);
 
 private:
   /**
    * Save Image part of a Widget as PNG file
    */
-  void SaveImage(char *name, unsigned char *image, Palette &pal, int id,
+  void SaveImage(char *name, unsigned char *image, int id,
       int w, int h);
 
   /**
    * Save Button part of a Widget as PNG
    */
-  void SaveButton(char *name, unsigned char *image, Palette &pal,
+  void SaveButton(char *name, unsigned char *image,
       int size, int id);
 
-  std::shared_ptr<Palette> mPalette;
+  std::shared_ptr<AbstractPalette> mPalette;
 };
 
 #endif /* WIDGETS_H_ */

@@ -40,7 +40,7 @@ Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
   load(arcfile);
 }
 
-Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<Palette> pal) :
+Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<AbstractPalette> pal) :
   Converter(hurricane),
   mPal(pal),
   mRGBA(false),
@@ -64,14 +64,9 @@ bool Grp::getGFX()
   return mGFX;
 }
 
-void Grp::setPalette(std::shared_ptr<Palette> pal)
+void Grp::setPalette(std::shared_ptr<AbstractPalette> pal)
 {
   mPal = pal;
-}
-
-void Grp::setPalette2D(std::shared_ptr<Palette2D> pal)
-{
-  mPal2D = pal;
 }
 
 void Grp::setRGBA(bool rgba)
@@ -127,21 +122,8 @@ bool Grp::save(Storage filename)
     DataChunk dc_image(&image, w * h);
     PaletteImage palImage(dc_image, Size(w, h));
 
-    if (!getRGBA())
-    {
-      PngExporter::saveRGB(filename.getFullPath(), palImage, *mPal, mTransparent);
-    }
-    else
-    {
-      if(mPal && !mPal2D)
-      {
-        PngExporter::saveRGBA(filename.getFullPath(), palImage, *mPal, mTransparent);
-      }
-      else if(mPal2D)
-      {
-        PngExporter::saveRGBA(filename.getFullPath(), palImage, *mPal2D, mTransparent);
-      }
-    }
+    PngExporter::save(filename.getFullPath(), palImage, mPal, mTransparent, mRGBA);
+
 
     // TODO: wrap into DataChunk
     free(gfxp);

@@ -40,9 +40,7 @@ UnitsConverter::~UnitsConverter()
 
 }
 
-bool UnitsConverter::convert(json &unitsJson,
-                                std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
-                                std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap)
+bool UnitsConverter::convert(json &unitsJson)
 {
   bool result = true;
 

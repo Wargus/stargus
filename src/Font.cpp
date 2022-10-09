@@ -62,13 +62,13 @@ bool Font::convert(const std::string &arcfile, Storage file)
     DataChunk dc_image(&image, w * h);
     PaletteImage palImage(dc_image, Size(w, h));
 
-    PngExporter::saveRGB(file.getFullPath(), palImage, *mPalette, 255);
+    PngExporter::save(file.getFullPath(), palImage, mPalette, 255);
   }
 
   return result;
 }
 
-void Font::setPalette(std::shared_ptr<Palette> pal)
+void Font::setPalette(std::shared_ptr<AbstractPalette> pal)
 {
   mPalette = pal;
 }

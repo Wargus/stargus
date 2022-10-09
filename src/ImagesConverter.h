@@ -16,8 +16,7 @@ public:
   ImagesConverter(std::shared_ptr<Hurricane> hurricane, dat::DataHub &datahub);
   virtual ~ImagesConverter();
 
-  bool convert(std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
-               std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap);
+  bool convert(std::map<std::string, std::shared_ptr<AbstractPalette>> &paletteMap);
 
 private:
   dat::DataHub &mDatahub;

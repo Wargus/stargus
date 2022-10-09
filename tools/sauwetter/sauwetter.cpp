@@ -92,7 +92,7 @@ const option::Descriptor usage[] =
     "Options:"
   },
   { HELP, 0, "h", "help", option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
-  { BACKEND, 0, "b", "backend", Arg::Required, "  --backend, -b  \t\tChoose a backend (Storm=St*arcr*ft1/Br**dwar;Casc=Remastered;Breeze=Folder)" },
+  { BACKEND, 0, "b", "backend", Arg::Required, "  --backend BACKEND, -b BACKEND  \t\tChoose a backend (Storm=St*arcr*ft1/Br**dwar;Casc=Remastered;Breeze=Folder)" },
   {
     UNKNOWN, 0, "", "", option::Arg::None,
     "\narchive \t\tDestination to the archive (mpq, casc or dummy folder) based on backend.\n"

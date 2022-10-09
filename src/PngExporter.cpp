@@ -29,7 +29,7 @@ PngExporter::~PngExporter()
 }
 
 bool PngExporter::save(const std::string &name, PaletteImage &palImage,
-        std::shared_ptr<AbstractPalette> abs_palette, int transparent)
+        std::shared_ptr<AbstractPalette> abs_palette, int transparent, bool rgba)
 {
   bool result = false;
 
@@ -37,7 +37,14 @@ bool PngExporter::save(const std::string &name, PaletteImage &palImage,
   std::shared_ptr<Palette> palette = dynamic_pointer_cast<Palette>(abs_palette);
   if(palette)
   {
-    result = PngExporter::saveRGB(name, palImage, *palette, transparent);
+    if(rgba)
+    {
+      result = PngExporter::saveRGBA(name, palImage, *palette, transparent);
+    }
+    else
+    {
+      result = PngExporter::saveRGB(name, palImage, *palette, transparent);
+    }
   }
   else
   {
@@ -346,7 +353,7 @@ bool PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Pale
   catch(std::out_of_range &ex)
   {
     LOG4CXX_ERROR(logger, ex.what());
-    LOG4CXX_ERROR(logger, "This image couldn't be saved because index out of range error. Very often this is because wrong palette is used for: " + name);
+    LOG4CXX_ERROR(logger, "This image couldn't be saved because index out of range error. Very often this happens because wrong palette is used for: " + name);
     result = false;
   }
 

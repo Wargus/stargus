@@ -28,7 +28,7 @@ static Logger logger("grptool");
 // some global variables
 string palette_file;
 string grp_file;
-bool remove_duplicates = true;
+bool duplicates = true;
 bool single_stiched = true;
 int image_per_row = 10;
 
@@ -97,7 +97,7 @@ const option::Descriptor usage[] =
     "Options:"
   },
   { HELP, 0, "h", "help", option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
-  { DUPLICATES, 0, "d", "duplicates", Arg::None, "  --duplicates, -d  \t\tExport also the duplicate frame" },
+  { DUPLICATES, 0, "d", "duplicates", Arg::Required, "  --duplicates yes|no, -d yes|no  \t\tgenerate duplicate frames (default: yes)" },
   { PALETTE, 0, "p", "palette", Arg::Required, "  --palette, -p  \t\tSpecify the path to a palette file" },
   { IMAGE_ROW, 0, "i", "image-row", Arg::Numeric, "  --image-row, -i  \t\tIf stitching is enabled, how many images should be saved per row (default: 10)" },
   { SINGLE_FRAMES, 0, "s", "single-frames", Arg::None, "  --single-frames, -s  \t\tExport each frame into one image (default: all stitched together)" },
@@ -128,7 +128,14 @@ int parseOptions(int argc, const char **argv)
 
   if ( options[DUPLICATES].count() > 0 )
   {
-    remove_duplicates = false;
+    if(string(options[DUPLICATES].arg) == "no")
+    {
+      duplicates = false;
+    }
+    else
+    {
+      duplicates = true;
+    }
   }
 
   if ( options[IMAGE_ROW].count() > 0 )
@@ -219,7 +226,7 @@ int main(int argc, const char **argv)
   {
     //myGRPPallete->write("test.pal");
 
-    GRPImage myGRPImage(grp_file, remove_duplicates);
+    GRPImage myGRPImage(grp_file, !duplicates);
     myGRPImage.SetColorPalette(myGRPPallete);
 
     //image_per_row=17 => starcraft
