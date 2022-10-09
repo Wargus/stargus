@@ -129,7 +129,7 @@ bool Grp::save(Storage filename)
 
     if (!getRGBA())
     {
-      PngExporter::save(filename.getFullPath(), palImage, *mPal, mTransparent);
+      PngExporter::saveRGB(filename.getFullPath(), palImage, *mPal, mTransparent);
     }
     else
     {

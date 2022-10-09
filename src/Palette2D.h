@@ -10,12 +10,13 @@
 // project
 #include "Color.h"
 #include "Palette.h"
+#include "AbstractPalette.h"
 
 // system
 #include <vector>
 #include <array>
 
-class Palette2D
+class Palette2D  : public AbstractPalette
 {
 public:
   Palette2D(unsigned int size);
@@ -40,13 +41,8 @@ public:
 
   void load(std::shared_ptr<DataChunk> rawPalette);
 
-  bool write(const std::string &filename);
-
-  bool read(const std::string &filename);
-
 private:
   std::vector<Palette> mColorPalette2D;
-  unsigned int mSize;
 };
 
 #endif /* PALETTE2D_H */

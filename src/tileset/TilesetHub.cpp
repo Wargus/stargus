@@ -103,7 +103,7 @@ bool TilesetHub::convert(std::shared_ptr<Palette> palette, Storage storage)
   // FIXME: I don't like the path handling in this case. Needs to be changed!
   string save_png(storage.getFullPath() + "/" + storage.getFilename() + ".png");
   CheckPath(save_png);
-  return !PngExporter::save(save_png, ultraTile, *palette, 0);
+  return PngExporter::saveRGB(save_png, ultraTile, *palette, 0);
 }
 
 void TilesetHub::generateLua(const std::string &name, const std::string &image, Storage luafile)

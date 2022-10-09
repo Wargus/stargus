@@ -62,7 +62,7 @@ bool Font::convert(const std::string &arcfile, Storage file)
     DataChunk dc_image(&image, w * h);
     PaletteImage palImage(dc_image, Size(w, h));
 
-    PngExporter::save(file.getFullPath(), palImage, *mPalette, 255);
+    PngExporter::saveRGB(file.getFullPath(), palImage, *mPalette, 255);
   }
 
   return result;

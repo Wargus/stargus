@@ -11,27 +11,26 @@
 
 // system
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 
 static Logger logger = Logger("startool.Palette2D");
 
 Palette2D::Palette2D(unsigned int size) :
-  mColorPalette2D(size),
-  mSize(size)
+  mColorPalette2D(size)
 {
 
 }
 
 Palette2D::Palette2D(std::shared_ptr<DataChunk> rawPalette) :
-  mColorPalette2D(rawPalette->getSize()/256),
-  mSize(rawPalette->getSize()/256)
+  mColorPalette2D(rawPalette->getSize()/256)
 {
   /**
-   * For initial construction just check that the DataChunk is a multiple of 256 bytes
+   * For initial construction just check that the DataChunk is a multiple of 256*3 bytes
    * which is an hint for a valid 2D palette.
    */
-  if((rawPalette->getSize() % 256) != 0)
+  if((rawPalette->getSize() % (256 * 3)))
   {
     throw NoValidPaletteException(rawPalette->getSize());
   }
@@ -48,10 +47,15 @@ void Palette2D::load(std::shared_ptr<DataChunk> rawPalette)
 {
   mColorPalette2D.clear();
 
-  for(unsigned int i = 0; i < mSize; i++)
+  unsigned int paletteSize = rawPalette->getSize() / (256*3);
+
+  for(unsigned int i = 0; i < paletteSize; i++)
   {
-    shared_ptr<DataChunk> dc;
-    dc->addData(rawPalette->getDataPointer(), 256);
+    shared_ptr<DataChunk> dc = make_shared<DataChunk>();
+
+    int start_read_pos = i * 256 *3;
+    int read_size = 256*3;
+    dc->addData(rawPalette->getDataPointer() + start_read_pos, read_size);
 
     Palette pal(dc);
 
@@ -74,9 +78,8 @@ std::shared_ptr<DataChunk> Palette2D::createDataChunk()
       datachunk->addData(&red, 1);
       datachunk->addData(&green, 1);
       datachunk->addData(&blue, 1);
-
-      i++;
     }
+
   }
 
   return datachunk;
@@ -84,12 +87,6 @@ std::shared_ptr<DataChunk> Palette2D::createDataChunk()
 
 Color &Palette2D::at(unsigned int column, unsigned int row)
 {
-  /*if(row <= mSize)
-  {
-    // dynamic grow the palette if one try to access a not available row
-    mColorPalette2D.resize(row);
-  }*/
-
   auto &color_array = mColorPalette2D.at(row);
   Color &color = color_array.at(column);
 
@@ -98,29 +95,7 @@ Color &Palette2D::at(unsigned int column, unsigned int row)
 
 unsigned int Palette2D::getSize()
 {
-  return mSize;
+  return mColorPalette2D.size();
 }
 
-bool Palette2D::write(const std::string &filename)
-{
-  bool result = true;
 
-  std::shared_ptr<DataChunk> dc_pal = createDataChunk();
-  result = dc_pal->write(filename);
-
-  return result;
-}
-
-bool Palette2D::read(const std::string &filename)
-{
-  bool result = true;
-
-  std::shared_ptr<DataChunk> dc_pal = make_shared<DataChunk>();
-  result = dc_pal->read(filename);
-  if(result)
-  {
-    load(dc_pal);
-  }
-
-  return result;
-}

@@ -14,7 +14,7 @@
 #ifndef GRPImage_Header
 #define GRPImage_Header
 
-#include "Palette.h"
+#include "AbstractPalette.h"
 
 #include "libgrp/GRPFrame/GRPFrame.hpp"
 
@@ -127,7 +127,7 @@ public:
    *      during the conversion process you may get a invalidColors or
    *      throw exception
    * \note NA*/
-  void SetColorPalette(std::shared_ptr<Palette> selectedColorPalette);
+  void SetColorPalette(std::shared_ptr<AbstractPalette> selectedColorPalette);
 
   /*!Save the GRPImage frames to a PNG file via libpng
    * \pre GRPImage is loaded.
@@ -172,7 +172,7 @@ private:
   std::vector<GRPFrame *> mImageFrames;
 
   //The palette that will be used during conversion
-  std::shared_ptr<Palette> mCurrentPalette;
+  std::shared_ptr<AbstractPalette> mCurrentPalette;
 
 
   //GRPimage Header

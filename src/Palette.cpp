@@ -88,27 +88,3 @@ Color &Palette::at(unsigned int index)
 {
   return mColorPalette.at(index);
 }
-
-bool Palette::write(const std::string &filename)
-{
-  bool result = true;
-
-  std::shared_ptr<DataChunk> dc_pal = createDataChunk();
-  result = dc_pal->write(filename);
-
-  return result;
-}
-
-bool Palette::read(const std::string &filename)
-{
-  bool result = true;
-
-  std::shared_ptr<DataChunk> dc_pal = make_shared<DataChunk>();
-  result = dc_pal->read(filename);
-  if(result)
-  {
-    load(dc_pal);
-  }
-
-  return result;
-}

@@ -460,11 +460,12 @@ void testHook()
   pal3->createDataChunk()->write("/tmp/ofire.pal");
 
   // Image 4
-  Pcx pcx4(storm, "tileset\\ashworld\\bfire.pcx");
+  Pcx pcx4(storm, "tileset\\ashworld\\ofire.pcx");
   pcx4.savePNG("/tmp/bfire.png");
   std::shared_ptr<Palette2D> pal2D_4 = pcx4.map2DPalette();
   std::shared_ptr<Palette> pal4 = pcx4.getPalette();
-  pal4->createDataChunk()->write("/tmp/bfire.pal");
+  pal4->createDataChunk()->write("/tmp/ofire.pal");
+  pal2D_4->write("/tmp/ofire.pal2d");
 
 
   shared_ptr<DataChunk> terrainWPE = storm->extractDataChunk("tileset\\jungle.wpe");
@@ -472,16 +473,16 @@ void testHook()
   terrainPalette->createDataChunk()->write("/tmp/terrainPalette.pal");
 
   //string grp_file = "unit\\protoss\\pbaGlow.grp";
-  string grp_file = "unit\\cmdbtns\\cmdicons.grp";
+  string grp_file = "unit\\thingy\\ofirec.grp";
   Grp grp(storm, grp_file);
-  grp.setPalette(pal2);
+  grp.setPalette2D(pal2D_4);
   grp.setRGBA(true);
   //grp.setPalette(terrainPalette);
   //grp.setTransparent(200);
   //grp.setRGBA(true);
 
 
-  grp.save("/tmp/cmdicons.png");
+  grp.save("/tmp/ofirec.png");
 
   cout << "end testHook()" << endl;
   exit(0);

@@ -8,18 +8,17 @@
 #define PALETTE_H
 
 // project
-#include "DataChunk.h"
 #include "Color.h"
 #include "Converter.h"
+#include "AbstractPalette.h"
 
 // project
-#include <memory>
 #include <array>
 
 /**
  *
  */
-class Palette
+class Palette : public AbstractPalette
 {
 public:
   Palette();
@@ -44,10 +43,6 @@ public:
   Color &at(unsigned int index);
 
   void load(std::shared_ptr<DataChunk> rawPalette);
-
-  bool write(const std::string &filename);
-
-  bool read(const std::string &filename);
 
 private:
   std::array<Color, 256> mColorPalette;

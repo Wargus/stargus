@@ -11,6 +11,7 @@
 #include "FileUtil.h"
 #include "Breeze.h"
 #include "NoValidPaletteException.h"
+#include "Palette2D.h"
 
 // system
 #include <iostream>
@@ -193,12 +194,14 @@ int main(int argc, const char **argv)
 
   parseOptions(argc, argv);
 
-  std::shared_ptr<Palette> myGRPPallete = make_shared<Palette>();
+  std::shared_ptr<AbstractPalette> myGRPPallete;// = make_shared<Palette>();
   bool pal_ok = false;
 
   try
   {
-    pal_ok = myGRPPallete->read(palette_file);
+    shared_ptr<DataChunk> dc = make_shared<DataChunk>();
+    dc->read(palette_file);
+    myGRPPallete = AbstractPalette::create(dc);
   }
   catch(NoValidPaletteException &palEx)
   {
@@ -212,7 +215,7 @@ int main(int argc, const char **argv)
     exit(1);
   }
 
-  if(pal_ok)
+  if(myGRPPallete)
   {
     //myGRPPallete->write("test.pal");
 
@@ -233,7 +236,7 @@ int main(int argc, const char **argv)
     exit(1);
   }
 
-  cerr << "Application finished!" << endl;
+  cout << "Application finished!" << endl;
 
   return 0;
 }

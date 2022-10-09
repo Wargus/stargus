@@ -469,7 +469,7 @@ uint16_t GRPImage::getMaxImageHeight() const
   return mMaxImageHeight;
 }
 
-void GRPImage::SetColorPalette(std::shared_ptr<Palette> selectedColorPalette)
+void GRPImage::SetColorPalette(std::shared_ptr<AbstractPalette> selectedColorPalette)
 {
   if(selectedColorPalette)
     mCurrentPalette = selectedColorPalette;
@@ -552,7 +552,7 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
     {
       string frameOutput = "frame" + to_string(currentProcessingFrame) + "_" + outFilePath;
 
-      PngExporter::save(frameOutput, *paletteImage, *mCurrentPalette, 0);
+      PngExporter::save(frameOutput, *paletteImage, mCurrentPalette, 0);
     }
     //Otherwise continue writing down the row
     else
@@ -564,7 +564,7 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
   //Now that all the pixels are in place, lets write the result to disk
   if(singleStitchedImage)
   {
-    PngExporter::save(outFilePath, *paletteImage, *mCurrentPalette, 0);
+    PngExporter::save(outFilePath, *paletteImage, mCurrentPalette, 0);
   }
 }
 

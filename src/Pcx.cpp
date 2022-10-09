@@ -65,7 +65,7 @@ bool Pcx::savePNG(Storage storage)
 
   if (mRawData)
   {
-    PngExporter::save(storage.getFullPath(), *mPaletteImage, *mPalette, 0);
+    PngExporter::saveRGB(storage.getFullPath(), *mPaletteImage, *mPalette, 0);
   }
   else
   {
