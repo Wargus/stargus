@@ -27,25 +27,28 @@ Grp::Grp(std::shared_ptr<Hurricane> hurricane) :
   Converter(hurricane),
   mRGBA(false),
   mGFX(true),
-  mTransparent(254)
+  mTransparent(254),
+  m_tmp_libgrp_transition(false)
 {
 }
 
-Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
+Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, bool tmp_libgrp_transition) :
   Converter(hurricane),
   mRGBA(false),
   mGFX(true),
-  mTransparent(254)
+  mTransparent(254),
+  m_tmp_libgrp_transition(tmp_libgrp_transition)
 {
   load(arcfile);
 }
 
-Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<AbstractPalette> pal) :
+Grp::Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<AbstractPalette> pal, bool tmp_libgrp_transition) :
   Converter(hurricane),
   mPal(pal),
   mRGBA(false),
   mGFX(true),
-  mTransparent(254)
+  mTransparent(254),
+  m_tmp_libgrp_transition(tmp_libgrp_transition)
 {
   load(arcfile);
 }
@@ -67,6 +70,8 @@ bool Grp::getGFX()
 void Grp::setPalette(std::shared_ptr<AbstractPalette> pal)
 {
   mPal = pal;
+
+  mGRPImage.SetColorPalette(pal);
 }
 
 void Grp::setRGBA(bool rgba)
@@ -83,6 +88,18 @@ bool Grp::load(const std::string &arcfile)
 {
   mArcfile = arcfile;
 
+  if(m_tmp_libgrp_transition)
+  {
+    std::shared_ptr<DataChunk> dcGrp = mHurricane->extractDataChunk(arcfile);
+
+    std::vector<char> GrpVec = dcGrp->getCharVector();
+
+    if(dcGrp)
+    {
+      mGRPImage.LoadImage(&GrpVec, false);
+    }
+  }
+
   return true;
 }
 
@@ -94,6 +111,21 @@ bool Grp::save(Storage filename)
   int w;
   int h;
   bool result = true;
+
+  if(m_tmp_libgrp_transition)
+  {
+    int IPR = 17;
+    int end_frame = mGRPImage.getNumberOfFrames();
+
+    // all IPR < 17 are buildings or similar and stratagus needs them in one image per row
+    if(end_frame < IPR)
+    {
+      IPR = 1;
+    }
+
+    mGRPImage.SaveConvertedPNG(filename.getFullPath(), 0, end_frame, true, IPR);
+    return true;
+  }
 
   result = mHurricane->extractMemory(mArcfile, &gfxp, NULL);
   if (result)
@@ -140,6 +172,12 @@ bool Grp::save(Storage filename)
 
 Size Grp::getTileSize()
 {
+  if(m_tmp_libgrp_transition)
+  {
+    Size size (mGRPImage.getMaxImageWidth(), mGRPImage.getMaxImageHeight());
+    return size;
+  }
+
   return mTilesize;
 }
 

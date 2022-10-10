@@ -10,6 +10,16 @@ using namespace std;
 
 //#define VERBOSE 10 // debug
 
+GRPImage::GRPImage() :
+  mCurrentPalette(nullptr),
+  mNumberOfFrames(0),
+  mMaxImageWidth(0),
+  mMaxImageHeight(0),
+  mUncompressed(false)
+{
+
+}
+
 GRPImage::GRPImage(std::vector<char> *inputImage, bool removeDuplicates) :
   mCurrentPalette(nullptr),
   mNumberOfFrames(0),

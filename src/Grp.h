@@ -13,6 +13,7 @@
 #include "Storage.h"
 #include "Size.h"
 #include "Palette2D.h"
+#include "libgrp/libgrp.hpp"
 
 // System
 #include <string.h>
@@ -27,8 +28,8 @@ class Grp: public Converter
 {
 public:
   Grp(std::shared_ptr<Hurricane> hurricane);
-  Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile);
-  Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<AbstractPalette> pal);
+  Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, bool tmp_libgrp_transition = false);
+  Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<AbstractPalette> pal, bool tmp_libgrp_transition = false);
   virtual ~Grp();
 
   /**
@@ -79,11 +80,13 @@ protected:
 
 private:
   std::shared_ptr<AbstractPalette> mPal;
+  GRPImage mGRPImage;
   std::string mArcfile;
   bool mRGBA;
   bool mGFX;
   int mTransparent;
   Size mTilesize;
+  bool m_tmp_libgrp_transition;
 };
 
 #endif /* GRP_H */

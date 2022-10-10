@@ -473,7 +473,7 @@ void testHook()
 
   //string grp_file = "unit\\protoss\\pbaGlow.grp";
   string grp_file = "unit\\thingy\\ofirec.grp";
-  Grp grp(storm, grp_file);
+  Grp grp(storm, grp_file, true);
   grp.setPalette(pal2D_4);
   grp.setRGBA(true);
   //grp.setPalette(terrainPalette);

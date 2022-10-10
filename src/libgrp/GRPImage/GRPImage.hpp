@@ -39,6 +39,8 @@ class GRPImage
 {
 
 public:
+  GRPImage();
+
   //!Set image data from memory
   /*! Use the image data that is loaded in a the specified
    * vector.

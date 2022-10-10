@@ -99,7 +99,7 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<AbstractPale
 
     string grp_arcfile =  "unit\\" + grp_name;
 
-    Grp grp(mHurricane, grp_arcfile);
+    Grp grp(mHurricane, grp_arcfile, true);
     std::shared_ptr<AbstractPalette> pal;
     string remapping;
 
