@@ -485,7 +485,7 @@ void GRPImage::SetColorPalette(std::shared_ptr<AbstractPalette> selectedColorPal
     mCurrentPalette = selectedColorPalette;
 }
 
-void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int endingFrame, bool singleStitchedImage, int imagesPerRow)
+void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int endingFrame, bool singleStitchedImage, int imagesPerRow, bool rgba)
 {
   if(!mCurrentPalette)
   {
@@ -562,7 +562,7 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
     {
       string frameOutput = "frame" + to_string(currentProcessingFrame) + "_" + outFilePath;
 
-      PngExporter::save(frameOutput, *paletteImage, mCurrentPalette, 0);
+      PngExporter::save(frameOutput, *paletteImage, mCurrentPalette, 0, rgba);
     }
     //Otherwise continue writing down the row
     else
@@ -574,7 +574,7 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
   //Now that all the pixels are in place, lets write the result to disk
   if(singleStitchedImage)
   {
-    PngExporter::save(outFilePath, *paletteImage, mCurrentPalette, 0);
+    PngExporter::save(outFilePath, *paletteImage, mCurrentPalette, 0, rgba);
   }
 }
 

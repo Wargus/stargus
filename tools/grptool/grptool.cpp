@@ -31,6 +31,7 @@ string grp_file;
 bool duplicates = true;
 bool single_stiched = true;
 int image_per_row = 10;
+bool rgba = false;
 
 
 /** option parser **/
@@ -88,7 +89,7 @@ struct Arg: public option::Arg
 
 enum optionIndex
 {
-  UNKNOWN, HELP, PALETTE, DUPLICATES, IMAGE_ROW, SINGLE_FRAMES
+  UNKNOWN, HELP, PALETTE, DUPLICATES, IMAGE_ROW, SINGLE_FRAMES, RGBA
 };
 const option::Descriptor usage[] =
 {
@@ -97,6 +98,7 @@ const option::Descriptor usage[] =
     "Options:"
   },
   { HELP, 0, "h", "help", option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
+  { RGBA, 0, "r", "rgba", option::Arg::None, "  --rgba, -r  \t\tForce RGBA PNG export for 8-bit palettes" },
   { DUPLICATES, 0, "d", "duplicates", Arg::Required, "  --duplicates yes|no, -d yes|no  \t\tgenerate duplicate frames (default: yes)" },
   { PALETTE, 0, "p", "palette", Arg::Required, "  --palette, -p  \t\tSpecify the path to a palette file" },
   { IMAGE_ROW, 0, "i", "image-row", Arg::Numeric, "  --image-row, -i  \t\tIf stitching is enabled, how many images should be saved per row (default: 10)" },
@@ -138,12 +140,12 @@ int parseOptions(int argc, const char **argv)
     }
   }
 
-  if ( options[IMAGE_ROW].count() > 0 )
+  if(options[IMAGE_ROW].count() > 0)
   {
     image_per_row = stoi(options[IMAGE_ROW].arg);
   }
 
-  if ( options[SINGLE_FRAMES].count() > 0 )
+  if(options[SINGLE_FRAMES].count() > 0)
   {
     single_stiched = false;
   }
@@ -157,6 +159,11 @@ int parseOptions(int argc, const char **argv)
     cerr << "Error: 'palette' not given!" << endl << endl;
     option::printUsage(std::cout, usage);
     exit(1);
+  }
+
+  if(options[RGBA].count() > 0 )
+  {
+    rgba = true;
   }
 
   // parse options
@@ -201,9 +208,7 @@ int main(int argc, const char **argv)
 
   parseOptions(argc, argv);
 
-  std::shared_ptr<AbstractPalette> myGRPPallete;// = make_shared<Palette>();
-  bool pal_ok = false;
-
+  std::shared_ptr<AbstractPalette> myGRPPallete;
   try
   {
     shared_ptr<DataChunk> dc = make_shared<DataChunk>();
@@ -230,7 +235,7 @@ int main(int argc, const char **argv)
     myGRPImage.SetColorPalette(myGRPPallete);
 
     //image_per_row=17 => starcraft
-    myGRPImage.SaveConvertedPNG("output_frame.png", 0, myGRPImage.getNumberOfFrames(), single_stiched, image_per_row);
+    myGRPImage.SaveConvertedPNG("output_frame.png", 0, myGRPImage.getNumberOfFrames(), single_stiched, image_per_row, rgba);
 
     //myGRPImage.SaveConvertedImage("output_frame_magic.png", 0, myGRPImage.getNumberOfFrames(), single_stiched, image_per_row);
 

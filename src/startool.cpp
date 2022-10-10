@@ -720,7 +720,7 @@ int main(int argc, const char **argv)
         case G: // WORKS!
         {
           printf("ConvertGfx: %s, %s, %d", c[u].File, c[u].ArcFile, c[u].Arg1);
-          Grp grp(storm, c[u].ArcFile);
+          Grp grp(storm, c[u].ArcFile, true);
           std::shared_ptr<AbstractPalette> pal;
 
           if (c[u].Arg1 == 6)

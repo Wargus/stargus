@@ -140,7 +140,7 @@ public:
    * \param[in] singleStitchedImage Stitch the GRP frames together into one image.
    * \param[in] imagesPerRow If stitching is enabled, how many images should be save per row.
    * \note NA*/
-  void SaveConvertedPNG(std::string outFilePath, int startingFrame, int endingFrame, bool singleStitchedImage, int imagesPerRow);
+  void SaveConvertedPNG(std::string outFilePath, int startingFrame, int endingFrame, bool singleStitchedImage, int imagesPerRow, bool rgba);
 
 protected:
 
