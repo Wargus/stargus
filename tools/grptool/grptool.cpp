@@ -235,7 +235,14 @@ int main(int argc, const char **argv)
     myGRPImage.SetColorPalette(myGRPPallete);
 
     //image_per_row=17 => starcraft
-    myGRPImage.SaveConvertedPNG("output_frame.png", 0, myGRPImage.getNumberOfFrames(), single_stiched, image_per_row, rgba);
+    if(single_stiched)
+    {
+      myGRPImage.SaveStitchedPNG("output_frame.png", 0, myGRPImage.getNumberOfFrames(), image_per_row, rgba);
+    }
+    else
+    {
+      myGRPImage.SaveSinglePNG("output_frame.png", 0, myGRPImage.getNumberOfFrames(), rgba);
+    }
 
     //myGRPImage.SaveConvertedImage("output_frame_magic.png", 0, myGRPImage.getNumberOfFrames(), single_stiched, image_per_row);
 

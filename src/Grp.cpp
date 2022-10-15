@@ -123,7 +123,7 @@ bool Grp::save(Storage filename)
       IPR = 1;
     }
 
-    mGRPImage.SaveConvertedPNG(filename.getFullPath(), 0, end_frame, true, IPR, mRGBA);
+    mGRPImage.SaveStitchedPNG(filename.getFullPath(), 0, end_frame, IPR, mRGBA);
     return true;
   }
 

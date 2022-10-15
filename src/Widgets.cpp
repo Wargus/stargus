@@ -4,12 +4,20 @@
  *      Author: Andreas Volz
  */
 
+// project
 #include <Palette.h>
 #include <PngExporter.h>
 #include "Widgets.h"
 #include "Storm.h"
 #include "Preferences.h"
 #include "FileUtil.h"
+#include "pacman.h"
+
+// system
+#include <fstream>
+#include <iostream>
+
+using namespace std;
 
 Widgets::Widgets(std::shared_ptr<Hurricane> hurricane) :
   Grp(hurricane)
@@ -20,6 +28,57 @@ Widgets::Widgets(std::shared_ptr<Hurricane> hurricane) :
 Widgets::~Widgets()
 {
 
+}
+
+bool Widgets::convert2(const std::string &arcfile, Storage filename, json &frameExtractJson)
+{
+  bool result = true;
+
+  std::shared_ptr<DataChunk> dcGrp = mHurricane->extractDataChunk(arcfile);
+
+  std::vector<char> GrpVec = dcGrp->getCharVector();
+
+  if(dcGrp)
+  {
+    //cout << frameExtractJson << endl; // prints json object to screen
+
+    vector<string> frameNames;
+
+    for(auto &array : frameExtractJson)
+    {
+      //int frame_id = array.at("frame");
+      string name = array.at("name");
+
+      //cout << "frame: " << to_string(frame_id) << endl;
+      //cout << "name: " << name << endl;
+
+      frameNames.push_back(name);
+    }
+
+    mGRPImage.LoadImage(&GrpVec, true); // true: no duplicate widgets needed
+
+    CheckPath(filename.getFullPath());
+    mGRPImage.SaveSinglePNG(filename.getFullPath(), frameNames, 0, mGRPImage.getNumberOfFrames(), true);
+
+    vector<int> testVec;
+    testVec.push_back(88);
+    testVec.push_back(82);
+    testVec.push_back(82);
+    testVec.push_back(82);
+    testVec.push_back(82);
+    testVec.push_back(82);
+    testVec.push_back(82);
+    testVec.push_back(82);
+    testVec.push_back(82);
+    testVec.push_back(82);
+    testVec.push_back(82);
+    testVec.push_back(82);
+    testVec.push_back(83);
+
+    mGRPImage.SaveStitchedPNG(filename.getFullPath()+"/widget2.png", testVec, 0, true);
+  }
+
+  return result;
 }
 
 bool Widgets::convert(const char *arcfile,
@@ -163,11 +222,6 @@ bool Widgets::convert(const char *arcfile,
   return result;
 }
 
-void Widgets::setPalette(std::shared_ptr<AbstractPalette> pal)
-{
-  mPalette = pal;
-}
-
 void Widgets::SaveImage(char *name, unsigned char *image,
                         int id, int w, int h)
 {
@@ -182,7 +236,7 @@ void Widgets::SaveImage(char *name, unsigned char *image,
   DataChunk dc_image(&buf, w * h);
   PaletteImage palImage(dc_image, Size(w, h));
 
-  PngExporter::save(name, palImage, mPalette, 255);
+  PngExporter::save(name, palImage, mPal, 255);
 }
 
 void Widgets::SaveButton(char *name, unsigned char *image,
@@ -216,6 +270,6 @@ void Widgets::SaveButton(char *name, unsigned char *image,
   DataChunk dc_image(&button, size * 28);
   PaletteImage palImage(dc_image, Size(size, 28));
 
-  PngExporter::save(name, palImage, mPalette, 255);
+  PngExporter::save(name, palImage, mPal, 255);
 }
 

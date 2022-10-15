@@ -480,6 +480,17 @@ void testHook()
   //grp.setTransparent(200);
   //grp.setRGBA(true);
 
+  // read in the json file
+  std::ifstream json_file(pacman::searchFile("dataset/dlgs_race.json"));
+
+  json dlgsRaceJson; //create unitiialized json object
+
+  json_file >> dlgsRaceJson; // initialize json object with what was read from file
+
+  Widgets widgets(storm);
+  widgets.setPalette(pal);
+  widgets.convert2("dlgs\\terran.grp", "/tmp/widgets2/", dlgsRaceJson);
+
 
   grp.save("/tmp/ofirec.png");
 
@@ -672,6 +683,15 @@ int main(int argc, const char **argv)
       SfxConverter sfxConverter(sub_storm, datahub);
       sfxConverter.convert();
     }
+
+    // read in the json file
+    std::ifstream dlgsRaceJsonStream(pacman::searchFile("dataset/dlgs_race.json"));
+    json dlgsRaceJson; //create unitiialized json object
+    dlgsRaceJsonStream >> dlgsRaceJson; // initialize json object with what was read from file
+
+    Widgets widgets(sub_storm);
+    widgets.setPalette(paletteMap["tunit"]);
+    widgets.convert2("dlgs\\terran.grp", graphics("ui/terran-new"), dlgsRaceJson);
 
     for (i = 0; i <= 1; ++i)
     {

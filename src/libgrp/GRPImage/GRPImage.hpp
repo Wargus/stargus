@@ -134,13 +134,19 @@ public:
   /*!Save the GRPImage frames to a PNG file via libpng
    * \pre GRPImage is loaded.
    * \post Outputs a image to the ourFilePath.
-   * \param[in] outFilePath The output image file path.
+   * \param[in] outFilePath The output image file path. (use %d for single image frame replace in the exported image path)
    * \param[in] startingFrame The first image that you would like saved.
    * \param[in] endingFrame The frame you would like to stop saving on.
    * \param[in] singleStitchedImage Stitch the GRP frames together into one image.
    * \param[in] imagesPerRow If stitching is enabled, how many images should be save per row.
    * \note NA*/
-  void SaveConvertedPNG(std::string outFilePath, int startingFrame, int endingFrame, bool singleStitchedImage, int imagesPerRow, bool rgba);
+  void SaveStitchedPNG(const std::string &outFilePath, int startingFrame, int endingFrame, unsigned int imagesPerRow, bool rgba);
+
+  void SaveStitchedPNG(const std::string &outFilePath, std::vector<int> frameEnumerator, unsigned int imagesPerRow, bool rgba);
+
+  void SaveSinglePNG(const std::string &outFilePath, int startingFrame, int endingFrame, bool rgba);
+
+  void SaveSinglePNG(const std::string &outFilePath, const std::vector<std::string> &fileNames, int startingFrame, int endingFrame, bool rgba);
 
 protected:
 

@@ -1,5 +1,6 @@
 #include "GRPImage.hpp"
 #include "PngExporter.h"
+#include "StringUtil.h"
 
 #include <string.h>
 #include <iostream>
@@ -155,11 +156,6 @@ void GRPImage::LoadImage(std::vector<char> *inputImage, bool removeDuplicates)
   currentDataPosition += 2;
   currentDataPosition += 2;
 
-  if(mUncompressed)
-  {
-    //cout << "uncompressed Grp" << endl;
-  }
-
 #if VERBOSE >= 2
   std::cout << "GRP Image Number of Frames: " << mNumberOfFrames << " maxWidth: " << mMaxImageWidth << " maxHeight: " << mMaxImageHeight << '\n';
 #endif
@@ -173,8 +169,8 @@ void GRPImage::LoadImage(std::vector<char> *inputImage, bool removeDuplicates)
   std::unordered_map<uint32_t, bool> uniqueGRPImages;
   std::unordered_map<uint32_t, bool>::const_iterator uniqueGRPCheck;
 
-  int bestWidth = 0;
-  int bestHeight = 0;
+  //int bestWidth = 0;
+  //int bestHeight = 0;
 
   //Load each GRP Header into a GRPFrame & Allocate
   for(int currentGRPFrame = 0; currentGRPFrame < mNumberOfFrames; currentGRPFrame++)
@@ -203,22 +199,6 @@ void GRPImage::LoadImage(std::vector<char> *inputImage, bool removeDuplicates)
     std::copy(currentDataPosition, (currentDataPosition + 4),(char *) &tempDataOffset);
     currentDataPosition += 4;
     currentImageFrame->SetDataOffset(tempDataOffset);
-
-    // calculate the best width for that image (only for uncompressed)
-    if(mUncompressed)
-    {
-      if (currentImageFrame->GetXOffset() + currentImageFrame->GetImageWidth() > bestWidth)
-      {
-        bestWidth = currentImageFrame->GetXOffset() + currentImageFrame->GetImageWidth();
-      }
-
-      if (currentImageFrame->GetYOffset() + currentImageFrame->GetImageHeight() > bestHeight)
-      {
-        bestHeight = currentImageFrame->GetYOffset() + currentImageFrame->GetImageHeight();
-      }
-      mMaxImageWidth = bestWidth;
-      mMaxImageHeight = bestHeight;
-    }
 
 #if VERBOSE >= 2
     std::cout << "Current Frame: " << currentGRPFrame << " Width: " << (int) currentImageFrame->GetImageWidth() << " Height: "
@@ -485,7 +465,19 @@ void GRPImage::SetColorPalette(std::shared_ptr<AbstractPalette> selectedColorPal
     mCurrentPalette = selectedColorPalette;
 }
 
-void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int endingFrame, bool singleStitchedImage, int imagesPerRow, bool rgba)
+void GRPImage::SaveStitchedPNG(const std::string &outFilePath, int startingFrame, int endingFrame, unsigned int imagesPerRow, bool rgba)
+{
+  vector<int> frameEnumarator;
+
+  for(int i = startingFrame; i < endingFrame; i++)
+  {
+    frameEnumarator.push_back(i);
+  }
+
+  SaveStitchedPNG(outFilePath, frameEnumarator, imagesPerRow, rgba);
+}
+
+void GRPImage::SaveStitchedPNG(const std::string &outFilePath, std::vector<int> frameEnumerator, unsigned int imagesPerRow, bool rgba)
 {
   if(!mCurrentPalette)
   {
@@ -495,42 +487,52 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
 
   shared_ptr<PaletteImage> paletteImage;
 
-  if(imagesPerRow >= mNumberOfFrames)
+  // limit the 'imagePerRow' input parameter in both directions to something useful
+  if((imagesPerRow >= frameEnumerator.size()) || (imagesPerRow == 0))
   {
-    imagesPerRow = mNumberOfFrames;
-  }
-
-  int image_width = (mMaxImageWidth * imagesPerRow);
-  int image_height = (mMaxImageHeight * (ceil( (float)mNumberOfFrames/imagesPerRow)));
-
-  if(singleStitchedImage)
-  {
-    // create the complete image with all stitched small images
-    paletteImage = make_shared<PaletteImage>(Size(image_width, image_height));
-  }
-  else
-  {
-    // create later in the loop the small ones...
+    imagesPerRow = frameEnumerator.size();
   }
 
   Color currentPalettePixel;
   std::stringstream fileOutPath;
   int currentImageDestinationColumn = 0;
-  int currentImageDestinationRow = 0;
+  unsigned int currentImageDestinationRow = 0;
 
-  for(int currentProcessingFrame = startingFrame; currentProcessingFrame < endingFrame; ++currentProcessingFrame)
+  int bestWidth = 0;
+  int bestHeight = 0;
+  for(int currentProcessingFrame : frameEnumerator)
+  {
+    GRPFrame *currentImageFrame = mImageFrames.at(currentProcessingFrame);
+
+    // calculate the best width/height for that image (only for uncompressed or only partly exported)
+    if((mUncompressed) || (frameEnumerator.size() != mNumberOfFrames))
+    {
+      if (currentImageFrame->GetXOffset() + currentImageFrame->GetImageWidth() > bestWidth)
+      {
+        bestWidth = currentImageFrame->GetXOffset() + currentImageFrame->GetImageWidth();
+      }
+
+      if (currentImageFrame->GetYOffset() + currentImageFrame->GetImageHeight() > bestHeight)
+      {
+        bestHeight = currentImageFrame->GetYOffset() + currentImageFrame->GetImageHeight();
+      }
+      mMaxImageWidth = bestWidth;
+      mMaxImageHeight = bestHeight;
+    }
+  }
+
+  int image_width = (mMaxImageWidth * imagesPerRow);
+  int image_height = (mMaxImageHeight * (ceil( (float)frameEnumerator.size()/imagesPerRow)));
+
+  // create the complete image with all stitched small images
+  paletteImage = make_shared<PaletteImage>(Size(image_width, image_height));
+
+  for(int currentProcessingFrame : frameEnumerator)
   {
     GRPFrame *currentFrame = mImageFrames.at(currentProcessingFrame);
 
-    // create a image for each frame
-    if(!singleStitchedImage)
-    {
-      //cout << "image size: " << to_string(currentFrame->GetImageWidth()) << "/" <<  to_string(currentFrame->GetImageHeight()) << endl;
-      paletteImage = make_shared<PaletteImage>(Size(currentFrame->GetImageWidth(), currentFrame->GetImageHeight()));
-    }
-
     //If a row in a stitched image is complete, move onto the next row
-    if(singleStitchedImage && (currentImageDestinationRow >= imagesPerRow))
+    if(currentImageDestinationRow >= imagesPerRow)
     {
       currentImageDestinationColumn++;
       currentImageDestinationRow = 0;
@@ -539,43 +541,81 @@ void GRPImage::SaveConvertedPNG(std::string outFilePath, int startingFrame, int 
     //Start appling the pixels with the refence colorpalettes
     for (std::list<UniquePixel>::iterator currentProcessPixel = currentFrame->frameData.begin(); currentProcessPixel != currentFrame->frameData.end(); currentProcessPixel++)
     {
-      if(singleStitchedImage)
-      {
         Pos pixel_pos((currentFrame->GetXOffset() + currentProcessPixel->xPosition) + (mMaxImageWidth * currentImageDestinationRow),
                       (currentFrame->GetYOffset() + currentProcessPixel->yPosition) + (mMaxImageHeight * currentImageDestinationColumn) );
 
         paletteImage->at(pixel_pos) = currentProcessPixel->colorPaletteReference;
+    }
+
+    currentImageDestinationRow++;
+  }
+  //Now that all the pixels are in place, lets write the result to disk
+  PngExporter::save(outFilePath, *paletteImage, mCurrentPalette, 0, rgba);
+}
+
+void GRPImage::SaveSinglePNG(const std::string &outFilePath, int startingFrame, int endingFrame, bool rgba)
+{
+  SaveSinglePNG(outFilePath, std::vector<std::string>(), startingFrame, endingFrame, rgba);
+}
+
+void GRPImage::SaveSinglePNG(const std::string &outFilePath, const std::vector<std::string> &fileNames, int startingFrame, int endingFrame, bool rgba)
+{
+  if(!mCurrentPalette)
+  {
+    GRPImageNoLoadedPaletteSet noPalette;
+    noPalette.SetErrorMessage("No loaded set");
+  }
+
+  shared_ptr<PaletteImage> paletteImage;
+
+  Color currentPalettePixel;
+  std::stringstream fileOutPath;
+
+  unsigned int i = 0;
+  for(int currentProcessingFrame = startingFrame; currentProcessingFrame < endingFrame; ++currentProcessingFrame)
+  {
+    GRPFrame *currentFrame = mImageFrames.at(currentProcessingFrame);
+
+    // create a image for each frame
+    //cout << "image size: " << to_string(currentFrame->GetImageWidth()) << "/" <<  to_string(currentFrame->GetImageHeight()) << endl;
+    paletteImage = make_shared<PaletteImage>(Size(currentFrame->GetImageWidth(), currentFrame->GetImageHeight()));
+
+    //Start appling the pixels with the refence colorpalettes
+    for (std::list<UniquePixel>::iterator currentProcessPixel = currentFrame->frameData.begin(); currentProcessPixel != currentFrame->frameData.end(); currentProcessPixel++)
+    {
+      Pos pixel_pos((currentProcessPixel->xPosition),
+                    (currentProcessPixel->yPosition));
+      //cout << "put color to: " << to_string(pixel_pos.getX()) << "/" << to_string(pixel_pos.getY()) << endl;
+
+      paletteImage->at(pixel_pos) = currentProcessPixel->colorPaletteReference;
+    }
+
+    //It's time to write the current frame to a file
+    string frameOutput = outFilePath;
+
+    // if the name vector is empty use the string %d replacer
+    if(fileNames.empty())
+    {
+      replaceString("%d", to_string(currentProcessingFrame), frameOutput);
+    }
+    else
+    {
+      if(i < fileNames.size())
+      {
+        frameOutput += "/" + fileNames.at(i);
       }
       else
       {
-        Pos pixel_pos((currentProcessPixel->xPosition),
-                      (currentProcessPixel->yPosition));
-        //cout << "put color to: " << to_string(pixel_pos.getX()) << "/" << to_string(pixel_pos.getY()) << endl;
-
-        paletteImage->at(pixel_pos) = currentProcessPixel->colorPaletteReference;
+        // name fallback in case the input doesn't contain a name
+        frameOutput += "/" + to_string(i) + ".png";
       }
-
     }
 
-    //If not stitched it's time to write the current frame to a file
-    if(!singleStitchedImage)
-    {
-      string frameOutput = "frame" + to_string(currentProcessingFrame) + "_" + outFilePath;
+    PngExporter::save(frameOutput, *paletteImage, mCurrentPalette, 0, rgba);
 
-      PngExporter::save(frameOutput, *paletteImage, mCurrentPalette, 0, rgba);
-    }
-    //Otherwise continue writing down the row
-    else
-    {
-      currentImageDestinationRow++;
-    }
-
+    i++;
   }
-  //Now that all the pixels are in place, lets write the result to disk
-  if(singleStitchedImage)
-  {
-    PngExporter::save(outFilePath, *paletteImage, mCurrentPalette, 0, rgba);
-  }
+
 }
 
 void GRPImage::CleanGRPImage()

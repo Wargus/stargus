@@ -78,7 +78,7 @@ protected:
    */
   void DecodeGfuEntry(int index, unsigned char *start, unsigned char *image, int ix, int iy, int iadd);
 
-private:
+protected: // TODO: maybe back to private after Widget redesign
   std::shared_ptr<AbstractPalette> mPal;
   GRPImage mGRPImage;
   std::string mArcfile;
