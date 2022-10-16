@@ -473,7 +473,7 @@ void testHook()
 
   //string grp_file = "unit\\protoss\\pbaGlow.grp";
   string grp_file = "unit\\thingy\\ofirec.grp";
-  Grp grp(storm, grp_file, true);
+  Grp grp(storm, grp_file);
   grp.setPalette(pal2D_4);
   grp.setRGBA(true);
   //grp.setPalette(terrainPalette);
@@ -489,7 +489,7 @@ void testHook()
 
   Widgets widgets(storm);
   widgets.setPalette(pal);
-  widgets.convert2("dlgs\\terran.grp", "/tmp/widgets2/", dlgsRaceJson);
+  widgets.convert("dlgs\\terran.grp", "/tmp/widgets2/", dlgsRaceJson);
 
 
   grp.save("/tmp/ofirec.png");
@@ -691,9 +691,9 @@ int main(int argc, const char **argv)
 
     Widgets widgets(sub_storm);
     widgets.setPalette(paletteMap["tunit"]);
-    widgets.convert2("dlgs\\terran.grp", graphics("ui/terran"), dlgsRaceJson);
-    widgets.convert2("dlgs\\zerg.grp", graphics("ui/zerg"), dlgsRaceJson);
-    widgets.convert2("dlgs\\protoss.grp", graphics("ui/protoss"), dlgsRaceJson);
+    widgets.convert("dlgs\\terran.grp", graphics("ui/terran"), dlgsRaceJson);
+    widgets.convert("dlgs\\zerg.grp", graphics("ui/zerg"), dlgsRaceJson);
+    widgets.convert("dlgs\\protoss.grp", graphics("ui/protoss"), dlgsRaceJson);
 
     for (i = 0; i <= 1; ++i)
     {
@@ -742,7 +742,7 @@ int main(int argc, const char **argv)
         case G: // WORKS!
         {
           printf("ConvertGfx: %s, %s, %d", c[u].File, c[u].ArcFile, c[u].Arg1);
-          Grp grp(storm, c[u].ArcFile, true);
+          Grp grp(storm, c[u].ArcFile);
           std::shared_ptr<AbstractPalette> pal;
 
           if (c[u].Arg1 == 6)
@@ -754,7 +754,6 @@ int main(int argc, const char **argv)
           {
             pal = paletteMap.at("ticon-0");
             grp.setPalette(pal);
-            grp.setGFX(false);
           }
           else if (c[u].Arg1 == 4)
           {

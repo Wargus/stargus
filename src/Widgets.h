@@ -24,22 +24,9 @@ public:
   /**
    * Convert a widget from data container as several PNG files
    */
-  bool convert(const char *arcfile, const char *file);
-
-  bool convert2(const std::string &arcfile, Storage filename, json &frameExtractJson);
+  bool convert(const std::string &arcfile, Storage filename, json &frameExtractJson);
 
 private:
-  /**
-   * Save Image part of a Widget as PNG file
-   */
-  void SaveImage(char *name, unsigned char *image, int id,
-      int w, int h);
-
-  /**
-   * Save Button part of a Widget as PNG
-   */
-  void SaveButton(char *name, unsigned char *image,
-      int size, int id);
 
 };
 

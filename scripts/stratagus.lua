@@ -186,7 +186,9 @@ else
   SetFogOfWarGraphics("contrib/fog.png")
 end
 
-SetEnableMapGrid(true)
+-- path finding debug option only!
+SetEnableMapGrid(false)
+
 SetTileSize(8, 8)
 
 --  Choose your default for minimap with/without terrain.
