@@ -58,7 +58,7 @@ bool Widgets::convert2(const std::string &arcfile, Storage filename, json &frame
       vector<int> stitchedFrames;
       for(auto frame : frameArray)
       {
-        cout << "frame: " << frame << endl;
+        //cout << "frame: " << frame << endl;
         stitchedFrames.push_back(frame);
         frameStitching++;
       }

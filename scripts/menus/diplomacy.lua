@@ -35,7 +35,8 @@ function RunDiplomacyMenu()
 
       sharedvisioncb = menu:addCheckBox("", 269, (17 * j) + 41,
         function() end)
-      sharedvisioncb:setMarked(ThisPlayer:IsSharedVision(Players[i]))
+      -- FIXME: IsSharedVision() produces a LUA stacktrace
+      --sharedvisioncb:setMarked(ThisPlayer:IsSharedVision(Players[i]))
       sharedvision[j] = sharedvisioncb
 
       j = j + 1

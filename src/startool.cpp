@@ -691,7 +691,9 @@ int main(int argc, const char **argv)
 
     Widgets widgets(sub_storm);
     widgets.setPalette(paletteMap["tunit"]);
-    widgets.convert2("dlgs\\terran.grp", graphics("ui/terran-new"), dlgsRaceJson);
+    widgets.convert2("dlgs\\terran.grp", graphics("ui/terran"), dlgsRaceJson);
+    widgets.convert2("dlgs\\zerg.grp", graphics("ui/zerg"), dlgsRaceJson);
+    widgets.convert2("dlgs\\protoss.grp", graphics("ui/protoss"), dlgsRaceJson);
 
     for (i = 0; i <= 1; ++i)
     {
@@ -786,7 +788,7 @@ int main(int argc, const char **argv)
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
-        case I: // WORKS!
+        /*case I: // WORKS!
         {
           printf("ConvertWidgets: %s, %s", c[u].File, c[u].ArcFile);
           Widgets widgets(storm);
@@ -794,7 +796,7 @@ int main(int argc, const char **argv)
           widgets.setPalette(pal);
           case_func = widgets.convert(c[u].ArcFile, c[u].File);
           printf("...%s\n", case_func ? "ok" : "nok");
-        }
+        }*/
         break;
         case N: // WORKS!
         {
