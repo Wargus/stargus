@@ -205,6 +205,7 @@ int main(int argc, const char **argv)
   }
   else if(to_lower(backend) == "casc")
   {
+#ifdef HAVE_CASC
     if(CheckCASCDataFolder(archive))
     {
       hurricane = make_shared<Casc>(archive);
@@ -213,7 +214,12 @@ int main(int argc, const char **argv)
     {
       cerr << "Error: 'archive' is not a CASC archive!" << endl;
     }
+#else
+    cerr << "Error: No CASC support compiled into sauwetter!" << endl;
+    exit(1);
+#endif
   }
+
 
   string archive_file_slash(archive_file);
   replaceString("\\", "/", archive_file_slash);

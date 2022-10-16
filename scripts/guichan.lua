@@ -809,6 +809,12 @@ end
 
 
 function BuildProgramStartMenu()
+  
+  if (preferences.DirectStart == true) then
+    mapname = "maps/\(2\)Space Madness.smp"
+    RunMap(mapname)
+  end
+  
   local menu = WarMenu()
   local offx = (Video.Width - 640) / 2
   local offy = (Video.Height - 480) / 2

@@ -61,20 +61,47 @@ function InitGameVariables()
   end
 end
 
+--  Set the game name. It's used so we can mantain different savegames
+--  and setting. Might also be used for multiplayer.
+SetGameName("sc")
+SetFullGameName(Name)
+
+Load("preferences.lua")
+
+if (preferences == nil) then
+  preferences = {
+    VideoWidth = 800,
+    VideoHeight = 600,
+    VideoFullScreen = false,
+    PlayerName = "Player",
+    FogOfWar = true,
+    ShowCommandKey = true,
+    GroupKeys = "0123456789`",
+    GameSpeed = 30,
+    EffectsEnabled = true,
+    EffectsVolume = 128,
+    MusicEnabled = true,
+    MusicVolume = 128,
+    StratagusTranslation = "",
+    GameTranslation = "",
+    TipNumber = 0,
+    ShowTips = true,
+    GrabMouse = false,
+    DirectStart = false
+  }
+end
+
 --  Edit the next sections to get your look and feel.
 --  Note, some of those values are overridden by user preferences,
 --  see preferences.lua
 
 --  Enter your default title screen.
-SetTitleScreens(
-  {Image = "videos/blizzard.ogv"},
-  {Image = "ui/title.png", Music = "music/title.ogg",  Timeout = 5}
-)
-
---  Set the game name. It's used so we can mantain different savegames
---  and setting. Might also be used for multiplayer.
-SetGameName("sc")
-SetFullGameName(Name)
+if (preferences.DirectStart == false) then
+  SetTitleScreens(
+    {Image = "videos/blizzard.ogv"},
+    {Image = "ui/title.png", Music = "music/title.ogg",  Timeout = 5}
+  )
+end
 
 SetSelectionStyle("ellipse", 0.589)
 Preference.ShowSightRange = false
@@ -340,30 +367,6 @@ end
 --  Tables-Part
 -------------------------------------------------------------------------------
 
-Load("preferences.lua")
-
-if (preferences == nil) then
-  preferences = {
-    VideoWidth = 800,
-    VideoHeight = 600,
-    VideoFullScreen = false,
-    PlayerName = "Player",
-    FogOfWar = true,
-    ShowCommandKey = true,
-    GroupKeys = "0123456789`",
-    GameSpeed = 30,
-    EffectsEnabled = true,
-    EffectsVolume = 128,
-    MusicEnabled = true,
-    MusicVolume = 128,
-    StratagusTranslation = "",
-    GameTranslation = "",
-    TipNumber = 0,
-    ShowTips = true,
-    GrabMouse = false,
-  }
-end
-
 SetVideoResolution(preferences.VideoWidth, preferences.VideoHeight)
 SetVideoFullScreen(preferences.VideoFullScreen)
 SetLocalPlayerName(preferences.PlayerName)
@@ -380,7 +383,6 @@ SetGrabMouse(preferences.GrabMouse)
 
 --- Uses Stratagus Library path!
 Load("scripts/sc.lua")
-
 Load("scripts/icons.lua")
 Load("scripts/sound.lua")
 Load("scripts/missiles.lua")
