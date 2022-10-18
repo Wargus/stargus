@@ -254,6 +254,7 @@ int main(int argc, const char **argv)
   }
   else if(to_lower(backend) == "casc")
   {
+#ifdef HAVE_CASC
     if(CheckCASCDataFolder(archive))
     {
       hurricane = make_shared<Casc>(archive);
@@ -262,6 +263,10 @@ int main(int argc, const char **argv)
     {
       cerr << "Error: 'archive' is not a CASC archive!" << endl;
     }
+#else
+    cerr << "Error: No CASC support compiled into sauwetter!" << endl;
+    exit(1);
+#endif
   }
 
   dat::DataHub datahub(hurricane);
