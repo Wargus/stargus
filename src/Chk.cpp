@@ -1117,6 +1117,18 @@ void Chk::SaveSMS(Storage storage)
 
   fprintf(fd, "\n\n");
 
+  /**
+   * This is some debug code that prints RapidStratagusIDE support as hook into each map
+   */
+  string if_rsi = lg::line(lg::function("if", lg::compare("preferences.RapidStratagusIDE", "true")) + " then");
+  if_rsi += lg::line(lg::function("Load", lg::quote("RapidStratagusIDE/RSI_Functions.lua")));
+  if_rsi += lg::line(lg::function("RSI_MapConfiguration"));
+  if_rsi += lg::line("end");
+  fprintf(fd, "%s\n", if_rsi.c_str());
+  /******/
+
+  fprintf(fd, "\n\n");
+
   fclose(fd);
 }
 

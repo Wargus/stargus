@@ -1,5 +1,5 @@
 project('stargus', 'cpp', 'c',
-default_options : ['cpp_std=c++17'])
+        default_options : ['cpp_std=c++17'])
 
 cpp = meson.get_compiler('cpp')
 

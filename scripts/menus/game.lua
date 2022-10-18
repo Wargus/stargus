@@ -44,7 +44,7 @@ function RunGameMenu()
     function() end)
 ]]
   menu:addFullButton("~!Options", "o", 20, 104,
-    function() RunGameOptionsMenu() end)
+    function() RunGameOptionsMenu() end)  
   menu:addFullButton("~!Help", "h", 20, 138,
     function() RunHelpMenu() end)
   menu:addFullButton("Mission Ob~!jectives", "j", 20, 172,

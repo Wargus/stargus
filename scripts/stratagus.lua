@@ -37,11 +37,14 @@
 --  Version
 -------------------------------------------------------------------------------
 
-Name = "Stargus"
-Version = "3.3.0"
-Homepage = "https://github.com/Wargus/stargus"
-Licence = "GPL v2"
-Copyright = "Copyright (c) 2002-2022 by The Stratagus Project and Pali Rohar"
+stargus = {}
+
+stargus.Name = "Stargus"
+stargus.Homepage = "https://github.com/Wargus/stargus"
+stargus.Copyright = "(c) 1998-2021 by The Stratagus Project."
+stargus.Version = "3.3.0"
+stargus.Licence = "GPL v2+"
+
 
 -- activate debugging
 pcall(function() require("scripts/mobdebug").start() end)
@@ -87,8 +90,13 @@ if (preferences == nil) then
     TipNumber = 0,
     ShowTips = true,
     GrabMouse = false,
-    DirectStart = false
+    RapidStratagusIDE = false
   }
+end
+
+-- nil this option to false if not given in users preferences
+if (preferences.RapidStratagusIDE == nil) then 
+  preferences.RapidStratagusIDE = false
 end
 
 --  Edit the next sections to get your look and feel.
@@ -96,7 +104,7 @@ end
 --  see preferences.lua
 
 --  Enter your default title screen.
-if (preferences.DirectStart == false) then
+if (preferences.RapidStratagusIDE == false) then
   SetTitleScreens(
     {Image = "videos/blizzard.ogv"},
     {Image = "ui/title.png", Music = "music/title.ogg",  Timeout = 5}
@@ -395,5 +403,7 @@ Load("scripts/ui.lua")
 Load("scripts/ai.lua")
 Load("scripts/commands.lua")
 Load("scripts/cheats.lua")
+
+
 
 --print("... ready!\n")

@@ -616,6 +616,14 @@ function RunMap(map, objective, fow, revealmap)
     if revealmap == true then
        RevealMap()
     end
+    
+    if (preferences.RapidStratagusIDE == true) then
+  Load("RapidStratagusIDE/RSI_Functions.lua")
+  --RSI_MapConfiguration()
+  --CreateUnit("unit-terran-command-center", 0, {0, 0})
+end
+
+    
     StartMap(map)
     if GameResult ~= GameRestart then
       loop = false
@@ -711,7 +719,7 @@ function RunInfoMenu()
   
   menu:addFullButton("~!Back", "b", offx + 640 - 224 - 16, offy + 360 + 36*2, function() menu:stop() end)
   
-  menu:addLabel(Name .. " V" .. Version .. "  " .. Homepage, offx + 320, offy + 226 + 18*0) 
+  menu:addLabel(stargus.Name .. " V" .. stargus.Version .. "  " .. stargus.Homepage, offx + 320, offy + 226 + 18*0) 
   menu:addLabel("Stratagus V" .. GetStratagusVersion() .. "  " .. GetStratagusHomepage(), offx + 320, offy + 226 + 18*1)
   menu:addLabel(Copyright, offx + 320, offy + 290 + 18*4)
   
@@ -810,16 +818,11 @@ end
 
 function BuildProgramStartMenu()
   
-  if (preferences.DirectStart == true) then
-    mapname = "maps/\(2\)Space Madness.smp"
-    RunMap(mapname)
-  end
-  
   local menu = WarMenu()
   local offx = (Video.Width - 640) / 2
   local offy = (Video.Height - 480) / 2
 
-  menu:addLabel("~white~" .. Name .. " V" .. Version, Video.Width - 60, Video.Height - 18*1) 
+  menu:addLabel("~white~" .. stargus.Name .. " V" .. stargus.Version, Video.Width - 60, Video.Height - 18*1) 
   
   menu:addAnimatedButton(
     "videos/mainmenu/single.mng",
@@ -879,6 +882,9 @@ function BuildProgramStartMenu()
     
   -- menu:addTextButton("~light-green~R~white~eplay Game", "r", 100, Video.Height-80, function() RunReplayGameMenu(); menu:stop(1) end)
     
+  -- TODO: merge video options and all needed widgets from wargus
+  --menu:addTextButton("~light-green~V~white~ideo Options", "o", 100, Video.Height-80, function() BuildVideoOptionsMenu(); menu:stop(1) end)
+  
   menu:addTextButton("~light-green~O~white~ptions", "o", 100, Video.Height-60, function() RunOptionsMenu(); menu:stop(1) end)
   
   menu:addTextButton("~white~Show ~light-green~I~white~nfo", "i", 100, Video.Height-40, function() RunInfoMenu(); menu:stop(1) end)
@@ -923,5 +929,10 @@ if SetShader then
   SetShader("none")
 end
 
+if (preferences.RapidStratagusIDE == true) then
+  Load("RapidStratagusIDE/RSI_Functions.lua")
+  RSI_MapStarter()
+end
+  
 RunProgramStartMenu()
 
