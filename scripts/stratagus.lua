@@ -67,7 +67,7 @@ end
 --  Set the game name. It's used so we can mantain different savegames
 --  and setting. Might also be used for multiplayer.
 SetGameName("sc")
-SetFullGameName(Name)
+SetFullGameName(stargus.Name)
 
 Load("preferences.lua")
 
