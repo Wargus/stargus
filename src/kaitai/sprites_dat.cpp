@@ -27,39 +27,33 @@ sprites_dat_t::sprites_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent,
 }
 
 void sprites_dat_t::_read() {
-    int l_image = num_lines();
     m_image = new std::vector<uint16_t>();
-    m_image->reserve(l_image);
+    const int l_image = num_lines();
     for (int i = 0; i < l_image; i++) {
         m_image->push_back(m__io->read_u2le());
     }
-    int l_health_bar = (num_lines() - 130);
     m_health_bar = new std::vector<uint8_t>();
-    m_health_bar->reserve(l_health_bar);
+    const int l_health_bar = (num_lines() - 130);
     for (int i = 0; i < l_health_bar; i++) {
         m_health_bar->push_back(m__io->read_u1());
     }
-    int l_unknown2 = num_lines();
     m_unknown2 = new std::vector<uint8_t>();
-    m_unknown2->reserve(l_unknown2);
+    const int l_unknown2 = num_lines();
     for (int i = 0; i < l_unknown2; i++) {
         m_unknown2->push_back(m__io->read_u1());
     }
-    int l_is_visible = num_lines();
     m_is_visible = new std::vector<uint8_t>();
-    m_is_visible->reserve(l_is_visible);
+    const int l_is_visible = num_lines();
     for (int i = 0; i < l_is_visible; i++) {
         m_is_visible->push_back(m__io->read_u1());
     }
-    int l_select_circle_image_size = (num_lines() - 130);
     m_select_circle_image_size = new std::vector<uint8_t>();
-    m_select_circle_image_size->reserve(l_select_circle_image_size);
+    const int l_select_circle_image_size = (num_lines() - 130);
     for (int i = 0; i < l_select_circle_image_size; i++) {
         m_select_circle_image_size->push_back(m__io->read_u1());
     }
-    int l_select_circle_vertical_pos = (num_lines() - 130);
     m_select_circle_vertical_pos = new std::vector<uint8_t>();
-    m_select_circle_vertical_pos->reserve(l_select_circle_vertical_pos);
+    const int l_select_circle_vertical_pos = (num_lines() - 130);
     for (int i = 0; i < l_select_circle_vertical_pos; i++) {
         m_select_circle_vertical_pos->push_back(m__io->read_u1());
     }

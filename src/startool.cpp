@@ -33,8 +33,8 @@
  ----------------------------------------------------------------------------*/
 
 // project
-#include <dat/UnitsConverter.h>
-#include <dat/PortraitsConverter.h>
+#include <UnitsConverter.h>
+#include <PortraitsConverter.h>
 #include "dat/DataHub.h"
 #include "tileset/TilesetHub.h"
 #include "PngExporter.h"
@@ -62,8 +62,9 @@
 #include "UIConsole.h"
 #include "StringUtil.h"
 #include "pacman.h"
-#include "dat/ImagesConverter.h"
-#include "dat/SfxConverter.h"
+#include "ImagesConverter.h"
+#include "SfxConverter.h"
+#include "optparser.h"
 
 // system
 #include <nlohmann/json.hpp>
@@ -71,15 +72,6 @@
 
 using json = nlohmann::json;
 
-// as this is 3rd party code I don't fix it ->
-#ifndef _MSC_VER
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
-#endif
-#include "optionparser.h"
-#ifndef _MSC_VER
-#pragma GCC diagnostic pop
-#endif
 // <-
 
 // System
@@ -283,8 +275,7 @@ int parseOptions(int argc, const char **argv)
 
 void loadPalettes(std::shared_ptr<Hurricane> hurricane,
                   Storage palStorage,
-                  std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
-                  std::map<std::string, std::shared_ptr<Palette2D>> &palette2DMap)
+                  std::map<std::string, std::shared_ptr<AbstractPalette>> &paletteMap)
 {
   // read in the json file
   std::ifstream json_file(pacman::searchFile("dataset/palettes.json"));
@@ -295,7 +286,6 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
 
   //std::cout << units_json << std::endl; // prints json object to screen
 
-  // needed to fix broodware tileset parser. TODO: think abot the concept
   vector<string> wpeNames;
 
   /** WPE **/
@@ -347,6 +337,7 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
 
     if(!pcx.getSize().isEmpty()) // load from PCX palette
     {
+      std::shared_ptr<Palette> pal;
       try
       {
         auto &pcx_mapping = pcx_array.at("mapping");
@@ -355,15 +346,12 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
         int start = pcx_mapping.at("start");
         int index = pcx_mapping.at("index");
 
-        pcx.mapIndexPalette(length, start, index);
-        //cout << pcx_mapping << endl;
+        pal = pcx.mapIndexPalette(length, start, index);
       }
       catch (const nlohmann::detail::out_of_range &json_range)
       {
-        // just ignore if the section is not availabe
+        pal = pcx.getPalette();
       }
-
-      std::shared_ptr<Palette> pal = pcx.getPalette();
 
       string pal_file(palStorage.getFullPath() + pal_palette);
       CheckPath(pal_file);
@@ -386,21 +374,27 @@ void loadPalettes(std::shared_ptr<Hurricane> hurricane,
     //cout << pcx_array << endl;
   }
 
-  /** PCX2D **/
+  /** PCX2D (after WPE block has been read in) **/
   auto &pcx2d_section = palettes_json.at("PCX2D");
 
   for(auto &pcx_array : pcx2d_section)
   {
     string pcx_name = pcx_array.at("name");
     string pcx_arcfile = pcx_array.at("arcfile");
+    string pal_palette = pcx_array.at("palette");
 
+    // replace this with the first of the WPE palettes. Which one doesn't care for the palette logic.
     replaceString("<?>", *wpeNames.begin(), pcx_arcfile);
 
     Pcx pcx(hurricane, pcx_arcfile);
 
     std::shared_ptr<Palette2D> pal2D = pcx.map2DPalette();
 
-    palette2DMap[pcx_name] = pal2D;
+    string pal_file(palStorage.getFullPath() + pal_palette);
+    CheckPath(pal_file);
+    pal2D->write(pal_file);
+
+    paletteMap[pcx_name] = pal2D;
 
     //cout << pcx_array << endl;
   }
@@ -435,12 +429,12 @@ void testHook()
 
   dat::Unit unit(datahub, 39, "test");
 
-  unit.name();
+  unit.name_tbl();
 
-  dat::Sfx sfx = unit.ready_sound();
+  dat::Sfx sfx = unit.ready_sound_obj();
   sfx.sound_file_tbl();
 
-  dat::Portrait portrait = unit.portrait();
+  dat::Portrait portrait = unit.portrait_obj();
 
   portrait.video_talking_tbl();
   portrait.video_idle_tbl();
@@ -448,15 +442,13 @@ void testHook()
   /// Image 1
   Pcx pcx1(storm, "game\\tunit.pcx");
   pcx1.savePNG("/tmp/tunit.png");
-  pcx1.mapIndexPalette(8, 8, 2);
-  std::shared_ptr<Palette> pal = pcx1.getPalette();
+  std::shared_ptr<Palette> pal = pcx1.mapIndexPalette(8, 8, 2);
   pal->createDataChunk()->write("/tmp/tunit.pal");
 
   // Image 2
   Pcx pcx2(storm, "unit\\cmdbtns\\ticon.pcx");
   pcx2.savePNG("/tmp/ticon.png");
-  pcx2.mapIndexPalette(16, 0, 0);
-  std::shared_ptr<Palette> pal2 = pcx2.getPalette();
+  std::shared_ptr<Palette> pal2 = pcx2.mapIndexPalette(16, 0, 0);
   pal2->createDataChunk()->write("/tmp/ticon.pal");
 
   // Image 3
@@ -467,11 +459,12 @@ void testHook()
   pal3->createDataChunk()->write("/tmp/ofire.pal");
 
   // Image 4
-  Pcx pcx4(storm, "tileset\\ashworld\\bfire.pcx");
+  Pcx pcx4(storm, "tileset\\ashworld\\ofire.pcx");
   pcx4.savePNG("/tmp/bfire.png");
   std::shared_ptr<Palette2D> pal2D_4 = pcx4.map2DPalette();
   std::shared_ptr<Palette> pal4 = pcx4.getPalette();
-  pal4->createDataChunk()->write("/tmp/bfire.pal");
+  pal4->createDataChunk()->write("/tmp/ofire.pal");
+  pal2D_4->write("/tmp/ofire.pal2d");
 
 
   shared_ptr<DataChunk> terrainWPE = storm->extractDataChunk("tileset\\jungle.wpe");
@@ -479,16 +472,27 @@ void testHook()
   terrainPalette->createDataChunk()->write("/tmp/terrainPalette.pal");
 
   //string grp_file = "unit\\protoss\\pbaGlow.grp";
-  string grp_file = "unit\\cmdbtns\\cmdicons.grp";
+  string grp_file = "unit\\thingy\\ofirec.grp";
   Grp grp(storm, grp_file);
-  grp.setPalette(pal2);
+  grp.setPalette(pal2D_4);
   grp.setRGBA(true);
   //grp.setPalette(terrainPalette);
   //grp.setTransparent(200);
   //grp.setRGBA(true);
 
+  // read in the json file
+  std::ifstream json_file(pacman::searchFile("dataset/dlgs_race.json"));
 
-  grp.save("/tmp/cmdicons.png");
+  json dlgsRaceJson; //create unitiialized json object
+
+  json_file >> dlgsRaceJson; // initialize json object with what was read from file
+
+  Widgets widgets(storm);
+  widgets.setPalette(pal);
+  widgets.convert("dlgs\\terran.grp", "/tmp/widgets2/", dlgsRaceJson);
+
+
+  grp.save("/tmp/ofirec.png");
 
   cout << "end testHook()" << endl;
   exit(0);
@@ -577,8 +581,7 @@ int main(int argc, const char **argv)
   Storage data;
   data.setDataPath(preferences.getDestDir());
 
-  map<string, shared_ptr<Palette>> paletteMap;
-  map<string, shared_ptr<Palette2D>> palette2DMap;
+  map<string, shared_ptr<AbstractPalette>> paletteMap;
 
   if (mpq)
   {
@@ -661,25 +664,36 @@ int main(int argc, const char **argv)
       unitNames.push_back(unit_name);
     }
 
-    loadPalettes(sub_storm, palStorage, paletteMap, palette2DMap);
+    loadPalettes(sub_storm, palStorage, paletteMap);
 
     if (preferences.getVideoExtraction())
     {
-      dat::PortraitsConverter portraitsConverter(sub_storm, datahub);
+      PortraitsConverter portraitsConverter(sub_storm, datahub);
       portraitsConverter.convert();
     }
 
     dat::UnitsConverter unitsConverter(sub_storm, datahub);
-    unitsConverter.convert(units_json, paletteMap, palette2DMap);
+    unitsConverter.convert(units_json);
 
-    dat::ImagesConverter imagesConverter(sub_storm, datahub);
-    imagesConverter.convert(paletteMap, palette2DMap);
+    ImagesConverter imagesConverter(sub_storm, datahub);
+    imagesConverter.convert(paletteMap);
 
     if(preferences.getSoundExtraction())
     {
-      dat::SfxConverter sfxConverter(sub_storm, datahub);
+      SfxConverter sfxConverter(sub_storm, datahub);
       sfxConverter.convert();
     }
+
+    // read in the json file
+    std::ifstream dlgsRaceJsonStream(pacman::searchFile("dataset/dlgs_race.json"));
+    json dlgsRaceJson; //create unitiialized json object
+    dlgsRaceJsonStream >> dlgsRaceJson; // initialize json object with what was read from file
+
+    Widgets widgets(sub_storm);
+    widgets.setPalette(paletteMap["tunit"]);
+    widgets.convert("dlgs\\terran.grp", graphics("ui/terran"), dlgsRaceJson);
+    widgets.convert("dlgs\\zerg.grp", graphics("ui/zerg"), dlgsRaceJson);
+    widgets.convert("dlgs\\protoss.grp", graphics("ui/protoss"), dlgsRaceJson);
 
     for (i = 0; i <= 1; ++i)
     {
@@ -727,10 +741,9 @@ int main(int argc, const char **argv)
         break;
         case G: // WORKS!
         {
-          printf("ConvertGfx: %s, %s", c[u].File, c[u].ArcFile);
+          printf("ConvertGfx: %s, %s, %d", c[u].File, c[u].ArcFile, c[u].Arg1);
           Grp grp(storm, c[u].ArcFile);
-          std::shared_ptr<Palette> pal;
-          std::shared_ptr<Palette2D> pal2D;
+          std::shared_ptr<AbstractPalette> pal;
 
           if (c[u].Arg1 == 6)
           {
@@ -741,7 +754,6 @@ int main(int argc, const char **argv)
           {
             pal = paletteMap.at("ticon-0");
             grp.setPalette(pal);
-            grp.setGFX(false);
           }
           else if (c[u].Arg1 == 4)
           {
@@ -751,8 +763,8 @@ int main(int argc, const char **argv)
           }
           else if (c[u].Arg1 == 3)
           {
-            pal2D = palette2DMap.at("ofire");
-            grp.setPalette2D(pal2D);
+            pal = paletteMap.at("ofire");
+            grp.setPalette(pal);
             grp.setRGBA(true);
           }
           else if (c[u].Arg1 == 2)
@@ -775,21 +787,21 @@ int main(int argc, const char **argv)
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
-        case I: // WORKS!
+        /*case I: // WORKS!
         {
           printf("ConvertWidgets: %s, %s", c[u].File, c[u].ArcFile);
           Widgets widgets(storm);
-          std::shared_ptr<Palette> pal = paletteMap.at("tunit");
+          std::shared_ptr<AbstractPalette> pal = paletteMap.at("tunit");
           widgets.setPalette(pal);
           case_func = widgets.convert(c[u].ArcFile, c[u].File);
           printf("...%s\n", case_func ? "ok" : "nok");
-        }
+        }*/
         break;
         case N: // WORKS!
         {
           printf("ConvertFont: %s, %s", c[u].File, c[u].ArcFile);
           Font font(storm);
-          std::shared_ptr<Palette> pal = paletteMap.at("tfontgam");
+          std::shared_ptr<AbstractPalette> pal = paletteMap.at("tfontgam");
           font.setPalette(pal);
           case_func = font.convert(c[u].ArcFile, fonts(string(c[u].File) + ".png"));
           printf("...%s\n", case_func ? "ok" : "nok");

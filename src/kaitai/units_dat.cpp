@@ -80,357 +80,297 @@ units_dat_t::units_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, uni
 }
 
 void units_dat_t::_read() {
-    int l_flingy = 228;
     m_flingy = new std::vector<uint8_t>();
-    m_flingy->reserve(l_flingy);
+    const int l_flingy = 228;
     for (int i = 0; i < l_flingy; i++) {
         m_flingy->push_back(m__io->read_u1());
     }
-    int l_subunit1 = 228;
     m_subunit1 = new std::vector<uint16_t>();
-    m_subunit1->reserve(l_subunit1);
+    const int l_subunit1 = 228;
     for (int i = 0; i < l_subunit1; i++) {
         m_subunit1->push_back(m__io->read_u2le());
     }
-    int l_subunit2 = 228;
     m_subunit2 = new std::vector<uint16_t>();
-    m_subunit2->reserve(l_subunit2);
+    const int l_subunit2 = 228;
     for (int i = 0; i < l_subunit2; i++) {
         m_subunit2->push_back(m__io->read_u2le());
     }
-    int l_infestation = 96;
     m_infestation = new std::vector<uint16_t>();
-    m_infestation->reserve(l_infestation);
+    const int l_infestation = 96;
     for (int i = 0; i < l_infestation; i++) {
         m_infestation->push_back(m__io->read_u2le());
     }
-    int l_construction_animation = 228;
     m_construction_animation = new std::vector<uint32_t>();
-    m_construction_animation->reserve(l_construction_animation);
+    const int l_construction_animation = 228;
     for (int i = 0; i < l_construction_animation; i++) {
         m_construction_animation->push_back(m__io->read_u4le());
     }
-    int l_unit_direction = 228;
     m_unit_direction = new std::vector<uint8_t>();
-    m_unit_direction->reserve(l_unit_direction);
+    const int l_unit_direction = 228;
     for (int i = 0; i < l_unit_direction; i++) {
         m_unit_direction->push_back(m__io->read_u1());
     }
-    int l_shield_enable = 228;
     m_shield_enable = new std::vector<uint8_t>();
-    m_shield_enable->reserve(l_shield_enable);
+    const int l_shield_enable = 228;
     for (int i = 0; i < l_shield_enable; i++) {
         m_shield_enable->push_back(m__io->read_u1());
     }
-    int l_shield_amount = 228;
     m_shield_amount = new std::vector<uint16_t>();
-    m_shield_amount->reserve(l_shield_amount);
+    const int l_shield_amount = 228;
     for (int i = 0; i < l_shield_amount; i++) {
         m_shield_amount->push_back(m__io->read_u2le());
     }
-    int l_hit_points = 228;
     m_hit_points = new std::vector<hit_points_type_t*>();
-    m_hit_points->reserve(l_hit_points);
+    const int l_hit_points = 228;
     for (int i = 0; i < l_hit_points; i++) {
         m_hit_points->push_back(new hit_points_type_t(m__io, this, m__root));
     }
-    int l_elevation_level = 228;
     m_elevation_level = new std::vector<uint8_t>();
-    m_elevation_level->reserve(l_elevation_level);
+    const int l_elevation_level = 228;
     for (int i = 0; i < l_elevation_level; i++) {
         m_elevation_level->push_back(m__io->read_u1());
     }
-    int l_unknown = 228;
     m_unknown = new std::vector<uint8_t>();
-    m_unknown->reserve(l_unknown);
+    const int l_unknown = 228;
     for (int i = 0; i < l_unknown; i++) {
         m_unknown->push_back(m__io->read_u1());
     }
-    int l_rank = 228;
     m_rank = new std::vector<uint8_t>();
-    m_rank->reserve(l_rank);
+    const int l_rank = 228;
     for (int i = 0; i < l_rank; i++) {
         m_rank->push_back(m__io->read_u1());
     }
-    int l_ai_computer_idle = 228;
     m_ai_computer_idle = new std::vector<uint8_t>();
-    m_ai_computer_idle->reserve(l_ai_computer_idle);
+    const int l_ai_computer_idle = 228;
     for (int i = 0; i < l_ai_computer_idle; i++) {
         m_ai_computer_idle->push_back(m__io->read_u1());
     }
-    int l_ai_human_idle = 228;
     m_ai_human_idle = new std::vector<uint8_t>();
-    m_ai_human_idle->reserve(l_ai_human_idle);
+    const int l_ai_human_idle = 228;
     for (int i = 0; i < l_ai_human_idle; i++) {
         m_ai_human_idle->push_back(m__io->read_u1());
     }
-    int l_ai_return_to_idle = 228;
     m_ai_return_to_idle = new std::vector<uint8_t>();
-    m_ai_return_to_idle->reserve(l_ai_return_to_idle);
+    const int l_ai_return_to_idle = 228;
     for (int i = 0; i < l_ai_return_to_idle; i++) {
         m_ai_return_to_idle->push_back(m__io->read_u1());
     }
-    int l_ai_attack_unit = 228;
     m_ai_attack_unit = new std::vector<uint8_t>();
-    m_ai_attack_unit->reserve(l_ai_attack_unit);
+    const int l_ai_attack_unit = 228;
     for (int i = 0; i < l_ai_attack_unit; i++) {
         m_ai_attack_unit->push_back(m__io->read_u1());
     }
-    int l_ai_attack_move = 228;
     m_ai_attack_move = new std::vector<uint8_t>();
-    m_ai_attack_move->reserve(l_ai_attack_move);
+    const int l_ai_attack_move = 228;
     for (int i = 0; i < l_ai_attack_move; i++) {
         m_ai_attack_move->push_back(m__io->read_u1());
     }
-    int l_ground_weapon = 228;
     m_ground_weapon = new std::vector<uint8_t>();
-    m_ground_weapon->reserve(l_ground_weapon);
+    const int l_ground_weapon = 228;
     for (int i = 0; i < l_ground_weapon; i++) {
         m_ground_weapon->push_back(m__io->read_u1());
     }
     n_max_ground_hits = true;
     if (is_format_bw() == true) {
         n_max_ground_hits = false;
-        int l_max_ground_hits = 228;
         m_max_ground_hits = new std::vector<uint8_t>();
-        m_max_ground_hits->reserve(l_max_ground_hits);
+        const int l_max_ground_hits = 228;
         for (int i = 0; i < l_max_ground_hits; i++) {
             m_max_ground_hits->push_back(m__io->read_u1());
         }
     }
-    int l_air_weapon = 228;
     m_air_weapon = new std::vector<uint8_t>();
-    m_air_weapon->reserve(l_air_weapon);
+    const int l_air_weapon = 228;
     for (int i = 0; i < l_air_weapon; i++) {
         m_air_weapon->push_back(m__io->read_u1());
     }
     n_max_air_hits = true;
     if (is_format_bw() == true) {
         n_max_air_hits = false;
-        int l_max_air_hits = 228;
         m_max_air_hits = new std::vector<uint8_t>();
-        m_max_air_hits->reserve(l_max_air_hits);
+        const int l_max_air_hits = 228;
         for (int i = 0; i < l_max_air_hits; i++) {
             m_max_air_hits->push_back(m__io->read_u1());
         }
     }
-    int l_ai_internal = 228;
     m_ai_internal = new std::vector<uint8_t>();
-    m_ai_internal->reserve(l_ai_internal);
+    const int l_ai_internal = 228;
     for (int i = 0; i < l_ai_internal; i++) {
         m_ai_internal->push_back(m__io->read_u1());
     }
-    int l_special_ability_flags = 228;
     m__raw_special_ability_flags = new std::vector<std::string>();
-    m__raw_special_ability_flags->reserve(l_special_ability_flags);
     m__io__raw_special_ability_flags = new std::vector<kaitai::kstream*>();
-    m__io__raw_special_ability_flags->reserve(l_special_ability_flags);
     m_special_ability_flags = new std::vector<special_ability_flags_type_t*>();
-    m_special_ability_flags->reserve(l_special_ability_flags);
+    const int l_special_ability_flags = 228;
     for (int i = 0; i < l_special_ability_flags; i++) {
         m__raw_special_ability_flags->push_back(m__io->read_bytes(4));
         kaitai::kstream* io__raw_special_ability_flags = new kaitai::kstream(m__raw_special_ability_flags->at(m__raw_special_ability_flags->size() - 1));
         m__io__raw_special_ability_flags->push_back(io__raw_special_ability_flags);
         m_special_ability_flags->push_back(new special_ability_flags_type_t(io__raw_special_ability_flags, this, m__root));
     }
-    int l_target_acquisition_range = 228;
     m_target_acquisition_range = new std::vector<uint8_t>();
-    m_target_acquisition_range->reserve(l_target_acquisition_range);
+    const int l_target_acquisition_range = 228;
     for (int i = 0; i < l_target_acquisition_range; i++) {
         m_target_acquisition_range->push_back(m__io->read_u1());
     }
-    int l_sight_range = 228;
     m_sight_range = new std::vector<uint8_t>();
-    m_sight_range->reserve(l_sight_range);
+    const int l_sight_range = 228;
     for (int i = 0; i < l_sight_range; i++) {
         m_sight_range->push_back(m__io->read_u1());
     }
-    int l_armor_upgrade = 228;
     m_armor_upgrade = new std::vector<uint8_t>();
-    m_armor_upgrade->reserve(l_armor_upgrade);
+    const int l_armor_upgrade = 228;
     for (int i = 0; i < l_armor_upgrade; i++) {
         m_armor_upgrade->push_back(m__io->read_u1());
     }
-    int l_unit_size = 228;
     m_unit_size = new std::vector<unit_size_enum_t>();
-    m_unit_size->reserve(l_unit_size);
+    const int l_unit_size = 228;
     for (int i = 0; i < l_unit_size; i++) {
         m_unit_size->push_back(static_cast<units_dat_t::unit_size_enum_t>(m__io->read_u1()));
     }
-    int l_armor = 228;
     m_armor = new std::vector<uint8_t>();
-    m_armor->reserve(l_armor);
+    const int l_armor = 228;
     for (int i = 0; i < l_armor; i++) {
         m_armor->push_back(m__io->read_u1());
     }
-    int l_right_click_action = 228;
     m_right_click_action = new std::vector<right_click_action_enum_t>();
-    m_right_click_action->reserve(l_right_click_action);
+    const int l_right_click_action = 228;
     for (int i = 0; i < l_right_click_action; i++) {
         m_right_click_action->push_back(static_cast<units_dat_t::right_click_action_enum_t>(m__io->read_u1()));
     }
-    int l_ready_sound = 106;
     m_ready_sound = new std::vector<uint16_t>();
-    m_ready_sound->reserve(l_ready_sound);
+    const int l_ready_sound = 106;
     for (int i = 0; i < l_ready_sound; i++) {
         m_ready_sound->push_back(m__io->read_u2le());
     }
-    int l_what_sound_start = 228;
     m_what_sound_start = new std::vector<uint16_t>();
-    m_what_sound_start->reserve(l_what_sound_start);
+    const int l_what_sound_start = 228;
     for (int i = 0; i < l_what_sound_start; i++) {
         m_what_sound_start->push_back(m__io->read_u2le());
     }
-    int l_what_sound_end = 228;
     m_what_sound_end = new std::vector<uint16_t>();
-    m_what_sound_end->reserve(l_what_sound_end);
+    const int l_what_sound_end = 228;
     for (int i = 0; i < l_what_sound_end; i++) {
         m_what_sound_end->push_back(m__io->read_u2le());
     }
-    int l_piss_sound_start = 106;
     m_piss_sound_start = new std::vector<uint16_t>();
-    m_piss_sound_start->reserve(l_piss_sound_start);
+    const int l_piss_sound_start = 106;
     for (int i = 0; i < l_piss_sound_start; i++) {
         m_piss_sound_start->push_back(m__io->read_u2le());
     }
-    int l_piss_sound_end = 106;
     m_piss_sound_end = new std::vector<uint16_t>();
-    m_piss_sound_end->reserve(l_piss_sound_end);
+    const int l_piss_sound_end = 106;
     for (int i = 0; i < l_piss_sound_end; i++) {
         m_piss_sound_end->push_back(m__io->read_u2le());
     }
-    int l_yes_sound_start = 106;
     m_yes_sound_start = new std::vector<uint16_t>();
-    m_yes_sound_start->reserve(l_yes_sound_start);
+    const int l_yes_sound_start = 106;
     for (int i = 0; i < l_yes_sound_start; i++) {
         m_yes_sound_start->push_back(m__io->read_u2le());
     }
-    int l_yes_sound_end = 106;
     m_yes_sound_end = new std::vector<uint16_t>();
-    m_yes_sound_end->reserve(l_yes_sound_end);
+    const int l_yes_sound_end = 106;
     for (int i = 0; i < l_yes_sound_end; i++) {
         m_yes_sound_end->push_back(m__io->read_u2le());
     }
-    int l_staredit_placement_box = 228;
     m_staredit_placement_box = new std::vector<staredit_placement_box_type_t*>();
-    m_staredit_placement_box->reserve(l_staredit_placement_box);
+    const int l_staredit_placement_box = 228;
     for (int i = 0; i < l_staredit_placement_box; i++) {
         m_staredit_placement_box->push_back(new staredit_placement_box_type_t(m__io, this, m__root));
     }
-    int l_addon_position = 96;
     m_addon_position = new std::vector<addon_position_type_t*>();
-    m_addon_position->reserve(l_addon_position);
+    const int l_addon_position = 96;
     for (int i = 0; i < l_addon_position; i++) {
         m_addon_position->push_back(new addon_position_type_t(m__io, this, m__root));
     }
-    int l_unit_dimension = 228;
     m_unit_dimension = new std::vector<unit_dimension_type_t*>();
-    m_unit_dimension->reserve(l_unit_dimension);
+    const int l_unit_dimension = 228;
     for (int i = 0; i < l_unit_dimension; i++) {
         m_unit_dimension->push_back(new unit_dimension_type_t(m__io, this, m__root));
     }
-    int l_portrait = 228;
     m_portrait = new std::vector<uint16_t>();
-    m_portrait->reserve(l_portrait);
+    const int l_portrait = 228;
     for (int i = 0; i < l_portrait; i++) {
         m_portrait->push_back(m__io->read_u2le());
     }
-    int l_mineral_cost = 228;
     m_mineral_cost = new std::vector<uint16_t>();
-    m_mineral_cost->reserve(l_mineral_cost);
+    const int l_mineral_cost = 228;
     for (int i = 0; i < l_mineral_cost; i++) {
         m_mineral_cost->push_back(m__io->read_u2le());
     }
-    int l_vespene_cost = 228;
     m_vespene_cost = new std::vector<uint16_t>();
-    m_vespene_cost->reserve(l_vespene_cost);
+    const int l_vespene_cost = 228;
     for (int i = 0; i < l_vespene_cost; i++) {
         m_vespene_cost->push_back(m__io->read_u2le());
     }
-    int l_build_time = 228;
     m_build_time = new std::vector<uint16_t>();
-    m_build_time->reserve(l_build_time);
+    const int l_build_time = 228;
     for (int i = 0; i < l_build_time; i++) {
         m_build_time->push_back(m__io->read_u2le());
     }
-    int l_requirements = 228;
     m_requirements = new std::vector<uint16_t>();
-    m_requirements->reserve(l_requirements);
+    const int l_requirements = 228;
     for (int i = 0; i < l_requirements; i++) {
         m_requirements->push_back(m__io->read_u2le());
     }
-    int l_staredit_group_flags = 228;
     m__raw_staredit_group_flags = new std::vector<std::string>();
-    m__raw_staredit_group_flags->reserve(l_staredit_group_flags);
     m__io__raw_staredit_group_flags = new std::vector<kaitai::kstream*>();
-    m__io__raw_staredit_group_flags->reserve(l_staredit_group_flags);
     m_staredit_group_flags = new std::vector<staredit_group_flags_type_t*>();
-    m_staredit_group_flags->reserve(l_staredit_group_flags);
+    const int l_staredit_group_flags = 228;
     for (int i = 0; i < l_staredit_group_flags; i++) {
         m__raw_staredit_group_flags->push_back(m__io->read_bytes(1));
         kaitai::kstream* io__raw_staredit_group_flags = new kaitai::kstream(m__raw_staredit_group_flags->at(m__raw_staredit_group_flags->size() - 1));
         m__io__raw_staredit_group_flags->push_back(io__raw_staredit_group_flags);
         m_staredit_group_flags->push_back(new staredit_group_flags_type_t(io__raw_staredit_group_flags, this, m__root));
     }
-    int l_supply_provided = 228;
     m_supply_provided = new std::vector<uint8_t>();
-    m_supply_provided->reserve(l_supply_provided);
+    const int l_supply_provided = 228;
     for (int i = 0; i < l_supply_provided; i++) {
         m_supply_provided->push_back(m__io->read_u1());
     }
-    int l_supply_required = 228;
     m_supply_required = new std::vector<uint8_t>();
-    m_supply_required->reserve(l_supply_required);
+    const int l_supply_required = 228;
     for (int i = 0; i < l_supply_required; i++) {
         m_supply_required->push_back(m__io->read_u1());
     }
-    int l_space_required = 228;
     m_space_required = new std::vector<uint8_t>();
-    m_space_required->reserve(l_space_required);
+    const int l_space_required = 228;
     for (int i = 0; i < l_space_required; i++) {
         m_space_required->push_back(m__io->read_u1());
     }
-    int l_space_provided = 228;
     m_space_provided = new std::vector<uint8_t>();
-    m_space_provided->reserve(l_space_provided);
+    const int l_space_provided = 228;
     for (int i = 0; i < l_space_provided; i++) {
         m_space_provided->push_back(m__io->read_u1());
     }
-    int l_build_score = 228;
     m_build_score = new std::vector<uint16_t>();
-    m_build_score->reserve(l_build_score);
+    const int l_build_score = 228;
     for (int i = 0; i < l_build_score; i++) {
         m_build_score->push_back(m__io->read_u2le());
     }
-    int l_destroy_score = 228;
     m_destroy_score = new std::vector<uint16_t>();
-    m_destroy_score->reserve(l_destroy_score);
+    const int l_destroy_score = 228;
     for (int i = 0; i < l_destroy_score; i++) {
         m_destroy_score->push_back(m__io->read_u2le());
     }
-    int l_unit_map_string = 228;
     m_unit_map_string = new std::vector<uint16_t>();
-    m_unit_map_string->reserve(l_unit_map_string);
+    const int l_unit_map_string = 228;
     for (int i = 0; i < l_unit_map_string; i++) {
         m_unit_map_string->push_back(m__io->read_u2le());
     }
     n_broodwar_flag = true;
     if (is_format_bw() == true) {
         n_broodwar_flag = false;
-        int l_broodwar_flag = 228;
         m_broodwar_flag = new std::vector<uint8_t>();
-        m_broodwar_flag->reserve(l_broodwar_flag);
+        const int l_broodwar_flag = 228;
         for (int i = 0; i < l_broodwar_flag; i++) {
             m_broodwar_flag->push_back(m__io->read_u1());
         }
     }
-    int l_staredit_availability_flags = 228;
     m__raw_staredit_availability_flags = new std::vector<std::string>();
-    m__raw_staredit_availability_flags->reserve(l_staredit_availability_flags);
     m__io__raw_staredit_availability_flags = new std::vector<kaitai::kstream*>();
-    m__io__raw_staredit_availability_flags->reserve(l_staredit_availability_flags);
     m_staredit_availability_flags = new std::vector<staredit_availability_flags_type_t*>();
-    m_staredit_availability_flags->reserve(l_staredit_availability_flags);
+    const int l_staredit_availability_flags = 228;
     for (int i = 0; i < l_staredit_availability_flags; i++) {
         m__raw_staredit_availability_flags->push_back(m__io->read_bytes(2));
         kaitai::kstream* io__raw_staredit_availability_flags = new kaitai::kstream(m__raw_staredit_availability_flags->at(m__raw_staredit_availability_flags->size() - 1));

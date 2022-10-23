@@ -9,7 +9,7 @@
 #include "Storage.h"
 #include "Preferences.h"
 #include "FileUtil.h"
-#include "Sfx.h"
+#include "dat/Sfx.h"
 #include "Wav.h"
 #include "Logger.h"
 #include "StringUtil.h"
@@ -19,11 +19,10 @@
 #include <fstream>
 
 using namespace std;
+using namespace dat;
 
 static Logger logger = Logger("startool.dat.SfxConverter");
 
-namespace dat
-{
 
 SfxConverter::SfxConverter(std::shared_ptr<Hurricane> hurricane, DataHub &datahub) :
   Converter(hurricane),
@@ -60,8 +59,8 @@ bool SfxConverter::convert()
 
     TblEntry sound_file = sfx.sound_file_tbl();
 
-    string sound_arcfile("sound\\" + sound_file.name1);
-    string sound_file_base(sound_file.name1);
+    string sound_arcfile("sound\\" + sound_file.name1());
+    string sound_file_base(sound_file.name1());
     replaceString("\\", "/", sound_file_base);
     sound_file_base = cutFileEnding(to_lower(sound_file_base), ".wav");
 
@@ -77,5 +76,3 @@ bool SfxConverter::convert()
 
   return result;
 }
-
-} /* namespace dat */

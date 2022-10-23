@@ -24,39 +24,33 @@ portdata_dat_t::portdata_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__paren
 }
 
 void portdata_dat_t::_read() {
-    int l_video_idle = (num_lines() / 2);
     m_video_idle = new std::vector<uint32_t>();
-    m_video_idle->reserve(l_video_idle);
+    const int l_video_idle = (num_lines() / 2);
     for (int i = 0; i < l_video_idle; i++) {
         m_video_idle->push_back(m__io->read_u4le());
     }
-    int l_video_talking = (num_lines() / 2);
     m_video_talking = new std::vector<uint32_t>();
-    m_video_talking->reserve(l_video_talking);
+    const int l_video_talking = (num_lines() / 2);
     for (int i = 0; i < l_video_talking; i++) {
         m_video_talking->push_back(m__io->read_u4le());
     }
-    int l_change_idle = (num_lines() / 2);
     m_change_idle = new std::vector<uint8_t>();
-    m_change_idle->reserve(l_change_idle);
+    const int l_change_idle = (num_lines() / 2);
     for (int i = 0; i < l_change_idle; i++) {
         m_change_idle->push_back(m__io->read_u1());
     }
-    int l_change_talking = (num_lines() / 2);
     m_change_talking = new std::vector<uint8_t>();
-    m_change_talking->reserve(l_change_talking);
+    const int l_change_talking = (num_lines() / 2);
     for (int i = 0; i < l_change_talking; i++) {
         m_change_talking->push_back(m__io->read_u1());
     }
-    int l_unknown1_idle = (num_lines() / 2);
     m_unknown1_idle = new std::vector<uint8_t>();
-    m_unknown1_idle->reserve(l_unknown1_idle);
+    const int l_unknown1_idle = (num_lines() / 2);
     for (int i = 0; i < l_unknown1_idle; i++) {
         m_unknown1_idle->push_back(m__io->read_u1());
     }
-    int l_unknown1_talking = (num_lines() / 2);
     m_unknown1_talking = new std::vector<uint8_t>();
-    m_unknown1_talking->reserve(l_unknown1_talking);
+    const int l_unknown1_talking = (num_lines() / 2);
     for (int i = 0; i < l_unknown1_talking; i++) {
         m_unknown1_talking->push_back(m__io->read_u1());
     }

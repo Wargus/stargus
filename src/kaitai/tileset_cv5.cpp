@@ -64,9 +64,8 @@ void tileset_cv5_t::group_t::_read() {
     m_unknown6 = m__io->read_u2le();
     m_unknown7 = m__io->read_u2le();
     m_unknown8 = m__io->read_u2le();
-    int l_megatile_references = 16;
     m_megatile_references = new std::vector<uint16_t>();
-    m_megatile_references->reserve(l_megatile_references);
+    const int l_megatile_references = 16;
     for (int i = 0; i < l_megatile_references; i++) {
         m_megatile_references->push_back(m__io->read_u2le());
     }

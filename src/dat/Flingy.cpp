@@ -26,24 +26,52 @@ Flingy::~Flingy()
 
 }
 
-
-Sprite Flingy::sprite()
+uint16_t Flingy::sprite()
 {
-  uint16_t sprite_id = 0;
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.flingy->sprite()->at(mId);
+}
 
-  if (mId < mDatahub.flingy->sprite()->size())
-  {
-    sprite_id = mDatahub.flingy->sprite()->at(mId);
-    LOG4CXX_TRACE(logger, string("sprite(") + to_string(sprite_id) + ")");
-  }
-  else
-  {
-    LOG4CXX_WARN(logger, string("not found sprite->at(") + to_string(mId) + ") mapped to 0");
-  }
+Sprite Flingy::sprite_obj()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return Sprite(mDatahub, sprite());
+}
 
-  Sprite sprite(mDatahub, sprite_id);
+uint32_t Flingy::speed()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.flingy->speed()->at(mId);
+}
 
-  return sprite;
+uint16_t Flingy::acceleration()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.flingy->acceleration()->at(mId);
+}
+
+uint32_t Flingy::halt_distance()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.flingy->halt_distance()->at(mId);
+}
+
+uint8_t Flingy::turn_radius()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.flingy->turn_radius()->at(mId);
+}
+
+uint8_t Flingy::unused()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.flingy->unused()->at(mId);
+}
+
+uint8_t Flingy::movement_control()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.flingy->movement_control()->at(mId);
 }
 
 } /* namespace dat */

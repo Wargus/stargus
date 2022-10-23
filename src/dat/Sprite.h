@@ -10,6 +10,7 @@
 // project
 #include "ObjectAccess.h"
 #include "Image.h"
+#include "PropertyNotAvailableException.h"
 
 namespace dat
 {
@@ -20,7 +21,18 @@ public:
   Sprite(DataHub &datahub, unsigned int id);
   virtual ~Sprite();
 
-  Image image();
+  uint16_t image();
+  Image image_obj();
+
+  uint8_t health_bar();
+
+  uint8_t unknown2();
+
+  bool is_visible();
+
+  uint8_t select_circle_image_size();
+
+  uint8_t select_circle_vertical_pos();
 
 private:
 

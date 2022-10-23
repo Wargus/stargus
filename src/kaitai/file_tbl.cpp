@@ -19,9 +19,8 @@ file_tbl_t::file_tbl_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, file_
 
 void file_tbl_t::_read() {
     m_num_offsets = m__io->read_u2le();
-    int l_ofs_files = num_offsets();
     m_ofs_files = new std::vector<uint16_t>();
-    m_ofs_files->reserve(l_ofs_files);
+    const int l_ofs_files = num_offsets();
     for (int i = 0; i < l_ofs_files; i++) {
         m_ofs_files->push_back(m__io->read_u2le());
     }
@@ -98,9 +97,8 @@ std::vector<uint8_t>* file_tbl_t::tbl_entry_t::entry() {
         return m_entry;
     std::streampos _pos = m__io->pos();
     m__io->seek(_parent()->ofs_files()->at(i()));
-    int l_entry = dyn_end();
     m_entry = new std::vector<uint8_t>();
-    m_entry->reserve(l_entry);
+    const int l_entry = dyn_end();
     for (int i = 0; i < l_entry; i++) {
         m_entry->push_back(m__io->read_u1());
     }
@@ -112,9 +110,8 @@ std::vector<uint8_t>* file_tbl_t::tbl_entry_t::entry() {
 std::vector<file_tbl_t::tbl_entry_t*>* file_tbl_t::tbl_entries() {
     if (f_tbl_entries)
         return m_tbl_entries;
-    int l_tbl_entries = num_offsets();
     m_tbl_entries = new std::vector<tbl_entry_t*>();
-    m_tbl_entries->reserve(l_tbl_entries);
+    const int l_tbl_entries = num_offsets();
     for (int i = 0; i < l_tbl_entries; i++) {
         m_tbl_entries->push_back(new tbl_entry_t(i, m__io, this, m__root));
     }

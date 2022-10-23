@@ -1,5 +1,5 @@
 project('stargus', 'cpp', 'c',
-default_options : ['cpp_std=c++17'])
+        default_options : ['cpp_std=c++17'])
 
 cpp = meson.get_compiler('cpp')
 
@@ -46,10 +46,14 @@ cppunit_dep = dependency('cppunit', required : false)
 
 subdir('src')
 subdir('tools')
+subdir('tools/sauwetter')
+subdir('tools/scdat2json')
+subdir('tools/grptool')
+#subdir('tools/scpalette')
 subdir('test/lua')
 
 if cppunit_dep.found()
 	subdir('test/module')
 endif
 
-subdir('test/gamedata/dat')
+#subdir('test/gamedata/dat')

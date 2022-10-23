@@ -9,6 +9,7 @@
 
 // project
 #include "ObjectAccess.h"
+#include "PropertyNotAvailableException.h"
 
 namespace dat
 {
@@ -26,17 +27,45 @@ public:
   virtual ~Image();
 
   uint32_t grp();
-
   TblEntry grp_tbl();
-
-  uint8_t draw_function();
-
-  uint8_t remapping();
 
   bool gfx_turns();
 
+  bool clickable();
+
+  bool use_full_iscript();
+
+  bool draw_if_cloaked();
+
+  images_dat_t::draw_function_enum_t draw_function();
+
+  images_dat_t::remapping_enum_t remapping();
+
+  // TODO: Iscript Object
+  uint32_t iscript_id();
+
+  uint32_t shield_overlay();
+  TblEntry shield_overlay_tbl();
+
+  uint32_t attack_overlay();
+  TblEntry attack_overlay_tbl();
+
+  uint32_t damage_overlay();
+  TblEntry damage_overlay_tbl();
+
+  uint32_t special_overlay();
+  TblEntry special_overlay_tbl();
+
+  uint32_t landing_dust_overlay();
+  TblEntry landing_dust_overlay_tbl();
+
+  uint32_t lift_off_dust_overlay();
+  TblEntry lift_off_dust_overlay_tbl();
+
   /***/
-  std::string createID();
+  std::string getIDString();
+
+  static const int overlay_none = 0;
 
 private:
 

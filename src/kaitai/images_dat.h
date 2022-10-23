@@ -15,6 +15,40 @@ class images_dat_t : public kaitai::kstruct {
 
 public:
 
+    enum draw_function_enum_t {
+        DRAW_FUNCTION_ENUM_NORMAL = 0,
+        DRAW_FUNCTION_ENUM_NO_HALLUCINATION = 1,
+        DRAW_FUNCTION_ENUM_NON_VISION_CLOAKING = 2,
+        DRAW_FUNCTION_ENUM_NON_VISION_CLOAKED = 3,
+        DRAW_FUNCTION_ENUM_NON_VISION_UNCLOAKING = 4,
+        DRAW_FUNCTION_ENUM_VISION_CLOAKING = 5,
+        DRAW_FUNCTION_ENUM_VISION_CLOAKED = 6,
+        DRAW_FUNCTION_ENUM_VISION_UNCLOAKING = 7,
+        DRAW_FUNCTION_ENUM_EMP_SHOCKWAVE = 8,
+        DRAW_FUNCTION_ENUM_REMAPPING = 9,
+        DRAW_FUNCTION_ENUM_SHADOW = 10,
+        DRAW_FUNCTION_ENUM_HP_BAR = 11,
+        DRAW_FUNCTION_ENUM_WARP_TEXTURE = 12,
+        DRAW_FUNCTION_ENUM_SEL_CIRCLE_REMAPPING = 13,
+        DRAW_FUNCTION_ENUM_PLAYER_COLOR = 14,
+        DRAW_FUNCTION_ENUM_UPDATE_RECT = 15,
+        DRAW_FUNCTION_ENUM_HALLUCINATION = 16,
+        DRAW_FUNCTION_ENUM_WARP_FLASH = 17
+    };
+
+    enum remapping_enum_t {
+        REMAPPING_ENUM_NO_REMAPPING = 0,
+        REMAPPING_ENUM_OFIRE = 1,
+        REMAPPING_ENUM_GFIRE = 2,
+        REMAPPING_ENUM_BFIRE = 3,
+        REMAPPING_ENUM_BEXPL = 4,
+        REMAPPING_ENUM_SPECIAL = 5,
+        REMAPPING_ENUM_UNKNOWN1 = 6,
+        REMAPPING_ENUM_UNKNOWN2 = 7,
+        REMAPPING_ENUM_UNKNOWN3 = 8,
+        REMAPPING_ENUM_UNKNOWN4 = 9
+    };
+
     images_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, images_dat_t* p__root = 0);
 
 private:
@@ -59,8 +93,8 @@ private:
     std::vector<uint8_t>* m_clickable;
     std::vector<uint8_t>* m_use_full_iscript;
     std::vector<uint8_t>* m_draw_if_cloaked;
-    std::vector<uint8_t>* m_draw_function;
-    std::vector<uint8_t>* m_remapping;
+    std::vector<draw_function_enum_t>* m_draw_function;
+    std::vector<remapping_enum_t>* m_remapping;
     std::vector<uint32_t>* m_iscript_id;
     std::vector<uint32_t>* m_shield_overlay;
     std::vector<uint32_t>* m_attack_overlay;
@@ -108,7 +142,7 @@ public:
      * 5 - vision cloaking\n
      * 6 - vision cloaked\n
      * 7 - vision uncloaking\n
-     * 8 - EMP\n
+     * 8 - EMP shockwave\n
      * 9 - uses remapping\n
      * 10 - shadow\n
      * 11 - HP bar\n
@@ -119,7 +153,7 @@ public:
      * 16 - hallucination\n
      * 17 - warp flash\n
      */
-    std::vector<uint8_t>* draw_function() const { return m_draw_function; }
+    std::vector<draw_function_enum_t>* draw_function() const { return m_draw_function; }
 
     /**
      * An additional remapping "palette" that is to be used. Each tileset has its own files responsible for remapping. Used only if the Draw property is set to "9-Use Remapping". Values 8 and 9 produce a weird effect and most probably are a result of an error in Starcraft.
@@ -135,7 +169,7 @@ public:
      * 8 = Unk8 (?)\n
      * 9 = Unk9 (?)\n
      */
-    std::vector<uint8_t>* remapping() const { return m_remapping; }
+    std::vector<remapping_enum_t>* remapping() const { return m_remapping; }
 
     /**
      * Indicates the animation ID in the Iscript.bin file used to manage the animation of the current entry's GRP graphics. [pointer to Iscript.bin]

@@ -19,6 +19,8 @@ class DataChunkTest : public CPPUNIT_NS::TestFixture
   CPPUNIT_TEST(test2_createFromExistingHeap);
   CPPUNIT_TEST(test3_vectorReturn);
   CPPUNIT_TEST(test4_write_compare);
+  CPPUNIT_TEST(test5_read_write_compare);
+
 
   CPPUNIT_TEST_SUITE_END();
 
@@ -46,6 +48,11 @@ protected:
    * Create an empty DataCkunk add some data, write it into a file, read it back from file and compare with input data
    */
   void test4_write_compare();
+
+  /**
+   * Similar to test4_write_compare() but with the DataChunk::read() function
+   */
+  void test5_read_write_compare();
 
 private:
 

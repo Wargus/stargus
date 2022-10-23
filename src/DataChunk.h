@@ -68,7 +68,14 @@ public:
    *
    * @return true if succeed
    */
-  bool write(const std::string filename);
+  bool write(const std::string &filename);
+
+  /**
+   * Read data from a file and use addData() to put it into the DataChunk
+   *
+   * @return true if succeed
+   */
+  bool read(const std::string &filename);
 
   /**
    * Access to a specific element

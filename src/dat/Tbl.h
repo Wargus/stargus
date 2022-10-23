@@ -9,44 +9,14 @@
 
 // Local
 #include "kaitai/file_tbl.h"
+#include "TblEntry.h"
 
 // System
 #include <memory>
 
-class TblEntry
-{
-public:
-  TblEntry()
-  {
-    shortcut_pos = -1;
-    shortcut = ' ';
-  }
-  std::string name1;
-  std::string name2;
-  std::string name3;
-  int shortcut_pos;
-  std::string shortcut;
+namespace dat {
 
 
-  void removeSpaces()
-  {
-    size_t pos;
-    while ((pos = name1.find("  ")) != std::string::npos)
-    {
-      name1 = name1.replace(pos, 2, " ");
-    }
-
-    while ((pos = name2.find("  ")) != std::string::npos)
-    {
-      name2 = name2.replace(pos, 2, " ");
-    }
-
-    while ((pos = name3.find("  ")) != std::string::npos)
-    {
-      name3 = name3.replace(pos, 2, " ");
-    }
-  }
-};
 
 class Tbl
 {
@@ -55,6 +25,11 @@ public:
   virtual ~Tbl();
 
   std::vector<TblEntry> convertFromStream(std::shared_ptr<kaitai::kstream> ks);
+
+private:
+  void removeDoubleSpaces(std::string &str);
 };
+
+} /* namespace dat */
 
 #endif /* TBL_H */

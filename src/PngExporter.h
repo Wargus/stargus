@@ -24,6 +24,8 @@ public:
 
   //TODO: un-static this in the design!
 
+  static bool save(const std::string &name, PaletteImage &palImage,
+        std::shared_ptr<AbstractPalette> abs_palette, int transparent, bool rgba = false);
 
   /**
    **  Save a png file with 8-bit colormap palette
@@ -35,7 +37,7 @@ public:
    **  @param pal          Palette (256*3 colors/bytes)
    **  @param transparent  Image uses transparency
    */
-  static int save(const std::string &name, PaletteImage &palImage,
+  static bool saveRGB(const std::string &name, PaletteImage &palImage,
       Palette &palette, int transparent);
 
   /**
@@ -49,10 +51,10 @@ public:
    **  @param pal          Palette (256*3 colors/bytes)
    **  @param transparent  Image uses transparency from from specific palette index
    */
-  static int saveRGBA(const std::string &name, PaletteImage &palImageh,
+  static bool saveRGBA(const std::string &name, PaletteImage &palImageh,
       Palette &palette, int transparent);
 
-  static int saveRGBA(const std::string &name, PaletteImage &palImageh,
+  static bool saveRGBA(const std::string &name, PaletteImage &palImageh,
       Palette2D &palette2d, int transparent);
 
 };

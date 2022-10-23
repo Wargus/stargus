@@ -60,7 +60,7 @@ public:
 class validation_failed_error: public kstruct_error {
 public:
     validation_failed_error(const std::string what, kstream* io, const std::string src_path):
-        kstruct_error("at pos " + kstream::to_string(static_cast<int>(io->pos())) + ": validation failed: " + what, src_path),
+        kstruct_error("at pos " + kstream::to_string(io->pos()) + ": validation failed: " + what, src_path),
         m_io(io)
     {
     }

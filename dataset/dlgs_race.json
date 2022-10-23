@@ -1,0 +1,482 @@
+[
+    {
+        "frame": [0],
+        "name": "menu.png"
+    },
+    {
+        "frame": [1],
+        "name": "menu_pressed.png"
+    },
+    {
+        "frame": [2],
+        "name": "minimap_disabled.png"
+    },
+    {
+        "frame": [3],
+        "name": "minimap.png"
+    },
+    {
+        "frame": [4],
+        "name": "minimap_pressed.png"
+    },
+    {
+        "frame": [5],
+        "name": "radiobutton_disabled.png"
+    },
+    {
+        "frame": [6],
+        "name": "radiobutton_off_selected.png"
+    },
+    {
+        "frame": [7],
+        "name": "radiobutton_off.png"
+    },
+    {
+        "frame": [8],
+        "name": "radiobutton_on_selected.png"
+    },
+    {
+        "frame": [9],
+        "name": "radiobutton_on.png"
+    },
+    {
+        "frame": [10],
+        "name": "checkbutton_disabled.png"
+    },
+    {
+        "frame": [11],
+        "name": "checkbutton_off.png"
+    },
+    {
+        "frame": [12],
+        "name": "checkbutton_off_selected.png"
+    },
+    {
+        "frame": [13],
+        "name": "checkbutton_on.png"
+    },
+    {
+        "frame": [14],
+        "name": "checkbutton_on_selcted.png"
+    },
+    {
+        "frame": [15],
+        "name": "scroll_up_disabled.png"
+    },
+    {
+        "frame": [16],
+        "name": "scroll_up.png"
+    },
+    {
+        "frame": [17],
+        "name": "scroll_up_pressed.png"
+    },
+    {
+        "frame": [18],
+        "name": "scroll_down_disabled.png"
+    },
+    {
+        "frame": [19],
+        "name": "scroll_down.png"
+    },
+    {
+        "frame": [20],
+        "name": "scroll_down_pressed.png"
+    },
+    {
+        "frame": [21],
+        "name": "scroll_left_disabled.png"
+    },
+    {
+        "frame": [22],
+        "name": "scoll_left.png"
+    },
+    {
+        "frame": [23],
+        "name": "scroll_left_pressed.png"
+    },
+    {
+        "frame": [24],
+        "name": "scroll_right_disabled.png"
+    },
+    {
+        "frame": [25],
+        "name": "scroll_right.png"
+    },
+    {
+        "frame": [26],
+        "name": "scroll_right_pressed.png"
+    },
+    {
+        "frame": [27],
+        "name": "radiobutton_on_off_transition.png"
+    },
+    {
+        "frame": [28],
+        "name": "scrollborder_horiz_top.png"
+    },
+    {
+        "frame": [29],
+        "name": "scrollborder_horiz_middle.png"
+    },
+    {
+        "frame": [30],
+        "name": "scrollborder_horiz_bottom.png"
+    },
+    {
+        "frame": [31],
+        "name": "scrollborder_vert_left.png"
+    },
+    {
+        "frame": [32],
+        "name": "scrollborder_vert_middle.png"
+    },
+    {
+        "frame": [33],
+        "name": "scrollborder_vert_right.png"
+    },
+    {
+        "frame": [34],
+        "name": "panel01.png"
+    },
+    {
+        "frame": [35],
+        "name": "panel02.png"
+    },
+    {
+        "frame": [36],
+        "name": "panel03.png"
+    },
+    {
+        "frame": [37],
+        "name": "panel04.png"
+    },
+    {
+        "frame": [38],
+        "name": "panel05.png"
+    },
+    {
+        "frame": [39],
+        "name": "panel06.png"
+    },
+    {
+        "frame": [40],
+        "name": "panel07.png"
+    },
+    {
+        "frame": [41],
+        "name": "panel08.png"
+    },
+    {
+        "frame": [42],
+        "name": "panel09.png"
+    },
+    {
+        "frame": [43],
+        "name": "panel10.png"
+    },
+    {
+        "frame": [44],
+        "name": "panel11.png"
+    },
+    {
+        "frame": [45],
+        "name": "panel12.png"
+    },
+    {
+        "frame": [46],
+        "name": "panel13.png"
+    },
+    {
+        "frame": [47],
+        "name": "panel14.png"
+    },
+    {
+        "frame": [48],
+        "name": "panel15.png"
+    },
+    {
+        "frame": [49],
+        "name": "trangle1.png"
+    },
+    {
+        "frame": [50],
+        "name": "trangle2.png"
+    },
+    {
+        "frame": [51],
+        "name": "trangle3.png"
+    },
+    {
+        "frame": [52],
+        "name": "input_left.png"
+    },
+    {
+        "frame": [53],
+        "name": "input_middle.png"
+    },
+    {
+        "frame": [54],
+        "name": "input_right.png"
+    },
+    {
+        "frame": [55],
+        "name": "input2_left"
+    },
+    {
+        "frame": [56],
+        "name": "input2_middle"
+    },
+    {
+        "frame": [57],
+        "name": "input2_right"
+    },
+    {
+        "frame": [58],
+        "name": "diplomacy_disabled.png"
+    },
+    {
+        "frame": [59],
+        "name": "displomacy.png"
+    },
+    {
+        "frame": [60],
+        "name": "diplomacy_pressed.png"
+    },
+    {
+        "frame": [61],
+        "name": "skull_disabled.png"
+    },
+    {
+        "frame": [62],
+        "name": "skill.png"
+    },
+    {
+        "frame": [63],
+        "name": "skull_selected.png"
+    },
+    {
+        "frame": [64],
+        "name": "bird.png"
+    },
+    {
+        "frame": [65],
+        "name": "bird_selected.png"
+    },
+    {
+        "frame": [66],
+        "name": "dline_left_disabled.png"
+    },
+    {
+        "frame": [67],
+        "name": "dline_middle_disabled.png"
+    },
+    {
+        "frame": [68],
+        "name": "dline_right_disabled.png"
+    },
+    {
+        "frame": [69],
+        "name": "dline_left.png"
+    },
+    {
+        "frame": [70],
+        "name": "dline_middle.png"
+    },
+    {
+        "frame": [71],
+        "name": "dline_right.png"
+    },
+    {
+        "frame": [72],
+        "name": "dline_cross_disabled.png"
+    },
+    {
+        "frame": [73],
+        "name": "dline_cross.png"
+    },
+    {
+        "frame": [74],
+        "name": "statuslight_grey.png"
+    },
+    {
+        "frame": [75],
+        "name": "statuslight_yellow.png"
+    },
+    {
+        "frame": [76],
+        "name": "statuslight_green.png"
+    },
+    {
+        "frame": [77],
+        "name": "statuslight_red.png"
+    },
+    {
+        "frame": [78],
+        "name": "left_button_left_disabled.png"
+    },
+    {
+        "frame": [79],
+        "name": "button_middle_disabled.png"
+    },
+    {
+        "frame": [80],
+        "name": "left_button_right_disabled.png"
+    },
+    {
+        "frame": [81],
+        "name": "left_button_left.png"
+    },
+    {
+        "frame": [82],
+        "name": "button_middle.png"
+    },
+    {
+        "frame": [83],
+        "name": "left_button_right.png"
+    },
+    {
+        "frame": [84],
+        "name": "left_button_left_pressed.png"
+    },
+    {
+        "frame": [85],
+        "name": "button_middle_pressed.png"
+    },
+    {
+        "frame": [86],
+        "name": "left_button_right_pressed.png"
+    },
+    {
+        "frame": [87],
+        "name": "right_button_left_disabled.png"
+    },
+    {
+        "frame": [88],
+        "name": "right_button_left.png"
+    },
+    {
+        "frame": [89],
+        "name": "right_button_left_pressed.png"
+    },
+    {
+        "frame": [90],
+        "name": "right_button_right_disabled.png"
+    },
+    {
+        "frame": [91],
+        "name": "right_button_right.png"
+    },
+    {
+        "frame": [92],
+        "name": "right_button_right_pressed.png"
+    },
+    {
+        "frame": [93],
+        "name": "radar_deactivated.png"
+    },
+    {
+        "frame": [94],
+        "name": "radar.png"
+    },
+    {
+        "frame": [95],
+        "name": "radar_pressed.png"
+    },
+    {
+        "frame": [96],
+        "name": "input2_left.png"
+    },
+    {
+        "frame": [97],
+        "name": "input2_middle.png"
+    },
+    {
+        "frame": [98],
+        "name": "input2_right.png"
+    },
+    {
+        "frame": [99],
+        "name": "empty1.png"
+    },
+    {
+        "frame": [100],
+        "name": "empty2.png"
+    },
+    {
+        "frame": [101],
+        "name": "empty3.png"
+    },
+    {
+		"frame": [88,82,82,82,82,82,82,82,82,82,82,82,83],
+		"name": "agg/button_small.png"
+	},
+	{
+		"frame": [87,79,79,79,79,79,79,79,79,79,79,79,80],
+		"name": "agg/button_small_disabled.png"
+	},
+	{
+		"frame": [89,85,85,85,85,85,85,85,85,85,85,85,86],
+		"name": "agg/button_small_pressed.png"
+	},
+    {
+		"frame": [81,82,82,82,82,82,82,82,82,82,82,82,83],
+		"name": "agg/button_left_small.png"
+	},
+	{
+		"frame": [78,79,79,79,79,79,79,79,79,79,79,79,80],
+		"name": "agg/button_left_small_disabled.png"
+	},
+	{
+		"frame": [84,85,85,85,85,85,85,85,85,85,85,85,86],
+		"name": "agg/button_left_small_pressed.png"
+	},
+	{
+		"frame": [88,82,82,82,82,82,82,82,82,82,82,82,91],
+		"name": "agg/button_right_small.png"
+	},
+	{
+		"frame": [87,79,79,79,79,79,79,79,79,79,79,79,90],
+		"name": "agg/button_right_small_disabled.png"
+	},
+	{
+		"frame": [89,85,85,85,85,85,85,85,85,85,85,85,92],
+		"name": "agg/button_right_small_pressed.png"
+	},
+	{
+		"frame": [88,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,83],
+		"name": "agg/button_large.png"
+	},
+	{
+		"frame": [87,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,80],
+		"name": "agg/button_large_disabled.png"
+	},
+	{
+		"frame": [89,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,86],
+		"name": "agg/button_large_pressed.png"
+	},
+    {
+		"frame": [81,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,83],
+		"name": "agg/button_left_large.png"
+	},
+	{
+		"frame": [78,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,80],
+		"name": "agg/button_left_large_disabled.png"
+	},
+	{
+		"frame": [84,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,86],
+		"name": "agg/button_left_large_pressed.png"
+	},
+	{
+		"frame": [88,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,91],
+		"name": "agg/button_right_large.png"
+	},
+	{
+		"frame": [87,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,90],
+		"name": "agg/button_right_large_disabled.png"
+	},
+	{
+		"frame": [89,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,92],
+		"name": "agg/button_right_large_pressed.png"
+	}
+]

@@ -55,6 +55,13 @@ std::string assign(const std::string &left, const std::string &right)
   return assign_str;
 }
 
+std::string compare(const std::string &left, const std::string &right)
+{
+  string compare_str(left + " == " + right);
+
+  return compare_str;
+}
+
 std::string quote(const std::string &text)
 {
   string quote_str("\"");

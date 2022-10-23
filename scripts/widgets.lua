@@ -42,7 +42,7 @@ function DefineButtonStyles(race)
       TextNormalColor = "white",
     },
     Clicked = {
-      File = "ui/"..race.."/menu pressed.png",
+      File = "ui/"..race.."/menu_pressed.png",
       TextPos = {31, 4},
     },
   })
@@ -61,7 +61,7 @@ function DefineButtonStyles(race)
       TextNormalColor = "white",
     },
     Clicked = {
-      File = "ui/"..race.."/diplomacy pressed.png",
+      File = "ui/"..race.."/diplomacy_pressed.png",
       TextPos = {31, 4},
     },
   })
@@ -74,13 +74,13 @@ function DefineButtonStyles(race)
     TextAlign = "Center",
     TextPos = {33, 6},
     Default = {
-      File = "ui/"..race.."/minimap terrain.png",
+      File = "ui/"..race.."/minimap.png",
     },
     Hover = {
       TextNormalColor = "white",
     },
     Clicked = {
-      File = "ui/"..race.."/minimap terrain pressed.png",
+      File = "ui/"..race.."/minimap_pressed.png",
       TextPos = {31, 4},
     },
   })

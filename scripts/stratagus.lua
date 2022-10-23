@@ -37,11 +37,14 @@
 --  Version
 -------------------------------------------------------------------------------
 
-Name = "Stargus"
-Version = "3.3.0"
-Homepage = "https://github.com/Wargus/stargus"
-Licence = "GPL v2"
-Copyright = "Copyright (c) 2002-2022 by The Stratagus Project and Pali Rohar"
+stargus = {}
+
+stargus.Name = "Stargus"
+stargus.Homepage = "https://github.com/Wargus/stargus"
+stargus.Copyright = "(c) 1998-2021 by The Stratagus Project."
+stargus.Version = "3.3.0"
+stargus.Licence = "GPL v2+"
+
 
 -- activate debugging
 pcall(function() require("scripts/mobdebug").start() end)
@@ -61,20 +64,52 @@ function InitGameVariables()
   end
 end
 
+--  Set the game name. It's used so we can mantain different savegames
+--  and setting. Might also be used for multiplayer.
+SetGameName("sc")
+SetFullGameName(stargus.Name)
+
+Load("preferences.lua")
+
+if (preferences == nil) then
+  preferences = {
+    VideoWidth = 800,
+    VideoHeight = 600,
+    VideoFullScreen = false,
+    PlayerName = "Player",
+    FogOfWar = true,
+    ShowCommandKey = true,
+    GroupKeys = "0123456789`",
+    GameSpeed = 30,
+    EffectsEnabled = true,
+    EffectsVolume = 128,
+    MusicEnabled = true,
+    MusicVolume = 128,
+    StratagusTranslation = "",
+    GameTranslation = "",
+    TipNumber = 0,
+    ShowTips = true,
+    GrabMouse = false,
+    RapidStratagusIDE = false
+  }
+end
+
+-- nil this option to false if not given in users preferences
+if (preferences.RapidStratagusIDE == nil) then 
+  preferences.RapidStratagusIDE = false
+end
+
 --  Edit the next sections to get your look and feel.
 --  Note, some of those values are overridden by user preferences,
 --  see preferences.lua
 
 --  Enter your default title screen.
-SetTitleScreens(
-  {Image = "videos/blizzard.ogv"},
-  {Image = "ui/title.png", Music = "music/title.ogg",  Timeout = 5}
-)
-
---  Set the game name. It's used so we can mantain different savegames
---  and setting. Might also be used for multiplayer.
-SetGameName("sc")
-SetFullGameName(Name)
+if (preferences.RapidStratagusIDE == false) then
+  SetTitleScreens(
+    {Image = "videos/blizzard.ogv"},
+    {Image = "ui/title.png", Music = "music/title.ogg",  Timeout = 5}
+  )
+end
 
 SetSelectionStyle("ellipse", 0.589)
 Preference.ShowSightRange = false
@@ -186,7 +221,9 @@ else
   SetFogOfWarGraphics("contrib/fog.png")
 end
 
-SetEnableMapGrid(true)
+-- path finding debug option only!
+SetEnableMapGrid(false)
+
 SetTileSize(8, 8)
 
 --  Choose your default for minimap with/without terrain.
@@ -338,30 +375,6 @@ end
 --  Tables-Part
 -------------------------------------------------------------------------------
 
-Load("preferences.lua")
-
-if (preferences == nil) then
-  preferences = {
-    VideoWidth = 800,
-    VideoHeight = 600,
-    VideoFullScreen = false,
-    PlayerName = "Player",
-    FogOfWar = true,
-    ShowCommandKey = true,
-    GroupKeys = "0123456789`",
-    GameSpeed = 30,
-    EffectsEnabled = true,
-    EffectsVolume = 128,
-    MusicEnabled = true,
-    MusicVolume = 128,
-    StratagusTranslation = "",
-    GameTranslation = "",
-    TipNumber = 0,
-    ShowTips = true,
-    GrabMouse = false,
-  }
-end
-
 SetVideoResolution(preferences.VideoWidth, preferences.VideoHeight)
 SetVideoFullScreen(preferences.VideoFullScreen)
 SetLocalPlayerName(preferences.PlayerName)
@@ -378,7 +391,6 @@ SetGrabMouse(preferences.GrabMouse)
 
 --- Uses Stratagus Library path!
 Load("scripts/sc.lua")
-
 Load("scripts/icons.lua")
 Load("scripts/sound.lua")
 Load("scripts/missiles.lua")
@@ -391,5 +403,7 @@ Load("scripts/ui.lua")
 Load("scripts/ai.lua")
 Load("scripts/commands.lua")
 Load("scripts/cheats.lua")
+
+
 
 --print("... ready!\n")

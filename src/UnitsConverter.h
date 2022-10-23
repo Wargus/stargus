@@ -8,9 +8,9 @@
 #define UNITSEXPORTER_H
 
 // project
-#include "DataHub.h"
+#include "dat/DataHub.h"
 #include "Storage.h"
-#include "Unit.h"
+#include "dat/Unit.h"
 
 // system
 
@@ -26,9 +26,7 @@ public:
   UnitsConverter(std::shared_ptr<Hurricane> hurricane, DataHub &datahub);
   virtual ~UnitsConverter();
 
-  bool convert(json &unitsJson,
-               std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
-               std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap);
+  bool convert(json &unitsJson);
 
 private:
   std::string makeReadySounds(Unit &unit);

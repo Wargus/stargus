@@ -65,7 +65,7 @@ bool Pcx::savePNG(Storage storage)
 
   if (mRawData)
   {
-    PngExporter::save(storage.getFullPath(), *mPaletteImage, *mPalette, 0);
+    PngExporter::saveRGB(storage.getFullPath(), *mPaletteImage, *mPalette, 0);
   }
   else
   {
@@ -77,7 +77,7 @@ bool Pcx::savePNG(Storage storage)
 
 std::shared_ptr<Palette> Pcx::getPalette()
 {
-  return mPalette;
+  return make_shared<Palette>(*mPalette);
 }
 
 Size Pcx::getSize()
@@ -92,9 +92,11 @@ Size Pcx::getSize()
   return imageSize;
 }
 
-void Pcx::mapIndexPalette(int length, int start, int index)
+std::shared_ptr<Palette> Pcx::mapIndexPalette(int length, int start, int index)
 {
-  if (mPaletteImage && mPalette)
+  std::shared_ptr<Palette> palette(mPalette);
+
+  if (mPaletteImage && palette)
   {
     for (int i = 0; i < length; i++)
     {
@@ -104,9 +106,11 @@ void Pcx::mapIndexPalette(int length, int start, int index)
       unsigned char color_index = mPaletteImage->at(rel_index);
 
       Color &image_color = mPalette->at(color_index);
-      mPalette->at(start_pal_dest) = image_color;
+      palette->at(start_pal_dest) = image_color;
     }
   }
+
+  return palette;
 }
 
 std::shared_ptr<Palette2D> Pcx::map2DPalette()

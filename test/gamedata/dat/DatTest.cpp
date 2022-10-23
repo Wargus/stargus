@@ -6,21 +6,11 @@
 
 // project
 #include "dat/DataHub.h"
-#include "dat/CSVExporter.h"
+#include "CSVExporter.h"
 #include "Breeze.h"
 #include "FileUtil.h"
 #include "Logger.h"
-
-// as this is 3rd party code I don't fix it ->
-#ifndef _MSC_VER
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
-#endif
-#include "optionparser.h"
-#ifndef _MSC_VER
-#pragma GCC diagnostic pop
-#endif
-// <-
+#include "optparser.h"
 
 // system
 #include <iostream>
@@ -167,7 +157,7 @@ int main(int argc, const char **argv)
   shared_ptr<Breeze> storm = make_shared<Breeze>(dat_files_directory);
   dat::DataHub datahub(storm);
 
-  dat::CSVExporter csvexporter(datahub);
+  CSVExporter csvexporter(datahub);
 
   csvexporter.print();
 

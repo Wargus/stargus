@@ -126,3 +126,35 @@ void DataChunkTest::test4_write_compare()
 
   fs::remove(savename);
 }
+
+void DataChunkTest::test5_read_write_compare()
+{
+  DataChunk dc;
+  int LENGTH = 5;
+  string savename = "datachunk.txt";
+
+  unsigned char rawdata[LENGTH];
+  rawdata[0] = 0x1;
+  rawdata[1] = 0x2;
+  rawdata[2] = 0x3;
+  rawdata[3] = 0x4;
+  rawdata[4] = 0x5;
+
+  dc.addData(rawdata, LENGTH);
+
+  dc.write(savename);
+
+  string line;
+  string filecontent;
+
+  DataChunk dc_read;
+  dc_read.read(savename);
+
+  CPPUNIT_ASSERT(dc_read.at(0) == rawdata[0]);
+  CPPUNIT_ASSERT(dc_read.at(1) == rawdata[1]);
+  CPPUNIT_ASSERT(dc_read.at(2) == rawdata[2]);
+  CPPUNIT_ASSERT(dc_read.at(3) == rawdata[3]);
+  CPPUNIT_ASSERT(dc_read.at(4) == rawdata[4]);
+
+  fs::remove(savename);
+}

@@ -6,7 +6,7 @@
 
 // project
 #include "PortraitsConverter.h"
-#include "Portrait.h"
+#include "dat/Portrait.h"
 #include "Smacker.h"
 #include "StringUtil.h"
 #include "Preferences.h"
@@ -21,9 +21,7 @@
 #include <set>
 
 using namespace std;
-
-namespace dat
-{
+using namespace dat;
 
 static Logger mLogger = Logger("startool.dat.PortraitsConverter");
 
@@ -58,15 +56,15 @@ bool PortraitsConverter::convert()
   lua_include.open (luagen("luagen-portrait.lua").getFullPath());
   string lua_include_str;
 
-  for(unsigned int i = 0; i < mDatahub.portrait->video_idle()->size(); i++)
+  for(unsigned int i = 0; i < mDatahub.portdata->video_idle()->size(); i++)
   {
     Portrait portrait(mDatahub, i);
 
-    string portrait_arcfile_idle(portrait.video_idle_tbl().name1);
-    string portrait_arcfile_talking(portrait.video_talking_tbl().name1);
+    string portrait_arcfile_idle(portrait.video_idle_tbl().name1());
+    string portrait_arcfile_talking(portrait.video_talking_tbl().name1());
 
-    string portrait_idle_id(Portrait::createID(portrait_arcfile_idle));
-    string portrait_talking_id(Portrait::createID(portrait_arcfile_talking));
+    string portrait_idle_id(portrait.getIDString(portrait_arcfile_idle));
+    string portrait_talking_id(portrait.getIDString(portrait_arcfile_talking));
 
     // just to ensure the idle / talking consistency in the database
     // this should also be the case otherwise something is broken
@@ -140,5 +138,3 @@ bool PortraitsConverter::convertMngPortraits(const std::string &arcfile, std::ve
 
   return true;
 }
-
-} /* namespace dat */

@@ -1,5 +1,5 @@
-#ifndef FILE_NOT_FOUND_EXCEPTION_H
-#define EXCEPTIONS_H
+#ifndef FILENOTFOUNDEXCEPTION_H
+#define FILENOTFOUNDEXCEPTION_H
 
 #include <exception>
 
@@ -14,4 +14,4 @@ private:
   const std::string &txt;
 };
 
-#endif // FILE_NOT_FOUND_EXCEPTION_H
+#endif // FILENOTFOUNDEXCEPTION_H

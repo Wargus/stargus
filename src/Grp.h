@@ -4,8 +4,8 @@
  *      Author: Andreas Volz
  */
 
-#ifndef GRP_H_
-#define GRP_H_
+#ifndef GRP_H
+#define GRP_H
 
 // Local
 #include "Converter.h"
@@ -13,22 +13,21 @@
 #include "Storage.h"
 #include "Size.h"
 #include "Palette2D.h"
+#include "libgrp/libgrp.hpp"
 
 // System
 #include <string.h>
 #include <memory>
 
 /**
- * Put the code for decoding of Gfu and Gfx in Gfu parent as workaround.
- * Reason seems to be a workaround for "Hardcoded support for worker with resource repairing"
- * TODO: Find a better solution and move to to Gfx/Gfu class
+ *
  */
 class Grp: public Converter
 {
 public:
   Grp(std::shared_ptr<Hurricane> hurricane);
   Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile);
-  Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<Palette> pal);
+  Grp(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, std::shared_ptr<AbstractPalette> pal);
   virtual ~Grp();
 
   /**
@@ -39,9 +38,6 @@ public:
 
   bool getRGBA();
 
-  /**
-   * FIXME: load should really load the file and not just set the name (instead of save() does all)
-   */
   bool load(const std::string &arcfile);
 
   /**
@@ -51,42 +47,16 @@ public:
    */
   bool save(Storage filename);
 
-  void setPalette(std::shared_ptr<Palette> pal);
+  void setPalette(std::shared_ptr<AbstractPalette> pal);
 
-  void setPalette2D(std::shared_ptr<Palette2D> pal);
-
-  void setGFX(bool gfx);
-  bool getGFX();
-
-  void setTransparent(int transparent);
-
-  // FIXME: returns only valid size after saving
   Size getTileSize();
 
-protected:
-  /**
-   **  Convert graphics into image.
-   */
-  unsigned char* ConvertGraphic(bool gfx, unsigned char *bp, int *wp, int *hp, unsigned char *bp2);
-
-  /**
-   **  Decode a entry(frame) into image.
-   */
-  void DecodeGfxEntry(int index, unsigned char *start, unsigned char *image, int ix, int iy, int iadd);
-
-  /**
-   **  Decode a entry(frame) into image.
-   */
-  void DecodeGfuEntry(int index, unsigned char *start, unsigned char *image, int ix, int iy, int iadd);
-
-private:
-  std::shared_ptr<Palette> mPal;
-  std::shared_ptr<Palette2D> mPal2D;
-  std::string mArcfile;
+protected: // TODO: maybe back to private after Widget redesign
+  std::shared_ptr<AbstractPalette> mPal;
+  GRPImage mGRPImage;
+  //std::string mArcfile;
   bool mRGBA;
-  bool mGFX;
-  int mTransparent;
-  Size mTilesize;
+  //int mTransparent;
 };
 
-#endif /* GRP_H_ */
+#endif /* GRP_H */

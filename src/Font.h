@@ -24,7 +24,7 @@ public:
 
   bool convert(const std::string &arcfile, Storage file);
 
-  void setPalette(std::shared_ptr<Palette> pal);
+  void setPalette(std::shared_ptr<AbstractPalette> pal);
 
 private:
   /**
@@ -33,7 +33,7 @@ private:
   unsigned char* convertImage(unsigned char *start, int *wp, int *hp);
 
   std::shared_ptr<Hurricane> mHurricane;
-  std::shared_ptr<Palette> mPalette;
+  std::shared_ptr<AbstractPalette> mPalette;
 };
 
 #endif /* FONT_H */

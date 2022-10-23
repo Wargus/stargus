@@ -20,7 +20,20 @@ public:
   Flingy(DataHub &datahub, unsigned int id);
   virtual ~Flingy();
 
-  Sprite sprite();
+  uint16_t sprite();
+  Sprite sprite_obj();
+
+  uint32_t speed();
+
+  uint16_t acceleration();
+
+  uint32_t halt_distance();
+
+  uint8_t turn_radius();
+
+  uint8_t unused();
+
+  uint8_t movement_control();
 
 private:
 

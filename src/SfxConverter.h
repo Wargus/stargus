@@ -8,23 +8,18 @@
 #define SFXCONVERTER_H
 
 // project
-#include "DataHub.h"
-
-namespace dat
-{
+#include "dat/DataHub.h"
 
 class SfxConverter : public Converter
 {
 public:
-  SfxConverter(std::shared_ptr<Hurricane> hurricane, DataHub &datahub);
+  SfxConverter(std::shared_ptr<Hurricane> hurricane, dat::DataHub &datahub);
   virtual ~SfxConverter();
 
   bool convert();
 
 private:
-  DataHub &mDatahub;
+  dat::DataHub &mDatahub;
 };
-
-} /* namespace dat */
 
 #endif /* SFXCONVERTER_H */

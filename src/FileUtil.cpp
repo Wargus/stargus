@@ -12,26 +12,17 @@
 
 using namespace std;
 
-/**
- **  Check if path exists - DOESN'T create any directories/files
- */
 bool FileExists(const std::string &filename)
 {
   struct stat buffer;
   return stat(filename.c_str(), &buffer) == 0 ? true : false;
 }
 
-/**
- *  Check if path exists, if not make all directories.
- */
 void CheckPath(const std::string &path)
 {
   CheckPath(path.c_str());
 }
 
-/**
- *  Check if path exists, if not make all directories.
- */
 void CheckPath(const char *path)
 {
   char *cp = NULL;

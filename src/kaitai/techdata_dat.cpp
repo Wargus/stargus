@@ -32,66 +32,56 @@ techdata_dat_t::techdata_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__paren
 }
 
 void techdata_dat_t::_read() {
-    int l_mineral_cost = num_lines();
     m_mineral_cost = new std::vector<uint16_t>();
-    m_mineral_cost->reserve(l_mineral_cost);
+    const int l_mineral_cost = num_lines();
     for (int i = 0; i < l_mineral_cost; i++) {
         m_mineral_cost->push_back(m__io->read_u2le());
     }
-    int l_vespene_cost = num_lines();
     m_vespene_cost = new std::vector<uint16_t>();
-    m_vespene_cost->reserve(l_vespene_cost);
+    const int l_vespene_cost = num_lines();
     for (int i = 0; i < l_vespene_cost; i++) {
         m_vespene_cost->push_back(m__io->read_u2le());
     }
-    int l_research_time = num_lines();
     m_research_time = new std::vector<uint16_t>();
-    m_research_time->reserve(l_research_time);
+    const int l_research_time = num_lines();
     for (int i = 0; i < l_research_time; i++) {
         m_research_time->push_back(m__io->read_u2le());
     }
-    int l_energy_required = num_lines();
     m_energy_required = new std::vector<uint16_t>();
-    m_energy_required->reserve(l_energy_required);
+    const int l_energy_required = num_lines();
     for (int i = 0; i < l_energy_required; i++) {
         m_energy_required->push_back(m__io->read_u2le());
     }
-    int l_unknown4 = num_lines();
     m_unknown4 = new std::vector<uint32_t>();
-    m_unknown4->reserve(l_unknown4);
+    const int l_unknown4 = num_lines();
     for (int i = 0; i < l_unknown4; i++) {
         m_unknown4->push_back(m__io->read_u4le());
     }
-    int l_icon = num_lines();
     m_icon = new std::vector<uint16_t>();
-    m_icon->reserve(l_icon);
+    const int l_icon = num_lines();
     for (int i = 0; i < l_icon; i++) {
         m_icon->push_back(m__io->read_u2le());
     }
-    int l_label = num_lines();
     m_label = new std::vector<uint16_t>();
-    m_label->reserve(l_label);
+    const int l_label = num_lines();
     for (int i = 0; i < l_label; i++) {
         m_label->push_back(m__io->read_u2le());
     }
-    int l_race = num_lines();
     m_race = new std::vector<uint8_t>();
-    m_race->reserve(l_race);
+    const int l_race = num_lines();
     for (int i = 0; i < l_race; i++) {
         m_race->push_back(m__io->read_u1());
     }
-    int l_unused = num_lines();
     m_unused = new std::vector<uint8_t>();
-    m_unused->reserve(l_unused);
+    const int l_unused = num_lines();
     for (int i = 0; i < l_unused; i++) {
         m_unused->push_back(m__io->read_u1());
     }
     n_broodwar_flag = true;
     if (has_broodwar_flag() == true) {
         n_broodwar_flag = false;
-        int l_broodwar_flag = num_lines();
         m_broodwar_flag = new std::vector<uint8_t>();
-        m_broodwar_flag->reserve(l_broodwar_flag);
+        const int l_broodwar_flag = num_lines();
         for (int i = 0; i < l_broodwar_flag; i++) {
             m_broodwar_flag->push_back(m__io->read_u1());
         }

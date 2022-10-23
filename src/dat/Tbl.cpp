@@ -17,6 +17,8 @@
 
 using namespace std;
 
+namespace dat {
+
 static Logger logger = Logger("startool.DataHub.Tbl");
 
 // this is a very local debug print concept. But for this use case of sequence character debugging perfect...
@@ -47,8 +49,7 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
 {
   file_tbl_t file_tbl = file_tbl_t(ks.get());
 
-  std::vector<file_tbl_t::tbl_entry_t *> *file_tbl_entry_vec =
-    file_tbl.tbl_entries();
+  std::vector<file_tbl_t::tbl_entry_t *> *file_tbl_entry_vec = file_tbl.tbl_entries();
 
   unsigned int i = 0;
   vector<TblEntry> tbl_entry_vec;
@@ -65,7 +66,13 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
     //"#entry: " << entry_char_vec->size() << endl;
 
     //uint8_t last_control = 0;
-    TblEntry tbl_entry;
+
+    std::string name1;
+    std::string name2;
+    std::string name3;
+    int shortcut_pos = -1;
+    std::string shortcut;
+
     string entry_str_tmp;
     unsigned int null_counter = 0;
     bool etx = false;
@@ -87,7 +94,7 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
             // TODO: special handling of ESC key if I ever come to this point...
             if (last != 0x1B) // !Escape
             {
-              tbl_entry.shortcut = last;
+              shortcut = last;
               entry_str_tmp.clear();
             }
           }
@@ -95,17 +102,17 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
           {
             if (null_counter == 0)
             {
-              tbl_entry.name1 = entry_str_tmp;
+              name1 = entry_str_tmp;
               entry_str_tmp.clear();
             }
             else if (null_counter == 1)
             {
-              tbl_entry.name2 = entry_str_tmp;
+              name2 = entry_str_tmp;
               entry_str_tmp.clear();
             }
             else if (null_counter == 2)
             {
-              tbl_entry.name3 = entry_str_tmp;
+              name3 = entry_str_tmp;
               entry_str_tmp.clear();
             }
             null_counter++;
@@ -119,25 +126,25 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
           dbg_printf("<SOH>");
           if (!etx) // <ETX><SOH> is a special case
           {
-            tbl_entry.shortcut = entry_char_vec->at(n - 1);
+            shortcut = entry_char_vec->at(n - 1);
             entry_str_tmp.clear();
           }
           break;
         case 0x02: // Start of Text
           dbg_printf("<STX>");
-          tbl_entry.shortcut = entry_char_vec->at(n - 1);
+          shortcut = entry_char_vec->at(n - 1);
           entry_str_tmp.clear();
           break;
         case 0x03: // End of Text
           dbg_printf("<ETX>");
           if (n == 1) // first char is shortcut special case
           {
-            tbl_entry.shortcut = entry_char_vec->at(n - 1);
+            shortcut = entry_char_vec->at(n - 1);
             entry_str_tmp.clear();
           }
           else
           {
-            tbl_entry.shortcut_pos = entry_str_tmp.length();
+            shortcut_pos = entry_str_tmp.length();
             etx = true;
           }
           break;
@@ -145,7 +152,7 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
           dbg_printf("<EOT>");
           if (n > 0)
           {
-            tbl_entry.shortcut = entry_char_vec->at(n - 1);
+            shortcut = entry_char_vec->at(n - 1);
             entry_str_tmp.clear();
           }
           break;
@@ -203,22 +210,47 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
     dbg_printf("\n");
 
     // fix trailing characters
-    if (tbl_entry.shortcut == " ")
+    if (shortcut == " ")
     {
-      tbl_entry.shortcut = "";
+      shortcut = "";
     }
 
-    tbl_entry.removeSpaces();
+    removeDoubleSpaces(name1);
+    removeDoubleSpaces(name2);
+    removeDoubleSpaces(name3);
 
-    dbg_printf("tbl_entry.name(): %s\n", tbl_entry.name1.c_str());
-    dbg_printf("tbl_entry.category1(): %s\n", tbl_entry.name2.c_str());
-    dbg_printf("tbl_entry.category2(): %s\n", tbl_entry.name3.c_str());
-    dbg_printf("tbl_entry.shortcut(): %s\n", tbl_entry.shortcut.c_str());
-    dbg_printf("tbl_entry.shortcut_pos(): %d\n", tbl_entry.shortcut_pos);
+    // access the tbl_entry members direct for now as this is a friend class.
+    // maybe I change this design later, but for now it's ok
+    TblEntry tbl_entry;
+    tbl_entry.m_name1 = name1;
+    tbl_entry.m_name2 = name2;
+    tbl_entry.m_name3 = name3;
+    tbl_entry.m_shortcut = shortcut;
+    tbl_entry.m_shortcut_pos = shortcut_pos;
+
+
+    dbg_printf("tbl_entry.name(): %s\n", tbl_entry.name1().c_str());
+    dbg_printf("tbl_entry.category1(): %s\n", tbl_entry.name2().c_str());
+    dbg_printf("tbl_entry.category2(): %s\n", tbl_entry.name3().c_str());
+    dbg_printf("tbl_entry.shortcut(): %s\n", tbl_entry.shortcut().c_str());
+    dbg_printf("tbl_entry.shortcut_pos(): %d\n", tbl_entry.shortcut_pos());
 
     i++;
+
+
     tbl_entry_vec.push_back(tbl_entry);
   }
 
   return tbl_entry_vec;
 }
+
+void Tbl::removeDoubleSpaces(std::string &str)
+{
+  size_t pos;
+  while ((pos = str.find("  ")) != std::string::npos)
+  {
+    str = str.replace(pos, 2, " ");
+  }
+}
+
+} /* namespace dat */
