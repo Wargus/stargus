@@ -33,12 +33,27 @@ DefineAnimations("animations-zerg-zergling", {
     "frame 85", "wait 125",
   },
   Move = {
-    "unbreakable begin",
-    "move 1", "wait 1", "frame 102", "move 7", "wait 1", "frame 119",
-    "move 8", "wait 1", "frame 136", "move 4", "wait 1", "frame 153",
-    "move 5", "wait 1", "frame 170", "move 6", "wait 1", "frame 187",
-    "move 1",
-    "unbreakable end",  "wait 1", "frame 85",
+    "label jumpoff", "unbreakable begin",
+    "move 1", "wait 1", "frame 102", "move 7",
+    "unbreakable end", "wait 1",
+
+    "label fly", "unbreakable begin",
+    "if-var R >= 80 jumpoff", -- 180 turn, accellerate from slow
+    "if-var R <= -80 jumpoff", -- 180 turn, accellerate from slow
+    "frame 119", "move 8",
+    "unbreakable end", "wait 1",
+
+    "label land", "unbreakable begin",
+    "if-var R >= 80 jumpoff", -- 180 turn, accellerate from slow
+    "if-var R <= -80 jumpoff", -- 180 turn, accellerate from slow
+    "frame 136", "move 4", "wait 1", "frame 153", "move 4",
+    "unbreakable end", "wait 1",
+
+    "wait crash", "unbreakable begin",
+    "if-var R >= 80 jumpoff", -- 180 turn, accellerate from slow
+    "if-var R <= -80 jumpoff", -- 180 turn, accellerate from slow
+    "frame 170", "move 6", "wait 1", "frame 187", "move 2",
+    "unbreakable end", "wait 1",
   },
   Attack = {
     "frame 0", "wait 1",
