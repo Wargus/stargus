@@ -8,6 +8,6 @@ scdat2json_sources = files(
 
 executable('scdat2json', 
 	scdat2json_sources,
-	dependencies : [log4cxx_dep,libstarformat_dep],
+	dependencies : [log4cxx_dep,libstarformat_dep,nlohmann_json_dep],
 	install : true)
 	
