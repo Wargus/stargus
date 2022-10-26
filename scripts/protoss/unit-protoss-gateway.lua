@@ -12,12 +12,8 @@ DefineAnimations("animations-protoss-gateway", {
 })
 
 DefineConstruction("construction-protoss-gateway", {
-  Files = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
-  ShadowFiles = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
+  Files = image_325_terran_tbldlrg_var,
+  ShadowFiles = image_325_terran_tbldlrg_var,
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -35,7 +31,6 @@ DefineConstruction("construction-protoss-gateway", {
 
 DefineUnitType("unit-protoss-gateway", {
   Animations = "animations-protoss-gateway", Icon = "icon-protoss-gateway",
-  Costs = {"time", 200, "minerals", 150},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-gateway",
@@ -48,8 +43,7 @@ DefineUnitType("unit-protoss-gateway", {
   --ExplodeWhenKilled = "missile-terran-explosion-large",
   BuilderOutside = true,  
   AutoBuildRate = 2,
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   BuildingRules = { { "distance", { Distance = 3, DistanceType = "<", Type = "unit-protoss-pylon"} } },
   Sounds = {
     "selected", "protoss-gateway-selected",

@@ -16,7 +16,6 @@ DefineAnimations("animations-zerg-lair", {
 
 DefineUnitType("unit-zerg-lair", {
   Animations = "animations-zerg-lair", Icon = "icon-zerg-lair",
-  Costs = {"time", 255, "minerals", 300},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 0},
   Construction = "construction-zerg",
@@ -28,10 +27,9 @@ DefineUnitType("unit-zerg-lair", {
   Supply = 8,
   RegenerationRate = 1,
 --  ExplodeWhenKilled = "missle-zerg-rubble-large",
-  Type = "land",
 --  Corpse = "unit-zerg-rubble-large",
   BuilderLost = true,
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   BuildingRules = { { "distance", { Distance = 3, DistanceType = ">", Type = "unit-minerals1"} } },
   CanStore = {"gas", "minerals"},
   Sounds = {

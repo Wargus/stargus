@@ -5,9 +5,13 @@ startool_dat_sources = files(
 	'Sprite.cpp',
 	'Image.cpp',
 	'Tbl.cpp',
-	'CSVExporter.cpp',
-	'UnitsConverter.cpp',
-	'PortraitsConverter.cpp',
-	'ImagesConverter.cpp',
-	'Portrait.cpp'
+	'TblEntry.cpp',
+	'Portrait.cpp',
+	'Sfx.cpp',
+	'Weapon.cpp',
+	'PropertyNotAvailableException.cpp',
+	'Order.cpp',
+	'Techdata.cpp',
+	'Upgrade.cpp'
 )
+

@@ -7,10 +7,7 @@
 #ifndef CSVEXPORTER_H
 #define CSVEXPORTER_H
 
-#include "DataHub.h"
-
-namespace dat
-{
+#include "dat/DataHub.h"
 
 /**
  * Just some experiments for development to print the dat files into a csv compatible format
@@ -18,15 +15,13 @@ namespace dat
 class CSVExporter
 {
 public:
-  CSVExporter(DataHub &datahub);
+  CSVExporter(dat::DataHub &datahub);
   virtual ~CSVExporter();
 
   void print();
 
 private:
-  DataHub &mDatahub;
+  dat::DataHub &mDatahub;
 };
-
-} /* namespace dat */
 
 #endif /* CSVEXPORTER_H */

@@ -11,7 +11,7 @@
 #include "Storage.h"
 #include "luagen.h"
 #include "FileUtil.h"
-#include "Image.h"
+#include "dat/Image.h"
 #include "StringUtil.h"
 #include "Grp.h"
 
@@ -21,9 +21,7 @@
 #include <string>
 
 using namespace std;
-
-namespace dat
-{
+using namespace dat;
 
 static Logger logger = Logger("startool.dat.ImagesConverter");
 
@@ -39,8 +37,7 @@ ImagesConverter::~ImagesConverter()
 
 }
 
-bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
-                              std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap)
+bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<AbstractPalette>> &paletteMap)
 {
   bool result = true;
 
@@ -59,80 +56,84 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
   lua_include.open (luagen("luagen-images.lua").getFullPath());
   string lua_include_str;
 
-  for (unsigned int i = 0; i < mDatahub.images->draw_function()->size(); i++)
+  for (unsigned int i = 0; i < mDatahub.images->grp()->size(); i++)
   {
     Image image(mDatahub, i);
 
-    string grp_name(image.grp().name1);
+    string grp_name(image.grp_tbl().name1());
     grp_name = to_lower(grp_name); // make lower case to match it always
+
+    LOG4CXX_TRACE(logger, "image: " + grp_name);
+
+    /* The following code splits a full GRP path/file into a logic of image type, subtype and subsubtype.
+     * The idea is to identify the logic which palette should be used to decode that specific GRP image.
+     */
+
+    string imageType;
+    string imageSubType;
+    string imageSubSubType;
 
     // find first slash
     size_t found = grp_name.find('\\');
-    string imageType;
     if(found != string::npos)
     {
       imageType = grp_name.substr (0, found);
       LOG4CXX_TRACE(logger, "imageType: " + imageType);
-    }
 
-    // find second slash
-    size_t found2 = grp_name.find('\\', found+1);
-    string imageSubType;
-    if(found2 != string::npos)
-    {
-      imageSubType = grp_name.substr (found+1, found2 - found-1);
-      LOG4CXX_TRACE(logger, "imageSubType: " + imageSubType);
-    }
+      // find second slash
+      size_t found2 = grp_name.find('\\', found+1);
+      if(found2 != string::npos)
+      {
+        imageSubType = grp_name.substr (found+1, found2 - found-1);
+        LOG4CXX_TRACE(logger, "imageSubType: " + imageSubType);
 
-    // find third slash
-    size_t found3 = grp_name.find('\\', found2+1);
-    string imageSubSubType;
-    if(found3 != string::npos)
-    {
-      imageSubSubType = grp_name.substr (found2+1, found3 - found2-1);
-      LOG4CXX_TRACE(logger, "imageSubSubType: " + imageSubSubType);
+        // find third slash
+        size_t found3 = grp_name.find('\\', found2+1);
+        if(found3 != string::npos)
+        {
+          imageSubSubType = grp_name.substr (found2+1, found3 - found2-1);
+          LOG4CXX_TRACE(logger, "imageSubSubType: " + imageSubSubType);
+        }
+      }
     }
 
     string grp_arcfile =  "unit\\" + grp_name;
 
     Grp grp(mHurricane, grp_arcfile);
-    std::shared_ptr<Palette> pal;
-    std::shared_ptr<Palette2D> pal2D;
+    std::shared_ptr<AbstractPalette> pal;
+    string remapping;
 
     bool save_grp = true;
 
-    // TODO: map this constants in Kaitai parser
-    if (image.draw_function() == 9) // uses remapping
+    if (image.draw_function() == images_dat_t::DRAW_FUNCTION_ENUM_REMAPPING)
     {
-      if(image.remapping() == 1) // ofire
+      if(image.remapping() == images_dat_t::REMAPPING_ENUM_OFIRE)
       {
-        pal2D = palette2DMap.at("ofire");
-        grp.setPalette2D(pal2D);
+        remapping = "ofire";
       }
-      else if(image.remapping() == 2) // gfire
+      else if(image.remapping() == images_dat_t::REMAPPING_ENUM_GFIRE)
       {
-        pal2D = palette2DMap.at("gfire");
-        grp.setPalette2D(pal2D);
+        remapping = "gfire";
       }
-      else if(image.remapping() == 3) // bfire
+      else if(image.remapping() == images_dat_t::REMAPPING_ENUM_BFIRE)
       {
-        pal2D = palette2DMap.at("bfire");
-        grp.setPalette2D(pal2D);
+        remapping = "bfire";
       }
-      else if(image.remapping() == 4) // bexpl
+      else if(image.remapping() == images_dat_t::REMAPPING_ENUM_BEXPL)
       {
-        pal2D = palette2DMap.at("bexpl");
-        grp.setPalette2D(pal2D);
+        remapping = "bexpl";
       }
       else // as default use ofire until I've a better idea....
       {
-        pal2D = palette2DMap.at("ofire");
-        grp.setPalette2D(pal2D);
+        remapping = "ofire";
       }
+
+      pal = paletteMap.at(remapping);
+      grp.setPalette(pal);
 
       grp.setRGBA(true);
     }
-    else if (image.draw_function() == 10) // shadow
+    else if (image.draw_function() == images_dat_t::DRAW_FUNCTION_ENUM_SHADOW)
     {
       // do not export shadows images as the stratagus engine has a better way to generate them
       save_grp = false;
@@ -203,49 +204,64 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
       // cut the file ending and lower case it
       string grp_storage_file_base = to_lower(cutFileEnding(grp_storage_file, ".grp"));
 
-      string image_id = Image::createID(grp_arcfile);
-      string image_lua = "image_" + image_id + ".lua";
+      // if a remapping function is used for that Grp than save with specific name
+      if(!remapping.empty())
+      {
+        grp_storage_file_base += "_" + remapping;
+      }
 
       Storage png_file = graphics(grp_storage_file_base + ".png");
 
-      Storage lua_file_store(luagen(image_lua));
-      ofstream lua_file;
-      lua_file.open (lua_file_store.getFullPath());
-
       result = grp.save(png_file);
 
-      Size tilesize = grp.getTileSize();
+      string image_id = image.getIDString();
+      string image_lua = image_id + ".lua";
 
+      Storage lua_file_store(luagen(image_lua));
 
-      int NumDirections = 1;
-      if(image.gfx_turns() == true)
+      // only generate LUA file with the image properties in case it could be saved successful
+      if(result)
       {
-        // it seems all animations which are calculated by gfx_turns have 32 directions
-        NumDirections = 32;
+        ofstream lua_file;
+        lua_file.open (lua_file_store.getFullPath());
+
+        Size tilesize = grp.getTileSize();
+
+        int NumDirections = 1;
+        if(image.gfx_turns() == true)
+        {
+          // it seems all animations which are calculated by gfx_turns have 32 directions
+          NumDirections = 32;
+        }
+
+        string unit_image_file(lg::assign(image_id + "_file", lg::quote(png_file.getRelativePath())));
+        lua_file << unit_image_file << endl;
+
+        string unit_image_size(lg::assign(image_id + "_size", lg::sizeTable(tilesize)));
+        lua_file << unit_image_size << endl;
+
+        string unit_image_NumDirections(lg::assign(image_id + "_NumDirections", to_string(NumDirections)));
+        lua_file << unit_image_NumDirections << endl;
+
+        string unit_image_table(
+            lg::table({lg::quote("file"), image_id + "_file",
+            lg::quote("size") , image_id + "_size"}));
+        string unit_image = lg::assign(image_id, unit_image_table);
+        lua_file << unit_image << endl;
+
+        string unit_image_table_var(
+            lg::table({lg::assign("File", image_id + "_file"),
+            lg::assign("Size" , image_id + "_size")}));
+        string unit_image_var = lg::assign(image_id + "_var", unit_image_table_var);
+        lua_file << unit_image_var << endl;
+
+        lua_file.close();
+
+        string grp_save_trace(to_string(i) +  ": " + grp_name + " : " + grp_arcfile + " => " + grp_storage_file_base);
+        LOG4CXX_TRACE(logger, grp_save_trace);
       }
-
-      string unit_image_file(lg::assign("image_" + image_id + "_file", lg::quote(png_file.getRelativePath())));
-      lua_file << unit_image_file << endl;
-
-      string unit_image_size(lg::assign("image_" + image_id + "_size", lg::sizeTable(tilesize)));
-      lua_file << unit_image_size << endl;
-
-      string unit_image_NumDirections(lg::assign("image_" + image_id + "_NumDirections", to_string(NumDirections)));
-      lua_file << unit_image_NumDirections << endl;
-
-      string unit_image_table(
-          lg::table({lg::quote("file"), "image_" + image_id + "_file",
-          lg::quote("size") , "image_" + image_id + "_size"}));
-
-      string unit_image = lg::assign("image_" + image_id, unit_image_table);
-      lua_file << unit_image;
-
+      // write the Load call even if Grp not present to preserve the SC base files
       lua_include_str += lg::line(lg::function("Load", lg::quote(lua_file_store.getRelativePath())));
-
-      lua_file.close();
-
-      string grp_save_trace(to_string(i) +  ": " + grp_name + " : " + grp_arcfile + " => " + grp_storage_file_base);
-      LOG4CXX_TRACE(logger, grp_save_trace);
     }
   }
 
@@ -255,4 +271,3 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<Palette>> &p
   return result;
 }
 
-} /* namespace dat */

@@ -8,7 +8,8 @@
 #define IMAGE_H
 
 // project
-#include "DataHub.h"
+#include "ObjectAccess.h"
+#include "PropertyNotAvailableException.h"
 
 namespace dat
 {
@@ -19,26 +20,55 @@ namespace dat
  * and documentation in only mandatory if needed to understand the difference.
  *
  */
-class Image
+class Image : public ObjectAccess
 {
 public:
-  Image(DataHub &datahub, uint16_t id);
+  Image(DataHub &datahub, unsigned int id);
   virtual ~Image();
 
-  TblEntry grp();
-
-  uint8_t draw_function();
-
-  uint8_t remapping();
+  uint32_t grp();
+  TblEntry grp_tbl();
 
   bool gfx_turns();
 
+  bool clickable();
+
+  bool use_full_iscript();
+
+  bool draw_if_cloaked();
+
+  images_dat_t::draw_function_enum_t draw_function();
+
+  images_dat_t::remapping_enum_t remapping();
+
+  // TODO: Iscript Object
+  uint32_t iscript_id();
+
+  uint32_t shield_overlay();
+  TblEntry shield_overlay_tbl();
+
+  uint32_t attack_overlay();
+  TblEntry attack_overlay_tbl();
+
+  uint32_t damage_overlay();
+  TblEntry damage_overlay_tbl();
+
+  uint32_t special_overlay();
+  TblEntry special_overlay_tbl();
+
+  uint32_t landing_dust_overlay();
+  TblEntry landing_dust_overlay_tbl();
+
+  uint32_t lift_off_dust_overlay();
+  TblEntry lift_off_dust_overlay_tbl();
+
   /***/
-  static std::string createID(const std::string &image);
+  std::string getIDString();
+
+  static const int overlay_none = 0;
 
 private:
-  DataHub &mDatahub;
-  uint16_t mId;
+
 };
 
 } /* namespace dat */

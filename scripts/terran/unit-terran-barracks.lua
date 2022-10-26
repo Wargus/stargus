@@ -14,12 +14,8 @@ DefineAnimations("animations-terran-barracks", {
 })
 
 DefineConstruction("construction-terran-barracks", {
-  Files = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
-  ShadowFiles = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
+  Files = image_325_terran_tbldlrg_var,
+  ShadowFiles = image_325_terran_tbldlrg_var,
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -37,7 +33,6 @@ DefineConstruction("construction-terran-barracks", {
 
 DefineUnitType("unit-terran-barracks", {
   Animations = "animations-terran-barracks", Icon = "icon-terran-barracks",
-  Costs = {"time", 60, "minerals", 150},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-barracks",
@@ -51,8 +46,7 @@ DefineUnitType("unit-terran-barracks", {
   Points = 160,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   Sounds = {
     "selected", "button",
     "ready", "terran-scv-done",

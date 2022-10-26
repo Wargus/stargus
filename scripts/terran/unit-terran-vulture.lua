@@ -76,7 +76,6 @@ DefineAnimations("animations-terran-vulture", {
 
 DefineUnitType("unit-terran-vulture", {
   Animations = "animations-terran-vulture", Icon = "icon-terran-vulture",
-  Costs = {"time", 60, "minerals", 75},
   Speed = 10,
   DrawLevel = 40,
   RotationSpeed = 10,
@@ -88,12 +87,9 @@ DefineUnitType("unit-terran-vulture", {
   Points = 50,
   Demand = 2,
   ExplodeWhenKilled = "missile-terran-explosion-small",
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "terran-vulture-selected",

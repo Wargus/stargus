@@ -64,8 +64,8 @@ void TiledPaletteImageTest::test1_tileStrategyCompare()
   tiled_image_pos.copyTile(yellow_image, Pos(1, 1));
 
   // export the PNGs for visual test feedback
-  PngExporter::save(save_num_name_png, tiled_image_num, pal, 255);
-  PngExporter::save(save_pos_name_png, tiled_image_pos, pal, 255);
+  PngExporter::saveRGB(save_num_name_png, tiled_image_num, pal, 255);
+  PngExporter::saveRGB(save_pos_name_png, tiled_image_pos, pal, 255);
 
   // this test just checks if adding the tiles by #num or Pos gives us the same result
   CPPUNIT_ASSERT(tiled_image_num == tiled_image_pos);
@@ -115,7 +115,7 @@ void TiledPaletteImageTest::test2_tileHorizontalFlipping()
   tiled_image_big.copyTile(tiled_image_num, 2, true); // flip horizontal
   tiled_image_big.copyTile(tiled_image_num, 3);
 
-  PngExporter::save(save_name_flipped_png, tiled_image_big, pal, 255);
+  PngExporter::saveRGB(save_name_flipped_png, tiled_image_big, pal, 255);
 
   CPPUNIT_ASSERT(compareFiles(save_name_flipped_png, test_data_dir + "/" + reference_big_flipped_name_png));
 

@@ -21,6 +21,9 @@ public:
   Wav(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile);
   virtual ~Wav();
 
+  /**
+   * storage the file basename without any file extension to let the converter the flexibility to add own extension
+   */
   bool convert(const std::string &arcfile, Storage storage);
 
 private:

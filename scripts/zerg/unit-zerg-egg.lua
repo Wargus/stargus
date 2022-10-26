@@ -47,5 +47,4 @@ DefineUnitType("unit-zerg-egg", { Name = "Egg",
   Animations = "animations-zerg-egg", Icon = "icon-zerg-egg",
   Armor = 10, Missile = "missile-none",
   Corpse = "unit-zerg-egg-death",
-  Type = "land",
 } )

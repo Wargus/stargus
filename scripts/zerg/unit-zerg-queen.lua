@@ -32,7 +32,6 @@ DefineAnimations("animations-zerg-queen", {
 
 DefineUnitType("unit-zerg-queen", {
   Animations = "animations-zerg-queen", Icon = "icon-zerg-queen",
-  Costs = {"time", 100, "minerals", 100, "gas", 100,},
   RepairHp = 1,
   Speed = 4,
   DrawLevel = 45,
@@ -42,7 +41,6 @@ DefineUnitType("unit-zerg-queen", {
   Points = 200,
   ExplodeWhenKilled = "missile-terran-explosion-large",
   RegenerationRate = 1,
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   Sounds = {
     "selected", "zerg-queen-selected",
     "acknowledge", "zerg-queen-acknowledgement",

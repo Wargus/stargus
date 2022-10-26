@@ -12,12 +12,8 @@ DefineAnimations("animations-terran-academy", {
 })
 
 DefineConstruction("construction-terran-academy", {
-  Files = {
-    File = image_unit_terran_tbldmed_file,
-    Size = image_unit_terran_tbldmed_size},
-  ShadowFiles = {
-    File = image_unit_terran_tbldmed_file,
-    Size = image_unit_terran_tbldmed_size},
+  Files = image_327_terran_tbldmed_var,
+  ShadowFiles = image_327_terran_tbldmed_var,
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -35,7 +31,6 @@ DefineConstruction("construction-terran-academy", {
 
 DefineUnitType("unit-terran-academy", {
   Animations = "animations-terran-academy", Icon = "icon-terran-academy",
-  Costs = {"time", 200, "minerals", 150},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-academy",
@@ -49,8 +44,7 @@ DefineUnitType("unit-terran-academy", {
   Points = 170,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   Sounds = {
     "selected", "terran-academy-selected",
     "ready", "terran-scv-done",

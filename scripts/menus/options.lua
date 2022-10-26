@@ -119,6 +119,13 @@ function RunPreferencesMenu()
   l:setFont(Fonts["small"])
   l:adjustSize()
   menu:add(l, 230 - l:getWidth(), 40 + (36 * 3) + 6)
+  
+  local grabMouse = menu:addCheckBox("Grab Mouse", 16, 40 + 36 * 4, function()end)
+  grabMouse:setMarked(GetGrabMouse())
+  grabMouse:setActionCallback(
+    function()
+      SetGrabMouse(grabMouse:isMarked())
+    end)
 
   menu:addHalfLeftButton("~!OK", "o", 20, 252,
     function()
@@ -187,7 +194,7 @@ function BuildOptionsMenu()
     function() SetVideoSize(1680, 1050) menu:stop(1) end)
   if (Video.Width == 1680) then b:setMarked(true) end
 
-  b = menu:addCheckBox("Full Screen", offx + 17, offy + 65 + 26*10 + 14,
+  b = menu:addCheckBox("Full Screen", offx + 17, offy + 65 + 26*10,
     function()
       ToggleFullScreen()
       preferences.VideoFullScreen = Video.FullScreen
@@ -196,27 +203,21 @@ function BuildOptionsMenu()
     end)
   b:setMarked(Video.FullScreen)
 
-  checkTexture = menu:addCheckBox("Set Maximum OpenGL Texture to 256", offx + 127, offy + 65 + 26*10 + 14, 
+  local grabMouse = menu:addCheckBox("Grab Mouse", offx + 16, offy + 65 + 26*11, function()end)
+  grabMouse:setMarked(GetGrabMouse())
+  grabMouse:setActionCallback(
     function()
-      if (checkTexture:isMarked()) then
-        preferences.MaxOpenGLTexture = 256
-      else
-        preferences.MaxOpenGLTexture = 0
-      end
-      SetMaxOpenGLTexture(preferences.MaxOpenGLTexture)
-      SavePreferences()
+      SetGrabMouse(grabMouse:isMarked())
     end)
-  if (preferences.MaxOpenGLTexture == 128) then checkTexture:setMarked(true) end
 
-  checkOpenGL = menu:addCheckBox("Use OpenGL / OpenGL ES 1.1 (restart required)", offx + 17, offy + 65 + 26*11 + 14,
+   local hwCursor = menu:addCheckBox("Hardware cursor", offx + 16, offy + 65 + 26*12, function()end)
+   hwCursor:setMarked(preferences.HardwareCursor)
+   hwCursor:setActionCallback(
     function()
---TODO: Add function for immediately change state of OpenGL
-      preferences.UseOpenGL = checkOpenGL:isMarked()
+      preferences.HardwareCursor = hwCursor:isMarked()
+      Preference.HardwareCursor = hwCursor:isMarked()
       SavePreferences()
---      menu:stop(1) --TODO: Enable if we have an OpenGL function
     end)
-  checkOpenGL:setMarked(preferences.UseOpenGL)
---  checkOpenGL:setMarked(UseOpenGL) --TODO: Enable if we have an OpenGL function
 
   menu:addHalfButton("~!OK", "o", offx + 123, offy + 309, function() menu:stop() end)
 

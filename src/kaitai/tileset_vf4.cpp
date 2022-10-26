@@ -53,9 +53,8 @@ tileset_vf4_t::minitile_t::minitile_t(kaitai::kstream* p__io, tileset_vf4_t* p__
 }
 
 void tileset_vf4_t::minitile_t::_read() {
-    int l_flags = 16;
     m_flags = new std::vector<minitile_flags_types_t*>();
-    m_flags->reserve(l_flags);
+    const int l_flags = 16;
     for (int i = 0; i < l_flags; i++) {
         m_flags->push_back(new minitile_flags_types_t(m__io, this, m__root));
     }

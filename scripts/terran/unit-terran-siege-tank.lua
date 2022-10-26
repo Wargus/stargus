@@ -51,7 +51,6 @@ DefineAnimations("animations-terran-siege-tank", {
 
 DefineUnitType("unit-terran-siege-tank-tank-mode", {
   Animations = "animations-terran-siege-tank", Icon = "icon-terran-siege-tank",
-  Costs = {"time", 60, "minerals", 150, "gas", 100},
   Speed = 10,
   RotationSpeed = 4,
   DrawLevel = 40,
@@ -63,15 +62,12 @@ DefineUnitType("unit-terran-siege-tank-tank-mode", {
   MinAttackRange = 8, MaxAttackRange = 48,
   Demand = 2,
   ExplodeWhenKilled = "missile-terran-explosion-medium",
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
-  LandUnit = true,
   SurroundAttack = true,
-  organic = false,
   SelectableByRectangle = true,
-  OnReady = function(self)
+  OnInit = function(self)
     local turret = CreateUnit("unit-terran-siege-tank-tank-mode-turret", GetUnitVariable(self, "Player"), {0, 0})
     SetUnitVariable(self, "Summoned", turret)
     moveTurret(self)

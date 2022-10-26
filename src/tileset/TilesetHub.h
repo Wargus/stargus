@@ -41,7 +41,7 @@ public:
   TilesetHub(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile);
   virtual ~TilesetHub();
 
-  bool convert(std::shared_ptr<Palette> palette, Storage storage);
+  bool convert(std::shared_ptr<AbstractPalette> palette, Storage storage);
 
   void generateLua(const std::string &name, const std::string &image, Storage luafile);
 

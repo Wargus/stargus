@@ -14,9 +14,9 @@ DefineAnimations("animations-zerg-scourge-death", {
 
 
 DefineUnitType("unit-zerg-scourge-death", { Name = "Dead Scourge",
-  Image = image_unit_zerg_zavdeath,
+  Image = image_3_zerg_zavdeath,
   Animations = "animations-zerg-scourge-death", Icon = "icon-zerg-scourge",
-  NumDirections = 1,
+  NumDirections = image_3_zerg_zavdeath_NumDirections,
   HitPoints = 255,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {31, 31},
@@ -58,7 +58,6 @@ DefineAnimations("animations-zerg-scourge", {
 DefineUnitType("unit-zerg-scourge", {
   DrawLevel = 45,
   Animations = "animations-zerg-scourge", Icon = "icon-zerg-scourge",
-  Costs = {"time", 250, "minerals", 12, "gas", 38},
   Speed = 14,
   DrawLevel = 60,
   Armor = 0, BasicDamage = 110, PiercingDamage = 16, Missile = "missile-none",
@@ -67,13 +66,11 @@ DefineUnitType("unit-zerg-scourge", {
   Points = 150,
   Demand = 1,
   Corpse = "unit-zerg-scourge-death",
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = false, CanTargetSea = false, CanTargetAir = true,
   AirUnit = true,
   DetectCloak = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "zerg-scourge-selected",

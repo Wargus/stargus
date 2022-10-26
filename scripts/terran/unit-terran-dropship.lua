@@ -18,7 +18,6 @@ DefineAnimations("animations-terran-dropship", {
 DefineUnitType("unit-terran-dropship", {
   DrawLevel = 45,
   Animations = "animations-terran-dropship", Icon = "icon-terran-dropship",
-  Costs = {"time", 250, "minerals", 400, "gas", 300},
   Speed = 14,
   DrawLevel = 60,
   MaxOnBoard = 8,
@@ -29,13 +28,10 @@ DefineUnitType("unit-terran-dropship", {
   Points = 150,
   Demand = 2,
   ExplodeWhenKilled = "missile-terran-explosion-small",
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   RightMouseAction = "move",
   CanAttack = false,
-  AirUnit = true,
   CanTransport = {},
   DetectCloak = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "terran-dropship-selected",

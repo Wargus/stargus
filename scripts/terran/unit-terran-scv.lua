@@ -89,7 +89,6 @@ DefineAnimations("animations-terran-scv", {
 
 DefineUnitType("unit-terran-scv", {
   Animations = "animations-terran-scv", Icon = "icon-terran-scv",
-  Costs = {"time", 45, "minerals", 50},
   Speed = 10,
   DrawLevel = 45,
   BasicDamage = 3, PiercingDamage = 2, Missile = "missile-none",
@@ -98,32 +97,31 @@ DefineUnitType("unit-terran-scv", {
   Points = 30,
   Demand = 1,
   ExplodeWhenKilled = "missile-terran-explosion-small",
-  Type = "land",
   RightMouseAction = "harvest",
   CanAttack = true, RepairRange = 1,
   CanTargetLand = true,
-  LandUnit = true,
   Coward = true,
   CanGatherResources = {
-   {"file-when-loaded", image_unit_terran_scv_file,
+   {"file-when-loaded", image_247_terran_scv_file,
     "resource-id", "minerals",
     "harvest-from-outside",
     "resource-capacity", 8,
     "wait-at-resource", 150,
     "wait-at-depot", 50},
-   {"file-when-loaded", image_unit_terran_scv_file,
+   {"file-when-loaded", image_247_terran_scv_file,
     "resource-id", "gas",
     "resource-capacity", 8,
     "wait-at-resource", 50,
     "wait-at-depot", 50,}},
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "terran-scv-selected",
     "acknowledge", "terran-scv-acknowledge",
     "ready", "terran-scv-ready",
     "help", "terran-units-attacked",
-    "dead", "terran-scv-death"} } )
+    "dead", "terran-scv-death"} 
+  
+  } )
 
 
 --

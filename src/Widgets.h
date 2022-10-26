@@ -10,6 +10,11 @@
 #include "Grp.h"
 #include "Palette.h"
 
+// system
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
+
 class Widgets: public Grp
 {
 public:
@@ -19,24 +24,10 @@ public:
   /**
    * Convert a widget from data container as several PNG files
    */
-  bool convert(const char *arcfile, const char *file);
-
-  void setPalette(std::shared_ptr<Palette> pal);
+  bool convert(const std::string &arcfile, Storage filename, json &frameExtractJson);
 
 private:
-  /**
-   * Save Image part of a Widget as PNG file
-   */
-  void SaveImage(char *name, unsigned char *image, Palette &pal, int id,
-      int w, int h);
 
-  /**
-   * Save Button part of a Widget as PNG
-   */
-  void SaveButton(char *name, unsigned char *image, Palette &pal,
-      int size, int id);
-
-  std::shared_ptr<Palette> mPalette;
 };
 
 #endif /* WIDGETS_H_ */

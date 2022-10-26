@@ -14,9 +14,9 @@ DefineAnimations("animations-zerg-zergling-death", {
 
 
 DefineUnitType("unit-zerg-zergling-death", { Name = "Dead Zergling",
-  Image = image_unit_zerg_zzedeath,
+  Image = image_57_zerg_zzedeath,
   Animations = "animations-zerg-zergling-death", Icon = "icon-zerg-zergling",
-  NumDirections = 1,
+  NumDirections = image_57_zerg_zzedeath_NumDirections,
   HitPoints = 255,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {31, 31},
@@ -84,7 +84,6 @@ DefineAnimations("animations-zerg-zergling", {
 
 DefineUnitType("unit-zerg-zergling", {
   Animations = "animations-zerg-zergling", Icon = "icon-zerg-zergling",
-  Costs = {"time", 50, "minerals", 50},
   Speed = 10,
   RotationSpeed = 40,
   DrawLevel = 40,
@@ -96,12 +95,9 @@ DefineUnitType("unit-zerg-zergling", {
   Demand = 1,
   Corpse = "unit-zerg-zergling-death",
   RegenerationRate = 1,
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "zerg-zergling-selected",

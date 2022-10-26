@@ -34,78 +34,66 @@ upgrades_dat_t::upgrades_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__paren
 }
 
 void upgrades_dat_t::_read() {
-    int l_mineral_cost_base = num_lines();
     m_mineral_cost_base = new std::vector<uint16_t>();
-    m_mineral_cost_base->reserve(l_mineral_cost_base);
+    const int l_mineral_cost_base = num_lines();
     for (int i = 0; i < l_mineral_cost_base; i++) {
         m_mineral_cost_base->push_back(m__io->read_u2le());
     }
-    int l_mineral_cost_factor = num_lines();
     m_mineral_cost_factor = new std::vector<uint16_t>();
-    m_mineral_cost_factor->reserve(l_mineral_cost_factor);
+    const int l_mineral_cost_factor = num_lines();
     for (int i = 0; i < l_mineral_cost_factor; i++) {
         m_mineral_cost_factor->push_back(m__io->read_u2le());
     }
-    int l_vespene_cost_base = num_lines();
     m_vespene_cost_base = new std::vector<uint16_t>();
-    m_vespene_cost_base->reserve(l_vespene_cost_base);
+    const int l_vespene_cost_base = num_lines();
     for (int i = 0; i < l_vespene_cost_base; i++) {
         m_vespene_cost_base->push_back(m__io->read_u2le());
     }
-    int l_vespene_cost_factor = num_lines();
     m_vespene_cost_factor = new std::vector<uint16_t>();
-    m_vespene_cost_factor->reserve(l_vespene_cost_factor);
+    const int l_vespene_cost_factor = num_lines();
     for (int i = 0; i < l_vespene_cost_factor; i++) {
         m_vespene_cost_factor->push_back(m__io->read_u2le());
     }
-    int l_research_time_base = num_lines();
     m_research_time_base = new std::vector<uint16_t>();
-    m_research_time_base->reserve(l_research_time_base);
+    const int l_research_time_base = num_lines();
     for (int i = 0; i < l_research_time_base; i++) {
         m_research_time_base->push_back(m__io->read_u2le());
     }
-    int l_research_time_factor = num_lines();
     m_research_time_factor = new std::vector<uint16_t>();
-    m_research_time_factor->reserve(l_research_time_factor);
+    const int l_research_time_factor = num_lines();
     for (int i = 0; i < l_research_time_factor; i++) {
         m_research_time_factor->push_back(m__io->read_u2le());
     }
-    int l_unknown6 = num_lines();
     m_unknown6 = new std::vector<uint16_t>();
-    m_unknown6->reserve(l_unknown6);
+    const int l_unknown6 = num_lines();
     for (int i = 0; i < l_unknown6; i++) {
         m_unknown6->push_back(m__io->read_u2le());
     }
-    int l_icon = num_lines();
     m_icon = new std::vector<uint16_t>();
-    m_icon->reserve(l_icon);
+    const int l_icon = num_lines();
     for (int i = 0; i < l_icon; i++) {
         m_icon->push_back(m__io->read_u2le());
     }
-    int l_label = num_lines();
     m_label = new std::vector<uint16_t>();
-    m_label->reserve(l_label);
+    const int l_label = num_lines();
     for (int i = 0; i < l_label; i++) {
         m_label->push_back(m__io->read_u2le());
     }
-    int l_race = num_lines();
     m_race = new std::vector<uint8_t>();
-    m_race->reserve(l_race);
+    const int l_race = num_lines();
     for (int i = 0; i < l_race; i++) {
         m_race->push_back(m__io->read_u1());
     }
-    int l_max_repeats = num_lines();
     m_max_repeats = new std::vector<uint8_t>();
-    m_max_repeats->reserve(l_max_repeats);
+    const int l_max_repeats = num_lines();
     for (int i = 0; i < l_max_repeats; i++) {
         m_max_repeats->push_back(m__io->read_u1());
     }
     n_broodwar_flags = true;
     if (has_broodwar_flag() == true) {
         n_broodwar_flags = false;
-        int l_broodwar_flags = num_lines();
         m_broodwar_flags = new std::vector<uint8_t>();
-        m_broodwar_flags->reserve(l_broodwar_flags);
+        const int l_broodwar_flags = num_lines();
         for (int i = 0; i < l_broodwar_flags; i++) {
             m_broodwar_flags->push_back(m__io->read_u1());
         }

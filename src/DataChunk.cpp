@@ -80,7 +80,7 @@ std::vector<char> DataChunk::getCharVector() const
   return std::vector<char>(mData, mData + mSize);
 }
 
-bool DataChunk::write(const std::string filename)
+bool DataChunk::write(const std::string &filename)
 {
   bool result = true;
 
@@ -96,8 +96,40 @@ bool DataChunk::write(const std::string filename)
   }
   else
   {
-    LOG4CXX_DEBUG(logger, string("Couldn't write in: ") + filename);
+    LOG4CXX_ERROR(logger, string("Couldn't write in: ") + filename);
     result = false;
+  }
+
+  return result;
+}
+
+bool DataChunk::read(const std::string &filename)
+{
+  streampos size;
+  char *memblock;
+  bool result = false;
+
+  ifstream file(filename, ios::in|ios::binary|ios::ate);
+  if (file.is_open())
+  {
+    size = file.tellg();
+    memblock = new char [size];
+    file.seekg (0, ios::beg);
+    file.read(memblock, size);
+
+    if(file)
+    {
+      addData(reinterpret_cast<unsigned char*>(memblock), size);
+      result = true;
+    }
+    else
+    {
+      LOG4CXX_ERROR(logger, string("Couldn't read from: ") + filename);
+    }
+
+    file.close();
+
+    delete[] memblock;
   }
 
   return result;

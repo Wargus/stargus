@@ -23,7 +23,6 @@ DefineAnimations("animations-zerg-sunken-colony", {
 
 DefineUnitType("unit-zerg-sunken-colony", {
   Animations = "animations-zerg-sunken-colony", Icon = "icon-zerg-sunken-colony",
-  Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",
@@ -35,13 +34,12 @@ DefineUnitType("unit-zerg-sunken-colony", {
   Points = 170,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
   RightMouseAction = "attack",
   BuilderLost = true,
   RegenerationRate = 1,
   CanAttack = true,
   CanTargetLand = true,
-  Building = true, VisibleUnderFog = true,
+  VisibleUnderFog = true,
   Sounds = {
     "selected", "zerg-sunken-colony-selected",
     "ready", "zerg-building-ready",

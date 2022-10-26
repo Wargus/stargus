@@ -16,9 +16,8 @@ namespace dat
 
 static Logger logger = Logger("startool.dat.Portrait");
 
-Portrait::Portrait(DataHub &datahub,  uint16_t id) :
-  mDatahub(datahub),
-  mId(id)
+Portrait::Portrait(DataHub &datahub, unsigned int id) :
+  ObjectAccess(datahub, id)
 {
 
 }
@@ -30,37 +29,53 @@ Portrait::~Portrait()
 
 uint32_t Portrait::video_idle()
 {
-  uint32_t portrait_id = mDatahub.portrait->video_idle()->at(mId);
-  LOG4CXX_TRACE(logger, string("video_idle(") + to_string(portrait_id) + ")");
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata->video_idle()->at(mId);
+}
 
-  return portrait_id;
+TblEntry Portrait::video_idle_tbl()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata_tbl_vec.at(video_idle() - 1);
 }
 
 uint32_t Portrait::video_talking()
 {
-  uint32_t portrait_id = mDatahub.portrait->video_talking()->at(mId);
-  LOG4CXX_TRACE(logger, string("video_talking(") + to_string(portrait_id) + ")");
-
-  return portrait_id;
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata->video_talking()->at(mId);
 }
 
-TblEntry Portrait::tbl_idle()
+TblEntry Portrait::video_talking_tbl()
 {
-  TblEntry tbl_entry = mDatahub.portdata_tbl_vec.at(video_idle() - 1);
-  LOG4CXX_TRACE(logger, string("tbl_idle(") + tbl_entry.name1 + ")");
-
-  return tbl_entry;
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata_tbl_vec.at(video_talking() - 1);
 }
 
-TblEntry Portrait::tbl_talking()
+uint8_t Portrait::change_idle()
 {
-  TblEntry tbl_entry = mDatahub.portdata_tbl_vec.at(video_talking() - 1);
-  LOG4CXX_TRACE(logger, string("tbl_talking(") + tbl_entry.name1 + ")");
-
-  return tbl_entry;
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata->change_idle()->at(mId);
 }
 
-std::string Portrait::createID(const std::string &portrait)
+uint8_t Portrait::change_talking()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata->change_talking()->at(mId);
+}
+
+uint8_t Portrait::unknown1_idle()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata->unknown1_idle()->at(mId);
+}
+
+uint8_t Portrait::unknown1_talking()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return mDatahub.portdata->unknown1_talking()->at(mId);
+}
+
+std::string Portrait::getIDString(const std::string &portrait)
 {
   string portrait_name(portrait);
   replaceString("\\", "/", portrait_name);

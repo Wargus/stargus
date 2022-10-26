@@ -19,7 +19,6 @@ DefineAnimations("animations-terran-battlecruiser", {
 DefineUnitType("unit-terran-battlecruiser", {
   DrawLevel = 45,
   Animations = "animations-terran-battlecruiser", Icon = "icon-terran-battlecruiser",
-  Costs = {"time", 250, "minerals", 400, "gas", 300},
   Speed = 14,
   DrawLevel = 60,
   Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-terran-battlecruiser-laser",
@@ -29,13 +28,10 @@ DefineUnitType("unit-terran-battlecruiser", {
   Points = 150,
   Demand = 6,
   ExplodeWhenKilled = "missile-terran-explosion-medium",
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true, CanTargetSea = true, CanTargetAir = true,
-  AirUnit = true,
   DetectCloak = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "terran-battlecruiser-selected",

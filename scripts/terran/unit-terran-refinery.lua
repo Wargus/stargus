@@ -27,7 +27,6 @@ DefineConstruction("construction-terran-refinery", {
 
 DefineUnitType("unit-terran-refinery", { Name = "Refinery",
   Animations = "animations-terran-refinery", Icon = "icon-terran-refinery",
-  Costs = {"time", 200, "minerals", 100},
   Construction = "construction-terran-refinery",
   Speed = 0,
   BurnPercent = 30,
@@ -39,8 +38,7 @@ DefineUnitType("unit-terran-refinery", { Name = "Refinery",
   Points = 160,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-explosion",
-  Type = "land",
-  Building = true, VisibleUnderFog = true,
+  VisibleUnderFog = true,
   BuildingRules = { { "ontop", { Type = "unit-resource-vespene-geyser", ReplaceOnDie = true, ReplaceOnBuild = true} } },
   GivesResource = "gas", CanHarvest = true,
   Sounds = {

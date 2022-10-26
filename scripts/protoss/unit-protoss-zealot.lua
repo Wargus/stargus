@@ -36,7 +36,6 @@ DefineAnimations("animations-protoss-zealot", {
 
 DefineUnitType("unit-protoss-zealot", {
   Animations = "animations-protoss-zealot", Icon = "icon-protoss-zealot",
-  Costs = {"time", 100, "minerals", 100},
   Speed = 10,
   DrawLevel = 40,
   Armor = 4, BasicDamage = 10, PiercingDamage = 3, Missile = "missile-none",
@@ -44,12 +43,9 @@ DefineUnitType("unit-protoss-zealot", {
   Priority = 60,
   Points = 50,
   Demand = 1,
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "protoss-zealot-selected",

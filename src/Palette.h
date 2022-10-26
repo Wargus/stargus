@@ -8,18 +8,17 @@
 #define PALETTE_H
 
 // project
-#include "DataChunk.h"
 #include "Color.h"
 #include "Converter.h"
+#include "AbstractPalette.h"
 
 // project
-#include <memory>
 #include <array>
 
 /**
  *
  */
-class Palette
+class Palette : public AbstractPalette
 {
 public:
   Palette();
@@ -31,13 +30,6 @@ public:
 
   virtual ~Palette();
 
-  void load(std::shared_ptr<DataChunk> rawPalette);
-
-  // TODO: this might be just complete replaced by at()
-  void replaceIndexColor(unsigned int index, const Color &rgb);
-
-  void replaceIndexColorRange(const Palette &pal, unsigned int startIndex, unsigned int endIndex);
-
   /**
    * Create a new DataChunk copy for (old) functions that need the data aligned in a big unsigned char*
    * Pay attention of the std::shared_ptr nature:
@@ -45,14 +37,12 @@ public:
    */
   std::shared_ptr<DataChunk> createDataChunk();
 
-  const Color &at(int index) const;
-
   /**
    * Property change of a color with r-value
    */
-  Color &at(int index);
+  Color &at(unsigned int index);
 
-  bool write(const std::string &filename);
+  void load(std::shared_ptr<DataChunk> rawPalette);
 
 private:
   std::array<Color, 256> mColorPalette;

@@ -11,12 +11,8 @@ DefineAnimations("animations-protoss-arbiter-tribunal", {
 })
 
 DefineConstruction("construction-protoss-arbiter-tribunal", {
-  Files = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
-  ShadowFiles = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
+  Files = image_325_terran_tbldlrg_var,
+  ShadowFiles = image_325_terran_tbldlrg_var,
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -34,7 +30,6 @@ DefineConstruction("construction-protoss-arbiter-tribunal", {
 
 DefineUnitType("unit-protoss-arbiter-tribunal", {
   Animations = "animations-protoss-arbiter-tribunal", Icon = "icon-protoss-arbiter-tribunal",
-  Costs = {"time", 30, "minerals", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-arbiter-tribunal",
@@ -45,8 +40,7 @@ DefineUnitType("unit-protoss-arbiter-tribunal", {
   Points = 160,
   BuilderOutside = true,
   AutoBuildRate = 2,
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   BuildingRules = { { "distance", { Distance = 3, DistanceType = "<", Type = "unit-protoss-pylon"} } },
   Sounds = {
     "selected", "protoss-cybernetics-core-selected",

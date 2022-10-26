@@ -51,7 +51,6 @@ DefineAnimations("animations-zerg-guardian", {
 DefineUnitType("unit-zerg-guardian", {
   DrawLevel = 45,
   Animations = "animations-zerg-guardian", Icon = "icon-zerg-guardian",
-  Costs = {"time", 250, "minerals", 150, "gas", 200},
   Speed = 14,
   DrawLevel = 60,
   Armor = 2, BasicDamage = 20, PiercingDamage = 16, Missile = "missile-none",
@@ -59,13 +58,10 @@ DefineUnitType("unit-zerg-guardian", {
   Priority = 65,
   Points = 150,
   Demand = 2,
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true, CanTargetSea = true, CanTargetAir = true,
-  AirUnit = true,
   DetectCloak = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "zerg-guardian-selected",

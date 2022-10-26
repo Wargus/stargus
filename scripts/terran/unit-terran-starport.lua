@@ -12,12 +12,8 @@ DefineAnimations("animations-terran-starport", {
 })
 
 DefineConstruction("construction-terran-starport", {
-  Files = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
-  ShadowFiles = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
+  Files = image_325_terran_tbldlrg_var,
+  ShadowFiles = image_325_terran_tbldlrg_var,
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -35,7 +31,6 @@ DefineConstruction("construction-terran-starport", {
 
 DefineUnitType("unit-terran-starport", {
   Animations = "animations-terran-starport", Icon = "icon-terran-starport",
-  Costs = {"time", 200, "minerals", 150, "gas", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-starport",
@@ -49,8 +44,7 @@ DefineUnitType("unit-terran-starport", {
   Points = 160,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   Sounds = {
     "selected", "button",
     "ready", "terran-scv-done",

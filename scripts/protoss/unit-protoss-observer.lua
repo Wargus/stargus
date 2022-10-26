@@ -13,7 +13,7 @@ DefineAnimations("animations-protoss-observer-death", {
 
 
 DefineUnitType("unit-protoss-observer-death", { Name = "Dead Overlord",
-  Image = image_unit_zerg_zovdeath,
+  Image = image_45_zerg_zovdeath,
   Animations = "animations-zerg-overlord-death", Icon = "icon-zerg-overlord",
   HitPoints = 255,
   DrawLevel = 30,
@@ -43,7 +43,6 @@ DefineAnimations("animations-protoss-observer", {
 
 DefineUnitType("unit-protoss-observer", {
   Animations = "animations-protoss-observer", Icon = "icon-protoss-observer",
-  Costs = {"time", 45, "minerals", 100},
   RepairHp = 4,
   Speed = 20, 
   DrawLevel = 45,
@@ -57,7 +56,6 @@ DefineUnitType("unit-protoss-observer", {
   --Corpse = "unit-zerg-overlord-death",
   SelectableByRectangle = true,
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   Sounds = {
     "selected", "protoss-observer-selected",
     "acknowledge", "protoss-observer-acknowledge",

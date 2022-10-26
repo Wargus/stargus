@@ -31,7 +31,6 @@ DefineAnimations("animations-terran-goliath", {
 
 DefineUnitType("unit-terran-goliath", {
   Animations = "animations-terran-goliath", Icon = "icon-terran-goliath",
-  Costs = {"time", 60, "minerals", 100, "gas", 50},
   Speed = 10,
   DrawLevel = 40,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-none",
@@ -41,12 +40,9 @@ DefineUnitType("unit-terran-goliath", {
   Points = 50,
   Demand = 2,
   ExplodeWhenKilled = "missile-terran-explosion-small",
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "terran-goliath-selected",

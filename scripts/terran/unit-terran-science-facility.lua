@@ -12,12 +12,8 @@ DefineAnimations("animations-terran-science-facility", {
 })
 
 DefineConstruction("construction-terran-science-facility", {
-  Files = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
-  ShadowFiles = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
+  Files = image_325_terran_tbldlrg_var,
+  ShadowFiles = image_325_terran_tbldlrg_var,
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -35,7 +31,6 @@ DefineConstruction("construction-terran-science-facility", {
 
 DefineUnitType("unit-terran-science-facility", {
   Animations = "animations-terran-science-facility", Icon = "icon-terran-science-facility",
-  Costs = {"time", 200, "minerals", 100, "gas", 150},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-science-facility",
@@ -49,8 +44,7 @@ DefineUnitType("unit-terran-science-facility", {
   Points = 160,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   Sounds = {
     "selected", "terran-science-facility-selected",
     "ready", "terran-scv-done",

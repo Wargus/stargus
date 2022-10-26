@@ -1,12 +1,8 @@
 -- FIXME: need support for animations while building
 
 DefineConstruction("construction-zerg", {
-  Files = {
-    File = image_unit_zerg_zbuild_file,
-    Size = image_unit_zerg_zbuild_size},
-  ShadowFiles = {
-    File = image_unit_zerg_zbuild_file,
-    Size = image_unit_zerg_zbuild_size},
+  Files = image_102_zerg_zbuild_var,
+  ShadowFiles = image_102_zerg_zbuild_var,
   Constructions = {
    {Percent = 0,
     File = "construction",

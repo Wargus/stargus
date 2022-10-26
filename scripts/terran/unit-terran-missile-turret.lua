@@ -12,12 +12,8 @@ DefineAnimations("animations-terran-missile-turret", {
 })
 
 DefineConstruction("construction-terran-missile-turret", {
-  Files = {
-    File = image_unit_terran_tbldsml_file,
-    Size = image_unit_terran_tbldsml_size},
-  ShadowFiles = {
-    File = image_unit_terran_tbldsml_file,
-    Size = image_unit_terran_tbldsml_size},
+  Files = image_329_terran_tbldsml_var,
+  ShadowFiles = image_329_terran_tbldsml_var,
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -35,7 +31,6 @@ DefineConstruction("construction-terran-missile-turret", {
 
 DefineUnitType("unit-terran-missile-turret", {
   Animations = "animations-terran-missile-turret", Icon = "icon-terran-missile-turret",
-  Costs = {"time", 190, "minerals", 200},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-missile-turret",
@@ -50,10 +45,9 @@ DefineUnitType("unit-terran-missile-turret", {
   Points = 250,
   Corpse = "unit-destroyed-2x2-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
   CanAttack = true,
   CanTargetLand = true, CanTargetSea = true,
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   DetectCloak = true,
   Sounds = {
     "selected", "terran-missile-turret-selected",

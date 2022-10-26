@@ -8,8 +8,9 @@
 #define UNITSEXPORTER_H
 
 // project
-#include "DataHub.h"
+#include "dat/DataHub.h"
 #include "Storage.h"
+#include "dat/Unit.h"
 
 // system
 
@@ -25,12 +26,14 @@ public:
   UnitsConverter(std::shared_ptr<Hurricane> hurricane, DataHub &datahub);
   virtual ~UnitsConverter();
 
-  bool convert(json &unitsJson,
-               std::map<std::string, std::shared_ptr<Palette>> &paletteMap,
-               std::map<std::string, std::shared_ptr<Palette2D>> palette2DMap);
+  bool convert(json &unitsJson);
 
 private:
-  void convertGrp(const std::string &arcfile, Storage storage);
+  std::string makeReadySounds(Unit &unit);
+  std::string makeWhatSounds(Unit &unit);
+  std::string makeYesSounds(Unit &unit);
+  std::string makePissSounds(Unit &unit);
+  std::string makeHelpSounds(Unit &unit);
 
   DataHub &mDatahub;
 };

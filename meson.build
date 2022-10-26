@@ -1,5 +1,5 @@
 project('stargus', 'cpp', 'c',
-default_options : ['cpp_std=c++17'])
+        default_options : ['cpp_std=c++17'])
 
 cpp = meson.get_compiler('cpp')
 
@@ -7,7 +7,7 @@ cpp = meson.get_compiler('cpp')
 pkgdatadir = join_paths(get_option('datadir'), 'stargus')
 conf = configuration_data()
 conf.set_quoted('PACKAGE_DATA_DIR', join_paths(get_option('prefix'), pkgdatadir))
-conf.set_quoted('PACKAGE_SOURCE_DIR', meson.current_build_dir())
+conf.set_quoted('PACKAGE_SOURCE_DIR', meson.current_source_dir())
 configure_file(
   output: 'config.h',
   configuration: conf
@@ -46,10 +46,14 @@ cppunit_dep = dependency('cppunit', required : false)
 
 subdir('src')
 subdir('tools')
+subdir('tools/sauwetter')
+subdir('tools/scdat2json')
+subdir('tools/grptool')
+#subdir('tools/scpalette')
 subdir('test/lua')
 
 if cppunit_dep.found()
 	subdir('test/module')
 endif
 
-subdir('test/gamedata/dat')
+#subdir('test/gamedata/dat')

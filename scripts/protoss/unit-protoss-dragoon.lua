@@ -8,7 +8,7 @@ DefineAnimations("animations-protoss-dragoon-death", {
 })
 
 DefineUnitType("unit-protoss-dragoon-death", { Name = "Dead dragoon",
-  Image = image_unit_protoss_pdrdeath,
+  Image = image_124_protoss_pdrdeath,
   Animations = "animations-terran-marine-death", Icon = "icon-terran-marine",
   HitPoints = 255,
   DrawLevel = 30,
@@ -51,7 +51,6 @@ DefineAnimations("animations-protoss-dragoon", {
 
 DefineUnitType("unit-protoss-dragoon", {
   Animations = "animations-protoss-dragoon", Icon = "icon-protoss-dragoon",
-  Costs = {"time", 60, "minerals", 125, "gas", 25},
   Speed = 10,
   ShieldPoints = 200,
   DrawLevel = 40,
@@ -60,13 +59,10 @@ DefineUnitType("unit-protoss-dragoon", {
   Priority = 60,
   Points = 50,
   Demand = 2,
-  Type = "land",
   RightMouseAction = "attack",
   Corpse = "unit-protoss-dragoon-death",
   CanAttack = true,
   CanTargetLand = true, CanTargetAir = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "protoss-dragoon-selected",

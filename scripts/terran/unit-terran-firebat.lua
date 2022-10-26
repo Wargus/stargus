@@ -40,7 +40,6 @@ DefineAnimations("animations-terran-firebat", {
 
 DefineUnitType("unit-terran-firebat", {
   Animations = "animations-terran-firebat", Icon = "icon-terran-firebat",
-  Costs = {"time", 60, "minerals", 50, "gas", 25},
   Speed = 10,
   DrawLevel = 40,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-terran-firebat-flame",
@@ -50,12 +49,9 @@ DefineUnitType("unit-terran-firebat", {
   Points = 50,
   Demand = 1,
   ExplodeWhenKilled = "missile-terran-explosion-small",
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "terran-firebat-selected",

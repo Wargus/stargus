@@ -36,7 +36,6 @@ DefineUnitType("unit-zerg-hatchery", {
 	   SetUnitVariable(self, "LarvaTimeout", timeout - 1)
 	end
   end),
-  Costs = {"time", 255, "minerals", 300},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 0},
   Construction = "construction-zerg",
@@ -48,10 +47,9 @@ DefineUnitType("unit-zerg-hatchery", {
   Supply = 8,
   RegenerationRate = 1,
 --  ExplodeWhenKilled = "missle-zerg-rubble-large",
-  Type = "land",
 --  Corpse = "unit-zerg-rubble-large",
   BuilderLost = true,
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   BuildingRules = { { "distance", { Distance = 3, DistanceType = ">", Type = "unit-minerals1"} } },
   CanStore = {"gas", "minerals"},
   Sounds = {

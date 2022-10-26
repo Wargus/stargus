@@ -15,7 +15,6 @@ DefineAnimations("animations-zerg-spawning-pool", {
 
 DefineUnitType("unit-zerg-spawning-pool", {
   Animations = "animations-zerg-spawning-pool", Icon = "icon-zerg-spawning-pool",
-  Costs = {"time", 200, "minerals", 150},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",
@@ -28,8 +27,7 @@ DefineUnitType("unit-zerg-spawning-pool", {
   BuilderLost = true,
 --  Corpse = "unit-zerg-rubble-large",
   ExplodeWhenKilled = "missile-none",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   Sounds = {
     "selected", "zerg-spawning-pool-selected",
     "ready", "zerg-building-ready",

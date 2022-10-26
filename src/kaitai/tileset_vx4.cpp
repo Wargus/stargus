@@ -53,9 +53,8 @@ tileset_vx4_t::megatile_type_t::megatile_type_t(kaitai::kstream* p__io, tileset_
 }
 
 void tileset_vx4_t::megatile_type_t::_read() {
-    int l_graphic_ref = 16;
     m_graphic_ref = new std::vector<graphic_ref_type_t*>();
-    m_graphic_ref->reserve(l_graphic_ref);
+    const int l_graphic_ref = 16;
     for (int i = 0; i < l_graphic_ref; i++) {
         m_graphic_ref->push_back(new graphic_ref_type_t(m__io, this, m__root));
     }

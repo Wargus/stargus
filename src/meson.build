@@ -2,12 +2,13 @@
 subdir('kaitai')
 subdir('dat')
 subdir('tileset')
+subdir('libgrp')
 
 startool_sources = files(
 	'startool.cpp'
 )
 
-startool_lib_sources = files(
+starformat_lib_sources = files(
 	'Casc.cpp',
 	'FileUtil.cpp',
 	'Palette.cpp',
@@ -39,7 +40,13 @@ startool_lib_sources = files(
 	'platform.cpp',
 	'UIConsole.cpp',
 	'pacman.cpp',
-	'FileNotFoundException.cpp'
+	'FileNotFoundException.cpp',
+	'UnitsConverter.cpp',
+	'PortraitsConverter.cpp',
+	'ImagesConverter.cpp',
+	'SfxConverter.cpp',
+	'NoValidPaletteException.cpp',
+	'AbstractPalette.cpp'
 	)
 
 stratagus_prefix = get_option('prefix')
@@ -59,17 +66,30 @@ message('Using stratagus: ' + stratagus_bin)
 
 stargus_sources = files('stargus.cpp')
 
-executable('startool',
-	startool_lib_sources,
-	startool_sources,
+inc = include_directories('.')
+
+libstarformat = library('starformat',
+	starformat_lib_sources,
 	startool_kaitai_sources,
 	startool_dat_sources,
 	startool_tileset_sources,
+	libgrp_sources,
 	include_directories : config_incdir,
 	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep],
+	install : true)
+
+libstarformat_dep = declare_dependency(include_directories : [config_incdir, inc],
+  link_with : libstarformat)
+
+executable('startool',
+	startool_sources,
+	include_directories : config_incdir,
+	dependencies : [log4cxx_dep, libstarformat_dep],
 	install : true)
 
 executable('stargus',
 	stargus_sources,
 	include_directories : [stratagus_incdir, config_incdir],
 	install : true)
+	
+

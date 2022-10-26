@@ -12,12 +12,8 @@ DefineAnimations("animations-terran-factory", {
 })
 
 DefineConstruction("construction-terran-factory", {
-  Files = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
-  ShadowFiles = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
+  Files = image_325_terran_tbldlrg_var,
+  ShadowFiles = image_325_terran_tbldlrg_var,
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -35,7 +31,6 @@ DefineConstruction("construction-terran-factory", {
 
 DefineUnitType("unit-terran-factory", {
   Animations = "animations-terran-factory", Icon = "icon-terran-factory",
-  Costs = {"time", 200, "minerals", 200, "gas", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-terran-factory",
@@ -49,8 +44,7 @@ DefineUnitType("unit-terran-factory", {
   Points = 170,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   Sounds = {
     "selected", "terran-factory-selected",
     "ready", "terran-scv-done",

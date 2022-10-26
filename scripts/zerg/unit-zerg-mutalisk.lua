@@ -27,7 +27,6 @@ DefineAnimations("animations-zerg-mutalisk", {
 DefineUnitType("unit-zerg-mutalisk", {
   DrawLevel = 45,
   Animations = "animations-zerg-mutalisk", Icon = "icon-zerg-mutalisk",
-  Costs = {"time", 250, "minerals", 150, "gas", 100},
   Speed = 14,
   DrawLevel = 60,
   Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-zerg-mutalisk-glaive-wurm",
@@ -37,13 +36,10 @@ DefineUnitType("unit-zerg-mutalisk", {
   Points = 150,
   Demand = 2,
   ExplodeWhenKilled = "missile-terran-explosion-small",--FIXME:wrong explosion
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true, CanTargetSea = true, CanTargetAir = true,
-  AirUnit = true,
   DetectCloak = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "zerg-mutalisk-selected",

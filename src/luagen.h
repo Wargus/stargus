@@ -24,9 +24,14 @@
  */
 namespace lg
 {
+  // type generators
+  std::string boolean(bool b);
+
+  std::string integer(int i);
+
   // generic LUA language generators
   std::string function(const std::string &name, const std::initializer_list<std::string> &functionParams);
-  std::string function(const std::string &name, const std::string &functionParams);
+  std::string function(const std::string &name, const std::string &functionParams = "");
 
   /**
    * Create a LUA table from the std::initializer_list. The function calls implicit params().
@@ -48,6 +53,13 @@ namespace lg
    * @return example: left = right
    */
   std::string assign(const std::string &left, const std::string &right);
+
+  /**
+   * Create a LUA assignment from left and right side
+   *
+   * @return example: left == right
+   */
+  std::string compare(const std::string &left, const std::string &right);
 
   /**
    * Put surrounding quotes around:

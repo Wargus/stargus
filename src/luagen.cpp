@@ -10,6 +10,16 @@ using namespace std;
 
 namespace lg {
 
+std::string boolean(bool b)
+{
+  return b ? "true" : "false";
+}
+
+std::string integer(int i)
+{
+  return to_string(i);
+}
+
 std::string function(const std::string &name, const std::initializer_list<std::string> &functionParams)
 {
   return function(name, params(functionParams));
@@ -43,6 +53,13 @@ std::string assign(const std::string &left, const std::string &right)
   string assign_str(left + " = " + right);
 
   return assign_str;
+}
+
+std::string compare(const std::string &left, const std::string &right)
+{
+  string compare_str(left + " == " + right);
+
+  return compare_str;
 }
 
 std::string quote(const std::string &text)

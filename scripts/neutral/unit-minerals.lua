@@ -15,8 +15,7 @@ DefineUnitType("unit-resource-mineral-field", {
   DrawLevel = 5,
   BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 0,
-  Type = "land",
-  Building = true, VisibleUnderFog = true,
+  VisibleUnderFog = true,
   GivesResource = "minerals", CanHarvest = true,
 })
 
@@ -28,8 +27,7 @@ DefineUnitType("unit-resource-mineral-field-type-2", {
   DrawLevel = 5,
   BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 0,
-  Type = "land",
-  Building = true, VisibleUnderFog = true,
+  VisibleUnderFog = true,
   GivesResource = "minerals", CanHarvest = true,
 })
 
@@ -41,8 +39,7 @@ DefineUnitType("unit-resource-mineral-field-type-3", {
   DrawLevel = 5,
   BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 0,
-  Type = "land",
-  Building = true, VisibleUnderFog = true,
+  VisibleUnderFog = true,
   GivesResource = "minerals", CanHarvest = true,
 })
 

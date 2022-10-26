@@ -6,7 +6,7 @@
 
 // project
 #include "CSVExporter.h"
-#include "Unit.h"
+#include "dat/Unit.h"
 
 // system
 #include <vector>
@@ -14,9 +14,9 @@
 #include <string>
 
 using namespace std;
+using namespace dat;
 
-namespace dat
-{
+static const int units_units_ready_sound_end = 106;
 
 CSVExporter::CSVExporter(DataHub &datahub) :
   mDatahub(datahub)
@@ -64,8 +64,8 @@ void CSVExporter::print()
 
   sfxdata_sound_file_vec = mDatahub.sfxdata->sound_file();
 
-  std::vector<uint32_t> *portdata_portrait_idle_vec = mDatahub.portrait->video_idle();
-  std::vector<uint32_t> *portdata_portrait_talking_vec = mDatahub.portrait->video_talking();
+  std::vector<uint32_t> *portdata_portrait_idle_vec = mDatahub.portdata->video_idle();
+  std::vector<uint32_t> *portdata_portrait_talking_vec = mDatahub.portdata->video_talking();
 
   // upgrades.dat
   std::vector<uint16_t> *upgrades_label_vec = mDatahub.upgrades->label();
@@ -77,8 +77,8 @@ void CSVExporter::print()
   mapdata_mission_dir_vec = mDatahub.mapdata->mission_dir();
 
   // images.dat
-  std::vector<uint8_t> *images_draw_function = mDatahub.images->draw_function();
-  std::vector<uint8_t> *images_remapping_function = mDatahub.images->remapping();
+  std::vector<images_dat_t::draw_function_enum_t> *images_draw_function = mDatahub.images->draw_function();
+  std::vector<images_dat_t::remapping_enum_t> *images_remapping_function = mDatahub.images->remapping();
 
   // units.dat
   for (unsigned int i = 0; i < units_graphics_vec->size(); i++)
@@ -118,7 +118,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry = mDatahub.stat_txt_vec.at(i);
+    TblEntry tblEntry = mDatahub.stat_txt_units_tbl_vec.at(i);
     csv_dat += "ref:name=" + tblEntry.name1;
 
     csv_dat += CSV_SEPARATOR;
@@ -133,7 +133,7 @@ void CSVExporter::print()
     sprintf(buf, "weapon=%d", weapon_id);
     csv_dat += buf;
 
-    if (i < DataHub::units_units_ready_sound_end)
+    if (i < units_units_ready_sound_end)
     {
       csv_dat += CSV_SEPARATOR;
       uint16_t ready_sound_id = units_ready_sound_vec->at(i);
@@ -205,7 +205,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry_label = mDatahub.stat_txt_vec.at(label_id);
+    TblEntry tblEntry_label = mDatahub.stat_txt_tbl_vec.at(label_id);
     csv_dat += "ref:name=" + tblEntry_label.name1;
 
     csv_dat += CSV_SEPARATOR;
@@ -222,7 +222,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry_error = mDatahub.stat_txt_vec.at(error_id);
+    TblEntry tblEntry_error = mDatahub.stat_txt_tbl_vec.at(error_id);
     csv_dat += " ref:error_text=" + tblEntry_error.name1;
 
     csv_dat += CSV_SEPARATOR;
@@ -379,7 +379,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry = mDatahub.stat_txt_vec.at(upgrades_label);
+    TblEntry tblEntry = mDatahub.stat_txt_tbl_vec.at(upgrades_label);
     csv_dat += "ref:label=" + tblEntry.name1;
     sprintf(buf, "ref:shortcut=%s", tblEntry.shortcut.c_str());
     csv_dat += buf;
@@ -406,7 +406,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry = mDatahub.stat_txt_vec.at(orders_label);
+    TblEntry tblEntry = mDatahub.stat_txt_tbl_vec.at(orders_label);
     csv_dat += "ref:label=" + tblEntry.name1;
 
     csv_dat += CSV_SEPARATOR;
@@ -431,7 +431,7 @@ void CSVExporter::print()
 
     csv_dat += CSV_SEPARATOR;
 
-    TblEntry tblEntry = mDatahub.stat_txt_vec.at(techdata_label);
+    TblEntry tblEntry = mDatahub.stat_txt_tbl_vec.at(techdata_label);
     csv_dat += "ref:label=" + tblEntry.name1;
     csv_dat += CSV_SEPARATOR;
     sprintf(buf, "ref:shortcut=%s", tblEntry.shortcut.c_str());
@@ -474,6 +474,3 @@ void CSVExporter::print()
   // stdout
   cout << csv_dat;
 }
-
-
-} /* namespace dat */

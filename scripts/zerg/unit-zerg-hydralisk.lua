@@ -14,9 +14,9 @@ DefineAnimations("animations-zerg-hydralisk-death", {
 
 
 DefineUnitType("unit-zerg-hydralisk-death", {
-  Image = image_unit_zerg_zhydeath,
+  Image = image_32_zerg_zhydeath,
   Animations = "animations-zerg-hydralisk-death", Icon = "icon-zerg-hydralisk",
-  NumDirections = 1,
+  NumDirections = image_32_zerg_zhydeath_NumDirections,
   HitPoints = 255,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {31, 31},
@@ -74,7 +74,6 @@ DefineAnimations("animations-zerg-hydralisk", {
 
 DefineUnitType("unit-zerg-hydralisk", { Name = "Hydralisk",
   Animations = "animations-zerg-hydralisk", Icon = "icon-zerg-hydralisk",
-  Costs = {"time", 35, "minerals", 75, "gas", 25,},
   Speed = 0,
   DrawLevel = 40,
   BoardSize = 2,
@@ -86,13 +85,10 @@ DefineUnitType("unit-zerg-hydralisk", { Name = "Hydralisk",
   Demand = 1,
   RegenerationRate = 1,
   Corpse = "unit-zerg-hydralisk-death",
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
   CanTargetAir = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "zerg-hydralisk-selected",

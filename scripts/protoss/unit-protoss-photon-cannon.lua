@@ -9,12 +9,8 @@ DefineAnimations("animations-protoss-photon-cannon", {
 })
 
 DefineConstruction("construction-protoss-photon-cannon", {
-  Files = {
-    File = image_unit_zerg_zbuild_file,
-    Size = image_unit_zerg_zbuild_size},
-  ShadowFiles = {
-    File = image_unit_zerg_zbuild_file,
-    Size = image_unit_zerg_zbuild_size},
+  Files = image_325_terran_tbldlrg_var,
+  ShadowFiles = image_325_terran_tbldlrg_var,
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -632,7 +628,6 @@ DefineConstruction("construction-protoss-photon-cannon", {
 
 DefineUnitType("unit-protoss-photon-cannon", {
   Animations = "animations-protoss-photon-cannon", Icon = "icon-terran-bunker",
-  Costs = {"time", 200, "minerals", 150},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-photon-cannon",
@@ -644,13 +639,12 @@ DefineUnitType("unit-protoss-photon-cannon", {
   Points = 170,
   --[[Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",--]]
-  Type = "land",
   RightMouseAction = "attack",
   BuilderOutside = true,
   AutoBuildRate = 30,
   CanAttack = true,
   CanTargetLand = true,
-  Building = true, VisibleUnderFog = true,
+  VisibleUnderFog = true,
   BuildingRules = { { "distance", { Distance = 3, DistanceType = "<", Type = "unit-protoss-pylon"} } },
   Sounds = {
     "selected", "protoss-photon-cannon-selected",

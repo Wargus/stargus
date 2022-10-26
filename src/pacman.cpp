@@ -22,15 +22,16 @@ const std::string searchFile(const std::string &data)
 {
   vector <string> name_vector;
 
-  name_vector.push_back(data);
-
 #ifdef HAVE_CONFIG_H
   // search in the package directory (e.g. /usr/share/<package>
-  name_vector.push_back(string(PACKAGE_DATA_DIR));
+  name_vector.push_back(string(PACKAGE_DATA_DIR) + data);
 
   // if this still fails we assume the developer case and search the data in absolute source folder
-  name_vector.push_back(string(PACKAGE_SOURCE_DIR));
+  name_vector.push_back(string(PACKAGE_SOURCE_DIR) + data);
 #endif
+
+  // do this as last as in config.h case relative path is not desired
+  name_vector.push_back(data);
 
   const string &file = statFile(name_vector);
 

@@ -8,18 +8,15 @@
 #define PORTRAITSCONVERTER_H
 
 // project
-#include "DataHub.h"
+#include "dat/DataHub.h"
 #include "Storage.h"
 
 // system
 
-namespace dat
-{
-
 class PortraitsConverter : public Converter
 {
 public:
-  PortraitsConverter(std::shared_ptr<Hurricane> hurricane, DataHub &datahub);
+  PortraitsConverter(std::shared_ptr<Hurricane> hurricane, dat::DataHub &datahub);
   virtual ~PortraitsConverter();
 
   bool convert();
@@ -40,9 +37,7 @@ private:
       vec.erase(std::unique(vec.begin(), vec.end()), vec.end());
   }*/
 
-  DataHub &mDatahub;
+  dat::DataHub &mDatahub;
 };
-
-} /* namespace dat */
 
 #endif /* PORTRAITSCONVERTER_H */

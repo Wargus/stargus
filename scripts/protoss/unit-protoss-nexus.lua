@@ -8,12 +8,8 @@ DefineAnimations("animations-protoss-nexus", {
 })
 
 DefineConstruction("construction-protoss-nexus", {
-  Files = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
-  ShadowFiles = {
-    File = image_unit_terran_tbldlrg_file,
-    Size = image_unit_terran_tbldlrg_size},
+  Files = image_325_terran_tbldlrg_var,
+  ShadowFiles = image_325_terran_tbldlrg_var,
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -654,7 +650,6 @@ DefineConstruction("construction-zerg-hatchery", {
 
 DefineUnitType("unit-protoss-nexus", {
   Animations = "animations-protoss-nexus", Icon = "icon-protoss-nexus",
-  Costs = {"time", 255, "minerals", 400},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 0},
   Construction = "construction-protoss-nexus",
@@ -667,8 +662,7 @@ DefineUnitType("unit-protoss-nexus", {
   Points = 200,
   Supply = 10,  Corpse = "unit-destroyed-4x4-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   BuildingRules = { { "distance", { Distance = 3, DistanceType = ">", Type = "unit-minerals1"} } },
   CanStore = {"gas", "minerals"},
   Sounds = {

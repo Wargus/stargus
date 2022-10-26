@@ -8,23 +8,34 @@
 #define SPRITE_H
 
 // project
-#include "DataHub.h"
+#include "ObjectAccess.h"
 #include "Image.h"
+#include "PropertyNotAvailableException.h"
 
 namespace dat
 {
 
-class Sprite
+class Sprite : public ObjectAccess
 {
 public:
-  Sprite(DataHub &datahub, uint16_t id);
+  Sprite(DataHub &datahub, unsigned int id);
   virtual ~Sprite();
 
-  Image image();
+  uint16_t image();
+  Image image_obj();
+
+  uint8_t health_bar();
+
+  uint8_t unknown2();
+
+  bool is_visible();
+
+  uint8_t select_circle_image_size();
+
+  uint8_t select_circle_vertical_pos();
 
 private:
-  DataHub &mDatahub;
-  uint16_t mId;
+
 };
 
 } /* namespace dat */

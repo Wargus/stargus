@@ -9,7 +9,7 @@ DefineAnimations("animations-terran-marine-death", {
 })
 
 DefineUnitType("unit-terran-marine-death", { Name = "Dead Marine",
-  Image = image_unit_terran_tmadeath,
+  Image = image_241_terran_tmadeath,
   Animations = "animations-terran-marine-death", Icon = "icon-terran-marine",
   NumDirections = 1,
   HitPoints = 255,
@@ -69,7 +69,6 @@ DefineAnimations("animations-terran-marine", {
 
 DefineUnitType("unit-terran-marine", {
   Animations = "animations-terran-marine", Icon = "icon-terran-marine",
-  Costs = {"time", 60, "minerals", 50},
   Speed = 10,
   DrawLevel = 40,
   -- TileSize = {2, 2}, BoxSize = {31, 31}, Offset = {0, -8}, BoxOffset = {0, -8}, PersonalSpace = {1, 1},
@@ -80,17 +79,16 @@ DefineUnitType("unit-terran-marine", {
   Points = 50,
   Demand = 1,
   Corpse = "unit-terran-marine-death",
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
   CanTargetAir = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
-  Sounds = {
+  --[[Sounds = {
     "selected", "terran-marine-selected",
     "acknowledge", "terran-marine-acknowledge",
     "ready", "terran-marine-ready",
-    "help", "terran-units-attacked",} } )
+    "help", "terran-units-attacked",} ]]--
+    
+    } )
 

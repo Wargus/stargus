@@ -16,7 +16,6 @@ DefineAnimations("animations-zerg-evolution-chamber", {
 
 DefineUnitType("unit-zerg-evolution-chamber", {
   Animations = "animations-zerg-evolution-chamber", Icon = "icon-zerg-evolution-chamber",
-  Costs = {"time", 200, "minerals", 75},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",
@@ -27,13 +26,12 @@ DefineUnitType("unit-zerg-evolution-chamber", {
   Points = 170,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
   RightMouseAction = "attack",
   RegenerationRate = 1,
   CanAttack = true,
   BuilderLost = true,
   CanTargetLand = true,
-  Building = true, VisibleUnderFog = true,
+  VisibleUnderFog = true,
   Sounds = {
     "selected", "zerg-evolution-chamber-selected",
     "ready", "zerg-building-ready",

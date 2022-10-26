@@ -13,7 +13,7 @@ DefineAnimations("animations-protoss-shuttle-death", {
 
 
 DefineUnitType("unit-protoss-shuttle-death", { Name = "Dead Shuttle",
-  Image = image_unit_zerg_zovdeath,
+  Image = image_45_zerg_zovdeath,
   Animations = "animations-zerg-overlord-death", Icon = "icon-zerg-overlord",
   NumDirections = 1,
   HitPoints = 255,
@@ -45,7 +45,6 @@ DefineAnimations("animations-protoss-shuttle", {
 
 DefineUnitType("unit-protoss-shuttle", {
   Animations = "animations-protoss-shuttle", Icon = "icon-protoss-shuttle",
-  Costs = {"time", 45, "minerals", 100},
   RepairHp = 4,
   Speed = 10,
   DrawLevel = 45,
@@ -59,7 +58,6 @@ DefineUnitType("unit-protoss-shuttle", {
   --Corpse = "unit-zerg-overlord-death",
   SelectableByRectangle = true,
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   Sounds = {
     "selected", "protoss-shuttle-selected",
     "acknowledge", "protoss-shuttle-acknowledge",

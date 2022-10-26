@@ -14,9 +14,9 @@ DefineAnimations("animations-zerg-ultralisk-death", {
 
 
 DefineUnitType("unit-zerg-ultralisk-death", { Name = "Dead Zergling",
-  Image = image_unit_zerg_zuldeath,
+  Image = image_53_zerg_zuldeath,
   Animations = "animations-zerg-ultralisk-death", Icon = "icon-zerg-ultralisk",
-  NumDirections = 1,
+  NumDirections = image_53_zerg_zuldeath_NumDirections,
   HitPoints = 255,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {63, 63},--FIXME: wrong boxsize
@@ -76,7 +76,6 @@ DefineAnimations("animations-zerg-ultralisk", {
 
 DefineUnitType("unit-zerg-ultralisk", {
   Animations = "animations-zerg-ultralisk", Icon = "icon-zerg-ultralisk",
-  Costs = {"time", 200, "minerals", 200, "gas", 200},
   Speed = 12,
   DrawLevel = 40,
   Armor = 3, BasicDamage = 20, PiercingDamage = 10, Missile = "missile-none",
@@ -85,14 +84,11 @@ DefineUnitType("unit-zerg-ultralisk", {
   Priority = 60,
   Points = 30,
   Demand = 6,
-  Type = "land",
   RegenerationRate = 1,
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
   Corpse = "unit-zerg-ultralisk-death",
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "zerg-ultralisk-selected",

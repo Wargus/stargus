@@ -10,27 +10,39 @@
 // project
 #include "Color.h"
 #include "Palette.h"
+#include "AbstractPalette.h"
 
 // system
 #include <vector>
 #include <array>
 
-class Palette2D
+class Palette2D  : public AbstractPalette
 {
 public:
-  Palette2D(int size);
+  Palette2D(unsigned int size);
+
+  Palette2D(std::shared_ptr<DataChunk> rawPalette);
 
   virtual ~Palette2D();
 
-  const Color &at(int x, int y) const;
+  /**
+   * Create a new DataChunk copy for (old) functions that need the data aligned in a big unsigned char*
+   * Pay attention of the std::shared_ptr nature:
+   *    If you directly call createDataChunk()->getDataPointer() without saving it before to a std::shared_ptr<DataChunk> it won't work!
+   */
+  std::shared_ptr<DataChunk> createDataChunk();
 
-  Color &at(int x, int y);
+  /**
+   * Property change of a color with r-value
+   */
+  Color &at(unsigned int column, unsigned int row);
 
-  int getSize();
+  unsigned int getSize();
+
+  void load(std::shared_ptr<DataChunk> rawPalette);
 
 private:
   std::vector<Palette> mColorPalette2D;
-  int mSize;
 };
 
 #endif /* PALETTE2D_H */

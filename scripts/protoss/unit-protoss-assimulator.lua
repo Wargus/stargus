@@ -8,12 +8,8 @@ DefineAnimations("animations-protoss-assimulator", {
 })
 
 DefineConstruction("construction-protoss-assimulator", {
-  Files = {
-    File = image_unit_zerg_zbuild_file,
-    Size = image_unit_zerg_zbuild_size},
-  ShadowFiles = {
-    File = image_unit_zerg_zbuild_file,
-    Size = image_unit_zerg_zbuild_size},
+  Files = image_102_zerg_zbuild_var,
+  ShadowFiles = image_102_zerg_zbuild_var,
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -631,7 +627,6 @@ DefineConstruction("construction-protoss-assimulator", {
 
 DefineUnitType("unit-protoss-assimulator", {
   Animations = "animations-protoss-assimulator", Icon = "icon-zerg-extractor",
-  Costs = {"time", 200, "minerals", 100},
   Construction = "construction-protoss-assimulator",
   Speed = 0,
   DrawLevel = 30,
@@ -640,8 +635,7 @@ DefineUnitType("unit-protoss-assimulator", {
   Points = 160,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-explosion",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   BuildingRules = { { "ontop", { Type = "unit-vespene-geyser", ReplaceOnDie = true, ReplaceOnBuild = true} } },
   GivesResource = "gas", CanHarvest = true,
   Sounds = {

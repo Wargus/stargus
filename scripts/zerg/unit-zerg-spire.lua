@@ -16,7 +16,6 @@ DefineAnimations("animations-zerg-spire", {
 
 DefineUnitType("unit-zerg-spire", {
   Animations = "animations-zerg-spire", Icon = "icon-zerg-spire",
-  Costs = {"time", 200, "minerals", 200, "gas", 200},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-zerg",
@@ -27,14 +26,13 @@ DefineUnitType("unit-zerg-spire", {
   Points = 170,
   Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
   UpgradeTo = 100,
   RightMouseAction = "attack",
   RegenerationRate = 1,
   CanAttack = true,
   BuilderLost = true,
   CanTargetLand = true,
-  Building = true, VisibleUnderFog = true,
+  VisibleUnderFog = true,
   Sounds = {
     "selected", "zerg-spire-selected",
     "ready", "zerg-building-ready",

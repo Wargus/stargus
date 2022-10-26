@@ -13,9 +13,9 @@ DefineAnimations("animations-zerg-overlord-death", {
 
 
 DefineUnitType("unit-zerg-overlord-death", {
-  Image = image_unit_zerg_zovdeath,
+  Image = image_45_zerg_zovdeath,
   Animations = "animations-zerg-overlord-death", Icon = "icon-zerg-overlord",
-  NumDirections = 1,
+  NumDirections = image_45_zerg_zovdeath_NumDirections,
   HitPoints = 255,
   DrawLevel = 30,
   TileSize = {1, 1}, BoxSize = {63, 63},
@@ -52,7 +52,6 @@ DefineAnimations("animations-zerg-overlord", {
 
 DefineUnitType("unit-zerg-overlord", { Name = "Overlord",
   Animations = "animations-zerg-overlord", Icon = "icon-zerg-overlord",
-  Costs = {"time", 45, "minerals", 100},
   RepairHp = 4,
   Speed = 0,
   DrawLevel = 45,
@@ -66,7 +65,6 @@ DefineUnitType("unit-zerg-overlord", { Name = "Overlord",
   Corpse = "unit-zerg-overlord-death",
   SelectableByRectangle = true,
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   Sounds = {
     "selected", "zerg-overlord-selected",
     "acknowledge", "zerg-overlord-acknowledgement",

@@ -19,7 +19,6 @@ DefineAnimations("animations-protoss-scout", {
 DefineUnitType("unit-protoss-scout", {
   DrawLevel = 45,
   Animations = "animations-protoss-scout", Icon = "icon-protoss-scout",
-  Costs = {"time", 250, "minerals", 150, "gas", 100},
   Speed = 14,
   DrawLevel = 60,
   Armor = 5, BasicDamage = 0, PiercingDamage = 16, Missile = "missile-none",
@@ -29,13 +28,10 @@ DefineUnitType("unit-protoss-scout", {
   Points = 150,
   Demand = 2,
   ExplodeWhenKilled = "missile-terran-explosion-small",
-  Type = "fly", ShadowFly = {Value = 1, Enable = true},
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true, CanTargetSea = true, CanTargetAir = true,
-  AirUnit = true,
   DetectCloak = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "protoss-scout-selected",

@@ -9,12 +9,8 @@ DefineAnimations("animations-protoss-pylon", {
 })
 
 DefineConstruction("construction-protoss-pylon", {
-  Files = {
-    File = image_unit_terran_tbldmed_file,
-    Size = image_unit_terran_tbldmed_size},
-  ShadowFiles = {
-    File = image_unit_terran_tbldmed_file,
-    Size = image_unit_terran_tbldmed_size},
+  Files = image_327_terran_tbldmed_var,
+  ShadowFiles = image_327_terran_tbldmed_var,
   Constructions = {
    {Percent = 0,
     File = "construction",
@@ -32,7 +28,6 @@ DefineConstruction("construction-protoss-pylon", {
 
 DefineUnitType("unit-protoss-pylon", {
   Animations = "animations-protoss-pylon", Icon = "icon-protoss-pylon",
-  Costs = {"time", 100, "minerals", 100},
   RepairHp = 4,
   RepairCosts = {"minerals", 1, "gas", 1},
   Construction = "construction-protoss-pylon",
@@ -46,8 +41,7 @@ DefineUnitType("unit-protoss-pylon", {
   Supply = 8,
   Corpse = "unit-destroyed-2x2-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
-  Type = "land",
-  Building = true, VisibleUnderFog = true, 
+  VisibleUnderFog = true, 
   Sounds = {
     "selected", "protoss-pylon-selected",
 --    "acknowledge", "farm-acknowledge",

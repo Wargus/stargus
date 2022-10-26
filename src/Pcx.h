@@ -24,29 +24,34 @@ public:
   bool load(const std::string &arcfile);
 
   /**
-   *  Convert a pcx graphic to PNG format
+   *  Convert a PCX graphic to PNG format.
+   *  The PCX files is always saved with the original unmapped palette as mapping is
+   *  only relevant for GRP colors.
    *
-   *  @param arcfile File identifier in the MPQ file
-   *  @param file Place to save the file on the drive
+   *  @param storage where to save the PNG image
    */
   bool savePNG(Storage storage);
 
   /**
-   * @return get the pcx palette information (including all index mapping that has been applied before)
+   *
+   * @return get a copy of the unmodified original pcx palette information
    */
   std::shared_ptr<Palette> getPalette();
 
   /**
    * Map palette colors from one place in the image to a position in the color palette
    *
-   * TODO: I need to write a more extensive documentation for this
-   *
    * @param length the length of one color index
    * @param start where to place the copy in the palette position
    * @param index the color index
+   *
+   * @return a new created Palette with the applied mapping
    */
-  void mapIndexPalette(int length, int start, int index);
+  std::shared_ptr<Palette> mapIndexPalette(int length, int start, int index);
 
+  /**
+   * * @return a new created Palette2D with the applied mapping
+   */
   std::shared_ptr<Palette2D> map2DPalette();
 
   Size getSize();

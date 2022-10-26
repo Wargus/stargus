@@ -10,117 +10,115 @@ bckground:Load()
 bckground:Resize(Video.Width, Video.Height)
 backgroundWidget = ImageWidget(bckground)
 
-g_tbln = CGraphic:New("ui/terran/button 224x28.png")
+-- button large
+g_tbln = CGraphic:New("ui/terran/agg/button_large.png")
 g_tbln:Load()
-g_tblp = CGraphic:New("ui/terran/button pressed 224x28.png")
+g_tblp = CGraphic:New("ui/terran/agg/button_large_pressed.png")
 g_tblp:Load()
-g_tblg = CGraphic:New("ui/terran/button disabled 224x28.png")
+g_tblg = CGraphic:New("ui/terran/agg/button_large_disabled.png")
 g_tblg:Load()
 
-g_zbln = CGraphic:New("ui/zerg/button 224x28.png")
+g_zbln = CGraphic:New("ui/zerg/agg/button_large.png")
 g_zbln:Load()
-g_zblp = CGraphic:New("ui/zerg/button pressed 224x28.png")
+g_zblp = CGraphic:New("ui/zerg/agg/button_large_pressed.png")
 g_zblp:Load()
-g_zblg = CGraphic:New("ui/zerg/button disabled 224x28.png")
+g_zblg = CGraphic:New("ui/zerg/agg/button_large_disabled.png")
 g_zblg:Load()
 
-g_pbln = CGraphic:New("ui/protoss/button 224x28.png")
+g_pbln = CGraphic:New("ui/protoss/agg/button_large.png")
 g_pbln:Load()
-g_pblp = CGraphic:New("ui/protoss/button pressed 224x28.png")
+g_pblp = CGraphic:New("ui/protoss/agg/button_large_pressed.png")
 g_pblp:Load()
-g_pblg = CGraphic:New("ui/protoss/button disabled 224x28.png")
+g_pblg = CGraphic:New("ui/protoss/agg/button_large_disabled.png")
 g_pblg:Load()
 
-
-g_tblln = CGraphic:New("ui/terran/button left 224x28.png")
+-- button left large
+g_tblln = CGraphic:New("ui/terran/agg/button_left_large.png")
 g_tblln:Load()
-g_tbllp = CGraphic:New("ui/terran/button left pressed 224x28.png")
+g_tbllp = CGraphic:New("ui/terran/agg/button_left_large_pressed.png")
 g_tbllp:Load()
-g_tbllg = CGraphic:New("ui/terran/button left disabled 224x28.png")
+g_tbllg = CGraphic:New("ui/terran/agg/button_left_large_disabled.png")
 g_tbllg:Load()
 
-g_zblln = CGraphic:New("ui/zerg/button left 224x28.png")
+g_zblln = CGraphic:New("ui/zerg/agg/button_left_large.png")
 g_zblln:Load()
-g_zbllp = CGraphic:New("ui/zerg/button left pressed 224x28.png")
+g_zbllp = CGraphic:New("ui/zerg/agg/button_left_large_pressed.png")
 g_zbllp:Load()
-g_zbllg = CGraphic:New("ui/zerg/button left disabled 224x28.png")
+g_zbllg = CGraphic:New("ui/zerg/agg/button_left_large_disabled.png")
 g_zbllg:Load()
 
-g_pblln = CGraphic:New("ui/protoss/button left 224x28.png")
+g_pblln = CGraphic:New("ui/protoss/agg/button_left_large.png")
 g_pblln:Load()
-g_pbllp = CGraphic:New("ui/protoss/button left pressed 224x28.png")
+g_pbllp = CGraphic:New("ui/protoss/agg/button_left_large_pressed.png")
 g_pbllp:Load()
-g_pbllg = CGraphic:New("ui/protoss/button left disabled 224x28.png")
+g_pbllg = CGraphic:New("ui/protoss/agg/button_left_large_disabled.png")
 g_pbllg:Load()
 
-
-g_tbhn = CGraphic:New("ui/terran/button 104x28.png")
+-- button small
+g_tbhn = CGraphic:New("ui/terran/agg/button_small.png")
 g_tbhn:Load()
-g_tbhp = CGraphic:New("ui/terran/button pressed 104x28.png")
+g_tbhp = CGraphic:New("ui/terran/agg/button_small_pressed.png")
 g_tbhp:Load()
-g_tbhg = CGraphic:New("ui/terran/button disabled 104x28.png")
+g_tbhg = CGraphic:New("ui/terran/agg/button_small_disabled.png")
 g_tbhg:Load()
 
-g_zbhn = CGraphic:New("ui/zerg/button 104x28.png")
+g_zbhn = CGraphic:New("ui/zerg/agg/button_small.png")
 g_zbhn:Load()
-g_zbhp = CGraphic:New("ui/zerg/button pressed 104x28.png")
+g_zbhp = CGraphic:New("ui/zerg/agg/button_small_pressed.png")
 g_zbhp:Load()
-g_zbhg = CGraphic:New("ui/zerg/button disabled 104x28.png")
+g_zbhg = CGraphic:New("ui/zerg/agg/button_small_disabled.png")
 g_zbhg:Load()
 
-g_pbhn = CGraphic:New("ui/protoss/button 104x28.png")
+g_pbhn = CGraphic:New("ui/protoss/agg/button_small.png")
 g_pbhn:Load()
-g_pbhp = CGraphic:New("ui/protoss/button pressed 104x28.png")
+g_pbhp = CGraphic:New("ui/protoss/agg/button_small_pressed.png")
 g_pbhp:Load()
-g_pbhg = CGraphic:New("ui/protoss/button disabled 104x28.png")
+g_pbhg = CGraphic:New("ui/protoss/agg/button_small_disabled.png")
 g_pbhg:Load()
 
-
-g_tbhln = CGraphic:New("ui/terran/button left 104x28.png")
+-- button left small
+g_tbhln = CGraphic:New("ui/terran/agg/button_left_small.png")
 g_tbhln:Load()
-g_tbhlp = CGraphic:New("ui/terran/button left pressed 104x28.png")
+g_tbhlp = CGraphic:New("ui/terran/agg/button_left_small_pressed.png")
 g_tbhlp:Load()
-g_tbhlg = CGraphic:New("ui/terran/button left disabled 104x28.png")
+g_tbhlg = CGraphic:New("ui/terran/agg/button_left_small_disabled.png")
 g_tbhlg:Load()
 
-g_zbhln = CGraphic:New("ui/zerg/button left 104x28.png")
+g_zbhln = CGraphic:New("ui/zerg/agg/button_left_small.png")
 g_zbhln:Load()
-g_zbhlp = CGraphic:New("ui/zerg/button left pressed 104x28.png")
+g_zbhlp = CGraphic:New("ui/zerg/agg/button_left_small_pressed.png")
 g_zbhlp:Load()
-g_zbhlg = CGraphic:New("ui/zerg/button left disabled 104x28.png")
+g_zbhlg = CGraphic:New("ui/zerg/agg/button_left_small_disabled.png")
 g_zbhlg:Load()
 
-g_pbhln = CGraphic:New("ui/protoss/button left 104x28.png")
+g_pbhln = CGraphic:New("ui/protoss/agg/button_left_small.png")
 g_pbhln:Load()
-g_pbhlp = CGraphic:New("ui/protoss/button left pressed 104x28.png")
+g_pbhlp = CGraphic:New("ui/protoss/agg/button_left_small_pressed.png")
 g_pbhlp:Load()
-g_pbhlg = CGraphic:New("ui/protoss/button left disabled 104x28.png")
+g_pbhlg = CGraphic:New("ui/protoss/agg/button_left_small_disabled.png")
 g_pbhlg:Load()
 
-
-g_tbhrn = CGraphic:New("ui/terran/button right 104x28.png")
+-- button right small
+g_tbhrn = CGraphic:New("ui/terran/agg/button_right_small.png")
 g_tbhrn:Load()
-g_tbhrp = CGraphic:New("ui/terran/button right pressed 104x28.png")
+g_tbhrp = CGraphic:New("ui/terran/agg/button_right_small_pressed.png")
 g_tbhrp:Load()
-g_tbhrg = CGraphic:New("ui/terran/button right disabled 104x28.png")
+g_tbhrg = CGraphic:New("ui/terran/agg/button_right_small_disabled.png")
 g_tbhrg:Load()
 
-g_zbhrn = CGraphic:New("ui/zerg/button right 104x28.png")
+g_zbhrn = CGraphic:New("ui/zerg/agg/button_right_small.png")
 g_zbhrn:Load()
-g_zbhrp = CGraphic:New("ui/zerg/button right pressed 104x28.png")
+g_zbhrp = CGraphic:New("ui/zerg/agg/button_right_small_pressed.png")
 g_zbhrp:Load()
-g_zbhrg = CGraphic:New("ui/zerg/button right disabled 104x28.png")
+g_zbhrg = CGraphic:New("ui/zerg/agg/button_right_small_disabled.png")
 g_zbhrg:Load()
 
-g_pbhrn = CGraphic:New("ui/protoss/button right 104x28.png")
+g_pbhrn = CGraphic:New("ui/protoss/agg/button_right_small.png")
 g_pbhrn:Load()
-g_pbhrp = CGraphic:New("ui/protoss/button right pressed 104x28.png")
+g_pbhrp = CGraphic:New("ui/protoss/agg/button_right_small_pressed.png")
 g_pbhrp:Load()
-g_pbhrg = CGraphic:New("ui/protoss/button right disabled 104x28.png")
+g_pbhrg = CGraphic:New("ui/protoss/agg/button_right_small_disabled.png")
 g_pbhrg:Load()
-
-
-
 
 function panel(n)
   return "ui/panels/" .. n .. ".png"
@@ -618,6 +616,14 @@ function RunMap(map, objective, fow, revealmap)
     if revealmap == true then
        RevealMap()
     end
+    
+    if (preferences.RapidStratagusIDE == true) then
+  Load("RapidStratagusIDE/RSI_Functions.lua")
+  --RSI_MapConfiguration()
+  --CreateUnit("unit-terran-command-center", 0, {0, 0})
+end
+
+    
     StartMap(map)
     if GameResult ~= GameRestart then
       loop = false
@@ -713,7 +719,7 @@ function RunInfoMenu()
   
   menu:addFullButton("~!Back", "b", offx + 640 - 224 - 16, offy + 360 + 36*2, function() menu:stop() end)
   
-  menu:addLabel(Name .. " V" .. Version .. "  " .. Homepage, offx + 320, offy + 226 + 18*0) 
+  menu:addLabel(stargus.Name .. " V" .. stargus.Version .. "  " .. stargus.Homepage, offx + 320, offy + 226 + 18*0) 
   menu:addLabel("Stratagus V" .. GetStratagusVersion() .. "  " .. GetStratagusHomepage(), offx + 320, offy + 226 + 18*1)
   menu:addLabel(Copyright, offx + 320, offy + 290 + 18*4)
   
@@ -811,11 +817,12 @@ end
 
 
 function BuildProgramStartMenu()
+  
   local menu = WarMenu()
   local offx = (Video.Width - 640) / 2
   local offy = (Video.Height - 480) / 2
 
-  menu:addLabel("~white~" .. Name .. " V" .. Version, Video.Width - 60, Video.Height - 18*1) 
+  menu:addLabel("~white~" .. stargus.Name .. " V" .. stargus.Version, Video.Width - 60, Video.Height - 18*1) 
   
   menu:addAnimatedButton(
     "videos/mainmenu/single.mng",
@@ -875,6 +882,9 @@ function BuildProgramStartMenu()
     
   -- menu:addTextButton("~light-green~R~white~eplay Game", "r", 100, Video.Height-80, function() RunReplayGameMenu(); menu:stop(1) end)
     
+  -- TODO: merge video options and all needed widgets from wargus
+  --menu:addTextButton("~light-green~V~white~ideo Options", "o", 100, Video.Height-80, function() BuildVideoOptionsMenu(); menu:stop(1) end)
+  
   menu:addTextButton("~light-green~O~white~ptions", "o", 100, Video.Height-60, function() RunOptionsMenu(); menu:stop(1) end)
   
   menu:addTextButton("~white~Show ~light-green~I~white~nfo", "i", 100, Video.Height-40, function() RunInfoMenu(); menu:stop(1) end)
@@ -919,5 +929,10 @@ if SetShader then
   SetShader("none")
 end
 
+if (preferences.RapidStratagusIDE == true) then
+  Load("RapidStratagusIDE/RSI_Functions.lua")
+  RSI_MapStarter()
+end
+  
 RunProgramStartMenu()
 

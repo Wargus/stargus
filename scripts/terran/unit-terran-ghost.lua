@@ -48,7 +48,6 @@ DefineAnimations("animations-terran-ghost", {
 
 DefineUnitType("unit-terran-ghost", {
   Animations = "animations-terran-ghost", Icon = "icon-terran-ghost",
-  Costs = {"time", 60, "minerals", 25, "gas", 75},
   Speed = 10,
   DrawLevel = 40,
   Armor = 2, BasicDamage = 6, PiercingDamage = 3, Missile = "missile-none",
@@ -57,12 +56,9 @@ DefineUnitType("unit-terran-ghost", {
   Points = 50,
   Demand = 1,
 --  Corpse = "unit-dead-body",
-  Type = "land",
   RightMouseAction = "attack",
   CanAttack = true,
   CanTargetLand = true,
-  LandUnit = true,
-  organic = true,
   SelectableByRectangle = true,
   Sounds = {
     "selected", "terran-ghost-selected",

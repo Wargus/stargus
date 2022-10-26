@@ -7,30 +7,35 @@
 #ifndef PORTRAIT_H
 #define PORTRAIT_H
 
-#include "DataHub.h"
+#include "ObjectAccess.h"
 
 namespace dat
 {
 
-class Portrait
+class Portrait : public ObjectAccess
 {
 public:
-  Portrait(DataHub &datahub,  uint16_t id);
+  Portrait(DataHub &datahub, unsigned int id);
   virtual ~Portrait();
 
   uint32_t video_idle();
+  TblEntry video_idle_tbl();
+
   uint32_t video_talking();
+  TblEntry video_talking_tbl();
 
-  TblEntry tbl_idle();
-  TblEntry tbl_talking();
+  uint8_t change_idle();
 
-  static std::string createID(const std::string &portrait);
+  uint8_t change_talking();
+
+  uint8_t unknown1_idle();
+
+  uint8_t unknown1_talking();
+
+  std::string getIDString(const std::string &portrait);
 
 private:
 
-
-  DataHub &mDatahub;
-  uint16_t mId;
 };
 
 } /* namespace dat */

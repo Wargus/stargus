@@ -56,7 +56,7 @@ seq:
     repeat: expr
     repeat-expr: num_lines
     enum: attack_type_enum
-    # TODO: work on this bitfield!
+    # TODO: work on this bitfield (DatEdit has better definition)
     # 200 Bytes | 1 Integer / Weapon
     #  1 = Attacks Air only
     #  2 = Attacks Ground only
