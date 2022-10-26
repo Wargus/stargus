@@ -23,13 +23,30 @@ install_data(
 )
 
 nlohmann_json_dep = dependency('nlohmann_json', fallback : ['nlohmann_json', 'nlohmann_json_dep'])
-
 casc_dep = cpp.find_library('casc', required : false)
-storm_dep = cpp.find_library('storm', required : false)
-png_dep = cpp.find_library('png', required : true)
-bzip2_dep = cpp.find_library('bz2', required : true)
-zlib_dep = dependency('zlib', required : false)
+storm_dep = dependency('storm', required : false)
+if not storm_dep.found()
+	cmake = import('cmake')
+	storm_proj = cmake.subproject('StormLib')
+	storm_dep = storm_proj.dependency('storm')
+endif
+zlib_dep = dependency('zlib', fallback: ['zlib', 'zlib_dep'])
+png_dep = dependency('png', fallback: ['libpng', 'png_dep'])
+bzip2_dep = dependency('bz2', required: false)
+if not bzip2_dep.found()
+	cmake = import('cmake')
+	bzip2_proj = cmake.subproject('bzip2')
+	bzip2_dep = bzip2_proj.dependency('bz2')
+endif
 imagemagickpp_dep = dependency('ImageMagick++', required : false)
+
+if build_machine.system() == 'windows'
+	cmake = import('cmake')
+	win_iconv_proj = cmake.subproject('win-iconv')
+	iconv_lib = win_iconv_proj.dependency('iconv-static')
+else
+	iconv_lib = dependency('iconv', required: true)
+endif
 
 log4cxx_dep = dependency('liblog4cxx', required : false)
 if log4cxx_dep.found()
