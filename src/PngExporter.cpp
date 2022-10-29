@@ -77,7 +77,7 @@ bool PngExporter::saveRGB(const std::string &name, PaletteImage &palImage, Palet
   {
     printf("%s:", name.c_str());
     perror("Can't open file");
-    fflush(stdout);
+    fflush(app_stdout);
     fflush(stderr);
     return false;
   }
@@ -168,7 +168,7 @@ bool PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Pale
   {
     printf("%s:", name.c_str());
     perror("Can't open file");
-    fflush(stdout);
+    fflush(app_stdout);
     fflush(stderr);
     return false;
   }
@@ -268,7 +268,7 @@ bool PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Pale
   {
     printf("%s:", name.c_str());
     perror("Can't open file");
-    fflush(stdout);
+    fflush(app_stdout);
     fflush(stderr);
     return false;
   }

@@ -539,13 +539,13 @@ int main(int argc, const char **argv)
     if (len != 0 && strcmp(version, VERSION) == 0)
     {
       printf("Note: Data is already extracted in Dir \"%s\" with this version of startool\n", preferences.getDestDir().c_str());
-      fflush(stdout);
+      fflush(app_stdout);
     }
   }
 
   printf("Extract from \"%s\" to \"%s\"\n", preferences.getArchiveDir().c_str(), preferences.getDestDir().c_str());
   printf("Please be patient, the data may take a couple of minutes to extract...\n\n");
-  fflush(stdout);
+  fflush(app_stdout);
 
   // set this to false for activating the SC remastered Casc code while development
   bool mpq = true;
