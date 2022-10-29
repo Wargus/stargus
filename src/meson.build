@@ -68,14 +68,14 @@ stargus_sources = files('stargus.cpp')
 
 inc = include_directories('.')
 
-libstarformat = library('starformat',
+libstarformat = static_library('starformat',
 	starformat_lib_sources,
 	startool_kaitai_sources,
 	startool_dat_sources,
 	startool_tileset_sources,
 	libgrp_sources,
 	include_directories : config_incdir,
-	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep],
+	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep, nlohmann_json_dep, iconv_lib],
 	install : true)
 
 libstarformat_dep = declare_dependency(include_directories : [config_incdir, inc],
@@ -84,7 +84,7 @@ libstarformat_dep = declare_dependency(include_directories : [config_incdir, inc
 executable('startool',
 	startool_sources,
 	include_directories : config_incdir,
-	dependencies : [log4cxx_dep, libstarformat_dep],
+	dependencies : [log4cxx_dep, libstarformat_dep, nlohmann_json_dep, png_dep],
 	install : true)
 
 executable('stargus',

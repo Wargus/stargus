@@ -138,13 +138,53 @@ function HandleCheats(str)
       AddMessage("NORMAL DEBUG SPEED")
 
     elseif (string.find(str, ".lua")) then
-      AddMessage("Reloading " .. str)
-      print("Force reloading by in-game console cmd " .. str)
-      Load("scripts/" .. str)
-      LoadDecorations();
-      InitUserInterface();
-      LoadUI(GetPlayerData(GetThisPlayer(), "RaceName"))
-
+       if (string.find(str, "watch ", 1, true) == 1) then
+          if GlobalWatches == nil then
+             GlobalWatches = {}
+             AddTrigger(
+                function()
+                   for fn,value in pairs(GlobalWatches) do
+                      local buf = LoadBuffer("scripts/" .. fn)
+                      if value[1] ~= buf then
+                         -- file contents changed, load it
+                         AddMessage(fn .. " contents changed, reloading")
+                         value[1] = buf
+                         Load("scripts/" .. fn, false)
+                         LoadDecorations();
+                         InitUserInterface();
+                         LoadUI(GetPlayerData(GetThisPlayer(), "RaceName"))
+                         return false
+                      end
+                   end
+                   return false
+                end,
+                function()
+                   return true
+                end
+             )
+          end
+          local filename = str:gsub("^watch ", "")
+          local buf = LoadBuffer(filename)
+          if buf then
+             AddMessage("Watching " .. filename)
+             GlobalWatches[filename] = {buf}
+          else
+             AddMessage("Cannot read " .. filename .. ", not watching")
+          end
+       elseif (string.find(str, "unwatch ", 1, true) == 1) then
+          if GlobalWatches then
+             local filename = str:gsub("^unwatch ", "")
+             AddMessage("Unwatching " .. filename)
+             GlobalWatches[filename] = nil
+          end
+       else
+          AddMessage("Reloading " .. str)
+          print("Force reloading by in-game console cmd " .. str)
+          Load("scripts/" .. str, false)
+          LoadDecorations();
+          InitUserInterface();
+          LoadUI(GetPlayerData(GetThisPlayer(), "RaceName"))
+       end
     elseif (string.find(str, "eval") == 1) then
       local code = str:gsub("^eval%s", "")
       AddMessage("Running: " .. code)

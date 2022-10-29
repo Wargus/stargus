@@ -9,4 +9,5 @@ executable('iscript',
 	
 executable('json_transition', 
 	json_transition_sources,
+	dependencies : [nlohmann_json_dep, png_dep],
 	install : false)

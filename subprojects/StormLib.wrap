@@ -1,0 +1,5 @@
+[wrap-file]
+directory = StormLib-9.24
+source_url = https://github.com/ladislav-zezula/StormLib/archive/refs/tags/v9.24.tar.gz
+source_filename = StormLib-9.24.tar.gz
+source_hash = 33e43788f53a9f36ff107a501caaa744fd239f38bb5c6d6af2c845b87c8a2ee1
