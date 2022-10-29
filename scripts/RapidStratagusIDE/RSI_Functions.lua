@@ -13,10 +13,10 @@ function RSI_MapConfiguration()
   
   Load("rsi_testscenario/rsi_configuration.lua")
   
-  if (_G["rsi_tc_run"] ~= nil) then
+  if (_G["RSI_tc_run"] ~= nil) then
     RSI_tc_run(initPos)
   else
-    print("RapidStratagusIDE->rsi_tc_run() not available") 
+    print("RapidStratagusIDE->RSI_tc_run() not available") 
   end
 
   -- on screen
@@ -24,10 +24,3 @@ function RSI_MapConfiguration()
   RevealMap("explored")
 end
 
-function RSI_CreateUnitNum(unit, num)
-  if not num then num = 10 end
-  
-  for i=1,num do 
-    CreateUnit(unit, 0, {10, 10})
-  end    
-end

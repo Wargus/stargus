@@ -22,7 +22,7 @@ DefineAnimations("animations-protoss-dark-templar", {
     "frame 68", "sound protoss-zealot-hit", "wait 1", "frame 51", "wait 1", "frame 34", "sound protoss-zealot-hit",
     "unbreakable end", "wait 10", "frame 17",
   },
---  EndAttack = {"frame 17", "wait 1", "frame 0", "wait 1", --[[goto 70FD]]},
+--  EndAttack = {"frame 17", "waait 1", "frame 0", "wait 1", --[[goto 70FD]]},
   Death = {
     "unbreakable begin",
     "sound protoss-zealot-death", "exact-frame 221", "wait 2",
