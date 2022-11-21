@@ -15,6 +15,7 @@
 #include <string.h>
 #include <fstream>
 #include <zlib.h>
+#include <optional>
 
 using namespace std;
 
@@ -131,5 +132,15 @@ bool Breeze::extractMemory(const std::string &archivedFile, unsigned char **szEn
   *szEntryBufferPrt = szEntryBuffer;
 
   return result;
+}
+
+std::shared_ptr<std::istream> Breeze::extractStream(const std::string &archivedFile)
+{
+  string archivedFilePath = mArchiveName + "/" + archivedFile;
+  replaceString("\\", "/", archivedFilePath);
+
+  auto stream = std::make_shared<std::ifstream>(archivedFilePath);
+
+  return std::shared_ptr<std::ifstream>(*stream ? std::move(stream) : nullptr);
 }
 

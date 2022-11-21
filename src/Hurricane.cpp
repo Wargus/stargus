@@ -9,6 +9,8 @@
 
 // Sytsem
 #include <string>
+#include <sstream>
+#include <iostream>
 
 using namespace std;
 
@@ -22,8 +24,7 @@ Hurricane::~Hurricane()
 
 }
 
-std::shared_ptr<DataChunk> Hurricane::extractDataChunk(
-  const std::string &archivedFile)
+std::shared_ptr<DataChunk> Hurricane::extractDataChunk(const std::string &archivedFile)
 {
   size_t bufferLen = 0;
   unsigned char *szEntryBufferPrt = nullptr;
@@ -33,6 +34,23 @@ std::shared_ptr<DataChunk> Hurricane::extractDataChunk(
     shared_ptr<DataChunk> data = make_shared<DataChunk>(&szEntryBufferPrt,
                                  bufferLen);
     return data;
+  }
+
+  return nullptr;
+}
+
+std::shared_ptr<std::istream> Hurricane::extractStream(const std::string &archivedFile)
+{
+  size_t bufferLen = 0;
+  unsigned char *szEntryBufferPrt = nullptr;
+
+  if (extractMemory(archivedFile, &szEntryBufferPrt, &bufferLen))
+  {
+    shared_ptr<stringstream> sstream = make_shared<stringstream>();
+
+    sstream->write(reinterpret_cast<char*>(szEntryBufferPrt), bufferLen);
+
+    return sstream;
   }
 
   return nullptr;

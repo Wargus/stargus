@@ -24,6 +24,7 @@
 #include "kaitai/orders_dat.h"
 #include "kaitai/techdata_dat.h"
 #include "kaitai/mapdata_dat.h"
+#include "kaitai/iscript_bin.h"
 
 // System
 #include <nlohmann/json.hpp>
@@ -83,6 +84,7 @@ public:
   std::shared_ptr<upgrades_dat_t> upgrades;
   std::shared_ptr<techdata_dat_t> techdata;
   std::shared_ptr<mapdata_dat_t> mapdata;
+  std::shared_ptr<iscript_bin_t> iscript;
 
   // kaitai parsed Tbl vectors
   std::vector<TblEntry> stat_txt_tbl_vec;
@@ -99,6 +101,32 @@ public:
   std::vector<TblEntry> mapdata_tbl_vec;
 
 private:
+  std::shared_ptr<kaitai::kstream> m_units_ks;
+  std::shared_ptr<kaitai::kstream> m_orders_ks;
+  std::shared_ptr<kaitai::kstream> m_weapons_ks;
+  std::shared_ptr<kaitai::kstream> m_flingy_ks;
+  std::shared_ptr<kaitai::kstream> m_sprites_ks;
+  std::shared_ptr<kaitai::kstream> m_images_ks;
+  std::shared_ptr<kaitai::kstream> m_sfxdata_ks;
+  std::shared_ptr<kaitai::kstream> m_portdata_ks;
+  std::shared_ptr<kaitai::kstream> m_upgrades_ks;
+  std::shared_ptr<kaitai::kstream> m_techdata_ks;
+  std::shared_ptr<kaitai::kstream> m_mapdata_ks;
+  std::shared_ptr<kaitai::kstream> m_iscript_ks;
+
+  std::shared_ptr<std::istream> m_units_stream;
+  std::shared_ptr<std::istream> m_orders_stream;
+  std::shared_ptr<std::istream> m_weapons_stream;
+  std::shared_ptr<std::istream> m_flingy_stream;
+  std::shared_ptr<std::istream> m_sprites_stream;
+  std::shared_ptr<std::istream> m_images_stream;
+  std::shared_ptr<std::istream> m_sfxdata_stream;
+  std::shared_ptr<std::istream> m_portdata_stream;
+  std::shared_ptr<std::istream> m_upgrades_stream;
+  std::shared_ptr<std::istream> m_techdata_stream;
+  std::shared_ptr<std::istream> m_mapdata_stream;
+  std::shared_ptr<std::istream> m_iscript_stream;
+
   // units.dat
   void init_units_dat();
 
@@ -147,6 +175,8 @@ private:
   // mapdata.tbl
   void init_mapdata_tbl();
 
+  // iscript.bin
+  void init_iscript_bin();
 };
 
 } /* namespace dat */

@@ -36,6 +36,10 @@ TilesetHub::~TilesetHub()
 
 void TilesetHub::init(const std::string &arcfile)
 {
+  /**
+   * TODO: don't use getKaitaiStream() any longer and better save stringstream and kaitai as member!
+   */
+
   std::shared_ptr<kaitai::kstream> cv5_ks;
   cv5_ks = getKaitaiStream(arcfile + ".cv5");
   if(cv5_ks)

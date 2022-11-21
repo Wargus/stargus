@@ -21,6 +21,10 @@ public:
   virtual ~KaitaiConverter();
 
 protected:
+  /**
+   * WARNING DEPRECATED!
+   * remove getKaitaiStream() complete and replace by logic in DataHub
+   */
   std::shared_ptr<kaitai::kstream> getKaitaiStream(const std::string &file);
 };
 

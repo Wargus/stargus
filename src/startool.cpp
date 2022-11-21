@@ -419,15 +419,20 @@ void testHook()
    font.convert("font16.fnt", "font16");*/
 
   shared_ptr<Storm> storm = make_shared<Storm>(
-                              "/home/andreas/BigSpace/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
-  //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
+                              "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
+  //shared_ptr<Breeze> breeze = make_shared<Breeze>("/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ");
   dat::DataHub datahub(storm);
-  //datahub.printCSV();
-
-  //dat::SfxConverter sfxConverter(storm, datahub);
-  //sfxConverter.convert();
 
   dat::Unit unit(datahub, 39, "test");
+
+  uint16_t id = datahub.iscript->entree_offsets()->at(0)->offset();
+  iscript_bin_t::scpe_type_t* scpe = datahub.iscript->scpe_offsets()->at(0);
+  iscript_bin_t::scpe_header_type_t* header = scpe->scpe_header();
+  std::vector<iscript_bin_t::scpe_content_type_t*>* scpe_content_vec = scpe->scpe_content();
+
+  iscript_bin_t::scpe_content_type_t* scpe_content = scpe_content_vec->at(0);
+
+  iscript_bin_t::opcode_type_t* opcode = scpe_content->scpe_opcode();
 
   unit.name_tbl();
 

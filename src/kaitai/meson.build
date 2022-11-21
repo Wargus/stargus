@@ -11,7 +11,8 @@ startool_kaitai_dat_sources = files(
 	'upgrades_dat.cpp',
 	'orders_dat.cpp',
 	'techdata_dat.cpp',
-	'mapdata_dat.cpp'
+	'mapdata_dat.cpp',
+	'iscript_bin.cpp'
 )
 
 startool_kaitai_tileset_sources = files(

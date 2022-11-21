@@ -1,6 +1,7 @@
 meta:
   id: iscript_bin
   endian: le
+#  ks-opaque-types: true
   
 seq:
   - id: entree_offsets
@@ -77,6 +78,15 @@ types:
       scpe_opcode:
         pos: scpe_opcode_offset
         type: opcode_type
+        
+#  scpe_content_custom_type:
+#    seq:
+#      - id: scpe_opcode_offset
+#        type: u2
+#    instances:
+#      scpe_opcode:
+#        pos: scpe_opcode_offset
+#        type: opcode_custom_type
 
   opcode_type:
     seq:
@@ -87,72 +97,72 @@ types:
         type:
           switch-on: code
           cases:
-            'opcode::playfram'         : u2
-            'opcode::playframtile'     : u2
-            'opcode::sethorpos'        : u1
-            'opcode::setvertpos'       : u1
+            'opcode::playfram'         : u2_type
+            'opcode::playframtile'     : u2_type
+            'opcode::sethorpos'        : u1_type
+            'opcode::setvertpos'       : u1_type
             'opcode::setpos'           : pos_type
-            'opcode::wait'             : u1
+            'opcode::wait'             : u1_type
             'opcode::waitrand'         : waitrand_type
-            'opcode::goto'             : u2 #INSTR_JMP
+            'opcode::goto'             : u2_type #INSTR_JMP
             'opcode::imgol'            : imgl_type
             'opcode::imgul'            : imgl_type
-            'opcode::imgolorig'        : u2
-            'opcode::switchul'         : u2
+            'opcode::imgolorig'        : u2_type
+            'opcode::switchul'         : u2_type
             'opcode::unknown_0c'       : empty_type
             'opcode::imgoluselo'       : imgl_type
             'opcode::imguluselo'       : imgl_type
             'opcode::sprol'            : sprl_type
             'opcode::highsprol'        : sprl_type
             'opcode::lowsprul'         : sprl_type
-            'opcode::uflunstable'      : u2
+            'opcode::uflunstable'      : u2_type
             'opcode::spruluselo'       : sprl_type
             'opcode::sprul'            : sprl_type
             'opcode::sproluselo'       : sprov_type
             'opcode::end'              : empty_type #INSTR_TERM
-            'opcode::setflipstate'     : u1
-            'opcode::playsnd'          : u2
+            'opcode::setflipstate'     : u1_type
+            'opcode::playsnd'          : u2_type
             'opcode::playsndrand'      : playsounds_type
             'opcode::playsndbtwn'      : playsndbtwn_type
             'opcode::domissiledmg'     : empty_type
             'opcode::attackmelee'      : playsounds_type
             'opcode::followmaingraphic': empty_type
             'opcode::randcondjmp'      : randcondjmp_type #INSTR_COND_JMP
-            'opcode::turnccwise'       : u1
-            'opcode::turncwise'        : u1
+            'opcode::turnccwise'       : u1_type
+            'opcode::turncwise'        : u1_type
             'opcode::turn1cwise'       : empty_type
-            'opcode::turnrand'         : u1
-            'opcode::setspawnframe'    : u1
-            'opcode::sigorder'         : u1
-            'opcode::attackwith'       : u1
+            'opcode::turnrand'         : u1_type
+            'opcode::setspawnframe'    : u1_type
+            'opcode::sigorder'         : u1_type
+            'opcode::attackwith'       : u1_type
             'opcode::attack'           : empty_type
             'opcode::castspell'        : empty_type
-            'opcode::useweapon'        : u1
-            'opcode::move'             : u1
+            'opcode::useweapon'        : u1_type
+            'opcode::move'             : u1_type
             'opcode::gotorepeatattk'   : empty_type
-            'opcode::engframe'         : u1
-            'opcode::engset'           : u1
+            'opcode::engframe'         : u1_type
+            'opcode::engset'           : u1_type
             'opcode::unknown_2d'       : empty_type
             'opcode::nobrkcodestart'   : empty_type
             'opcode::nobrkcodeend'     : empty_type
             'opcode::ignorerest'       : empty_type
-            'opcode::attkshiftproj'    : u1
+            'opcode::attkshiftproj'    : u1_type
             'opcode::tmprmgraphicstart': empty_type
             'opcode::tmprmgraphicend'  : empty_type
-            'opcode::setfldirect'      : u1
-            'opcode::call'             : u2 #INSTR_COND_JMP
+            'opcode::setfldirect'      : u1_type
+            'opcode::call'             : u2_type #INSTR_COND_JMP
             'opcode::return'           : empty_type #INSTR_TERM
-            'opcode::setflspeed'       : u2
-            'opcode::creategasoverlays': u1
-            'opcode::pwrupcondjmp'     : u2 #INSTR_COND_JMP
+            'opcode::setflspeed'       : u2_type
+            'opcode::creategasoverlays': u1_type
+            'opcode::pwrupcondjmp'     : u2_type #INSTR_COND_JMP
             'opcode::trgtrangecondjmp' : trgtrangecondjmp_type #INSTR_COND_JMP
             'opcode::trgtarccondjmp'   : trgcondjmp_type #INSTR_COND_JMP
             'opcode::curdirectcondjmp' : trgcondjmp_type #INSTR_COND_JMP
             'opcode::imgulnextid'      : pos_type
             'opcode::unknown_3e'       : empty_type
-            'opcode::liftoffcondjmp'   : u2 #INSTR_COND_JMP
-            'opcode::warpoverlay'      : u2
-            'opcode::orderdone'        : u1
+            'opcode::liftoffcondjmp'   : u2_type #INSTR_COND_JMP
+            'opcode::warpoverlay'      : u2_type
+            'opcode::orderdone'        : u1_type
             'opcode::grdsprol'         : sprl_type
             'opcode::unknown_43'       : empty_type
             'opcode::dogrddamage'      : empty_type
@@ -160,6 +170,16 @@ types:
         
   empty_type:
     seq: []
+        
+  u1_type:
+    seq:
+      - id: value
+        type: u1
+       
+  u2_type:
+    seq:
+      - id: value
+        type: u2
         
   pos_type:
     seq:

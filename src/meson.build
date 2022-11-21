@@ -3,6 +3,7 @@ subdir('kaitai')
 subdir('dat')
 subdir('tileset')
 subdir('libgrp')
+subdir('iscript')
 
 startool_sources = files(
 	'startool.cpp'

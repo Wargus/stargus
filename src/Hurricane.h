@@ -47,6 +47,8 @@ public:
 	 */
 	virtual std::shared_ptr<DataChunk> extractDataChunk(const std::string &archivedFile);
 
+	virtual std::shared_ptr<std::istream> extractStream(const std::string &archivedFile);
+
 	virtual const std::string &getArchiveName() const;
 
 protected:
