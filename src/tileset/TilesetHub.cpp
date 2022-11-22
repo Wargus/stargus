@@ -12,6 +12,7 @@
 #include "FileUtil.h"
 #include "luagen.h"
 #include "Preferences.h"
+#include "Hurricane.h"
 
 // system
 #include <iostream>
@@ -34,49 +35,28 @@ TilesetHub::~TilesetHub()
 
 }
 
+/*m_iscript_stream = mHurricane->extractStream(sc_iscript_bin);
+m_iscript_ks = make_shared<kaitai::kstream>(&*m_iscript_stream);
+
+iscript = make_shared<iscript_bin_t>(m_iscript_ks.get());
+*/
 void TilesetHub::init(const std::string &arcfile)
 {
-  /**
-   * TODO: don't use getKaitaiStream() any longer and better save stringstream and kaitai as member!
-   */
+  m_cv5_stream = mHurricane->extractStream(arcfile + ".cv5");
+  m_cv5_ks = make_shared<kaitai::kstream>(&*m_cv5_stream);
+  cv5 = make_shared<tileset_cv5_t>(m_cv5_ks.get());
 
-  std::shared_ptr<kaitai::kstream> cv5_ks;
-  cv5_ks = getKaitaiStream(arcfile + ".cv5");
-  if(cv5_ks)
-  {
-    std::shared_ptr<tileset_cv5_t> cv5_loc(new tileset_cv5_t(cv5_ks.get()));
-    cv5 = cv5_loc;
-  }
+  m_vx4_stream = mHurricane->extractStream(arcfile + ".vx4");
+  m_vx4_ks = make_shared<kaitai::kstream>(&*m_vx4_stream);
+  vx4 = make_shared<tileset_vx4_t>(m_vx4_ks.get());
 
-  std::shared_ptr<kaitai::kstream> vx4_ks;
-  vx4_ks = getKaitaiStream(arcfile + ".vx4");
-  if(vx4_ks)
-  {
-    std::shared_ptr<tileset_vx4_t> vx4_loc(new tileset_vx4_t(vx4_ks.get()));
-    vx4 = vx4_loc;
-  }
+  m_vf4_stream = mHurricane->extractStream(arcfile + ".vf4");
+  m_vf4_ks = make_shared<kaitai::kstream>(&*m_vf4_stream);
+  vf4 = make_shared<tileset_vf4_t>(m_vf4_ks.get());
 
-  std::shared_ptr<kaitai::kstream> vf4_ks;
-  vf4_ks = getKaitaiStream(arcfile + ".vf4");
-  if(vf4_ks)
-  {
-    std::shared_ptr<tileset_vf4_t> vf4_loc(new tileset_vf4_t(vf4_ks.get()));
-    vf4 = vf4_loc;
-  }
-
-  std::shared_ptr<kaitai::kstream> vr4_ks;
-  vr4_ks = getKaitaiStream(arcfile + ".vr4");
-  if(vr4_ks)
-  {
-  std::shared_ptr<tileset_vr4_t> vr4_loc(new tileset_vr4_t(vr4_ks.get()));
-  vr4 = vr4_loc;
-  }
-
-  //cout << "cv5_raw->elements()->size(): " << cv5_raw->elements()->size() << endl;
-  //cout << "vx4_raw->elements()->size(): " << vx4_raw->elements()->size() << endl;
-  //cout << "vf4_raw->elements()->size(): " << vf4_raw->elements()->size() << endl;
-  //cout << "vr4_raw->elements()->size(): " << vr4_raw->elements()->size() << endl;
-
+  m_vr4_stream = mHurricane->extractStream(arcfile + ".vr4");
+  m_vr4_ks = make_shared<kaitai::kstream>(&*m_vr4_stream);
+  vr4 = make_shared<tileset_vr4_t>(m_vr4_ks.get());
 }
 
 bool TilesetHub::convert(std::shared_ptr<AbstractPalette> palette, Storage storage)

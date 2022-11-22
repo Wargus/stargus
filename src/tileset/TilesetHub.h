@@ -53,6 +53,15 @@ public:
 private:
   void init(const std::string &arcfile);
 
+  std::shared_ptr<std::istream> m_cv5_stream;
+  std::shared_ptr<std::istream> m_vx4_stream;
+  std::shared_ptr<std::istream> m_vf4_stream;
+  std::shared_ptr<std::istream> m_vr4_stream;
+
+  std::shared_ptr<kaitai::kstream> m_cv5_ks;
+  std::shared_ptr<kaitai::kstream> m_vx4_ks;
+  std::shared_ptr<kaitai::kstream> m_vf4_ks;
+  std::shared_ptr<kaitai::kstream> m_vr4_ks;
 };
 
 } /* namespace tileset */

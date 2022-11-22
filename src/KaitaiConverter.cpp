@@ -25,7 +25,7 @@ KaitaiConverter::~KaitaiConverter()
 
 }
 
-std::shared_ptr<kaitai::kstream> KaitaiConverter::getKaitaiStream(const std::string &file)
+/*std::shared_ptr<kaitai::kstream> KaitaiConverter::getKaitaiStream(const std::string &file)
 {
   std::shared_ptr<std::istream> stream = mHurricane->extractStream(file);
 
@@ -37,4 +37,4 @@ std::shared_ptr<kaitai::kstream> KaitaiConverter::getKaitaiStream(const std::str
   std::shared_ptr<kaitai::kstream> ks = make_shared<kaitai::kstream>(s);
 
   return ks;
-}
+}*/
