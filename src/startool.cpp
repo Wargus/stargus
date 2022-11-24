@@ -69,6 +69,8 @@
 // system
 #include <nlohmann/json.hpp>
 #include <fstream>
+#include <unordered_set>
+#include <map>
 
 using json = nlohmann::json;
 
@@ -418,21 +420,42 @@ void testHook()
    Font font(breeze);
    font.convert("font16.fnt", "font16");*/
 
-  shared_ptr<Storm> storm = make_shared<Storm>(
-                              "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
+  shared_ptr<Storm> storm = make_shared<Storm>("/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
+  //shared_ptr<Storm> storm = make_shared<Storm>("/home/andreas/Games/DOS/Starcraft/Original_Backup/broodwar_install.exe_MPQ/files/broodat.mpq");
   //shared_ptr<Breeze> breeze = make_shared<Breeze>("/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ");
   dat::DataHub datahub(storm);
 
   dat::Unit unit(datahub, 39, "test");
 
+  std::map<uint16_t, uint16_t> imageEntreeMap;
+  for(unsigned int i = 0; i < datahub.iscript->entree_offsets()->size(); i++)
+  {
+    auto entree_offset = datahub.iscript->entree_offsets()->at(i);
+
+    uint16_t iscript_id = entree_offset->iscript_id();
+
+    imageEntreeMap[iscript_id] = i;
+  }
+
   uint16_t id = datahub.iscript->entree_offsets()->at(0)->offset();
-  iscript_bin_t::scpe_type_t* scpe = datahub.iscript->scpe_offsets()->at(0);
+  iscript_bin_t::scpe_type_t* scpe = datahub.iscript->scpe_offsets()->at(imageEntreeMap.at(78)); // marine
   iscript_bin_t::scpe_header_type_t* header = scpe->scpe_header();
   std::vector<iscript_bin_t::scpe_content_type_t*>* scpe_content_vec = scpe->scpe_content();
 
-  iscript_bin_t::scpe_content_type_t* scpe_content = scpe_content_vec->at(0);
+  unordered_set<uint16_t> scpe_offset_table;
+  for(auto scpe_content : *scpe_content_vec)
+  {
+    scpe_offset_table.insert(scpe_content->scpe_opcode_offset());
+  }
 
-  iscript_bin_t::opcode_type_t* opcode = scpe_content->scpe_opcode();
+  // idea: give the 'scpe_offset_table' to each opcode_list_type_t object as break condition
+  iscript_bin_t::scpe_content_type_t* scpe_content = scpe_content_vec->at(11);
+  opcode_list_type_t* opcode_list_type = scpe_content->scpe_opcode_list();
+
+  std::vector<kaitai::kstruct*>* opcode_list = opcode_list_type->read_list(scpe_offset_table);
+  cout << "opcode list size: " << opcode_list->size() << endl;
+
+  kaitai::kstruct* ks = opcode_list->at(8);
 
   unit.name_tbl();
 

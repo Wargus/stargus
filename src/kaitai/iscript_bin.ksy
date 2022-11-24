@@ -1,21 +1,34 @@
 meta:
   id: iscript_bin
   endian: le
-#  ks-opaque-types: true
+  ks-opaque-types: true
   
 seq:
-  - id: entree_offsets
-    type: entree_offset_type
-    repeat: expr
-    repeat-expr: 342
-    doc: |
-      tbd
-      
+  - id: first_word
+    type: u2
+  
 instances:
+  version_tag:
+    pos: 0x2
+    type: u4
+    doc: |
+      value is 0x0 in case of broodwar and any other value for plain old starcraft
+    
+  entree_table_pos:
+    value: 'version_tag == 0x0 ? first_word : 0x0'
+
+  entree_offsets:
+    type: entree_offset_type
+    pos: entree_table_pos
+    repeat: until
+    repeat-until: '(_.iscript_id == 0xFFFF) ? ( _.offset == 0x0) : false'
+    doc: |
+      read entree offsets until the magic stop sign '0xFFFF 0x0000' is found
+      
   scpe_offsets:
     type: scpe_type(_index)
     repeat: expr
-    repeat-expr: 342
+    repeat-expr: _root.entree_offsets.size
     doc: |
       tbd
 
@@ -75,18 +88,10 @@ types:
       - id: scpe_opcode_offset
         type: u2
     instances:
-      scpe_opcode:
+      scpe_opcode_list:
         pos: scpe_opcode_offset
-        type: opcode_type
-        
-#  scpe_content_custom_type:
-#    seq:
-#      - id: scpe_opcode_offset
-#        type: u2
-#    instances:
-#      scpe_opcode:
-#        pos: scpe_opcode_offset
-#        type: opcode_custom_type
+        type: opcode_list_type(_parent, _root) # custom ks-opaque-types for C++ generation
+        #type: opcode_type # for kaitai IDE development parse only one element
 
   opcode_type:
     seq:

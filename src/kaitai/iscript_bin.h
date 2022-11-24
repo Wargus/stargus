@@ -5,11 +5,13 @@
 
 #include "kaitai/kaitaistruct.h"
 #include <stdint.h>
+#include "opcode_list_type.h"
 #include <vector>
 
 #if KAITAI_STRUCT_VERSION < 9000L
 #error "Incompatible Kaitai Struct C++/STL API: version 0.9 or later is required"
 #endif
+class opcode_list_type_t;
 
 class iscript_bin_t : public kaitai::kstruct {
 
@@ -128,11 +130,11 @@ public:
         ~scpe_content_type_t();
 
     private:
-        bool f_scpe_opcode;
-        opcode_type_t* m_scpe_opcode;
+        bool f_scpe_opcode_list;
+        opcode_list_type_t* m_scpe_opcode_list;
 
     public:
-        opcode_type_t* scpe_opcode();
+        opcode_list_type_t* scpe_opcode_list();
 
     private:
         uint16_t m_scpe_opcode_offset;
@@ -149,7 +151,7 @@ public:
 
     public:
 
-        trgtrangecondjmp_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent = 0, iscript_bin_t* p__root = 0);
+        trgtrangecondjmp_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, iscript_bin_t* p__root = 0);
 
     private:
         void _read();
@@ -162,20 +164,20 @@ public:
         uint16_t m_distance;
         uint16_t m_labelname;
         iscript_bin_t* m__root;
-        iscript_bin_t::opcode_type_t* m__parent;
+        kaitai::kstruct* m__parent;
 
     public:
         uint16_t distance() const { return m_distance; }
         uint16_t labelname() const { return m_labelname; }
         iscript_bin_t* _root() const { return m__root; }
-        iscript_bin_t::opcode_type_t* _parent() const { return m__parent; }
+        kaitai::kstruct* _parent() const { return m__parent; }
     };
 
     class u1_type_t : public kaitai::kstruct {
 
     public:
 
-        u1_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent = 0, iscript_bin_t* p__root = 0);
+        u1_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, iscript_bin_t* p__root = 0);
 
     private:
         void _read();
@@ -187,19 +189,19 @@ public:
     private:
         uint8_t m_value;
         iscript_bin_t* m__root;
-        iscript_bin_t::opcode_type_t* m__parent;
+        kaitai::kstruct* m__parent;
 
     public:
         uint8_t value() const { return m_value; }
         iscript_bin_t* _root() const { return m__root; }
-        iscript_bin_t::opcode_type_t* _parent() const { return m__parent; }
+        kaitai::kstruct* _parent() const { return m__parent; }
     };
 
     class playsounds_type_t : public kaitai::kstruct {
 
     public:
 
-        playsounds_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent = 0, iscript_bin_t* p__root = 0);
+        playsounds_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, iscript_bin_t* p__root = 0);
 
     private:
         void _read();
@@ -212,20 +214,20 @@ public:
         uint8_t m_number_sounds;
         std::vector<uint16_t>* m_sound;
         iscript_bin_t* m__root;
-        iscript_bin_t::opcode_type_t* m__parent;
+        kaitai::kstruct* m__parent;
 
     public:
         uint8_t number_sounds() const { return m_number_sounds; }
         std::vector<uint16_t>* sound() const { return m_sound; }
         iscript_bin_t* _root() const { return m__root; }
-        iscript_bin_t::opcode_type_t* _parent() const { return m__parent; }
+        kaitai::kstruct* _parent() const { return m__parent; }
     };
 
     class randcondjmp_type_t : public kaitai::kstruct {
 
     public:
 
-        randcondjmp_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent = 0, iscript_bin_t* p__root = 0);
+        randcondjmp_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, iscript_bin_t* p__root = 0);
 
     private:
         void _read();
@@ -238,20 +240,20 @@ public:
         uint8_t m_randchance;
         uint16_t m_labelname;
         iscript_bin_t* m__root;
-        iscript_bin_t::opcode_type_t* m__parent;
+        kaitai::kstruct* m__parent;
 
     public:
         uint8_t randchance() const { return m_randchance; }
         uint16_t labelname() const { return m_labelname; }
         iscript_bin_t* _root() const { return m__root; }
-        iscript_bin_t::opcode_type_t* _parent() const { return m__parent; }
+        kaitai::kstruct* _parent() const { return m__parent; }
     };
 
     class empty_type_t : public kaitai::kstruct {
 
     public:
 
-        empty_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent = 0, iscript_bin_t* p__root = 0);
+        empty_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, iscript_bin_t* p__root = 0);
 
     private:
         void _read();
@@ -262,11 +264,11 @@ public:
 
     private:
         iscript_bin_t* m__root;
-        iscript_bin_t::opcode_type_t* m__parent;
+        kaitai::kstruct* m__parent;
 
     public:
         iscript_bin_t* _root() const { return m__root; }
-        iscript_bin_t::opcode_type_t* _parent() const { return m__parent; }
+        kaitai::kstruct* _parent() const { return m__parent; }
     };
 
     class pos_type_t : public kaitai::kstruct {
@@ -299,7 +301,7 @@ public:
 
     public:
 
-        sprl_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent = 0, iscript_bin_t* p__root = 0);
+        sprl_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, iscript_bin_t* p__root = 0);
 
     private:
         void _read();
@@ -312,20 +314,20 @@ public:
         uint16_t m_sprite;
         pos_type_t* m_pos;
         iscript_bin_t* m__root;
-        iscript_bin_t::opcode_type_t* m__parent;
+        kaitai::kstruct* m__parent;
 
     public:
         uint16_t sprite() const { return m_sprite; }
         pos_type_t* pos() const { return m_pos; }
         iscript_bin_t* _root() const { return m__root; }
-        iscript_bin_t::opcode_type_t* _parent() const { return m__parent; }
+        kaitai::kstruct* _parent() const { return m__parent; }
     };
 
     class opcode_type_t : public kaitai::kstruct {
 
     public:
 
-        opcode_type_t(kaitai::kstream* p__io, iscript_bin_t::scpe_content_type_t* p__parent = 0, iscript_bin_t* p__root = 0);
+        opcode_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, iscript_bin_t* p__root = 0);
 
     private:
         void _read();
@@ -338,20 +340,20 @@ public:
         opcode_t m_code;
         kaitai::kstruct* m_args;
         iscript_bin_t* m__root;
-        iscript_bin_t::scpe_content_type_t* m__parent;
+        kaitai::kstruct* m__parent;
 
     public:
         opcode_t code() const { return m_code; }
         kaitai::kstruct* args() const { return m_args; }
         iscript_bin_t* _root() const { return m__root; }
-        iscript_bin_t::scpe_content_type_t* _parent() const { return m__parent; }
+        kaitai::kstruct* _parent() const { return m__parent; }
     };
 
     class trgcondjmp_type_t : public kaitai::kstruct {
 
     public:
 
-        trgcondjmp_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent = 0, iscript_bin_t* p__root = 0);
+        trgcondjmp_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, iscript_bin_t* p__root = 0);
 
     private:
         void _read();
@@ -365,14 +367,14 @@ public:
         uint16_t m_angle2;
         uint16_t m_labelname;
         iscript_bin_t* m__root;
-        iscript_bin_t::opcode_type_t* m__parent;
+        kaitai::kstruct* m__parent;
 
     public:
         uint16_t angle1() const { return m_angle1; }
         uint16_t angle2() const { return m_angle2; }
         uint16_t labelname() const { return m_labelname; }
         iscript_bin_t* _root() const { return m__root; }
-        iscript_bin_t::opcode_type_t* _parent() const { return m__parent; }
+        kaitai::kstruct* _parent() const { return m__parent; }
     };
 
     class entree_offset_type_t : public kaitai::kstruct {
@@ -443,7 +445,7 @@ public:
 
     public:
 
-        playsndbtwn_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent = 0, iscript_bin_t* p__root = 0);
+        playsndbtwn_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, iscript_bin_t* p__root = 0);
 
     private:
         void _read();
@@ -456,20 +458,20 @@ public:
         uint16_t m_firstsound;
         uint16_t m_lastsound;
         iscript_bin_t* m__root;
-        iscript_bin_t::opcode_type_t* m__parent;
+        kaitai::kstruct* m__parent;
 
     public:
         uint16_t firstsound() const { return m_firstsound; }
         uint16_t lastsound() const { return m_lastsound; }
         iscript_bin_t* _root() const { return m__root; }
-        iscript_bin_t::opcode_type_t* _parent() const { return m__parent; }
+        kaitai::kstruct* _parent() const { return m__parent; }
     };
 
     class imgl_type_t : public kaitai::kstruct {
 
     public:
 
-        imgl_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent = 0, iscript_bin_t* p__root = 0);
+        imgl_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, iscript_bin_t* p__root = 0);
 
     private:
         void _read();
@@ -482,20 +484,20 @@ public:
         uint16_t m_image;
         pos_type_t* m_pos;
         iscript_bin_t* m__root;
-        iscript_bin_t::opcode_type_t* m__parent;
+        kaitai::kstruct* m__parent;
 
     public:
         uint16_t image() const { return m_image; }
         pos_type_t* pos() const { return m_pos; }
         iscript_bin_t* _root() const { return m__root; }
-        iscript_bin_t::opcode_type_t* _parent() const { return m__parent; }
+        kaitai::kstruct* _parent() const { return m__parent; }
     };
 
     class waitrand_type_t : public kaitai::kstruct {
 
     public:
 
-        waitrand_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent = 0, iscript_bin_t* p__root = 0);
+        waitrand_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, iscript_bin_t* p__root = 0);
 
     private:
         void _read();
@@ -508,20 +510,20 @@ public:
         uint8_t m_ticks1;
         uint8_t m_ticks2;
         iscript_bin_t* m__root;
-        iscript_bin_t::opcode_type_t* m__parent;
+        kaitai::kstruct* m__parent;
 
     public:
         uint8_t ticks1() const { return m_ticks1; }
         uint8_t ticks2() const { return m_ticks2; }
         iscript_bin_t* _root() const { return m__root; }
-        iscript_bin_t::opcode_type_t* _parent() const { return m__parent; }
+        kaitai::kstruct* _parent() const { return m__parent; }
     };
 
     class sprov_type_t : public kaitai::kstruct {
 
     public:
 
-        sprov_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent = 0, iscript_bin_t* p__root = 0);
+        sprov_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, iscript_bin_t* p__root = 0);
 
     private:
         void _read();
@@ -534,13 +536,13 @@ public:
         uint16_t m_sprite;
         uint8_t m_overlay;
         iscript_bin_t* m__root;
-        iscript_bin_t::opcode_type_t* m__parent;
+        kaitai::kstruct* m__parent;
 
     public:
         uint16_t sprite() const { return m_sprite; }
         uint8_t overlay() const { return m_overlay; }
         iscript_bin_t* _root() const { return m__root; }
-        iscript_bin_t::opcode_type_t* _parent() const { return m__parent; }
+        kaitai::kstruct* _parent() const { return m__parent; }
     };
 
     class scpe_header_type_t : public kaitai::kstruct {
@@ -579,7 +581,7 @@ public:
 
     public:
 
-        u2_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent = 0, iscript_bin_t* p__root = 0);
+        u2_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, iscript_bin_t* p__root = 0);
 
     private:
         void _read();
@@ -591,13 +593,42 @@ public:
     private:
         uint16_t m_value;
         iscript_bin_t* m__root;
-        iscript_bin_t::opcode_type_t* m__parent;
+        kaitai::kstruct* m__parent;
 
     public:
         uint16_t value() const { return m_value; }
         iscript_bin_t* _root() const { return m__root; }
-        iscript_bin_t::opcode_type_t* _parent() const { return m__parent; }
+        kaitai::kstruct* _parent() const { return m__parent; }
     };
+
+private:
+    bool f_version_tag;
+    uint32_t m_version_tag;
+
+public:
+
+    /**
+     * value is 0x0 in case of broodwar and any other value for plain old starcraft
+     */
+    uint32_t version_tag();
+
+private:
+    bool f_entree_table_pos;
+    uint16_t m_entree_table_pos;
+
+public:
+    uint16_t entree_table_pos();
+
+private:
+    bool f_entree_offsets;
+    std::vector<entree_offset_type_t*>* m_entree_offsets;
+
+public:
+
+    /**
+     * read entree offsets until the magic stop sign '0xFFFF 0x0000' is found
+     */
+    std::vector<entree_offset_type_t*>* entree_offsets();
 
 private:
     bool f_scpe_offsets;
@@ -611,16 +642,12 @@ public:
     std::vector<scpe_type_t*>* scpe_offsets();
 
 private:
-    std::vector<entree_offset_type_t*>* m_entree_offsets;
+    uint16_t m_first_word;
     iscript_bin_t* m__root;
     kaitai::kstruct* m__parent;
 
 public:
-
-    /**
-     * tbd
-     */
-    std::vector<entree_offset_type_t*>* entree_offsets() const { return m_entree_offsets; }
+    uint16_t first_word() const { return m_first_word; }
     iscript_bin_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };

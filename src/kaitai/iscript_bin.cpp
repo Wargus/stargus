@@ -7,6 +7,9 @@ iscript_bin_t::iscript_bin_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent,
     m__root = this;
     m_entree_offsets = 0;
     m_scpe_offsets = 0;
+    f_version_tag = false;
+    f_entree_table_pos = false;
+    f_entree_offsets = false;
     f_scpe_offsets = false;
 
     try {
@@ -18,11 +21,7 @@ iscript_bin_t::iscript_bin_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent,
 }
 
 void iscript_bin_t::_read() {
-    m_entree_offsets = new std::vector<entree_offset_type_t*>();
-    const int l_entree_offsets = 342;
-    for (int i = 0; i < l_entree_offsets; i++) {
-        m_entree_offsets->push_back(new entree_offset_type_t(m__io, this, m__root));
-    }
+    m_first_word = m__io->read_u2le();
 }
 
 iscript_bin_t::~iscript_bin_t() {
@@ -30,11 +29,15 @@ iscript_bin_t::~iscript_bin_t() {
 }
 
 void iscript_bin_t::_clean_up() {
-    if (m_entree_offsets) {
-        for (std::vector<entree_offset_type_t*>::iterator it = m_entree_offsets->begin(); it != m_entree_offsets->end(); ++it) {
-            delete *it;
+    if (f_version_tag) {
+    }
+    if (f_entree_offsets) {
+        if (m_entree_offsets) {
+            for (std::vector<entree_offset_type_t*>::iterator it = m_entree_offsets->begin(); it != m_entree_offsets->end(); ++it) {
+                delete *it;
+            }
+            delete m_entree_offsets; m_entree_offsets = 0;
         }
-        delete m_entree_offsets; m_entree_offsets = 0;
     }
     if (f_scpe_offsets) {
         if (m_scpe_offsets) {
@@ -49,8 +52,8 @@ void iscript_bin_t::_clean_up() {
 iscript_bin_t::scpe_content_type_t::scpe_content_type_t(kaitai::kstream* p__io, iscript_bin_t::scpe_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
-    m_scpe_opcode = 0;
-    f_scpe_opcode = false;
+    m_scpe_opcode_list = 0;
+    f_scpe_opcode_list = false;
 
     try {
         _read();
@@ -69,25 +72,25 @@ iscript_bin_t::scpe_content_type_t::~scpe_content_type_t() {
 }
 
 void iscript_bin_t::scpe_content_type_t::_clean_up() {
-    if (f_scpe_opcode) {
-        if (m_scpe_opcode) {
-            delete m_scpe_opcode; m_scpe_opcode = 0;
+    if (f_scpe_opcode_list) {
+        if (m_scpe_opcode_list) {
+            delete m_scpe_opcode_list; m_scpe_opcode_list = 0;
         }
     }
 }
 
-iscript_bin_t::opcode_type_t* iscript_bin_t::scpe_content_type_t::scpe_opcode() {
-    if (f_scpe_opcode)
-        return m_scpe_opcode;
+opcode_list_type_t* iscript_bin_t::scpe_content_type_t::scpe_opcode_list() {
+    if (f_scpe_opcode_list)
+        return m_scpe_opcode_list;
     std::streampos _pos = m__io->pos();
     m__io->seek(scpe_opcode_offset());
-    m_scpe_opcode = new opcode_type_t(m__io, this, m__root);
+    m_scpe_opcode_list = new opcode_list_type_t(_parent(), _root(), m__io);
     m__io->seek(_pos);
-    f_scpe_opcode = true;
-    return m_scpe_opcode;
+    f_scpe_opcode_list = true;
+    return m_scpe_opcode_list;
 }
 
-iscript_bin_t::trgtrangecondjmp_type_t::trgtrangecondjmp_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
+iscript_bin_t::trgtrangecondjmp_type_t::trgtrangecondjmp_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -111,7 +114,7 @@ iscript_bin_t::trgtrangecondjmp_type_t::~trgtrangecondjmp_type_t() {
 void iscript_bin_t::trgtrangecondjmp_type_t::_clean_up() {
 }
 
-iscript_bin_t::u1_type_t::u1_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
+iscript_bin_t::u1_type_t::u1_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -134,7 +137,7 @@ iscript_bin_t::u1_type_t::~u1_type_t() {
 void iscript_bin_t::u1_type_t::_clean_up() {
 }
 
-iscript_bin_t::playsounds_type_t::playsounds_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
+iscript_bin_t::playsounds_type_t::playsounds_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_sound = 0;
@@ -166,7 +169,7 @@ void iscript_bin_t::playsounds_type_t::_clean_up() {
     }
 }
 
-iscript_bin_t::randcondjmp_type_t::randcondjmp_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
+iscript_bin_t::randcondjmp_type_t::randcondjmp_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -190,7 +193,7 @@ iscript_bin_t::randcondjmp_type_t::~randcondjmp_type_t() {
 void iscript_bin_t::randcondjmp_type_t::_clean_up() {
 }
 
-iscript_bin_t::empty_type_t::empty_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
+iscript_bin_t::empty_type_t::empty_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -236,7 +239,7 @@ iscript_bin_t::pos_type_t::~pos_type_t() {
 void iscript_bin_t::pos_type_t::_clean_up() {
 }
 
-iscript_bin_t::sprl_type_t::sprl_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
+iscript_bin_t::sprl_type_t::sprl_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_pos = 0;
@@ -264,7 +267,7 @@ void iscript_bin_t::sprl_type_t::_clean_up() {
     }
 }
 
-iscript_bin_t::opcode_type_t::opcode_type_t(kaitai::kstream* p__io, iscript_bin_t::scpe_content_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
+iscript_bin_t::opcode_type_t::opcode_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -572,7 +575,7 @@ void iscript_bin_t::opcode_type_t::_clean_up() {
     }
 }
 
-iscript_bin_t::trgcondjmp_type_t::trgcondjmp_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
+iscript_bin_t::trgcondjmp_type_t::trgcondjmp_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -687,7 +690,7 @@ std::vector<iscript_bin_t::scpe_content_type_t*>* iscript_bin_t::scpe_type_t::sc
     return m_scpe_content;
 }
 
-iscript_bin_t::playsndbtwn_type_t::playsndbtwn_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
+iscript_bin_t::playsndbtwn_type_t::playsndbtwn_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -711,7 +714,7 @@ iscript_bin_t::playsndbtwn_type_t::~playsndbtwn_type_t() {
 void iscript_bin_t::playsndbtwn_type_t::_clean_up() {
 }
 
-iscript_bin_t::imgl_type_t::imgl_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
+iscript_bin_t::imgl_type_t::imgl_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_pos = 0;
@@ -739,7 +742,7 @@ void iscript_bin_t::imgl_type_t::_clean_up() {
     }
 }
 
-iscript_bin_t::waitrand_type_t::waitrand_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
+iscript_bin_t::waitrand_type_t::waitrand_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -763,7 +766,7 @@ iscript_bin_t::waitrand_type_t::~waitrand_type_t() {
 void iscript_bin_t::waitrand_type_t::_clean_up() {
 }
 
-iscript_bin_t::sprov_type_t::sprov_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
+iscript_bin_t::sprov_type_t::sprov_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -814,7 +817,7 @@ iscript_bin_t::scpe_header_type_t::~scpe_header_type_t() {
 void iscript_bin_t::scpe_header_type_t::_clean_up() {
 }
 
-iscript_bin_t::u2_type_t::u2_type_t(kaitai::kstream* p__io, iscript_bin_t::opcode_type_t* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
+iscript_bin_t::u2_type_t::u2_type_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, iscript_bin_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -837,11 +840,50 @@ iscript_bin_t::u2_type_t::~u2_type_t() {
 void iscript_bin_t::u2_type_t::_clean_up() {
 }
 
+uint32_t iscript_bin_t::version_tag() {
+    if (f_version_tag)
+        return m_version_tag;
+    std::streampos _pos = m__io->pos();
+    m__io->seek(2);
+    m_version_tag = m__io->read_u4le();
+    m__io->seek(_pos);
+    f_version_tag = true;
+    return m_version_tag;
+}
+
+uint16_t iscript_bin_t::entree_table_pos() {
+    if (f_entree_table_pos)
+        return m_entree_table_pos;
+    m_entree_table_pos = ((version_tag() == 0) ? (first_word()) : (0));
+    f_entree_table_pos = true;
+    return m_entree_table_pos;
+}
+
+std::vector<iscript_bin_t::entree_offset_type_t*>* iscript_bin_t::entree_offsets() {
+    if (f_entree_offsets)
+        return m_entree_offsets;
+    std::streampos _pos = m__io->pos();
+    m__io->seek(entree_table_pos());
+    m_entree_offsets = new std::vector<entree_offset_type_t*>();
+    {
+        int i = 0;
+        entree_offset_type_t* _;
+        do {
+            _ = new entree_offset_type_t(m__io, this, m__root);
+            m_entree_offsets->push_back(_);
+            i++;
+        } while (!(((_->iscript_id() == 65535) ? (_->offset() == 0) : (false))));
+    }
+    m__io->seek(_pos);
+    f_entree_offsets = true;
+    return m_entree_offsets;
+}
+
 std::vector<iscript_bin_t::scpe_type_t*>* iscript_bin_t::scpe_offsets() {
     if (f_scpe_offsets)
         return m_scpe_offsets;
     m_scpe_offsets = new std::vector<scpe_type_t*>();
-    const int l_scpe_offsets = 342;
+    const int l_scpe_offsets = _root()->entree_offsets()->size();
     for (int i = 0; i < l_scpe_offsets; i++) {
         m_scpe_offsets->push_back(new scpe_type_t(i, m__io, this, m__root));
     }
