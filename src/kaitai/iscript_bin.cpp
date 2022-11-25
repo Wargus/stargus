@@ -6,11 +6,11 @@ iscript_bin_t::iscript_bin_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent,
     m__parent = p__parent;
     m__root = this;
     m_entree_offsets = 0;
-    m_scpe_offsets = 0;
+    m_scpe = 0;
     f_version_tag = false;
     f_entree_table_pos = false;
     f_entree_offsets = false;
-    f_scpe_offsets = false;
+    f_scpe = false;
 
     try {
         _read();
@@ -39,12 +39,12 @@ void iscript_bin_t::_clean_up() {
             delete m_entree_offsets; m_entree_offsets = 0;
         }
     }
-    if (f_scpe_offsets) {
-        if (m_scpe_offsets) {
-            for (std::vector<scpe_type_t*>::iterator it = m_scpe_offsets->begin(); it != m_scpe_offsets->end(); ++it) {
+    if (f_scpe) {
+        if (m_scpe) {
+            for (std::vector<scpe_type_t*>::iterator it = m_scpe->begin(); it != m_scpe->end(); ++it) {
                 delete *it;
             }
-            delete m_scpe_offsets; m_scpe_offsets = 0;
+            delete m_scpe; m_scpe = 0;
         }
     }
 }
@@ -805,9 +805,7 @@ iscript_bin_t::scpe_header_type_t::scpe_header_type_t(kaitai::kstream* p__io, is
 void iscript_bin_t::scpe_header_type_t::_read() {
     m_scpe_magic = m__io->read_u4le();
     m_scpe_content_type = m__io->read_u1();
-    m_padding1 = m__io->read_u1();
-    m_padding2 = m__io->read_u1();
-    m_padding3 = m__io->read_u1();
+    m_padding = m__io->read_bytes(3);
 }
 
 iscript_bin_t::scpe_header_type_t::~scpe_header_type_t() {
@@ -879,14 +877,14 @@ std::vector<iscript_bin_t::entree_offset_type_t*>* iscript_bin_t::entree_offsets
     return m_entree_offsets;
 }
 
-std::vector<iscript_bin_t::scpe_type_t*>* iscript_bin_t::scpe_offsets() {
-    if (f_scpe_offsets)
-        return m_scpe_offsets;
-    m_scpe_offsets = new std::vector<scpe_type_t*>();
-    const int l_scpe_offsets = _root()->entree_offsets()->size();
-    for (int i = 0; i < l_scpe_offsets; i++) {
-        m_scpe_offsets->push_back(new scpe_type_t(i, m__io, this, m__root));
+std::vector<iscript_bin_t::scpe_type_t*>* iscript_bin_t::scpe() {
+    if (f_scpe)
+        return m_scpe;
+    m_scpe = new std::vector<scpe_type_t*>();
+    const int l_scpe = _root()->entree_offsets()->size();
+    for (int i = 0; i < l_scpe; i++) {
+        m_scpe->push_back(new scpe_type_t(i, m__io, this, m__root));
     }
-    f_scpe_offsets = true;
-    return m_scpe_offsets;
+    f_scpe = true;
+    return m_scpe;
 }

@@ -72,6 +72,8 @@ public:
   DataHub(std::shared_ptr<Hurricane> hurricane);
   virtual ~DataHub();
 
+  uint16_t getIScriptImage(uint16_t index);
+
   // Kaitai parsed objects
   std::shared_ptr<units_dat_t> units;
   std::shared_ptr<orders_dat_t> orders;
@@ -177,6 +179,8 @@ private:
   std::shared_ptr<kaitai::kstream> m_techdata_ks;
   std::shared_ptr<kaitai::kstream> m_mapdata_ks;
   std::shared_ptr<kaitai::kstream> m_iscript_ks;
+
+  std::map<uint16_t, uint16_t> m_iscriptImageEntreeMap;
 };
 
 } /* namespace dat */

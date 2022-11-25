@@ -59,11 +59,8 @@ void opcode_list_type_t::_read()
     iscript_bin_t::opcode_type_t *opcode = new iscript_bin_t::opcode_type_t(m__io, m__parent, m__root);
     m_opcode_list->push_back(opcode);
 
-    cout << "opcode: " << opcode << endl;
-
-    scpe_opcode_offset =  m__io->pos();
-    cout << "scpe_opcode_offset: " <<  scpe_opcode_offset << endl;
-
+    // set next offset position
+    scpe_opcode_offset = m__io->pos();
   }
   while(m_scpe_offset_table.find(scpe_opcode_offset) == m_scpe_offset_table.end());
 }

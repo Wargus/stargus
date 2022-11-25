@@ -425,41 +425,10 @@ void testHook()
   //shared_ptr<Breeze> breeze = make_shared<Breeze>("/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ");
   dat::DataHub datahub(storm);
 
-  dat::Unit unit(datahub, 39, "test");
+  dat::Unit unit(datahub, 0, "test");
+  cout << "unit: " << unit.name_tbl().name1() << endl;
 
-  std::map<uint16_t, uint16_t> imageEntreeMap;
-  for(unsigned int i = 0; i < datahub.iscript->entree_offsets()->size(); i++)
-  {
-    auto entree_offset = datahub.iscript->entree_offsets()->at(i);
-
-    uint16_t iscript_id = entree_offset->iscript_id();
-
-    imageEntreeMap[iscript_id] = i;
-  }
-
-  cout << "marine: " << imageEntreeMap.at(78) << endl;
-
-  uint16_t id = datahub.iscript->entree_offsets()->at(0)->offset();
-  iscript_bin_t::scpe_type_t* scpe = datahub.iscript->scpe_offsets()->at(imageEntreeMap.at(78)); // marine
-  iscript_bin_t::scpe_header_type_t* header = scpe->scpe_header();
-  std::vector<iscript_bin_t::scpe_content_type_t*>* scpe_content_vec = scpe->scpe_content();
-
-  unordered_set<uint16_t> scpe_offset_table;
-  for(auto scpe_content : *scpe_content_vec)
-  {
-    scpe_offset_table.insert(scpe_content->scpe_opcode_offset());
-  }
-
-  // idea: give the 'scpe_offset_table' to each opcode_list_type_t object as break condition
-  iscript_bin_t::scpe_content_type_t* scpe_content = scpe_content_vec->at(11);
-  opcode_list_type_t* opcode_list_type = scpe_content->scpe_opcode_list();
-
-  std::vector<kaitai::kstruct*>* opcode_list = opcode_list_type->read_list(scpe_offset_table);
-  cout << "opcode list size: " << opcode_list->size() << endl;
-
-  kaitai::kstruct* ks = opcode_list->at(8);
-
-  unit.name_tbl();
+  unit.flingy_obj().sprite_obj().image_obj().iscript_id_obj().printAnimScript(5);
 
   dat::Sfx sfx = unit.ready_sound_obj();
   sfx.sound_file_tbl();

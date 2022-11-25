@@ -25,7 +25,7 @@ instances:
     doc: |
       read entree offsets until the magic stop sign '0xFFFF 0x0000' is found
       
-  scpe_offsets:
+  scpe:
     type: scpe_type(_index)
     repeat: expr
     repeat-expr: _root.entree_offsets.size
@@ -76,12 +76,8 @@ types:
         type: u4
       - id: scpe_content_type
         type: u1
-      - id: padding1
-        type: u1
-      - id: padding2
-        type: u1
-      - id: padding3
-        type: u1
+      - id: padding
+        size: 3
         
   scpe_content_type:
     seq:
@@ -331,3 +327,4 @@ enums:
     0x42: grdsprol           # <sprite#> <x> <y>: # spawns a sprite one animation level above the current image overlay at a specific offset position, but only if the current sprite is over ground-passable terrain.
     0x43: unknown_43         # no parameters: # unknown.
     0x44: dogrddamage        # no parameters: # applies damage like domissiledmg when on ground-unit-passable terrain.
+    

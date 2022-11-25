@@ -561,18 +561,14 @@ public:
     private:
         uint32_t m_scpe_magic;
         uint8_t m_scpe_content_type;
-        uint8_t m_padding1;
-        uint8_t m_padding2;
-        uint8_t m_padding3;
+        std::string m_padding;
         iscript_bin_t* m__root;
         iscript_bin_t::scpe_type_t* m__parent;
 
     public:
         uint32_t scpe_magic() const { return m_scpe_magic; }
         uint8_t scpe_content_type() const { return m_scpe_content_type; }
-        uint8_t padding1() const { return m_padding1; }
-        uint8_t padding2() const { return m_padding2; }
-        uint8_t padding3() const { return m_padding3; }
+        std::string padding() const { return m_padding; }
         iscript_bin_t* _root() const { return m__root; }
         iscript_bin_t::scpe_type_t* _parent() const { return m__parent; }
     };
@@ -631,15 +627,15 @@ public:
     std::vector<entree_offset_type_t*>* entree_offsets();
 
 private:
-    bool f_scpe_offsets;
-    std::vector<scpe_type_t*>* m_scpe_offsets;
+    bool f_scpe;
+    std::vector<scpe_type_t*>* m_scpe;
 
 public:
 
     /**
      * tbd
      */
-    std::vector<scpe_type_t*>* scpe_offsets();
+    std::vector<scpe_type_t*>* scpe();
 
 private:
     uint16_t m_first_word;

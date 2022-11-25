@@ -274,6 +274,21 @@ void DataHub::init_iscript_bin()
   m_iscript_ks = make_shared<kaitai::kstream>(&*m_iscript_stream);
 
   iscript = make_shared<iscript_bin_t>(m_iscript_ks.get());
+
+  /* This code creates a map to access the iscripts by image ID */
+  for(unsigned int i = 0; i < iscript->entree_offsets()->size(); i++)
+  {
+    auto entree_offset = iscript->entree_offsets()->at(i);
+
+    uint16_t iscript_id = entree_offset->iscript_id();
+
+    m_iscriptImageEntreeMap[iscript_id] = i;
+  }
+}
+
+uint16_t DataHub::getIScriptImage(uint16_t index)
+{
+  return m_iscriptImageEntreeMap.at(index);
 }
 
 } /* namespace dat */
