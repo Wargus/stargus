@@ -81,6 +81,12 @@ uint32_t Image::iscript_id()
   return mDatahub.images->iscript_id()->at(mId);
 }
 
+IScript Image::iscript_id_obj()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return IScript(mDatahub, iscript_id());
+}
+
 uint32_t Image::shield_overlay()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");

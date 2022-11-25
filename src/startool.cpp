@@ -437,6 +437,8 @@ void testHook()
     imageEntreeMap[iscript_id] = i;
   }
 
+  cout << "marine: " << imageEntreeMap.at(78) << endl;
+
   uint16_t id = datahub.iscript->entree_offsets()->at(0)->offset();
   iscript_bin_t::scpe_type_t* scpe = datahub.iscript->scpe_offsets()->at(imageEntreeMap.at(78)); // marine
   iscript_bin_t::scpe_header_type_t* header = scpe->scpe_header();
