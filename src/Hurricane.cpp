@@ -48,7 +48,11 @@ std::shared_ptr<std::istream> Hurricane::extractStream(const std::string &archiv
   {
     shared_ptr<stringstream> sstream = make_shared<stringstream>();
 
+    // write the memory into the stream
     sstream->write(reinterpret_cast<char*>(szEntryBufferPrt), bufferLen);
+
+    // and then free the memory afterwards
+    free(szEntryBufferPrt);
 
     return sstream;
   }
