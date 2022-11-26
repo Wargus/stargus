@@ -72,7 +72,7 @@ iscript_bin_t::scpe_content_type_t::~scpe_content_type_t() {
 }
 
 void iscript_bin_t::scpe_content_type_t::_clean_up() {
-    if (f_scpe_opcode_list) {
+    if (f_scpe_opcode_list && !n_scpe_opcode_list) {
         if (m_scpe_opcode_list) {
             delete m_scpe_opcode_list; m_scpe_opcode_list = 0;
         }
@@ -82,11 +82,15 @@ void iscript_bin_t::scpe_content_type_t::_clean_up() {
 opcode_list_type_t* iscript_bin_t::scpe_content_type_t::scpe_opcode_list() {
     if (f_scpe_opcode_list)
         return m_scpe_opcode_list;
-    std::streampos _pos = m__io->pos();
-    m__io->seek(scpe_opcode_offset());
-    m_scpe_opcode_list = new opcode_list_type_t(_parent(), _root(), m__io);
-    m__io->seek(_pos);
-    f_scpe_opcode_list = true;
+    n_scpe_opcode_list = true;
+    if (scpe_opcode_offset() != 0) {
+        n_scpe_opcode_list = false;
+        std::streampos _pos = m__io->pos();
+        m__io->seek(scpe_opcode_offset());
+        m_scpe_opcode_list = new opcode_list_type_t(_parent(), _root(), m__io);
+        m__io->seek(_pos);
+        f_scpe_opcode_list = true;
+    }
     return m_scpe_opcode_list;
 }
 
@@ -631,6 +635,7 @@ iscript_bin_t::scpe_type_t::scpe_type_t(uint16_t p_i, kaitai::kstream* p__io, is
     m_scpe_header = 0;
     m_scpe_content = 0;
     f_scpe_header = false;
+    f_num_scpe_content = false;
     f_scpe_content = false;
 
     try {
@@ -675,13 +680,21 @@ iscript_bin_t::scpe_header_type_t* iscript_bin_t::scpe_type_t::scpe_header() {
     return m_scpe_header;
 }
 
+int8_t iscript_bin_t::scpe_type_t::num_scpe_content() {
+    if (f_num_scpe_content)
+        return m_num_scpe_content;
+    m_num_scpe_content = ((scpe_header()->scpe_content_type() == 0) ? (2) : (((scpe_header()->scpe_content_type() == 1) ? (2) : (((scpe_header()->scpe_content_type() == 2) ? (4) : (((scpe_header()->scpe_content_type() == 12) ? (14) : (((scpe_header()->scpe_content_type() == 13) ? (14) : (((scpe_header()->scpe_content_type() == 14) ? (15) : (((scpe_header()->scpe_content_type() == 15) ? (15) : (((scpe_header()->scpe_content_type() == 20) ? (21) : (((scpe_header()->scpe_content_type() == 21) ? (21) : (((scpe_header()->scpe_content_type() == 23) ? (23) : (((scpe_header()->scpe_content_type() == 24) ? (25) : (((scpe_header()->scpe_content_type() == 26) ? (27) : (((scpe_header()->scpe_content_type() == 27) ? (27) : (((scpe_header()->scpe_content_type() == 28) ? (27) : (((scpe_header()->scpe_content_type() == 29) ? (27) : (0))))))))))))))))))))))))))))));
+    f_num_scpe_content = true;
+    return m_num_scpe_content;
+}
+
 std::vector<iscript_bin_t::scpe_content_type_t*>* iscript_bin_t::scpe_type_t::scpe_content() {
     if (f_scpe_content)
         return m_scpe_content;
     std::streampos _pos = m__io->pos();
     m__io->seek((_parent()->entree_offsets()->at(i())->offset() + 8));
     m_scpe_content = new std::vector<scpe_content_type_t*>();
-    const int l_scpe_content = ((scpe_header()->scpe_content_type() == 0) ? (2) : (((scpe_header()->scpe_content_type() == 1) ? (2) : (((scpe_header()->scpe_content_type() == 2) ? (4) : (((scpe_header()->scpe_content_type() == 12) ? (14) : (((scpe_header()->scpe_content_type() == 13) ? (14) : (((scpe_header()->scpe_content_type() == 14) ? (15) : (((scpe_header()->scpe_content_type() == 15) ? (15) : (((scpe_header()->scpe_content_type() == 20) ? (21) : (((scpe_header()->scpe_content_type() == 21) ? (21) : (((scpe_header()->scpe_content_type() == 23) ? (23) : (((scpe_header()->scpe_content_type() == 24) ? (25) : (((scpe_header()->scpe_content_type() == 26) ? (27) : (((scpe_header()->scpe_content_type() == 27) ? (27) : (((scpe_header()->scpe_content_type() == 28) ? (27) : (((scpe_header()->scpe_content_type() == 29) ? (27) : (0))))))))))))))))))))))))))))));
+    const int l_scpe_content = num_scpe_content();
     for (int i = 0; i < l_scpe_content; i++) {
         m_scpe_content->push_back(new scpe_content_type_t(m__io, this, m__root));
     }

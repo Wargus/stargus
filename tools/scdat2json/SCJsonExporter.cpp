@@ -324,7 +324,7 @@ json SCJsonExporter::export_images_dat()
 
   j["remapping"] = json(*images->remapping());
 
-  j["iscript_id"] = json(*images->iscript_id());
+  j["iscript"] = json(*images->iscript());
 
   j["shield_overlay"] = json(*images->shield_overlay());
 

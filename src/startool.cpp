@@ -69,7 +69,6 @@
 // system
 #include <nlohmann/json.hpp>
 #include <fstream>
-#include <unordered_set>
 #include <map>
 
 using json = nlohmann::json;
@@ -427,8 +426,27 @@ void testHook()
 
   dat::Unit unit(datahub, 0, "test");
   cout << "unit: " << unit.name_tbl().name1() << endl;
+/*
+  dat::IScript is = unit.flingy_obj().sprite_obj().image_obj().iscript_obj();
 
-  unit.flingy_obj().sprite_obj().image_obj().iscript_id_obj().printAnimScript(5);
+  int animation_count = is.getAnimationCount();
+
+  cout << "animation_count: " << to_string(animation_count) << endl;
+
+  for(int i = 0; i < animation_count; i++)
+  //int i = 4;
+  {
+    cout << "animation: " << i << endl;
+    std::vector<iscript_bin_t::opcode_type_t*> opcode_vec =
+        unit.flingy_obj().sprite_obj().image_obj().iscript_obj().getAnimationScript(i);
+
+    for(auto opcode : opcode_vec)
+    {
+      cout << "code: " << hex << opcode->code() << endl;
+    }
+  }
+
+*/
 
   dat::Sfx sfx = unit.ready_sound_obj();
   sfx.sound_file_tbl();

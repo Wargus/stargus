@@ -132,6 +132,12 @@ public:
     private:
         bool f_scpe_opcode_list;
         opcode_list_type_t* m_scpe_opcode_list;
+        bool n_scpe_opcode_list;
+
+    public:
+        bool _is_null_scpe_opcode_list() { scpe_opcode_list(); return n_scpe_opcode_list; };
+
+    private:
 
     public:
         opcode_list_type_t* scpe_opcode_list();
@@ -422,6 +428,13 @@ public:
 
     public:
         scpe_header_type_t* scpe_header();
+
+    private:
+        bool f_num_scpe_content;
+        int8_t m_num_scpe_content;
+
+    public:
+        int8_t num_scpe_content();
 
     private:
         bool f_scpe_content;

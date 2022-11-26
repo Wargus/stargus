@@ -45,10 +45,6 @@ GRPImage::GRPImage(std::string filePath, bool removeDuplicates) :
 GRPImage::~GRPImage()
 {
   CleanGRPImage();
-  if(mCurrentPalette != NULL)
-  {
-    mCurrentPalette = NULL;
-  }
 }
 
 bool GRPImage::DetectUncompressed(std::vector<char> *inputImage)
@@ -209,7 +205,8 @@ void GRPImage::LoadImage(std::vector<char> *inputImage, bool removeDuplicates)
     uniqueGRPCheck = uniqueGRPImages.find(currentImageFrame->GetDataOffset());
     if(removeDuplicates && (uniqueGRPCheck != uniqueGRPImages.end()))
     {
-
+      // in case of not included duplicates delete the frame
+      delete currentImageFrame;
     }
     else
     {
@@ -621,14 +618,11 @@ void GRPImage::SaveSinglePNG(const std::string &outFilePath, const std::vector<s
 
 void GRPImage::CleanGRPImage()
 {
-  if(mImageFrames.size() != 0)
+  for(unsigned int i = 0; i < mImageFrames.size(); i++)
   {
-    for(std::vector<GRPFrame *>::iterator currentDeleteFrame = mImageFrames.begin(); currentDeleteFrame != mImageFrames.end(); currentDeleteFrame++)
-    {
-      delete *currentDeleteFrame;
-      *currentDeleteFrame = NULL;
-    }
-    mImageFrames.resize(0);
+    GRPFrame *frame = mImageFrames.at(i);
+    delete frame;
   }
+  mImageFrames.resize(0);
 }
 

@@ -48,11 +48,8 @@ types:
       scpe_header:
         pos: _parent.entree_offsets[i].offset
         type: scpe_header_type
-      scpe_content:
-        pos: _parent.entree_offsets[i].offset + 8
-        type: scpe_content_type
-        repeat: expr
-        repeat-expr: |
+      num_scpe_content:
+        value:  |
           (scpe_header.scpe_content_type == 0) ? 2 : 
           (scpe_header.scpe_content_type == 1) ? 2 :
           (scpe_header.scpe_content_type == 2) ? 4 : 
@@ -69,6 +66,11 @@ types:
           (scpe_header.scpe_content_type == 28) ? 27 : 
           (scpe_header.scpe_content_type == 29) ? 27 : 
           0
+      scpe_content:
+        pos: _parent.entree_offsets[i].offset + 8
+        type: scpe_content_type
+        repeat: expr
+        repeat-expr: num_scpe_content
         
   scpe_header_type:
     seq:
@@ -86,6 +88,7 @@ types:
     instances:
       scpe_opcode_list:
         pos: scpe_opcode_offset
+        if: scpe_opcode_offset != 0
         type: opcode_list_type(_parent, _root) # custom ks-opaque-types for C++ generation
         #type: opcode_type # for kaitai IDE development parse only one element
 

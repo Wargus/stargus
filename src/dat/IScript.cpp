@@ -10,6 +10,7 @@
 
 // system
 #include <iostream>
+#include <iterator>
 
 using namespace std;
 
@@ -27,32 +28,48 @@ IScript::~IScript()
 {
 }
 
-void IScript::printAnimScript(int num)
+
+
+std::vector<iscript_bin_t::opcode_type_t*> IScript::getAnimationScript(IScript::AnimationType animationType)
 {
-  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+  return getAnimationScript(static_cast<unsigned int>(animationType));
+}
+
+std::vector<iscript_bin_t::opcode_type_t*> IScript::getAnimationScript(unsigned int animationType)
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + ":" + to_string(animationType) + "=>" + LOG_CUR_FUNC + "()");
 
   iscript_bin_t::scpe_type_t* scpe = mDatahub.iscript->scpe()->at(mId);
 
   std::vector<iscript_bin_t::scpe_content_type_t*>* scpe_content_vec = scpe->scpe_content();
 
-  // calculate the offset hash list per iscript (maybe cache this?)
+  // calculate the offset hash list per iscript (TODO: maybe cache this?)
   unordered_set<uint16_t> scpe_offset_table;
   for(auto scpe_content : *scpe_content_vec)
   {
     scpe_offset_table.insert(scpe_content->scpe_opcode_offset());
   }
 
-  iscript_bin_t::scpe_content_type_t* scpe_content = scpe_content_vec->at(num);
+  iscript_bin_t::scpe_content_type_t* scpe_content = scpe_content_vec->at(animationType);
   opcode_list_type_t* opcode_list_type = scpe_content->scpe_opcode_list();
 
-  std::vector<kaitai::kstruct*>* opcode_list = opcode_list_type->read_list(scpe_offset_table);
+  cout << "before read_list" << endl;
+  std::vector<kaitai::kstruct*>* opcode_vec_ks = opcode_list_type->read_list(scpe_offset_table);
+  cout << "after read_list: " << opcode_vec_ks << endl;
 
-  for(auto opcode_ks : *opcode_list)
-  {
-    iscript_bin_t::opcode_type_t *opcode = static_cast<iscript_bin_t::opcode_type_t*>(opcode_ks);
+  std::vector<iscript_bin_t::opcode_type_t*> opcode_vec;//(opcode_vec_ks->size());
 
-    cout << "code: " << hex << opcode->code() << endl;
-  }
+  //std::transform(opcode_vec_ks->begin(), opcode_vec_ks->end(), opcode_vec.begin(),
+    //             [](auto ptr) {return static_cast<iscript_bin_t::opcode_type_t*>(ptr); });
+
+  return opcode_vec;
+}
+
+int8_t IScript::getAnimationCount()
+{
+  LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
+
+  return mDatahub.iscript->scpe()->at(mId)->num_scpe_content();
 }
 
 bool IScript::is_format_bw()

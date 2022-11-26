@@ -75,16 +75,16 @@ images_dat_t::remapping_enum_t Image::remapping()
   return mDatahub.images->remapping()->at(mId);
 }
 
-uint32_t Image::iscript_id()
+uint32_t Image::iscript()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return mDatahub.images->iscript_id()->at(mId);
+  return mDatahub.images->iscript()->at(mId);
 }
 
-IScript Image::iscript_id_obj()
+IScript Image::iscript_obj()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return IScript(mDatahub, iscript_id());
+  return IScript(mDatahub, iscript());
 }
 
 uint32_t Image::shield_overlay()

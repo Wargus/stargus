@@ -33,7 +33,6 @@ private:
   kaitai::kstruct* m__parent;
   std::streampos m_pos;
 
-  bool f_opcode_list;
   std::vector<kaitai::kstruct*>* m_opcode_list;
 };
 

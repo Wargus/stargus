@@ -84,7 +84,7 @@ seq:
       8 = Unk8 (?)\n
       9 = Unk9 (?)\n
 
-  - id: iscript_id
+  - id: iscript
     type: u4
     repeat: expr
     repeat-expr: num_lines

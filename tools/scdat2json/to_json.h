@@ -19,6 +19,8 @@ void to_json(json &j, units_dat_t::addon_position_type_t* t);
 void to_json(json &j, units_dat_t::unit_dimension_type_t* t);
 void to_json(json &j, units_dat_t::staredit_group_flags_type_t* t);
 void to_json(json &j, units_dat_t::staredit_availability_flags_type_t* t);
+void to_json(json &j, iscript_bin_t::opcode_type_t*);
+void to_json(json &j, std::vector<iscript_bin_t::opcode_type_t*>);
 
 // -> file_tbl.ksy
 
@@ -37,6 +39,7 @@ void to_json(json &j, Image i);
 void to_json(json &j, Sprite s);
 void to_json(json &j, Flingy f);
 void to_json(json &j, Unit u);
+void to_json(json &j, IScript i);
 
 } /* namespace dat */
 

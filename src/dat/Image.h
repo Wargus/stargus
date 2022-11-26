@@ -42,8 +42,8 @@ public:
 
   images_dat_t::remapping_enum_t remapping();
 
-  uint32_t iscript_id();
-  IScript iscript_id_obj();
+  uint32_t iscript();
+  IScript iscript_obj();
 
   uint32_t shield_overlay();
   TblEntry shield_overlay_tbl();

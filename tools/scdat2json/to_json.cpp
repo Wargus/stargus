@@ -93,6 +93,16 @@ void to_json(json &j, units_dat_t::staredit_availability_flags_type_t* t)
   };
 }
 
+void to_json(json &j, iscript_bin_t::opcode_type_t*)
+{
+
+}
+
+void to_json(json &j, std::vector<iscript_bin_t::opcode_type_t*>)
+{
+
+}
+
 namespace dat {
 
 void to_json(json &j, TblEntry t)
@@ -251,6 +261,19 @@ void to_json(json &j, Portrait p)
   };
 }
 
+void to_json(json &j, IScript is)
+{
+  j = json::array();
+
+  for(int i = 0; i < is.getAnimationCount(); i++)
+  //int i = 5;
+  {
+    cout << "script: " << i << endl;
+    std::vector<iscript_bin_t::opcode_type_t*> opcode_vec = is.getAnimationScript(i);
+    //j.push_back(opcode_vec);
+  }
+}
+
 void to_json(json &j, Image i)
 {
   j["id"] = json(i.id());
@@ -262,7 +285,8 @@ void to_json(json &j, Image i)
   j["draw_if_cloaked"] = json(i.draw_if_cloaked());
   j["draw_function"] = json(i.draw_function());
   j["remapping"] = json(i.remapping());
-  j["iscript_id"] = json(i.iscript_id());
+  j["iscript"] = json(i.iscript());
+  //j["iscript_obj"] = json(i.iscript_obj());
 
   j["shield_overlay"] = json(i.shield_overlay());
   try
