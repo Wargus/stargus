@@ -111,7 +111,9 @@ char *iconvISO2UTF8(char *iso)
   char *utf8 = NULL;
   size_t len = 0;
   size_t utf8len = 0;
+  size_t utf8len_save = 0;
   char *utf8start = NULL;
+
 
   len = strlen(iso);
   if (!len)
@@ -123,6 +125,7 @@ char *iconvISO2UTF8(char *iso)
 
   /* Assign enough space to put the UTF-8. */
   utf8len = 2 * len;
+  utf8len_save = utf8len;
   utf8 = (char *) calloc(utf8len + 1, sizeof(char));
   if (!utf8)
   {
@@ -177,7 +180,7 @@ char *iconvISO2UTF8(char *iso)
     LOG4CXX_ERROR(logger, buf);
   }
 
-  utf8start[utf8len] ='\0';
+  utf8start[utf8len_save] ='\0';
   return utf8start;
 
 }
