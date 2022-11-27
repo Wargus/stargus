@@ -53,14 +53,19 @@ std::vector<iscript_bin_t::opcode_type_t*> IScript::getAnimationScript(unsigned 
   iscript_bin_t::scpe_content_type_t* scpe_content = scpe_content_vec->at(animationType);
   opcode_list_type_t* opcode_list_type = scpe_content->scpe_opcode_list();
 
-  cout << "before read_list" << endl;
+  // if kaitai animation script object is null give a empty vector back (TODO: maybe change design)
+  if(!opcode_list_type)
+  {
+    return std::vector<iscript_bin_t::opcode_type_t*>();
+  }
+  // else... parse the object....
+
   std::vector<kaitai::kstruct*>* opcode_vec_ks = opcode_list_type->read_list(scpe_offset_table);
-  cout << "after read_list: " << opcode_vec_ks << endl;
 
-  std::vector<iscript_bin_t::opcode_type_t*> opcode_vec;//(opcode_vec_ks->size());
+  std::vector<iscript_bin_t::opcode_type_t*> opcode_vec(opcode_vec_ks->size());
 
-  //std::transform(opcode_vec_ks->begin(), opcode_vec_ks->end(), opcode_vec.begin(),
-    //             [](auto ptr) {return static_cast<iscript_bin_t::opcode_type_t*>(ptr); });
+  std::transform(opcode_vec_ks->begin(), opcode_vec_ks->end(), opcode_vec.begin(),
+                 [](auto ptr) {return static_cast<iscript_bin_t::opcode_type_t*>(ptr); });
 
   return opcode_vec;
 }

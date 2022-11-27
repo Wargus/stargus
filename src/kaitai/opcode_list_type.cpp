@@ -28,8 +28,6 @@ opcode_list_type_t::~opcode_list_type_t()
 
 std::vector<kaitai::kstruct*>* opcode_list_type_t::read_list(std::unordered_set<uint16_t> scpe_offset_table)
 {
-  cout << "+read_list" << endl;
-  cout << "m_opcode_list: " << m_opcode_list << endl;
   if (m_opcode_list)
   {
     return m_opcode_list;
@@ -37,7 +35,6 @@ std::vector<kaitai::kstruct*>* opcode_list_type_t::read_list(std::unordered_set<
   else
   {
     m_opcode_list = new std::vector<kaitai::kstruct*>();
-    cout << "new vector in opcode_list_type_t: " << m_opcode_list << endl;
   }
 
   m_scpe_offset_table = scpe_offset_table;
@@ -61,19 +58,31 @@ std::vector<kaitai::kstruct*>* opcode_list_type_t::read_list(std::unordered_set<
 void opcode_list_type_t::_read()
 {
   int scpe_opcode_offset = 0;
+  bool end_criteria = false;
   do
   {
     iscript_bin_t::opcode_type_t *opcode = new iscript_bin_t::opcode_type_t(m__io, m__parent, m__root);
+    //cout << "_read::code: " << hex << opcode->code() << endl;
     m_opcode_list->push_back(opcode);
 
     // set next offset position
     scpe_opcode_offset = m__io->pos();
+
+    if(m_scpe_offset_table.find(scpe_opcode_offset) != m_scpe_offset_table.end())
+    {
+      end_criteria = true;
+    }
+
+    // for now stop when GOTO opcode is found
+    if(opcode->code() == iscript_bin_t::opcode_t::OPCODE_GOTO)
+    {
+      end_criteria = true;
+    }
   }
-  while((m_scpe_offset_table.find(scpe_opcode_offset) == m_scpe_offset_table.end()));
+  while(!end_criteria);
 }
 
 void opcode_list_type_t::_clean_up()
 {
-  cout << "delete vector in opcode_list_type_t: " << m_opcode_list << endl;
   delete m_opcode_list;
 }

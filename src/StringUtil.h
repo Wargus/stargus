@@ -13,6 +13,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <exception>
 
 // some functions that are very usefull for writing files
 bool hasFileEnding(const std::string &filename, const std::string &ending);
@@ -58,5 +59,12 @@ void printVector(std::vector<T> iv)
   std::cout << "]" << std::endl;
 }
 
+template<class T>
+std::string to_hex(const T &value)
+{
+  char hex_string[20];
+  sprintf(hex_string, "0x%X", value); //convert number to hex
+  return hex_string;
+}
 
 #endif /* STRINGUTIL_H_ */

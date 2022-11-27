@@ -89,8 +89,8 @@ types:
       scpe_opcode_list:
         pos: scpe_opcode_offset
         if: scpe_opcode_offset != 0
-        type: opcode_list_type(_parent, _root) # custom ks-opaque-types for C++ generation
-        #type: opcode_type # for kaitai IDE development parse only one element
+        #type: opcode_list_type(_parent, _root) # custom ks-opaque-types for C++ generation
+        type: opcode_type # for kaitai IDE development parse only one element
 
   opcode_type:
     seq:

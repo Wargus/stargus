@@ -433,8 +433,8 @@ void testHook()
 
   cout << "animation_count: " << to_string(animation_count) << endl;
 
-  //for(int i = 0; i < animation_count; i++)
-  int i = 4;
+  for(int i = 0; i < animation_count; i++)
+  //int i = 8;
   {
     cout << "animation: " << i << endl;
     std::vector<iscript_bin_t::opcode_type_t*> opcode_vec =
@@ -445,8 +445,6 @@ void testHook()
       cout << "code: " << hex << opcode->code() << endl;
     }
   }
-
-
 
   dat::Sfx sfx = unit.ready_sound_obj();
   sfx.sound_file_tbl();
