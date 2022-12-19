@@ -140,7 +140,7 @@ function HandleCheats(str)
     elseif (string.find(str, ".lua")) then
       AddMessage("Reloading " .. str)
       print("Force reloading by in-game console cmd " .. str)
-      Load("scripts/" .. str)
+      Load("scripts/" .. str, false)
       LoadDecorations();
       InitUserInterface();
       LoadUI(GetPlayerData(GetThisPlayer(), "RaceName"))
