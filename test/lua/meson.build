@@ -7,7 +7,7 @@ LuaTest_sources = files(
 executable('LuaTest',
 			LuaTest_sources,
 			include_directories : [config_incdir],
-			dependencies : [log4cxx_dep, libstarformat_dep],
+			dependencies : [log4cxx_dep, libstarformat_dep, nlohmann_json_dep],
 			install : false)
 
 

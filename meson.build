@@ -22,6 +22,8 @@ install_data(
 	install_dir: get_option('datadir') / 'dataset'
 )
 
+nlohmann_json_dep = dependency('nlohmann_json', fallback : ['nlohmann_json', 'nlohmann_json_dep'])
+
 casc_dep = cpp.find_library('casc', required : false)
 storm_dep = cpp.find_library('storm', required : false)
 png_dep = cpp.find_library('png', required : true)
