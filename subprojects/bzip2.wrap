@@ -1,0 +1,6 @@
+[wrap-file]
+directory = bzip2-1.0.5
+source_url = https://github.com/LuaDist/bzip2/archive/refs/tags/1.0.5.tar.gz
+source_filename = bzip2-1.0.5.tar.gz
+source_hash = 1190e2877a8d9d4a4fa5b8716b649a2f232976d7e1a8f199861a90c7bc282ce0
+diff_files = bzip2.patch

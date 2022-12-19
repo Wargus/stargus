@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9d7eb62..76e4f49 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -14,7 +14,7 @@ ADD_DEFINITIONS(-D_FILE_OFFSET_BITS=64)
+ SET(BZIP2_SRCS blocksort.c huffman.c crctable.c randtable.c
+                compress.c decompress.c bzlib.c )
+
+-ADD_LIBRARY(bz2 SHARED ${BZIP2_SRCS} libbz2.def)
++ADD_LIBRARY(bz2 STATIC ${BZIP2_SRCS} libbz2.def)
+
+ ADD_EXECUTABLE(bzip2 bzip2.c)
+ TARGET_LINK_LIBRARIES(bzip2 bz2)
