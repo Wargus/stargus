@@ -45,7 +45,11 @@ if build_machine.system() == 'windows'
 	win_iconv_proj = cmake.subproject('win-iconv')
 	iconv_lib = win_iconv_proj.dependency('iconv-static')
 else
-	iconv_lib = dependency('iconv', required: true)
+	if cpp.has_function('iconv_open')
+		iconv_lib = []
+	elif cpp.has_header_symbol('iconv.h', 'iconv_open')
+		iconv_lib = [cpp.find_library('iconv')]
+	endif
 endif
 
 log4cxx_dep = dependency('liblog4cxx', required : false)
