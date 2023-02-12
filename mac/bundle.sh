@@ -46,8 +46,8 @@ cd macdylibbundler
 make
 cd ..
 
-cp ../build/startool Stargus.app/Contents/MacOS/
-cp ../build/stargus Stargus.app/Contents/MacOS/
+cp ../build/src/startool Stargus.app/Contents/MacOS/
+cp ../build/src/stargus Stargus.app/Contents/MacOS/
 cp "$STRATAGUS" Stargus.app/Contents/MacOS/stratagus
 cp "$(dirname "$STRATAGUS")"/../libs/* Stargus.app/Contents/libs/
 
