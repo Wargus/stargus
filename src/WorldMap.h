@@ -77,7 +77,17 @@ typedef struct Location
   unsigned int EndX;
   unsigned int EndY;
   unsigned short StringNumber;
-  unsigned short Flags;
+  union {
+    unsigned short Flags;
+    struct {
+      unsigned LowElevation:1;
+      unsigned MediumElevation:1;
+      unsigned HighElevation:1;
+      unsigned LowAir:1;
+      unsigned MediumAir:1;
+      unsigned HighAir:1;
+    };
+  };
 } Location;
 
 typedef struct TriggerCondition
@@ -142,3 +152,7 @@ typedef struct WorldMap
 } WorldMap;
 
 #endif /* WORLDMAP_H_ */
+
+// Local Variables:
+// c-basic-offset: 2
+// End:

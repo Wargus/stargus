@@ -241,7 +241,7 @@ int main(int argc, const char **argv)
     }
     else
     {
-      myGRPImage.SaveSinglePNG("output_frame.png", 0, myGRPImage.getNumberOfFrames(), rgba);
+      myGRPImage.SaveSinglePNG("output_frame%d.png", 0, myGRPImage.getNumberOfFrames(), rgba);
     }
 
     //myGRPImage.SaveConvertedImage("output_frame_magic.png", 0, myGRPImage.getNumberOfFrames(), single_stiched, image_per_row);
