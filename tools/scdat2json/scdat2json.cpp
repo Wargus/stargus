@@ -229,6 +229,7 @@ int main(int argc, const char **argv)
 #endif // HAVE_LOG4CXX
 
   parseOptions(argc, argv);
+  CheckPath(destination_directory);
 
   bool archive_exists = FileExists(archive);
   if(!archive_exists)
