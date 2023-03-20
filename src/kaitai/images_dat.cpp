@@ -12,7 +12,7 @@ images_dat_t::images_dat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, i
     m_draw_if_cloaked = 0;
     m_draw_function = 0;
     m_remapping = 0;
-    m_iscript_id = 0;
+    m_iscript = 0;
     m_shield_overlay = 0;
     m_attack_overlay = 0;
     m_damage_overlay = 0;
@@ -67,10 +67,10 @@ void images_dat_t::_read() {
     for (int i = 0; i < l_remapping; i++) {
         m_remapping->push_back(static_cast<images_dat_t::remapping_enum_t>(m__io->read_u1()));
     }
-    m_iscript_id = new std::vector<uint32_t>();
-    const int l_iscript_id = num_lines();
-    for (int i = 0; i < l_iscript_id; i++) {
-        m_iscript_id->push_back(m__io->read_u4le());
+    m_iscript = new std::vector<uint32_t>();
+    const int l_iscript = num_lines();
+    for (int i = 0; i < l_iscript; i++) {
+        m_iscript->push_back(m__io->read_u4le());
     }
     m_shield_overlay = new std::vector<uint32_t>();
     const int l_shield_overlay = num_lines();
@@ -130,8 +130,8 @@ void images_dat_t::_clean_up() {
     if (m_remapping) {
         delete m_remapping; m_remapping = 0;
     }
-    if (m_iscript_id) {
-        delete m_iscript_id; m_iscript_id = 0;
+    if (m_iscript) {
+        delete m_iscript; m_iscript = 0;
     }
     if (m_shield_overlay) {
         delete m_shield_overlay; m_shield_overlay = 0;

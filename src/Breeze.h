@@ -40,6 +40,8 @@ public:
    */
   virtual bool extractMemory(const std::string &archivedFile, unsigned char **szEntryBufferPrt, size_t *bufferLen);
 
+  virtual std::shared_ptr<std::istream> extractStream(const std::string &archivedFile);
+
 private:
 
 };

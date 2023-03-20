@@ -9,6 +9,9 @@
 #include "DataChunk.h"
 #include "Hurricane.h"
 
+// system
+#include <iostream>
+
 using namespace std;
 
 KaitaiConverter::KaitaiConverter(std::shared_ptr<Hurricane> hurricane) :
@@ -22,22 +25,16 @@ KaitaiConverter::~KaitaiConverter()
 
 }
 
-std::shared_ptr<kaitai::kstream> KaitaiConverter::getKaitaiStream(const std::string &file)
+/*std::shared_ptr<kaitai::kstream> KaitaiConverter::getKaitaiStream(const std::string &file)
 {
-  std::shared_ptr<DataChunk> data = mHurricane->extractDataChunk(file);
-  if (data)
-  {
-    //std::ifstream ifs(arcfile, std::ifstream::binary);
-    //kaitai::kstream ks(&ifs);
+  std::shared_ptr<std::istream> stream = mHurricane->extractStream(file);
 
-    // TODO: for now just create from complete string instead of istream. Maybe change the complete
-    // reader to stream based concept...
-    std::string str(reinterpret_cast<char const *>(data->getDataPointer()),
-                    data->getSize());
-    std::shared_ptr<kaitai::kstream> ks = make_shared<kaitai::kstream>(str);
-    return ks;
-  }
+  std::string s;
+  std::ostringstream os;
+  os<<stream->rdbuf();
+  s=os.str();
 
-  // TODO: hm, better create an exception
-  return nullptr;
-}
+  std::shared_ptr<kaitai::kstream> ks = make_shared<kaitai::kstream>(s);
+
+  return ks;
+}*/

@@ -185,10 +185,10 @@ vector<TblEntry> Tbl::convertFromStream(std::shared_ptr<kaitai::kstream> ks)
       // printable extended ASCII characters
       else if (entry_char >= 120 && entry_char <= 255)
       {
-        char inBuf[1024];
+        char inBuf[2];
         inBuf[0] = (char) entry_char;
         inBuf[1] = '\0';
-        // TODO: valgrind detects this as problem:
+
         char *utf8 = iconvISO2UTF8(inBuf);
         if (utf8)
         {

@@ -95,7 +95,7 @@ private:
     std::vector<uint8_t>* m_draw_if_cloaked;
     std::vector<draw_function_enum_t>* m_draw_function;
     std::vector<remapping_enum_t>* m_remapping;
-    std::vector<uint32_t>* m_iscript_id;
+    std::vector<uint32_t>* m_iscript;
     std::vector<uint32_t>* m_shield_overlay;
     std::vector<uint32_t>* m_attack_overlay;
     std::vector<uint32_t>* m_damage_overlay;
@@ -174,7 +174,7 @@ public:
     /**
      * Indicates the animation ID in the Iscript.bin file used to manage the animation of the current entry's GRP graphics. [pointer to Iscript.bin]
      */
-    std::vector<uint32_t>* iscript_id() const { return m_iscript_id; }
+    std::vector<uint32_t>* iscript() const { return m_iscript; }
 
     /**
      * Overlay used to place the Images.dat entry #424 ("Shield Overlay"), if the unit has shields and is hit. [pointer to images.tbl]

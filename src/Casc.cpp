@@ -75,7 +75,7 @@ PCASC_FILE_SPAN_INFO GetFileSpanInfo(HANDLE hFile)
         return pSpans;
 
       // in case of error...
-      free(pSpans);
+      //free(pSpans); // TODO: this results in warning - not sure why
       pSpans = NULL;
     }
   }

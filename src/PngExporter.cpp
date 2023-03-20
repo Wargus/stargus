@@ -360,9 +360,9 @@ bool PngExporter::saveRGBA(const std::string &name, PaletteImage &palImage, Pale
   png_destroy_write_struct(&png_ptr, &info_ptr);
   fclose(fp);
 
-  if (NULL != row_pointers)
+  if (row_pointers != NULL)
   {
-    for (int h_pos = 0; h_pos < h_pos_allocated; ++h_pos)
+    for (int h_pos = 0; h_pos <= h_pos_allocated; ++h_pos)
     {
       free(row_pointers[h_pos]);
     }

@@ -14,6 +14,9 @@
 //system
 #include <memory>
 
+/**
+ * TODO: meaybe remove complete KaitaiConverter class layer...
+ */
 class KaitaiConverter: public Converter
 {
 public:
@@ -21,7 +24,11 @@ public:
   virtual ~KaitaiConverter();
 
 protected:
-  std::shared_ptr<kaitai::kstream> getKaitaiStream(const std::string &file);
+  /**
+   * WARNING DEPRECATED!
+   * remove getKaitaiStream() complete and replace by logic in DataHub
+   */
+  //std::shared_ptr<kaitai::kstream> getKaitaiStream(const std::string &file);
 };
 
 #endif /* KAITAICONVERTER_H */

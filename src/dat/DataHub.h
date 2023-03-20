@@ -24,6 +24,7 @@
 #include "kaitai/orders_dat.h"
 #include "kaitai/techdata_dat.h"
 #include "kaitai/mapdata_dat.h"
+#include "kaitai/iscript_bin.h"
 
 // System
 #include <nlohmann/json.hpp>
@@ -71,6 +72,8 @@ public:
   DataHub(std::shared_ptr<Hurricane> hurricane);
   virtual ~DataHub();
 
+  uint16_t getIScriptImage(uint16_t index);
+
   // Kaitai parsed objects
   std::shared_ptr<units_dat_t> units;
   std::shared_ptr<orders_dat_t> orders;
@@ -83,6 +86,7 @@ public:
   std::shared_ptr<upgrades_dat_t> upgrades;
   std::shared_ptr<techdata_dat_t> techdata;
   std::shared_ptr<mapdata_dat_t> mapdata;
+  std::shared_ptr<iscript_bin_t> iscript;
 
   // kaitai parsed Tbl vectors
   std::vector<TblEntry> stat_txt_tbl_vec;
@@ -147,6 +151,36 @@ private:
   // mapdata.tbl
   void init_mapdata_tbl();
 
+  // iscript.bin
+  void init_iscript_bin();
+
+  std::shared_ptr<std::istream> m_units_stream;
+  std::shared_ptr<std::istream> m_orders_stream;
+  std::shared_ptr<std::istream> m_weapons_stream;
+  std::shared_ptr<std::istream> m_flingy_stream;
+  std::shared_ptr<std::istream> m_sprites_stream;
+  std::shared_ptr<std::istream> m_images_stream;
+  std::shared_ptr<std::istream> m_sfxdata_stream;
+  std::shared_ptr<std::istream> m_portdata_stream;
+  std::shared_ptr<std::istream> m_upgrades_stream;
+  std::shared_ptr<std::istream> m_techdata_stream;
+  std::shared_ptr<std::istream> m_mapdata_stream;
+  std::shared_ptr<std::istream> m_iscript_stream;
+
+  std::shared_ptr<kaitai::kstream> m_units_ks;
+  std::shared_ptr<kaitai::kstream> m_orders_ks;
+  std::shared_ptr<kaitai::kstream> m_weapons_ks;
+  std::shared_ptr<kaitai::kstream> m_flingy_ks;
+  std::shared_ptr<kaitai::kstream> m_sprites_ks;
+  std::shared_ptr<kaitai::kstream> m_images_ks;
+  std::shared_ptr<kaitai::kstream> m_sfxdata_ks;
+  std::shared_ptr<kaitai::kstream> m_portdata_ks;
+  std::shared_ptr<kaitai::kstream> m_upgrades_ks;
+  std::shared_ptr<kaitai::kstream> m_techdata_ks;
+  std::shared_ptr<kaitai::kstream> m_mapdata_ks;
+  std::shared_ptr<kaitai::kstream> m_iscript_ks;
+
+  std::map<uint16_t, uint16_t> m_iscriptImageEntreeMap;
 };
 
 } /* namespace dat */

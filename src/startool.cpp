@@ -69,6 +69,7 @@
 // system
 #include <nlohmann/json.hpp>
 #include <fstream>
+#include <map>
 
 using json = nlohmann::json;
 
@@ -418,18 +419,32 @@ void testHook()
    Font font(breeze);
    font.convert("font16.fnt", "font16");*/
 
-  shared_ptr<Storm> storm = make_shared<Storm>(
-                              "/home/andreas/BigSpace/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
-  //shared_ptr<Breeze> storm = make_shared<Breeze>("/home/andreas/Downloads/Games/DOS/Starcraft/wintools/datedit/Default");
+  shared_ptr<Storm> storm = make_shared<Storm>("/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/files/stardat.mpq");
+  //shared_ptr<Storm> storm = make_shared<Storm>("/home/andreas/Games/DOS/Starcraft/Original_Backup/broodwar_install.exe_MPQ/files/broodat.mpq");
+  //shared_ptr<Breeze> breeze = make_shared<Breeze>("/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ");
   dat::DataHub datahub(storm);
-  //datahub.printCSV();
 
-  //dat::SfxConverter sfxConverter(storm, datahub);
-  //sfxConverter.convert();
+  dat::Unit unit(datahub, 0, "test");
+  cout << "unit: " << unit.name_tbl().name1() << endl;
 
-  dat::Unit unit(datahub, 39, "test");
+  dat::IScript is = unit.flingy_obj().sprite_obj().image_obj().iscript_obj();
 
-  unit.name_tbl();
+  int animation_count = is.getAnimationCount();
+
+  cout << "animation_count: " << to_string(animation_count) << endl;
+
+  for(int i = 0; i < animation_count; i++)
+  //int i = 8;
+  {
+    cout << "animation: " << i << endl;
+    std::vector<iscript_bin_t::opcode_type_t*> opcode_vec =
+        unit.flingy_obj().sprite_obj().image_obj().iscript_obj().getAnimationScript(i);
+
+    for(auto opcode : opcode_vec)
+    {
+      cout << "code: " << hex << opcode->code() << endl;
+    }
+  }
 
   dat::Sfx sfx = unit.ready_sound_obj();
   sfx.sound_file_tbl();
