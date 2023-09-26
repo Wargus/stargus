@@ -144,12 +144,29 @@ if(WIN32 AND MSVC)
 	add_subdirectory("third-party/win-iconv")
 	include_directories("third-party/win-iconv")
 	set(startool_LIBS ${startool_LIBS} iconv-static)
-else()
-	include(CheckCXXSourceCompiles)
-	set(FS_SRC "
-	#include <experimental/filesystem> 
+endif()
+
+include(CheckCXXSourceCompiles)
+
+set(FS_SRC "
+#include <filesystem>
+namespace fs = std::filesystem;
+int main() {
+	fs::path p = fs::path(\".\");
+	if (fs::absolute(p).is_absolute()) {
+		return 0;
+	} else {
+		return 1;
+	}
+}
+")
+check_cxx_source_compiles("${FS_SRC}" HAS_17_FS)
+
+if(NOT HAS_17_FS) # Tr
+	set(EXPERIMENTAL_FS_SRC "
+	#include <experimental/filesystem>
 	namespace fs = std::experimental::filesystem;
-	int main(int argc, char **argv) {
+	int main() {
 		fs::path p = fs::path(\".\");
 		if (fs::absolute(p).is_absolute()) {
 			return 0;
@@ -158,19 +175,17 @@ else()
 		}
 	}
 	")
-	check_cxx_source_compiles("${FS_SRC}" HAS_17_FS)
-	if(NOT HAS_17_FS)
+	check_cxx_source_compiles("${EXPERIMENTAL_FS_SRC}" HAS_17_EXPERIMENTAL_FS)
+	if(NOT HAS_17_EXPERIMENTAL_FS)
 		set(CMAKE_REQUIRED_LIBRARIES stdc++fs)
-		check_cxx_source_compiles("${FS_SRC}" HAS_EXP_17_FS_WITH_STDC)
+		check_cxx_source_compiles("${EXPERIMENTAL_FS_SRC}" HAS_EXP_17_FS_WITH_STDC)
 		if(HAS_EXP_17_FS_WITH_STDC)
-			set(stargus_LIBS ${stargus_LIBS} stdc++fs)
-			set(startool_LIBS ${startool_LIBS} stdc++fs)
+			set(stratagus_LIBS ${stratagus_LIBS} stdc++fs)
 		else()
 			set(CMAKE_REQUIRED_LIBRARIES c++fs)
-			check_cxx_source_compiles("${FS_SRC}" HAS_EXP_17_FS_WITH_CLIB)
+			check_cxx_source_compiles("${EXPERIMENTAL_FS_SRC}" HAS_EXP_17_FS_WITH_CLIB)
 			if(HAS_EXP_17_FS_WITH_CLIB)
-				set(stargus_LIBS ${stargus_LIBS} c++fs)
-				set(startool_LIBS ${startool_LIBS} c++fs)
+				set(stratagus_LIBS ${stratagus_LIBS} c++fs)
 			else()
 				message(FATAL_ERROR "I don't know how to compile with C++17 filesystem support on your system")
 			endif()
