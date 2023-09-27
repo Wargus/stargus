@@ -50,7 +50,7 @@ DefineUnitType("unit-zerg-hatchery", {
 --  Corpse = "unit-zerg-rubble-large",
   BuilderLost = true,
   VisibleUnderFog = true, 
-  BuildingRules = { { "distance", { Distance = 3, DistanceType = ">", Type = "unit-minerals1"} } },
+  BuildingRules = { { "distance", { Distance = 3, DistanceType = ">", Type = "unit-resource-mineral-field"} } },
   CanStore = {"gas", "minerals"},
   Sounds = {
     "selected", "zerg-hatchery-selected",

@@ -22,7 +22,7 @@ DefineUnitType("unit-zerg-extractor", {
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 20, AnnoyComputerFactor = 20,
   Points = 160,
-  Corpse = "unit-destroyed-3x3-place",
+  --Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-explosion",
   BuilderLost = true,
   VisibleUnderFog = true, 

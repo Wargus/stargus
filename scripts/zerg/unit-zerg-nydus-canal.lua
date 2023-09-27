@@ -21,7 +21,7 @@ DefineUnitType("unit-zerg-nydus-canal", {
   Armor = 20, BasicDamage = 20, PiercingDamage = 5, Missile = "missile-none",
   Priority = 15, AnnoyComputerFactor = 20,
   Points = 170,
-  Corpse = "unit-destroyed-3x3-place",
+  --Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
   RightMouseAction = "attack",
   RegenerationRate = 1,

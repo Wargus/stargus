@@ -32,7 +32,7 @@ DefineUnitType("unit-zerg-sunken-colony", {
   MaxAttackRange = 7,
   Priority = 15, AnnoyComputerFactor = 20,
   Points = 170,
-  Corpse = "unit-destroyed-3x3-place",
+  --Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
   RightMouseAction = "attack",
   BuilderLost = true,

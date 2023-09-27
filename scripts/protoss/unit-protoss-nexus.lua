@@ -660,10 +660,11 @@ DefineUnitType("unit-protoss-nexus", {
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 35, AnnoyComputerFactor = 45,
   Points = 200,
-  Supply = 10,  Corpse = "unit-destroyed-4x4-place",
+  Supply = 10,  
+  --Corpse = "unit-destroyed-4x4-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
   VisibleUnderFog = true, 
-  BuildingRules = { { "distance", { Distance = 3, DistanceType = ">", Type = "unit-minerals1"} } },
+  BuildingRules = { { "distance", { Distance = 3, DistanceType = ">", Type = "unit-resource-mineral-field"} } },
   CanStore = {"gas", "minerals"},
   Sounds = {
     "selected", "protoss-nexus-selected",
