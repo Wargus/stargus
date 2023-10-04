@@ -40,7 +40,7 @@ DefineUnitType("unit-terran-supply-depot", {
   Priority = 20, AnnoyComputerFactor = 45,
   Points = 100,
   Supply = 8,
-  Corpse = "unit-destroyed-2x2-place",
+  --Corpse = "unit-destroyed-2x2-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
   VisibleUnderFog = true, 
   Sounds = {

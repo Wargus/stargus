@@ -42,7 +42,7 @@ DefineUnitType("unit-terran-science-facility", {
   Armor = 20, BasicDamage = 0, PiercingDamage = 0, Missile = "missile-none",
   Priority = 30, AnnoyComputerFactor = 35,
   Points = 160,
-  Corpse = "unit-destroyed-3x3-place",
+  --Corpse = "unit-destroyed-3x3-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
   VisibleUnderFog = true, 
   Sounds = {

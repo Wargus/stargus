@@ -43,7 +43,7 @@ DefineUnitType("unit-terran-missile-turret", {
   MinAttackRange = 2, MaxAttackRange = 7,
   Priority = 40, AnnoyComputerFactor = 50,
   Points = 250,
-  Corpse = "unit-destroyed-2x2-place",
+  --Corpse = "unit-destroyed-2x2-place",
   ExplodeWhenKilled = "missile-terran-explosion-large",
   CanAttack = true,
   CanTargetLand = true, CanTargetSea = true,

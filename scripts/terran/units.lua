@@ -21,7 +21,7 @@ Load("scripts/terran/unit-terran-marine.lua")
 Load("scripts/terran/unit-terran-science-vessel.lua")
 Load("scripts/terran/unit-terran-scv.lua")
 Load("scripts/terran/unit-terran-siege-tank.lua")
-Load("scripts/terran/unit-terran-vulture.lua")
+--Load("scripts/terran/unit-terran-vulture.lua")
 Load("scripts/terran/unit-terran-wraith.lua")
 
 --

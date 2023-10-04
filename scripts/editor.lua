@@ -37,10 +37,10 @@ SetEditorUnitsIcon("icon-terran-marine")
 --	FIXME: this is only a temporary hack, for better sorted units.
 --
 DefineEditorUnitTypes({
-  "unit-minerals1",
-  "unit-minerals2",
-  "unit-minerals3",
-  "unit-vespene-geyser",
+  "unit-resource-mineral-field",
+  "unit-resource-mineral-field-type-2",
+  "unit-resource-mineral-field-type-3",
+  "unit-resource-vespene-geyser",
 
   -- Terran
   "unit-terran-marine",

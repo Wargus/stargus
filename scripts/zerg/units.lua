@@ -17,7 +17,7 @@ Load("scripts/zerg/unit-zerg-spore-colony.lua")
 Load("scripts/zerg/unit-zerg-sunken-colony.lua")
 Load("scripts/zerg/unit-zerg-ultralisk-cavern.lua")
 
-Load("scripts/zerg/unit-zerg-larva.lua")
+--Load("scripts/zerg/unit-zerg-larva.lua")
 
 Load("scripts/zerg/unit-zerg-defiler.lua")
 Load("scripts/zerg/unit-zerg-drone.lua")
