@@ -145,7 +145,6 @@ function RunImageStep(filename, pagenum)
         local time = 0
         local alpha = 255
         local function listen()
-          menu:setDirty(true)
           if time <= fadespeed then
             alpha = math.max(0, alpha - 255 / fadespeed)
             blackScreen:setBaseColor(Color(0, 0, 0, math.floor(alpha)))
