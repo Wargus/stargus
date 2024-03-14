@@ -191,7 +191,7 @@ const option::Descriptor usage[] =
   },
   { HELP, 0, "h", "help", option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
   { VIDEO, 0, "v", "video", Arg::None, "  --video, -v  \t\tExtract and convert videos" },
-  { SOUND, 0, "s", "sound", Arg::None, "  --sound, -v  \t\tExtract and convert sounds" },
+  { SOUND, 0, "s", "sound", Arg::None, "  --sound, -s  \t\tExtract and convert sounds" },
   { DEV, 0, "d", "dev", Arg::None,
     "  --dev, -d  \t\tSome test hooks while development. Don't use it if you don't know what it does!"},
   { VERSIONPARAM, 0, "V", "version", Arg::None, "  --version, -V  \t\tShow version" },
