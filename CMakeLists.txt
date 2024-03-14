@@ -135,8 +135,8 @@ set(startool_LIBS ${scmconvert_LIBS} ${PNG_LIBRARIES} ${ZLIB_LIBRARIES} ${STORML
 
 # Platform specific definitions and compilation settings
 
-add_subdirectory("subprojects/nlohmann-json")
-include_directories("subprojects/nlohmann-json/include")
+add_subdirectory("subprojects/nlohmann_json")
+include_directories("subprojects/nlohmann_json/include")
 set(startool_LIBS ${startool_LIBS} ${NLOHMANN_JSON_TARGET_NAME})
 
 if(WIN32 AND MSVC)
