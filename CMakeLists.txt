@@ -135,14 +135,14 @@ set(startool_LIBS ${scmconvert_LIBS} ${PNG_LIBRARIES} ${ZLIB_LIBRARIES} ${STORML
 
 # Platform specific definitions and compilation settings
 
-add_subdirectory("third-party/nlohmann-json")
-include_directories("third-party/nlohmann-json/include")
+add_subdirectory("subprojects/nlohmann-json")
+include_directories("subprojects/nlohmann-json/include")
 set(startool_LIBS ${startool_LIBS} ${NLOHMANN_JSON_TARGET_NAME})
 
 if(WIN32 AND MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_DEPRECATE=1 -D_HAS_STD_BYTE=0)
-	add_subdirectory("third-party/win-iconv")
-	include_directories("third-party/win-iconv")
+	add_subdirectory("subprojects/win-iconv")
+	include_directories("subprojects/win-iconv")
 	set(startool_LIBS ${startool_LIBS} iconv-static)
 endif()
 
