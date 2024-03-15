@@ -99,7 +99,7 @@ bool GRPImage::DetectUncompressed(std::vector<char> *inputImage)
       imagePayload += tempWidth * tempHeight;
     }
 
-    uniqueGRPImages.insert(std::make_pair<uint32_t,bool>((uint32_t)tempDataOffset,true));
+    uniqueGRPImages.insert(std::make_pair(tempDataOffset, true));
 
     if(firstOffset == 0)
     {
