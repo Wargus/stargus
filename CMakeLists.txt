@@ -64,15 +64,23 @@ set(scmconvert_HDRS
 
 file(GLOB startool_SRCS
 	src/*.cpp
-	src/kaitai/*.cpp
 	src/dat/*.cpp
+	src/kaitai/*.cpp
+	src/libgrp/*.cpp
+	src/libgrp/Exceptions/*.cpp
+	src/libgrp/GRPFrame/*.cpp
+	src/libgrp/GRPImage/*.cpp
 	src/tileset/*.cpp
 )
 
 file(GLOB startool_HDRS
 	src/*.h
-	src/kaitai/*.h
 	src/dat/*.h
+	src/kaitai/*.h
+	src/libgrp/*.h
+	src/libgrp/Exceptions/*.h
+	src/libgrp/GRPFrame/*.h
+	src/libgrp/GRPImage/*.h
 	src/tileset/*.h
 )
 
