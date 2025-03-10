@@ -1,0 +1,87 @@
+name: macOS
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**'
+      - '!.github/**'
+      - '!**.yml'
+      - '.github/workflows/macos.yml'
+      - '!**.md'
+      - '!.vscode/**'
+      - '!doc/**'
+
+  pull_request:
+    paths:
+      - '**'
+      - '!.github/**'
+      - '!**.yml'
+      - '.github/workflows/macos.yml'
+      - '!**.md'
+      - '!.vscode/**'
+      - '!doc/**'
+
+jobs:
+  macOS-arm64:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout Stargus
+      uses: actions/checkout@v4
+      with:
+        repository: Wargus/stargus
+        submodules: recursive
+        path: stargus
+
+    - name: Checkout Stratagus
+      uses: actions/checkout@v4
+      with: 
+        repository: Wargus/stratagus
+        submodules: recursive
+        path: stratagus
+
+    - name: Install dependencies
+      run: brew install dylibbundler sdl2 sdl2_mixer sdl2_image lua ffmpeg meson
+
+    - name: cmake --version
+      run: cmake --version
+
+    - name: Build Stratagus
+      run: |
+        cmake stratagus -B stratagus/build \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_VENDORED_LUA=ON \
+        -DBUILD_VENDORED_SDL=OFF \
+        -DBUILD_VENDORED_MEDIA_LIBS=OFF \
+        -DBUILD_TESTING=1
+        cmake --build stratagus/build
+
+    - name: Build Stargus
+      run: |
+        meson setup stargus \
+        --buildtype=release \
+        -DSTRATAGUS_INCLUDE_DIR=../../stratagus/gameheaders \
+        -DSTRATAGUS_BIN=../../stratagus/build/stratagus \
+        stargus/build
+        ninja -C stargus/build
+
+    - name: Create app bundle
+      run: |
+        export STRATAGUS=stratagus/build/stratagus
+        stargus/mac/bundle.sh
+        
+        dylibbundler -of -cd -b -x stargus/mac/Stargus.app/Contents/MacOS/stratagus -d stargus/mac/Stargus.app/Contents/libs/
+        dylibbundler -of -cd -b -x stargus/mac/Stargus.app/Contents/MacOS/startool -d stargus/mac/Stargus.app/Contents/libs/
+        
+        codesign --force --deep --sign - stargus/mac/Stargus.app
+        
+    - name: Create .dmg
+      run: hdiutil create -volname "Stargus" -srcfolder "stargus/mac/Stargus.app" "Stargus-arm64"
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Stargus-macOS-arm64
+        path: Stargus-arm64.dmg
+        if-no-files-found: error
