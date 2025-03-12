@@ -51,6 +51,7 @@ jobs:
       run: |
         cmake stratagus -B stratagus/build \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_FIND_FRAMEWORK=LAST \
         -DBUILD_VENDORED_LUA=ON \
         -DBUILD_VENDORED_SDL=OFF \
         -DBUILD_VENDORED_MEDIA_LIBS=OFF \
