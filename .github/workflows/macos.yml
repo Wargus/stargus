@@ -23,8 +23,16 @@ on:
       - '!doc/**'
 
 jobs:
-  macOS-arm64:
-    runs-on: macos-latest
+  macOS:
+    strategy:
+      matrix:
+        include:
+            - runner: macos-latest
+              suffix: arm64
+            - runner: macos-13
+              suffix: x86
+              
+    runs-on: ${{ matrix.runner}}
 
     steps:
     - name: Checkout Stargus
@@ -78,11 +86,11 @@ jobs:
         codesign --force --deep --sign - stargus/mac/Stargus.app
         
     - name: Create .dmg
-      run: hdiutil create -volname "Stargus" -srcfolder "stargus/mac/Stargus.app" "Stargus-arm64"
+      run: hdiutil create -volname "Stargus" -srcfolder "stargus/mac/Stargus.app" "Stargus-${{ matrix.suffix }}"
     
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: Stargus-macOS-arm64
-        path: Stargus-arm64.dmg
+        name: Stargus-macOS-${{ matrix.suffix }}
+        path: Stargus-${{ matrix.suffix }}.dmg
         if-no-files-found: error
