@@ -13,7 +13,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, ubuntu-20.04, windows-2019]
+        os: [ubuntu-latest, ubuntu-20.04, windows-2022]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -50,7 +50,7 @@ jobs:
 
     - name: Configure CMake on Windows
       if: startsWith(matrix.os, 'windows')
-      run: cmake -B ${{github.workspace}}/build -G "Visual Studio 16 2019" -T v141_xp -A win32 -DCMAKE_PREFIX_PATH="${{github.workspace}}\\dependencies" -DSTRATAGUS=stratagus -DSTRATAGUS_INCLUDE_DIR="${{github.workspace}}\\stratagus-master\\gameheaders" -DENABLE_NSIS=ON
+      run: cmake -B ${{github.workspace}}/build -G "Visual Studio 17 2022" -A win32 -DCMAKE_PREFIX_PATH="${{github.workspace}}\\dependencies" -DSTRATAGUS=stratagus -DSTRATAGUS_INCLUDE_DIR="${{github.workspace}}\\stratagus-master\\gameheaders" -DENABLE_NSIS=ON
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
