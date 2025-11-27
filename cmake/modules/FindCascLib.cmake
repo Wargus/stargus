@@ -13,7 +13,7 @@
 if(CASCLIB_INCLUDE_DIR AND CASCLIB_LIBRARY AND (NOT UNIX OR BZIP2_FOUND))
 	set(CASCLIB_FOUND true)
 else()
-	find_path(CASCLIB_INCLUDE_DIR Casc.h)
+	find_path(CASCLIB_INCLUDE_DIR CascLib.h)
 	find_library(CASCLIB_LIBRARY NAMES casc)
 	if (UNIX)
 		find_package(BZip2)
