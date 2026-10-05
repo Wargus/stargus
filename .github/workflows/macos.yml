@@ -36,14 +36,14 @@ jobs:
 
     steps:
     - name: Checkout Stargus
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         repository: Wargus/stargus
         submodules: recursive
         path: stargus
 
     - name: Checkout Stratagus
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with: 
         repository: Wargus/stratagus
         submodules: recursive
@@ -89,7 +89,7 @@ jobs:
       run: hdiutil create -volname "Stargus" -srcfolder "stargus/mac/Stargus.app" "Stargus-${{ matrix.suffix }}"
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: Stargus-macOS-${{ matrix.suffix }}
         path: Stargus-${{ matrix.suffix }}.dmg
