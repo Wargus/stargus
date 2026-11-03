@@ -23,6 +23,14 @@
 
 using namespace std;
 
+// added in StormLib 9.31
+#if STORMLIB_VERSION < 0x091F
+DWORD SErrGetLastError()
+{
+	return GetLastError();
+}
+#endif
+
 Storm::Storm() :
   mMpqHandle(nullptr)
 {
@@ -79,7 +87,7 @@ bool Storm::extractMemory(const std::string &archivedFile, unsigned char **szEnt
   if (nError == ERROR_SUCCESS)
   {
     if (!SFileOpenFileEx(mMpqHandle, archivedFile.c_str(), 0, &hFile))
-      nError = GetLastError();
+      nError = SErrGetLastError();
   }
 
   int i = 0;
@@ -138,7 +146,7 @@ bool Storm::extractFile(const std::string &archivedFile, const std::string &extr
   if (nError == ERROR_SUCCESS)
   {
     if (!SFileOpenFileEx(mMpqHandle, archivedFile.c_str(), 0, &hFile))
-      nError = GetLastError();
+      nError = SErrGetLastError();
   }
 
   // Create the target file
