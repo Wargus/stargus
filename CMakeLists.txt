@@ -102,7 +102,19 @@ endif()
 find_package(Stratagus REQUIRED)
 find_package(PNG REQUIRED)
 find_package(ZLIB REQUIRED)
-find_package(StormLib REQUIRED)
+# StormLib comes either from the system (libstorm-dev) or from the submodule
+# in third-party/StormLib, so that distros without a StormLib package build
+# out of the box.
+find_package(StormLib)
+if(STORMLIB_FOUND)
+	set(STORMLIB_TARGET ${STORMLIB_LIBRARY})
+else()
+	message(STATUS "StormLib not found, building the submodule in third-party/StormLib")
+	set(STORM_SKIP_INSTALL ON CACHE BOOL "Skip installing files" FORCE)
+	add_subdirectory(third-party/StormLib)
+	set(STORMLIB_TARGET StormLib::storm)
+	set(STORMLIB_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third-party/StormLib/src)
+endif()
 find_package(CascLib)
 
 if(WIN32)
@@ -138,8 +150,8 @@ add_definitions(-DUSE_STORMLIB -D__STORMLIB_SELF__)
 
 include_directories(${PNG_INCLUDE_DIR} ${ZLIB_INCLUDE_DIRS} ${STORMLIB_INCLUDE_DIR} src)
 
-set(scmconvert_LIBS ${scmconvert_LIBS} ${ZLIB_LIBRARIES} ${STORMLIB_LIBRARY} ${BZIP2_LIBRARIES})
-set(startool_LIBS ${scmconvert_LIBS} ${PNG_LIBRARIES} ${ZLIB_LIBRARIES} ${STORMLIB_LIBRARY} ${BZIP2_LIBRARIES})
+set(scmconvert_LIBS ${scmconvert_LIBS} ${ZLIB_LIBRARIES} ${STORMLIB_TARGET} ${BZIP2_LIBRARIES})
+set(startool_LIBS ${scmconvert_LIBS} ${PNG_LIBRARIES} ${ZLIB_LIBRARIES} ${STORMLIB_TARGET} ${BZIP2_LIBRARIES})
 
 # Platform specific definitions and compilation settings
 
