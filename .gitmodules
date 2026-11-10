@@ -1,0 +1,4 @@
+[submodule "third-party/StormLib"]
+	path = third-party/StormLib
+	url = https://github.com/ladislav-zezula/StormLib
+	branch = master
