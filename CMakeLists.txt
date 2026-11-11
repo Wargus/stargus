@@ -97,23 +97,27 @@ if(WIN32)
 	)
 endif()
 
+# Shared dependencies, all of them optional and only used as a fallback for
+# libraries that are not installed on the build machine
+
+if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/third-party/CMakeLists.txt")
+	add_subdirectory(third-party EXCLUDE_FROM_ALL SYSTEM)
+endif()
+
 # Find all libraries
 
 find_package(Stratagus REQUIRED)
 find_package(PNG REQUIRED)
 find_package(ZLIB REQUIRED)
-# StormLib comes either from the system (libstorm-dev) or from the submodule
-# in third-party/StormLib, so that distros without a StormLib package build
-# out of the box.
+# StormLib comes either from the system (libstorm-dev) or from the shared
+# dependencies in third-party, so that distros without a StormLib package
+# build out of the box.
 find_package(StormLib)
 if(STORMLIB_FOUND)
 	set(STORMLIB_TARGET ${STORMLIB_LIBRARY})
 else()
-	message(STATUS "StormLib not found, building the submodule in third-party/StormLib")
-	set(STORM_SKIP_INSTALL ON CACHE BOOL "Skip installing files" FORCE)
-	add_subdirectory(third-party/StormLib)
-	set(STORMLIB_TARGET StormLib::storm)
-	set(STORMLIB_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third-party/StormLib/src)
+	message(STATUS "StormLib not found, building the vendored one in third-party")
+	vendored_stormlib()
 endif()
 find_package(CascLib)
 
