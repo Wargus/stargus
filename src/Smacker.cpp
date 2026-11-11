@@ -82,8 +82,10 @@ bool Smacker::convertAnimation(const std::string &arcfile,  Storage storage)
     {
       if(result)
       {
-        // -delay is in 1/100s, -loop 0 keeps the animation running forever
-        string gif_cmd = "convert \"" + png_path + "image*.png\" -delay 4 -loop 0 \"" + gif_file + "\"";
+        // -delay is in 1/100s and -loop 0 keeps the animation running forever.
+        // Both only apply to the images that follow them, so they have to come
+        // before the frames, otherwise the GIF ends up with a delay of zero.
+        string gif_cmd = "convert -delay 4 -loop 0 \"" + png_path + "image*.png\" \"" + gif_file + "\"";
         LOG4CXX_DEBUG(logger, gif_cmd);
 
         result = callConvert(gif_cmd);
