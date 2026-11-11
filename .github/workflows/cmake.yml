@@ -1,6 +1,14 @@
 name: CMake
 
 on:
+  workflow_dispatch:
+  # Rebuilt when the engine or the shared dependencies move, and nightly so a
+  # broken engine is caught even without a dispatch token. See the
+  # "Downstream builds" workflow in Wargus/stratagus.
+  repository_dispatch:
+    types: [engine-update]
+  schedule:
+    - cron: '37 4 * * *'
   push:
     branches: [ master ]
   pull_request:
@@ -17,7 +25,11 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+    # The submodule carries the shared dependencies, which provide the StormLib
+    # fallback used when the system one is not installed.
     - uses: actions/checkout@v7
+      with:
+        submodules: true
 
     - uses: olegtarasov/get-tag@v2.1.4
       id: tagName
