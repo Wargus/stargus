@@ -21,7 +21,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, ubuntu-20.04, windows-2022]
+        os: [ubuntu-latest, windows-2022]
     runs-on: ${{ matrix.os }}
 
     steps:
