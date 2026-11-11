@@ -236,13 +236,13 @@ function RunCampaignGameMenu()
   local z_x = Video.Width / 6 * 1
   local z_y = 100 + offy
 
-  menu:addAnimation("videos/campaign/disk.mng", t_x, t_y + 160, true)
-  menu:addAnimation("videos/campaign/disk.mng", p_x, p_y + 160, true)
-  menu:addAnimation("videos/campaign/disk.mng", z_x, z_y + 160, true)
+  menu:addAnimation("videos/campaign/disk.gif", t_x, t_y + 160, true)
+  menu:addAnimation("videos/campaign/disk.gif", p_x, p_y + 160, true)
+  menu:addAnimation("videos/campaign/disk.gif", z_x, z_y + 160, true)
 
   menu:addAnimatedButton(
-    "videos/campaign/terr.mng",
-    "videos/campaign/terron.mng",
+    "videos/campaign/terr.gif",
+    "videos/campaign/terron.gif",
     t_x - 35, t_y,
     t_x - 140, t_y - 50,
     "~light-green~T~!erran",
@@ -253,8 +253,8 @@ function RunCampaignGameMenu()
   )
 
   menu:addAnimatedButton(
-    "videos/campaign/prot.mng",
-    "videos/campaign/proton.mng",
+    "videos/campaign/prot.gif",
+    "videos/campaign/proton.gif",
     p_x, p_y,
     p_x - 140, p_y - 90,
     "~light-green~P~!rotoss",
@@ -265,8 +265,8 @@ function RunCampaignGameMenu()
   )
   
   menu:addAnimatedButton(
-    "videos/campaign/zerg.mng",
-    "videos/campaign/zergon.mng",
+    "videos/campaign/zerg.gif",
+    "videos/campaign/zergon.gif",
     z_x + 5, z_y - 15,
     z_x - 105, z_y - 50,
     "~light-green~Z~!erg",

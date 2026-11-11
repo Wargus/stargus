@@ -845,7 +845,7 @@ int main(int argc, const char **argv)
           {
             printf("ConvertPortrait: %s, %s", c[u].File, c[u].ArcFile);
             Smacker video(storm);
-            case_func = video.convertMNG(c[u].ArcFile, videos(c[u].File));
+            case_func = video.convertAnimation(c[u].ArcFile, videos(c[u].File));
             printf("...%s\n", case_func ? "ok" : "nok");
           }
           break;

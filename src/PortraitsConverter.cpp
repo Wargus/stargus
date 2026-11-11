@@ -76,9 +76,9 @@ bool PortraitsConverter::convert()
 
       vector<string> portrait_list;
 
-      convertMngPortraits(portrait_arcfile_idle, portrait_list);
+      convertAnimatedPortraits(portrait_arcfile_idle, portrait_list);
       portrait_list.push_back("talking"); // the stratagus API needs this as separator
-      convertMngPortraits(portrait_arcfile_talking, portrait_list);
+      convertAnimatedPortraits(portrait_arcfile_talking, portrait_list);
 
       string portraits_table = lg::assign("portrait_" + portrait_idle_id ,lg::table(lg::paramsQuote(portrait_list)));
 
@@ -100,7 +100,7 @@ bool PortraitsConverter::convert()
   return result;
 }
 
-bool PortraitsConverter::convertMngPortraits(const std::string &arcfile, std::vector<std::string> &portrait_list)
+bool PortraitsConverter::convertAnimatedPortraits(const std::string &arcfile, std::vector<std::string> &portrait_list)
 {
   bool smk_available = true;
   unsigned int smk_num = 0;
@@ -125,11 +125,11 @@ bool PortraitsConverter::convertMngPortraits(const std::string &arcfile, std::ve
 
     cout << "Try export (last one may fail if less then three) " << smk_arcfile << " to " << target_basename;
 
-    smk_available = video.convertMNG(smk_arcfile, videos(target_basename));
+    smk_available = video.convertAnimation(smk_arcfile, videos(target_basename));
 
     if(smk_available)
     {
-      portrait_list.push_back(videos.getDataType() + "/" + target_basename + ".mng");
+      portrait_list.push_back(videos.getDataType() + "/" + target_basename + ".gif");
     }
 
     printf("...%s\n", smk_available ? "ok" : "nok");

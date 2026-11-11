@@ -453,11 +453,11 @@ function AddMenuHelpers(menu)
   end
   
   function menu:addAnimation(filename, x, y, center)
-    local mng1 = Mng:New(filename)
-    if mng1 then
-      mng1:Load()
-      mng1:Reset()
-      local im1 = ImageWidget(mng1)
+    local anim1 = Animation:New(filename)
+    if anim1 then
+      anim1:Load()
+      anim1:Reset()
+      local im1 = ImageWidget(anim1)
       
       if center then
         x = x - (im1:getWidth() / 2)
@@ -469,14 +469,14 @@ function AddMenuHelpers(menu)
   end
 
   function menu:addAnimatedButton(filename, filenameOn, x, y, xOn, yOn, caption, hotkey, callback, animationIsBehind, center)
-    local mng1 = Mng:New(filename)
+    local anim1 = Animation:New(filename)
     local im1
-    local mngOn
+    local animOn
     local imOn
-    if mng1 then
-      mng1:Load()
-      mng1:Reset()
-      im1 = ImageWidget(mng1)
+    if anim1 then
+      anim1:Load()
+      anim1:Reset()
+      im1 = ImageWidget(anim1)
 
       if center then
         x = x - (im1:getWidth() / 2)
@@ -486,9 +486,9 @@ function AddMenuHelpers(menu)
         self:add(im1, x, y)
       end
 
-      mngOn = Mng:New(filenameOn)
-      mngOn:Load()
-      imOn = ImageWidget(mngOn)
+      animOn = Animation:New(filenameOn)
+      animOn:Load()
+      imOn = ImageWidget(animOn)
       self:add(imOn, xOn, yOn)
       imOn:setVisible(false)
 
@@ -516,10 +516,10 @@ function AddMenuHelpers(menu)
     
     local button = self:addTextButton("", hotkey, x, y, callback, {max_width, max_height})
 
-    if mngOn then
+    if animOn then
       button:setMouseCallback(function(evt, btn, cnt)
         if evt == "mouseIn" then
-          mngOn:Reset()
+          animOn:Reset()
           imOn:setVisible(true)
         elseif evt == "mouseOut" then
           imOn:setVisible(false)
@@ -825,8 +825,8 @@ function BuildProgramStartMenu()
   menu:addLabel("~white~" .. stargus.Name .. " V" .. stargus.Version, Video.Width - 60, Video.Height - 18*1) 
   
   menu:addAnimatedButton(
-    "videos/mainmenu/single.mng",
-    "videos/mainmenu/singleon.mng",
+    "videos/mainmenu/single.gif",
+    "videos/mainmenu/singleon.gif",
     100, 50,
     143, 115,
     "~light-green~S~!ingle Player",
@@ -836,8 +836,8 @@ function BuildProgramStartMenu()
   )
   
   menu:addAnimatedButton(
-    "videos/mainmenu/multi.mng",
-    "videos/mainmenu/multion.mng",
+    "videos/mainmenu/multi.gif",
+    "videos/mainmenu/multion.gif",
     80, 250,
     99, 261,
     "~light-green~M~!ultiplayer",
@@ -846,8 +846,8 @@ function BuildProgramStartMenu()
   )
   
   menu:addAnimatedButton(
-    "videos/mainmenu/exit.mng",
-    "videos/mainmenu/exiton.mng",
+    "videos/mainmenu/exit.gif",
+    "videos/mainmenu/exiton.gif",
     Video.Width - 300, Video.Height - 200,
     Video.Width - 285, Video.Height - 200,
     "~light-green~E~!xit Program",

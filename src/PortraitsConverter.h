@@ -23,10 +23,11 @@ public:
 
 private:
   /**
-   * check all smk files for a portrait, export them, convert to mng and save the raw name
+   * check all smk files for a portrait, export them, convert to an animated
+   * GIF and save the raw name
    * @param portrait_list The function fills this vector to later export to LUA
    */
-  bool convertMngPortraits(const std::string &arcfile, std::vector<std::string> &portrait_list);
+  bool convertAnimatedPortraits(const std::string &arcfile, std::vector<std::string> &portrait_list);
 
 
   // if used more often put into a utils namespace...
