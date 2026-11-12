@@ -626,10 +626,17 @@ int main(int argc, const char **argv)
       break;
       case Q:
       {
-        cout << "Q:" <<  c[u].ArcFile << " : " << c[u].File <<  endl;
-        if (main_storm)
+        string file = preferences.getDestDir() + "/" + c[u].File;
+        if (FileExists(file))
         {
-          string file = preferences.getDestDir() + "/" + c[u].File;
+          // A previous run unpacked this already. Unpacking it again would
+          // truncate a file another run might just be reading, and rewrite
+          // sixty megabytes for nothing.
+          cout << "Q:" << c[u].ArcFile << " : " << c[u].File << " : already unpacked" << endl;
+        }
+        else if (main_storm)
+        {
+          cout << "Q:" <<  c[u].ArcFile << " : " << c[u].File <<  endl;
           main_storm->extractFile(c[u].ArcFile, file, false);
         }
       }
@@ -659,6 +666,17 @@ int main(int argc, const char **argv)
       default:
         break;
       }
+    }
+
+    if (!sub_storm)
+    {
+      // Everything below reads through this archive, so say what is missing
+      // instead of running the whole conversion list against nothing.
+      cerr << "Can't find the starcraft data in \"" << preferences.getDestDir()
+           << "\": no stardat.mpq there, and the copy of it unpacked from install.exe ("
+           << preferences.getDestDir() << "/remove-stardat.mpq) is missing or unreadable. "
+           << "Delete that copy and run again to unpack it from the CD." << endl;
+      return 1;
     }
 
     dat::DataHub datahub(sub_storm);
