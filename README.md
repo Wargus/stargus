@@ -14,13 +14,12 @@ Older releases are in the [release list](https://github.com/Wargus/stargus/relea
 
 ### Build status
 
-- Windows: ![Build Status](https://github.com/Wargus/stargus/actions/workflows/windows.yml/badge.svg)
-- Linux: ![Build Status](https://github.com/Wargus/stargus/actions/workflows/ubuntu.yml/badge.svg)
-- macOS: ![Build Status](https://github.com/Wargus/stargus/actions/workflows/macos.yml/badge.svg)
+![Build Status](https://github.com/Wargus/stargus/actions/workflows/build.yml/badge.svg)
 
-The Windows workflow builds the installer, the Linux workflow the AppImage and
-the macOS workflow the `dmg`; pushing a version tag creates the release with
-those artifacts, and pushes to `master` update the `master-builds` release.
+The build makes the artifacts of all three platforms at once, the Windows
+installer, the Linux AppImage and the macOS `dmg`; pushing a version tag creates
+the release with those artifacts, and pushes to `master` update the
+`master-builds` release.
 `RELEASING.md` describes how a release is made.
 
 ## Installation Instructions
