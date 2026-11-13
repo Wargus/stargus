@@ -81,7 +81,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -yy imagemagick meson ninja-build pkg-config \
-          libpng-dev zlib1g-dev libmagick++-6.q16-dev libcppunit-dev nlohmann-json3-dev
+          libpng-dev zlib1g-dev libmagick++-dev libcppunit-dev nlohmann-json3-dev
 
     - name: build Stratagus
       run: |
