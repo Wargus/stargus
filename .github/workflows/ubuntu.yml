@@ -2,22 +2,27 @@ name: ubuntu
 
 on:
   workflow_dispatch:
-    inputs:
-      stratagus_ref:
-        description: 'Stratagus branch, tag or commit to build against'
-        required: false
-        default: 'master'
-  # Rebuilt when the engine or the shared dependencies move, and nightly so a
-  # broken engine is caught even without a dispatch token. See the
-  # "Downstream builds" workflow in Wargus/stratagus.
   repository_dispatch:
     types: [engine-update]
-  schedule:
-    - cron: '23 4 * * *'
   push:
-    branches: [ master ]
+    paths:
+      - '**'
+      - '!.github/**'
+      - '!**.yml'
+      - '.github/workflows/ubuntu.yml'
+      - '!**.md'
+      - '!.vscode/**'
+      - '!doc/**'
+
   pull_request:
-    branches: [ master ]
+    paths:
+      - '**'
+      - '!.github/**'
+      - '!**.yml'
+      - '.github/workflows/ubuntu.yml'
+      - '!**.md'
+      - '!.vscode/**'
+      - '!doc/**'
 
 env:
   build_type: Release
@@ -33,11 +38,42 @@ jobs:
         submodules: recursive
         path: stargus
 
+    - name: Resolve which Stratagus to build against
+      id: stratagus
+      run: |
+        # The engine and the game are released in lockstep: a tag in this
+        # repository has an engine tag of the same name, and a change that spans
+        # both repositories is developed on branches of the same name. So look for
+        # the same kind of ref as the one we are running on, and build against the
+        # engine master branch when the engine does not have it.
+        engine=https://github.com/Wargus/stratagus
+        # A pull request builds the branch it came from, not the merge ref.
+        name=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}
+        if [ "$GITHUB_REF_TYPE" = tag ]; then
+          candidate=refs/tags/$name
+        else
+          candidate=refs/heads/$name
+        fi
+
+        if git ls-remote --exit-code --refs "$engine" "$candidate" > /dev/null; then
+          ref=$name
+          probe=$candidate
+        else
+          probe=refs/heads/master
+          if ! git ls-remote --exit-code --refs "$engine" "$probe" > /dev/null; then
+            echo "Wargus/stratagus has neither $candidate nor $probe" >&2
+            exit 1
+          fi
+          ref=master
+        fi
+        echo "ref=$ref" >> "$GITHUB_OUTPUT"
+        echo "building against Wargus/stratagus@$ref ($probe)"
+
     - name: Checkout Stratagus
       uses: actions/checkout@v7
       with:
         repository: Wargus/stratagus
-        ref: ${{ inputs.stratagus_ref || 'master' }}
+        ref: ${{ steps.stratagus.outputs.ref }}
         submodules: recursive
         path: stratagus
 
@@ -47,38 +83,20 @@ jobs:
         sudo apt-get install -yy imagemagick meson ninja-build pkg-config \
           libpng-dev zlib1g-dev libmagick++-6.q16-dev libcppunit-dev nlohmann-json3-dev
 
-    # One engine build serves both game builds below, and it is the same one the
-    # macOS and Windows jobs use, so the engine no longer has to be downloaded
-    # from a released archive.
     - name: build Stratagus
       run: |
         cmake -S stratagus -B stratagus/build -DCMAKE_BUILD_TYPE=$build_type -DBUILD_VENDORED_LUA=ON -DBUILD_VENDORED_SDL=ON -DBUILD_VENDORED_MEDIA_LIBS=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.5
         cmake --build stratagus/build --config $build_type
 
-    # The CMake build takes png, zlib, bzip2 and StormLib from the shared
-    # dependencies submodule, so nothing about it depends on the versions Ubuntu
-    # happens to ship.
     - name: build Stargus with CMake
       run: |
         cmake -S stargus -B stargus/build-cmake -DCMAKE_BUILD_TYPE=$build_type -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DSTRATAGUS=$GITHUB_WORKSPACE/stratagus/build/stratagus -DSTRATAGUS_INCLUDE_DIR=$GITHUB_WORKSPACE/stratagus/gameheaders
         cmake --build stargus/build-cmake --config $build_type
 
-    # Meson cannot use the shared dependencies, so this build is the one that
-    # keeps working with the system libraries (and with the wraps for whatever a
-    # distribution does not package).
+    # Meson cannot use the shared dependencies
     - name: build Stargus with meson
       run: |
         meson setup stargus stargus/build-meson --buildtype=release \
           -DSTRATAGUS_INCLUDE_DIR=$GITHUB_WORKSPACE/stratagus/gameheaders \
           -DSTRATAGUS_BIN=$GITHUB_WORKSPACE/stratagus/build/stratagus
         ninja -C stargus/build-meson
-
-    - name: upload binaries
-      uses: actions/upload-artifact@v7
-      with:
-        name: Stargus-Linux
-        path: |
-          stargus/build-cmake/stargus
-          stargus/build-cmake/startool
-        retention-days: 90
-        if-no-files-found: error

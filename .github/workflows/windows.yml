@@ -2,21 +2,11 @@ name: windows
 
 on:
   workflow_dispatch:
-    inputs:
-      stratagus_ref:
-        description: 'Stratagus branch, tag or commit to build against'
-        required: false
-        default: 'master'
-  # Rebuilt when the engine or the shared dependencies move, and nightly so a
-  # broken engine is caught even without a dispatch token. See the
-  # "Downstream builds" workflow in Wargus/stratagus.
   repository_dispatch:
     types: [engine-update]
-  schedule:
-    - cron: '13 4 * * *'
   push:
     # The branches filter is required: a tags filter on its own would stop
-    # branch pushes, i.e. the daily installers. Tags are filtered so that only
+    # branch pushes, i.e. the installers. Tags are filtered so that only
     # version tags get a release.
     branches: ['**']
     tags: ['v*', '[0-9]*']
@@ -56,15 +46,40 @@ jobs:
         submodules: recursive
         path: stargus
 
-    # The engine is built from the same sources as the macOS and Linux jobs, so
-    # that the installers always ship the gameheaders the launcher was
-    # configured with, and so that none of the platforms depend on a release
-    # of the engine having been published first.
+    - name: Resolve which Stratagus to build against
+      id: stratagus
+      shell: pwsh
+      run: |
+        # The engine and the game are released in lockstep: a tag in this
+        # repository has an engine tag of the same name, and a change that spans
+        # both repositories is developed on branches of the same name. So look for
+        # the same kind of ref as the one we are running on, and build against the
+        # engine master branch when the engine does not have it.
+        $engine = 'https://github.com/Wargus/stratagus'
+        # A pull request builds the branch it came from, not the merge ref.
+        $name = if ($env:GITHUB_HEAD_REF) { $env:GITHUB_HEAD_REF } else { $env:GITHUB_REF_NAME }
+        if ($env:GITHUB_REF_TYPE -eq 'tag') {
+          $candidate = "refs/tags/$name"
+        } else {
+          $candidate = "refs/heads/$name"
+        }
+
+        foreach ($probe in @($candidate, 'refs/heads/master')) {
+          git ls-remote --exit-code --refs $engine $probe | Out-Null
+          if ($LASTEXITCODE -eq 0) {
+            $ref = $probe -replace '^refs/(heads|tags)/', ''
+            "ref=$ref" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+            "building against Wargus/stratagus@$ref ($probe)"
+            return
+          }
+        }
+        throw "Wargus/stratagus has neither $candidate nor refs/heads/master"
+
     - name: Checkout Stratagus
       uses: actions/checkout@v7
       with:
         repository: Wargus/stratagus
-        ref: ${{ inputs.stratagus_ref || 'master' }}
+        ref: ${{ steps.stratagus.outputs.ref }}
         submodules: recursive
         path: stratagus
 
@@ -86,9 +101,6 @@ jobs:
         cmake -S stratagus -B stratagus/build -DCMAKE_BUILD_TYPE=$env:build_type -DBUILD_VENDORED_LUA=ON -DBUILD_VENDORED_SDL=ON -DBUILD_VENDORED_MEDIA_LIBS=ON "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
         cmake --build stratagus/build --config $env:build_type
 
-    # png, zlib, bzip2 and StormLib come from the shared dependencies submodule,
-    # so the separate win32 dependency archive the old job downloaded is not
-    # needed any more.
     - name: build Stargus
       shell: pwsh
       run: |
