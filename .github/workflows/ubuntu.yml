@@ -77,16 +77,21 @@ jobs:
         submodules: recursive
         path: stratagus
 
+    # The engine vendors everything it needs and is picky about what it finds:
+    # installing the game packages first drags in system dev packages (tiff,
+    # webp, ...) that the vendored SDL2_image builds against but nobody links,
+    # so build the engine before installing anything, the way Wargus and War1gus
+    # do.
+    - name: build Stratagus
+      run: |
+        cmake -S stratagus -B stratagus/build -DCMAKE_BUILD_TYPE=$build_type -DBUILD_VENDORED_LUA=ON -DBUILD_VENDORED_SDL=ON -DBUILD_VENDORED_MEDIA_LIBS=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+        cmake --build stratagus/build --config $build_type
+
     - name: install dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -yy imagemagick meson ninja-build pkg-config \
           libpng-dev zlib1g-dev libmagick++-dev libcppunit-dev nlohmann-json3-dev
-
-    - name: build Stratagus
-      run: |
-        cmake -S stratagus -B stratagus/build -DCMAKE_BUILD_TYPE=$build_type -DBUILD_VENDORED_LUA=ON -DBUILD_VENDORED_SDL=ON -DBUILD_VENDORED_MEDIA_LIBS=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.5
-        cmake --build stratagus/build --config $build_type
 
     - name: build Stargus with CMake
       run: |

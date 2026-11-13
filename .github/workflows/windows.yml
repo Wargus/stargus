@@ -104,7 +104,7 @@ jobs:
     - name: build Stargus
       shell: pwsh
       run: |
-        cmake -S stargus -B stargus/build -DCMAKE_BUILD_TYPE=$env:build_type -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DENABLE_NSIS=ON -DSTRATAGUS=../stratagus/build/Release/stratagus.exe -DSTRATAGUS_INCLUDE_DIR=../stratagus/gameheaders
+        cmake -S stargus -B stargus/build "-DCMAKE_BUILD_TYPE=$env:build_type" "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" -DENABLE_NSIS=ON "-DSTRATAGUS=../stratagus/build/Release/stratagus.exe" "-DSTRATAGUS_INCLUDE_DIR=../stratagus/gameheaders"
         # stargus.nsi ships the engine it finds next to it, and makensis runs in
         # the build directory.
         Copy-Item stratagus/build/Release/stratagus.exe stargus/build/
