@@ -17,25 +17,32 @@ including its documentation and changelog.
 | macOS `dmg` | [`macos.yml`](.github/workflows/macos.yml) |
 | Linux AppImage | [`ubuntu.yml`](.github/workflows/ubuntu.yml) |
 
-A push to `master`, a tag, a manual "Run workflow", or a push to the engine
-`master` (which announces it with the "Downstream builds" workflow of
-[`Wargus/stratagus`](https://github.com/Wargus/stratagus)) makes all three
-build, and
-the Launchpad packages and the `release.py` version bumper they came with are
-gone. Each of the three workflows uploads its artifact to the release for the
-tag it ran for, creating that release if none of them has yet, and pushes to
-`master` upload to the [master-builds
+A push to `master`, a tag, or a manual "Run workflow" makes all three build,
+and so does [`engine.yml`](.github/workflows/engine.yml), which runs daily and
+starts them when the engine has moved since the artifacts went up. A pull
+request is built so that it can be reviewed, but publishes nothing, and it is
+the only build a branch gets: `master` and version tags are the refs that
+publish, so a branch with a pull request is not built twice. The Launchpad
+packages and the `release.py` version bumper they came with are gone. Each of
+the three workflows uploads its artifact to the release for the tag it ran
+for, creating that release if none of them has yet, and pushes to `master`
+upload to the [master-builds
 release](https://github.com/Wargus/stargus/releases/tag/master-builds) instead.
 
 The Windows and Linux artifacts are built with CMake rather than meson, as it
 is the build system that takes its libraries from `third-party/`, which is what
 makes the bundle independent of whatever happens to be installed on the build
-host. The AppImage can be built locally the same way the Linux workflow does:
+host. What runs on the runners is `tools/ci-build.sh`, which takes one argument,
+the platform being built for, and does that platform's whole artifact. The
+AppImage can therefore be built locally the same way the Linux workflow does:
 
 ```sh
 git clone --recursive https://github.com/Wargus/stratagus ../stratagus
-tools/build_appimage.sh ../stratagus
+tools/ci-build.sh linux   # and macos or windows, where the tools are
 ```
+
+It writes the artifact to `release-assets/`, and takes the engine from
+`../stratagus` unless `ENGINE_SRC` says otherwise.
 
 ## Tagging a release
 
