@@ -18,13 +18,32 @@ your Starcraft installation to extract the data to work with Stargus.
 NOTE: stratagus ( https://github.com/Wargus/stratagus ) is required.
 stargus and stratagus version must match
 
+There are two build systems.
+
+**meson is the development build**
+
 ```
 meson build
 ninja -C build
 ./stargus
 ```
 
-Please take a look into meson_options.txt for possible build options. Special -DSTRATAGUS_INCLUDE_DIR and -DSTRATAGUS_BIN.
+Take a look into meson_options.txt for possible build options.
+
+With meson you get the development extras: the data tools (iscript,
+json_transition, grptool, sauwetter, scdat2json) and the cppunit test suite in
+test/module.
+
+**CMake is the release build**
+
+CMake only builds stargus and startool two binaries, as well as the Windows
+NSIS installer.
+
+- `third-party/` is shared and with CMake, png, zlib, bzip2 and StormLib
+  come from there
+- `subprojects/` are managed by meson, but the inlined stuff is consumed by CMake
+  as well
+- Meson does not use `third-party/`
 
 ![image](https://cloud.githubusercontent.com/assets/46235/11292960/499a7d3c-8f55-11e5-9356-62c190c57467.png)
 ![image](https://cloud.githubusercontent.com/assets/46235/11292993/9198675c-8f55-11e5-9f74-2f23fb207498.png)

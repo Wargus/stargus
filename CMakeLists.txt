@@ -97,12 +97,43 @@ if(WIN32)
 	)
 endif()
 
+# The libraries come from the shared dependencies submodule, so a plain build
+# does not depend on which versions a distribution happens to install. Packagers
+# that insist on the system libraries can turn this off, and then every library
+# has to be installed for real, because nothing is used as a fallback anymore.
+
+if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/third-party/CMakeLists.txt")
+	add_subdirectory(third-party EXCLUDE_FROM_ALL SYSTEM)
+	set(have_vendored_deps ON)
+else()
+	message(WARNING "Third-party directory not populated, cannot vendor any dependencies.")
+	set(have_vendored_deps OFF)
+endif()
+
+option(ENABLE_VENDORED_LIBS "Build the dependencies from third-party instead of finding them on the system" ${have_vendored_deps})
+
 # Find all libraries
 
 find_package(Stratagus REQUIRED)
-find_package(PNG REQUIRED)
-find_package(ZLIB REQUIRED)
-find_package(StormLib REQUIRED)
+if(ENABLE_VENDORED_LIBS)
+	vendored_png()
+	vendored_zlib()
+	vendored_bzip2()
+	# StormLib is only built from third-party as well, so the system library is
+	# not even looked for and cannot be mixed into the link line half way.
+	set(STORMLIB_FOUND false)
+else()
+	find_package(PNG REQUIRED)
+	find_package(ZLIB REQUIRED)
+	find_package(BZIP2 REQUIRED)
+	find_package(StormLib)
+endif()
+if(STORMLIB_FOUND)
+	set(STORMLIB_TARGET ${STORMLIB_LIBRARY})
+else()
+	message(STATUS "Building the StormLib from third-party")
+	vendored_stormlib()
+endif()
 find_package(CascLib)
 
 if(WIN32)
@@ -138,8 +169,8 @@ add_definitions(-DUSE_STORMLIB -D__STORMLIB_SELF__)
 
 include_directories(${PNG_INCLUDE_DIR} ${ZLIB_INCLUDE_DIRS} ${STORMLIB_INCLUDE_DIR} src)
 
-set(scmconvert_LIBS ${scmconvert_LIBS} ${ZLIB_LIBRARIES} ${STORMLIB_LIBRARY} ${BZIP2_LIBRARIES})
-set(startool_LIBS ${scmconvert_LIBS} ${PNG_LIBRARIES} ${ZLIB_LIBRARIES} ${STORMLIB_LIBRARY} ${BZIP2_LIBRARIES})
+set(scmconvert_LIBS ${scmconvert_LIBS} ${ZLIB_LIBRARIES} ${STORMLIB_TARGET} ${BZIP2_LIBRARIES})
+set(startool_LIBS ${scmconvert_LIBS} ${PNG_LIBRARIES} ${ZLIB_LIBRARIES} ${STORMLIB_TARGET} ${BZIP2_LIBRARIES})
 
 # Platform specific definitions and compilation settings
 
@@ -215,6 +246,10 @@ set(BINDIR "bin" CACHE PATH "Where to install user binaries")
 add_executable(startool ${startool_SRCS} ${startool_HDRS})
 target_link_libraries(startool ${startool_LIBS})
 install(TARGETS startool DESTINATION ${BINDIR})
+
+if(ENABLE_VENDORED_LIBS)
+	add_dependencies(startool png zlib bzip2)
+endif()
 
 ########### stargus launcher and installer ###############
 

@@ -25,7 +25,11 @@ public:
    */
   bool convertOGV(const std::string &arcfile, Storage storage);
 
-  bool convertMNG(const std::string &arcfile,  Storage storage);
+  /**
+   *  Convert SMK video to an animated GIF, which the engine displays
+   *  through its Animation class
+   */
+  bool convertAnimation(const std::string &arcfile, Storage storage);
 
 private:
   bool callConvert(const std::string &cmd);

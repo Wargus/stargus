@@ -59,13 +59,13 @@ bool Smacker::convertOGV(const std::string &arcfile,  Storage storage)
   return result;
 }
 
-bool Smacker::convertMNG(const std::string &arcfile,  Storage storage)
+bool Smacker::convertAnimation(const std::string &arcfile,  Storage storage)
 {
   bool result = true;
 
   string smk_file = storage.getFullPath() + ".smk";
   string png_path = storage.getFullPath() + "_png/";
-  string mng_file = storage.getFullPath() + ".mng";
+  string gif_file = storage.getFullPath() + ".gif";
 
   result = mHurricane->extractFile(arcfile, smk_file, false);
   if(result)
@@ -82,10 +82,13 @@ bool Smacker::convertMNG(const std::string &arcfile,  Storage storage)
     {
       if(result)
       {
-        string mng_cmd = "convert \"" + png_path + "image*.png\" -delay 4 \"" + mng_file + "\"";
-        LOG4CXX_DEBUG(logger, mng_cmd);
+        // -delay is in 1/100s and -loop 0 keeps the animation running forever.
+        // Both only apply to the images that follow them, so they have to come
+        // before the frames, otherwise the GIF ends up with a delay of zero.
+        string gif_cmd = "convert -delay 4 -loop 0 \"" + png_path + "image*.png\" \"" + gif_file + "\"";
+        LOG4CXX_DEBUG(logger, gif_cmd);
 
-        result = callConvert(mng_cmd);
+        result = callConvert(gif_cmd);
       }
     }
     else

@@ -236,7 +236,7 @@ Preference.GrayscaleIcons = true
 SetFontCodePage(1252)
 
 -- Maximum fps for portraits and other animations
-Mng.MaxFPS = 15
+Animation.MaxFPS = 15
 
 -------------------------------------------------------------------------------
 
