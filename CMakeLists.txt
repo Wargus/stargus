@@ -284,27 +284,18 @@ if(STRATAGUS_FOUND)
       "${PROJECT_SOURCE_DIR}/stargus.desktop.in"
       "${PROJECT_BINARY_DIR}/stargus.desktop"
     )
-    add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/stargus.png"
-      COMMAND convert
-      ARGS "${PROJECT_SOURCE_DIR}/stargus.ico" "${PROJECT_BINARY_DIR}/stargus.png"
-      DEPENDS stargus.ico
-      COMMENT "Generating stargus.png" VERBATIM
-    )
-    add_custom_target(icon ALL DEPENDS stargus.png)
+    # The icon is a file in the repository like the desktop file that names it, and
+    # it is installed as it is: making it out of stargus.ico at build time asked
+    # every build of the game for an ICO decoder, and an ICO holds several pictures,
+    # so what ImageMagick wrote for it was not even the file named on the command
+    # line. The 32x32 xpm the Debian menu used is made by the packaging that needs
+    # it, out of this one.
     install(FILES
-      "${PROJECT_BINARY_DIR}/stargus.png"
+      "${CMAKE_CURRENT_SOURCE_DIR}/stargus.png"
       "${CMAKE_CURRENT_SOURCE_DIR}/dataset/palettes.json"
       "${CMAKE_CURRENT_SOURCE_DIR}/dataset/units.json"
       DESTINATION ${ICONDIR}
     )
-    add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/stargus.xpm"
-      COMMAND convert
-      ARGS "${PROJECT_SOURCE_DIR}/stargus.ico" -resize 32x32 "${PROJECT_BINARY_DIR}/stargus.xpm"
-      DEPENDS stargus.ico
-      COMMENT "Generating stargus.xmp" VERBATIM
-    )
-    add_custom_target(xpmicon ALL DEPENDS stargus.xpm)
-    install(FILES "${PROJECT_BINARY_DIR}/stargus.xpm" DESTINATION ${ICONDIR})
     install(FILES "${PROJECT_BINARY_DIR}/stargus.desktop" DESTINATION ${DESKTOPDIR})
     # not every data directory a deployment can have is in this repository, so
     # only install the ones that are here rather than failing the install.
