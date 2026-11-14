@@ -2,11 +2,25 @@
 
 [![Discord](https://img.shields.io/discord/780082494447288340?style=flat-square&logo=discord&label=discord)](https://discord.gg/dQGxaw3QfB)
 
-### Nightly builds are available:
+### Downloads
 
-- Windows Installer: https://github.com/Wargus/stargus/releases/tag/master-builds
-- Ubuntu/Debian Packages: https://code.launchpad.net/~timfelgentreff/+archive/ubuntu/stratagus
-- OS X App Bundle: https://github.com/Wargus/stratagus/wiki/osx/Stargus.app.tar.gz
+Every release of Stargus comes with a Windows installer, a macOS `dmg` and a
+Linux AppImage:
+
+- [Latest stable release](https://github.com/Wargus/stargus/releases/latest)
+- [Latest unstable build](https://github.com/Wargus/stargus/releases/tag/master-builds) — rebuilt for every push to `master`, so it is the newest development build rather than a tested release
+
+Older releases are in the [release list](https://github.com/Wargus/stargus/releases).
+
+### Build status
+
+![Build Status](https://github.com/Wargus/stargus/actions/workflows/build.yml/badge.svg)
+
+The build makes the artifacts of all three platforms at once, the Windows
+installer, the Linux AppImage and the macOS `dmg`; pushing a version tag creates
+the release with those artifacts, and pushes to `master` update the
+`master-builds` release.
+`RELEASING.md` describes how a release is made.
 
 ## Installation Instructions
 
