@@ -42,7 +42,7 @@ stargus = {}
 stargus.Name = "Stargus"
 stargus.Homepage = "https://github.com/Wargus/stargus"
 stargus.Copyright = "(c) 1998-2021 by The Stratagus Project."
-stargus.Version = "3.3.0"
+stargus.Version = "3.3.3"
 stargus.Licence = "GPL v2+"
 
 

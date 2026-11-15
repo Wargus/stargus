@@ -1,3 +1,26 @@
+stargus (3.3.3-1) unstable; urgency=medium
+
+  * fixed use after free issue in wav gzip
+  * Fix for MPQ archives scanner
+  * Fixed bug that left file open in scanner when invalid archive was found
+  * startool became its own library
+  * Fixed compilation issue with meson
+  * Migrate to github actions
+  * Compatibility with current stratagus mainline
+  * [macOS] Fix bundle.sh
+  * iscript.bin structure and memory leak fixed
+  * experimental filesystem should be tested when filesystem is not supported
+  * remove reference to illegal units
+  * Removal of menu::setDirty(true), removed from Stratagus with Guichan 0.9.0
+  * Try to fix CMake with 'subprojects' directory
+  * wrong sound parameter documentation
+  * Fix path of subprojects/nlohmann_json in CMakeLists.txt
+  * [CI]: ubuntu-18.04 is no longer supported by github, update to
+    ubuntu-20.04, and update action versions
+  * Update upstream dependencies
+
+ -- Tim Felgentreff <tim.felgentreff@gmail.com>  Sun, 15 Nov 2026 14:12:00 +0100
+
 stargus (2.4.1-1) unstable; urgency=low
 
   * Support Stratagus 2.4.1
