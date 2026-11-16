@@ -137,7 +137,6 @@ bool Storm::extractMemory(const std::string &archivedFile, unsigned char **szEnt
 bool Storm::extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress)
 {
   HANDLE hFile = nullptr;          // Archived file handle
-  FILE *file = nullptr;            // Disk file handle
   gzFile gzfile = nullptr;         // Compressed file handle
   int nError = ERROR_SUCCESS;
   bool result = true;
@@ -149,18 +148,27 @@ bool Storm::extractFile(const std::string &archivedFile, const std::string &extr
       nError = SErrGetLastError();
   }
 
+  if (nError == ERROR_SUCCESS && !compress)
+  {
+    // Let StormLib extract the complete file
+    CheckPath(extractedName);
+    bool extracted = SFileExtractFile(
+                       mMpqHandle,
+                       archivedFile.c_str(),
+                       extractedName.c_str(),
+                       SFILE_OPEN_FROM_MPQ
+                     );
+    SFileCloseFile(hFile);
+    return extracted;
+  }
+
   // Create the target file
   if (nError == ERROR_SUCCESS)
   {
     CheckPath(extractedName);
-    if (compress)
-    {
-      gzfile = gzopen(extractedName.c_str(), "wb9");
-    }
-    else
-    {
-      file = fopen(extractedName.c_str(), "wb");
-    }
+    gzfile = gzopen(extractedName.c_str(), "wb9");
+    if (gzfile == nullptr)
+      nError = ERROR_CAN_NOT_COMPLETE;
   }
 
   // Read the file from the archive
@@ -171,32 +179,21 @@ bool Storm::extractFile(const std::string &archivedFile, const std::string &extr
 
     while (dwBytes > 0)
     {
-      SFileReadFile(hFile, szBuffer, sizeof(szBuffer), &dwBytes, NULL);
-      if (dwBytes > 0)
+      // SFileReadFile() fails with ERROR_HANDLE_EOF at the end of the
+      // file; any other failure must abort instead of truncating.
+      if (!SFileReadFile(hFile, szBuffer, sizeof(szBuffer), &dwBytes, NULL))
       {
-        if (compress)
-        {
-          if(gzfile)
-          {
-            gzwrite(gzfile, szBuffer, dwBytes);
-          }
-        }
-        else
-        {
-          if(file)
-          {
-            fwrite(szBuffer, 1, dwBytes, file);
-          }
-        }
+        nError = SErrGetLastError();
+        if (nError == ERROR_HANDLE_EOF)
+          nError = ERROR_SUCCESS;
       }
+      if (nError != ERROR_SUCCESS || dwBytes == 0)
+        break;
+      gzwrite(gzfile, szBuffer, dwBytes);
     }
   }
 
   // Cleanup and exit
-  if (file != NULL)
-  {
-    fclose(file);
-  }
   if (gzfile != NULL)
   {
     gzclose(gzfile);
