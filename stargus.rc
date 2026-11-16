@@ -5,8 +5,8 @@
 #endif
 
 #define DESCRIPTION NAME
-#define VERSION "3.3.0"
-#define VIVERSION 3,3,0,0
+#define VERSION "3.3.3"
+#define VIVERSION 3,3,3,0
 #define HOMEPAGE "https://github.com/Wargus/stargus"
 #define LICENSE "GPL v2"
 #define COPYRIGHT "Copyright (c) 2002-2022 by The Stratagus Project and Pali Rohar"

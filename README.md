@@ -1,12 +1,15 @@
+![Build Status](https://github.com/Wargus/stargus/actions/workflows/build.yml/badge.svg)
+
 [![Join the chat at https://gitter.im/Wargus](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Wargus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![Discord](https://img.shields.io/discord/780082494447288340?style=flat-square&logo=discord&label=discord)](https://discord.gg/dQGxaw3QfB)
 
-### Nightly builds are available:
+### Downloads
 
-- Windows Installer: https://github.com/Wargus/stargus/releases/tag/master-builds
-- Ubuntu/Debian Packages: https://code.launchpad.net/~timfelgentreff/+archive/ubuntu/stratagus
-- OS X App Bundle: https://github.com/Wargus/stratagus/wiki/osx/Stargus.app.tar.gz
+Every release of Stargus comes with a Windows installer, a macOS `dmg` and a Linux AppImage:
+
+- [Latest stable release](https://github.com/Wargus/stargus/releases/latest)
+- [Latest unstable build](https://github.com/Wargus/stargus/releases/tag/master-builds)
 
 ## Installation Instructions
 
